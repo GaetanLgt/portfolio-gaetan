@@ -1,0 +1,33 @@
+:root {
+  /* Couleurs principales */
+  --matrix-green: #00ff41;
+  --ark-blue: #4a9eff;
+  --code-dark: #1a1a1a;
+  --code-darker: #0d0d0d;
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0a0;
+  --accent-gold: #ffd700;
+  --border-subtle: #333333;
+  
+  /* États interactifs */
+  --hover-glow: rgba(0, 255, 65, 0.2);
+  --card-bg: rgba(26, 26, 26, 0.8);
+  
+  /* Spacing scale (système 8px) */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 600ms ease;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px var(--hover-glow);
+}
