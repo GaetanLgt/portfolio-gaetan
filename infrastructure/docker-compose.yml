@@ -1,0 +1,373 @@
+# ============================================================
+# GL TOWER - STACK AGENTIQUE COMPLÈTE
+# Infrastructure Docker pour 13 Agents IA
+# ============================================================
+# 
+# Architecture:
+#   - n8n: Orchestration workflows (JARVIS)
+#   - Ollama: LLM local (Mistral, Llama)
+#   - PostgreSQL: Base de données principale
+#   - Redis: Cache & queues
+#   - ChromaDB: Vector store (RAG)
+#   - Prometheus + Grafana: Monitoring (ULTRON)
+#   - Traefik: Reverse proxy & SSL
+#
+# ============================================================
+
+version: '3.9'
+
+networks:
+  gl-tower:
+    driver: bridge
+    name: gl-tower-network
+
+volumes:
+  postgres_data:
+  redis_data:
+  n8n_data:
+  ollama_data:
+  chroma_data:
+  prometheus_data:
+  grafana_data:
+  traefik_certs:
+
+services:
+  # ============================================================
+  # INFRASTRUCTURE CORE
+  # ============================================================
+
+  # Reverse Proxy & SSL
+  traefik:
+    image: traefik:v3.0
+    container_name: gl-traefik
+    restart: unless-stopped
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-neo@gldigitallab.fr}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/certs/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"  # Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_certs:/certs
+    networks:
+      - gl-tower
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN:-localhost}`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+
+  # PostgreSQL - Base de données principale (ZOLA)
+  postgres:
+    image: postgres:16-alpine
+    container_name: gl-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-gltower}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gltower_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-gltower}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init/postgres:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - gl-tower
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gltower}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis - Cache & Message Queue
+  redis:
+    image: redis:7-alpine
+    container_name: gl-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-redis_secret}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - gl-tower
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # JARVIS - COORDINATION CENTRALE (n8n)
+  # ============================================================
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: gl-jarvis-n8n
+    restart: unless-stopped
+    environment:
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://${N8N_HOST:-localhost}:5678/
+      - GENERIC_TIMEZONE=Europe/Paris
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin}
+      # Database
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB:-gltower}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-gltower}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-gltower_secret}
+      # Redis Queue
+      - QUEUE_BULL_REDIS_HOST=redis
+      - QUEUE_BULL_REDIS_PORT=6379
+      - QUEUE_BULL_REDIS_PASSWORD=${REDIS_PASSWORD:-redis_secret}
+      # Executions
+      - EXECUTIONS_MODE=queue
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=168
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./workflows:/home/node/workflows
+    ports:
+      - "5678:5678"
+    networks:
+      - gl-tower
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.n8n.rule=Host(`n8n.${DOMAIN:-localhost}`)"
+      - "traefik.http.services.n8n.loadbalancer.server.port=5678"
+
+  # n8n Worker (pour les queues)
+  n8n-worker:
+    image: n8nio/n8n:latest
+    container_name: gl-jarvis-worker
+    restart: unless-stopped
+    command: worker
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB:-gltower}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-gltower}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-gltower_secret}
+      - QUEUE_BULL_REDIS_HOST=redis
+      - QUEUE_BULL_REDIS_PORT=6379
+      - QUEUE_BULL_REDIS_PASSWORD=${REDIS_PASSWORD:-redis_secret}
+      - EXECUTIONS_MODE=queue
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - gl-tower
+    depends_on:
+      - n8n
+
+  # ============================================================
+  # IA LOCALE - Ollama (FRIDAY, VISION, JARVIS)
+  # ============================================================
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: gl-ollama
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - gl-tower
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    # Si pas de GPU, commenter le bloc deploy ci-dessus
+
+  # OpenWebUI - Interface chat (FRIDAY)
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: gl-friday-webui
+    restart: unless-stopped
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET:-changeme}
+      - ENABLE_RAG_WEB_SEARCH=true
+      - RAG_EMBEDDING_MODEL=nomic-embed-text
+      - CHROMA_HTTP_HOST=chromadb
+      - CHROMA_HTTP_PORT=8000
+    volumes:
+      - ./data/openwebui:/app/backend/data
+    ports:
+      - "3000:8080"
+    networks:
+      - gl-tower
+    depends_on:
+      - ollama
+      - chromadb
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webui.rule=Host(`chat.${DOMAIN:-localhost}`)"
+      - "traefik.http.services.webui.loadbalancer.server.port=8080"
+
+  # ============================================================
+  # RAG & VECTOR STORE - ChromaDB (FRIDAY, ZOLA)
+  # ============================================================
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: gl-chromadb
+    restart: unless-stopped
+    environment:
+      - CHROMA_SERVER_AUTH_CREDENTIALS=${CHROMA_AUTH:-admin:admin}
+      - CHROMA_SERVER_AUTH_PROVIDER=chromadb.auth.basic.BasicAuthServerProvider
+      - ANONYMIZED_TELEMETRY=false
+    volumes:
+      - chroma_data:/chroma/chroma
+    ports:
+      - "8000:8000"
+    networks:
+      - gl-tower
+
+  # ============================================================
+  # MONITORING - ULTRON (Prometheus + Grafana)
+  # ============================================================
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: gl-ultron-prometheus
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - gl-tower
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prometheus.rule=Host(`prometheus.${DOMAIN:-localhost}`)"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: gl-ultron-grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://grafana.${DOMAIN:-localhost}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
+      - ./config/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3001:3000"
+    networks:
+      - gl-tower
+    depends_on:
+      - prometheus
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN:-localhost}`)"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+  # Loki - Logs aggregation
+  loki:
+    image: grafana/loki:latest
+    container_name: gl-ultron-loki
+    restart: unless-stopped
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./config/loki.yml:/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+    networks:
+      - gl-tower
+
+  # Node Exporter - Métriques système
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: gl-node-exporter
+    restart: unless-stopped
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "9100:9100"
+    networks:
+      - gl-tower
+
+  # ============================================================
+  # SÉCURITÉ - EDITH (Trivy, Vault)
+  # ============================================================
+
+  vault:
+    image: hashicorp/vault:latest
+    container_name: gl-edith-vault
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=${VAULT_TOKEN:-root}
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+    ports:
+      - "8200:8200"
+    networks:
+      - gl-tower
+
+  # ============================================================
+  # COMMUNITY & DISCORD - KAREN
+  # ============================================================
+
+  # Le bot Discord tourne via n8n ou un service Node.js dédié
+  # Configuration dans ./services/karen/
+
+  # ============================================================
+  # BUILD & TOOLING - DUM-E (Registry Docker local optionnel)
+  # ============================================================
+
+  registry:
+    image: registry:2
+    container_name: gl-dume-registry
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data/registry:/var/lib/registry
+    networks:
+      - gl-tower
+
+  # ============================================================
+  # FINANCE - PEPPER (API interne)
+  # ============================================================
+
+  # L'API finance est un service Symfony dans ./services/pepper/
+  # Voir docker-compose.pepper.yml pour le déploiement séparé

@@ -1,0 +1,17 @@
+# ===========================================
+# GL Digital Lab - robots.txt
+# ===========================================
+
+# Autoriser tous les robots
+User-agent: *
+Allow: /
+
+# Bloquer les assets techniques
+Disallow: /assets/*.js$
+Disallow: /assets/*.css$
+
+# Sitemap
+Sitemap: https://gldigitallab.fr/sitemap.xml
+
+# Crawl-delay (optionnel, respecté par certains bots)
+Crawl-delay: 1

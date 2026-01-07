@@ -1,12 +1,251 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gaëtan - Full-Stack Developer</title>
+    
+    <!-- Opquast N°98 : Title identifie le site -->
+    <title>GL Digital Lab | Architecture Numérique Souveraine</title>
+    
+    <!-- Opquast N°98 : Meta description -->
+    <meta name="description" content="Développement web sur-mesure pour PME : applications Symfony 8, interfaces Vue 3, IA locale. Architecture numérique souveraine depuis Limoges, France." />
+    
+    <!-- Opquast N°99 : Favicon complet -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#10B981" />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="GL Digital Lab | Architecture Numérique Souveraine" />
+    <meta property="og:description" content="Développement web sur-mesure pour PME : Symfony 8, Vue 3, IA locale. Basé à Limoges, France." />
+    <meta property="og:image" content="https://gldigitallab.fr/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GL Digital Lab - Architecture Numérique Souveraine" />
+    <meta property="og:site_name" content="GL Digital Lab" />
+    <meta property="og:url" content="https://gldigitallab.fr" />
+    <meta property="og:locale" content="fr_FR" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GL Digital Lab | Architecture Numérique Souveraine" />
+    <meta name="twitter:description" content="Développement web sur-mesure pour PME : Symfony 8, Vue 3, IA locale." />
+    <meta name="twitter:image" content="https://gldigitallab.fr/og-image.png" />
+    <meta name="twitter:image:alt" content="GL Digital Lab - Architecture Numérique Souveraine" />
+    
+    <!-- SEO -->
+    <meta name="author" content="Gaëtan LANGLET - GL Digital Lab" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <link rel="canonical" href="https://gldigitallab.fr" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    
+    <!-- Google Search Console -->
+    <meta name="google-site-verification" content="9VCKd68WLGM0VJTj5PMkZOLG8uAID2RCo6OhEDsBM7k" />
+    
+    <!-- Mots-clés (moins important mais toujours utile) -->
+    <meta name="keywords" content="développeur web Limoges, Symfony, Vue.js, développement sur-mesure, IA locale, architecture logicielle, PME France, freelance développeur" />
+    
+    <!-- Géolocalisation (Opquast N°100) -->
+    <meta name="geo.region" content="FR-NAQ" />
+    <meta name="geo.placename" content="Limoges" />
+    
+    <!-- Schema.org JSON-LD : LocalBusiness + Person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://gldigitallab.fr/#business",
+          "name": "GL Digital Lab",
+          "description": "Architecture numérique souveraine pour PME : développement Symfony 8, Vue 3, IA locale, hébergement France.",
+          "url": "https://gldigitallab.fr",
+          "logo": "https://gldigitallab.fr/favicon-512x512.png",
+          "image": "https://gldigitallab.fr/og-image.png",
+          "email": "contact@gldigitallab.fr",
+          "telephone": "+33678695881",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Limoges",
+            "addressRegion": "Nouvelle-Aquitaine",
+            "postalCode": "87000",
+            "addressCountry": "FR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "45.8336",
+            "longitude": "1.2611"
+          },
+          "areaServed": {
+            "@type": "Country",
+            "name": "France"
+          },
+          "priceRange": "€€€",
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          },
+          "sameAs": [
+            "https://github.com/GaetanLgt",
+            "https://www.linkedin.com/in/gldigitallab/"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://gldigitallab.fr/#founder",
+          "name": "Gaëtan LANGLET",
+          "jobTitle": "Architecte Logiciel & Développeur Full-Stack",
+          "description": "Développeur spécialisé Symfony, Vue.js et IA locale. Fondateur de GL Digital Lab.",
+          "url": "https://gldigitallab.fr",
+          "worksFor": {
+            "@id": "https://gldigitallab.fr/#business"
+          },
+          "knowsAbout": [
+            "Symfony",
+            "Vue.js",
+            "PHP",
+            "JavaScript",
+            "Three.js",
+            "Intelligence Artificielle",
+            "DevOps",
+            "Architecture Logicielle"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://gldigitallab.fr/#website",
+          "url": "https://gldigitallab.fr",
+          "name": "GL Digital Lab",
+          "description": "Architecture numérique souveraine",
+          "publisher": {
+            "@id": "https://gldigitallab.fr/#business"
+          },
+          "inLanguage": "fr-FR"
+        },
+        {
+          "@type": "Service",
+          "@id": "https://gldigitallab.fr/#service-performance",
+          "name": "Performance Web",
+          "description": "Audit Lighthouse, refonte Vue 3, optimisation SSR et mise en cache.",
+          "provider": {
+            "@id": "https://gldigitallab.fr/#business"
+          },
+          "areaServed": "France",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Services GL Digital Lab",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Performance"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": "8000",
+                  "maxPrice": "15000",
+                  "priceCurrency": "EUR"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Digital Factory"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": "15000",
+                  "maxPrice": "30000",
+                  "priceCurrency": "EUR"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Neural Ops - IA & Automatisation"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "minPrice": "12000",
+                  "maxPrice": "25000",
+                  "priceCurrency": "EUR"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Taux Journalier (TJM)"
+                },
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "550",
+                  "priceCurrency": "EUR",
+                  "unitCode": "DAY"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Audit Flash"
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "price": "800",
+                  "priceCurrency": "EUR"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Consulting"
+                },
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "90",
+                  "priceCurrency": "EUR",
+                  "unitCode": "HUR"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Maintenance mensuelle"
+                },
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "350",
+                  "priceCurrency": "EUR",
+                  "unitCode": "MON"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- FONTS : Self-hosted pour performance (voir /public/fonts) -->
+    <!-- Preload des fonts critiques -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/Inter-Regular.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/JetBrainsMono-Regular.woff2" crossorigin>
   </head>
-  <body>
+  <body class="antialiased">
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

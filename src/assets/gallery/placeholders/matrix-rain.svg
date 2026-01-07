@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a2e;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00ff41" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+  </defs>
+  
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+  
+  <!-- Matrix rain columns -->
+  <text x="100" y="50" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.3">ア</text>
+  <text x="100" y="100" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.4">カ</text>
+  <text x="100" y="150" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.5">サ</text>
+  <text x="100" y="200" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.7">タ</text>
+  <text x="100" y="250" font-family="monospace" font-size="14" fill="#00ff41" opacity="1">ナ</text>
+  
+  <text x="200" y="150" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.2">マ</text>
+  <text x="200" y="200" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.4">ヤ</text>
+  <text x="200" y="250" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.6">ラ</text>
+  <text x="200" y="300" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.8">ワ</text>
+  <text x="200" y="350" font-family="monospace" font-size="14" fill="#00ff41" opacity="1">ン</text>
+  
+  <text x="300" y="200" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.3">0</text>
+  <text x="300" y="250" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.5">1</text>
+  <text x="300" y="300" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.7">0</text>
+  <text x="300" y="350" font-family="monospace" font-size="14" fill="#00ff41" opacity="0.9">1</text>
+  <text x="300" y="400" font-family="monospace" font-size="14" fill="#00ff41" opacity="1">1</text>
+  
+  <text x="400" y="290" font-family="monospace" font-size="28" fill="#00ff41" text-anchor="middle" filter="url(#glow)">
+    MATRIX RAIN
+  </text>
+  
+  <rect x="320" y="320" width="160" height="24" rx="4" fill="#00ff41" opacity="0.2"/>
+  <text x="400" y="337" font-family="monospace" font-size="11" fill="#00ff41" text-anchor="middle" opacity="0.7">
+    UNIVERS
+  </text>
+  
+  <path d="M 20 20 L 20 60 M 20 20 L 60 20" stroke="#00ff41" stroke-width="2" opacity="0.5"/>
+  <path d="M 780 20 L 780 60 M 780 20 L 740 20" stroke="#00ff41" stroke-width="2" opacity="0.5"/>
+  <path d="M 20 580 L 20 540 M 20 580 L 60 580" stroke="#00ff41" stroke-width="2" opacity="0.5"/>
+  <path d="M 780 580 L 780 540 M 780 580 L 740 580" stroke="#00ff41" stroke-width="2" opacity="0.5"/>
+</svg>

@@ -1,0 +1,51 @@
+/**
+ * Matrix Theme Variables
+ * Variables CSS partagées pour le thème Construct/Matrix
+ */
+
+:root {
+  /* Primary Matrix Colors */
+  --matrix-green: #00ff88;
+  --matrix-green-dark: #00cc6a;
+  --matrix-green-soft: rgba(0, 255, 136, 0.1);
+  --matrix-cyan: #00ffff;
+  --matrix-purple: #bf00ff;
+  --matrix-red: #ff4444;
+  --matrix-gold: #ffd700;
+  
+  /* Backgrounds */
+  --matrix-bg-deep: #010a01;
+  --matrix-bg-surface: rgba(0, 20, 5, 0.95);
+  --matrix-bg-elevated: rgba(0, 30, 10, 0.9);
+  --matrix-bg-overlay: rgba(0, 0, 0, 0.8);
+  
+  /* Borders & Glows */
+  --matrix-border: rgba(0, 255, 136, 0.2);
+  --matrix-border-active: rgba(0, 255, 136, 0.5);
+  --matrix-glow: rgba(0, 255, 136, 0.3);
+  --matrix-glow-intense: rgba(0, 255, 136, 0.6);
+  
+  /* Text */
+  --matrix-text-primary: #00ff88;
+  --matrix-text-secondary: rgba(0, 255, 136, 0.6);
+  --matrix-text-muted: rgba(0, 255, 136, 0.35);
+  --matrix-text-white: #ffffff;
+  
+  /* Timing */
+  --matrix-transition-fast: 0.15s ease;
+  --matrix-transition-base: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --matrix-transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  /* Shadows */
+  --matrix-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --matrix-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --matrix-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --matrix-shadow-glow: 0 0 30px rgba(0, 255, 136, 0.2);
+  
+  /* Z-Index Scale */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-modal: 1000;
+  --z-overlay: 2000;
+  --z-tooltip: 3000;
+}

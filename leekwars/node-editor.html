@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeekScript Node Editor - GL Digital Lab</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg-dark: #0a150a;
+      --bg-canvas: #0d1a0d;
+      --bg-node: #1a2e1a;
+      --bg-node-header: #2d4a2d;
+      --leek-green: #7bc043;
+      --leek-dark: #3e8914;
+      --leek-light: #a4d96c;
+      --text: #e8f5e8;
+      --text-muted: #8ba88b;
+      --wire-color: #7bc043;
+      --type-action: #ff6b6b;
+      --type-condition: #ffd93d;
+      --type-value: #6bcfff;
+      --type-target: #ff9f43;
+      --type-flow: #a855f7;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+    }
+    
+    /* HEADER */
+    .header {
+      height: 50px;
+      background: linear-gradient(90deg, var(--bg-node), var(--bg-dark));
+      border-bottom: 2px solid var(--leek-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 100;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    
+    .logo-icon { font-size: 1.5rem; }
+    .logo span { color: var(--leek-green); }
+    
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--leek-dark);
+      background: var(--bg-node);
+      color: var(--text);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn:hover { background: var(--bg-node-header); border-color: var(--leek-green); }
+    .btn-primary { background: var(--leek-dark); border-color: var(--leek-green); }
+    .btn-primary:hover { background: var(--leek-green); color: #000; }
+    
+    /* MAIN LAYOUT */
+    .main {
+      display: flex;
+      height: calc(100vh - 50px);
+    }
+    
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      background: var(--bg-dark);
+      border-right: 1px solid var(--leek-dark);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .sidebar-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--leek-dark);
+      font-weight: bold;
+      color: var(--leek-green);
+      font-size: 0.9rem;
+    }
+    
+    .sidebar-search {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--leek-dark);
+    }
+    
+    .sidebar-search input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg-node);
+      border: 1px solid var(--leek-dark);
+      border-radius: 4px;
+      color: var(--text);
+      font-size: 0.85rem;
+    }
+    
+    .sidebar-search input:focus {
+      outline: none;
+      border-color: var(--leek-green);
+    }
+    
+    .node-palette {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem;
+    }
+    
+    .palette-category {
+      margin-bottom: 0.75rem;
+    }
+    
+    .category-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .palette-node {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      background: var(--bg-node);
+      border: 1px solid transparent;
+      border-radius: 4px;
+      margin-bottom: 0.25rem;
+      cursor: grab;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    
+    .palette-node:hover {
+      border-color: var(--leek-green);
+      background: var(--bg-node-header);
+    }
+    
+    .palette-node:active { cursor: grabbing; }
+    
+    .node-type-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    
+    .type-action .node-type-dot { background: var(--type-action); }
+    .type-condition .node-type-dot { background: var(--type-condition); }
+    .type-value .node-type-dot { background: var(--type-value); }
+    .type-target .node-type-dot { background: var(--type-target); }
+    .type-flow .node-type-dot { background: var(--type-flow); }
+    
+    /* CANVAS */
+    .canvas-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-canvas);
+    }
+    
+    .canvas-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(123, 192, 67, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(123, 192, 67, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+      pointer-events: none;
+    }
+    
+    #canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .nodes-container {
+      position: absolute;
+      inset: 0;
+      transform-origin: 0 0;
+    }
+    
+    /* NODES */
+    .node {
+      position: absolute;
+      min-width: 180px;
+      background: var(--bg-node);
+      border: 2px solid var(--leek-dark);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      cursor: move;
+      user-select: none;
+    }
+    
+    .node:hover { border-color: var(--leek-green); }
+    .node.selected { border-color: var(--leek-light); box-shadow: 0 0 20px rgba(123, 192, 67, 0.3); }
+    
+    .node-header {
+      padding: 0.6rem 0.75rem;
+      background: var(--bg-node-header);
+      border-radius: 6px 6px 0 0;
+      font-weight: 600;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .node.type-action .node-header { background: linear-gradient(135deg, #4a1a1a, var(--bg-node-header)); }
+    .node.type-condition .node-header { background: linear-gradient(135deg, #4a3a1a, var(--bg-node-header)); }
+    .node.type-value .node-header { background: linear-gradient(135deg, #1a3a4a, var(--bg-node-header)); }
+    .node.type-target .node-header { background: linear-gradient(135deg, #4a2a1a, var(--bg-node-header)); }
+    .node.type-flow .node-header { background: linear-gradient(135deg, #3a1a4a, var(--bg-node-header)); }
+    
+    .node-body {
+      padding: 0.5rem 0;
+    }
+    
+    .node-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
+    }
+    
+    .node-port {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid;
+      background: var(--bg-node);
+      cursor: crosshair;
+      transition: all 0.2s;
+    }
+    
+    .node-port:hover {
+      transform: scale(1.3);
+    }
+    
+    .port-input { margin-left: -18px; }
+    .port-output { margin-right: -18px; }
+    
+    .port-flow { border-color: var(--type-flow); }
+    .port-flow.connected, .port-flow:hover { background: var(--type-flow); }
+    
+    .port-value { border-color: var(--type-value); }
+    .port-value.connected, .port-value:hover { background: var(--type-value); }
+    
+    .port-target { border-color: var(--type-target); }
+    .port-target.connected, .port-target:hover { background: var(--type-target); }
+    
+    .port-bool { border-color: var(--type-condition); }
+    .port-bool.connected, .port-bool:hover { background: var(--type-condition); }
+    
+    .node-input-field {
+      background: var(--bg-dark);
+      border: 1px solid var(--leek-dark);
+      border-radius: 3px;
+      padding: 0.2rem 0.4rem;
+      color: var(--text);
+      font-size: 0.75rem;
+      width: 60px;
+      text-align: center;
+    }
+    
+    .node-select {
+      background: var(--bg-dark);
+      border: 1px solid var(--leek-dark);
+      border-radius: 3px;
+      padding: 0.2rem 0.4rem;
+      color: var(--text);
+      font-size: 0.75rem;
+    }
+    
+    /* OUTPUT PANEL */
+    .output-panel {
+      width: 350px;
+      background: var(--bg-dark);
+      border-left: 1px solid var(--leek-dark);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .output-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--leek-dark);
+      font-weight: bold;
+      color: var(--leek-green);
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .output-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+    
+    .code-output {
+      background: #000;
+      border-radius: 4px;
+      padding: 1rem;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--leek-light);
+      white-space: pre-wrap;
+      overflow-x: auto;
+      min-height: 200px;
+    }
+    
+    .code-keyword { color: #ff79c6; }
+    .code-function { color: #50fa7b; }
+    .code-number { color: #bd93f9; }
+    .code-string { color: #f1fa8c; }
+    .code-comment { color: #6272a4; }
+    
+    /* CONTEXT MENU */
+    .context-menu {
+      position: fixed;
+      background: var(--bg-node);
+      border: 1px solid var(--leek-dark);
+      border-radius: 6px;
+      padding: 0.5rem 0;
+      min-width: 180px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      z-index: 1000;
+      display: none;
+    }
+    
+    .context-menu.show { display: block; }
+    
+    .context-item {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .context-item:hover { background: var(--bg-node-header); }
+    .context-separator { height: 1px; background: var(--leek-dark); margin: 0.5rem 0; }
+    
+    /* MINIMAP */
+    .minimap {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      width: 150px;
+      height: 100px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--leek-dark);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .minimap-viewport {
+      position: absolute;
+      border: 1px solid var(--leek-green);
+      background: rgba(123, 192, 67, 0.1);
+    }
+    
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--leek-dark);
+      color: var(--text);
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+    
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--leek-dark); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--leek-green); }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">🥬</span>
+      <span>LeekScript</span> Node Editor
+    </div>
+    <div class="header-actions">
+      <button class="btn" onclick="clearCanvas()">🗑️ Effacer</button>
+      <button class="btn" onclick="loadTemplate()">📂 Template</button>
+      <button class="btn" onclick="copyCode()">📋 Copier le code</button>
+      <button class="btn btn-primary" onclick="generateCode()">⚡ Générer LS</button>
+    </div>
+  </header>
+  
+  <main class="main">
+    <!-- SIDEBAR: Palette de nodes -->
+    <aside class="sidebar">
+      <div class="sidebar-header">📦 Nodes</div>
+      <div class="sidebar-search">
+        <input type="text" placeholder="Rechercher un node..." id="searchNodes" oninput="filterNodes(this.value)">
+      </div>
+      <div class="node-palette" id="nodePalette">
+        <!-- Généré par JS -->
+      </div>
+    </aside>
+    
+    <!-- CANVAS -->
+    <div class="canvas-container" id="canvasContainer">
+      <div class="canvas-grid"></div>
+      <svg id="canvas"></svg>
+      <div class="nodes-container" id="nodesContainer"></div>
+      <div class="minimap" id="minimap">
+        <div class="minimap-viewport" id="minimapViewport"></div>
+      </div>
+    </div>
+    
+    <!-- OUTPUT -->
+    <aside class="output-panel">
+      <div class="output-header">
+        <span>📝 Code LeekScript</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);" id="nodeCount">0 nodes</span>
+      </div>
+      <div class="output-content">
+        <div class="code-output" id="codeOutput">
+<span class="code-comment">// Glissez des nodes depuis la palette</span>
+<span class="code-comment">// et connectez-les pour créer votre IA</span>
+
+<span class="code-comment">// Exemple de code généré:</span>
+<span class="code-keyword">var</span> enemy = <span class="code-function">getNearestEnemy</span>();
+<span class="code-keyword">if</span> (<span class="code-function">canUseWeapon</span>(enemy)) {
+    <span class="code-function">useWeapon</span>(enemy);
+}
+        </div>
+      </div>
+    </aside>
+  </main>
+  
+  <!-- CONTEXT MENU -->
+  <div class="context-menu" id="contextMenu">
+    <div class="context-item" onclick="duplicateNode()">📋 Dupliquer</div>
+    <div class="context-item" onclick="deleteNode()">🗑️ Supprimer</div>
+    <div class="context-separator"></div>
+    <div class="context-item" onclick="disconnectNode()">🔌 Déconnecter</div>
+  </div>
+  
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ============== DATA ==============
+    const nodeTypes = {
+      // FLOW
+      start: { 
+        category: 'flow', type: 'flow', name: 'Début Tour', 
+        outputs: [{ name: 'exec', type: 'flow' }]
+      },
+      ifCondition: { 
+        category: 'flow', type: 'condition', name: 'Si (Condition)', 
+        inputs: [{ name: 'exec', type: 'flow' }, { name: 'condition', type: 'bool' }],
+        outputs: [{ name: 'vrai', type: 'flow' }, { name: 'faux', type: 'flow' }]
+      },
+      sequence: { 
+        category: 'flow', type: 'flow', name: 'Séquence', 
+        inputs: [{ name: 'exec', type: 'flow' }],
+        outputs: [{ name: '1', type: 'flow' }, { name: '2', type: 'flow' }, { name: '3', type: 'flow' }]
+      },
+      loop: { 
+        category: 'flow', type: 'flow', name: 'Boucle While', 
+        inputs: [{ name: 'exec', type: 'flow' }, { name: 'condition', type: 'bool' }],
+        outputs: [{ name: 'body', type: 'flow' }, { name: 'done', type: 'flow' }]
+      },
+      
+      // TARGETS
+      getNearestEnemy: { 
+        category: 'target', type: 'target', name: 'Ennemi le plus proche', 
+        outputs: [{ name: 'enemy', type: 'target' }]
+      },
+      getWeakestEnemy: { 
+        category: 'target', type: 'target', name: 'Ennemi le plus faible', 
+        outputs: [{ name: 'enemy', type: 'target' }]
+      },
+      getSelf: { 
+        category: 'target', type: 'target', name: 'Moi-même', 
+        outputs: [{ name: 'me', type: 'target' }]
+      },
+      getAllies: { 
+        category: 'target', type: 'target', name: 'Tous les alliés', 
+        outputs: [{ name: 'allies', type: 'target' }]
+      },
+      
+      // CONDITIONS
+      canUseWeapon: { 
+        category: 'condition', type: 'condition', name: 'Peut tirer?', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'result', type: 'bool' }]
+      },
+      canUseChip: { 
+        category: 'condition', type: 'condition', name: 'Peut utiliser puce?', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'result', type: 'bool' }],
+        fields: [{ name: 'chip', type: 'select', options: ['CHIP_BANDAGE', 'CHIP_CURE', 'CHIP_HELMET', 'CHIP_ICE', 'CHIP_SPARK', 'CHIP_ROCK'] }]
+      },
+      isAlive: { 
+        category: 'condition', type: 'condition', name: 'Est vivant?', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'result', type: 'bool' }]
+      },
+      lifeBelow: { 
+        category: 'condition', type: 'condition', name: 'Vie < X%?', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'result', type: 'bool' }],
+        fields: [{ name: 'percent', type: 'number', default: 50 }]
+      },
+      inRange: { 
+        category: 'condition', type: 'condition', name: 'À portée?', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'result', type: 'bool' }]
+      },
+      hasLineOfSight: { 
+        category: 'condition', type: 'condition', name: 'Ligne de vue?', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'result', type: 'bool' }]
+      },
+      
+      // ACTIONS
+      useWeapon: { 
+        category: 'action', type: 'action', name: 'Tirer (Arme)', 
+        inputs: [{ name: 'exec', type: 'flow' }, { name: 'target', type: 'target' }],
+        outputs: [{ name: 'exec', type: 'flow' }]
+      },
+      useChip: { 
+        category: 'action', type: 'action', name: 'Utiliser Puce', 
+        inputs: [{ name: 'exec', type: 'flow' }, { name: 'target', type: 'target' }],
+        outputs: [{ name: 'exec', type: 'flow' }],
+        fields: [{ name: 'chip', type: 'select', options: ['CHIP_BANDAGE', 'CHIP_CURE', 'CHIP_HELMET', 'CHIP_ICE', 'CHIP_SPARK', 'CHIP_ROCK'] }]
+      },
+      setWeapon: { 
+        category: 'action', type: 'action', name: 'Équiper Arme', 
+        inputs: [{ name: 'exec', type: 'flow' }],
+        outputs: [{ name: 'exec', type: 'flow' }],
+        fields: [{ name: 'weapon', type: 'select', options: ['WEAPON_PISTOL', 'WEAPON_MACHINE_GUN', 'WEAPON_SHOTGUN', 'WEAPON_MAGNUM'] }]
+      },
+      moveToward: { 
+        category: 'action', type: 'action', name: 'Avancer vers', 
+        inputs: [{ name: 'exec', type: 'flow' }, { name: 'target', type: 'target' }],
+        outputs: [{ name: 'exec', type: 'flow' }],
+        fields: [{ name: 'steps', type: 'number', default: 1 }]
+      },
+      moveAway: { 
+        category: 'action', type: 'action', name: 'Reculer de', 
+        inputs: [{ name: 'exec', type: 'flow' }, { name: 'target', type: 'target' }],
+        outputs: [{ name: 'exec', type: 'flow' }],
+        fields: [{ name: 'steps', type: 'number', default: 1 }]
+      },
+      
+      // VALUES
+      getLife: { 
+        category: 'value', type: 'value', name: 'Vie actuelle', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'value', type: 'value' }]
+      },
+      getTP: { 
+        category: 'value', type: 'value', name: 'Points de Tour (PT)', 
+        outputs: [{ name: 'value', type: 'value' }]
+      },
+      getMP: { 
+        category: 'value', type: 'value', name: 'Points Mouvement (PM)', 
+        outputs: [{ name: 'value', type: 'value' }]
+      },
+      getDistance: { 
+        category: 'value', type: 'value', name: 'Distance à', 
+        inputs: [{ name: 'target', type: 'target' }],
+        outputs: [{ name: 'value', type: 'value' }]
+      },
+      compare: { 
+        category: 'value', type: 'condition', name: 'Comparer', 
+        inputs: [{ name: 'a', type: 'value' }, { name: 'b', type: 'value' }],
+        outputs: [{ name: 'result', type: 'bool' }],
+        fields: [{ name: 'op', type: 'select', options: ['<', '<=', '==', '>=', '>'] }]
+      },
+    };
+    
+    const categories = {
+      flow: { name: 'Flux', icon: '🔀' },
+      target: { name: 'Cibles', icon: '🎯' },
+      condition: { name: 'Conditions', icon: '❓' },
+      action: { name: 'Actions', icon: '⚡' },
+      value: { name: 'Valeurs', icon: '📊' }
+    };
+    
+    // ============== STATE ==============
+    let nodes = [];
+    let connections = [];
+    let selectedNode = null;
+    let draggingNode = null;
+    let dragOffset = { x: 0, y: 0 };
+    let connectingFrom = null;
+    let nodeIdCounter = 0;
+    let canvasOffset = { x: 0, y: 0 };
+    let canvasZoom = 1;
+    
+    // ============== INIT ==============
+    function init() {
+      renderPalette();
+      setupEventListeners();
+      loadTemplate();
+    }
+    
+    function renderPalette() {
+      const palette = document.getElementById('nodePalette');
+      palette.innerHTML = '';
+      
+      for (const [catKey, catInfo] of Object.entries(categories)) {
+        const catDiv = document.createElement('div');
+        catDiv.className = 'palette-category';
+        catDiv.innerHTML = `<div class="category-title">${catInfo.icon} ${catInfo.name}</div>`;
+        
+        for (const [nodeKey, nodeInfo] of Object.entries(nodeTypes)) {
+          if (nodeInfo.category === catKey) {
+            const nodeEl = document.createElement('div');
+            nodeEl.className = `palette-node type-${nodeInfo.type}`;
+            nodeEl.draggable = true;
+            nodeEl.dataset.nodeType = nodeKey;
+            nodeEl.innerHTML = `<div class="node-type-dot"></div><span>${nodeInfo.name}</span>`;
+            catDiv.appendChild(nodeEl);
+          }
+        }
+        
+        palette.appendChild(catDiv);
+      }
+    }
+    
+    function filterNodes(query) {
+      const nodes = document.querySelectorAll('.palette-node');
+      query = query.toLowerCase();
+      nodes.forEach(n => {
+        const name = n.textContent.toLowerCase();
+        n.style.display = name.includes(query) ? 'flex' : 'none';
+      });
+    }
+    
+    // ============== NODE CREATION ==============
+    function createNode(typeKey, x, y) {
+      const type = nodeTypes[typeKey];
+      if (!type) return null;
+      
+      const id = `node_${nodeIdCounter++}`;
+      const node = {
+        id,
+        type: typeKey,
+        x,
+        y,
+        data: {}
+      };
+      
+      // Init default field values
+      if (type.fields) {
+        type.fields.forEach(f => {
+          node.data[f.name] = f.default !== undefined ? f.default : (f.options ? f.options[0] : '');
+        });
+      }
+      
+      nodes.push(node);
+      renderNode(node);
+      updateNodeCount();
+      return node;
+    }
+    
+    function renderNode(node) {
+      const type = nodeTypes[node.type];
+      const container = document.getElementById('nodesContainer');
+      
+      const el = document.createElement('div');
+      el.className = `node type-${type.type}`;
+      el.id = node.id;
+      el.style.left = node.x + 'px';
+      el.style.top = node.y + 'px';
+      
+      let html = `<div class="node-header"><div class="node-type-dot"></div>${type.name}</div><div class="node-body">`;
+      
+      // Inputs
+      const inputs = type.inputs || [];
+      inputs.forEach((inp, i) => {
+        html += `<div class="node-row">
+          <div class="node-port port-input port-${inp.type}" data-port="${inp.name}" data-dir="input" data-type="${inp.type}"></div>
+          <span>${inp.name}</span>
+          <span></span>
+        </div>`;
+      });
+      
+      // Fields
+      const fields = type.fields || [];
+      fields.forEach(f => {
+        if (f.type === 'select') {
+          html += `<div class="node-row"><span>${f.name}</span>
+            <select class="node-select" data-field="${f.name}" onchange="updateNodeField('${node.id}', '${f.name}', this.value)">
+              ${f.options.map(o => `<option value="${o}" ${node.data[f.name] === o ? 'selected' : ''}>${o.replace('CHIP_', '').replace('WEAPON_', '')}</option>`).join('')}
+            </select>
+          </div>`;
+        } else if (f.type === 'number') {
+          html += `<div class="node-row"><span>${f.name}</span>
+            <input type="number" class="node-input-field" data-field="${f.name}" value="${node.data[f.name] || f.default || 0}" onchange="updateNodeField('${node.id}', '${f.name}', this.value)">
+          </div>`;
+        }
+      });
+      
+      // Outputs
+      const outputs = type.outputs || [];
+      outputs.forEach((out, i) => {
+        html += `<div class="node-row">
+          <span></span>
+          <span>${out.name}</span>
+          <div class="node-port port-output port-${out.type}" data-port="${out.name}" data-dir="output" data-type="${out.type}"></div>
+        </div>`;
+      });
+      
+      html += '</div>';
+      el.innerHTML = html;
+      container.appendChild(el);
+      
+      // Setup drag
+      el.addEventListener('mousedown', e => onNodeMouseDown(e, node));
+      el.addEventListener('contextmenu', e => onNodeContextMenu(e, node));
+      
+      // Setup port interactions
+      el.querySelectorAll('.node-port').forEach(port => {
+        port.addEventListener('mousedown', e => onPortMouseDown(e, node, port));
+      });
+    }
+    
+    function updateNodeField(nodeId, fieldName, value) {
+      const node = nodes.find(n => n.id === nodeId);
+      if (node) {
+        node.data[fieldName] = value;
+        generateCode();
+      }
+    }
+    
+    // ============== CONNECTIONS ==============
+    function renderConnections() {
+      const svg = document.getElementById('canvas');
+      svg.innerHTML = '';
+      
+      connections.forEach(conn => {
+        const fromNode = document.getElementById(conn.from.nodeId);
+        const toNode = document.getElementById(conn.to.nodeId);
+        if (!fromNode || !toNode) return;
+        
+        const fromPort = fromNode.querySelector(`[data-port="${conn.from.port}"][data-dir="output"]`);
+        const toPort = toNode.querySelector(`[data-port="${conn.to.port}"][data-dir="input"]`);
+        if (!fromPort || !toPort) return;
+        
+        const fromRect = fromPort.getBoundingClientRect();
+        const toRect = toPort.getBoundingClientRect();
+        const containerRect = document.getElementById('canvasContainer').getBoundingClientRect();
+        
+        const x1 = fromRect.left + fromRect.width/2 - containerRect.left;
+        const y1 = fromRect.top + fromRect.height/2 - containerRect.top;
+        const x2 = toRect.left + toRect.width/2 - containerRect.left;
+        const y2 = toRect.top + toRect.height/2 - containerRect.top;
+        
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const midX = (x1 + x2) / 2;
+        const ctrlOffset = Math.min(Math.abs(x2 - x1) * 0.5, 100);
+        path.setAttribute('d', `M ${x1} ${y1} C ${x1 + ctrlOffset} ${y1}, ${x2 - ctrlOffset} ${y2}, ${x2} ${y2}`);
+        path.setAttribute('stroke', getPortColor(conn.from.type));
+        path.setAttribute('stroke-width', '3');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('opacity', '0.8');
+        svg.appendChild(path);
+      });
+    }
+    
+    function getPortColor(type) {
+      const colors = {
+        flow: '#a855f7',
+        value: '#6bcfff',
+        target: '#ff9f43',
+        bool: '#ffd93d'
+      };
+      return colors[type] || '#7bc043';
+    }
+    
+    function addConnection(from, to) {
+      // Remove existing connection to this input
+      connections = connections.filter(c => !(c.to.nodeId === to.nodeId && c.to.port === to.port));
+      connections.push({ from, to });
+      renderConnections();
+      updatePortStyles();
+      generateCode();
+    }
+    
+    function updatePortStyles() {
+      document.querySelectorAll('.node-port').forEach(p => p.classList.remove('connected'));
+      connections.forEach(conn => {
+        const fromNode = document.getElementById(conn.from.nodeId);
+        const toNode = document.getElementById(conn.to.nodeId);
+        if (fromNode) {
+          const port = fromNode.querySelector(`[data-port="${conn.from.port}"][data-dir="output"]`);
+          if (port) port.classList.add('connected');
+        }
+        if (toNode) {
+          const port = toNode.querySelector(`[data-port="${conn.to.port}"][data-dir="input"]`);
+          if (port) port.classList.add('connected');
+        }
+      });
+    }
+    
+    // ============== EVENT HANDLERS ==============
+    function setupEventListeners() {
+      const container = document.getElementById('canvasContainer');
+      
+      // Drag from palette
+      document.querySelectorAll('.palette-node').forEach(el => {
+        el.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('nodeType', el.dataset.nodeType);
+        });
+      });
+      
+      container.addEventListener('dragover', e => e.preventDefault());
+      container.addEventListener('drop', e => {
+        e.preventDefault();
+        const nodeType = e.dataTransfer.getData('nodeType');
+        if (nodeType) {
+          const rect = container.getBoundingClientRect();
+          createNode(nodeType, e.clientX - rect.left - 90, e.clientY - rect.top - 20);
+          generateCode();
+        }
+      });
+      
+      // Global mouse events
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+      document.addEventListener('click', () => {
+        document.getElementById('contextMenu').classList.remove('show');
+      });
+      
+      // Keyboard
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Delete' && selectedNode) {
+          deleteNode();
+        }
+      });
+    }
+    
+    function onNodeMouseDown(e, node) {
+      if (e.target.classList.contains('node-port')) return;
+      if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+      
+      e.preventDefault();
+      selectNode(node);
+      draggingNode = node;
+      const el = document.getElementById(node.id);
+      const rect = el.getBoundingClientRect();
+      dragOffset = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+    
+    function onPortMouseDown(e, node, portEl) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const dir = portEl.dataset.dir;
+      const portName = portEl.dataset.port;
+      const portType = portEl.dataset.type;
+      
+      if (dir === 'output') {
+        connectingFrom = { nodeId: node.id, port: portName, type: portType };
+      }
+    }
+    
+    function onMouseMove(e) {
+      if (draggingNode) {
+        const container = document.getElementById('canvasContainer').getBoundingClientRect();
+        const x = e.clientX - container.left - dragOffset.x;
+        const y = e.clientY - container.top - dragOffset.y;
+        draggingNode.x = Math.max(0, x);
+        draggingNode.y = Math.max(0, y);
+        const el = document.getElementById(draggingNode.id);
+        el.style.left = draggingNode.x + 'px';
+        el.style.top = draggingNode.y + 'px';
+        renderConnections();
+      }
+    }
+    
+    function onMouseUp(e) {
+      if (connectingFrom) {
+        // Check if dropped on a port
+        const target = document.elementFromPoint(e.clientX, e.clientY);
+        if (target && target.classList.contains('node-port') && target.dataset.dir === 'input') {
+          const toNodeId = target.closest('.node').id;
+          const toPort = target.dataset.port;
+          const toType = target.dataset.type;
+          
+          // Type checking
+          if (connectingFrom.type === toType || connectingFrom.type === 'target' && toType === 'target') {
+            addConnection(connectingFrom, { nodeId: toNodeId, port: toPort, type: toType });
+          }
+        }
+        connectingFrom = null;
+      }
+      draggingNode = null;
+    }
+    
+    function onNodeContextMenu(e, node) {
+      e.preventDefault();
+      selectNode(node);
+      const menu = document.getElementById('contextMenu');
+      menu.style.left = e.clientX + 'px';
+      menu.style.top = e.clientY + 'px';
+      menu.classList.add('show');
+    }
+    
+    function selectNode(node) {
+      document.querySelectorAll('.node').forEach(n => n.classList.remove('selected'));
+      selectedNode = node;
+      if (node) {
+        document.getElementById(node.id).classList.add('selected');
+      }
+    }
+    
+    // ============== ACTIONS ==============
+    function deleteNode() {
+      if (!selectedNode) return;
+      connections = connections.filter(c => c.from.nodeId !== selectedNode.id && c.to.nodeId !== selectedNode.id);
+      nodes = nodes.filter(n => n.id !== selectedNode.id);
+      document.getElementById(selectedNode.id).remove();
+      selectedNode = null;
+      renderConnections();
+      updateNodeCount();
+      generateCode();
+      document.getElementById('contextMenu').classList.remove('show');
+    }
+    
+    function duplicateNode() {
+      if (!selectedNode) return;
+      const newNode = createNode(selectedNode.type, selectedNode.x + 30, selectedNode.y + 30);
+      if (newNode) {
+        newNode.data = { ...selectedNode.data };
+      }
+      document.getElementById('contextMenu').classList.remove('show');
+      generateCode();
+    }
+    
+    function disconnectNode() {
+      if (!selectedNode) return;
+      connections = connections.filter(c => c.from.nodeId !== selectedNode.id && c.to.nodeId !== selectedNode.id);
+      renderConnections();
+      updatePortStyles();
+      document.getElementById('contextMenu').classList.remove('show');
+      generateCode();
+    }
+    
+    function clearCanvas() {
+      if (!confirm('Effacer tous les nodes ?')) return;
+      nodes = [];
+      connections = [];
+      document.getElementById('nodesContainer').innerHTML = '';
+      document.getElementById('canvas').innerHTML = '';
+      updateNodeCount();
+      generateCode();
+    }
+    
+    function updateNodeCount() {
+      document.getElementById('nodeCount').textContent = `${nodes.length} nodes`;
+    }
+    
+    // ============== CODE GENERATION ==============
+    function generateCode() {
+      const output = document.getElementById('codeOutput');
+      
+      if (nodes.length === 0) {
+        output.innerHTML = `<span class="code-comment">// Glissez des nodes depuis la palette</span>\n<span class="code-comment">// et connectez-les pour créer votre IA</span>`;
+        return;
+      }
+      
+      let code = `<span class="code-comment">// Code généré par LeekScript Node Editor</span>\n`;
+      code += `<span class="code-comment">// GL Digital Lab - ${new Date().toLocaleDateString('fr-FR')}</span>\n\n`;
+      
+      // Find start node
+      const startNode = nodes.find(n => n.type === 'start');
+      
+      // Generate variable declarations
+      const targetNodes = nodes.filter(n => nodeTypes[n.type].category === 'target');
+      targetNodes.forEach(n => {
+        const funcName = getFunctionCall(n);
+        code += `<span class="code-keyword">var</span> ${n.id.replace('node_', 'target_')} = ${funcName};\n`;
+      });
+      
+      if (targetNodes.length > 0) code += '\n';
+      
+      // Generate main logic from flow
+      if (startNode) {
+        code += generateFlowCode(startNode.id, 'exec', 0);
+      } else {
+        // Fallback: generate based on connections
+        const actionNodes = nodes.filter(n => nodeTypes[n.type].category === 'action');
+        actionNodes.forEach(n => {
+          code += generateNodeCode(n, 0);
+        });
+      }
+      
+      output.innerHTML = code || `<span class="code-comment">// Connectez les nodes pour générer du code</span>`;
+    }
+    
+    function generateFlowCode(nodeId, outputPort, indent) {
+      const conn = connections.find(c => c.from.nodeId === nodeId && c.from.port === outputPort);
+      if (!conn) return '';
+      
+      const nextNode = nodes.find(n => n.id === conn.to.nodeId);
+      if (!nextNode) return '';
+      
+      return generateNodeCode(nextNode, indent);
+    }
+    
+    function generateNodeCode(node, indent) {
+      const type = nodeTypes[node.type];
+      const ind = '    '.repeat(indent);
+      let code = '';
+      
+      switch (node.type) {
+        case 'ifCondition': {
+          const condConn = connections.find(c => c.to.nodeId === node.id && c.to.port === 'condition');
+          const condCode = condConn ? getConditionCode(condConn.from.nodeId) : 'true';
+          code += `${ind}<span class="code-keyword">if</span> (${condCode}) {\n`;
+          code += generateFlowCode(node.id, 'vrai', indent + 1);
+          code += `${ind}}\n`;
+          const falseCode = generateFlowCode(node.id, 'faux', indent + 1);
+          if (falseCode) {
+            code += `${ind}<span class="code-keyword">else</span> {\n${falseCode}${ind}}\n`;
+          }
+          break;
+        }
+        
+        case 'loop': {
+          const condConn = connections.find(c => c.to.nodeId === node.id && c.to.port === 'condition');
+          const condCode = condConn ? getConditionCode(condConn.from.nodeId) : 'true';
+          code += `${ind}<span class="code-keyword">while</span> (${condCode}) {\n`;
+          code += generateFlowCode(node.id, 'body', indent + 1);
+          code += `${ind}}\n`;
+          code += generateFlowCode(node.id, 'done', indent);
+          break;
+        }
+        
+        case 'sequence': {
+          code += generateFlowCode(node.id, '1', indent);
+          code += generateFlowCode(node.id, '2', indent);
+          code += generateFlowCode(node.id, '3', indent);
+          break;
+        }
+        
+        case 'useWeapon': {
+          const targetCode = getTargetCode(node.id);
+          code += `${ind}<span class="code-function">useWeapon</span>(${targetCode});\n`;
+          code += generateFlowCode(node.id, 'exec', indent);
+          break;
+        }
+        
+        case 'useChip': {
+          const targetCode = getTargetCode(node.id);
+          const chip = node.data.chip || 'CHIP_BANDAGE';
+          code += `${ind}<span class="code-function">useChip</span>(<span class="code-string">${chip}</span>, ${targetCode});\n`;
+          code += generateFlowCode(node.id, 'exec', indent);
+          break;
+        }
+        
+        case 'setWeapon': {
+          const weapon = node.data.weapon || 'WEAPON_PISTOL';
+          code += `${ind}<span class="code-function">setWeapon</span>(<span class="code-string">${weapon}</span>);\n`;
+          code += generateFlowCode(node.id, 'exec', indent);
+          break;
+        }
+        
+        case 'moveToward': {
+          const targetCode = getTargetCode(node.id);
+          const steps = node.data.steps || 1;
+          code += `${ind}<span class="code-function">moveToward</span>(${targetCode}, <span class="code-number">${steps}</span>);\n`;
+          code += generateFlowCode(node.id, 'exec', indent);
+          break;
+        }
+        
+        case 'moveAway': {
+          const targetCode = getTargetCode(node.id);
+          const steps = node.data.steps || 1;
+          code += `${ind}<span class="code-function">moveAwayFrom</span>(${targetCode}, <span class="code-number">${steps}</span>);\n`;
+          code += generateFlowCode(node.id, 'exec', indent);
+          break;
+        }
+      }
+      
+      return code;
+    }
+    
+    function getTargetCode(nodeId) {
+      const conn = connections.find(c => c.to.nodeId === nodeId && c.to.port === 'target');
+      if (!conn) return 'getNearestEnemy()';
+      const targetNode = nodes.find(n => n.id === conn.from.nodeId);
+      if (!targetNode) return 'getNearestEnemy()';
+      return targetNode.id.replace('node_', 'target_');
+    }
+    
+    function getConditionCode(nodeId) {
+      const node = nodes.find(n => n.id === nodeId);
+      if (!node) return 'true';
+      
+      const type = nodeTypes[node.type];
+      const targetCode = getTargetCode(node.id);
+      
+      switch (node.type) {
+        case 'canUseWeapon':
+          return `<span class="code-function">canUseWeapon</span>(${targetCode})`;
+        case 'canUseChip':
+          return `<span class="code-function">canUseChip</span>(<span class="code-string">${node.data.chip || 'CHIP_BANDAGE'}</span>, ${targetCode})`;
+        case 'isAlive':
+          return `<span class="code-function">isAlive</span>(${targetCode})`;
+        case 'lifeBelow':
+          return `<span class="code-function">getLife</span>(${targetCode}) / <span class="code-function">getTotalLife</span>(${targetCode}) < <span class="code-number">${(node.data.percent || 50) / 100}</span>`;
+        case 'inRange':
+          return `<span class="code-function">getCellDistance</span>(<span class="code-function">getCell</span>(), <span class="code-function">getCell</span>(${targetCode})) <= <span class="code-function">getWeaponMaxRange</span>(<span class="code-function">getWeapon</span>())`;
+        case 'hasLineOfSight':
+          return `<span class="code-function">lineOfSight</span>(<span class="code-function">getCell</span>(), <span class="code-function">getCell</span>(${targetCode}))`;
+        default:
+          return 'true';
+      }
+    }
+    
+    function getFunctionCall(node) {
+      switch (node.type) {
+        case 'getNearestEnemy': return `<span class="code-function">getNearestEnemy</span>()`;
+        case 'getWeakestEnemy': return `<span class="code-function">getWeakestEnemy</span>()`;
+        case 'getSelf': return `<span class="code-function">getEntity</span>()`;
+        case 'getAllies': return `<span class="code-function">getAllies</span>()`;
+        default: return 'null';
+      }
+    }
+    
+    // ============== TEMPLATES ==============
+    function loadTemplate() {
+      clearCanvasSilent();
+      
+      // Create a basic attack template
+      createNode('start', 50, 50);
+      createNode('getNearestEnemy', 50, 180);
+      createNode('canUseWeapon', 250, 180);
+      createNode('ifCondition', 250, 50);
+      createNode('useWeapon', 480, 30);
+      createNode('moveToward', 480, 130);
+      
+      // Connect them
+      setTimeout(() => {
+        // start -> if
+        addConnection(
+          { nodeId: 'node_0', port: 'exec', type: 'flow' },
+          { nodeId: 'node_3', port: 'exec', type: 'flow' }
+        );
+        // enemy -> canUse
+        addConnection(
+          { nodeId: 'node_1', port: 'enemy', type: 'target' },
+          { nodeId: 'node_2', port: 'target', type: 'target' }
+        );
+        // canUse -> if condition
+        addConnection(
+          { nodeId: 'node_2', port: 'result', type: 'bool' },
+          { nodeId: 'node_3', port: 'condition', type: 'bool' }
+        );
+        // if true -> useWeapon
+        addConnection(
+          { nodeId: 'node_3', port: 'vrai', type: 'flow' },
+          { nodeId: 'node_4', port: 'exec', type: 'flow' }
+        );
+        // enemy -> useWeapon
+        addConnection(
+          { nodeId: 'node_1', port: 'enemy', type: 'target' },
+          { nodeId: 'node_4', port: 'target', type: 'target' }
+        );
+        // if false -> moveToward
+        addConnection(
+          { nodeId: 'node_3', port: 'faux', type: 'flow' },
+          { nodeId: 'node_5', port: 'exec', type: 'flow' }
+        );
+        // enemy -> moveToward
+        addConnection(
+          { nodeId: 'node_1', port: 'enemy', type: 'target' },
+          { nodeId: 'node_5', port: 'target', type: 'target' }
+        );
+        
+        generateCode();
+        showToast('Template "Attaque basique" chargé !');
+      }, 100);
+    }
+    
+    function clearCanvasSilent() {
+      nodes = [];
+      connections = [];
+      nodeIdCounter = 0;
+      document.getElementById('nodesContainer').innerHTML = '';
+      document.getElementById('canvas').innerHTML = '';
+      updateNodeCount();
+    }
+    
+    // ============== UTILS ==============
+    function copyCode() {
+      const codeEl = document.getElementById('codeOutput');
+      const code = codeEl.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Code copié dans le presse-papier ! 📋');
+      });
+    }
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    
+    // ============== START ==============
+    init();
+  </script>
+</body>
+</html>

@@ -1,21 +1,34 @@
 {
   "name": "portfolio-gaetan",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "npm run generate:assets && vite build",
+    "preview": "vite preview",
+    "generate:favicons": "node scripts/generate-favicons.js",
+    "generate:og": "node scripts/generate-og-image.js",
+    "generate:assets": "npm run generate:favicons && npm run generate:og",
+    "optimize:images": "node scripts/optimize-images.js",
+    "audit:lighthouse": "lighthouse http://localhost:4173 --only-categories=performance,accessibility,best-practices,seo --chrome-flags='--headless' --output=json --output-path=./lighthouse-report.json",
+    "audit:a11y": "axe http://localhost:4173 --exit",
+    "optimize": "npm run generate:assets && npm run optimize:images && npm run build",
+    "deploy:ready": "node scripts/optimize-and-build.js"
   },
   "dependencies": {
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
+    "chart.js": "^4.4.1",
+    "gsap": "^3.12.5",
     "three": "^0.162.0",
-    "gsap": "^3.12.5"
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@vicons/ionicons5": "^0.13.0",
     "@vitejs/plugin-vue": "^5.0.4",
+    "naive-ui": "^2.43.2",
+    "sharp": "^0.33.5",
+    "terser": "^5.44.1",
     "vite": "^5.1.6"
   }
 }

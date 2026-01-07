@@ -1,0 +1,125 @@
+# ===========================================
+# GL Digital Lab - Configuration Apache/O2Switch
+# ===========================================
+
+# ------------------------------
+# 1. HTTPS OBLIGATOIRE (SSL)
+# ------------------------------
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ------------------------------
+# 2. REDIRECTION WWW → NON-WWW
+# (cohérence SEO - un seul domaine canonique)
+# ------------------------------
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# ------------------------------
+# 3. SPA ROUTING (Vue Router)
+# Toutes les routes vers index.html
+# ------------------------------
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.html [L]
+
+# ------------------------------
+# 4. COMPRESSION GZIP
+# ------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/atom+xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ------------------------------
+# 5. CACHE HEADERS (Performance)
+# ------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # HTML - pas de cache (SPA dynamique)
+  ExpiresByType text/html "access plus 0 seconds"
+  
+  # CSS & JS - cache 1 an (Vite ajoute des hash)
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  
+  # Images - cache 1 mois
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 year"
+  
+  # Fonts - cache 1 an
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+  
+  # JSON/XML - cache court
+  ExpiresByType application/json "access plus 1 hour"
+  ExpiresByType application/xml "access plus 1 hour"
+</IfModule>
+
+# ------------------------------
+# 6. SECURITE HEADERS
+# ------------------------------
+<IfModule mod_headers.c>
+  # Protection XSS
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # HSTS (force HTTPS pendant 1 an)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  
+  # Permissions Policy (ex-Feature-Policy)
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  
+  # Cache control pour assets hashés
+  <FilesMatch "\.(js|css|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  
+  # Pas de cache pour HTML
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>
+
+# ------------------------------
+# 7. TYPES MIME
+# ------------------------------
+<IfModule mod_mime.c>
+  AddType application/javascript js mjs
+  AddType text/css css
+  AddType image/svg+xml svg svgz
+  AddType image/webp webp
+  AddType font/woff woff
+  AddType font/woff2 woff2
+  AddType application/json json
+  AddType application/manifest+json webmanifest
+</IfModule>
+
+# ------------------------------
+# 8. ERREURS PERSONNALISEES
+# ------------------------------
+ErrorDocument 404 /index.html
+ErrorDocument 500 /index.html
