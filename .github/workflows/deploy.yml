@@ -172,7 +172,6 @@ jobs:
     
     steps:
       - name: 💬 Discord Notification
-        if: ${{ secrets.DISCORD_WEBHOOK != '' }}
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
