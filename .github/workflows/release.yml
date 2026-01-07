@@ -1,0 +1,67 @@
+# ============================================================================
+# Auto Release on Tag
+# ============================================================================
+# Creates a GitHub release when you push a tag like v1.0.0
+# Usage: git tag v1.0.0 && git push origin v1.0.0
+# ============================================================================
+
+name: 📦 Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: 📦 Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Install & Build
+        run: |
+          npm ci
+          npm run build
+
+      - name: 📊 Get version info
+        id: version
+        run: |
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: 📝 Generate changelog
+        id: changelog
+        run: |
+          echo "## What's Changed" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          git log $(git describe --tags --abbrev=0 HEAD^)..HEAD --pretty=format:"- %s (%h)" >> CHANGELOG.md 2>/dev/null || echo "- Initial release" >> CHANGELOG.md
+
+      - name: 📦 Create zip artifact
+        run: |
+          cd dist
+          zip -r ../gldigitallab-${{ steps.version.outputs.tag }}.zip .
+
+      - name: 🎉 Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: GL Digital Lab ${{ steps.version.outputs.tag }}
+          body_path: CHANGELOG.md
+          files: |
+            gldigitallab-${{ steps.version.outputs.tag }}.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

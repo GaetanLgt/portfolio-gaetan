@@ -1,0 +1,47 @@
+# ============================================================================
+# Security & Dependency Checks
+# ============================================================================
+# Runs weekly + on PR to check for vulnerabilities
+# ============================================================================
+
+name: 🔒 Security Audit
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 9am
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  security:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔒 NPM Audit
+        run: |
+          echo "## 🔒 Security Audit Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          npm audit --audit-level=moderate >> $GITHUB_STEP_SUMMARY 2>&1 || true
+
+      - name: 📊 Outdated packages
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 📦 Outdated Packages" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          npm outdated >> $GITHUB_STEP_SUMMARY 2>&1 || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
