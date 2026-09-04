@@ -15,7 +15,7 @@
             Gaëtan LANGLET<br>
             80560 Harponville, Somme, Hauts-de-France, France<br>
             Email : <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a><br>
-            Téléphone : <a href="tel:+33669474610">06 69 47 46 10</a>
+            Téléphone : <a href="tel:+33686474610">06 86 47 46 10</a>
           </p>
           <p v-if="siret">
             SIRET : {{ siret }}<br>

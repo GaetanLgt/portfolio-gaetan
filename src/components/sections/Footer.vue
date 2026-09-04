@@ -34,7 +34,7 @@
               <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
             </p>
             <p>
-              <a href="tel:+33669474610">06 69 47 46 10</a>
+              <a href="tel:+33686474610">06 86 47 46 10</a>
             </p>
           </address>
           <p class="footer__response">SLA réponse : 24h</p>
