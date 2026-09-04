@@ -48,46 +48,9 @@
                   </MagneticButton>
                 </div>
                 
-                <!-- Quick Navigation -->
-                <div class="hero__quick-nav">
-                  <router-link to="/carte-holistique" class="quick-link quick-link--featured">
-                    <span>🗺️</span> Carte Holistique
-                  </router-link>
-                  <router-link to="/arkadia" class="quick-link">
-                    <span>🦖</span> Case Study
-                  </router-link>
-                  <router-link to="/services" class="quick-link">
-                    <span>⚡</span> Services
-                  </router-link>
-                  <router-link to="/parcours" class="quick-link">
-                    <span>🎮</span> Parcours
-                  </router-link>
-                </div>
               </div>
             </ScrollReveal>
             
-            <!-- Code Window Décoratif -->
-            <ScrollReveal animation="fade-left" :delay="300">
-              <div class="hero__code-window glass" aria-hidden="true">
-                <div class="code-window__header">
-                  <span class="code-dot code-dot--red"></span>
-                  <span class="code-dot code-dot--yellow"></span>
-                  <span class="code-dot code-dot--green"></span>
-                  <span class="code-window__title">votre-projet.ts</span>
-                </div>
-                <div class="code-window__body">
-                  <pre><code><span class="code-keyword">const</span> <span class="code-var">votreProjet</span> = {
-  <span class="code-prop">objectif</span>: <span class="code-string">"Gagner du temps"</span>,
-  <span class="code-prop">budget</span>: <span class="code-string">"Sur-mesure"</span>,
-  <span class="code-prop">délai</span>: <span class="code-string">"Rapide"</span>,
-  <span class="code-prop">données</span>: <span class="code-string">"🇫🇷 Restent en France"</span>
-};
-
-<span class="code-keyword">await</span> <span class="code-func">glDigitalLab</span>.<span class="code-method">build</span>(votreProjet);
-<span class="code-comment">// ✨ Votre site est en ligne !</span></code></pre>
-                </div>
-              </div>
-            </ScrollReveal>
           </div>
         </div>
         
@@ -98,22 +61,6 @@
         </div>
       </section>
     </SpotlightContainer>
-    
-    <!-- METRICS BAR -->
-    <section class="metrics-bar" aria-label="Chiffres clés">
-      <div class="container">
-        <div class="metrics-bar__grid" role="list">
-          <ScrollReveal v-for="(metric, i) in metrics" :key="metric.label" animation="fade-up" :delay="i * 100">
-            <div class="metric-mini" role="listitem">
-              <span class="metric-mini__label" :id="'metric-' + i">{{ metric.label }}</span>
-              <span class="metric-mini__value" :aria-labelledby="'metric-' + i">
-                <AnimatedCounter :value="metric.value" :suffix="metric.suffix" :decimals="metric.decimals || 0" />
-              </span>
-            </div>
-          </ScrollReveal>
-        </div>
-      </div>
-    </section>
     
     <!-- SOLUTIONS / SERVICES -->
     <section class="solutions" aria-labelledby="services-title">
@@ -287,19 +234,6 @@
       </div>
     </section>
     
-    <!-- SYSTEM CHECK (Terminal) -->
-    <section class="system-check">
-      <div class="container">
-        <ScrollReveal animation="fade-up">
-          <SystemTerminal
-            title="arkadia@cluster:~"
-            :lines="healthCheckLines"
-            :typeDelay="120"
-          />
-        </ScrollReveal>
-      </div>
-    </section>
-    
     <!-- STACK -->
     <section class="stack">
       <div class="container">
@@ -331,21 +265,6 @@
       </div>
     </section>
     
-    <!-- MULTIVERS : retrograde en lien discret.
-         Une section pleine page sur 20 univers de fiction, juste avant le
-         formulaire, disqualifie aupres d'un dirigeant de PME venu chercher
-         un prestataire. Le contenu reste accessible, il ne coupe plus le
-         parcours de conversion. -->
-    <section class="multivers-link">
-      <div class="container">
-        <p class="multivers-link__text">
-          Curieux de voir jusqu'où va le code ?
-          <router-link to="/multivers">Explorez le Multivers</router-link> —
-          20 univers interactifs, en guise de terrain de jeu technique.
-        </p>
-      </div>
-    </section>
-
     <!-- CTA FINAL -->
     <section class="cta-final" aria-labelledby="cta-title">
       <div class="container">
@@ -380,7 +299,6 @@ import { ref } from 'vue';
 // Components
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 import GaugeCircle from '@/components/common/GaugeCircle.vue';
-import SystemTerminal from '@/components/common/SystemTerminal.vue';
 
 // UI Components
 import { 
@@ -389,18 +307,11 @@ import {
   GlitchText, 
   TypeWriter, 
   TextScramble,
-  MorphingText,
   ScrollReveal, 
   SpotlightContainer 
 } from '@/components/ui';
 
 // Data
-const metrics = [
-  { label: 'UPTIME', value: 99.8, suffix: '%', decimals: 1 },
-  { label: 'UTILISATEURS', value: 150, suffix: '+' },
-  { label: 'RTO', value: 15, suffix: 'min' },
-  { label: 'SLA RÉPONSE', value: 24, suffix: 'h' }
-];
 
 const solutions = [
   {
@@ -435,29 +346,8 @@ const stackItems = [
   { category: 'INFRA', techs: [{ name: 'Docker' }, { name: 'Hébergement FR', highlight: true }, { name: 'Linux' }] }
 ];
 
-const featuredUniverses = [
-  { name: 'Matrix', icon: '💊', path: '/matrix', color: '#00ff41' },
-  { name: 'Tron', icon: '🏍️', path: '/tron', color: '#00d4ff' },
-  { name: 'Blade Runner', icon: '🌧️', path: '/blade-runner', color: '#ff6b2b' },
-  { name: 'Dragon Ball', icon: '🔥', path: '/dragon-ball-z', color: '#ff9800' },
-  { name: 'Inception', icon: '🎯', path: '/inception', color: '#d4af37' }
-];
 
 // Health check terminal lines
-const healthCheckLines = ref([
-  { type: 'prompt', text: 'check_health --cluster arkadia' },
-  { type: 'output', prefix: '[INFO]', text: 'Scanning 9 server instances...', status: 'success' },
-  { type: 'output', prefix: '[OK]', text: 'TheIsland_01: CPU 45%, RAM 68%, PING 12ms', status: 'success' },
-  { type: 'output', prefix: '[OK]', text: 'Ragnarok_01: CPU 52%, RAM 71%, PING 14ms', status: 'success' },
-  { type: 'output', prefix: '[OK]', text: 'Fjordur_01: CPU 38%, RAM 59%, PING 11ms', status: 'success' },
-  { type: 'output', prefix: '[OK]', text: 'Aberration_01: CPU 41%, RAM 63%, PING 13ms', status: 'success' },
-  { type: 'output', prefix: '[OK]', text: 'ScorchedEarth_01: CPU 35%, RAM 54%, PING 12ms', status: 'success' },
-  { type: 'output', prefix: '[INFO]', text: 'All instances responding within SLA', status: 'success' },
-  { type: 'output', prefix: '[INFO]', text: 'Last backup: 2h ago (incremental)', status: 'success' },
-  { type: 'output', prefix: '[INFO]', text: 'Active players: 47 / 150', status: 'success' },
-  { type: 'output', text: '─────────────────────────────────────' },
-  { type: 'output', text: 'CLUSTER STATUS: NOMINAL', status: 'success', highlight: true },
-]);
 </script>
 
 <style scoped>
@@ -523,9 +413,10 @@ const healthCheckLines = ref([
 
 .hero__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 4rem;
   align-items: center;
+  max-width: 780px;
 }
 
 .hero__content {
@@ -533,31 +424,7 @@ const healthCheckLines = ref([
 }
 
 /* Floating Tech Badges */
-.hero__floating-badges {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
 
-.floating-badge {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  padding: 0.4rem 0.8rem;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 2rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--primary);
-  animation: floatBadge 6s ease-in-out infinite;
-  animation-delay: var(--delay);
-  opacity: 0.7;
-}
 
 @keyframes floatBadge {
   0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -565,51 +432,16 @@ const healthCheckLines = ref([
 }
 
 /* Code Window */
-.hero__code-window {
-  border-radius: 12px;
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  overflow: hidden;
-  transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
-  transition: transform 0.5s ease;
-  box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(16, 185, 129, 0.1);
-}
 
 .hero__code-window:hover {
   transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
 }
 
-.code-window__header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-.code-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
 
-.code-dot--red { background: #ff5f56; }
 .code-dot--yellow { background: #ffbd2e; }
-.code-dot--green { background: #27ca40; }
 
-.code-window__title {
-  margin-left: auto;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
 
-.code-window__body {
-  padding: 1.25rem;
-  background: rgba(0, 0, 0, 0.3);
-}
 
 .code-window__body pre {
   margin: 0;
@@ -899,38 +731,10 @@ const healthCheckLines = ref([
 }
 
 /* METRICS BAR */
-.metrics-bar {
-  padding: var(--space-md) 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-}
 
-.metrics-bar__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-md);
-}
 
-.metric-mini {
-  text-align: center;
-}
 
-.metric-mini__label {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.55rem;
-  color: var(--text-dark);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.25rem;
-}
 
-.metric-mini__value {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
 
 /* SOLUTIONS */
 .solutions {
@@ -1077,16 +881,7 @@ const healthCheckLines = ref([
 }
 
 /* PROOF */
-.multivers-link {
-  padding: var(--space-md) 0;
-}
 
-.multivers-link__text {
-  font-size: 0.88rem;
-  opacity: 0.65;
-  text-align: center;
-  margin: 0;
-}
 
 .section-header__caveat {
   display: inline-block;
@@ -1267,9 +1062,6 @@ const healthCheckLines = ref([
 }
 
 /* SYSTEM CHECK */
-.system-check {
-  padding: var(--space-lg) 0;
-}
 
 .system-check .system-terminal {
   max-width: 700px;
@@ -1354,74 +1146,19 @@ const healthCheckLines = ref([
 }
 
 /* MULTIVERS TEASER */
-.multivers-teaser {
-  padding: var(--space-xl) 0;
-  background: linear-gradient(180deg, transparent, rgba(16, 185, 129, 0.03), transparent);
-}
 
-.multivers-preview {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  margin: var(--space-lg) 0;
-}
 
-.universe-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1.5rem 2rem;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--accent, var(--border));
-  border-radius: 1rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
 
 .universe-card:hover {
   border-color: var(--accent);
   box-shadow: 0 0 30px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
-.universe-card__icon {
-  font-size: 2rem;
-}
 
-.universe-card__name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--accent, var(--text-main));
-  letter-spacing: 0.05em;
-}
 
-.multivers-cta {
-  text-align: center;
-}
 
 /* HERO QUICK NAV */
-.hero__quick-nav {
-  display: flex;
-  justify-content: flex-start;
-  gap: 1rem;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
 
-.quick-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 2rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
 
 .quick-link:hover {
   border-color: var(--primary);
@@ -1429,11 +1166,6 @@ const healthCheckLines = ref([
   background: rgba(16, 185, 129, 0.1);
 }
 
-.quick-link--featured {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(180, 83, 9, 0.05));
-  border-color: rgba(251, 191, 36, 0.3);
-  color: #FBBF24;
-}
 
 .quick-link--featured:hover {
   border-color: #FBBF24;
@@ -1556,10 +1288,6 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 }
 
 /* Quick link arrow animation */
-.quick-link {
-  position: relative;
-  overflow: hidden;
-}
 
 .quick-link::after {
   content: '→';
@@ -1579,9 +1307,6 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 }
 
 /* Metric value counter glow */
-.metric-mini__value {
-  transition: text-shadow 0.3s ease;
-}
 
 .metric-mini:hover .metric-mini__value {
   text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
@@ -1669,9 +1394,6 @@ html {
 }
 
 @media (max-width: 768px) {
-  .metrics-bar__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   
   .proof__metrics {
     flex-direction: column;
