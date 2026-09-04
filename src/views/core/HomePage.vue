@@ -7,9 +7,12 @@
     <SpotlightContainer :size="600" color="var(--primary)" :opacity="0.15">
       <section class="hero" id="main-content" aria-labelledby="hero-title">
         <!-- Floating Tech Badges -->
-        <!-- Les noms de technologies ont ete retires du premier ecran : un
-             dirigeant de PME n'achete pas Symfony, il achete moins de ressaisie.
-             La pile reste presentee plus bas, dans la section technique. -->
+        <div class="hero__floating-badges" aria-hidden="true">
+          <span class="floating-badge" style="--delay: 0s; --x: 85%; --y: 15%;">Vue 3</span>
+          <span class="floating-badge" style="--delay: 0.5s; --x: 90%; --y: 35%;">Symfony</span>
+          <span class="floating-badge" style="--delay: 1s; --x: 80%; --y: 55%;">Three.js</span>
+          <span class="floating-badge" style="--delay: 1.5s; --x: 88%; --y: 75%;">IA Locale</span>
+        </div>
         
         <div class="container">
           <div class="hero__grid">
@@ -47,17 +50,47 @@
                     ⚡ Voir les services
                   </MagneticButton>
                 </div>
-
-                <ul class="hero__reassurance">
-                  <li><strong>Réponse sous 24 h</strong> — premier échange gratuit, sans engagement</li>
-                  <li><strong>Tarifs affichés</strong> — dès 2 500 € HT, périmètre écrit noir sur blanc</li>
-                  <li><strong>Hébergement en France</strong> — vos données ne partent pas aux États-Unis</li>
-                  <li><strong>Prestataire TIH</strong> — déductible de votre contribution OETH, sous conditions</li>
-                </ul>
                 
+                <!-- Quick Navigation -->
+                <div class="hero__quick-nav">
+                  <router-link to="/carte-holistique" class="quick-link quick-link--featured">
+                    <span>🗺️</span> Carte Holistique
+                  </router-link>
+                  <router-link to="/arkadia" class="quick-link">
+                    <span>🦖</span> Case Study
+                  </router-link>
+                  <router-link to="/services" class="quick-link">
+                    <span>⚡</span> Services
+                  </router-link>
+                  <router-link to="/parcours" class="quick-link">
+                    <span>🎮</span> Parcours
+                  </router-link>
+                </div>
               </div>
             </ScrollReveal>
             
+            <!-- Code Window Décoratif -->
+            <ScrollReveal animation="fade-left" :delay="300">
+              <div class="hero__code-window glass" aria-hidden="true">
+                <div class="code-window__header">
+                  <span class="code-dot code-dot--red"></span>
+                  <span class="code-dot code-dot--yellow"></span>
+                  <span class="code-dot code-dot--green"></span>
+                  <span class="code-window__title">votre-projet.ts</span>
+                </div>
+                <div class="code-window__body">
+                  <pre><code><span class="code-keyword">const</span> <span class="code-var">votreProjet</span> = {
+  <span class="code-prop">objectif</span>: <span class="code-string">"Gagner du temps"</span>,
+  <span class="code-prop">budget</span>: <span class="code-string">"Sur-mesure"</span>,
+  <span class="code-prop">délai</span>: <span class="code-string">"Rapide"</span>,
+  <span class="code-prop">données</span>: <span class="code-string">"🇫🇷 Restent en France"</span>
+};
+
+<span class="code-keyword">await</span> <span class="code-func">glDigitalLab</span>.<span class="code-method">build</span>(votreProjet);
+<span class="code-comment">// ✨ Votre site est en ligne !</span></code></pre>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
         
@@ -435,11 +468,10 @@ const stackItems = [
 
 .hero__grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
-  max-width: 940px;
-}
+  }
 
 .hero__content {
   max-width: 600px;
@@ -591,37 +623,94 @@ const stackItems = [
 }
 
 /* Hero actions spacing */
-.hero__reassurance {
-  list-style: none;
-  padding: 0;
-  margin: var(--space-lg) 0 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 0.85rem 2rem;
-  max-width: 800px;
-}
 
-.hero__reassurance li {
-  position: relative;
-  padding-left: 1.6rem;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  opacity: 0.85;
-}
 
-.hero__reassurance li::before {
-  content: "";
+
+
+.floating-badge {
   position: absolute;
-  left: 0;
-  top: 0.45em;
-  width: 9px;
-  height: 9px;
-  border: 1.5px solid var(--primary);
-  border-radius: 2px;
+  left: var(--x);
+  top: var(--y);
+  padding: 0.4rem 0.8rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--primary);
+  animation: floatBadge 6s ease-in-out infinite;
+  animation-delay: var(--delay);
+  opacity: 0.7;
 }
 
-.hero__reassurance strong {
-  opacity: 1;
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.code-window__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.code-window__body {
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.code-window__title {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.code-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.hero__floating-badges {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero__quick-nav {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero__code-window {
+  border-radius: 12px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  overflow: hidden;
+  transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+  transition: transform 0.5s ease;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(16, 185, 129, 0.1);
 }
 
 .hero__actions {

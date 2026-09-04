@@ -244,6 +244,28 @@
     <!-- Preload des fonts critiques -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/Inter-Regular.woff2" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="/fonts/JetBrainsMono-Regular.woff2" crossorigin>
+
+    <!-- Ces deux faces sont declarees ici, et non uniquement dans fonts.css :
+         fonts.css est importe depuis main.js, donc apres le bundle JS. Le
+         preload ci-dessus se declenchait avant que la @font-face existe et
+         restait inutilise. Les autres graisses restent dans fonts.css. -->
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fonts/Inter-Regular.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+      }
+    </style>
+
   </head>
   <body class="antialiased">
     <div id="app"></div>
