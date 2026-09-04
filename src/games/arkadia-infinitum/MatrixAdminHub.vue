@@ -1,7 +1,7 @@
 <template>
   <div class="matrix-reloaded" :class="{ unlocked: !locked }" ref="wrapper">
     <!-- CODE RAIN BACKGROUND -->
-    <canvas ref="rainCanvas" class="rain-canvas"></canvas>
+    <!-- <canvas ref="rainCanvas" class="rain-canvas"></canvas> pluie 2D desactivee -->
 
     <!-- PRELOADER -->
     <Transition name="fade-out">
@@ -1444,18 +1444,25 @@ function initThree() {
     console.warn('CyberpunkSkyline init failed:', e);
   }
 
-  // Pluie 3D Matrix style - RÉDUIT SIGNIFICATIVEMENT
-  try {
-    matrixRain3D = new MatrixRain3D(scene, {
-      dropCount: isLowEnd ? 3000 : 6000,
-      areaSize: 80,
-      dropSpeed: 20,
-      splashEnabled: !isLowEnd, // Pas de splash sur mobile
-      windStrength: 0.3
-    });
-    addTerminalLine('Matrix rain 3D initialized.');
-  } catch (e) {
-    console.warn('MatrixRain3D init failed:', e);
+  // Pluie 3D Matrix — DÉSACTIVÉE.
+  // Passer RAIN_3D_ENABLED à true pour la remettre. Tous les appels a
+  // matrixRain3D sont deja gardes par `if (matrixRain3D)`, donc le laisser
+  // a null n'exige aucune autre modification.
+  const RAIN_3D_ENABLED = false;
+
+  if (RAIN_3D_ENABLED) {
+    try {
+      matrixRain3D = new MatrixRain3D(scene, {
+        dropCount: isLowEnd ? 3000 : 6000,
+        areaSize: 80,
+        dropSpeed: 20,
+        splashEnabled: !isLowEnd, // Pas de splash sur mobile
+        windStrength: 0.3
+      });
+      addTerminalLine('Matrix rain 3D initialized.');
+    } catch (e) {
+      console.warn('MatrixRain3D init failed:', e);
+    }
   }
 
   // Post-processing cinématique - SIMPLIFIÉ
@@ -1832,8 +1839,8 @@ function drawRain() {
 function animate() {
   requestAnimationFrame(animate);
 
-  // Rain (2D canvas)
-  drawRain();
+  // Pluie 2D desactivee (voir RAIN_2D_ENABLED)
+  // drawRain();
 
   if (!scene || !camera || loading.value) return;
 
@@ -2032,7 +2039,7 @@ onMounted(async () => {
     await new Promise(r => setTimeout(r, 400));
   }
 
-  initRain();
+  // initRain();  // pluie 2D desactivee
   initThree();
   checkMobile();
   
