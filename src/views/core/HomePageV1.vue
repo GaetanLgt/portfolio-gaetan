@@ -19,7 +19,7 @@
           
           <!-- Subtitle explicatif -->
           <p class="hero__subtitle">
-            Développeur indépendant basé à <strong>Limoges</strong>, je transforme vos idées 
+            Développeur indépendant basé dans la <strong>Somme</strong>, je transforme vos idées 
             en outils numériques performants. Du site vitrine à l'application métier complète.
           </p>
           
@@ -278,7 +278,7 @@
               </div>
             </div>
             <div class="location-badge">
-              <span>📍 Limoges, France</span>
+              <span>📍 Somme, France</span>
             </div>
           </div>
           

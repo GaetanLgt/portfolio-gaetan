@@ -128,7 +128,7 @@
           <h2>Article 11 - Droit applicable</h2>
           <p>
             Les présentes CGV sont soumises au droit français. En cas de litige, les parties 
-            s'efforceront de trouver une solution amiable. À défaut, les tribunaux de Limoges 
+            s'efforceront de trouver une solution amiable. À défaut, les tribunaux d'Amiens 
             seront seuls compétents.
           </p>
         </section>

@@ -328,7 +328,7 @@ const profileData = [
   { key: 'DÉSIGNATION', value: 'Développeur Full-Stack', class: '' },
   { key: 'SPÉCIALISATION', value: 'Intégration IA & Automatisation', class: '' },
   { key: 'AFFILIATION', value: 'GL Digital Lab', class: 'value--gold' },
-  { key: 'LOCALISATION', value: 'Limoges, France', class: '' },
+  { key: 'LOCALISATION', value: 'Somme, France', class: '' },
   { key: 'HABILITATION', value: 'Niveau 7', class: 'value--blue' },
   { key: 'STATUT', value: 'OPÉRATIONNEL', class: 'value--green' }
 ];

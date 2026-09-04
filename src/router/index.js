@@ -163,7 +163,7 @@ const routes = [
     component: HomePage,
     meta: { 
       title: 'Sites web et applications sur-mesure pour PME',
-      description: 'Développeur indépendant à Limoges : sites web, applications métier et IA locale pour PME françaises. Vos données restent chez vous. Devis gratuit sous 24h.'
+      description: 'Développeur indépendant dans la Somme : sites web, applications métier et IA locale pour PME françaises. Vos données restent chez vous. Devis gratuit sous 24h.'
     }
   },
   {
@@ -190,7 +190,7 @@ const routes = [
     component: CvPage,
     meta: { 
       title: 'CV Gaëtan LANGLET | Développeur Full-Stack',
-      description: 'CV de Gaëtan LANGLET, développeur full-stack spécialisé Symfony, Vue.js et intégration IA. Limoges, France.'
+      description: 'CV de Gaëtan LANGLET, développeur full-stack spécialisé Symfony, Vue.js et intégration IA. Somme, Hauts-de-France.'
     }
   },
   {

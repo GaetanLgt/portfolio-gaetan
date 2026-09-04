@@ -33,7 +33,7 @@
                 
                 <!-- Subtitle with Typewriter -->
                 <p class="hero__subtitle">
-                  Développeur indépendant à <strong>Limoges</strong>, je transforme vos idées en outils numériques qui travaillent pour vous.
+                  Développeur indépendant dans la <strong>Somme</strong>, je transforme vos idées en outils numériques qui travaillent pour vous.
                 </p>
                 
                 <!-- CTA Buttons -->

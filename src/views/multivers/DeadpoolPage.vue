@@ -112,7 +112,7 @@
         </div>
 
         <div class="speech-bubble">
-          <p>Fun fact : Je suis en fait un développeur full-stack basé à Limoges, France. 
+          <p>Fun fact : Je suis en fait un développeur full-stack basé à Somme, France. 
           Mais c'est moins intéressant que "mercenaire avec facteur de guérison", non ?</p>
         </div>
       </div>

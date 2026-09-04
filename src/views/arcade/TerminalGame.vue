@@ -390,7 +390,7 @@ const commands = {
 Username:    NEO
 Real name:   Gaëtan LANGLET
 Title:       Full-Stack Developer
-Location:    Limoges, France 🇫🇷
+Location:    Somme, France 🇫🇷
 Experience:  5+ years
 Status:      <span class="success">ONLINE</span>
 
@@ -429,7 +429,7 @@ Status:      <span class="success">ONLINE</span>
 ║          CONTACT INFORMATION         ║
 ╚══════════════════════════════════════╝</span>
 
-Email:    contact@gldigitallab.fr
+Email:    gtn.langlet@gmail.com
 Website:  <a href="https://gldigitallab.fr" target="_blank" class="terminal-link">https://gldigitallab.fr</a>
 GitHub:   <a href="https://github.com/GaetanLgt" target="_blank" class="terminal-link">github.com/GaetanLgt</a>
 LinkedIn: /in/gaetan-langlet

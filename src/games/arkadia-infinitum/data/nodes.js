@@ -44,7 +44,7 @@ export const nodes = [
       'Rôle': 'Fondateur',
       'Stack': 'Symfony, Vue 3, Three.js',
       'Spécialité': 'Architecture souveraine',
-      'Base': 'Limoges, France 🇫🇷'
+      'Base': 'Somme, France 🇫🇷'
     },
     links: [
       { icon: '🏠', label: 'Portfolio', url: '/' },

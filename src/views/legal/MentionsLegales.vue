@@ -13,9 +13,9 @@
           <p>
             <strong>GL Digital Lab</strong><br>
             Gaëtan LANGLET<br>
-            87000 Limoges, Nouvelle-Aquitaine, France<br>
-            Email : <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a><br>
-            Téléphone : <a href="tel:+33678695881">06 78 69 58 81</a>
+            80560 Harponville, Somme, Hauts-de-France, France<br>
+            Email : <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a><br>
+            Téléphone : <a href="tel:+33669474610">06 69 47 46 10</a>
           </p>
           <p v-if="siret">
             SIRET : {{ siret }}<br>
@@ -31,7 +31,7 @@
           <h2>2. Directeur de publication</h2>
           <p>
             Le directeur de la publication est <strong>Gaëtan LANGLET</strong>, en sa qualité de fondateur de GL Digital Lab.<br>
-            Contact : <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a>
+            Contact : <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
           </p>
         </section>
         
@@ -71,7 +71,7 @@
           </p>
           <p>
             Pour exercer ces droits, contactez-nous à : 
-            <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a>
+            <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
           </p>
           <p>
             Pour plus d'informations sur le traitement de vos données, consultez notre 
@@ -127,7 +127,7 @@
           <h2>10. Droit applicable</h2>
           <p>
             Les présentes mentions légales sont soumises au droit français. 
-            En cas de litige, les tribunaux de Limoges seront seuls compétents.
+            En cas de litige, les tribunaux d'Amiens seront seuls compétents.
           </p>
         </section>
       </div>

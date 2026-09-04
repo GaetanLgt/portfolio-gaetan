@@ -177,10 +177,6 @@
             <span class="quick-icon">🌌</span>
             <span class="quick-label">Multivers</span>
           </router-link>
-          <router-link to="/formation" class="quick-card">
-            <span class="quick-icon">🎓</span>
-            <span class="quick-label">Formations</span>
-          </router-link>
           <router-link to="/agents" class="quick-card">
             <span class="quick-icon">🤖</span>
             <span class="quick-label">Agents IA</span>
@@ -389,23 +385,6 @@ const sections = ref([
       { name: 'MARIA - Marketing', path: '/agents/maria', icon: '📈' },
       // Équipe Contenu
       { name: 'VISION - Content Gen', path: '/agents/vision', icon: '📢' },
-    ]
-  },
-  {
-    id: 'formation',
-    title: 'Formation',
-    icon: '🎓',
-    pages: [
-      { name: 'Hub Formations', path: '/formation', icon: '🎓', featured: true },
-      { name: 'Challenges', path: '/formation/challenges', icon: '🎯', isNew: true },
-      { name: 'Symfony Fondamentaux', path: '/formation/symfony-fondamentaux', icon: '🎵' },
-      { name: 'Vue.js Moderne', path: '/formation/vuejs-moderne', icon: '💚' },
-      { name: 'IA pour Devs', path: '/formation/ia-developpeurs', icon: '🧠' },
-      { name: 'DevOps Essentiel', path: '/formation/devops-essentiel', icon: '🔄' },
-      { name: 'API REST Pro', path: '/formation/api-rest-pro', icon: '🔌' },
-      { name: 'Clean Code', path: '/formation/clean-code', icon: '✨' },
-      { name: 'WordPress Dev', path: '/formation/wordpress-dev', icon: '📝' },
-      { name: 'Git Avancé', path: '/formation/git-avance', icon: '🌿' },
     ]
   },
   {

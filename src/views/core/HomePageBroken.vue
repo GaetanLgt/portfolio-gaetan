@@ -31,7 +31,7 @@
           </h1>
           
           <p class="hero__subtitle">
-            Développeur indépendant à <strong>Limoges</strong>, je transforme vos idées 
+            Développeur indépendant dans la <strong>Somme</strong>, je transforme vos idées 
             en outils numériques qui <em>travaillent pour vous</em>.
           </p>
           
@@ -278,7 +278,7 @@
             <div class="id-card">
               <div class="id-row"><span>NOM</span><span>Gaëtan Langlet</span></div>
               <div class="id-row"><span>ALIAS</span><span class="accent">"Neo"</span></div>
-              <div class="id-row"><span>BASE</span><span>📍 Limoges, FR</span></div>
+              <div class="id-row"><span>BASE</span><span>📍 Somme, FR</span></div>
               <div class="id-row"><span>XP</span><span>Depuis 2020</span></div>
             </div>
           </div>
@@ -403,7 +403,7 @@ const hoveredSrv = ref(null);
 const players = ref(47);
 
 // Data
-const badgeTexts = ['Bienvenue chez GL Digital Lab', 'Développeur Full-Stack', 'Basé à Limoges', 'Disponible'];
+const badgeTexts = ['Bienvenue chez GL Digital Lab', 'Développeur Full-Stack', 'Basé dans la Somme', 'Disponible'];
 
 const values = [
   { icon: '🇫🇷', short: '100% France', detail: 'Hébergement souverain' },

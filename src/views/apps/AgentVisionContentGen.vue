@@ -38,7 +38,7 @@
             </div>
             <div class="input-group">
               <label>📍 Localisation</label>
-              <input type="text" v-model="location" placeholder="Limoges, Nouvelle-Aquitaine" class="text-input">
+              <input type="text" v-model="location" placeholder="Amiens, Hauts-de-France" class="text-input">
             </div>
           </div>
 
@@ -635,8 +635,8 @@ function loadTemplate(type) {
     gldigital: {
       brief: 'GL Digital Lab est une agence web spécialisée dans le développement d\'applications sur-mesure avec Symfony et Vue.js. Nous accompagnons les PME de Nouvelle-Aquitaine dans leur transformation digitale avec une approche pragmatique et orientée résultats.',
       company: 'GL Digital Lab',
-      location: 'Limoges, Nouvelle-Aquitaine',
-      keywords: 'développement web, Symfony, Vue.js, agence web Limoges',
+      location: 'Amiens, Hauts-de-France',
+      keywords: 'développement web, Symfony, Vue.js, agence web Amiens',
       audience: 'PME et ETI',
       highlights: '50+ projets livrés, 100% clients satisfaits, Expert Symfony certifié',
       technologies: 'Symfony 7, Vue.js 3, PostgreSQL, Docker, API REST',

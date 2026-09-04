@@ -103,7 +103,7 @@
               </div>
               <div class="data-row">
                 <span class="data-key">LOCALISATION :</span>
-                <span class="data-val">Limoges, France</span>
+                <span class="data-val">Somme, France</span>
               </div>
               <div class="data-row">
                 <span class="data-key">INTÉGRITÉ_GHOST :</span>

@@ -29,12 +29,12 @@
           <h4 class="footer__title">Contact</h4>
           <address class="footer__address">
             <p>Gaëtan LANGLET</p>
-            <p>Limoges, Nouvelle-Aquitaine (87)</p>
+            <p>Harponville, Somme (80) — Hauts-de-France</p>
             <p>
-              <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a>
+              <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
             </p>
             <p>
-              <a href="tel:+33678695881">06 78 69 58 81</a>
+              <a href="tel:+33669474610">06 69 47 46 10</a>
             </p>
           </address>
           <p class="footer__response">SLA réponse : 24h</p>
@@ -105,11 +105,10 @@
         <p class="footer__copyright">
           © {{ currentYear }} GL Digital Lab · Tous droits réservés
         </p>
+        <!-- Rien n'est affiche tant qu'il n'y a pas de SIRET reel :
+             « EN COURS » signale a un prospect qu'aucune facture n'est possible. -->
         <p class="footer__siret" v-if="siret">
           SIRET : {{ siret }}
-        </p>
-        <p class="footer__siret" v-else>
-          SIRET : EN COURS
         </p>
         <div class="footer__social">
           <a 

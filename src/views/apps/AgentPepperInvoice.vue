@@ -226,7 +226,7 @@ const notes = ref('Paiement à réception de facture. Pénalités de retard : 3 
 
 const company = ref({
   name: 'GL Digital Lab',
-  address: 'Limoges, France',
+  address: 'Somme, France',
   siret: '123 456 789 00012',
   email: 'contact@gl-digitallab.fr'
 });

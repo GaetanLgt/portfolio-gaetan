@@ -405,7 +405,7 @@ const logicBoard = ref([
 
 const logicRules = [
   { symbol: 'P₁', premise: 'Tous les développeurs boivent du café', conclusion: 'Neo est développeur' },
-  { symbol: 'P₂', premise: 'Neo code à Limoges', conclusion: '∴ La logique fonctionne' },
+  { symbol: 'P₂', premise: 'Neo code dans la Somme', conclusion: '∴ La logique fonctionne' },
   { symbol: '∴', premise: 'Ou alors...', conclusion: 'Nous sommes dans la Matrice' }
 ];
 

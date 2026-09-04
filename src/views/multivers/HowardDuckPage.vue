@@ -84,7 +84,7 @@
                 </div>
                 <div class="mini-stat">
                   <span class="mini-lbl">LOCALISATION :</span>
-                  <span class="mini-val">Limoges, France</span>
+                  <span class="mini-val">Somme, France</span>
                 </div>
                 <div class="mini-stat">
                   <span class="mini-lbl">SUPER-POUVOIR :</span>

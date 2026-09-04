@@ -13,8 +13,8 @@
           <p>
             <strong>GL Digital Lab</strong><br>
             Gaëtan LANGLET<br>
-            Limoges, Nouvelle-Aquitaine, France<br>
-            Email : <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a>
+            Harponville, Somme, Hauts-de-France, France<br>
+            Email : <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
           </p>
         </section>
         
@@ -64,7 +64,7 @@
             <li><strong>Droit d'opposition :</strong> vous opposer au traitement de vos données</li>
           </ul>
           <p>
-            Pour exercer ces droits : <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a>
+            Pour exercer ces droits : <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
           </p>
         </section>
         
@@ -151,7 +151,7 @@
             vous pouvez contacter notre délégué à la protection des données :
           </p>
           <p>
-            <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a>
+            <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
           </p>
           <p>
             Vous pouvez également introduire une réclamation auprès de la 
