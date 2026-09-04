@@ -39,7 +39,8 @@
           
           <p class="hero__subtitle">
             Le cluster français de référence sur ARK: Survival Ascended.<br>
-            <strong>150+ survivants</strong> · <strong>9 cartes</strong> · <strong>99.8% uptime</strong>
+            <strong>150+ survivants</strong> · <strong>9 cartes</strong> · <strong>99.8% uptime</strong><br>
+            <span class="hero__closed">Service clôturé — chiffres constatés sur 18 mois d'exploitation</span>
           </p>
           
           <div class="hero__badges">
@@ -75,12 +76,12 @@
             <div class="quickstat__divider"></div>
             <div class="quickstat">
               <span class="quickstat__value">24/7</span>
-              <span class="quickstat__label">ONLINE</span>
+              <span class="quickstat__label">EXPLOITÉ</span>
             </div>
             <div class="quickstat__divider"></div>
             <div class="quickstat">
-              <span class="quickstat__value">2024</span>
-              <span class="quickstat__label">LANCÉ</span>
+              <span class="quickstat__value">18</span>
+              <span class="quickstat__label">MOIS D'EXPLOITATION</span>
             </div>
           </div>
         </div>
@@ -1003,6 +1004,19 @@ const uptimeAccessibleData = ref([
   letter-spacing: 0.3em;
   text-transform: uppercase;
   margin-bottom: var(--space-sm);
+}
+
+.hero__closed {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted, #8a9099);
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 0.25rem 0.6rem;
 }
 
 .hero__subtitle {

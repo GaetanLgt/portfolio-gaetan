@@ -160,25 +160,25 @@
           <ScrollReveal animation="fade-right">
             <div class="proof__content">
               <div class="proof__header">
-                <span class="proof__badge">
-                  <span class="proof__badge-dot"></span>
-                  🎮 CAS CONCRET EN PRODUCTION
+                <span class="proof__badge proof__badge--closed">
+                  🎮 PROJET CLÔTURÉ · 18 MOIS D'EXPLOITATION
                 </span>
               </div>
-              
+
               <h2 id="proof-title" class="proof__title">
                 ARKADIA<br>
                 <span class="text-gradient"><GlitchText text="150 joueurs, 0 problème" /></span>
               </h2>
-              
+
               <p class="proof__desc">
-                Je gère un <strong>cluster de 9 serveurs de jeux</strong> avec de vrais utilisateurs 
-                qui comptent sur une disponibilité <strong>24/7</strong>.
+                Pendant 18 mois, j'ai exploité un <strong>cluster de 9 serveurs de jeux</strong>
+                avec de vrais utilisateurs qui comptaient sur une disponibilité <strong>24/7</strong>.
               </p>
-              
+
               <p class="proof__desc">
-                C'est mon terrain d'entraînement : monitoring temps réel, sauvegardes automatiques, 
-                gestion de crises, communication avec la communauté.
+                Ça a été mon terrain d'entraînement : monitoring temps réel, sauvegardes automatiques,
+                gestion de crises, communication avec la communauté. Le service a été arrêté,
+                les chiffres ci-dessous sont ceux constatés sur toute la période.
               </p>
               
               <div class="proof__metrics">
@@ -1068,6 +1068,15 @@ const healthCheckLines = ref([
   background: var(--primary);
   border-radius: 50%;
   animation: pulse-slow 2s infinite;
+}
+
+/* Projet cloture : ni point pulsant ni couleur d'accent — le badge ne doit
+   pas suggerer un service encore en ligne. */
+.proof__badge--closed {
+  color: var(--text-muted, #8a9099);
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 0.25rem 0.6rem;
 }
 
 .proof__title {
