@@ -26,20 +26,22 @@
                 
                 <!-- Main Title -->
                 <h1 id="hero-title" class="hero__title">
-                  Je crée des <span class="text-gradient neon-text">sites web</span><br>
-                  et <span class="text-gradient neon-text">applications</span><br>
-                  <span class="hero__title-sub">pour les PME 🇫🇷</span>
+                  Vos outils métier,<br>
+                  <span class="text-gradient neon-text">vos données</span>,<br>
+                  <span class="hero__title-sub">chez vous 🇫🇷</span>
                 </h1>
                 
                 <!-- Subtitle with Typewriter -->
                 <p class="hero__subtitle">
-                  Développeur indépendant dans la <strong>Somme</strong>, je transforme vos idées en outils numériques qui travaillent pour vous.
+                  J'aide les <strong>PME des Hauts-de-France</strong> à supprimer les ressaisies
+                  et les tâches répétitives — avec des applications web et de l'IA qui tournent
+                  dans <strong>votre environnement</strong>, pas dans un cloud américain.
                 </p>
                 
                 <!-- CTA Buttons -->
                 <div class="hero__actions">
                   <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large btn-glow" :strength="40" :text-strength="50">
-                    💬 Discutons de votre projet
+                    💬 Demander un échange de cadrage (30 min)
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                     </svg>
@@ -153,61 +155,6 @@
       </div>
     </section>
 
-    <!-- OETH : argument financier pour les entreprises de 20 salaries et plus -->
-    <section class="oeth" aria-labelledby="oeth-title">
-      <div class="container">
-        <ScrollReveal animation="fade-up">
-          <div class="oeth__card">
-            <span class="mono-tag" aria-hidden="true">/// 03 AVANTAGE FISCAL</span>
-
-            <h2 id="oeth-title" class="oeth__title">
-              Vous employez plus de 20 salariés ?<br>
-              <span class="text-gradient">Mes prestations réduisent votre contribution.</span>
-            </h2>
-
-            <p class="oeth__lead">
-              Je suis <strong>travailleur indépendant handicapé</strong> (RQTH).
-              À ce titre, <strong>30 % du coût de main-d'œuvre de mes factures se déduit
-              de votre contribution annuelle à l'Agefiph</strong>.
-            </p>
-
-            <div class="oeth__grid">
-              <div class="oeth__step">
-                <span class="oeth__step-num">1</span>
-                <p>
-                  Toute entreprise de 20 salariés ou plus doit employer 6 % de
-                  travailleurs handicapés — ou verser une contribution.
-                </p>
-              </div>
-              <div class="oeth__step">
-                <span class="oeth__step-num">2</span>
-                <p>
-                  La sous-traitance auprès d'un travailleur indépendant handicapé
-                  ouvre droit à une déduction sur cette contribution.
-                </p>
-              </div>
-              <div class="oeth__step">
-                <span class="oeth__step-num">3</span>
-                <p>
-                  Vous financez du développement plutôt qu'une pénalité, à budget
-                  constant.
-                </p>
-              </div>
-            </div>
-
-            <p class="oeth__note">
-              Déduction plafonnée selon votre taux d'emploi et le montant de votre
-              contribution. À valider avec votre expert-comptable ou votre service
-              paie — je fournis les justificatifs nécessaires à votre déclaration.
-            </p>
-
-            <router-link to="/contact" class="btn btn--primary oeth__cta">
-              Estimer l'économie sur votre projet
-            </router-link>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
 
     <!-- PROOF : ARKADIA -->
     <section class="proof" aria-labelledby="proof-title">
@@ -279,6 +226,65 @@
             </TiltCard>
           </ScrollReveal>
         </div>
+      </div>
+    </section>
+
+    <!-- OETH : argument financier pour les entreprises de 20 salaries et plus -->
+    <section class="oeth" aria-labelledby="oeth-title">
+      <div class="container">
+        <ScrollReveal animation="fade-up">
+          <div class="oeth__card">
+            <span class="mono-tag" aria-hidden="true">/// 04 DISPOSITIF OETH</span>
+
+            <h2 id="oeth-title" class="oeth__title">
+              Vous employez plus de 20 salariés ?<br>
+              <span class="text-gradient">Un dispositif peut alléger le coût.</span>
+            </h2>
+
+            <p class="oeth__lead">
+              Je suis reconnu <strong>travailleur handicapé</strong> (RQTH). Si votre
+              entreprise est assujettie à l'obligation d'emploi, mes prestations peuvent,
+              <strong>sous conditions</strong>, entrer dans le calcul de votre contribution
+              annuelle à l'Agefiph — <strong>jusqu'à 30 % de la valeur ajoutée</strong> des
+              factures concernées.
+            </p>
+
+            <div class="oeth__grid">
+              <div class="oeth__step">
+                <span class="oeth__step-num">1</span>
+                <p>
+                  Toute entreprise de 20 salariés ou plus doit employer 6 % de
+                  travailleurs handicapés — ou verser une contribution.
+                </p>
+              </div>
+              <div class="oeth__step">
+                <span class="oeth__step-num">2</span>
+                <p>
+                  La sous-traitance auprès d'un travailleur indépendant handicapé
+                  ouvre droit à une déduction sur cette contribution.
+                </p>
+              </div>
+              <div class="oeth__step">
+                <span class="oeth__step-num">3</span>
+                <p>
+                  Vous financez du développement plutôt qu'une pénalité, à budget
+                  constant.
+                </p>
+              </div>
+            </div>
+
+            <p class="oeth__note">
+              Le montant imputable dépend de votre situation, de votre taux d'emploi et
+              des règles en vigueur : il se valide avec votre référent RH, votre
+              expert-comptable ou votre déclarant OETH. Les justificatifs nécessaires à
+              votre déclaration vous sont remis chaque année.
+            </p>
+
+            <router-link to="/contact" class="btn btn--primary oeth__cta">
+              En parler sur votre projet
+            </router-link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
     
