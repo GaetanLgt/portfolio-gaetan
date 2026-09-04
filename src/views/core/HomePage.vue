@@ -152,7 +152,63 @@
         </div>
       </div>
     </section>
-    
+
+    <!-- OETH : argument financier pour les entreprises de 20 salaries et plus -->
+    <section class="oeth" aria-labelledby="oeth-title">
+      <div class="container">
+        <ScrollReveal animation="fade-up">
+          <div class="oeth__card">
+            <span class="mono-tag" aria-hidden="true">/// 03 AVANTAGE FISCAL</span>
+
+            <h2 id="oeth-title" class="oeth__title">
+              Vous employez plus de 20 salariés ?<br>
+              <span class="text-gradient">Mes prestations réduisent votre contribution.</span>
+            </h2>
+
+            <p class="oeth__lead">
+              Je suis <strong>travailleur indépendant handicapé</strong> (RQTH).
+              À ce titre, <strong>30 % du coût de main-d'œuvre de mes factures se déduit
+              de votre contribution annuelle à l'Agefiph</strong>.
+            </p>
+
+            <div class="oeth__grid">
+              <div class="oeth__step">
+                <span class="oeth__step-num">1</span>
+                <p>
+                  Toute entreprise de 20 salariés ou plus doit employer 6 % de
+                  travailleurs handicapés — ou verser une contribution.
+                </p>
+              </div>
+              <div class="oeth__step">
+                <span class="oeth__step-num">2</span>
+                <p>
+                  La sous-traitance auprès d'un travailleur indépendant handicapé
+                  ouvre droit à une déduction sur cette contribution.
+                </p>
+              </div>
+              <div class="oeth__step">
+                <span class="oeth__step-num">3</span>
+                <p>
+                  Vous financez du développement plutôt qu'une pénalité, à budget
+                  constant.
+                </p>
+              </div>
+            </div>
+
+            <p class="oeth__note">
+              Déduction plafonnée selon votre taux d'emploi et le montant de votre
+              contribution. À valider avec votre expert-comptable ou votre service
+              paie — je fournis les justificatifs nécessaires à votre déclaration.
+            </p>
+
+            <router-link to="/contact" class="btn btn--primary oeth__cta">
+              Estimer l'économie sur votre projet
+            </router-link>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+
     <!-- PROOF : ARKADIA -->
     <section class="proof" aria-labelledby="proof-title">
       <div class="container">
@@ -1037,6 +1093,76 @@ const healthCheckLines = ref([
 }
 
 /* PROOF */
+/* ── OETH ─────────────────────────────────────────────────────────────── */
+.oeth {
+  padding: var(--space-xl) 0;
+}
+
+.oeth__card {
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+}
+
+.oeth__title {
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  line-height: 1.2;
+  text-wrap: balance;
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.oeth__lead {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 62ch;
+  margin-bottom: var(--space-lg);
+}
+
+.oeth__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.oeth__step {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.oeth__step p {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.oeth__step-num {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--primary);
+}
+
+.oeth__note {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  opacity: 0.7;
+  max-width: 68ch;
+  margin-bottom: var(--space-lg);
+}
+
+.oeth__cta {
+  display: inline-block;
+}
+
 .proof {
   padding: var(--space-xl) 0;
   background: rgba(10, 10, 10, 0.5);
