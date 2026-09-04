@@ -162,8 +162,8 @@ const routes = [
     name: 'Home',
     component: HomePage,
     meta: { 
-      title: 'Architecte de vos Systèmes Critiques',
-      description: 'Architecture numérique souveraine pour PME : Symfony 8, Vue 3, IA locale. Développement sur-mesure, observabilité et automatisation. Basé à Limoges.'
+      title: 'Sites web et applications sur-mesure pour PME',
+      description: 'Développeur indépendant à Limoges : sites web, applications métier et IA locale pour PME françaises. Vos données restent chez vous. Devis gratuit sous 24h.'
     }
   },
   {

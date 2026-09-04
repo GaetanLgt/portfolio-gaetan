@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 
 const props = defineProps({
   value: { type: Number, default: 0 },
@@ -46,8 +46,6 @@ const props = defineProps({
 });
 
 const progressRef = ref(null);
-const displayValue = ref(0);
-const currentOffset = ref(0);
 
 const viewBox = 100;
 const center = viewBox / 2;
@@ -59,58 +57,76 @@ const targetOffset = computed(() => {
   return circumference - (percent * circumference);
 });
 
+// État au repos = la VRAIE valeur et l'anneau réellement rempli.
+// Si le JS échoue ou si l'observer ne se déclenche jamais, la jauge affiche
+// le bon chiffre plutôt que zéro.
+const displayValue = ref(props.value);
+const currentOffset = ref(targetOffset.value);
+
+let observer = null;
+let frameId = null;
+
 const animateGauge = () => {
-  if (!props.animate) {
-    displayValue.value = props.value;
-    currentOffset.value = targetOffset.value;
-    return;
-  }
-  
+  if (frameId) cancelAnimationFrame(frameId);
+
   const startOffset = circumference;
-  const startValue = 0;
   const startTime = performance.now();
-  
-  const animate = (currentTime) => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / props.duration, 1);
-    
-    // Easing
+
+  const step = (now) => {
+    const progress = Math.min((now - startTime) / props.duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
-    
+
     currentOffset.value = startOffset - (startOffset - targetOffset.value) * eased;
-    displayValue.value = Math.round(startValue + (props.value - startValue) * eased * 10) / 10;
-    
+    displayValue.value = Math.round(props.value * eased * 10) / 10;
+
     if (progress < 1) {
-      requestAnimationFrame(animate);
+      frameId = requestAnimationFrame(step);
+    } else {
+      currentOffset.value = targetOffset.value;
+      displayValue.value = props.value;
+      frameId = null;
     }
   };
-  
-  requestAnimationFrame(animate);
+
+  frameId = requestAnimationFrame(step);
 };
 
-// Observer pour déclencher l'animation au scroll
 onMounted(() => {
-  currentOffset.value = circumference;
-  
-  const observer = new IntersectionObserver(
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+  // Animation non souhaitée ou impossible : la valeur réelle est déjà affichée.
+  if (!props.animate || reducedMotion ||
+      typeof IntersectionObserver === 'undefined' || !progressRef.value) {
+    return;
+  }
+
+  observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animateGauge();
-          observer.disconnect();
-        }
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        observer = null;
+        // On repart de zéro juste avant de compter, pas avant.
+        displayValue.value = 0;
+        currentOffset.value = circumference;
+        animateGauge();
       });
     },
-    { threshold: 0.5 }
+    // threshold 0 : un bloc plus haut que la fenêtre n'atteindrait jamais 0.5.
+    { threshold: 0, rootMargin: '0px 0px -10% 0px' }
   );
-  
-  if (progressRef.value) {
-    observer.observe(progressRef.value);
-  }
+
+  observer.observe(progressRef.value);
 });
 
-watch(() => props.value, () => {
-  animateGauge();
+onBeforeUnmount(() => {
+  if (frameId) cancelAnimationFrame(frameId);
+  if (observer) observer.disconnect();
+});
+
+watch(() => props.value, (v) => {
+  displayValue.value = v;
+  currentOffset.value = targetOffset.value;
 });
 </script>
 
