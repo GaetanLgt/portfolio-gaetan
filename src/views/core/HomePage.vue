@@ -7,12 +7,9 @@
     <SpotlightContainer :size="600" color="var(--primary)" :opacity="0.15">
       <section class="hero" id="main-content" aria-labelledby="hero-title">
         <!-- Floating Tech Badges -->
-        <div class="hero__floating-badges" aria-hidden="true">
-          <span class="floating-badge" style="--delay: 0s; --x: 85%; --y: 15%;">Vue 3</span>
-          <span class="floating-badge" style="--delay: 0.5s; --x: 90%; --y: 35%;">Symfony</span>
-          <span class="floating-badge" style="--delay: 1s; --x: 80%; --y: 55%;">Three.js</span>
-          <span class="floating-badge" style="--delay: 1.5s; --x: 88%; --y: 75%;">IA Locale</span>
-        </div>
+        <!-- Les noms de technologies ont ete retires du premier ecran : un
+             dirigeant de PME n'achete pas Symfony, il achete moins de ressaisie.
+             La pile reste presentee plus bas, dans la section technique. -->
         
         <div class="container">
           <div class="hero__grid">
@@ -127,6 +124,8 @@
             <h2 id="services-title"><GlitchText text="Ce que je peux créer pour vous" /></h2>
             <p class="section-header__desc">
               Du site vitrine à l'application métier, chaque projet est conçu sur-mesure pour répondre à VOS besoins.
+              <br><span class="section-header__caveat">Budget final après atelier de cadrage : le prix dépend des
+              interfaces, des règles métier, des reprises de données et du niveau d'exigence sécurité.</span>
             </p>
           </div>
         </ScrollReveal>
@@ -332,42 +331,21 @@
       </div>
     </section>
     
-    <!-- MULTIVERS TEASER -->
-    <section class="multivers-teaser" aria-labelledby="multivers-title">
+    <!-- MULTIVERS : retrograde en lien discret.
+         Une section pleine page sur 20 univers de fiction, juste avant le
+         formulaire, disqualifie aupres d'un dirigeant de PME venu chercher
+         un prestataire. Le contenu reste accessible, il ne coupe plus le
+         parcours de conversion. -->
+    <section class="multivers-link">
       <div class="container">
-        <ScrollReveal animation="fade-up">
-          <div class="section-header section-header--center">
-            <span class="mono-tag" aria-hidden="true">/// EASTER EGG</span>
-            <h2 id="multivers-title">
-              <MorphingText :texts="['Explorez le Multivers', '20 Dimensions', 'Easter Eggs Cachés', 'Achievements à Débloquer']" :interval="3000" />
-            </h2>
-            <p class="section-header__desc">
-              20 univers parallèles à découvrir. Chaque dimension offre une expérience unique.
-            </p>
-          </div>
-        </ScrollReveal>
-        
-        <div class="multivers-preview" role="list" aria-label="Univers à découvrir">
-          <ScrollReveal v-for="(universe, i) in featuredUniverses" :key="universe.path" animation="zoom" :delay="i * 100">
-            <TiltCard :max-tilt="15" :scale="1.05" :glare="true">
-              <router-link :to="universe.path" class="universe-card" :style="{ '--accent': universe.color }" role="listitem" :aria-label="'Explorer l\'univers ' + universe.name">
-                <span class="universe-card__icon" aria-hidden="true">{{ universe.icon }}</span>
-                <span class="universe-card__name">{{ universe.name }}</span>
-              </router-link>
-            </TiltCard>
-          </ScrollReveal>
-        </div>
-        
-        <ScrollReveal animation="fade-up" :delay="400">
-          <div class="multivers-cta">
-            <MagneticButton tag="router-link" to="/multivers" class="btn-primary">
-              🌀 ENTRER DANS LE MULTIVERS
-            </MagneticButton>
-          </div>
-        </ScrollReveal>
+        <p class="multivers-link__text">
+          Curieux de voir jusqu'où va le code ?
+          <router-link to="/multivers">Explorez le Multivers</router-link> —
+          20 univers interactifs, en guise de terrain de jeu technique.
+        </p>
       </div>
     </section>
-    
+
     <!-- CTA FINAL -->
     <section class="cta-final" aria-labelledby="cta-title">
       <div class="container">
@@ -1099,6 +1077,24 @@ const healthCheckLines = ref([
 }
 
 /* PROOF */
+.multivers-link {
+  padding: var(--space-md) 0;
+}
+
+.multivers-link__text {
+  font-size: 0.88rem;
+  opacity: 0.65;
+  text-align: center;
+  margin: 0;
+}
+
+.section-header__caveat {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+  opacity: 0.7;
+}
+
 /* ── OETH ─────────────────────────────────────────────────────────────── */
 .oeth {
   padding: var(--space-xl) 0;
