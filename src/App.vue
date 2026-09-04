@@ -88,7 +88,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, defineAsyncComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import Navigation from '@/components/sections/Navigation.vue';
 import Footer from '@/components/sections/Footer.vue';
@@ -110,9 +110,13 @@ import ToastNotifications from '@/components/common/ToastNotifications.vue';
 import ConfettiEffect from '@/components/common/ConfettiEffect.vue';
 import KeyboardNavigator from '@/components/common/KeyboardNavigator.vue';
 import PWAUpdatePrompt from '@/components/common/PWAUpdatePrompt.vue';
-import ParticlesBackground from '@/components/three/ParticlesBackground.vue';
-import GridBackground from '@/components/three/GridBackground.vue';
-import MatrixBackground from '@/components/three/MatrixBackground.vue';
+// Fonds decoratifs charges a la demande : un seul est affiche a la fois, et
+// les importer statiquement tirait Three.js (522 Ko) dans le chargement
+// bloquant de CHAQUE page, pour un element purement ornemental.
+// En asynchrone, la page s'affiche d'abord et le decor arrive ensuite.
+const ParticlesBackground = defineAsyncComponent(() => import('@/components/three/ParticlesBackground.vue'));
+const GridBackground = defineAsyncComponent(() => import('@/components/three/GridBackground.vue'));
+const MatrixBackground = defineAsyncComponent(() => import('@/components/three/MatrixBackground.vue'));
 import FloatingElements from '@/components/ui/FloatingElements.vue';
 
 const isLoaded = ref(false);

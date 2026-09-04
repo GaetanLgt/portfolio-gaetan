@@ -30,13 +30,14 @@ export default defineConfig({
             }
             return 'vendor';
           }
-          // Component chunks
-          if (id.includes('/views/')) {
-            return 'views';
-          }
-          if (id.includes('/components/three/')) {
-            return 'three-components';
-          }
+          // NE RIEN regrouper cote application.
+          // Un `return 'views'` ici forcait les 108 vues dans un seul chunk de
+          // 1,5 Mo (+ 960 Ko de CSS), preloade des la page d'accueil : tous les
+          // imports dynamiques du routeur etaient annules.
+          // Meme probleme avec 'three-components' : nommer le chunk le rend
+          // eager et rappelle Three.js (522 Ko) dans le chargement bloquant,
+          // malgre le defineAsyncComponent cote App.vue.
+          // Rollup decoupe correctement a partir des import() si on le laisse faire.
         }
       }
     },
