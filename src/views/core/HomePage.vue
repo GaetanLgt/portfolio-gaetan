@@ -47,6 +47,13 @@
                     ⚡ Voir les services
                   </MagneticButton>
                 </div>
+
+                <ul class="hero__reassurance">
+                  <li><strong>Réponse sous 24 h</strong> — premier échange gratuit, sans engagement</li>
+                  <li><strong>Tarifs affichés</strong> — dès 2 500 € HT, périmètre écrit noir sur blanc</li>
+                  <li><strong>Hébergement en France</strong> — vos données ne partent pas aux États-Unis</li>
+                  <li><strong>Prestataire TIH</strong> — déductible de votre contribution OETH, sous conditions</li>
+                </ul>
                 
               </div>
             </ScrollReveal>
@@ -431,7 +438,7 @@ const stackItems = [
   grid-template-columns: 1fr;
   gap: 4rem;
   align-items: center;
-  max-width: 780px;
+  max-width: 940px;
 }
 
 .hero__content {
@@ -584,6 +591,39 @@ const stackItems = [
 }
 
 /* Hero actions spacing */
+.hero__reassurance {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-lg) 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.85rem 2rem;
+  max-width: 800px;
+}
+
+.hero__reassurance li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.hero__reassurance li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid var(--primary);
+  border-radius: 2px;
+}
+
+.hero__reassurance strong {
+  opacity: 1;
+}
+
 .hero__actions {
   display: flex;
   gap: 1rem;
