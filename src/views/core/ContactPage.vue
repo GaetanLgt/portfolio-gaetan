@@ -122,10 +122,10 @@
                   class="form-select"
                 >
                   <option value="" disabled>Sélectionner...</option>
-                  <option value="performance">PERFORMANCE — Audit & Refonte</option>
-                  <option value="factory">DIGITAL FACTORY — App Sur-Mesure</option>
-                  <option value="neural">NEURAL OPS — IA & Automatisation</option>
-                  <option value="consulting">CONSULTING — Conseil Technique</option>
+                  <option value="site">Site web — vitrine, refonte, e-commerce</option>
+                  <option value="application">Application métier — outil interne sur-mesure</option>
+                  <option value="ia">IA &amp; automatisation — hébergée chez vous</option>
+                  <option value="audit">Audit ou conseil — je ne sais pas encore</option>
                 </select>
               </div>
               
@@ -137,14 +137,29 @@
                   class="form-select"
                 >
                   <option value="" disabled>Sélectionner...</option>
+                  <option value="2.5-5k">2 500€ - 5 000€</option>
                   <option value="5-10k">5 000€ - 10 000€</option>
                   <option value="10-20k">10 000€ - 20 000€</option>
-                  <option value="20-50k">20 000€ - 50 000€</option>
-                  <option value="50k+">50 000€+</option>
-                  <option value="unknown">À définir</option>
+                  <option value="20k+">20 000€ et plus</option>
+                  <option value="unknown">À définir ensemble</option>
                 </select>
               </div>
               
+              <div class="form-group">
+                <label for="deadline" class="form-label">ÉCHÉANCE SOUHAITÉE</label>
+                <select
+                  id="deadline"
+                  v-model="form.deadline"
+                  class="form-select"
+                >
+                  <option value="" disabled>Sélectionner...</option>
+                  <option value="urgent">Le plus tôt possible</option>
+                  <option value="3mois">Dans les 3 mois</option>
+                  <option value="6mois">Dans les 6 mois</option>
+                  <option value="exploration">Je me renseigne</option>
+                </select>
+              </div>
+
               <div class="form-group">
                 <label for="message" class="form-label">VOTRE PROJET</label>
                 <textarea 
@@ -232,6 +247,7 @@ const form = reactive({
   email: '',
   project: '',
   budget: '',
+  deadline: '',
   message: ''
 });
 
@@ -250,6 +266,7 @@ const handleSubmit = async () => {
         email: form.email,
         project: form.project,
         budget: form.budget,
+        deadline: form.deadline,
         message: form.message,
         _subject: `[GL Digital Lab] Nouvelle demande de ${form.name}`
       })
