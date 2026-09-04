@@ -412,7 +412,7 @@ Le service Performance de GL Digital Lab est un audit complet de votre infrastru
 - Optimisations : 2-4 semaines
 
 ## Contact
-Réservez un audit gratuit de 30 minutes : contact@gldigitallab.fr
+Réservez un audit gratuit de 30 minutes : gtn.langlet@gmail.com
 ```
 
 ### Exemple : faq/general.md
@@ -421,7 +421,7 @@ Réservez un audit gratuit de 30 minutes : contact@gldigitallab.fr
 # FAQ Générale
 
 ## Où êtes-vous basés ?
-GL Digital Lab est basé à Limoges, en Nouvelle-Aquitaine (87). Nous travaillons avec des clients dans toute la France, principalement en remote.
+GL Digital Lab est basé dans la Somme, en Hauts-de-France (80). Nous travaillons avec des clients dans toute la France, principalement en remote.
 
 ## Quels sont vos horaires ?
 Du lundi au vendredi, 9h-18h. Réponse garantie sous 24h ouvrées.

@@ -22,7 +22,7 @@
 ### Données collectées
 - [x] Formulaire contact : Nom, email, projet (finalité claire)
 - [x] Durée de conservation : 3 ans (conformité CNIL)
-- [x] Contact DPO : `contact@gldigitallab.fr`
+- [x] Contact DPO : `gtn.langlet@gmail.com`
 
 ---
 

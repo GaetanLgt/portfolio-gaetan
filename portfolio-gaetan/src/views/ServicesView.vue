@@ -267,7 +267,7 @@ const faqs = ref([
   },
   {
     question: 'Travaillez-vous en remote ?',
-    answer: 'Oui, 100% remote avec une disponibilité sur Limoges et alentours pour des réunions en présentiel si nécessaire. Communication quotidienne via Slack/Discord, points hebdomadaires en visio, démos régulières.'
+    answer: 'Oui, 100% remote avec une disponibilité sur la Somme et les Hauts-de-France pour des réunions en présentiel si nécessaire. Communication quotidienne via Slack/Discord, points hebdomadaires en visio, démos régulières.'
   },
   {
     question: 'Quelles garanties après livraison ?',

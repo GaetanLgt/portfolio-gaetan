@@ -41,7 +41,7 @@
 │     💰 P.E.P.P.E.R. - Finance & Administration                 │
 │     Facturation • Comptabilité • TVA • Devis                    │
 └─────────────────────────────────────────────────────────────────┘
-            GL TOWER DEV LAB • Limoges, France • 2026
+            GL TOWER DEV LAB • Somme, France • 2026
 ```
 
 ---
@@ -244,4 +244,4 @@ Tous les agents du Dev Lab suivent les directives de sécurité d'**EDITH** :
 
 *GL Tower Dev Lab v1.0 | Janvier 2026*  
 *Développé par Neo pour GL Digital Lab*  
-*🇫🇷 Made in Limoges, France*
+*🇫🇷 Made in Somme, France*

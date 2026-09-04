@@ -633,7 +633,7 @@ function downloadFile(content, filename, type) {
 function loadTemplate(type) {
   const templates = {
     gldigital: {
-      brief: 'GL Digital Lab est une agence web spécialisée dans le développement d\'applications sur-mesure avec Symfony et Vue.js. Nous accompagnons les PME de Nouvelle-Aquitaine dans leur transformation digitale avec une approche pragmatique et orientée résultats.',
+      brief: 'GL Digital Lab est une agence web spécialisée dans le développement d\'applications sur-mesure avec Symfony et Vue.js. Nous accompagnons les PME des Hauts-de-France dans leur transformation digitale avec une approche pragmatique et orientée résultats.',
       company: 'GL Digital Lab',
       location: 'Amiens, Hauts-de-France',
       keywords: 'développement web, Symfony, Vue.js, agence web Amiens',

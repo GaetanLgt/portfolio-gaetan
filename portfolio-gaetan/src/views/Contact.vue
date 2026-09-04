@@ -148,8 +148,8 @@
                 <span class="info-icon">📧</span>
                 <div class="info-content">
                   <span class="info-label">Email</span>
-                  <a href="mailto:contact@gldigitallab.fr" class="info-value">
-                    contact@gldigitallab.fr
+                  <a href="mailto:gtn.langlet@gmail.com" class="info-value">
+                    gtn.langlet@gmail.com
                   </a>
                 </div>
               </div>
@@ -157,7 +157,7 @@
                 <span class="info-icon">📍</span>
                 <div class="info-content">
                   <span class="info-label">Localisation</span>
-                  <span class="info-value">Limoges, France (remote possible)</span>
+                  <span class="info-value">Somme, Hauts-de-France (remote possible)</span>
                 </div>
               </div>
               <div class="info-item">
@@ -264,7 +264,7 @@ const handleSubmit = async () => {
 
 const faqData = ref([
   {
-    question: 'Travaillez-vous uniquement sur Limoges ?',
+    question: 'Travaillez-vous uniquement dans la Somme ?',
     answer: 'Non, je travaille en remote avec des clients partout en France. Un déplacement est possible pour la phase de découverte si besoin.'
   },
   {

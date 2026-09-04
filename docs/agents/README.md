@@ -41,7 +41,7 @@
 │     🚪 Accueil Visiteurs                                        │
 │     Services • Contact • Portfolio                              │
 └─────────────────────────────────────────────────────────────────┘
-            GL TOWER • Limoges, France • 2026
+            GL TOWER • Somme, France • 2026
 ```
 
 ---
@@ -270,4 +270,4 @@ echo "✅ All agents updated"
 
 *GL Tower v2.0 | Janvier 2026*  
 *Développé par Neo pour GL Digital Lab*  
-*🇫🇷 Made in Limoges, France*
+*🇫🇷 Made in Somme, France*

@@ -260,16 +260,16 @@ Vous apprendrez non seulement la syntaxe et les concepts, mais surtout les **bon
       },
       {
         name: 'Thomas D.',
-        company: 'Agence Web Limoges',
+        company: 'Agence Web Amiens',
         text: 'Enfin une formation qui va au-delà des tutoriels YouTube ! Les bonnes pratiques et l\'architecture propre, c\'est ce qui manquait à mon équipe.',
         rating: 5
       }
     ],
     
     nextSessions: [
-      { date: '2026-02-10', location: 'Limoges (présentiel)', spots: 6 },
+      { date: '2026-02-10', location: 'Amiens (présentiel)', spots: 6 },
       { date: '2026-03-17', location: 'En ligne (visio)', spots: 10 },
-      { date: '2026-04-14', location: 'Limoges (présentiel)', spots: 6 },
+      { date: '2026-04-14', location: 'Amiens (présentiel)', spots: 6 },
       { date: '2026-05-19', location: 'En ligne (visio)', spots: 10 }
     ],
     
@@ -514,7 +514,7 @@ Vous construirez progressivement une application SaaS complète : dashboard anal
     
     nextSessions: [
       { date: '2026-02-17', location: 'En ligne (visio)', spots: 12 },
-      { date: '2026-03-24', location: 'Limoges (présentiel)', spots: 6 },
+      { date: '2026-03-24', location: 'Amiens (présentiel)', spots: 6 },
       { date: '2026-04-28', location: 'En ligne (visio)', spots: 12 }
     ],
     
@@ -729,7 +729,7 @@ Le point fort ? Nous construisons ensemble un **système RAG complet** : une bas
     
     nextSessions: [
       { date: '2026-02-24', location: 'En ligne (visio)', spots: 10 },
-      { date: '2026-04-07', location: 'Limoges (présentiel)', spots: 6 },
+      { date: '2026-04-07', location: 'Amiens (présentiel)', spots: 6 },
       { date: '2026-05-12', location: 'En ligne (visio)', spots: 10 }
     ],
     
@@ -924,7 +924,7 @@ Nous partons de zéro et allons jusqu'à un pipeline CI/CD complet qui build, te
     
     nextSessions: [
       { date: '2026-03-03', location: 'En ligne (visio)', spots: 12 },
-      { date: '2026-04-21', location: 'Limoges (présentiel)', spots: 6 }
+      { date: '2026-04-21', location: 'Amiens (présentiel)', spots: 6 }
     ],
     
     faq: [
