@@ -316,26 +316,41 @@ import {
 const solutions = [
   {
     icon: '🌐',
-    title: 'Sites Web',
-    price: 'À partir de 2 500€',
-    description: 'Site vitrine, e-commerce, blog... Un site qui vous ressemble et convertit vos visiteurs en clients.',
-    outputs: ['Design responsive', 'Référencement SEO', 'Admin facile', 'Ultra rapide']
+    title: 'Site web',
+    price: 'Dès 2 500 € HT',
+    description: 'Vitrine ou refonte : un site qui charge vite, se met à jour sans technicien et fait venir des demandes.',
+    outputs: [
+      'Jusqu\'à 8 pages · atelier de cadrage inclus',
+      'Responsive, SEO technique, RGPD',
+      'Formation à l\'administration',
+      'Livraison en 4 à 6 semaines'
+    ]
   },
   {
     icon: '⚙️',
-    title: 'Applications Métier',
-    price: 'À partir de 8 000€',
-    description: 'Logiciels sur-mesure pour automatiser vos tâches répétitives et gagner du temps.',
-    outputs: ['Adapté à VOS processus', 'Formation incluse', 'Support continu'],
+    title: 'Application métier',
+    price: 'Dès 8 000 € HT',
+    description: 'Un outil interne taillé sur vos processus, pour supprimer les ressaisies et les fichiers Excel qui circulent.',
+    outputs: [
+      'Atelier de cadrage préalable obligatoire',
+      'Jusqu\'à 10 utilisateurs dans le lot initial',
+      'Reprise de vos données existantes',
+      'Formation des équipes et maintenance'
+    ],
     featured: true,
-    badge: 'POPULAIRE'
+    badge: 'LE PLUS DEMANDÉ'
   },
   {
     icon: '🤖',
-    title: 'IA & Automatisation',
-    price: 'Sur Devis',
-    description: 'Intelligence artificielle qui tourne chez VOUS. Vos données restent privées, zéro cloud US.',
-    outputs: ['Chatbot interne', 'Tri de documents', 'Rapports automatiques']
+    title: 'IA &amp; automatisation locale',
+    price: 'Audit dès 1 500 € HT',
+    description: 'De l\'IA qui tourne sur vos serveurs. Vos documents et vos données ne sortent pas de votre réseau.',
+    outputs: [
+      'Audit et prototype sur un cas d\'usage réel',
+      'Hébergement dans votre environnement',
+      'Aucune donnée envoyée hors de France',
+      'Chiffrage du déploiement à l\'issue de l\'audit'
+    ]
   }
 ];
 
