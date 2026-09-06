@@ -62,8 +62,8 @@
                   <router-link to="/services" class="quick-link">
                     <span>⚡</span> Services
                   </router-link>
-                  <router-link to="/parcours" class="quick-link">
-                    <span>🎮</span> Parcours
+                  <router-link to="/conseil" class="quick-link">
+                    <span>🤖</span> Conseil IA
                   </router-link>
                 </div>
               </div>

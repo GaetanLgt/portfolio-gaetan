@@ -93,7 +93,7 @@
             aria-haspopup="true"
           >
             <span class="nav-link__num">03</span>
-            PARCOURS
+            À PROPOS
             <svg class="nav-dropdown__arrow" :class="{ 'rotate': activeDropdown === 'parcours' }" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"/>
             </svg>
@@ -105,13 +105,6 @@
                 <div>
                   <span class="nav-dropdown__title">Carte Holistique</span>
                   <span class="nav-dropdown__desc">Vue d'ensemble interactive</span>
-                </div>
-              </router-link>
-              <router-link to="/parcours" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🎮</span>
-                <div>
-                  <span class="nav-dropdown__title">Gaming → Dev</span>
-                  <span class="nav-dropdown__desc">L'origine du code</span>
                 </div>
               </router-link>
               <router-link to="/conseil" class="nav-dropdown__item" @click="closeDropdown">
@@ -194,15 +187,12 @@
           → Stack IA Locale
         </router-link>
         
-        <!-- Parcours Section -->
+        <!-- À Propos Section -->
         <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">03 PARCOURS</span>
+          <span class="nav-mobile__section-title">03 À PROPOS</span>
         </div>
         <router-link to="/carte-holistique" class="nav-mobile__link nav-mobile__link--featured" @click="closeMobile">
           <span class="nav-link__num">🗺️</span> Carte Holistique
-        </router-link>
-        <router-link to="/parcours" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Gaming → Dev
         </router-link>
         <router-link to="/conseil" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
           → Conseil

@@ -53,15 +53,14 @@
           </nav>
         </div>
         
-        <!-- Parcours -->
+        <!-- Approche -->
         <div class="footer__section">
-          <h4 class="footer__title">Parcours</h4>
+          <h4 class="footer__title">Approche</h4>
           <nav class="footer__nav">
-            <router-link to="/parcours">Gaming → Dev</router-link>
-            <router-link to="/conseil">Conseil des Agents</router-link>
+            <router-link to="/conseil">Conseil IA</router-link>
             <router-link to="/stack-ia">Stack IA Locale</router-link>
             <router-link to="/arkadia">Case Study ARKADIA</router-link>
-            <router-link to="/agents">Workflows n8n</router-link>
+            <router-link to="/carte-holistique">Carte Holistique</router-link>
             <router-link to="/cv">Mon CV</router-link>
           </nav>
         </div>

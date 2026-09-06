@@ -17,7 +17,6 @@ const ServicesPage = () => import('@/views/services/ServicesPage.vue');
 const ProjectsPage = () => import('@/views/services/ProjectsPage.vue');
 
 // PARCOURS - Histoire et parcours
-const GamingToDev = () => import('@/views/parcours/GamingToDev.vue');
 const ConseilAgents = () => import('@/views/parcours/ConseilAgents.vue');
 const StackIA = () => import('@/views/parcours/StackIA.vue');
 const HolisticMapPage = () => import('@/views/parcours/HolisticMapPage.vue');
@@ -140,15 +139,6 @@ const routes = [
   // -------------------------------------------------------------------------
   // PARCOURS
   // -------------------------------------------------------------------------
-  {
-    path: '/parcours',
-    name: 'GamingToDev',
-    component: GamingToDev,
-    meta: { 
-      title: 'Du Gaming au Code',
-      description: 'Mon parcours atypique : de la gestion de communautés gaming à l\'architecture logicielle. Rigueur acquise sur le terrain.'
-    }
-  },
   {
     path: '/conseil',
     name: 'ConseilAgents',

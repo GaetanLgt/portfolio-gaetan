@@ -14,8 +14,8 @@
           </h1>
           
           <p class="projects-hero__desc">
-            Une sélection de projets personnels, professionnels et expérimentaux. 
-            Du gaming à l'IA, en passant par le web full-stack.
+            Une sélection de réalisations professionnelles : applications Symfony,
+            interfaces Vue 3, automatisations n8n et infrastructure souveraine.
           </p>
           
           <!-- Stats -->

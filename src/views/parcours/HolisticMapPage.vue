@@ -669,15 +669,6 @@ const nodes = ref([
   // Parcours & Milestones
   // ========================================
   { 
-    id: 'parcours', 
-    label: 'GAMING→CODE', 
-    fullLabel: 'Du Gaming au Code',
-    description: 'Transition gaming vers développement professionnel.',
-    type: 'story', 
-    level: 3, 
-    x: 150, y: 140 
-  },
-  { 
     id: 'lancement', 
     label: '29/01/2026', 
     fullLabel: 'Lancement GL Digital Lab',
@@ -697,7 +688,6 @@ const links = ref([
   { source: 'neo', target: 'gllab', relation: 'fonde' },
   { source: 'neo', target: 'arkadia', relation: 'administre' },
   { source: 'neo', target: 'souverainete', relation: 'défend' },
-  { source: 'neo', target: 'parcours', relation: 'a vécu' },
   
   // ========================================
   // GL Tower - Équipage ARKADIA (6 Lois)
@@ -805,12 +795,6 @@ const links = ref([
   // ========================================
   { source: 'arkadia', target: 'stack_devops', relation: 'démontre' },
   { source: 'arkadia', target: 'proj_workflows', relation: 'alimente' },
-  
-  // ========================================
-  // Parcours
-  // ========================================
-  { source: 'parcours', target: 'arkadia', relation: 'aboutit à' },
-  { source: 'parcours', target: 'gllab', relation: 'aboutit à' },
 ]);
 
 // Computed: filtered nodes

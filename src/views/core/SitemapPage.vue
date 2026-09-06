@@ -244,11 +244,10 @@ const sections = ref([
   },
   {
     id: 'parcours',
-    title: 'Parcours & Vision',
+    title: 'Approche & Vision',
     icon: '🛤️',
     pages: [
-      { name: 'Du Gaming au Dev', path: '/parcours', icon: '🎮' },
-      { name: 'Conseil des Agents', path: '/conseil', icon: '🤖' },
+      { name: 'Conseil IA', path: '/conseil', icon: '🤖' },
       { name: 'Stack IA Souveraine', path: '/stack-ia', icon: '🧠' },
       { name: 'Carte Holistique', path: '/carte-holistique', icon: '🗺️' },
     ]
