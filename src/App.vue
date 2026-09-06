@@ -11,11 +11,11 @@
     <!-- Loader -->
     <Loader v-if="!isFullscreenGame" @loaded="onLoaded" />
     
-    <!-- Backgrounds (choix via backgroundType) -->
-    <component :is="backgroundComponent" v-if="isLoaded && !isFullscreenGame" />
+    <!-- Backgrounds (choix via backgroundType) — coupé sur les pages vitrine -->
+    <component :is="backgroundComponent" v-if="isLoaded && !isFullscreenGame && showAnimatedBackground" />
     
-    <!-- Reactive Particles (follows cursor) -->
-    <ReactiveParticles v-if="isLoaded && !isFullscreenGame" />
+    <!-- Reactive Particles (follows cursor) — coupé sur les pages vitrine -->
+    <ReactiveParticles v-if="isLoaded && !isFullscreenGame && showAnimatedBackground" />
     
     <!-- Floating Decorative Elements -->
     <FloatingElements v-if="isLoaded && !isFullscreenGame" />
@@ -43,8 +43,8 @@
     <!-- Footer classique -->
     <Footer v-if="isLoaded && !isFullscreenGame" />
     
-    <!-- Self-Diagnostic Bar (Footer fixe) -->
-    <SelfDiagnosticBar v-if="isLoaded && !isFullscreenGame" />
+    <!-- Self-Diagnostic Bar (Footer fixe) — réservée aux pages lore/expériences -->
+    <SelfDiagnosticBar v-if="isLoaded && !isFullscreenGame && !isShowcasePage" />
     
     <!-- Back to Hub Button (Multivers pages) -->
     <BackToHub v-if="isLoaded && !isFullscreenGame" />
@@ -148,6 +148,20 @@ const backgroundComponent = computed(() => {
       return GridBackground;
   }
 });
+
+// Pages "vitrine" : fond épuré, pas d'ornements animés qui coûtent du CPU
+// et distraient un prospect. Les ambiances (Matrix, particules, barre de
+// diagnostic) restent sur les pages lore/expériences.
+const isShowcasePage = computed(() => {
+  const p = route.path;
+  return p === '/' || p === '/services' || p === '/projets' || p === '/contact'
+    || p === '/cv' || p === '/sitemap' || p === '/stack-ia'
+    || p.startsWith('/mentions-legales') || p.startsWith('/confidentialite') || p.startsWith('/cgv');
+});
+
+// Pas de fond animé sur les pages vitrine (un canvas qui redessine l'écran
+// derrière un texte commercial = lag inutile + distraction).
+const showAnimatedBackground = computed(() => !isShowcasePage.value);
 
 // Transitions adaptatives selon la route
 const getTransitionName = (targetRoute) => {

@@ -13,6 +13,7 @@ const canvasRef = ref(null);
 let animationId = null;
 let ctx = null;
 let drops = [];
+let resizeHandler = null;
 
 const props = defineProps({
   chars: { type: String, default: '01GLX' },
@@ -22,71 +23,84 @@ const props = defineProps({
   color: { type: String, default: '#10b981' }
 });
 
-const initMatrix = () => {
+const draw = () => {
+  // Fade effect
+  ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  // Characters
+  ctx.fillStyle = props.color;
+  ctx.font = `${props.fontSize}px monospace`;
+
+  for (let i = 0; i < drops.length; i++) {
+    const char = props.chars.charAt(Math.floor(Math.random() * props.chars.length));
+    ctx.fillText(char, i * props.fontSize, drops[i] * props.fontSize);
+
+    // Reset drop
+    if (drops[i] * props.fontSize > ctx.canvas.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+};
+
+// Boucle unique : ralentit quand l'onglet est masqué, ne consomme rien si l'animation est coupée.
+const loop = () => {
+  if (document.hidden) {
+    animationId = setTimeout(loop, 250);
+    return;
+  }
+  draw();
+  animationId = setTimeout(() => {
+    requestAnimationFrame(loop);
+  }, props.speed);
+};
+
+const stop = () => {
+  if (animationId) {
+    clearTimeout(animationId);
+    animationId = null;
+  }
+};
+
+const resize = () => {
   const canvas = canvasRef.value;
   if (!canvas) return;
-  
-  ctx = canvas.getContext('2d');
-  
-  // Resize
-  const resize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const columns = Math.floor(canvas.width / props.fontSize);
-    drops = Array(columns).fill(1);
-  };
-  
-  resize();
-  window.addEventListener('resize', resize);
-  
-  // Draw
-  const draw = () => {
-    // Fade effect
-    ctx.fillStyle = `rgba(5, 5, 5, 0.05)`;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Characters
-    ctx.fillStyle = props.color;
-    ctx.font = `${props.fontSize}px monospace`;
-    
-    for (let i = 0; i < drops.length; i++) {
-      const char = props.chars.charAt(Math.floor(Math.random() * props.chars.length));
-      ctx.fillText(char, i * props.fontSize, drops[i] * props.fontSize);
-      
-      // Reset drop
-      if (drops[i] * props.fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-      drops[i]++;
-    }
-  };
-  
-  // Animation loop
-  const loop = () => {
-    draw();
-    animationId = setTimeout(() => {
-      requestAnimationFrame(loop);
-    }, props.speed);
-  };
-  
-  loop();
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const columns = Math.floor(canvas.width / props.fontSize);
+  drops = Array(columns).fill(1);
+};
+
+const onVisibility = () => {
+  if (document.hidden) {
+    stop();
+  } else if (!animationId && canvasRef.value && ctx) {
+    loop();
+  }
 };
 
 onMounted(() => {
-  // Respecter prefers-reduced-motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (!prefersReducedMotion) {
-    initMatrix();
-  }
+  if (prefersReducedMotion) return;
+
+  const canvas = canvasRef.value;
+  if (!canvas) return;
+
+  ctx = canvas.getContext('2d');
+  resize();
+  resizeHandler = resize;
+  window.addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', onVisibility);
+  loop();
 });
 
 onUnmounted(() => {
-  if (animationId) {
-    clearTimeout(animationId);
+  stop();
+  if (resizeHandler) {
+    window.removeEventListener('resize', resizeHandler);
   }
-  window.removeEventListener('resize', () => {});
+  document.removeEventListener('visibilitychange', onVisibility);
 });
 </script>
 
