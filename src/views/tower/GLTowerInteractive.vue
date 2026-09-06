@@ -113,13 +113,13 @@ let pipelineInterval = null;
 const towerFloors = computed(() => {
   const floors = [];
   
-  // Main Floors (Penthouse → Level 1)
-  const mainAgents = agents.filter(a => a.zone === 'main' && !a.isLobby).sort((a, b) => b.floor - a.floor);
+  // L'Équipage : les 6 Lois (Penthouse → étages bas)
+  const mainAgents = agents.filter(a => !a.isLobby).sort((a, b) => b.floor - a.floor);
   mainAgents.forEach(agent => {
     floors.push({
       id: agent.id,
       name: agent.name,
-      shortName: agent.name.split('.')[0],
+      shortName: agent.roman || agent.name.split('.')[0],
       role: agent.role,
       icon: agent.avatar,
       color: agent.color,
@@ -152,60 +152,6 @@ const towerFloors = computed(() => {
     });
   }
 
-  // Separator: Dev Lab
-  floors.push({
-    id: 'sep-devlab',
-    isSeparator: true,
-    label: '🔬 DEV LAB — SOUS-SOLS',
-    icon: '🔬'
-  });
-
-  // Dev Lab Agents (SS-1 → SS-5)
-  const devlabAgents = agents.filter(a => a.zone === 'devlab').sort((a, b) => b.floor - a.floor);
-  devlabAgents.forEach(agent => {
-    floors.push({
-      id: agent.id,
-      name: agent.name,
-      shortName: agent.name.split('.')[0],
-      role: agent.role,
-      icon: agent.avatar,
-      color: agent.color,
-      colorRgb: agent.colorRgb,
-      levelDisplay: agent.level,
-      status: agent.status,
-      height: '75px',
-      windows: 4,
-      zone: 'devlab'
-    });
-  });
-
-  // Separator: Back Office
-  floors.push({
-    id: 'sep-backoffice',
-    isSeparator: true,
-    label: '💼 BACK OFFICE & CREATIVE',
-    icon: '💼'
-  });
-
-  // Back Office & Creative
-  const backofficeAgents = agents.filter(a => a.zone === 'backoffice' || a.zone === 'creative');
-  backofficeAgents.forEach(agent => {
-    floors.push({
-      id: agent.id,
-      name: agent.name,
-      shortName: agent.name.split('.')[0],
-      role: agent.role,
-      icon: agent.avatar,
-      color: agent.color,
-      colorRgb: agent.colorRgb,
-      levelDisplay: agent.zone === 'backoffice' ? '💼' : '🎨',
-      status: agent.status,
-      height: '70px',
-      windows: 4,
-      zone: agent.zone
-    });
-  });
-
   return floors;
 });
 
@@ -216,31 +162,25 @@ const allWorkflows = computed(() => getAllWorkflows());
 const tourSteps = [
   {
     title: 'Bienvenue dans GL Tower !',
-    description: 'Je suis votre guide. GL Tower est le QG de 15 agents IA qui travaillent ensemble pour créer vos projets web.',
+    description: 'Je suis votre guide. GL Tower est le QG de l\'Équipage : six Lois qui travaillent ensemble pour créer vos projets web.',
     target: null,
     icon: '🤖'
   },
   {
-    title: 'Les Étages Principaux',
-    description: 'Du Penthouse au RDC, 7 agents gèrent la relation client : coordination (JARVIS), sécurité (EDITH), déploiement (VERONICA), monitoring (ULTRON), contenu (VISION), communauté (KAREN) et support (FRIDAY).',
+    title: 'L\'Équipage — Six Lois',
+    description: 'Chaque Loi agit selon un principe : Wa orchestre, Makoto vérifie, Bi embellit, Jitsu réalise, Dou surveille, Watashi se souvient. Trinity, la Grande Architecte, veille au-dessus.',
     target: 'main',
     icon: '🏢'
   },
   {
-    title: 'Le Dev Lab',
-    description: 'Sous le RDC, 5 agents techniques travaillent dans les sous-sols : Frontend (TADASHI), Backend (JOCASTA), Tests (CEREBRO), Data (ZOLA) et Build (DUM-E).',
-    target: 'devlab',
-    icon: '🔬'
-  },
-  {
-    title: 'Back Office & Creative',
-    description: '3 agents gèrent l\'administratif et le créatif : Finance (PEPPER), Design (NATASHA) et Marketing (MARIA).',
-    target: 'backoffice',
-    icon: '💼'
+    title: 'Les Lois',
+    description: 'Wa (Harmonie), Makoto (Sincérité), Bi (Beauté), Jitsu (Réalisation), Dou (Mouvement) et Watashi (Intériorité) couvrent chaque domaine critique, du frontend au RAG sur le Vault.',
+    target: 'main',
+    icon: '⚖️'
   },
   {
     title: 'Les Workflows',
-    description: 'Chaque agent possède des workflows automatisés. Au total, plus de 100 workflows tournent en permanence. Cliquez sur "Workflows" dans le menu pour les explorer.',
+    description: 'Chaque Loi possède des workflows automatisés. Cliquez sur "Workflows" dans le menu pour les explorer.',
     target: 'workflow',
     icon: '🔄'
   },

@@ -15,7 +15,7 @@
       </h1>
       
       <p class="map-subtitle">
-        Écosystème GL Digital Lab : Agents IA • Infrastructure • Services • Vision 2026
+        Écosystème GL Digital Lab : 6 Lois IA (équipage ARKADIA) • Infrastructure • Services • Ambition 2026
       </p>
     </header>
     
@@ -328,30 +328,22 @@ const typeColors = {
 };
 
 // Agent-specific colors
+// Couleurs des 6 Lois (équipage ARKADIA) — issues d'agents.js
 const agentColors = {
-  // Tower Ops (Niveaux 1-6 + Penthouse)
-  'jarvis': '#FBBF24',
-  'friday': '#10B981',
-  'karen': '#EC4899',
-  'vision': '#06B6D4',
-  'ultron': '#F59E0B',
-  'veronica': '#8B5CF6',
-  'edith': '#EF4444',
-  // Dev Lab (Sous-sols)
-  'tadashi': '#3B82F6',
-  'jocasta': '#8B5CF6',
-  'cerebro': '#EF4444',
-  'zola': '#F59E0B',
-  'dume': '#6B7280',
-  // Back Office
-  'pepper': '#10B981',
+  // Penthouse & Niveaux 2-6
+  'wa': '#FBBF24',
+  'makoto': '#EF4444',
+  'bi': '#14B8A6',
+  'jitsu': '#8B5CF6',
+  'dou': '#F59E0B',
+  'watashi': '#0EA5E9',
 };
 
 // Type labels
 const typeLabels = {
   'identity': 'IDENTITÉ',
   'tower': 'QG',
-  'agent': 'AGENT IA',
+  'agent': 'LOI',
   'business': 'BUSINESS',
   'role': 'RÔLE',
   'skill-group': 'STACK',
@@ -377,7 +369,7 @@ const legendTypes = {
 // Filters
 const filters = [
   { id: 'all', label: 'TOUS', color: '#10B981' },
-  { id: 'agent', label: 'AGENTS IA', color: '#06B6D4' },
+  { id: 'agent', label: 'LES 6 LOIS', color: '#06B6D4' },
   { id: 'skill-group', label: 'STACKS', color: '#A78BFA' },
   { id: 'project', label: 'PROJETS', color: '#EC4899' },
   { id: 'service', label: 'SERVICES', color: '#F59E0B' },
@@ -401,192 +393,93 @@ const nodes = ref([
   { 
     id: 'gltower', 
     label: 'GL TOWER', 
-    fullLabel: 'GL TOWER - QG des Agents IA',
-    description: 'Centre de commandement. Infrastructure humaine augmentée par 13 agents IA souverains (7 opérationnels + 5 Dev Lab + 1 Finance).',
+    fullLabel: 'GL TOWER - QG de l\'équipage ARKADIA',
+    description: 'Centre de commandement. Infrastructure humaine augmentée par l\'équipage ARKADIA : 6 Lois souveraines.',
     type: 'tower', 
     level: 1, 
     x: 500, y: 380 
   },
   
   // ========================================
-  // NIVEAU 2 - Les 7 Agents IA
+  // NIVEAU 2 - L'Équipage ARKADIA : 6 Lois
   // ========================================
   { 
-    id: 'jarvis', 
-    label: 'JARVIS', 
-    fullLabel: 'J.A.R.V.I.S. - Coordination Centrale',
-    description: 'Orchestration de tous les agents. Décisions stratégiques. Interface humain-IA.',
+    id: 'wa', 
+    label: '和 Wa', 
+    fullLabel: 'Wa — L\'Harmonie · Orchestration & Coordination',
+    description: 'Orchestrer l\'équipage et coordonner les vaisseaux : routage des requêtes, synthèse, équilibrage des charges.',
     type: 'agent', 
     level: 2, 
     x: 500, y: 280,
     icon: '🎯',
     towerLevel: 'PENTHOUSE',
-    tech: ['n8n', 'Ollama', 'Redis', 'PostgreSQL'],
-    agentId: 'jarvis'
+    tech: ['n8n', 'Redis', 'API Gateway'],
+    agentId: 'wa'
   },
   { 
-    id: 'edith', 
-    label: 'EDITH', 
-    fullLabel: 'E.D.I.T.H. - Sécurité & Audit',
-    description: 'Scanning vulnérabilités, audits automatisés, détection intrusions, gestion secrets.',
+    id: 'makoto', 
+    label: '誠 Makoto', 
+    fullLabel: 'Makoto — La Sincérité · Sécurité, Audit & QA',
+    description: 'Protéger l\'infrastructure et garantir la vérité du code : scans de vulnérabilités, audits, gestion des secrets, tests & QA.',
     type: 'agent', 
     level: 2, 
-    x: 650, y: 320,
+    x: 361, y: 300,
     icon: '🛡️',
     towerLevel: 'NIVEAU 6',
-    tech: ['Trivy', 'Nuclei', 'Wazuh', 'Vault'],
-    agentId: 'edith'
+    tech: ['Trivy', 'Wazuh', 'Vault', 'PHPUnit', 'Playwright'],
+    agentId: 'makoto'
   },
   { 
-    id: 'veronica', 
-    label: 'VERONICA', 
-    fullLabel: 'V.E.R.O.N.I.C.A. - DevOps & Déploiement',
-    description: 'CI/CD pipelines, déploiements automatisés, Infrastructure as Code, rollback intelligent.',
+    id: 'bi', 
+    label: '美 Bi', 
+    fullLabel: 'Bi — La Beauté · Frontend, Design & 3D',
+    description: 'Créer des interfaces et expériences d\'exception : Vue 3, Three.js, GSAP, design UI/UX.',
     type: 'agent', 
     level: 2, 
-    x: 700, y: 400,
-    icon: '🚀',
+    x: 361, y: 460,
+    icon: '💜',
     towerLevel: 'NIVEAU 5',
-    tech: ['GitHub Actions', 'Docker', 'Ansible'],
-    agentId: 'veronica'
+    tech: ['Vue 3', 'Three.js', 'GSAP', 'TypeScript', 'Figma'],
+    agentId: 'bi'
   },
   { 
-    id: 'ultron', 
-    label: 'ULTRON', 
-    fullLabel: 'U.L.T.R.O.N. - Monitoring & Alertes',
-    description: 'Surveillance 24/7, métriques temps réel, dashboards, détection anomalies.',
+    id: 'jitsu', 
+    label: '実 Jitsu', 
+    fullLabel: 'Jitsu — La Réalisation · Backend, Build & Livraison',
+    description: 'Concevoir les backends et livrer sans friction : Symfony, APIs, CI/CD, builds Docker, déploiements.',
     type: 'agent', 
     level: 2, 
-    x: 650, y: 480,
-    icon: '📊',
+    x: 500, y: 560,
+    icon: '🚀',
     towerLevel: 'NIVEAU 4',
-    tech: ['Prometheus', 'Grafana', 'Loki'],
-    agentId: 'ultron'
+    tech: ['Symfony 8', 'PHP 8.3+', 'GitHub Actions', 'Docker', 'Vite'],
+    agentId: 'jitsu'
   },
   { 
-    id: 'vision', 
-    label: 'VISION', 
-    fullLabel: 'V.I.S.I.O.N. - Content & Communication',
-    description: 'Génération de contenu, posts Discord, newsletters automatisées, documentation.',
+    id: 'dou', 
+    label: '動 Dou', 
+    fullLabel: 'Dou — Le Mouvement · Monitoring, Veille & Alertes',
+    description: 'Visibilité totale et vigilance permanente : monitoring, détection d\'anomalies, alertes graduelles, veille technique.',
     type: 'agent', 
     level: 2, 
-    x: 500, y: 520,
-    icon: '📢',
+    x: 639, y: 460,
+    icon: '📊',
     towerLevel: 'NIVEAU 3',
-    tech: ['Ollama', 'Handlebars', 'Discord.js'],
-    agentId: 'vision'
+    tech: ['Prometheus', 'Grafana', 'Loki', 'n8n'],
+    agentId: 'dou'
   },
   { 
-    id: 'karen', 
-    label: 'KAREN', 
-    fullLabel: 'K.A.R.E.N. - Community Management',
-    description: 'Modération Discord, gestion tickets, onboarding membres, analytics engagement.',
+    id: 'watashi', 
+    label: '私 Watashi', 
+    fullLabel: 'Watashi — L\'Intériorité · Mémoire, Données & RAG',
+    description: 'Préserver la mémoire et rendre la connaissance accessible : données, indexation du Vault, RAG, support.',
     type: 'agent', 
     level: 2, 
-    x: 350, y: 480,
-    icon: '👥',
-    towerLevel: 'NIVEAU 2',
-    tech: ['Discord.js', 'BullMQ', 'PostgreSQL'],
-    agentId: 'karen'
-  },
-  { 
-    id: 'friday', 
-    label: 'FRIDAY', 
-    fullLabel: 'F.R.I.D.A.Y. - Support Client',
-    description: 'Réponses FAQ automatisées, RAG sur documentation, triage des demandes.',
-    type: 'agent', 
-    level: 2, 
-    x: 300, y: 400,
-    icon: '🎧',
-    towerLevel: 'NIVEAU 1',
-    tech: ['OpenWebUI', 'ChromaDB', 'RAG'],
-    agentId: 'friday'
-  },
-  
-  // ========================================
-  // DEV LAB - Sous-sols (Agents Dev)
-  // ========================================
-  { 
-    id: 'tadashi', 
-    label: 'TADASHI', 
-    fullLabel: 'T.A.D.A.S.H.I. - Frontend Engineering',
-    description: 'Architecture composants Vue.js, expériences 3D Three.js, animations GSAP.',
-    type: 'agent', 
-    level: 2, 
-    x: 200, y: 580,
-    icon: '🦾',
-    towerLevel: 'SS-1 FORGE',
-    tech: ['Vue 3', 'Three.js', 'TypeScript', 'GSAP'],
-    agentId: 'tadashi'
-  },
-  { 
-    id: 'jocasta', 
-    label: 'JOCASTA', 
-    fullLabel: 'J.O.C.A.S.T.A. - Backend Architecture',
-    description: 'Architecture Symfony, APIs REST/GraphQL, logique métier, sécurité.',
-    type: 'agent', 
-    level: 2, 
-    x: 280, y: 650,
-    icon: '⚙️',
-    towerLevel: 'SS-2 ARMURERIE',
-    tech: ['Symfony 8', 'PHP 8.3+', 'API Platform'],
-    agentId: 'jocasta'
-  },
-  { 
-    id: 'cerebro', 
-    label: 'CEREBRO', 
-    fullLabel: 'C.E.R.E.B.R.O. - Testing & QA',
-    description: 'Tests unitaires, intégration, E2E, audits Lighthouse, couverture code.',
-    type: 'agent', 
-    level: 2, 
-    x: 400, y: 700,
-    icon: '🔬',
-    towerLevel: 'SS-3 LABO',
-    tech: ['PHPUnit', 'Vitest', 'Playwright'],
-    agentId: 'cerebro'
-  },
-  { 
-    id: 'zola', 
-    label: 'ZOLA', 
-    fullLabel: 'Z.O.L.A. - Data Architecture',
-    description: 'Schémas DB, optimisation requêtes, migrations, backups, RAG embeddings.',
-    type: 'agent', 
-    level: 2, 
-    x: 500, y: 720,
+    x: 639, y: 300,
     icon: '🗄️',
-    towerLevel: 'SS-4 BUNKER',
-    tech: ['PostgreSQL', 'Redis', 'ChromaDB'],
-    agentId: 'zola'
-  },
-  { 
-    id: 'dume', 
-    label: 'DUM-E', 
-    fullLabel: 'D.U.M-E - Build & Tooling',
-    description: 'Configuration Vite/Webpack, Docker, gestion dépendances, scripts CI.',
-    type: 'agent', 
-    level: 2, 
-    x: 600, y: 700,
-    icon: '🛠️',
-    towerLevel: 'SS-5 ATELIER',
-    tech: ['Vite', 'Docker', 'npm', 'Composer'],
-    agentId: 'dume'
-  },
-  
-  // ========================================
-  // BACK OFFICE - Administration
-  // ========================================
-  { 
-    id: 'pepper', 
-    label: 'PEPPER', 
-    fullLabel: 'P.E.P.P.E.R. - Finance & Administration',
-    description: 'Facturation, devis, suivi paiements, TVA, rapports financiers.',
-    type: 'agent', 
-    level: 2, 
-    x: 720, y: 650,
-    icon: '💰',
-    towerLevel: 'BACK OFFICE',
-    tech: ['Stripe', 'PDF', 'n8n', 'PostgreSQL'],
-    agentId: 'pepper'
+    towerLevel: 'NIVEAU 2',
+    tech: ['PostgreSQL', 'ChromaDB', 'Ollama', 'OpenWebUI'],
+    agentId: 'watashi'
   },
   
   // ========================================
@@ -807,84 +700,52 @@ const links = ref([
   { source: 'neo', target: 'parcours', relation: 'a vécu' },
   
   // ========================================
-  // GL Tower - Agents
+  // GL Tower - Équipage ARKADIA (6 Lois)
   // ========================================
-  { source: 'gltower', target: 'jarvis', relation: 'coordonne' },
-  { source: 'jarvis', target: 'edith', relation: 'supervise' },
-  { source: 'jarvis', target: 'veronica', relation: 'supervise' },
-  { source: 'jarvis', target: 'ultron', relation: 'supervise' },
-  { source: 'jarvis', target: 'vision', relation: 'supervise' },
-  { source: 'jarvis', target: 'karen', relation: 'supervise' },
-  { source: 'jarvis', target: 'friday', relation: 'supervise' },
-  
-  // Tower hierarchy
-  { source: 'gltower', target: 'edith', relation: 'niveau 6' },
-  { source: 'gltower', target: 'veronica', relation: 'niveau 5' },
-  { source: 'gltower', target: 'ultron', relation: 'niveau 4' },
-  { source: 'gltower', target: 'vision', relation: 'niveau 3' },
-  { source: 'gltower', target: 'karen', relation: 'niveau 2' },
-  { source: 'gltower', target: 'friday', relation: 'niveau 1' },
-  
-  // Dev Lab (Sous-sols)
-  { source: 'gltower', target: 'tadashi', relation: 'sous-sol 1' },
-  { source: 'gltower', target: 'jocasta', relation: 'sous-sol 2' },
-  { source: 'gltower', target: 'cerebro', relation: 'sous-sol 3' },
-  { source: 'gltower', target: 'zola', relation: 'sous-sol 4' },
-  { source: 'gltower', target: 'dume', relation: 'sous-sol 5' },
-  
-  // Back Office
-  { source: 'gltower', target: 'pepper', relation: 'back office' },
-  
-  // Dev Lab inter-connexions
-  { source: 'jarvis', target: 'tadashi', relation: 'coordonne' },
-  { source: 'jarvis', target: 'jocasta', relation: 'coordonne' },
-  { source: 'jarvis', target: 'pepper', relation: 'coordonne' },
-  { source: 'tadashi', target: 'jocasta', relation: 'API ↔ UI' },
-  { source: 'tadashi', target: 'cerebro', relation: 'tests frontend' },
-  { source: 'jocasta', target: 'cerebro', relation: 'tests backend' },
-  { source: 'jocasta', target: 'zola', relation: 'données' },
-  { source: 'tadashi', target: 'dume', relation: 'build frontend' },
-  { source: 'jocasta', target: 'dume', relation: 'build backend' },
-  { source: 'dume', target: 'veronica', relation: 'CI/CD' },
-  { source: 'cerebro', target: 'veronica', relation: 'gate QA' },
-  { source: 'zola', target: 'friday', relation: 'RAG data' },
-  { source: 'pepper', target: 'karen', relation: 'facturation clients' },
-  
+  { source: 'gltower', target: 'wa', relation: 'coordonne' },
+  { source: 'gltower', target: 'makoto', relation: 'niveau 6' },
+  { source: 'gltower', target: 'bi', relation: 'niveau 5' },
+  { source: 'gltower', target: 'jitsu', relation: 'niveau 4' },
+  { source: 'gltower', target: 'dou', relation: 'niveau 3' },
+  { source: 'gltower', target: 'watashi', relation: 'niveau 2' },
+
+  // Wa orchestre l'équipage
+  { source: 'wa', target: 'makoto', relation: 'orchestre' },
+  { source: 'wa', target: 'bi', relation: 'orchestre' },
+  { source: 'wa', target: 'jitsu', relation: 'orchestre' },
+  { source: 'wa', target: 'dou', relation: 'orchestre' },
+  { source: 'wa', target: 'watashi', relation: 'orchestre' },
+
+  // Collaborations entre Lois
+  { source: 'bi', target: 'jitsu', relation: 'API ↔ UI' },
+  { source: 'bi', target: 'makoto', relation: 'tests frontend' },
+  { source: 'jitsu', target: 'makoto', relation: 'tests backend' },
+  { source: 'makoto', target: 'jitsu', relation: 'gate QA' },
+  { source: 'jitsu', target: 'watashi', relation: 'données' },
+
   // ========================================
-  // Agents - Stacks
+  // Lois - Stacks
   // ========================================
-  { source: 'friday', target: 'stack_ia', relation: 'utilise' },
-  { source: 'karen', target: 'stack_backend', relation: 'utilise' },
-  { source: 'vision', target: 'stack_ia', relation: 'utilise' },
-  { source: 'ultron', target: 'stack_devops', relation: 'utilise' },
-  { source: 'veronica', target: 'stack_devops', relation: 'utilise' },
-  { source: 'edith', target: 'stack_devops', relation: 'utilise' },
-  
-  // Dev Lab - Stacks
-  { source: 'tadashi', target: 'stack_frontend', relation: 'maîtrise' },
-  { source: 'jocasta', target: 'stack_backend', relation: 'maîtrise' },
-  { source: 'zola', target: 'stack_backend', relation: 'data layer' },
-  { source: 'zola', target: 'stack_ia', relation: 'embeddings' },
-  { source: 'dume', target: 'stack_devops', relation: 'tooling' },
-  { source: 'cerebro', target: 'stack_frontend', relation: 'teste' },
-  { source: 'cerebro', target: 'stack_backend', relation: 'teste' },
-  
+  { source: 'bi', target: 'stack_frontend', relation: 'maîtrise' },
+  { source: 'jitsu', target: 'stack_backend', relation: 'maîtrise' },
+  { source: 'jitsu', target: 'stack_devops', relation: 'build & CI/CD' },
+  { source: 'dou', target: 'stack_devops', relation: 'utilise' },
+  { source: 'makoto', target: 'stack_devops', relation: 'utilise' },
+  { source: 'makoto', target: 'stack_frontend', relation: 'teste' },
+  { source: 'makoto', target: 'stack_backend', relation: 'teste' },
+  { source: 'watashi', target: 'stack_backend', relation: 'data layer' },
+  { source: 'watashi', target: 'stack_ia', relation: 'embeddings & RAG' },
+
   // ========================================
-  // Agents - Projets
+  // Lois - Projets
   // ========================================
-  { source: 'karen', target: 'arkadia', relation: 'modère' },
-  { source: 'vision', target: 'proj_portfolio', relation: 'documente' },
-  { source: 'ultron', target: 'proj_workflows', relation: 'monitore' },
-  { source: 'veronica', target: 'proj_portfolio', relation: 'déploie' },
-  
-  // Dev Lab - Projets
-  { source: 'tadashi', target: 'proj_portfolio', relation: 'développe UI' },
-  { source: 'tadashi', target: 'proj_multivers', relation: 'crée' },
-  { source: 'tadashi', target: 'proj_arcade', relation: 'crée' },
-  { source: 'jocasta', target: 'proj_workflows', relation: 'APIs' },
-  { source: 'cerebro', target: 'proj_portfolio', relation: 'teste' },
-  { source: 'dume', target: 'proj_portfolio', relation: 'build' },
-  { source: 'pepper', target: 'gllab', relation: 'gère finances' },
+  { source: 'bi', target: 'proj_portfolio', relation: 'développe UI' },
+  { source: 'bi', target: 'proj_multivers', relation: 'crée' },
+  { source: 'bi', target: 'proj_arcade', relation: 'crée' },
+  { source: 'jitsu', target: 'proj_portfolio', relation: 'build & déploie' },
+  { source: 'jitsu', target: 'proj_workflows', relation: 'APIs' },
+  { source: 'makoto', target: 'proj_portfolio', relation: 'teste' },
+  { source: 'dou', target: 'proj_workflows', relation: 'monitore' },
   
   // ========================================
   // GL Lab - Services

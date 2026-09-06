@@ -230,11 +230,9 @@ const props = defineProps({
 
 const emit = defineEmits(['selectFloor', 'highlightFloor', 'showWorkflow', 'goToWorkflows']);
 
-// Zones
+// Zones — GL Tower n'a plus qu'un seul étage de zone : l'équipage des six Lois + le lobby.
 const zones = [
-  { id: 'main', name: 'Étages Principaux', icon: '🏢' },
-  { id: 'devlab', name: 'Dev Lab', icon: '🔬' },
-  { id: 'backoffice', name: 'Back Office', icon: '💼' }
+  { id: 'main', name: 'GL Tower', icon: '🏢' }
 ];
 
 // Computed
@@ -263,9 +261,6 @@ const currentFloorDisplay = computed(() => {
 
 // Methods
 const getFloorsForZone = (zoneId) => {
-  if (zoneId === 'backoffice') {
-    return props.towerFloors.filter(f => f.zone === 'backoffice' || f.zone === 'creative');
-  }
   return props.towerFloors.filter(f => f.zone === zoneId && !f.isSeparator);
 };
 

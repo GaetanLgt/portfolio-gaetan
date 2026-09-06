@@ -56,19 +56,14 @@
     <!-- Stats -->
     <div class="production-stats">
       <div class="prod-stat">
-        <span class="stat-icon">⏱️</span>
-        <span class="stat-value">~2-4 sem.</span>
-        <span class="stat-label">Délai moyen</span>
-      </div>
-      <div class="prod-stat">
         <span class="stat-icon">🤖</span>
-        <span class="stat-value">15</span>
+        <span class="stat-value">{{ equipageCount }}</span>
         <span class="stat-label">Agents mobilisés</span>
       </div>
       <div class="prod-stat">
         <span class="stat-icon">⚡</span>
-        <span class="stat-value">100+</span>
-        <span class="stat-label">Workflows</span>
+        <span class="stat-value">{{ workflowStats.active }}</span>
+        <span class="stat-label">Workflows actifs</span>
       </div>
       <div class="prod-stat">
         <span class="stat-icon">🇫🇷</span>
@@ -89,6 +84,8 @@
 </template>
 
 <script setup>
+import { agents, getAgentById, getWorkflowStats } from '@/data/agents';
+
 defineProps({
   pipelineStep: { type: Number, default: -1 },
   pipelineRunning: { type: Boolean, default: false }
@@ -96,93 +93,92 @@ defineProps({
 
 defineEmits(['reset', 'play', 'complete']);
 
-const pipelineSteps = [
+// Étapes du pipeline : chaque étape référence les Lois par leur id réel (agents.js).
+// Les chips sont résolus depuis la data — un seul point de vérité, aucun doublon.
+const steps = [
   {
     id: 'reception',
     icon: '📥',
     title: '1. Réception',
-    description: 'Votre demande arrive et est analysée par le coordinateur',
-    agents: [{ id: 'jarvis', avatar: '🎯', name: 'JARVIS', color: '#FBBF24' }]
+    description: 'Votre demande arrive et est dispatchée par la coordinatrice de l\'équipage',
+    agentIds: ['wa']
   },
   {
     id: 'analyse',
     icon: '🔍',
     title: '2. Analyse & Recherche',
-    description: 'Étude du contexte, recherche de solutions adaptées',
-    agents: [
-      { id: 'friday', avatar: '🎧', name: 'FRIDAY', color: '#10B981' },
-      { id: 'zola', avatar: '🗄️', name: 'ZOLA', color: '#0EA5E9' }
-    ]
+    description: 'Étude du contexte et recherche de solutions dans la base de connaissance',
+    agentIds: ['watashi']
   },
   {
     id: 'strategie',
     icon: '📋',
-    title: '3. Stratégie & Contenu',
-    description: 'Définition de l\'architecture et rédaction du contenu',
-    agents: [
-      { id: 'vision', avatar: '📢', name: 'VISION', color: '#06B6D4' },
-      { id: 'maria', avatar: '📈', name: 'MARIA', color: '#22C55E' }
-    ]
+    title: '3. Stratégie & Cadrage',
+    description: 'Cadrage de l\'architecture, des priorités et des objectifs',
+    agentIds: ['wa']
   },
   {
     id: 'design',
     icon: '🎨',
     title: '4. Design & UX',
     description: 'Création des maquettes, wireframes et prototypes',
-    agents: [{ id: 'natasha', avatar: '🎨', name: 'NATASHA', color: '#F43F5E' }]
+    agentIds: ['bi']
   },
   {
     id: 'dev',
     icon: '💻',
     title: '5. Développement',
-    description: 'Frontend Vue.js + Backend Symfony + Base de données',
-    agents: [
-      { id: 'tadashi', avatar: '🦾', name: 'TADASHI', color: '#14B8A6' },
-      { id: 'jocasta', avatar: '⚙️', name: 'JOCASTA', color: '#6366F1' },
-      { id: 'zola', avatar: '🗄️', name: 'ZOLA', color: '#0EA5E9' },
-      { id: 'dume', avatar: '🛠️', name: 'DUM-E', color: '#78716C' }
-    ]
+    description: 'Frontend Vue 3 + Backend Symfony',
+    agentIds: ['bi', 'jitsu']
   },
   {
     id: 'tests',
     icon: '🧪',
     title: '6. Tests & QA',
     description: 'Tests unitaires, intégration, E2E et couverture',
-    agents: [{ id: 'cerebro', avatar: '🔬', name: 'CEREBRO', color: '#A855F7' }]
+    agentIds: ['makoto']
   },
   {
     id: 'securite',
     icon: '🛡️',
     title: '7. Sécurité & Audit',
-    description: 'Scan des vulnérabilités, conformité OWASP',
-    agents: [{ id: 'edith', avatar: '🛡️', name: 'EDITH', color: '#EF4444' }]
+    description: 'Scan des vulnérabilités, conformité OWASP, gestion des secrets',
+    agentIds: ['makoto']
   },
   {
     id: 'deploy',
     icon: '🚀',
     title: '8. Déploiement',
     description: 'Pipeline CI/CD, mise en production sans downtime',
-    agents: [{ id: 'veronica', avatar: '🚀', name: 'VERONICA', color: '#8B5CF6' }]
+    agentIds: ['jitsu']
   },
   {
     id: 'monitoring',
     icon: '📊',
     title: '9. Monitoring 24/7',
     description: 'Surveillance continue, alertes et métriques',
-    agents: [{ id: 'ultron', avatar: '📊', name: 'ULTRON', color: '#F59E0B' }]
+    agentIds: ['dou']
   },
   {
     id: 'support',
     icon: '✅',
     title: '10. Support & Évolution',
-    description: 'Maintenance, améliorations continues et facturation',
-    agents: [
-      { id: 'karen', avatar: '👥', name: 'KAREN', color: '#EC4899' },
-      { id: 'friday', avatar: '🎧', name: 'FRIDAY', color: '#10B981' },
-      { id: 'pepper', avatar: '💰', name: 'PEPPER', color: '#F97316' }
-    ]
+    description: 'Maintenance, support et améliorations continues',
+    agentIds: ['watashi', 'dou']
   }
 ];
+
+const pipelineSteps = steps.map(step => ({
+  ...step,
+  agents: step.agentIds
+    .map(id => getAgentById(id))
+    .filter(Boolean)
+    .map(agent => ({ id: agent.id, avatar: agent.avatar, name: agent.roman, color: agent.color }))
+}));
+
+// Métriques réelles, dérivées des données — jamais en dur.
+const equipageCount = agents.filter(agent => !agent.isLobby).length;
+const workflowStats = getWorkflowStats();
 </script>
 
 <style scoped>

@@ -109,14 +109,15 @@ const ErdDesigner = () => import(/* webpackChunkName: "apps-blueprint" */ '@/vie
 const WireframeBuilder = () => import(/* webpackChunkName: "apps-blueprint" */ '@/views/apps/WireframeBuilder.vue');
 const SitemapGenerator = () => import(/* webpackChunkName: "apps-blueprint" */ '@/views/apps/SitemapGenerator.vue');
 
-// AGENTS IA APPS
-const AgentJarvisRouter = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/AgentJarvisRouter.vue');
-const AgentEdithScanner = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/AgentEdithScanner.vue');
-const AgentUltronMonitor = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/AgentUltronMonitor.vue');
-const AgentFridayKnowledgeBase = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/AgentFridayKnowledgeBase.vue');
-const AgentVisionContentGen = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/AgentVisionContentGen.vue');
-const AgentVeronicaPipeline = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/AgentVeronicaPipeline.vue');
-const AgentPepperInvoice = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/AgentPepperInvoice.vue');
+// AGENTS IA APPS (outils de l'équipage des six Lois)
+const WaRouter = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/WaRouter.vue');
+const MakotoScanner = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/MakotoScanner.vue');
+const DouMonitor = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/DouMonitor.vue');
+const WatashiKnowledgeBase = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/WatashiKnowledgeBase.vue');
+const JitsuPipeline = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/JitsuPipeline.vue');
+// Outils neutres (détachés de la section Agents)
+const SeoContentGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/SeoContentGenerator.vue');
+const InvoiceGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/InvoiceGenerator.vue');
 
 // AGENTS - Bureau des Agents IA
 const AgentsHub = () => import('@/views/agents/AgentsHub.vue');
@@ -172,7 +173,7 @@ const routes = [
     component: HubPage,
     meta: { 
       title: 'GL TOWER | QG des Agents IA',
-      description: 'Centre de commandement GL Digital Lab. 7 agents IA couvrent tous les niveaux de votre infrastructure : support, community, content, monitoring, DevOps, sécurité.'
+      description: 'Centre de commandement GL Digital Lab. L\'équipage des six Lois couvre tous les niveaux de votre infrastructure : orchestration, sécurité, frontend, backend, monitoring, mémoire.'
     }
   },
   {
@@ -319,7 +320,7 @@ const routes = [
     component: GLTowerInteractive,
     meta: { 
       title: 'GL TOWER | Visite Interactive du QG',
-      description: 'Explorez GL Tower de manière interactive : 15 agents IA, 100+ workflows automatisés, et découvrez comment votre site est produit de A à Z.'
+      description: 'Explorez GL Tower de manière interactive : l\'équipage des six Lois, leurs workflows automatisés, et découvrez comment votre site est produit de A à Z.'
     }
   },
   {
@@ -920,68 +921,69 @@ const routes = [
       description: 'Créez des sitemaps visuels et exportez en XML.'
     }
   },
-  // AGENTS IA APPS
+  // AGENTS IA APPS (outils de l'équipage des six Lois)
   {
-    path: '/apps/agent/jarvis',
-    name: 'AgentJarvisRouter',
-    component: AgentJarvisRouter,
+    path: '/apps/agent/wa',
+    name: 'WaRouter',
+    component: WaRouter,
     meta: { 
-      title: 'JARVIS Router | Multi-Agent Orchestrator',
-      description: 'Orchestrez des requêtes complexes vers plusieurs agents IA.'
+      title: 'Wa Router | Orchestrateur Multi-Agent',
+      description: 'Orchestrez des requêtes complexes vers les six Lois de l\'équipage.'
     }
   },
   {
-    path: '/apps/agent/edith',
-    name: 'AgentEdithScanner',
-    component: AgentEdithScanner,
+    path: '/apps/agent/makoto',
+    name: 'MakotoScanner',
+    component: MakotoScanner,
     meta: { 
-      title: 'EDITH Scanner | Security Audit',
+      title: 'Makoto Scanner | Audit de Sécurité',
       description: 'Analysez la sécurité de vos projets et dépendances.'
     }
   },
   {
-    path: '/apps/agent/ultron',
-    name: 'AgentUltronMonitor',
-    component: AgentUltronMonitor,
+    path: '/apps/agent/dou',
+    name: 'DouMonitor',
+    component: DouMonitor,
     meta: { 
-      title: 'ULTRON Monitor | System Monitoring',
+      title: 'Dou Monitor | Supervision Système',
       description: 'Surveillez vos services et métriques en temps réel.'
     }
   },
   {
-    path: '/apps/agent/friday',
-    name: 'AgentFridayKnowledgeBase',
-    component: AgentFridayKnowledgeBase,
+    path: '/apps/agent/watashi',
+    name: 'WatashiKnowledgeBase',
+    component: WatashiKnowledgeBase,
     meta: { 
-      title: 'FRIDAY Knowledge Base | RAG Builder',
+      title: 'Watashi Knowledge Base | Base de Connaissances',
       description: 'Créez une base de connaissances RAG pour votre chatbot.'
     }
   },
   {
-    path: '/apps/agent/vision',
-    name: 'AgentVisionContentGen',
-    component: AgentVisionContentGen,
+    path: '/apps/agent/jitsu',
+    name: 'JitsuPipeline',
+    component: JitsuPipeline,
     meta: { 
-      title: 'VISION Content Gen | SEO Content',
+      title: 'Jitsu Pipeline | Générateur CI/CD',
+      description: 'Générez des configurations CI/CD pour GitHub Actions, GitLab CI.'
+    }
+  },
+  // Outils neutres (détachés de la section Agents)
+  {
+    path: '/apps/seo-content',
+    name: 'SeoContentGenerator',
+    component: SeoContentGenerator,
+    meta: { 
+      title: 'SEO Content Generator | Contenu Optimisé',
       description: 'Générez du contenu optimisé SEO pour vos projets.'
     }
   },
   {
-    path: '/apps/agent/veronica',
-    name: 'AgentVeronicaPipeline',
-    component: AgentVeronicaPipeline,
+    path: '/apps/invoice-generator',
+    name: 'InvoiceGenerator',
+    component: InvoiceGenerator,
     meta: { 
-      title: 'VERONICA Pipeline | CI/CD Builder',
-      description: 'Générez des configurations CI/CD pour GitHub Actions, GitLab CI.'
-    }
-  },
-  {
-    path: '/apps/agent/pepper',
-    name: 'AgentPepperInvoice',
-    component: AgentPepperInvoice,
-    meta: { 
-      title: 'PEPPER Invoice | Facturation',
-      description: 'Créez des devis et factures professionnels.'
+      title: 'Invoice Generator | Devis & Factures',
+      description: 'Créez des devis et factures professionnels en quelques clics.'
     }
   },
 

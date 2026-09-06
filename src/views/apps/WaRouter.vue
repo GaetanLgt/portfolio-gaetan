@@ -3,7 +3,7 @@
     <header class="app-header">
       <div class="container">
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
-        <span class="agent-badge" style="--agent-color: #FBBF24">🎯 JARVIS</span>
+        <span class="agent-badge" style="--agent-color: #FBBF24">🎯 WA</span>
       </div>
     </header>
     <main class="app-main">
@@ -24,7 +24,7 @@
 
         <!-- ANALYSIS RESULT -->
         <div v-if="analysis" class="analysis-section">
-          <h3>🧠 Analyse JARVIS</h3>
+          <h3>🧠 Analyse Wa</h3>
           
           <div class="intent-card">
             <div class="intent-header">
@@ -114,20 +114,12 @@ const analysis = ref(null);
 const executionLog = ref([]);
 
 const agentsDB = {
-  jarvis: { id: 'jarvis', name: 'JARVIS', avatar: '🎯', color: '#FBBF24' },
-  edith: { id: 'edith', name: 'EDITH', avatar: '🛡️', color: '#EF4444' },
-  veronica: { id: 'veronica', name: 'VERONICA', avatar: '🚀', color: '#8B5CF6' },
-  ultron: { id: 'ultron', name: 'ULTRON', avatar: '📊', color: '#F59E0B' },
-  vision: { id: 'vision', name: 'VISION', avatar: '📢', color: '#06B6D4' },
-  karen: { id: 'karen', name: 'KAREN', avatar: '👥', color: '#EC4899' },
-  friday: { id: 'friday', name: 'FRIDAY', avatar: '🎧', color: '#10B981' },
-  tadashi: { id: 'tadashi', name: 'TADASHI', avatar: '🦾', color: '#14B8A6' },
-  jocasta: { id: 'jocasta', name: 'JOCASTA', avatar: '⚙️', color: '#6366F1' },
-  cerebro: { id: 'cerebro', name: 'CEREBRO', avatar: '🔬', color: '#A855F7' },
-  zola: { id: 'zola', name: 'ZOLA', avatar: '🗄️', color: '#0EA5E9' },
-  natasha: { id: 'natasha', name: 'NATASHA', avatar: '🎨', color: '#F43F5E' },
-  maria: { id: 'maria', name: 'MARIA', avatar: '📈', color: '#22C55E' },
-  pepper: { id: 'pepper', name: 'PEPPER', avatar: '💰', color: '#F97316' }
+  wa: { id: 'wa', name: 'Wa', avatar: '🎯', color: '#FBBF24' },
+  makoto: { id: 'makoto', name: 'Makoto', avatar: '🛡️', color: '#EF4444' },
+  bi: { id: 'bi', name: 'Bi', avatar: '💜', color: '#14B8A6' },
+  jitsu: { id: 'jitsu', name: 'Jitsu', avatar: '🚀', color: '#8B5CF6' },
+  dou: { id: 'dou', name: 'Dou', avatar: '📊', color: '#F59E0B' },
+  watashi: { id: 'watashi', name: 'Watashi', avatar: '🗄️', color: '#0EA5E9' }
 };
 
 async function analyzeRequest() {
@@ -142,50 +134,50 @@ async function analyzeRequest() {
   const detectedAgents = [];
   const workflow = [];
   
-  // Detect intent and agents
+  // Détection de l'intention et routage vers les six Lois de l'équipage
+  const route = (agent, task, priority) => {
+    if (!detectedAgents.some(a => a.id === agent.id)) {
+      detectedAgents.push({ ...agent, task, priority });
+    }
+  };
   if (text.includes('landing') || text.includes('page') || text.includes('site')) {
-    detectedAgents.push({ ...agentsDB.natasha, task: 'Design UI/UX', priority: 'high' });
-    detectedAgents.push({ ...agentsDB.tadashi, task: 'Développement Vue.js', priority: 'high' });
-    workflow.push({ ...agentsDB.natasha, action: 'Wireframe' });
-    workflow.push({ ...agentsDB.tadashi, action: 'Component' });
+    route(agentsDB.bi, 'Design & Frontend Vue 3', 'high');
+    workflow.push({ ...agentsDB.bi, action: 'Wireframe' });
+    workflow.push({ ...agentsDB.bi, action: 'Component' });
   }
   if (text.includes('sécuri') || text.includes('audit') || text.includes('vuln')) {
-    detectedAgents.push({ ...agentsDB.edith, task: 'Scan vulnérabilités', priority: 'critical' });
-    workflow.push({ ...agentsDB.edith, action: 'Security Scan' });
+    route(agentsDB.makoto, 'Scan vulnérabilités', 'critical');
+    workflow.push({ ...agentsDB.makoto, action: 'Security Scan' });
   }
   if (text.includes('api') || text.includes('backend') || text.includes('symfony')) {
-    detectedAgents.push({ ...agentsDB.jocasta, task: 'Architecture API', priority: 'high' });
-    workflow.push({ ...agentsDB.jocasta, action: 'API Design' });
+    route(agentsDB.jitsu, 'Architecture API & Backend', 'high');
+    workflow.push({ ...agentsDB.jitsu, action: 'API Design' });
   }
   if (text.includes('test') || text.includes('qa')) {
-    detectedAgents.push({ ...agentsDB.cerebro, task: 'Tests automatisés', priority: 'medium' });
-    workflow.push({ ...agentsDB.cerebro, action: 'Test Suite' });
+    route(agentsDB.makoto, 'Tests automatisés', 'medium');
+    workflow.push({ ...agentsDB.makoto, action: 'Test Suite' });
   }
   if (text.includes('deploy') || text.includes('ci') || text.includes('prod')) {
-    detectedAgents.push({ ...agentsDB.veronica, task: 'CI/CD Pipeline', priority: 'high' });
-    workflow.push({ ...agentsDB.veronica, action: 'Deploy' });
+    route(agentsDB.jitsu, 'CI/CD Pipeline', 'high');
+    workflow.push({ ...agentsDB.jitsu, action: 'Deploy' });
   }
   if (text.includes('monitor') || text.includes('alert') || text.includes('log')) {
-    detectedAgents.push({ ...agentsDB.ultron, task: 'Monitoring setup', priority: 'medium' });
-    workflow.push({ ...agentsDB.ultron, action: 'Monitor' });
-  }
-  if (text.includes('content') || text.includes('blog') || text.includes('article')) {
-    detectedAgents.push({ ...agentsDB.vision, task: 'Rédaction contenu', priority: 'medium' });
-    workflow.push({ ...agentsDB.vision, action: 'Write' });
-  }
-  if (text.includes('seo') || text.includes('analytics') || text.includes('marketing')) {
-    detectedAgents.push({ ...agentsDB.maria, task: 'Optimisation SEO', priority: 'medium' });
-    workflow.push({ ...agentsDB.maria, action: 'SEO Audit' });
+    route(agentsDB.dou, 'Monitoring & alertes', 'medium');
+    workflow.push({ ...agentsDB.dou, action: 'Monitor' });
   }
   if (text.includes('database') || text.includes('data') || text.includes('sql')) {
-    detectedAgents.push({ ...agentsDB.zola, task: 'Architecture data', priority: 'high' });
-    workflow.push({ ...agentsDB.zola, action: 'Schema Design' });
+    route(agentsDB.watashi, 'Architecture data & RAG', 'high');
+    workflow.push({ ...agentsDB.watashi, action: 'Schema Design' });
   }
-  
-  // Default if nothing detected
+  if (text.includes('mémoire') || text.includes('vault') || text.includes('base de connaissance')) {
+    route(agentsDB.watashi, 'Base de connaissances', 'medium');
+    workflow.push({ ...agentsDB.watashi, action: 'RAG Index' });
+  }
+
+  // Defaut si rien n'est détecté
   if (detectedAgents.length === 0) {
-    detectedAgents.push({ ...agentsDB.friday, task: 'Analyse demande', priority: 'medium' });
-    workflow.push({ ...agentsDB.friday, action: 'Analyze' });
+    route(agentsDB.wa, 'Analyse & dispatch', 'medium');
+    workflow.push({ ...agentsDB.wa, action: 'Analyze' });
   }
   
   analysis.value = {
@@ -221,9 +213,9 @@ async function executeWorkflow() {
     });
   };
   
-  addLog('JARVIS', 'Initialisation du workflow...', 'running');
+  addLog('WA', 'Initialisation du workflow...', 'running');
   await new Promise(r => setTimeout(r, 800));
-  addLog('JARVIS', 'Workflow initialisé', 'success');
+  addLog('WA', 'Workflow initialisé', 'success');
   
   for (const step of analysis.value.workflow) {
     addLog(step.name, `Démarrage: ${step.action}`, 'running');
@@ -231,7 +223,7 @@ async function executeWorkflow() {
     addLog(step.name, `${step.action} terminé`, 'success');
   }
   
-  addLog('JARVIS', 'Workflow terminé avec succès ✓', 'success');
+  addLog('WA', 'Workflow terminé avec succès ✓', 'success');
   executing.value = false;
 }
 

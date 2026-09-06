@@ -3,7 +3,7 @@
     <header class="app-header">
       <div class="container">
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
-        <span class="agent-badge" style="--agent-color: #10B981">🎧 FRIDAY</span>
+        <span class="agent-badge" style="--agent-color: #0EA5E9">🗄️ WATASHI</span>
       </div>
     </header>
     <main class="app-main">
@@ -148,7 +148,7 @@ const documents = ref([
 ]);
 
 const messages = ref([
-  { id: 1, role: 'assistant', text: 'Bonjour ! Je suis FRIDAY, votre assistant support. Comment puis-je vous aider aujourd\'hui ?', sources: null }
+  { id: 1, role: 'assistant', text: 'Bonjour ! Je suis Watashi, votre assistant support. Comment puis-je vous aider aujourd\'hui ?', sources: null }
 ]);
 
 let docIdCounter = 3;
@@ -260,8 +260,8 @@ function exportKB() {
 }
 
 function generateEmbedCode() {
-  const code = `<script src="https://friday.gl-digitallab.fr/widget.js"><\/script>
-<div id="friday-chat" data-kb="your-kb-id"></div>`;
+  const code = `<script src="https://watashi.gl-digitallab.fr/widget.js"><\/script>
+<div id="watashi-chat" data-kb="your-kb-id"></div>`;
   navigator.clipboard.writeText(code);
   alert('Code copié dans le presse-papiers !');
 }
@@ -272,7 +272,7 @@ function generateEmbedCode() {
 .app-header { padding: 1rem 0; border-bottom: 1px solid var(--border); }
 .app-header .container { display: flex; justify-content: space-between; align-items: center; }
 .back-link { color: var(--text-muted); text-decoration: none; }
-.agent-badge { padding: 0.35rem 0.75rem; background: rgba(16,185,129,0.1); border: 1px solid var(--agent-color); border-radius: 2rem; font-size: 0.8rem; color: var(--agent-color); }
+.agent-badge { padding: 0.35rem 0.75rem; background: rgba(14,165,233,0.1); border: 1px solid var(--agent-color); border-radius: 2rem; font-size: 0.8rem; color: var(--agent-color); }
 .app-main { padding: var(--space-lg) 0; }
 .app-intro { text-align: center; margin-bottom: 2rem; }
 .app-intro h1 { display: flex; justify-content: center; gap: 0.5rem; font-size: 1.75rem; }

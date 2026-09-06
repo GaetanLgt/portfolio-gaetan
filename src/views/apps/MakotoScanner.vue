@@ -3,7 +3,7 @@
     <header class="app-header">
       <div class="container">
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
-        <span class="agent-badge" style="--agent-color: #EF4444">🛡️ EDITH</span>
+        <span class="agent-badge" style="--agent-color: #EF4444">🛡️ MAKOTO</span>
       </div>
     </header>
     <main class="app-main">
@@ -97,7 +97,7 @@
 
           <!-- RECOMMENDATIONS -->
           <div class="recommendations-section">
-            <h4>💡 Recommandations EDITH</h4>
+            <h4>💡 Recommandations Makoto</h4>
             <div class="reco-list">
               <div v-for="(reco, i) in results.recommendations" :key="i" class="reco-item">
                 <span class="reco-icon">{{ reco.icon }}</span>
@@ -241,7 +241,7 @@ function exportReport(format) {
     filename = 'security-report.json';
     type = 'application/json';
   } else {
-    content = `# Security Report - EDITH
+    content = `# Security Report - Makoto
     
 **Date:** ${results.value.timestamp}
 **Score:** ${results.value.score}/100 - ${getGrade(results.value.score)}

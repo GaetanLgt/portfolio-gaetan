@@ -3,7 +3,6 @@
     <header class="app-header">
       <div class="container">
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
-        <span class="agent-badge" style="--agent-color: #F97316">💰 PEPPER</span>
       </div>
     </header>
     <main class="app-main">

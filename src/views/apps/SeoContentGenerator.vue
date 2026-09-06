@@ -3,7 +3,6 @@
     <header class="app-header">
       <div class="container">
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
-        <span class="agent-badge" style="--agent-color: #06B6D4">📢 VISION</span>
       </div>
     </header>
     <main class="app-main">

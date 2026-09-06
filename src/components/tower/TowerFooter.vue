@@ -29,7 +29,7 @@
 defineProps({
   agentsCount: {
     type: Number,
-    default: 15
+    default: 6
   }
 });
 </script>

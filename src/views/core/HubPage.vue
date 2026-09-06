@@ -37,7 +37,7 @@
 
         <div class="tower-stats">
           <div class="stat">
-            <span class="stat-value">{{ towerSourceAgents.filter(a => a.status === 'active' && !a.isLobby).length }}</span>
+            <span class="stat-value">{{ activeAgentCount }}</span>
             <span class="stat-label">Agents Actifs</span>
           </div>
           <div class="stat">
@@ -98,62 +98,40 @@
         </div>
 
         <div class="tower-structure">
-          <!-- Penthouse -->
-          <div class="tower-level tower-level--penthouse">
-            <div class="level-indicator">
-              <span class="level-num">⬡</span>
-              <span class="level-name">PENTHOUSE</span>
-            </div>
-            <div class="level-content">
-              <div class="agent-card agent-card--jarvis">
-                <div class="agent-avatar">🎯</div>
-                <div class="agent-info">
-                  <h3>J.A.R.V.I.S.</h3>
-                  <span class="agent-role">Coordination Centrale</span>
-                  <p>Orchestration de tous les agents. Décisions stratégiques. Interface humain-IA.</p>
-                  <div class="agent-status">
-                    <span class="status-dot status-dot--online"></span>
-                    <span>ONLINE</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Autres niveaux -->
-          <div 
-            v-for="(agent, index) in agents" 
+          <!-- Étages : les 6 Lois, du Penthouse (wa, floor 99) au niveau 2 (watashi) -->
+          <div
+            v-for="agent in towerAgents"
             :key="agent.id"
             class="tower-level"
-            :class="'tower-level--' + agent.id"
+            :class="isPenthouse(agent) ? 'tower-level--penthouse' : ''"
             :style="{ '--agent-color': agent.color }"
           >
             <div class="level-indicator">
-              <span class="level-num">{{ agents.length - index }}</span>
-              <span class="level-name">NIVEAU {{ agents.length - index }}</span>
+              <span class="level-num">{{ isPenthouse(agent) ? '⬡' : agent.floor }}</span>
+              <span class="level-name">{{ isPenthouse(agent) ? 'PENTHOUSE' : 'NIVEAU ' + agent.floor }}</span>
             </div>
             <div class="level-content">
               <div class="agent-card">
-                <div class="agent-avatar">{{ agent.icon }}</div>
+                <div class="agent-avatar">{{ agent.avatar }}</div>
                 <div class="agent-info">
                   <h3>{{ agent.name }}</h3>
                   <span class="agent-role">{{ agent.role }}</span>
                   <p>{{ agent.description }}</p>
                   <div class="agent-tech">
-                    <span v-for="tech in agent.tech" :key="tech">{{ tech }}</span>
+                    <span v-for="tool in agent.tools" :key="tool.name">{{ tool.name }}</span>
                   </div>
                   <div class="agent-status">
-                    <span class="status-dot" :class="'status-dot--' + agent.status"></span>
-                    <span>{{ agent.status.toUpperCase() }}</span>
+                    <span class="status-dot" :class="'status-dot--' + statusKey(agent.status)"></span>
+                    <span>{{ statusKey(agent.status).toUpperCase() }}</span>
                   </div>
                 </div>
                 <div class="agent-metrics">
-                  <div class="metric" v-if="metricById(agent.id).workflows">
-                    <span class="metric-value">{{ metricById(agent.id).workflows }}</span>
+                  <div class="metric" v-if="agent.metrics && agent.metrics.workflowsActifs">
+                    <span class="metric-value">{{ agent.metrics.workflowsActifs }}</span>
                     <span class="metric-label">Workflows</span>
                   </div>
-                  <div class="metric" v-if="metricById(agent.id).outils">
-                    <span class="metric-value">{{ metricById(agent.id).outils }}</span>
+                  <div class="metric" v-if="agent.metrics && agent.metrics.outilsActifs">
+                    <span class="metric-value">{{ agent.metrics.outilsActifs }}</span>
                     <span class="metric-label">Outils</span>
                   </div>
                 </div>
@@ -182,101 +160,7 @@
             </div>
           </div>
 
-          <!-- Séparateur Sous-sols -->
-          <div class="tower-separator">
-            <span class="separator-line"></span>
-            <span class="separator-text">🔽 DEV LAB - SOUS-SOLS 🔽</span>
-            <span class="separator-line"></span>
-          </div>
 
-          <!-- Dev Lab (Sous-sols) -->
-          <div 
-            v-for="(agent, index) in devLabAgents" 
-            :key="agent.id"
-            class="tower-level tower-level--basement"
-            :class="'tower-level--' + agent.id"
-            :style="{ '--agent-color': agent.color }"
-          >
-            <div class="level-indicator level-indicator--basement">
-              <span class="level-num">{{ agent.level.split(' ')[0] }}</span>
-              <span class="level-name">{{ agent.level.split(' ').slice(1).join(' ') }}</span>
-            </div>
-            <div class="level-content">
-              <div class="agent-card">
-                <div class="agent-avatar">{{ agent.icon }}</div>
-                <div class="agent-info">
-                  <h3>{{ agent.name }}</h3>
-                  <span class="agent-role">{{ agent.role }}</span>
-                  <p>{{ agent.description }}</p>
-                  <div class="agent-tech">
-                    <span v-for="tech in agent.tech" :key="tech">{{ tech }}</span>
-                  </div>
-                  <div class="agent-status">
-                    <span class="status-dot" :class="'status-dot--' + agent.status"></span>
-                    <span>{{ agent.status.toUpperCase() }}</span>
-                  </div>
-                </div>
-                <div class="agent-metrics">
-                  <div class="metric" v-if="metricById(agent.id).workflows">
-                    <span class="metric-value">{{ metricById(agent.id).workflows }}</span>
-                    <span class="metric-label">Workflows</span>
-                  </div>
-                  <div class="metric" v-if="metricById(agent.id).outils">
-                    <span class="metric-value">{{ metricById(agent.id).outils }}</span>
-                    <span class="metric-label">Outils</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Séparateur Back Office -->
-          <div class="tower-separator tower-separator--office">
-            <span class="separator-line"></span>
-            <span class="separator-text">💼 BACK OFFICE 💼</span>
-            <span class="separator-line"></span>
-          </div>
-
-          <!-- Back Office -->
-          <div 
-            v-for="agent in backOfficeAgents" 
-            :key="agent.id"
-            class="tower-level tower-level--office"
-            :class="'tower-level--' + agent.id"
-            :style="{ '--agent-color': agent.color }"
-          >
-            <div class="level-indicator level-indicator--office">
-              <span class="level-num">💰</span>
-              <span class="level-name">{{ agent.level }}</span>
-            </div>
-            <div class="level-content">
-              <div class="agent-card">
-                <div class="agent-avatar">{{ agent.icon }}</div>
-                <div class="agent-info">
-                  <h3>{{ agent.name }}</h3>
-                  <span class="agent-role">{{ agent.role }}</span>
-                  <p>{{ agent.description }}</p>
-                  <div class="agent-tech">
-                    <span v-for="tech in agent.tech" :key="tech">{{ tech }}</span>
-                  </div>
-                  <div class="agent-status">
-                    <span class="status-dot" :class="'status-dot--' + agent.status"></span>
-                    <span>{{ agent.status.toUpperCase() }}</span>
-                  </div>
-                </div>
-                <div class="agent-metrics">
-                  <div class="metric" v-if="metricById(agent.id).workflows">
-                    <span class="metric-value">{{ metricById(agent.id).workflows }}</span>
-                    <span class="metric-label">Workflows</span>
-                  </div>
-                  <div class="metric" v-if="metricById(agent.id).outils">
-                    <span class="metric-value">{{ metricById(agent.id).outils }}</span>
-                    <span class="metric-label">Outils</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -294,23 +178,23 @@
 
         <div class="agents-grid">
           <div 
-            v-for="agent in allAgents" 
+            v-for="agent in towerAgents" 
             :key="agent.id"
             class="agent-tile"
             :style="{ '--color': agent.color }"
           >
             <div class="tile-glow"></div>
             <div class="tile-header">
-              <span class="tile-icon">{{ agent.icon }}</span>
+              <span class="tile-icon">{{ agent.avatar }}</span>
               <div class="tile-status">
-                <span class="status-dot" :class="'status-dot--' + agent.status"></span>
+                <span class="status-dot" :class="'status-dot--' + statusKey(agent.status)"></span>
               </div>
             </div>
             <h4>{{ agent.name }}</h4>
             <span class="tile-role">{{ agent.role }}</span>
-            <p>{{ agent.shortDesc }}</p>
+            <p>{{ agent.description }}</p>
             <div class="tile-tech">
-              <span v-for="tech in agent.tech.slice(0, 3)" :key="tech">{{ tech }}</span>
+              <span v-for="tool in agent.tools.slice(0, 3)" :key="tool.name">{{ tool.name }}</span>
             </div>
           </div>
         </div>
@@ -350,15 +234,15 @@
             <span class="terminal-title">GL_TOWER_CONTROL</span>
           </div>
           <div class="terminal-body">
-            <p class="terminal-line"><span class="t-prompt">jarvis@gl-tower:~$</span> status --all</p>
+            <p class="terminal-line"><span class="t-prompt">gl-tower:~$</span> status --all</p>
             <p class="terminal-line"><span class="t-info">[INFO]</span> Scanning tower levels...</p>
-            <p class="terminal-line" v-for="agent in allAgents" :key="agent.id + '-status'">
-              <span class="t-prompt">[{{ agent.name.toUpperCase() }}]</span> 
-              <span :class="agent.status === 'online' ? 't-success' : 't-warning'">{{ agent.status.toUpperCase() }}</span>
+            <p class="terminal-line" v-for="agent in towerAgents" :key="agent.id + '-status'">
+              <span class="t-prompt">[{{ (agent.roman || agent.name).toUpperCase() }}]</span> 
+              <span :class="statusKey(agent.status) === 'online' ? 't-success' : 't-warning'">{{ statusKey(agent.status).toUpperCase() }}</span>
               <span class="t-dim"> - {{ agent.role }}</span>
             </p>
             <p class="terminal-line"><span class="t-info">[INFO]</span> All agents operational.</p>
-            <p class="terminal-line"><span class="t-prompt">jarvis@gl-tower:~$</span> <span class="cursor">_</span></p>
+            <p class="terminal-line"><span class="t-prompt">gl-tower:~$</span> <span class="cursor">_</span></p>
           </div>
         </div>
       </div>
@@ -433,7 +317,7 @@
           </p>
           <router-link to="/contact" class="footer-cta">
             <span class="cta-icon">🎯</span>
-            Planifier un Audit avec JARVIS
+            Planifier un Audit avec l'Équipage ARKADIA
           </router-link>
         </div>
       </div>
@@ -442,199 +326,33 @@
 </template>
 
 <script setup>
-import { agents as towerSourceAgents } from '@/data/agents';
+import { agents } from '@/data/agents';
 
-// Métriques réelles : aucune valeur en dur — on lit les workflows/outils actifs
-// réellement déclarés dans data/agents.js (source unique, partagée avec /agents).
-const metricById = (id) => {
-  const source = towerSourceAgents.find(a => a.id === id);
-  if (!source || !source.metrics) return { workflows: null, outils: null };
-  return { workflows: source.metrics.workflowsActifs, outils: source.metrics.outilsActifs };
-};
+// La page ne duplique plus d'agents en dur : elle lit les 6 Lois (+ lobby)
+// depuis @/data/agents — source unique, partagée avec /agents.
+// Aucune métrique inventée : agent.metrics.{workflowsActifs,outilsActifs}
+// est calculé dans data/agents.js à partir des workflows/outils réels.
+const isPenthouse = (a) => a.floor >= 90;
 
-// Agents IA de GL Tower (du haut vers le bas)
-const agents = [
-  {
-    id: 'edith',
-    name: 'E.D.I.T.H.',
-    role: 'Sécurité & Audit',
-    icon: '🛡️',
-    color: '#ef4444',
-    description: 'Scanning de vulnérabilités, audits automatisés, alertes sécurité. Protection proactive.',
-    shortDesc: 'Audits sécurité automatisés',
-    tech: ['OWASP', 'Nuclei', 'Trivy'],
-    status: 'online',
-  },
-  {
-    id: 'veronica',
-    name: 'V.E.R.O.N.I.C.A.',
-    role: 'DevOps & Déploiement',
-    icon: '🚀',
-    color: '#8b5cf6',
-    description: 'CI/CD pipelines, déploiements automatisés, rollback intelligent. Infrastructure as Code.',
-    shortDesc: 'Pipelines CI/CD automatisés',
-    tech: ['GitHub Actions', 'Docker', 'Ansible'],
-    status: 'online',
-  },
-  {
-    id: 'ultron',
-    name: 'U.L.T.R.O.N.',
-    role: 'Monitoring & Alertes',
-    icon: '📊',
-    color: '#f59e0b',
-    description: 'Surveillance 24/7, métriques temps réel, alertes intelligentes. Détection d\'anomalies.',
-    shortDesc: 'Monitoring infrastructure',
-    tech: ['Prometheus', 'Grafana', 'n8n'],
-    status: 'online',
-  },
-  {
-    id: 'vision',
-    name: 'V.I.S.I.O.N.',
-    role: 'Content & Communication',
-    icon: '📢',
-    color: '#06b6d4',
-    description: 'Génération de contenu, posts Discord, newsletters automatisées. Voix de la marque.',
-    shortDesc: 'Contenu automatisé',
-    tech: ['Ollama', 'Discord.js', 'Markdown'],
-    status: 'online',
-  },
-  {
-    id: 'karen',
-    name: 'K.A.R.E.N.',
-    role: 'Community Management',
-    icon: '👥',
-    color: '#ec4899',
-    description: 'Modération Discord, gestion des tickets, onboarding membres. Expérience communauté.',
-    shortDesc: 'Modération communauté',
-    tech: ['Discord Bot', 'Webhooks', 'n8n'],
-    status: 'online',
-  },
-  {
-    id: 'friday',
-    name: 'F.R.I.D.A.Y.',
-    role: 'Support Client',
-    icon: '🎧',
-    color: '#10b981',
-    description: 'Réponses automatisées, triage des demandes, FAQ intelligente. Premier contact client.',
-    shortDesc: 'Support automatisé',
-    tech: ['RAG', 'ChromaDB', 'OpenWebUI'],
-    status: 'online',
-  }
-];
+// Étages de la tour, du haut vers le bas : wa(99) → makoto(6) → bi(5) →
+// jitsu(4) → dou(3) → watashi(2). Le lobby (isLobby) n'est pas un étage agent.
+const towerAgents = [...agents]
+  .filter((a) => !a.isLobby && a.zone === 'main')
+  .sort((a, b) => b.floor - a.floor);
 
-// Agents Dev Lab (Sous-sols)
-const devLabAgents = [
-  {
-    id: 'tadashi',
-    name: 'T.A.D.A.S.H.I.',
-    role: 'Frontend Engineering',
-    icon: '🦾',
-    color: '#3b82f6',
-    description: 'Architecture composants Vue.js, expériences 3D Three.js, animations GSAP.',
-    shortDesc: 'Frontend Vue/Three.js',
-    tech: ['Vue 3', 'Three.js', 'TypeScript', 'GSAP'],
-    status: 'online',
-    level: 'SS-1 FORGE'
-  },
-  {
-    id: 'jocasta',
-    name: 'J.O.C.A.S.T.A.',
-    role: 'Backend Architecture',
-    icon: '⚙️',
-    color: '#8b5cf6',
-    description: 'Architecture Symfony, APIs REST/GraphQL, logique métier, sécurité.',
-    shortDesc: 'Backend Symfony/API',
-    tech: ['Symfony 8', 'PHP 8.3+', 'API Platform'],
-    status: 'online',
-    level: 'SS-2 ARMURERIE'
-  },
-  {
-    id: 'cerebro',
-    name: 'C.E.R.E.B.R.O.',
-    role: 'Testing & QA',
-    icon: '🔬',
-    color: '#ef4444',
-    description: 'Tests unitaires, intégration, E2E, audits Lighthouse, couverture code.',
-    shortDesc: 'Tests automatisés',
-    tech: ['PHPUnit', 'Vitest', 'Playwright'],
-    status: 'online',
-    level: 'SS-3 LABO'
-  },
-  {
-    id: 'zola',
-    name: 'Z.O.L.A.',
-    role: 'Data Architecture',
-    icon: '🗄️',
-    color: '#f59e0b',
-    description: 'Schémas DB, optimisation requêtes, migrations, backups, RAG embeddings.',
-    shortDesc: 'Architecture données',
-    tech: ['PostgreSQL', 'Redis', 'ChromaDB'],
-    status: 'online',
-    level: 'SS-4 BUNKER'
-  },
-  {
-    id: 'dume',
-    name: 'D.U.M-E',
-    role: 'Build & Tooling',
-    icon: '🛠️',
-    color: '#6b7280',
-    description: 'Configuration Vite/Webpack, Docker, gestion dépendances, scripts CI.',
-    shortDesc: 'Build & DevTools',
-    tech: ['Vite', 'Docker', 'npm', 'Composer'],
-    status: 'online',
-    level: 'SS-5 ATELIER'
-  }
-];
+// Compteur réel d'agents non-lobby en ligne (6 Lois, aucun en dur).
+const activeAgentCount = agents.filter((a) => a.status === 'active' && !a.isLobby).length;
 
-// Agent Back Office
-const backOfficeAgents = [
-  {
-    id: 'pepper',
-    name: 'P.E.P.P.E.R.',
-    role: 'Finance & Administration',
-    icon: '💰',
-    color: '#10b981',
-    description: 'Facturation, devis, suivi paiements, TVA, rapports financiers.',
-    shortDesc: 'Gestion financière',
-    tech: ['Stripe', 'PDF', 'n8n', 'PostgreSQL'],
-    status: 'online',
-    level: 'BACK OFFICE'
-  }
-];
+// data/agents.js utilise status:'active' ; l'affichage historique parle en online/standby.
+const statusKey = (s) => (s === 'active' ? 'online' : s);
 
-// Tous les agents incluant JARVIS, Dev Lab et Back Office
-const allAgents = [
-  {
-    id: 'jarvis',
-    name: 'J.A.R.V.I.S.',
-    role: 'Coordination Centrale',
-    icon: '🎯',
-    color: '#fbbf24',
-    description: 'Orchestration de tous les agents. Décisions stratégiques. Interface humain-IA.',
-    shortDesc: 'Orchestration globale',
-    tech: ['n8n', 'Ollama', 'API Gateway'],
-    status: 'online',
-  },
-  ...agents,
-  ...devLabAgents,
-  ...backOfficeAgents
-];
-
-// Domaines couverts
-const domains = [
-  { name: 'Support Client', icon: '🎧', desc: 'Tickets, FAQ, onboarding', agent: 'FRIDAY' },
-  { name: 'Communauté', icon: '👥', desc: 'Discord, modération, events', agent: 'KAREN' },
-  { name: 'Contenu', icon: '📢', desc: 'Posts, newsletters, docs', agent: 'VISION' },
-  { name: 'Monitoring', icon: '📊', desc: 'Uptime, métriques, alertes', agent: 'ULTRON' },
-  { name: 'DevOps', icon: '🚀', desc: 'CI/CD, déploiements, infra', agent: 'VERONICA' },
-  { name: 'Sécurité', icon: '🛡️', desc: 'Audits, scans, protection', agent: 'EDITH' },
-  { name: 'Frontend', icon: '🦾', desc: 'Vue.js, Three.js, UI/UX', agent: 'TADASHI' },
-  { name: 'Backend', icon: '⚙️', desc: 'Symfony, APIs, logique', agent: 'JOCASTA' },
-  { name: 'Testing', icon: '🔬', desc: 'Tests, QA, couverture', agent: 'CEREBRO' },
-  { name: 'Data', icon: '🗄️', desc: 'DB, cache, migrations', agent: 'ZOLA' },
-  { name: 'Build', icon: '🛠️', desc: 'Vite, Docker, tooling', agent: 'DUM-E' },
-  { name: 'Finance', icon: '💰', desc: 'Factures, devis, TVA', agent: 'PEPPER' },
-];
+// Domaines couverts : dérivés des 6 Lois (plus aucun nom Marvel en dur).
+const domains = towerAgents.map((a) => ({
+  icon: a.avatar,
+  name: a.meaning,
+  desc: a.mission,
+  agent: a.roman,
+}));
 
 // Aperçu multivers
 const universePreview = [
@@ -955,13 +673,6 @@ const universePreview = [
   display: flex;
   align-items: flex-start;
   gap: 1.5rem;
-}
-
-.agent-card--jarvis {
-  padding: 1rem;
-  background: rgba(251, 191, 36, 0.05);
-  border-radius: 0.5rem;
-  border: 1px solid rgba(251, 191, 36, 0.2);
 }
 
 .agent-avatar {

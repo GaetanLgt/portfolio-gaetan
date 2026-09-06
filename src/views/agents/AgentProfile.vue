@@ -343,10 +343,11 @@ const route = useRoute();
 // Current agent
 const agent = computed(() => getAgentById(route.params.id));
 
-// Navigation
-const currentIndex = computed(() => agents.findIndex(a => a.id === route.params.id));
-const prevAgent = computed(() => currentIndex.value > 0 ? agents[currentIndex.value - 1] : null);
-const nextAgent = computed(() => currentIndex.value < agents.length - 1 ? agents[currentIndex.value + 1] : null);
+// Navigation (uniquement les Lois de l'équipage, lobby exclu)
+const equipageAgents = computed(() => agents.filter(a => !a.isLobby));
+const currentIndex = computed(() => equipageAgents.value.findIndex(a => a.id === route.params.id));
+const prevAgent = computed(() => currentIndex.value > 0 ? equipageAgents.value[currentIndex.value - 1] : null);
+const nextAgent = computed(() => currentIndex.value < equipageAgents.value.length - 1 ? equipageAgents.value[currentIndex.value + 1] : null);
 
 // Copy prompt
 const promptCopied = ref(false);

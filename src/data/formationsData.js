@@ -708,7 +708,7 @@ Le point fort ? Nous construisons ensemble un **système RAG complet** : une bas
     instructor: {
       name: 'Gaëtan Langlet',
       title: 'Expert IA & Automatisation',
-      bio: 'Passionné par l\'IA depuis 2022, j\'ai construit ma propre stack IA locale (Ollama, ChromaDB, n8n) et j\'intègre des agents IA dans mes projets clients. Mon portfolio est assisté par 15 agents IA spécialisés !',
+      bio: 'Passionné par l\'IA depuis 2022, j\'ai construit ma propre stack IA locale (Ollama, ChromaDB, n8n) et j\'intègre des agents IA dans mes projets clients. Mon portfolio est assisté par un équipage de six Lois IA spécialisées !',
       avatar: '/images/neo-avatar.jpg'
     },
     

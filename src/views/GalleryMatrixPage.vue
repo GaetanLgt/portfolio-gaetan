@@ -698,8 +698,8 @@ const galleryItems = reactive([
   {
     id: 205,
     title: 'Agents Bureau',
-    desc: 'Hub des agents IA',
-    description: 'Interface de gestion des 7 agents IA avec profils, statuts et interactions.',
+    desc: 'Hub des Lois',
+    description: 'Interface de gestion de l\'équipage des six Lois avec profils, statuts et interactions.',
     category: 'UI/UX',
     tags: ['Agents', 'IA', 'Dashboard'],
     color: '#ff4444',
@@ -758,8 +758,8 @@ const galleryItems = reactive([
   {
     id: 301,
     title: 'Icons Agents IA',
-    desc: '7 icônes pour 7 agents',
-    description: 'Set d\'icônes personnalisées pour chaque agent IA : JARVIS, EDITH, ULTRON, FRIDAY, VISION, VERONICA, PEPPER.',
+    desc: '6 icônes pour 6 Lois',
+    description: 'Set d\'icônes personnalisées pour chaque Loi de l\'équipage : Wa, Makoto, Bi, Jitsu, Dou, Watashi.',
     category: 'Branding',
     tags: ['Icônes', 'IA', 'Système'],
     color: '#ff4444',

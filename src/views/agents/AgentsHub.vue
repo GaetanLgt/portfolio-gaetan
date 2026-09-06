@@ -20,23 +20,23 @@
           <p class="hub-hero__tagline">Bureau des Agents IA</p>
           
           <p class="hub-hero__desc">
-            {{ agents.length }} intelligences artificielles organisées en 4 zones. 
-            Du support client au développement, chaque agent a sa mission.
+            {{ mainAgents.length }} Lois organisées selon l'Équipage ARKADIA.
+            De l'orchestration à la mémoire, chaque Loi couvre un domaine critique.
           </p>
         </div>
       </div>
     </section>
     
-    <!-- ZONE: Étages Principaux -->
+    <!-- L'ÉQUIPAGE : les 6 Lois -->
     <section class="zone-section zone--main" aria-labelledby="zone-main-title">
       <div class="container">
         <div class="zone-header">
           <div class="zone-icon">🏢</div>
           <div class="zone-info">
-            <h2 id="zone-main-title">Étages Principaux</h2>
-            <p>Client-facing : du support à la coordination</p>
+            <h2 id="zone-main-title">L'Équipage — Six Lois</h2>
+            <p>Chaque Loi agit selon un principe. Trinity, la Grande Architecte, veille au-dessus.</p>
           </div>
-          <div class="zone-floors">Penthouse → Niveau 1</div>
+          <div class="zone-floors">Penthouse → Lobby</div>
         </div>
         
         <div class="agents-list">
@@ -68,65 +68,6 @@
       </div>
     </section>
     
-    <!-- DEV LAB Separator -->
-    <div class="zone-separator">
-      <span class="separator-line"></span>
-      <span class="separator-text">🔽 DEV LAB - SOUS-SOLS 🔽</span>
-      <span class="separator-line"></span>
-    </div>
-    
-    <!-- ZONE: Dev Lab -->
-    <section class="zone-section zone--devlab" aria-labelledby="zone-devlab-title">
-      <div class="container">
-        <div class="zone-header">
-          <div class="zone-icon">🔬</div>
-          <div class="zone-info">
-            <h2 id="zone-devlab-title">Dev Lab</h2>
-            <p>Là où le code prend vie</p>
-          </div>
-          <div class="zone-floors">SS-1 → SS-5</div>
-        </div>
-        
-        <div class="agents-list agents-list--devlab">
-          <AgentCard 
-            v-for="agent in devlabAgents" 
-            :key="agent.id" 
-            :agent="agent"
-            variant="devlab"
-          />
-        </div>
-      </div>
-    </section>
-    
-    <!-- BACK OFFICE Separator -->
-    <div class="zone-separator">
-      <span class="separator-line"></span>
-      <span class="separator-text">💼 BACK OFFICE & CREATIVE 💼</span>
-      <span class="separator-line"></span>
-    </div>
-    
-    <!-- ZONE: Back Office & Creative -->
-    <section class="zone-section zone--backoffice" aria-labelledby="zone-back-title">
-      <div class="container">
-        <div class="zone-header">
-          <div class="zone-icon">💼</div>
-          <div class="zone-info">
-            <h2 id="zone-back-title">Back Office & Creative</h2>
-            <p>Finance, Design & Marketing</p>
-          </div>
-        </div>
-        
-        <div class="agents-list agents-list--compact">
-          <AgentCard 
-            v-for="agent in backofficeAgents" 
-            :key="agent.id" 
-            :agent="agent"
-            variant="compact"
-          />
-        </div>
-      </div>
-    </section>
-    
     <!-- Quick Nav -->
     <section class="quick-nav-section">
       <div class="container">
@@ -140,7 +81,7 @@
             :style="{ '--chip-color': agent.color }"
           >
             <span class="chip-avatar">{{ agent.avatar }}</span>
-            <span class="chip-name">{{ agent.name.split('.')[0] }}</span>
+            <span class="chip-name">{{ agent.roman }}</span>
           </router-link>
         </div>
       </div>
@@ -157,18 +98,12 @@
 
 <script setup>
 import { computed } from 'vue';
-import { agents, getAgentsByZone } from '@/data/agents';
+import { agents } from '@/data/agents';
 import AgentCard from '@/components/agents/AgentCard.vue';
 
-// Agents par zone
+// Les agents de l'Équipage (hors lobby), triés du Penthouse vers les étages bas
 const mainAgents = computed(() => 
-  agents.filter(a => a.zone === 'main' && !a.isLobby).sort((a, b) => b.floor - a.floor)
-);
-const devlabAgents = computed(() => 
-  agents.filter(a => a.zone === 'devlab').sort((a, b) => b.floor - a.floor)
-);
-const backofficeAgents = computed(() => 
-  agents.filter(a => a.zone === 'backoffice' || a.zone === 'creative')
+  agents.filter(a => !a.isLobby).sort((a, b) => b.floor - a.floor)
 );
 
 // Stats

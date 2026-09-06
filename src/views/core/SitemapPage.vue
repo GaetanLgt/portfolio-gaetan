@@ -365,26 +365,13 @@ const sections = ref([
     icon: '🤖',
     pages: [
       { name: 'Bureau des Agents', path: '/agents', icon: '🤖', featured: true },
-      // Équipe Direction (Floor 1)
-      { name: 'JARVIS - Orchestrateur', path: '/agents/jarvis', icon: '🎯' },
-      { name: 'FRIDAY - Support', path: '/agents/friday', icon: '🎧' },
-      { name: 'KAREN - Community', path: '/agents/karen', icon: '👥' },
-      // Équipe Développement (Dev Lab SS-1 à SS-5)
-      { name: 'TADASHI - Frontend', path: '/agents/tadashi', icon: '🤖' },
-      { name: 'JOCASTA - Backend', path: '/agents/jocasta', icon: '⚙️' },
-      { name: 'CEREBRO - Testing & QA', path: '/agents/cerebro', icon: '🔬' },
-      { name: 'ZOLA - Data Architecture', path: '/agents/zola', icon: '🗄️' },
-      { name: 'DUM-E - Build & Tooling', path: '/agents/dum-e', icon: '🛠️' },
-      // Équipe Infrastructure (Floor 2)
-      { name: 'ULTRON - Monitoring', path: '/agents/ultron', icon: '📊' },
-      { name: 'EDITH - Sécurité', path: '/agents/edith', icon: '🛡️' },
-      { name: 'VERONICA - CI/CD', path: '/agents/veronica', icon: '🚀' },
-      // Équipe Créative (Back Office)
-      { name: 'PEPPER - Finance', path: '/agents/pepper', icon: '💰' },
-      { name: 'NATASHA - Design', path: '/agents/natasha', icon: '🎨' },
-      { name: 'MARIA - Marketing', path: '/agents/maria', icon: '📈' },
-      // Équipe Contenu
-      { name: 'VISION - Content Gen', path: '/agents/vision', icon: '📢' },
+      // L'Équipage des six Lois (GL Tower)
+      { name: '和 Wa - Orchestration', path: '/agents/wa', icon: '🎯' },
+      { name: '誠 Makoto - Sécurité & QA', path: '/agents/makoto', icon: '🛡️' },
+      { name: '美 Bi - Frontend & Design', path: '/agents/bi', icon: '💜' },
+      { name: '実 Jitsu - Backend & Livraison', path: '/agents/jitsu', icon: '🚀' },
+      { name: '動 Dou - Monitoring & Veille', path: '/agents/dou', icon: '📊' },
+      { name: '私 Watashi - Mémoire & RAG', path: '/agents/watashi', icon: '🗄️' },
     ]
   },
   {

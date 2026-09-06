@@ -3,7 +3,7 @@
     <header class="app-header">
       <div class="container">
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
-        <span class="agent-badge" style="--agent-color: #8B5CF6">🚀 VERONICA</span>
+        <span class="agent-badge" style="--agent-color: #8B5CF6">🚀 JITSU</span>
       </div>
     </header>
     <main class="app-main">

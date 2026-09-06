@@ -3,7 +3,7 @@
     <header class="app-header">
       <div class="container">
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
-        <span class="agent-badge" style="--agent-color: #F59E0B">📊 ULTRON</span>
+        <span class="agent-badge" style="--agent-color: #F59E0B">📊 DOU</span>
       </div>
     </header>
     <main class="app-main">
