@@ -7,7 +7,7 @@
       <div class="arc-reactor-glow"></div>
       <div class="floating-data">
         <span class="data data--1">AGENTS: ONLINE</span>
-        <span class="data data--2">UPTIME: 99.8%</span>
+        <span class="data data--2">SYSTÈME: NOMINAL</span>
         <span class="data data--3">GL_TOWER_v2.0</span>
       </div>
     </div>
@@ -37,7 +37,7 @@
 
         <div class="tower-stats">
           <div class="stat">
-            <span class="stat-value">{{ allAgents.length }}</span>
+            <span class="stat-value">{{ towerSourceAgents.filter(a => a.status === 'active' && !a.isLobby).length }}</span>
             <span class="stat-label">Agents Actifs</span>
           </div>
           <div class="stat">
@@ -148,13 +148,13 @@
                   </div>
                 </div>
                 <div class="agent-metrics">
-                  <div class="metric">
-                    <span class="metric-value">{{ agent.metrics.tasks }}</span>
-                    <span class="metric-label">Tasks/jour</span>
+                  <div class="metric" v-if="metricById(agent.id).workflows">
+                    <span class="metric-value">{{ metricById(agent.id).workflows }}</span>
+                    <span class="metric-label">Workflows</span>
                   </div>
-                  <div class="metric">
-                    <span class="metric-value">{{ agent.metrics.uptime }}</span>
-                    <span class="metric-label">Uptime</span>
+                  <div class="metric" v-if="metricById(agent.id).outils">
+                    <span class="metric-value">{{ metricById(agent.id).outils }}</span>
+                    <span class="metric-label">Outils</span>
                   </div>
                 </div>
               </div>
@@ -217,13 +217,13 @@
                   </div>
                 </div>
                 <div class="agent-metrics">
-                  <div class="metric">
-                    <span class="metric-value">{{ agent.metrics.tasks }}</span>
-                    <span class="metric-label">Tasks/jour</span>
+                  <div class="metric" v-if="metricById(agent.id).workflows">
+                    <span class="metric-value">{{ metricById(agent.id).workflows }}</span>
+                    <span class="metric-label">Workflows</span>
                   </div>
-                  <div class="metric">
-                    <span class="metric-value">{{ agent.metrics.uptime }}</span>
-                    <span class="metric-label">Uptime</span>
+                  <div class="metric" v-if="metricById(agent.id).outils">
+                    <span class="metric-value">{{ metricById(agent.id).outils }}</span>
+                    <span class="metric-label">Outils</span>
                   </div>
                 </div>
               </div>
@@ -265,13 +265,13 @@
                   </div>
                 </div>
                 <div class="agent-metrics">
-                  <div class="metric">
-                    <span class="metric-value">{{ agent.metrics.tasks }}</span>
-                    <span class="metric-label">Tasks/jour</span>
+                  <div class="metric" v-if="metricById(agent.id).workflows">
+                    <span class="metric-value">{{ metricById(agent.id).workflows }}</span>
+                    <span class="metric-label">Workflows</span>
                   </div>
-                  <div class="metric">
-                    <span class="metric-value">{{ agent.metrics.uptime }}</span>
-                    <span class="metric-label">Uptime</span>
+                  <div class="metric" v-if="metricById(agent.id).outils">
+                    <span class="metric-value">{{ metricById(agent.id).outils }}</span>
+                    <span class="metric-label">Outils</span>
                   </div>
                 </div>
               </div>
@@ -442,6 +442,16 @@
 </template>
 
 <script setup>
+import { agents as towerSourceAgents } from '@/data/agents';
+
+// Métriques réelles : aucune valeur en dur — on lit les workflows/outils actifs
+// réellement déclarés dans data/agents.js (source unique, partagée avec /agents).
+const metricById = (id) => {
+  const source = towerSourceAgents.find(a => a.id === id);
+  if (!source || !source.metrics) return { workflows: null, outils: null };
+  return { workflows: source.metrics.workflowsActifs, outils: source.metrics.outilsActifs };
+};
+
 // Agents IA de GL Tower (du haut vers le bas)
 const agents = [
   {
@@ -454,7 +464,6 @@ const agents = [
     shortDesc: 'Audits sécurité automatisés',
     tech: ['OWASP', 'Nuclei', 'Trivy'],
     status: 'online',
-    metrics: { tasks: '150+', uptime: '99.9%' }
   },
   {
     id: 'veronica',
@@ -466,7 +475,6 @@ const agents = [
     shortDesc: 'Pipelines CI/CD automatisés',
     tech: ['GitHub Actions', 'Docker', 'Ansible'],
     status: 'online',
-    metrics: { tasks: '80+', uptime: '99.8%' }
   },
   {
     id: 'ultron',
@@ -478,7 +486,6 @@ const agents = [
     shortDesc: 'Monitoring infrastructure',
     tech: ['Prometheus', 'Grafana', 'n8n'],
     status: 'online',
-    metrics: { tasks: '500+', uptime: '99.9%' }
   },
   {
     id: 'vision',
@@ -490,7 +497,6 @@ const agents = [
     shortDesc: 'Contenu automatisé',
     tech: ['Ollama', 'Discord.js', 'Markdown'],
     status: 'online',
-    metrics: { tasks: '200+', uptime: '99.5%' }
   },
   {
     id: 'karen',
@@ -502,7 +508,6 @@ const agents = [
     shortDesc: 'Modération communauté',
     tech: ['Discord Bot', 'Webhooks', 'n8n'],
     status: 'online',
-    metrics: { tasks: '300+', uptime: '99.7%' }
   },
   {
     id: 'friday',
@@ -514,7 +519,6 @@ const agents = [
     shortDesc: 'Support automatisé',
     tech: ['RAG', 'ChromaDB', 'OpenWebUI'],
     status: 'online',
-    metrics: { tasks: '400+', uptime: '99.8%' }
   }
 ];
 
@@ -530,7 +534,6 @@ const devLabAgents = [
     shortDesc: 'Frontend Vue/Three.js',
     tech: ['Vue 3', 'Three.js', 'TypeScript', 'GSAP'],
     status: 'online',
-    metrics: { tasks: '120+', uptime: '99.8%' },
     level: 'SS-1 FORGE'
   },
   {
@@ -543,7 +546,6 @@ const devLabAgents = [
     shortDesc: 'Backend Symfony/API',
     tech: ['Symfony 8', 'PHP 8.3+', 'API Platform'],
     status: 'online',
-    metrics: { tasks: '100+', uptime: '99.9%' },
     level: 'SS-2 ARMURERIE'
   },
   {
@@ -556,7 +558,6 @@ const devLabAgents = [
     shortDesc: 'Tests automatisés',
     tech: ['PHPUnit', 'Vitest', 'Playwright'],
     status: 'online',
-    metrics: { tasks: '250+', uptime: '99.7%' },
     level: 'SS-3 LABO'
   },
   {
@@ -569,7 +570,6 @@ const devLabAgents = [
     shortDesc: 'Architecture données',
     tech: ['PostgreSQL', 'Redis', 'ChromaDB'],
     status: 'online',
-    metrics: { tasks: '80+', uptime: '99.9%' },
     level: 'SS-4 BUNKER'
   },
   {
@@ -582,7 +582,6 @@ const devLabAgents = [
     shortDesc: 'Build & DevTools',
     tech: ['Vite', 'Docker', 'npm', 'Composer'],
     status: 'online',
-    metrics: { tasks: '60+', uptime: '99.8%' },
     level: 'SS-5 ATELIER'
   }
 ];
@@ -599,7 +598,6 @@ const backOfficeAgents = [
     shortDesc: 'Gestion financière',
     tech: ['Stripe', 'PDF', 'n8n', 'PostgreSQL'],
     status: 'online',
-    metrics: { tasks: '50+', uptime: '99.9%' },
     level: 'BACK OFFICE'
   }
 ];
@@ -616,7 +614,6 @@ const allAgents = [
     shortDesc: 'Orchestration globale',
     tech: ['n8n', 'Ollama', 'API Gateway'],
     status: 'online',
-    metrics: { tasks: '1000+', uptime: '99.9%' }
   },
   ...agents,
   ...devLabAgents,

@@ -375,6 +375,8 @@ const getStatusLabel = (status) => agentStatuses[status]?.label || status;
 
 const formatMetricLabel = (key) => {
   const labels = {
+    workflowsActifs: 'Workflows actifs',
+    outilsActifs: 'Outils actifs',
     routingAccuracy: 'Précision routing',
     avgResponseTime: 'Temps réponse',
     agentsCoordinated: 'Agents coordonnés',

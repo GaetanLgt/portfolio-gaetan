@@ -24,10 +24,10 @@
         </div>
       </div>
       <div class="stat-item">
-        <span class="stat-icon">📊</span>
+        <span class="stat-icon">🔄</span>
         <div class="stat-content">
-          <span class="stat-value">99.8%</span>
-          <span class="stat-label">Uptime</span>
+          <span class="stat-value">{{ activeWorkflowsCount }}</span>
+          <span class="stat-label">Workflows actifs</span>
         </div>
       </div>
     </div>
@@ -240,6 +240,7 @@ const zones = [
 // Computed
 const totalWorkflows = computed(() => getAllWorkflows().length);
 const activeAgentsCount = computed(() => props.agents.filter(a => a.status === 'active' && !a.isLobby).length);
+const activeWorkflowsCount = computed(() => getAllWorkflows().filter(w => w.status === 'active').length);
 
 const selectedAgent = computed(() => {
   if (!props.selectedFloor) return null;

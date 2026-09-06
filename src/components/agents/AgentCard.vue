@@ -46,13 +46,13 @@
         </div>
         
         <div class="metrics" v-if="agent.metrics">
-          <div class="metric" v-if="agent.metrics.tasksPerDay">
-            <span class="metric-value">{{ agent.metrics.tasksPerDay }}</span>
-            <span class="metric-label">Tasks/jour</span>
+          <div class="metric" v-if="agent.metrics.workflowsActifs">
+            <span class="metric-value">{{ agent.metrics.workflowsActifs }}</span>
+            <span class="metric-label">Workflows actifs</span>
           </div>
-          <div class="metric" v-if="agent.metrics.uptime">
-            <span class="metric-value">{{ agent.metrics.uptime }}</span>
-            <span class="metric-label">Uptime</span>
+          <div class="metric" v-if="agent.metrics.outilsActifs">
+            <span class="metric-value">{{ agent.metrics.outilsActifs }}</span>
+            <span class="metric-label">Outils</span>
           </div>
         </div>
       </div>

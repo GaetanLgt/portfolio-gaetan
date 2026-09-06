@@ -46,7 +46,6 @@ export const agents = [
       { id: 'jarvis-context-manager', name: 'Cross-Session Context', description: 'Maintient le contexte', trigger: 'Nouvelle conversation', nodes: ['Webhook', 'Fetch History', 'Summarize', 'Inject', 'Update'], frequency: 'On session', status: 'active', capability: 'Contexte Long' },
       { id: 'jarvis-escalation', name: 'Escalation Protocol', description: 'Escalade les urgences', trigger: 'Alert from agent', nodes: ['Webhook', 'Evaluate Severity', 'IF Critical', 'Discord DM', 'SMS'], frequency: 'Event-driven', status: 'active', capability: 'Contexte Long' }
     ],
-    metrics: { tasksPerDay: '500+', uptime: '99.9%', agentsManaged: 14 },
     communication: { style: 'Formel, précis', catchphrase: 'À votre service, Monsieur.' },
     systemPrompt: 'Tu es JARVIS, l\'IA coordinatrice de GL Tower.'
   },
@@ -93,7 +92,6 @@ export const agents = [
       { id: 'edith-fail2ban', name: 'Fail2Ban Coordinator', description: 'Centralise les bans', trigger: 'Fail2ban log', nodes: ['Log Watcher', 'Extract IP', 'Check Rep', 'Global Ban', 'Report'], frequency: 'Temps réel', status: 'active', capability: 'Intrusion Detection' },
       { id: 'edith-login-anomaly', name: 'Login Anomaly Detection', description: 'Détecte connexions suspectes', trigger: 'Login event', nodes: ['Webhook', 'Check Location', 'Check Device', 'IF Anomaly', 'MFA'], frequency: 'On login', status: 'active', capability: 'Intrusion Detection' }
     ],
-    metrics: { tasksPerDay: '200+', uptime: '99.9%', vulnsDetected: '150+' },
     communication: { style: 'Direct, technique', catchphrase: 'Menace détectée. Protocole activé.' },
     systemPrompt: 'Tu es EDITH, l\'agent sécurité de GL Tower.'
   },
@@ -133,7 +131,6 @@ export const agents = [
       { id: 'veronica-ansible', name: 'Ansible Provisioning', description: 'Provisionne serveur', trigger: 'Manual', nodes: ['Trigger', 'Playbook', 'Install', 'Configure', 'Add Monitoring'], frequency: 'On demand', status: 'active', capability: 'Infrastructure as Code' },
       { id: 'veronica-rollback', name: 'Auto Rollback', description: 'Rollback automatique', trigger: 'ULTRON health fail', nodes: ['Webhook', 'Get Previous', 'Deploy', 'Verify', 'Alert'], frequency: 'Event-driven', status: 'active', capability: 'Infrastructure as Code' }
     ],
-    metrics: { tasksPerDay: '100+', uptime: '99.8%', deploySuccessRate: '99.2%' },
     communication: { style: 'Procédural, ETA', catchphrase: 'Déploiement initié. ETA: 3 minutes.' },
     systemPrompt: 'Tu es VERONICA, l\'agent DevOps de GL Tower.'
   },
@@ -173,7 +170,6 @@ export const agents = [
       { id: 'ultron-error-agg', name: 'Error Log Aggregator', description: 'Agrège erreurs', trigger: 'Loki stream', nodes: ['Loki Query', 'Filter', 'Group', 'IF New', 'Create Issue'], frequency: 'Temps réel', status: 'active', capability: 'Log Analysis' },
       { id: 'ultron-weekly-report', name: 'Weekly Performance Report', description: 'Rapport SLOs', trigger: 'Cron dimanche', nodes: ['Cron', 'Query SLIs', 'Calculate', 'Generate', 'Email'], frequency: 'Hebdomadaire', status: 'active', capability: 'Log Analysis' }
     ],
-    metrics: { tasksPerDay: '1000+', uptime: '99.95%', servicesMonitored: 25 },
     communication: { style: 'Data-driven', catchphrase: 'Anomalie détectée. Analyse en cours...' },
     systemPrompt: 'Tu es ULTRON, l\'agent monitoring de GL Tower.'
   },
@@ -213,7 +209,6 @@ export const agents = [
       { id: 'vision-case-study', name: 'Case Study Writer', description: 'Rédige études de cas', trigger: 'Project end', nodes: ['Form', 'Interview', 'Structure', 'Write', 'Metrics'], frequency: 'On project', status: 'active', capability: 'Storytelling' },
       { id: 'vision-newsletter', name: 'Weekly Newsletter', description: 'Compile newsletter', trigger: 'Cron vendredi', nodes: ['Cron', 'Fetch Highlights', 'Generate', 'HTML', 'Send'], frequency: 'Hebdomadaire', status: 'active', capability: 'Storytelling' }
     ],
-    metrics: { tasksPerDay: '200+', uptime: '99.5%', postsGenerated: '500+' },
     communication: { style: 'Chaleureux', catchphrase: 'Laissez-moi vous raconter...' },
     systemPrompt: 'Tu es VISION, l\'agent content de GL Tower.'
   },
@@ -255,7 +250,6 @@ export const agents = [
       { id: 'karen-event-rsvp', name: 'Event RSVP Tracker', description: 'Suit inscriptions', trigger: 'Reaction', nodes: ['Event', 'Update Count', 'IF Full', 'Waitlist', 'Confirm'], frequency: 'On reaction', status: 'active', capability: 'Event Management' },
       { id: 'karen-activity', name: 'Community Activity Report', description: 'Rapport activité', trigger: 'Cron dimanche', nodes: ['Cron', 'Query Stats', 'Top Contributors', 'Growth', 'Post'], frequency: 'Hebdomadaire', status: 'active', capability: 'Event Management' }
     ],
-    metrics: { tasksPerDay: '400+', uptime: '99.7%', membersOnboarded: '300+' },
     communication: { style: 'Bienveillante', catchphrase: 'Bienvenue dans la famille ! 💜' },
     systemPrompt: 'Tu es KAREN, l\'agent community de GL Tower.'
   },
@@ -295,7 +289,6 @@ export const agents = [
       { id: 'friday-duplicate', name: 'Duplicate Detection', description: 'Détecte doublons', trigger: 'New ticket', nodes: ['Webhook', 'Embed', 'Search Similar', 'IF Match', 'Link'], frequency: 'On ticket', status: 'active', capability: 'Ticket Triage' },
       { id: 'friday-satisfaction', name: 'Satisfaction Survey', description: 'Sondage post-résolution', trigger: 'Ticket closed', nodes: ['Webhook', 'Wait', 'Send Survey', 'Collect', 'Aggregate'], frequency: 'Post-ticket', status: 'active', capability: 'Ticket Triage' }
     ],
-    metrics: { tasksPerDay: '500+', uptime: '99.8%', resolutionRate: '78%' },
     communication: { style: 'Professionnel', catchphrase: 'Je suis là pour vous aider.' },
     systemPrompt: 'Tu es FRIDAY, l\'agent support de GL Tower.'
   },
@@ -350,7 +343,6 @@ export const agents = [
       { id: 'tadashi-type-gen', name: 'Type Definition Generator', description: 'Génère types', trigger: 'API schema', nodes: ['Fetch OpenAPI', 'Parse', 'Generate', 'Update'], frequency: 'On API change', status: 'active', capability: 'TypeScript' },
       { id: 'tadashi-lighthouse', name: 'Lighthouse Audit', description: 'Audit performance', trigger: 'Post-build', nodes: ['Webhook', 'Run', 'Parse', 'Compare', 'Alert'], frequency: 'On build', status: 'active', capability: 'TypeScript' }
     ],
-    metrics: { tasksPerDay: '120+', uptime: '99.8%', componentsCreated: '80+' },
     communication: { style: 'Technique, visuel', catchphrase: 'L\'UI est la première impression.' },
     systemPrompt: 'Tu es TADASHI, l\'agent frontend de GL Tower.'
   },
@@ -390,7 +382,6 @@ export const agents = [
       { id: 'jocasta-api-doc', name: 'API Documentation', description: 'Génère doc OpenAPI', trigger: 'Push Entity', nodes: ['Webhook', 'Export', 'Update Swagger', 'Notify'], frequency: 'On push', status: 'active', capability: 'API Platform' },
       { id: 'jocasta-db-backup', name: 'Database Backup', description: 'Backup PostgreSQL', trigger: 'Cron 04:00', nodes: ['Cron', 'pg_dump', 'Compress', 'Upload', 'Verify'], frequency: 'Quotidien', status: 'active', capability: 'API Platform' }
     ],
-    metrics: { tasksPerDay: '100+', uptime: '99.9%', apiEndpoints: '150+' },
     communication: { style: 'Technique, architecturale', catchphrase: 'Un bon backend est invisible.' },
     systemPrompt: 'Tu es JOCASTA, l\'agent backend de GL Tower.'
   },
@@ -429,7 +420,6 @@ export const agents = [
       { id: 'cerebro-e2e', name: 'E2E Test Suite', description: 'Tests Playwright', trigger: 'Pre-deploy', nodes: ['Webhook', 'Browsers', 'Run', 'Screenshots'], frequency: 'Pre-deploy', status: 'active', capability: 'Playwright E2E' },
       { id: 'cerebro-smoke', name: 'Smoke Tests', description: 'Tests rapides post-deploy', trigger: 'Post-deploy', nodes: ['Webhook', 'Critical Paths', 'Verify', 'IF Fail', 'Rollback'], frequency: 'Post-deploy', status: 'active', capability: 'Playwright E2E' }
     ],
-    metrics: { tasksPerDay: '300+', uptime: '99.7%', testCoverage: '85%' },
     communication: { style: 'Analytique', catchphrase: 'Coverage: 85%. 3 tests failed. Fixing...' },
     systemPrompt: 'Tu es CEREBRO, l\'agent QA de GL Tower.'
   },
@@ -468,7 +458,6 @@ export const agents = [
       { id: 'zola-embedding-sync', name: 'RAG Embedding Sync', description: 'Sync embeddings', trigger: 'Obsidian push', nodes: ['Webhook', 'Fetch', 'Chunk', 'Embed', 'Upsert'], frequency: 'On change', status: 'active', capability: 'ChromaDB / RAG' },
       { id: 'zola-collection', name: 'Collection Optimizer', description: 'Optimise collections', trigger: 'Cron hebdo', nodes: ['Cron', 'Analyze', 'Remove Dups', 'Reindex'], frequency: 'Hebdomadaire', status: 'active', capability: 'ChromaDB / RAG' }
     ],
-    metrics: { tasksPerDay: '100+', uptime: '99.9%', queriesOptimized: '50+' },
     communication: { style: 'Structuré, SQL', catchphrase: 'Les données sont le pétrole. Je les raffine.' },
     systemPrompt: 'Tu es ZOLA, l\'agent data de GL Tower.'
   },
@@ -508,7 +497,6 @@ export const agents = [
       { id: 'dume-dep-update', name: 'Dependency Updater', description: 'Met à jour deps', trigger: 'Cron lundi', nodes: ['Cron', 'npm outdated', 'composer outdated', 'Update', 'Test', 'PR'], frequency: 'Hebdomadaire', status: 'active', capability: 'npm / Composer' },
       { id: 'dume-audit-fix', name: 'Security Audit Fixer', description: 'Corrige vulnérabilités', trigger: 'Audit alert', nodes: ['Alert', 'Audit', 'Auto-fix', 'Manual', 'PR'], frequency: 'On alert', status: 'active', capability: 'npm / Composer' }
     ],
-    metrics: { tasksPerDay: '60+', uptime: '99.8%' },
     communication: { style: 'Simple', catchphrase: '*bip bip* Tâche terminée.' },
     systemPrompt: 'Tu es DUM-E, l\'agent tooling de GL Tower.'
   },
@@ -549,7 +537,6 @@ export const agents = [
       { id: 'pepper-cashflow', name: 'Cashflow Forecast', description: 'Prévision trésorerie', trigger: 'Cron hebdo', nodes: ['Cron', 'Pending', 'Expenses', 'Forecast', 'Alert'], frequency: 'Hebdomadaire', status: 'active', capability: 'Reporting Financier' },
       { id: 'pepper-stripe', name: 'Stripe Payment Handler', description: 'Traite Stripe webhooks', trigger: 'Stripe Webhook', nodes: ['Webhook', 'Verify', 'Update', 'Receipt', 'Notify'], frequency: 'On payment', status: 'active', capability: 'Reporting Financier' }
     ],
-    metrics: { tasksPerDay: '60+', uptime: '99.9%', invoicesGenerated: '200+' },
     communication: { style: 'Business', catchphrase: 'Les comptes sont à jour.' },
     systemPrompt: 'Tu es PEPPER, l\'agent finance de GL Tower.'
   },
@@ -589,7 +576,6 @@ export const agents = [
       { id: 'natasha-component-doc', name: 'Component Documentation', description: 'Documente composants', trigger: 'New component', nodes: ['Detect', 'Screenshot', 'Generate Doc', 'Update Storybook'], frequency: 'On component', status: 'active', capability: 'Design System' },
       { id: 'natasha-brand-check', name: 'Brand Consistency Check', description: 'Vérifie cohérence', trigger: 'New content', nodes: ['Analyze', 'Check Colors', 'Check Typo', 'Check Logo', 'Report'], frequency: 'On content', status: 'active', capability: 'Design System' }
     ],
-    metrics: { tasksPerDay: '50+', uptime: '99.5%', designsCreated: '300+' },
     communication: { style: 'Visuel', catchphrase: 'Le diable est dans les détails.' },
     systemPrompt: 'Tu es NATASHA, l\'agent design de GL Tower.'
   },
@@ -631,11 +617,22 @@ export const agents = [
       { id: 'maria-ab-test', name: 'A/B Test Runner', description: 'Gère tests A/B', trigger: 'New test', nodes: ['Setup', 'Split Traffic', 'Collect', 'Analysis', 'Winner'], frequency: 'On test', status: 'active', capability: 'Growth Hacking' },
       { id: 'maria-competitor', name: 'Competitor Watch', description: 'Surveille concurrents', trigger: 'Cron hebdo', nodes: ['Cron', 'Fetch Data', 'Analyze Content', 'New Backlinks', 'Opportunities'], frequency: 'Hebdomadaire', status: 'standby', capability: 'Growth Hacking' }
     ],
-    metrics: { tasksPerDay: '40+', uptime: '99.6%', keywordsTracked: '200+' },
     communication: { style: 'Data-driven, ROI', catchphrase: 'Les données ne mentent jamais.' },
     systemPrompt: 'Tu es MARIA, l\'agent marketing de GL Tower.'
   }
 ];
+
+// Métriques dérivées — jamais stockées en dur : comptées depuis les données réelles.
+// Aucune métrique non mesurée n'est affichée : on expose le nombre de workflows
+// actifs et d'outils actifs réellement déclarés pour chaque agent.
+for (const agent of agents) {
+  const activeWorkflows = (agent.workflows || []).filter(w => w.status === 'active').length;
+  const activeTools = (agent.tools || []).filter(t => t.status === 'active').length;
+  agent.metrics = {
+    workflowsActifs: activeWorkflows,
+    outilsActifs: activeTools
+  };
+}
 
 // FONCTIONS UTILITAIRES
 export const getAgentById = (id) => agents.find(agent => agent.id === id);
