@@ -1,19 +1,25 @@
-# 📊 U.L.T.R.O.N. - Monitoring & Alertes
+# 📊 Dou — Monitoring, Veille & Alertes (動)
 
-> **Universal Logging & Telemetry for Real-time Oversight Network**  
-> Niveau : 4 | Status : ONLINE | Priorité : CRITIQUE
+> **Loi Dou — 動 | Mouvement** — Codename : **WATCHER**  
+> Loi n° 5 des 6 Lois ARKADIA — Équipage GL Digital Lab  
+> Niveau : 3 | Étage : 3 | Status : ONLINE | Priorité : CRITIQUE  
+> — *« Toujours avancer, itérer. L'immobilité est la mort. »*
 
 ## 📋 Mission
 
-ULTRON surveille **24/7 l'infrastructure** GL Digital Lab. Il collecte les métriques, détecte les anomalies et alerte avant que les problèmes n'impactent les utilisateurs.
+Dou surveille **24/7 l'infrastructure** GL Digital Lab. Il collecte les métriques, détecte les anomalies et alerte **graduellement** avant que les problèmes n'impactent les utilisateurs. Sa mission est la **visibilité totale et la vigilance permanente** : rien ne doit rester invisible, rien ne doit stagner.
 
 ### Responsabilités
 
-- 📈 **Métriques temps réel** : CPU, RAM, disque, réseau
-- 🔔 **Alertes intelligentes** : Seuils adaptatifs, détection d'anomalies
-- 📊 **Dashboards** : Visualisation Grafana
-- 📝 **Logs centralisés** : Agrégation et recherche
-- 🔍 **APM** : Performance applicative
+- 📡 **Surveiller 24/7** : métriques temps réel (CPU, RAM, disque, réseau), état des services
+- 📈 **Analyser les tendances** : métriques temps réel, évolutions, capacités
+- 🔬 **Détecter les anomalies** : seuils, dérives, pics, comportements inhabituels
+- 🚨 **Alerter graduellement** : sévérité warning → critical, escalade vers Wa (coordinateur)
+- 📊 **Dashboards** : visualisation Grafana
+- 📝 **Logs centralisés** : agrégation et recherche (Loki)
+- 🔍 **Veille technique** : flux, versions, écosystème, pour toujours itérer
+
+> **Principe directeur** : toute alerte remonte à **Wa** (`wa-n8n`), coordinateur de l'équipage ARKADIA, qui orchestre la réponse (notifications Discord, escalade, actions correctives via les workflows d'équipage).
 
 ---
 
@@ -22,11 +28,13 @@ ULTRON surveille **24/7 l'infrastructure** GL Digital Lab. Il collecte les métr
 | Composant | Technologie | Rôle |
 |-----------|-------------|------|
 | Métriques | **Prometheus** | Collecte et stockage |
+| Logs | **Loki** | Agrégation de logs |
+| Collecteur logs | **Promtail** | Scraping et envoi des logs vers Loki |
 | Visualisation | **Grafana** | Dashboards |
-| Logs | **Loki** | Agrégation logs |
 | Alerting | **Alertmanager** | Gestion des alertes |
-| Agent | **Node Exporter** | Métriques système |
-| Orchestration | **n8n** | Workflows d'alerte |
+| Métriques système | **Node Exporter** | Métriques hôte (CPU, RAM, disque) |
+| Métriques conteneurs | **cAdvisor** | Métriques Docker |
+| Workflows | **n8n** | Workflows d'alerte et de veille |
 
 ---
 
@@ -35,9 +43,9 @@ ULTRON surveille **24/7 l'infrastructure** GL Digital Lab. Il collecte les métr
 ### 1. Structure des dossiers
 
 ```bash
-mkdir -p ~/gl-tower/ultron/{prometheus,grafana,alertmanager,loki}
-mkdir -p ~/gl-tower/ultron/grafana/{dashboards,provisioning}
-cd ~/gl-tower/ultron
+mkdir -p ~/gl-tower/dou/{prometheus,grafana,alertmanager,loki}
+mkdir -p ~/gl-tower/dou/grafana/dashboards
+cd ~/gl-tower/dou
 ```
 
 ### 2. Docker Compose
@@ -50,7 +58,7 @@ services:
   # Prometheus - Collecte métriques
   prometheus:
     image: prom/prometheus:latest
-    container_name: ultron-prometheus
+    container_name: dou-prometheus
     restart: unless-stopped
     ports:
       - "9090:9090"
@@ -69,7 +77,7 @@ services:
   # Grafana - Visualisation
   grafana:
     image: grafana/grafana:latest
-    container_name: ultron-grafana
+    container_name: dou-grafana
     restart: unless-stopped
     ports:
       - "3000:3000"
@@ -79,8 +87,6 @@ services:
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_SERVER_ROOT_URL=http://localhost:3000
     volumes:
-      - ./grafana/provisioning:/etc/grafana/provisioning
-      - ./grafana/dashboards:/var/lib/grafana/dashboards
       - grafana-data:/var/lib/grafana
     networks:
       - gl-tower
@@ -90,7 +96,7 @@ services:
   # Alertmanager - Gestion alertes
   alertmanager:
     image: prom/alertmanager:latest
-    container_name: ultron-alertmanager
+    container_name: dou-alertmanager
     restart: unless-stopped
     ports:
       - "9093:9093"
@@ -103,7 +109,7 @@ services:
   # Loki - Logs
   loki:
     image: grafana/loki:latest
-    container_name: ultron-loki
+    container_name: dou-loki
     restart: unless-stopped
     ports:
       - "3100:3100"
@@ -116,7 +122,7 @@ services:
   # Promtail - Collecteur logs
   promtail:
     image: grafana/promtail:latest
-    container_name: ultron-promtail
+    container_name: dou-promtail
     restart: unless-stopped
     volumes:
       - ./loki/promtail-config.yml:/etc/promtail/config.yml
@@ -130,7 +136,7 @@ services:
   # Node Exporter - Métriques système
   node-exporter:
     image: prom/node-exporter:latest
-    container_name: ultron-node-exporter
+    container_name: dou-node-exporter
     restart: unless-stopped
     ports:
       - "9100:9100"
@@ -149,7 +155,7 @@ services:
   # cAdvisor - Métriques Docker
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
-    container_name: ultron-cadvisor
+    container_name: dou-cadvisor
     restart: unless-stopped
     ports:
       - "8080:8080"
@@ -185,7 +191,7 @@ global:
 alerting:
   alertmanagers:
     - static_configs:
-        - targets: ['ultron-alertmanager:9093']
+        - targets: ['dou-alertmanager:9093']
 
 rule_files:
   - '/etc/prometheus/alerts/*.yml'
@@ -199,7 +205,7 @@ scrape_configs:
   # Node Exporter - Métriques système
   - job_name: 'node'
     static_configs:
-      - targets: ['ultron-node-exporter:9100']
+      - targets: ['dou-node-exporter:9100']
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance
@@ -208,22 +214,17 @@ scrape_configs:
   # cAdvisor - Métriques Docker
   - job_name: 'cadvisor'
     static_configs:
-      - targets: ['ultron-cadvisor:8080']
+      - targets: ['dou-cadvisor:8080']
 
-  # GL Tower Agents
-  - job_name: 'jarvis'
+  # Équipage ARKADIA — GL Tower
+  - job_name: 'wa'
     static_configs:
-      - targets: ['jarvis-n8n:5678']
+      - targets: ['wa-n8n:5678']
     metrics_path: '/metrics'
 
-  - job_name: 'friday'
+  - job_name: 'watashi'
     static_configs:
-      - targets: ['friday-webui:8080']
-
-  - job_name: 'vision'
-    static_configs:
-      - targets: ['vision-api:3001']
-    metrics_path: '/metrics'
+      - targets: ['watashi-webui:8080']
 
   # Applications
   - job_name: 'portfolio'
@@ -249,7 +250,7 @@ groups:
         for: 5m
         labels:
           severity: warning
-          agent: ultron
+          agent: dou
         annotations:
           summary: "CPU élevé sur {{ $labels.instance }}"
           description: "CPU à {{ $value }}% depuis 5 minutes"
@@ -260,7 +261,7 @@ groups:
         for: 5m
         labels:
           severity: critical
-          agent: ultron
+          agent: dou
         annotations:
           summary: "Mémoire critique sur {{ $labels.instance }}"
           description: "RAM à {{ $value }}%"
@@ -271,7 +272,7 @@ groups:
         for: 10m
         labels:
           severity: warning
-          agent: ultron
+          agent: dou
         annotations:
           summary: "Espace disque faible"
           description: "{{ $labels.mountpoint }} à {{ $value }}%"
@@ -282,7 +283,7 @@ groups:
         for: 1m
         labels:
           severity: critical
-          agent: ultron
+          agent: dou
         annotations:
           summary: "Service {{ $labels.job }} DOWN"
           description: "Le service {{ $labels.instance }} ne répond plus"
@@ -295,7 +296,7 @@ groups:
         for: 5m
         labels:
           severity: warning
-          agent: ultron
+          agent: dou
         annotations:
           summary: "Container {{ $labels.name }} en restart loop"
           description: "{{ $value }} restarts dans la dernière heure"
@@ -306,7 +307,7 @@ groups:
         for: 5m
         labels:
           severity: critical
-          agent: ultron
+          agent: dou
         annotations:
           summary: "Container {{ $labels.name }} proche OOM"
           description: "Mémoire à {{ $value | humanizePercentage }}"
@@ -319,7 +320,7 @@ groups:
         for: 5m
         labels:
           severity: warning
-          agent: ultron
+          agent: dou
         annotations:
           summary: "Latence API élevée"
           description: "P95 à {{ $value }}s"
@@ -330,7 +331,7 @@ groups:
         for: 5m
         labels:
           severity: critical
-          agent: ultron
+          agent: dou
         annotations:
           summary: "Taux d'erreurs HTTP élevé"
           description: "{{ $value | humanizePercentage }} d'erreurs 5xx"
@@ -362,21 +363,21 @@ route:
 receivers:
   - name: 'default'
     webhook_configs:
-      - url: 'http://jarvis-n8n:5678/webhook/ultron/alert'
+      - url: 'http://wa-n8n:5678/webhook/dou/alert'
         send_resolved: true
 
   - name: 'critical-alerts'
     webhook_configs:
-      - url: 'http://jarvis-n8n:5678/webhook/ultron/critical'
+      - url: 'http://wa-n8n:5678/webhook/dou/critical'
         send_resolved: true
     discord_configs:
       - webhook_url: '${DISCORD_CRITICAL_WEBHOOK}'
-        title: '🚨 ALERTE CRITIQUE - ULTRON'
+        title: '🚨 ALERTE CRITIQUE - DOU'
         message: '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}'
 
   - name: 'warning-alerts'
     webhook_configs:
-      - url: 'http://jarvis-n8n:5678/webhook/ultron/warning'
+      - url: 'http://wa-n8n:5678/webhook/dou/warning'
         send_resolved: true
 
 inhibit_rules:
@@ -450,7 +451,7 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  - url: http://ultron-loki:3100/loki/api/v1/push
+  - url: http://dou-loki:3100/loki/api/v1/push
 
 scrape_configs:
   # Logs Docker containers
@@ -490,46 +491,34 @@ scrape_configs:
           remote_addr:
 ```
 
-### 8. Provisioning Grafana
+### 8. Configuration initiale Grafana (datasources & dashboard)
 
-```yaml
-# grafana/provisioning/datasources/datasources.yml
-apiVersion: 1
+Une fois les conteneurs démarrés (`docker compose up -d`), enregistrer les datasources puis importer le dashboard via l'API Grafana :
 
-datasources:
-  - name: Prometheus
-    type: prometheus
-    access: proxy
-    url: http://ultron-prometheus:9090
-    isDefault: true
-    editable: false
+```bash
+# Enregistrer les datasources (Prometheus, Loki, Alertmanager)
+curl -u admin:${GRAFANA_PASSWORD} -H 'Content-Type: application/json' \
+  -X POST http://localhost:3000/api/datasources -d '{
+    "name": "Prometheus", "type": "prometheus", "access": "proxy",
+    "url": "http://dou-prometheus:9090", "isDefault": true, "editable": false
+  }'
 
-  - name: Loki
-    type: loki
-    access: proxy
-    url: http://ultron-loki:3100
-    editable: false
+curl -u admin:${GRAFANA_PASSWORD} -H 'Content-Type: application/json' \
+  -X POST http://localhost:3000/api/datasources -d '{
+    "name": "Loki", "type": "loki", "access": "proxy",
+    "url": "http://dou-loki:3100", "editable": false
+  }'
 
-  - name: Alertmanager
-    type: alertmanager
-    access: proxy
-    url: http://ultron-alertmanager:9093
-    editable: false
-```
+curl -u admin:${GRAFANA_PASSWORD} -H 'Content-Type: application/json' \
+  -X POST http://localhost:3000/api/datasources -d '{
+    "name": "Alertmanager", "type": "alertmanager", "access": "proxy",
+    "url": "http://dou-alertmanager:9093", "editable": false
+  }'
 
-```yaml
-# grafana/provisioning/dashboards/dashboards.yml
-apiVersion: 1
-
-providers:
-  - name: 'GL Tower Dashboards'
-    orgId: 1
-    folder: 'GL Tower'
-    type: file
-    disableDeletion: false
-    updateIntervalSeconds: 30
-    options:
-      path: /var/lib/grafana/dashboards
+# Importer le dashboard (fichier grafana/dashboards/gl-tower-overview.json)
+curl -u admin:${GRAFANA_PASSWORD} -H 'Content-Type: application/json' \
+  -X POST http://localhost:3000/api/dashboards/db \
+  --data @grafana/dashboards/gl-tower-overview.json
 ```
 
 ### 9. Dashboard JSON (exemple)
@@ -646,17 +635,32 @@ providers:
 
 ## 🔄 Workflows n8n
 
-### Workflow 1 : Alert Handler
+Les workflows officiels de Dou (source de vérité : `src/data/agents.js`) sont les suivants. Ils s'exécutent sur l'instance n8n de l'équipage (`wa-n8n`) ou pilotent ses propres collecteurs.
+
+| Workflow | Description | Déclencheur | Fréquence | Statut |
+|----------|-------------|-------------|-----------|--------|
+| **Service Health Ping** | Ping les services (HTTP multi, vérifie statut et temps de réponse) | Cron 30s | 30 secondes | 🟢 active |
+| **ARKADIA Servers Monitor** | Surveille les serveurs ARK via l'API Nitrado (état, joueurs) | Cron 5min | 5 minutes | 🟢 active |
+| **Resource Usage Watch** | Surveille CPU/RAM/Disk ; avertit au-delà de 80 %, alerte critique au-delà de 95 % | Prometheus | 15 secondes | 🟢 active |
+| **ML Anomaly Detection** | Détecte les anomalies par baseline et score Z | Continu | Continu | 🟢 active |
+| **Traffic Spike Detector** | Détecte les pics de trafic à partir des logs nginx (compte le RPS, compare, déclenche la mise à l'échelle) | Logs nginx | Temps réel | 🟢 active |
+| **Error Log Aggregator** | Agrège les erreurs depuis le flux Loki, regroupe, crée un ticket si nouveau | Flux Loki | Temps réel | 🟢 active |
+| **Weekly Performance Report** | Rapport hebdomadaire des SLIs/SLOs (calcule, génère, envoie) | Cron dimanche | Hebdomadaire | 🟢 active |
+| **Tech Watch** | Veille technologique : récupère les flux, filtre selon la stack, classe et envoie le digest | Cron hebdo | Hebdomadaire | 🟢 active |
+
+### Exemple d'implémentation 1 : Alert Handler
+
+Réception des alertes Alertmanager sur `wa-n8n`, mise en forme et notification, puis journalisation en base.
 
 ```json
 {
-  "name": "ULTRON - Alert Handler",
+  "name": "Dou - Alert Handler",
   "nodes": [
     {
       "name": "Webhook - Alert",
       "type": "n8n-nodes-base.webhook",
       "parameters": {
-        "path": "ultron/alert",
+        "path": "dou/alert",
         "httpMethod": "POST"
       }
     },
@@ -671,14 +675,14 @@ providers:
       "name": "Format Discord Message",
       "type": "n8n-nodes-base.code",
       "parameters": {
-        "jsCode": "const alert = $input.first().json;\nconst emoji = alert.severity === 'critical' ? '🚨' : '⚠️';\nconst color = alert.status === 'resolved' ? '✅' : emoji;\n\nconst message = `${color} **ULTRON Alert**\\n\\n` +\n  `**${alert.name}** (${alert.severity})\\n` +\n  `${alert.summary}\\n\\n` +\n  `_${alert.description}_`;\n\nreturn [{ json: { message } }];"
+        "jsCode": "const alert = $input.first().json;\nconst emoji = alert.severity === 'critical' ? '🚨' : '⚠️';\nconst color = alert.status === 'resolved' ? '✅' : emoji;\n\nconst message = `${color} **Dou Alert**\\n\\n` +\n  `**${alert.name}** (${alert.severity})\\n` +\n  `${alert.summary}\\n\\n` +\n  `_${alert.description}_`;\n\nreturn [{ json: { message } }];"
       }
     },
     {
       "name": "Send to Discord",
       "type": "n8n-nodes-base.discord",
       "parameters": {
-        "webhookUri": "={{ $env.ULTRON_WEBHOOK }}",
+        "webhookUri": "={{ $env.DOU_WEBHOOK }}",
         "content": "={{ $json.message }}"
       }
     },
@@ -694,24 +698,26 @@ providers:
 }
 ```
 
-### Workflow 2 : Daily Health Report
+### Exemple d'implémentation 2 : Weekly Performance Report
+
+Interroge Prometheus et la table `alerts`, puis publie le rapport hebdomadaire (chaque dimanche à 08:00).
 
 ```json
 {
-  "name": "ULTRON - Daily Health Report",
+  "name": "Dou - Weekly Performance Report",
   "nodes": [
     {
-      "name": "Cron - 8h",
+      "name": "Cron - Dim 8h",
       "type": "n8n-nodes-base.cron",
       "parameters": {
-        "cronExpression": "0 8 * * *"
+        "cronExpression": "0 8 * * 0"
       }
     },
     {
       "name": "Query Prometheus",
       "type": "n8n-nodes-base.httpRequest",
       "parameters": {
-        "url": "http://ultron-prometheus:9090/api/v1/query",
+        "url": "http://dou-prometheus:9090/api/v1/query",
         "method": "GET",
         "qs": {
           "query": "up"
@@ -722,21 +728,21 @@ providers:
       "name": "Get Alerts Count",
       "type": "n8n-nodes-base.postgres",
       "parameters": {
-        "query": "SELECT severity, COUNT(*) as count FROM alerts WHERE created_at > NOW() - INTERVAL '24 hours' GROUP BY severity"
+        "query": "SELECT severity, COUNT(*) as count FROM alerts WHERE created_at > NOW() - INTERVAL '7 days' GROUP BY severity"
       }
     },
     {
       "name": "Format Report",
       "type": "n8n-nodes-base.code",
       "parameters": {
-        "jsCode": "const services = $node['Query Prometheus'].json.data.result;\nconst alerts = $node['Get Alerts Count'].json;\n\nconst upCount = services.filter(s => s.value[1] === '1').length;\nconst totalCount = services.length;\n\nlet alertSummary = alerts.map(a => `${a.severity}: ${a.count}`).join(', ') || 'Aucune';\n\nconst report = `📊 **ULTRON Daily Health Report**\\n\\n` +\n  `**Services:** ${upCount}/${totalCount} UP\\n` +\n  `**Alertes (24h):** ${alertSummary}\\n\\n` +\n  `🔗 [Dashboard Grafana](http://localhost:3000)`;\n\nreturn [{ json: { report } }];"
+        "jsCode": "const services = $node['Query Prometheus'].json.data.result;\nconst alerts = $node['Get Alerts Count'].json;\n\nconst upCount = services.filter(s => s.value[1] === '1').length;\nconst totalCount = services.length;\n\nlet alertSummary = alerts.map(a => `${a.severity}: ${a.count}`).join(', ') || 'Aucune';\n\nconst report = `📊 **Dou Weekly Performance Report**\\n\\n` +\n  `**Services:** ${upCount}/${totalCount} UP\\n` +\n  `**Alertes (7 jours):** ${alertSummary}\\n\\n` +\n  `🔗 [Dashboard Grafana](http://localhost:3000)`;\n\nreturn [{ json: { report } }];"
       }
     },
     {
       "name": "Send Report",
       "type": "n8n-nodes-base.discord",
       "parameters": {
-        "webhookUri": "={{ $env.ULTRON_WEBHOOK }}",
+        "webhookUri": "={{ $env.DOU_WEBHOOK }}",
         "content": "={{ $json.report }}"
       }
     }
@@ -746,14 +752,16 @@ providers:
 
 ---
 
-## 📊 Métriques clés
+## 📊 Métriques clés et objectifs
 
-| Métrique | Query PromQL | Seuil |
-|----------|--------------|-------|
+Les valeurs ci-dessous sont des **objectifs de configuration** (seuils de règles d'alerte), pas des valeurs mesurées. La conformité réelle se mesure en continu via les requêtes PromQL indiquées.
+
+| Métrique | Query PromQL | Objectif (seuil) |
+|----------|--------------|------------------|
 | CPU Usage | `100 - (avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)` | < 80% |
 | Memory Usage | `(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100` | < 90% |
 | Disk Usage | `(1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100` | < 85% |
-| Service Uptime | `avg_over_time(up[24h]) * 100` | > 99.9% |
+| Service Uptime (SLO) | `avg_over_time(up[24h]) * 100` | > 99.9% |
 | Error Rate | `sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m]))` | < 1% |
 
 ---
@@ -764,13 +772,13 @@ providers:
 
 ```bash
 #!/bin/bash
-# backup-prometheus.sh
-BACKUP_DIR=~/backups/ultron/$(date +%Y%m%d)
+# dou-backup-prometheus.sh
+BACKUP_DIR=~/backups/dou/$(date +%Y%m%d)
 mkdir -p $BACKUP_DIR
 
 # Snapshot Prometheus
 curl -XPOST http://localhost:9090/api/v1/admin/tsdb/snapshot
-docker cp ultron-prometheus:/prometheus/snapshots $BACKUP_DIR/
+docker cp dou-prometheus:/prometheus/snapshots $BACKUP_DIR/
 
 echo "Prometheus backup: $BACKUP_DIR"
 ```
@@ -779,7 +787,7 @@ echo "Prometheus backup: $BACKUP_DIR"
 
 ```bash
 # Vérifier l'espace
-docker exec ultron-loki du -sh /loki/*
+docker exec dou-loki du -sh /loki/*
 
 # Forcer la compaction
 curl -XPOST http://localhost:3100/flush
@@ -796,14 +804,14 @@ curl -XPOST http://localhost:3100/flush
 curl http://localhost:9090/api/v1/targets | jq '.data.activeTargets[] | {job: .labels.job, health: .health}'
 
 # Vérifier la config
-docker exec ultron-prometheus promtool check config /etc/prometheus/prometheus.yml
+docker exec dou-prometheus promtool check config /etc/prometheus/prometheus.yml
 ```
 
 ### Grafana ne charge pas les dashboards
 
 ```bash
 # Vérifier les logs
-docker logs ultron-grafana --tail 50
+docker logs dou-grafana --tail 50
 
 # Vérifier les datasources
 curl -u admin:password http://localhost:3000/api/datasources | jq
@@ -811,5 +819,4 @@ curl -u admin:password http://localhost:3000/api/datasources | jq
 
 ---
 
-*Dernière mise à jour : Janvier 2026*  
-*Agent : ULTRON v1.0 | GL Tower - Niveau 4*
+*Loi : Dou — Équipage ARKADIA | GL Tower — NIVEAU 3*

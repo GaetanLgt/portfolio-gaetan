@@ -1,79 +1,77 @@
-# 🏢 GL TOWER - Documentation des Agents IA
+# 🏢 GL TOWER - L'Équipage des 6 Lois
 
 > **Centre de Commandement GL Digital Lab**  
-> Infrastructure humaine augmentée par des agents IA souverains
+> Infrastructure humaine augmentée par l'équipage ARKADIA — six Lois souveraines, 100 % locales.
+> Nomenclature : 和 Wa, 誠 Makoto, 美 Bi, 実 Jitsu, 動 Dou, 私 Watashi.
 
 ---
 
 ## 🗺️ Architecture de la Tour
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  ⬡ PENTHOUSE                                                    │
-│     🎯 J.A.R.V.I.S. - Coordination Centrale                     │
-│     Orchestration • Décisions • Interface humain-IA             │
-├─────────────────────────────────────────────────────────────────┤
-│  NIVEAU 6                                                       │
-│     🛡️ E.D.I.T.H. - Sécurité & Audit                           │
-│     Scanning • Détection intrusions • Compliance                │
-├─────────────────────────────────────────────────────────────────┤
-│  NIVEAU 5                                                       │
-│     🚀 V.E.R.O.N.I.C.A. - DevOps & Déploiement                 │
-│     CI/CD • Infrastructure as Code • Rollback                   │
-├─────────────────────────────────────────────────────────────────┤
-│  NIVEAU 4                                                       │
-│     📊 U.L.T.R.O.N. - Monitoring & Alertes                     │
-│     Métriques • Logs • Dashboards                               │
-├─────────────────────────────────────────────────────────────────┤
-│  NIVEAU 3                                                       │
-│     📢 V.I.S.I.O.N. - Content & Communication                  │
-│     Posts Discord • Newsletters • Documentation                 │
-├─────────────────────────────────────────────────────────────────┤
-│  NIVEAU 2                                                       │
-│     👥 K.A.R.E.N. - Community Management                       │
-│     Modération • Onboarding • Tickets                           │
-├─────────────────────────────────────────────────────────────────┤
-│  NIVEAU 1                                                       │
-│     🎧 F.R.I.D.A.Y. - Support Client                           │
-│     FAQ • RAG • Triage                                          │
-├─────────────────────────────────────────────────────────────────┤
-│  NIVEAU 0 - LOBBY                                               │
-│     🚪 Accueil Visiteurs                                        │
-│     Services • Contact • Portfolio                              │
-└─────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│  ⬡ PENTHOUSE                                                │
+│     🎯 和 Wa — Orchestration & Coordination                 │
+│     Routage • Contexte • Synthèse • Équilibrage             │
+├────────────────────────────────────────────────────────────┤
+│  NIVEAU 6                                                    │
+│     🛡️ 誠 Makoto — Sécurité, Audit & QA                    │
+│     Scan • Tests • Secrets • Intrusion                      │
+├────────────────────────────────────────────────────────────┤
+│  NIVEAU 5                                                    │
+│     💜 美 Bi — Frontend, Design & 3D                        │
+│     Vue 3 • Three.js • GSAP • UI/UX                         │
+├────────────────────────────────────────────────────────────┤
+│  NIVEAU 4                                                    │
+│     🚀 実 Jitsu — Backend, Build & Livraison                │
+│     Symfony • CI/CD • Docker • Déploiement                  │
+├────────────────────────────────────────────────────────────┤
+│  NIVEAU 3                                                    │
+│     📊 動 Dou — Monitoring, Veille & Alertes                │
+│     Prometheus • Grafana • Loki • Alertes                   │
+├────────────────────────────────────────────────────────────┤
+│  NIVEAU 2                                                    │
+│     🗄️ 私 Watashi — Mémoire, Données & RAG                 │
+│     PostgreSQL • ChromaDB • Vault ARKADIA • FAQ             │
+├────────────────────────────────────────────────────────────┤
+│  NIVEAU 0 — LOBBY                                            │
+│     🚪 Accueil Visiteurs • Services • Contact               │
+└────────────────────────────────────────────────────────────┘
             GL TOWER • Somme, France • 2026
 ```
 
 ---
 
-## 📚 Index des Agents
+## 📚 Index des Runbooks
 
-| Agent | Niveau | Rôle | Stack Principal | Doc |
-|-------|--------|------|-----------------|-----|
-| **J.A.R.V.I.S.** | ⬡ Penthouse | Coordination Centrale | n8n, Ollama, Redis | [→ 01-JARVIS.md](./01-JARVIS.md) |
-| **F.R.I.D.A.Y.** | 1 | Support Client | OpenWebUI, ChromaDB, RAG | [→ 02-FRIDAY.md](./02-FRIDAY.md) |
-| **K.A.R.E.N.** | 2 | Community Management | Discord.js, BullMQ, PostgreSQL | [→ 03-KAREN.md](./03-KAREN.md) |
-| **V.I.S.I.O.N.** | 3 | Content & Communication | Ollama, Handlebars, n8n | [→ 04-VISION.md](./04-VISION.md) |
-| **U.L.T.R.O.N.** | 4 | Monitoring & Alertes | Prometheus, Grafana, Loki | [→ 05-ULTRON.md](./05-ULTRON.md) |
-| **V.E.R.O.N.I.C.A.** | 5 | DevOps & Déploiement | GitHub Actions, Ansible, Docker | [→ 06-VERONICA.md](./06-VERONICA.md) |
-| **E.D.I.T.H.** | 6 | Sécurité & Audit | Trivy, Nuclei, Wazuh, Vault | [→ 07-EDITH.md](./07-EDITH.md) |
+| Loi | Niveau | Rôle | Stack Principal | Runbook |
+|-----|--------|------|-----------------|---------|
+| **和 Wa** | ⬡ Penthouse | Orchestration & Coordination | n8n, Redis, API Gateway | [→ wa.md](./wa.md) |
+| **誠 Makoto** | 6 | Sécurité, Audit & QA | Trivy, Wazuh, Vault, PHPUnit, Playwright | [→ makoto.md](./makoto.md) |
+| **美 Bi** | 5 | Frontend, Design & 3D | Vue 3, Three.js, GSAP, Figma | [→ bi.md](./bi.md) |
+| **実 Jitsu** | 4 | Backend, Build & Livraison | Symfony 8, GitHub Actions, Docker, Vite | [→ jitsu.md](./jitsu.md) |
+| **動 Dou** | 3 | Monitoring, Veille & Alertes | Prometheus, Grafana, Loki, n8n | [→ dou.md](./dou.md) |
+| **私 Watashi** | 2 | Mémoire, Données & RAG | PostgreSQL, ChromaDB, Ollama, OpenWebUI | [→ watashi.md](./watashi.md) |
+
+**Trinity**, la Grande Architecte, veille au-dessus de l'équipage — elle n'est pas un agent.
 
 ---
 
-## 🔄 Flux de communication
+## 🔄 Flux de coordination
 
 ```
                     ┌──────────────┐
-                    │   JARVIS     │ ← Coordination
-                    │  (Penthouse) │
+                    │      WA      │ ← Coordinatrice
+                    │  (Penthouse) │    (orchestration)
                     └──────┬───────┘
                            │
          ┌─────────────────┼─────────────────┐
          │                 │                 │
          ▼                 ▼                 ▼
    ┌──────────┐      ┌──────────┐      ┌──────────┐
-   │  EDITH   │      │ VERONICA │      │  ULTRON  │
-   │ Sécurité │      │  DevOps  │      │ Monitor  │
+   │  MAKOTO  │      │   JITSU  │      │   BI     │
+   │ Sécurité │      │ Backend  │      │ Frontend │
+   │ Tests QA │      │ CI/CD    │      │ Design 3D│
    └──────────┘      └──────────┘      └──────────┘
          │                 │                 │
          └─────────────────┼─────────────────┘
@@ -82,15 +80,15 @@
          │                 │                 │
          ▼                 ▼                 ▼
    ┌──────────┐      ┌──────────┐      ┌──────────┐
-   │  VISION  │      │  KAREN   │      │  FRIDAY  │
-   │ Content  │      │Community │      │ Support  │
+   │   DOU    │      │ WATASHI  │      │  LOBBY   │
+   │Monitoring│      │ Mémoire  │      │ Accueil  │
+   │ Alertes  │      │ RAG Vault│      │ Clients  │
    └──────────┘      └──────────┘      └──────────┘
-                           │
-                           ▼
-                    ┌──────────────┐
-                    │   CLIENTS    │
-                    └──────────────┘
 ```
+
+Les activités non techniques (community, contenu, facturation, marketing) ne sont
+**pas des agents** : elles relèvent des vaisseaux **Logos** (agence — ce qui finance)
+et **Icarus** (créations — ce qui donne le sens).
 
 ---
 
@@ -103,12 +101,12 @@
 docker --version  # >= 24.0
 docker compose version  # >= 2.20
 
-# Ollama (pour les agents IA)
+# Ollama (LLM local pour l'équipage)
 ollama --version
 ollama pull mistral
 ollama pull nomic-embed-text
 
-# Node.js (pour les bots Discord)
+# Node.js (pour les services annexes)
 node --version  # >= 20.0
 ```
 
@@ -120,29 +118,30 @@ docker network create gl-tower-network
 
 ### 3. Ordre de déploiement recommandé
 
-1. **Infrastructure de base**
+1. **Monitoring d'abord** (visibilité dès le départ)
    ```bash
-   cd ~/gl-tower/ultron && docker compose up -d  # Monitoring d'abord
+   cd ~/gl-tower/dou && docker compose up -d
    ```
 
-2. **Coordination**
+2. **Mémoire & données** (Vault, RAG)
    ```bash
-   cd ~/gl-tower/jarvis && docker compose up -d
+   cd ~/gl-tower/watashi && docker compose up -d
    ```
 
-3. **Sécurité**
+3. **Coordination** (n8n — Wa orchestre le reste)
    ```bash
-   cd ~/gl-tower/edith && docker compose up -d
+   cd ~/gl-tower/wa && docker compose up -d
    ```
 
-4. **Agents métier**
+4. **Sécurité & QA**
    ```bash
-   cd ~/gl-tower/friday && docker compose up -d
-   cd ~/gl-tower/karen && docker compose up -d
-   cd ~/gl-tower/vision && docker compose up -d
+   cd ~/gl-tower/makoto && docker compose up -d
    ```
 
-5. **DevOps** (GitHub Actions - pas de container local)
+5. **Livraison & Frontend** (Jitsu, Bi — le build se fait via CI/CD)
+
+> La documentation d'infrastructure consolidée (compose global, déploiement,
+> variables d'environnement) se trouve dans [`infrastructure/`](../infrastructure/DEPLOY.md).
 
 ### 4. Vérification
 
@@ -150,8 +149,8 @@ docker network create gl-tower-network
 # Status de tous les containers
 docker ps --filter "network=gl-tower-network"
 
-# Health check global
-curl http://localhost:5678/webhook/jarvis/status
+# Health check global (Wa — coordination)
+curl http://localhost:5678/webhook/wa/status
 ```
 
 ---
@@ -160,24 +159,24 @@ curl http://localhost:5678/webhook/jarvis/status
 
 Après déploiement, accéder aux interfaces :
 
-| Service | URL | Credentials |
+| Service | URL | Loi ARKADIA |
 |---------|-----|-------------|
-| Grafana (ULTRON) | http://localhost:3000 | admin / [.env] |
-| n8n (JARVIS) | http://localhost:5678 | setup initial |
-| Prometheus | http://localhost:9090 | - |
-| OpenWebUI (FRIDAY) | http://localhost:3000 | setup initial |
-| Wazuh (EDITH) | http://localhost:5601 | admin / [.env] |
-| Vault (EDITH) | http://localhost:8200 | [token] |
+| n8n (orchestration) | http://localhost:5678 | Wa |
+| OpenWebUI (chat + RAG) | http://localhost:3000 | Watashi |
+| Grafana | http://localhost:3001 | Dou |
+| Prometheus | http://localhost:9090 | Dou |
+| Vault | http://localhost:8200 | Makoto |
+| ChromaDB | http://localhost:8000 | Watashi |
 
 ---
 
 ## 🔐 Gestion des Secrets
 
-Tous les secrets sont gérés par **EDITH** via HashiCorp Vault :
+Tous les secrets sont gérés par **Makoto** via HashiCorp Vault :
 
 ```bash
 # Initialiser les secrets GL Tower
-cd ~/gl-tower/edith
+cd ~/gl-tower/makoto
 ./scripts/manage-secrets.sh init
 
 # Récupérer un secret
@@ -186,20 +185,6 @@ cd ~/gl-tower/edith
 # Rotation des secrets
 ./scripts/manage-secrets.sh rotate gl-tower/api discord_token
 ```
-
----
-
-## 📈 Métriques Clés
-
-| Agent | KPI Principal | Objectif |
-|-------|---------------|----------|
-| JARVIS | Routing accuracy | > 95% |
-| FRIDAY | Response time | < 30s |
-| KAREN | Ticket resolution | < 24h |
-| VISION | Content engagement | > 5% |
-| ULTRON | Uptime | > 99.9% |
-| VERONICA | Deploy success rate | > 95% |
-| EDITH | MTTD (Mean Time To Detect) | < 5min |
 
 ---
 
@@ -215,11 +200,11 @@ BACKUP_DIR=~/backups/gl-tower/$DATE
 
 mkdir -p $BACKUP_DIR
 
-# Backup chaque agent
-for agent in jarvis friday karen vision ultron edith; do
-  cd ~/gl-tower/$agent
-  docker compose exec -T postgres pg_dump -U app app > $BACKUP_DIR/${agent}-db.sql 2>/dev/null || true
-  cp -r ./config $BACKUP_DIR/${agent}-config/ 2>/dev/null || true
+# Backup de chaque Loi
+for loi in wa makoto jitsu dou watashi; do
+  cd ~/gl-tower/$loi
+  docker compose exec -T postgres pg_dump -U app app > $BACKUP_DIR/${loi}-db.sql 2>/dev/null || true
+  cp -r ./config $BACKUP_DIR/${loi}-config/ 2>/dev/null || true
 done
 
 # Compression
@@ -229,22 +214,22 @@ rm -rf $BACKUP_DIR
 echo "✅ Backup complete: gl-tower-$DATE.tar.gz"
 ```
 
-### Mise à jour des agents
+### Mise à jour de l'équipage
 
 ```bash
 #!/bin/bash
 # update-gl-tower.sh
 
-echo "🔄 Updating GL Tower agents..."
+echo "🔄 Updating GL Tower équipage..."
 
-for agent in jarvis friday karen vision ultron edith; do
-  echo "Updating $agent..."
-  cd ~/gl-tower/$agent
+for loi in wa makoto jitsu dou watashi; do
+  echo "Updating $loi..."
+  cd ~/gl-tower/$loi
   docker compose pull
   docker compose up -d --force-recreate
 done
 
-echo "✅ All agents updated"
+echo "✅ Équipage à jour"
 ```
 
 ---
@@ -268,6 +253,6 @@ echo "✅ All agents updated"
 
 ---
 
-*GL Tower v2.0 | Janvier 2026*  
+*GL Tower — L'Équipage ARKADIA | 2026*  
 *Développé par Neo pour GL Digital Lab*  
 *🇫🇷 Made in Somme, France*

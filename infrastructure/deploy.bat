@@ -5,8 +5,8 @@ cd /d "%~dp0"
 
 echo.
 echo ════════════════════════════════════════════════════
-echo    GL TOWER - Stack Agentique
-echo    13 Agents IA - Infrastructure Docker
+echo    GL TOWER - Equipage ARKADIA
+echo    6 Lois ARKADIA - Infrastructure Docker
 echo ════════════════════════════════════════════════════
 echo.
 
@@ -122,12 +122,12 @@ echo ═════════════════════════
 echo    URLs des services:
 echo ════════════════════════════════════════════════════
 echo.
-echo    JARVIS (n8n)       http://localhost:5678
-echo    FRIDAY (Chat)      http://localhost:3000
-echo    ULTRON (Grafana)   http://localhost:3001
-echo    ULTRON (Prometheus) http://localhost:9090
-echo    EDITH (Vault)      http://localhost:8200
-echo    ZOLA (ChromaDB)    http://localhost:8000
+echo    Wa (n8n)           http://localhost:5678
+echo    Watashi (Chat)     http://localhost:3000
+echo    Dou (Grafana)      http://localhost:3001
+echo    Dou (Prometheus)   http://localhost:9090
+echo    Makoto (Vault)     http://localhost:8200
+echo    Watashi (ChromaDB) http://localhost:8000
 echo    Ollama API         http://localhost:11434
 echo.
 

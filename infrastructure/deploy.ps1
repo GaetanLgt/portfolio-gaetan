@@ -31,8 +31,8 @@ function Show-Banner {
     Write-Host ""
     Write-Host "╔═══════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
     Write-Host "║                                                           ║" -ForegroundColor Cyan
-    Write-Host "║   🏢 GL TOWER - Stack Agentique                          ║" -ForegroundColor Cyan
-    Write-Host "║   13 Agents IA • Infrastructure Docker                   ║" -ForegroundColor Cyan
+    Write-Host "║   🏢 GL TOWER - Équipage ARKADIA                         ║" -ForegroundColor Cyan
+    Write-Host "║   6 Lois ARKADIA • Infrastructure Docker                 ║" -ForegroundColor Cyan
     Write-Host "║                                                           ║" -ForegroundColor Cyan
     Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
     Write-Host ""
@@ -207,7 +207,7 @@ schema_config:
     # Init SQL
     $initSql = @"
 -- GL Tower Database Initialization
--- Agent: ZOLA
+-- Agent: WATASHI
 
 -- Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -271,7 +271,7 @@ function Install-Stack {
     Set-Location $InfraPath
     
     # Étape 1: Infrastructure de base
-    Write-Info "Étape 1/5: Base de données (ZOLA)..."
+    Write-Info "Étape 1/5: Base de données (Watashi)..."
     docker compose up -d postgres redis
     Start-Sleep -Seconds 10
     
@@ -327,19 +327,19 @@ function Install-Models {
 function Show-Urls {
     Write-Title "🌐 URLs des services:"
     Write-Host ""
-    Write-Host "   JARVIS (n8n)      " -NoNewline -ForegroundColor Yellow
+    Write-Host "   Wa (n8n)           " -NoNewline -ForegroundColor Yellow
     Write-Host "http://localhost:5678" -ForegroundColor Cyan
-    Write-Host "   FRIDAY (Chat)     " -NoNewline -ForegroundColor Yellow
+    Write-Host "   Watashi (Chat)     " -NoNewline -ForegroundColor Yellow
     Write-Host "http://localhost:3000" -ForegroundColor Cyan
-    Write-Host "   ULTRON (Grafana)  " -NoNewline -ForegroundColor Yellow
+    Write-Host "   Dou (Grafana)      " -NoNewline -ForegroundColor Yellow
     Write-Host "http://localhost:3001" -ForegroundColor Cyan
-    Write-Host "   ULTRON (Prometheus)" -NoNewline -ForegroundColor Yellow
+    Write-Host "   Dou (Prometheus)   " -NoNewline -ForegroundColor Yellow
     Write-Host "http://localhost:9090" -ForegroundColor Cyan
-    Write-Host "   EDITH (Vault)     " -NoNewline -ForegroundColor Yellow
+    Write-Host "   Makoto (Vault)     " -NoNewline -ForegroundColor Yellow
     Write-Host "http://localhost:8200" -ForegroundColor Cyan
-    Write-Host "   ZOLA (ChromaDB)   " -NoNewline -ForegroundColor Yellow
+    Write-Host "   Watashi (ChromaDB) " -NoNewline -ForegroundColor Yellow
     Write-Host "http://localhost:8000" -ForegroundColor Cyan
-    Write-Host "   Ollama API        " -NoNewline -ForegroundColor Yellow
+    Write-Host "   Ollama API         " -NoNewline -ForegroundColor Yellow
     Write-Host "http://localhost:11434" -ForegroundColor Cyan
     Write-Host ""
 }
@@ -445,7 +445,7 @@ function Backup-Stack {
     
     # Backup n8n workflows
     Write-Info "Backup n8n..."
-    docker cp gl-jarvis-n8n:/home/node/.n8n "$backupPath\n8n_data"
+    docker cp gl-wa-n8n:/home/node/.n8n "$backupPath\n8n_data"
     Write-Success "n8n sauvegardé"
     
     Write-Success "Backup terminé: $backupPath"

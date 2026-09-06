@@ -1,19 +1,32 @@
-# 🎯 J.A.R.V.I.S. - Coordination Centrale
+# 🎯 Wa — Coordination Centrale (和)
 
-> **Just A Rather Very Intelligent System**  
-> Niveau : PENTHOUSE | Status : ONLINE | Priorité : CRITIQUE
+> **和 Wa — Loi de l'Harmonie**  
+> Codename : COORDINATOR | Rôle : Orchestration & Coordination  
+> Niveau : PENTHOUSE — 99ᵉ étage | Avatar : 🎯 | Couleur : #FBBF24 | Status : ACTIF  
+> *« L'équilibre entre les forces. La flotte ne tient que par l'harmonie de ses vaisseaux. »*
 
 ## 📋 Mission
 
-JARVIS est le **cerveau central** de GL Tower. Il orchestre tous les autres agents, prend les décisions stratégiques et sert d'interface entre l'humain (Neo) et l'écosystème IA.
+Wa est la **Loi de l'Harmonie**, la coordinatrice centrale de la GL Tower. Elle orchestre l'équipage ARKADIA, coordonne les vaisseaux, route les requêtes vers la bonne Loi, maintient le contexte entre les sessions et sert d'interface entre l'humain (Neo) et l'écosystème IA. La flotte ne tient que par l'harmonie de ses vaisseaux : Wa est l'équilibre entre les forces.
+
+Personnalité : calme, analytique, omnisciente. Voix posée, harmonieuse.
 
 ### Responsabilités
 
-- 🔄 **Orchestration** : Coordonne les workflows entre agents
-- 🧠 **Décisions** : Analyse les situations et route vers le bon agent
+- 🔄 **Orchestration** : Coordonne les workflows entre les agents de l'équipage
+- 🧠 **Routing** : Analyse les requêtes et les route vers la bonne Loi ou le bon vaisseau
+- 🧭 **Contexte** : Maintient le contexte entre les sessions de l'équipage
 - 📊 **Synthèse** : Agrège les rapports de tous les agents
+- ⚖️ **Équilibrage** : Équilibre les charges entre les agents et les files
 - 🗣️ **Interface** : Point d'entrée unique pour les commandes humaines
 - ⚡ **Escalade** : Détecte les urgences et alerte Neo
+
+### Objectifs
+
+- Router les requêtes
+- Maintenir le contexte
+- Synthétiser
+- Équilibrer les charges
 
 ---
 
@@ -21,11 +34,13 @@ JARVIS est le **cerveau central** de GL Tower. Il orchestre tous les autres agen
 
 | Composant | Technologie | Rôle |
 |-----------|-------------|------|
-| Orchestration | **n8n** | Workflows et routing |
-| LLM | **Ollama + Mistral/Nemotron** | Analyse et décisions |
-| API Gateway | **Caddy / Traefik** | Point d'entrée unifié |
-| Queue | **Redis** | File de tâches |
+| Orchestration | **n8n** (⚙️) | Workflows, routing et dispatch — outil principal de Wa |
+| Queue | **Redis** (🔴) | File prioritaire et contexte court |
+| API Gateway | **Caddy / Traefik** (🌐) | Point d'entrée unifié |
+| LLM | **Ollama + Mistral/Nemotron** | Analyse d'intention et synthèse |
 | Storage | **PostgreSQL** | État et historique |
+
+> Le préfixe de logs utilisé par Wa est `[WA]`.
 
 ---
 
@@ -46,8 +61,8 @@ ollama list  # Vérifier les modèles disponibles
 ### 1. Structure des dossiers
 
 ```bash
-mkdir -p ~/gl-tower/jarvis/{config,data,logs}
-cd ~/gl-tower/jarvis
+mkdir -p ~/gl-tower/wa/{config,data,logs}
+cd ~/gl-tower/wa
 ```
 
 ### 2. Docker Compose
@@ -60,7 +75,7 @@ services:
   # n8n - Orchestration
   n8n:
     image: n8nio/n8n:latest
-    container_name: jarvis-n8n
+    container_name: wa-n8n
     restart: unless-stopped
     ports:
       - "5678:5678"
@@ -81,7 +96,7 @@ services:
   # Redis - Queue de messages
   redis:
     image: redis:7-alpine
-    container_name: jarvis-redis
+    container_name: wa-redis
     restart: unless-stopped
     command: redis-server --appendonly yes
     volumes:
@@ -92,11 +107,11 @@ services:
   # PostgreSQL - Persistence
   postgres:
     image: postgres:16-alpine
-    container_name: jarvis-db
+    container_name: wa-db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: jarvis
-      POSTGRES_USER: jarvis
+      POSTGRES_DB: wa
+      POSTGRES_USER: wa
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
@@ -116,7 +131,7 @@ networks:
 N8N_ENCRYPTION_KEY=your-32-char-encryption-key-here
 DB_PASSWORD=your-secure-password
 OLLAMA_HOST=http://host.docker.internal:11434
-DISCORD_WEBHOOK_JARVIS=https://discord.com/api/webhooks/xxx
+DISCORD_WEBHOOK_WA=https://discord.com/api/webhooks/xxx
 ```
 
 ### 4. Lancement
@@ -130,19 +145,32 @@ docker compose logs -f  # Vérifier les logs
 
 ## 🔄 Workflows n8n
 
-### Workflow 1 : Router Central
+La bibliothèque de coordination de Wa (définie dans `src/data/agents.js`, préfixe d'id `wa-`) :
 
-Ce workflow reçoit toutes les requêtes et les route vers le bon agent.
+| ID | Workflow | Déclencheur | Chaîne de nœuds | Fréquence | Capacité | Statut |
+|----|----------|-------------|-----------------|-----------|----------|--------|
+| `wa-multi-agent` | Multi-Agent Orchestrator | Requête complexe | Webhook → Decompose → Parallel Calls → Merge → Response | On demand | Orchestration | actif |
+| `wa-health` | Agent Health Monitor | Cron 5min | Cron → Ping All → Aggregate → IF Down → Alert | 5 minutes | Orchestration | actif |
+| `wa-intent-router` | Intent Router | Webhook Discord/API | Webhook → Classify → Switch → HTTP Request → Log | Temps réel | Routing | actif |
+| `wa-priority-queue` | Priority Queue Manager | Nouvelle requête | Webhook → Extract Priority → Redis Queue → Process → Dispatch | Temps réel | Routing | actif |
+| `wa-daily-brief` | Daily Brief Synthesizer | Cron 08:00 | Cron → Fetch Reports → Merge → Summarize → Discord | Quotidien | Synthèse | actif |
+| `wa-meeting-notes` | Meeting Notes Generator | Post-meeting | Webhook → Transcribe → Extract Actions → Create Tasks → Send | On demand | Synthèse | standby |
+| `wa-context-manager` | Cross-Session Context | Nouvelle conversation | Webhook → Fetch History → Summarize → Inject → Update | On session | Contexte Long | actif |
+| `wa-escalation` | Escalation Protocol | Alert from agent | Webhook → Evaluate Severity → IF Critical → Discord DM → SMS | Event-driven | Contexte Long | actif |
+
+### Workflow 1 : Router Central *(équivalent : `wa-intent-router` / `wa-multi-agent`)*
+
+Ce workflow reçoit toutes les requêtes et les route vers la bonne Loi ou le bon vaisseau.
 
 ```json
 {
-  "name": "JARVIS - Central Router",
+  "name": "Wa - Central Router",
   "nodes": [
     {
       "name": "Webhook Trigger",
       "type": "n8n-nodes-base.webhook",
       "parameters": {
-        "path": "jarvis/incoming",
+        "path": "wa/incoming",
         "httpMethod": "POST"
       }
     },
@@ -177,13 +205,15 @@ Ce workflow reçoit toutes les requêtes et les route vers le bon agent.
 }
 ```
 
-### Workflow 2 : Daily Briefing
+Exemples d'aiguillage (par rôle réel de l'équipage) : SUPPORT → Watashi (tickets, FAQ, RAG), MONITORING → Dou, DEVOPS → Jitsu, SECURITY → Makoto, COMMUNITY et CONTENT → vaisseaux Logos / Icarus.
 
-Rapport quotidien de tous les agents.
+### Workflow 2 : Daily Briefing *(équivalent : `wa-daily-brief`)*
+
+Rapport quotidien de tous les agents (cron 08h00, fuseau Europe/Paris).
 
 ```json
 {
-  "name": "JARVIS - Daily Briefing",
+  "name": "Wa - Daily Briefing",
   "nodes": [
     {
       "name": "Cron Trigger",
@@ -217,27 +247,27 @@ Rapport quotidien de tous les agents.
       "name": "Send to Discord",
       "type": "n8n-nodes-base.discord",
       "parameters": {
-        "webhookUri": "={{ $env.DISCORD_WEBHOOK_JARVIS }}",
-        "content": "📊 **JARVIS Daily Briefing**\n\n{{ $json.response }}"
+        "webhookUri": "={{ $env.DISCORD_WEBHOOK_WA }}",
+        "content": "📊 **Wa Daily Briefing**\n\n{{ $json.response }}"
       }
     }
   ]
 }
 ```
 
-### Workflow 3 : Emergency Escalation
+### Workflow 3 : Emergency Escalation *(équivalent : `wa-escalation`)*
 
 Détection et escalade des urgences.
 
 ```json
 {
-  "name": "JARVIS - Emergency Escalation",
+  "name": "Wa - Emergency Escalation",
   "nodes": [
     {
       "name": "Webhook Trigger",
       "type": "n8n-nodes-base.webhook",
       "parameters": {
-        "path": "jarvis/alert",
+        "path": "wa/alert",
         "httpMethod": "POST"
       }
     },
@@ -270,7 +300,7 @@ Détection et escalade des urgences.
 ### Point d'entrée principal
 
 ```bash
-POST http://localhost:5678/webhook/jarvis/incoming
+POST http://localhost:5678/webhook/wa/incoming
 Content-Type: application/json
 
 {
@@ -281,13 +311,13 @@ Content-Type: application/json
 }
 ```
 
-### Réponse
+### Exemple de réponse
 
 ```json
 {
   "status": "routed",
-  "agent": "VERONICA",
-  "ticket_id": "JRV-2026-0001",
+  "agent": "jitsu",
+  "ticket_id": "WA-2026-0001",
   "estimated_response": "2min"
 }
 ```
@@ -296,7 +326,7 @@ Content-Type: application/json
 
 ## 🎮 Commandes Discord
 
-JARVIS répond aux commandes suivantes dans le channel `#jarvis-control` :
+Wa répond aux commandes suivantes dans le channel `#wa-control` :
 
 | Commande | Description |
 |----------|-------------|
@@ -308,25 +338,36 @@ JARVIS répond aux commandes suivantes dans le channel `#jarvis-control` :
 
 ---
 
-## 📊 Métriques
+## 📊 Métriques & Objectifs
 
-JARVIS expose ses métriques pour Prometheus :
+Wa expose des métriques pour Prometheus. Les valeurs d'objectif listées ci-dessous sont des **cibles**, pas des mesures constatées.
 
 ```yaml
 # prometheus.yml
 scrape_configs:
-  - job_name: 'jarvis'
+  - job_name: 'wa'
     static_configs:
       - targets: ['localhost:5678']
     metrics_path: '/metrics'
 ```
 
-### Métriques clés
+### Métriques exposées
 
-- `jarvis_requests_total` : Nombre de requêtes traitées
-- `jarvis_routing_time_seconds` : Temps de routage
-- `jarvis_agent_health` : État de santé des agents
-- `jarvis_escalations_total` : Nombre d'escalades
+- `wa_requests_total` : Nombre de requêtes traitées
+- `wa_routing_time_seconds` : Temps de routage
+- `wa_agent_health` : État de santé des agents
+- `wa_escalations_total` : Nombre d'escalades
+
+### État au moment de la rédaction *(source : `src/data/agents.js`)*
+
+- 8 workflows de coordination : 7 actifs, 1 en standby (`wa-meeting-notes`)
+- 3 outils actifs : n8n, Redis, API Gateway
+
+### Objectifs (cibles)
+
+- Disponibilité (uptime) visée du service de coordination : ≥ 99,9 %
+- Détection d'un agent hors-ligne sous 5 minutes (fréquence du workflow Agent Health Monitor)
+- Diffusion du briefing quotidien chaque matin à 08h00 (heure de Paris)
 
 ---
 
@@ -336,29 +377,29 @@ scrape_configs:
 
 ```bash
 # Voir les logs en temps réel
-docker logs -f jarvis-n8n
+docker logs -f wa-n8n
 
 # Exporter les logs
-docker logs jarvis-n8n > jarvis-logs-$(date +%Y%m%d).txt
+docker logs wa-n8n > wa-logs-$(date +%Y%m%d).txt
 ```
 
 ### Backup
 
 ```bash
 #!/bin/bash
-# backup-jarvis.sh
-BACKUP_DIR=~/backups/jarvis/$(date +%Y%m%d)
+# backup-wa.sh
+BACKUP_DIR=~/backups/wa/$(date +%Y%m%d)
 mkdir -p $BACKUP_DIR
 
 # Backup n8n workflows
-docker exec jarvis-n8n n8n export:workflow --all --output=/config/workflows.json
+docker exec wa-n8n n8n export:workflow --all --output=/config/workflows.json
 cp ./config/workflows.json $BACKUP_DIR/
 
 # Backup database
-docker exec jarvis-db pg_dump -U jarvis jarvis > $BACKUP_DIR/jarvis.sql
+docker exec wa-db pg_dump -U wa wa > $BACKUP_DIR/wa.sql
 
 # Backup Redis
-docker exec jarvis-redis redis-cli BGSAVE
+docker exec wa-redis redis-cli BGSAVE
 cp ./data/redis/dump.rdb $BACKUP_DIR/
 
 echo "Backup complete: $BACKUP_DIR"
@@ -375,7 +416,7 @@ echo "Backup complete: $BACKUP_DIR"
 sudo chown -R 1000:1000 ./data/n8n
 
 # Vérifier les logs
-docker logs jarvis-n8n --tail 100
+docker logs wa-n8n --tail 100
 ```
 
 ### Ollama non accessible
@@ -392,10 +433,10 @@ curl http://localhost:11434/api/tags
 
 ```bash
 # Vérifier la mémoire
-docker exec jarvis-redis redis-cli INFO memory
+docker exec wa-redis redis-cli INFO memory
 
 # Nettoyer les anciennes clés
-docker exec jarvis-redis redis-cli FLUSHDB
+docker exec wa-redis redis-cli FLUSHDB
 ```
 
 ---
@@ -409,4 +450,4 @@ docker exec jarvis-redis redis-cli FLUSHDB
 ---
 
 *Dernière mise à jour : Janvier 2026*  
-*Agent : JARVIS v2.0 | GL Tower*
+*Loi : Wa — Équipage ARKADIA | GL Tower — Penthouse*

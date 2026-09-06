@@ -1,15 +1,15 @@
 # ============================================================
-# GL TOWER - STACK AGENTIQUE COMPLÈTE
-# Infrastructure Docker pour 13 Agents IA
+# GL TOWER - ÉQUIPAGE ARKADIA
+# Infrastructure Docker pour l'équipage des 6 Lois
 # ============================================================
 # 
 # Architecture:
-#   - n8n: Orchestration workflows (JARVIS)
+#   - n8n: Orchestration workflows (WA)
 #   - Ollama: LLM local (Mistral, Llama)
 #   - PostgreSQL: Base de données principale
 #   - Redis: Cache & queues
 #   - ChromaDB: Vector store (RAG)
-#   - Prometheus + Grafana: Monitoring (ULTRON)
+#   - Prometheus + Grafana: Monitoring (DOU)
 #   - Traefik: Reverse proxy & SSL
 #
 # ============================================================
@@ -65,7 +65,7 @@ services:
       - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN:-localhost}`)"
       - "traefik.http.routers.dashboard.service=api@internal"
 
-  # PostgreSQL - Base de données principale (ZOLA)
+  # PostgreSQL - Base de données principale (WATASHI)
   postgres:
     image: postgres:16-alpine
     container_name: gl-postgres
@@ -106,12 +106,12 @@ services:
       retries: 5
 
   # ============================================================
-  # JARVIS - COORDINATION CENTRALE (n8n)
+  # WA - COORDINATION CENTRALE (n8n)
   # ============================================================
 
   n8n:
     image: n8nio/n8n:latest
-    container_name: gl-jarvis-n8n
+    container_name: gl-wa-n8n
     restart: unless-stopped
     environment:
       - N8N_HOST=${N8N_HOST:-localhost}
@@ -158,7 +158,7 @@ services:
   # n8n Worker (pour les queues)
   n8n-worker:
     image: n8nio/n8n:latest
-    container_name: gl-jarvis-worker
+    container_name: gl-wa-worker
     restart: unless-stopped
     command: worker
     environment:
@@ -180,7 +180,7 @@ services:
       - n8n
 
   # ============================================================
-  # IA LOCALE - Ollama (FRIDAY, VISION, JARVIS)
+  # IA LOCALE - Ollama (partagé par l'équipage)
   # ============================================================
 
   ollama:
@@ -202,10 +202,10 @@ services:
               capabilities: [gpu]
     # Si pas de GPU, commenter le bloc deploy ci-dessus
 
-  # OpenWebUI - Interface chat (FRIDAY)
+  # OpenWebUI - Interface chat (WATASHI)
   openwebui:
     image: ghcr.io/open-webui/open-webui:main
-    container_name: gl-friday-webui
+    container_name: gl-watashi-webui
     restart: unless-stopped
     environment:
       - OLLAMA_BASE_URL=http://ollama:11434
@@ -229,7 +229,7 @@ services:
       - "traefik.http.services.webui.loadbalancer.server.port=8080"
 
   # ============================================================
-  # RAG & VECTOR STORE - ChromaDB (FRIDAY, ZOLA)
+  # RAG & VECTOR STORE - ChromaDB (WATASHI)
   # ============================================================
 
   chromadb:
@@ -248,12 +248,12 @@ services:
       - gl-tower
 
   # ============================================================
-  # MONITORING - ULTRON (Prometheus + Grafana)
+  # MONITORING - DOU (Prometheus + Grafana)
   # ============================================================
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: gl-ultron-prometheus
+    container_name: gl-dou-prometheus
     restart: unless-stopped
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -272,7 +272,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: gl-ultron-grafana
+    container_name: gl-dou-grafana
     restart: unless-stopped
     environment:
       - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
@@ -297,7 +297,7 @@ services:
   # Loki - Logs aggregation
   loki:
     image: grafana/loki:latest
-    container_name: gl-ultron-loki
+    container_name: gl-dou-loki
     restart: unless-stopped
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
@@ -326,12 +326,12 @@ services:
       - gl-tower
 
   # ============================================================
-  # SÉCURITÉ - EDITH (Trivy, Vault)
+  # SÉCURITÉ - MAKOTO (Trivy, Vault)
   # ============================================================
 
   vault:
     image: hashicorp/vault:latest
-    container_name: gl-edith-vault
+    container_name: gl-makoto-vault
     restart: unless-stopped
     cap_add:
       - IPC_LOCK
@@ -344,19 +344,19 @@ services:
       - gl-tower
 
   # ============================================================
-  # COMMUNITY & DISCORD - KAREN
+  # COMMUNITY & DISCORD - Bot communautaire (vaisseau Logos)
   # ============================================================
 
   # Le bot Discord tourne via n8n ou un service Node.js dédié
-  # Configuration dans ./services/karen/
+  # Configuration: voir le service communautaire du vaisseau Logos
 
   # ============================================================
-  # BUILD & TOOLING - DUM-E (Registry Docker local optionnel)
+  # BUILD & TOOLING - JITSU (Registry Docker local optionnel)
   # ============================================================
 
   registry:
     image: registry:2
-    container_name: gl-dume-registry
+    container_name: gl-jitsu-registry
     restart: unless-stopped
     ports:
       - "5000:5000"
@@ -366,8 +366,8 @@ services:
       - gl-tower
 
   # ============================================================
-  # FINANCE - PEPPER (API interne)
+  # FACTURATION - API interne (vaisseau Logos)
   # ============================================================
 
-  # L'API finance est un service Symfony dans ./services/pepper/
-  # Voir docker-compose.pepper.yml pour le déploiement séparé
+  # L'API de facturation est un service Symfony dédié
+  # Voir son fichier docker-compose propre pour le déploiement séparé

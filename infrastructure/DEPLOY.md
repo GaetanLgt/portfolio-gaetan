@@ -2,27 +2,20 @@
 
 ## 📋 Vue d'ensemble
 
-Déploiement complet des 13 agents IA sur infrastructure Docker.
+Déploiement complet de l'équipage des 6 Lois ARKADIA sur infrastructure Docker.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      GL TOWER                                │
+│                           GL TOWER                          │
 ├─────────────────────────────────────────────────────────────┤
-│  PENTHOUSE    │ 🎯 JARVIS    │ n8n + Orchestration          │
-│  NIVEAU 6     │ 🛡️ EDITH     │ Vault + Trivy                │
-│  NIVEAU 5     │ 🚀 VERONICA  │ GitHub Actions + Ansible     │
-│  NIVEAU 4     │ 📊 ULTRON    │ Prometheus + Grafana + Loki  │
-│  NIVEAU 3     │ 📢 VISION    │ Ollama + Templates           │
-│  NIVEAU 2     │ 👥 KAREN     │ Discord.js Bot               │
-│  NIVEAU 1     │ 🎧 FRIDAY    │ OpenWebUI + ChromaDB (RAG)   │
+│  PENTHOUSE    │ WA         │ n8n + Orchestration            │
+│  NIVEAU 6     │ MAKOTO     │ Vault + Trivy + Tests          │
+│  NIVEAU 5     │ BI         │ Frontend (Vite)                │
+│  NIVEAU 4     │ JITSU      │ Symfony API + CI/CD + Registry │
+│  NIVEAU 3     │ DOU        │ Prometheus + Grafana + Loki    │
+│  NIVEAU 2     │ WATASHI    │ OpenWebUI + ChromaDB + Données │
 ├─────────────────────────────────────────────────────────────┤
-│  SS-1 FORGE   │ 🦾 TADASHI   │ Vite Dev Server              │
-│  SS-2 ARMUR.  │ ⚙️ JOCASTA   │ Symfony API                  │
-│  SS-3 LABO    │ 🔬 CEREBRO   │ PHPUnit + Vitest + Playwright│
-│  SS-4 BUNKER  │ 🗄️ ZOLA      │ PostgreSQL + Redis + Chroma  │
-│  SS-5 ATELIER │ 🛠️ DUM-E     │ Docker Registry              │
-├─────────────────────────────────────────────────────────────┤
-│  BACK OFFICE  │ 💰 PEPPER    │ Stripe + PDF Generation      │
+│  LOBBY        │ —          │ Traefik : Reverse Proxy + SSL  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -79,23 +72,23 @@ docker compose up -d
 ```
 
 ### 3. Accéder aux services
-| Service | URL | Agent |
+| Service | URL | Loi ARKADIA |
 |---------|-----|-------|
-| n8n | http://localhost:5678 | JARVIS |
-| OpenWebUI | http://localhost:3000 | FRIDAY |
-| Grafana | http://localhost:3001 | ULTRON |
-| Prometheus | http://localhost:9090 | ULTRON |
-| ChromaDB | http://localhost:8000 | ZOLA |
-| Vault | http://localhost:8200 | EDITH |
-| PostgreSQL | localhost:5432 | ZOLA |
-| Redis | localhost:6379 | ZOLA |
-| Ollama API | http://localhost:11434 | VISION |
+| n8n | http://localhost:5678 | WA |
+| OpenWebUI | http://localhost:3000 | WATASHI |
+| Grafana | http://localhost:3001 | DOU |
+| Prometheus | http://localhost:9090 | DOU |
+| ChromaDB | http://localhost:8000 | WATASHI |
+| Vault | http://localhost:8200 | MAKOTO |
+| PostgreSQL | localhost:5432 | WATASHI |
+| Redis | localhost:6379 | WATASHI |
+| Ollama API | http://localhost:11434 | partagé (équipage) |
 
 ---
 
 ## 📦 Installation Détaillée
 
-### Étape 1: Infrastructure de base (ZOLA)
+### Étape 1: Infrastructure de base (WATASHI)
 
 ```powershell
 # Démarrer PostgreSQL + Redis + ChromaDB
@@ -106,7 +99,7 @@ docker compose ps
 docker compose logs postgres
 ```
 
-### Étape 2: IA Locale (FRIDAY, VISION)
+### Étape 2: IA Locale (Ollama partagé — WATASHI)
 
 ```powershell
 # Démarrer Ollama
@@ -121,7 +114,7 @@ docker exec -it gl-ollama ollama pull nomic-embed-text
 docker compose up -d openwebui
 ```
 
-### Étape 3: Orchestration (JARVIS)
+### Étape 3: Orchestration (WA)
 
 ```powershell
 # Démarrer n8n + worker
@@ -131,7 +124,7 @@ docker compose up -d n8n n8n-worker
 # Login: admin / (mot de passe dans .env)
 ```
 
-### Étape 4: Monitoring (ULTRON)
+### Étape 4: Monitoring (DOU)
 
 ```powershell
 # Démarrer Prometheus + Grafana + Loki
@@ -141,7 +134,7 @@ docker compose up -d prometheus grafana loki node-exporter
 # Login: admin / (mot de passe dans .env)
 ```
 
-### Étape 5: Sécurité (EDITH)
+### Étape 5: Sécurité (MAKOTO)
 
 ```powershell
 # Démarrer Vault
@@ -159,24 +152,24 @@ docker compose up -d
 
 ---
 
-## 🔌 Configuration des Agents
+## 🔌 Configuration de l'équipage ARKADIA
 
-### JARVIS (n8n) - Workflows à importer
+### WA (n8n) - Workflows à importer
 
 ```powershell
 # Les workflows sont dans ./workflows/
 # Importer via l'interface n8n ou API
 
 # Workflows disponibles:
-# - jarvis-orchestrator.json     (Coordination)
-# - friday-support-rag.json      (Support FAQ)
-# - karen-discord-moderation.json (Modération)
-# - vision-content-generator.json (Contenu)
-# - ultron-alerting.json         (Alertes)
-# - pepper-invoicing.json        (Facturation)
+# - wa-orchestrator.json     (Coordination)
+# - watashi-support-rag.json      (Support FAQ)
+# - community-discord-moderation.json (Modération)
+# - content-generator.json (Contenu)
+# - dou-alerting.json         (Alertes)
+# - invoicing.json        (Facturation)
 ```
 
-### FRIDAY (RAG) - Indexer la documentation
+### WATASHI (RAG) - Indexer la documentation
 
 ```powershell
 # Via OpenWebUI, uploader les docs dans "Documents"
@@ -187,7 +180,7 @@ curl -X POST http://localhost:8000/api/v1/collections \
   -d '{"name": "gl-tower-docs"}'
 ```
 
-### KAREN (Discord Bot) - Configuration
+### Bot Discord communautaire (vaisseau Logos) - Configuration
 
 ```env
 # Dans .env
@@ -197,10 +190,10 @@ DISCORD_GUILD_ID=your_guild_id
 
 ```powershell
 # Le bot est orchestré via n8n
-# Workflow: karen-discord-moderation.json
+# Workflow: community-discord-moderation.json
 ```
 
-### ULTRON (Grafana) - Dashboards
+### DOU (Grafana) - Dashboards
 
 ```powershell
 # Les dashboards sont auto-provisionnés
@@ -260,7 +253,7 @@ docker compose up -d
 
 ```powershell
 # Shell dans un container
-docker exec -it gl-jarvis-n8n /bin/sh
+docker exec -it gl-wa-n8n /bin/sh
 
 # Vérifier réseau
 docker network inspect gl-tower-network
@@ -374,7 +367,7 @@ sudo ufw enable
 
 ## 📈 Monitoring & Alertes
 
-### Métriques collectées (ULTRON)
+### Métriques collectées (DOU)
 
 - CPU, RAM, Disk de chaque container
 - Temps de réponse APIs
@@ -456,8 +449,8 @@ taskkill /PID <pid> /F
 
 1. ✅ Déployer la stack de base
 2. ⬜ Importer les workflows n8n
-3. ⬜ Configurer le bot Discord (KAREN)
-4. ⬜ Indexer la documentation (FRIDAY RAG)
+3. ⬜ Configurer le bot Discord communautaire (vaisseau Logos)
+4. ⬜ Indexer la documentation (WATASHI RAG)
 5. ⬜ Créer les dashboards Grafana
 6. ⬜ Configurer les alertes
 7. ⬜ Backup automatique
@@ -465,4 +458,4 @@ taskkill /PID <pid> /F
 
 ---
 
-*GL Digital Lab - Infrastructure Humaine Augmentée par 13 Agents IA*
+*GL Digital Lab - Infrastructure Humaine Augmentée par l'équipage des 6 Lois ARKADIA*
