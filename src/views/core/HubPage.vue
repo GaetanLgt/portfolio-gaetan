@@ -52,25 +52,20 @@
 
         <!-- Quick Access Links -->
         <div class="hero-links">
-          <router-link to="/carte-holistique" class="hero-link hero-link--map">
-            <span class="link-icon">🗺️</span>
-            <span class="link-text">Carte Holistique</span>
-            <span class="link-desc">Vue d'ensemble interactive</span>
+          <router-link to="/tower" class="hero-link hero-link--map">
+            <span class="link-icon">🗼</span>
+            <span class="link-text">GL Tower</span>
+            <span class="link-desc">Visite interactive 3D</span>
           </router-link>
-          <router-link to="/creations" class="hero-link hero-link--gallery">
-            <span class="link-icon">🎨</span>
-            <span class="link-text">Galerie Créations</span>
-            <span class="link-desc">62 œuvres numériques</span>
+          <router-link to="/workflows" class="hero-link hero-link--gallery">
+            <span class="link-icon">🔄</span>
+            <span class="link-text">Workflows</span>
+            <span class="link-desc">Automatisations n8n</span>
           </router-link>
-          <router-link to="/multivers" class="hero-link hero-link--multivers">
-            <span class="link-icon">🌌</span>
-            <span class="link-text">Multivers</span>
-            <span class="link-desc">21 dimensions parallèles</span>
-          </router-link>
-          <router-link to="/construct" class="hero-link hero-link--construct">
-            <span class="link-icon">🕳️</span>
-            <span class="link-text">The Construct</span>
-            <span class="link-desc">Hub Admin Matrix</span>
+          <router-link to="/stack-ia" class="hero-link hero-link--multivers">
+            <span class="link-icon">⚡</span>
+            <span class="link-text">Stack IA Locale</span>
+            <span class="link-desc">Infrastructure souveraine</span>
           </router-link>
           <router-link to="/services" class="hero-link">
             <span class="link-icon">⚡</span>
@@ -283,26 +278,14 @@
       </div>
     </section>
 
-    <!-- MULTIVERS TEASER -->
-    <section class="multivers-teaser" aria-labelledby="multivers-title">
+    <!-- PREUVE : ARKADIA -->
+    <section class="multivers-teaser" aria-labelledby="proof-title">
       <div class="container">
         <div class="teaser-content">
-          <h2 id="multivers-title">🌌 Envie d'explorer d'autres dimensions ?</h2>
-          <p>Ce portfolio existe dans <strong>20 univers parallèles</strong>. Matrix, Blade Runner, Tron...</p>
-          <div class="teaser-scroll">
-            <router-link 
-              v-for="u in universePreview" 
-              :key="u.path" 
-              :to="u.path"
-              class="teaser-card"
-              :style="{ '--color': u.color }"
-            >
-              <span>{{ u.icon }}</span>
-              <span>{{ u.name }}</span>
-            </router-link>
-          </div>
-          <router-link to="/multivers" class="teaser-cta">
-            🌌 Voir les 20 univers →
+          <h2 id="proof-title">🦖 Une preuve : ARKADIA FRANCE</h2>
+          <p><strong>18 mois d'exploitation</strong> d'un cluster de 9 serveurs de jeux — 150+ joueurs, 99,8 % d'uptime, sauvegardes automatisées et rollback en moins de 10 minutes.</p>
+          <router-link to="/arkadia" class="teaser-cta">
+            Voir l'étude de cas complète →
           </router-link>
         </div>
       </div>
@@ -353,15 +336,6 @@ const domains = towerAgents.map((a) => ({
   desc: a.mission,
   agent: a.roman,
 }));
-
-// Aperçu multivers
-const universePreview = [
-  { path: '/inception', icon: '🌀', name: 'Inception', color: '#3b82f6' },
-  { path: '/tron', icon: '💠', name: 'TRON', color: '#06b6d4' },
-  { path: '/blade-runner', icon: '🌧️', name: 'Blade Runner', color: '#f97316' },
-  { path: '/iron-man', icon: '🦾', name: 'Iron Man', color: '#dc2626' },
-  { path: '/ready-player-one', icon: '🎮', name: 'Ready Player One', color: '#00f5ff' },
-];
 </script>
 
 <style scoped>

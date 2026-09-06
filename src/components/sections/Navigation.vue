@@ -132,58 +132,6 @@
           </Transition>
         </div>
         
-        <!-- Dropdown Multivers -->
-        <div class="nav-dropdown">
-          <button 
-            class="nav-link nav-dropdown__trigger nav-link--multivers"
-            @click="toggleDropdown('multivers')"
-            :aria-expanded="activeDropdown === 'multivers'"
-            aria-haspopup="true"
-          >
-            <span class="nav-link__num">🌌</span>
-            MULTIVERS
-            <svg class="nav-dropdown__arrow" :class="{ 'rotate': activeDropdown === 'multivers' }" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </button>
-          <Transition name="dropdown">
-            <div v-if="activeDropdown === 'multivers'" class="nav-dropdown__menu nav-dropdown__menu--multivers">
-              <div class="multivers-header">
-                <span class="multivers-title">🎬 Portails Dimensionnels</span>
-                <span class="multivers-desc">{{ universes.length }} dimensions à explorer</span>
-              </div>
-              <div class="multivers-grid">
-                <router-link v-for="universe in universes" :key="universe.path" 
-                  :to="universe.path" 
-                  class="nav-dropdown__item nav-dropdown__item--universe" 
-                  @click="closeDropdown"
-                >
-                  <span class="nav-dropdown__icon">{{ universe.icon }}</span>
-                  <div>
-                    <span class="nav-dropdown__title">{{ universe.name }}</span>
-                    <span class="nav-dropdown__desc">{{ universe.desc }}</span>
-                  </div>
-                </router-link>
-              </div>
-            </div>
-          </Transition>
-        </div>
-        
-        <router-link to="/arcade" class="nav-link nav-link--arcade">
-          <span class="nav-link__num">🕹️</span>
-          ARCADE
-        </router-link>
-
-        <router-link to="/apps" class="nav-link nav-link--apps">
-          <span class="nav-link__num">🧰</span>
-          APPS
-        </router-link>
-
-        <router-link to="/creations" class="nav-link nav-link--gallery">
-          <span class="nav-link__num">🎨</span>
-          GALERIE
-        </router-link>
-
         <!-- FORMATION - Masqué temporairement (droits en attente)
         <router-link to="/formation" class="nav-link nav-link--formation">
           <span class="nav-link__num">🎓</span>
@@ -262,78 +210,6 @@
         <router-link to="/cv" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
           → Mon CV
         </router-link>
-        
-        <!-- Multivers Mobile -->
-        <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">🌌 MULTIVERS ({{ universes.length }})</span>
-        </div>
-        <router-link v-for="universe in universes" :key="universe.path"
-          :to="universe.path" 
-          class="nav-mobile__link nav-mobile__link--sub nav-mobile__link--universe" 
-          @click="closeMobile"
-        >
-          <span class="universe-icon">{{ universe.icon }}</span> {{ universe.name }}
-        </router-link>
-
-        <!-- Arcade -->
-        <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">🕹️ ARCADE</span>
-        </div>
-        <router-link to="/arcade" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Hub Arcade
-        </router-link>
-        <router-link to="/arcade/cards" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → GL Cards
-        </router-link>
-        <router-link to="/arcade/memory" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Memory
-        </router-link>
-        <router-link to="/arcade/terminal" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Terminal
-        </router-link>
-        <router-link to="/arcade/slots" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Stack Slots
-        </router-link>
-
-        <!-- Galerie Créations -->
-        <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">🎨 GALERIE CRÉATIONS</span>
-        </div>
-        <router-link to="/creations" class="nav-mobile__link nav-mobile__link--gallery" @click="closeMobile">
-          <span class="nav-link__num">🎨</span> Galerie Matrix Style
-        </router-link>
-
-        <!-- Apps Section -->
-        <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">🧰 APPLICATIONS</span>
-        </div>
-        <router-link to="/apps" class="nav-mobile__link nav-mobile__link--apps" @click="closeMobile">
-          <span class="nav-link__num">🧰</span> Hub Applications
-        </router-link>
-        <router-link to="/apps/colors" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Color Converter
-        </router-link>
-        <router-link to="/apps/json" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → JSON Formatter
-        </router-link>
-        <router-link to="/apps/password" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Password Generator
-        </router-link>
-        <router-link to="/apps/base64" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Base64 Encoder
-        </router-link>
-        <router-link to="/apps/uuid" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → UUID Generator
-        </router-link>
-        <router-link to="/apps/lorem" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Lorem Ipsum
-        </router-link>
-        <router-link to="/apps/diff" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Diff Checker
-        </router-link>
-        <router-link to="/apps/chatbot" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Chatbot Builder
-        </router-link>
 
         <!-- FORMATION - Masqué temporairement (droits en attente)
         <div class="nav-mobile__section">
@@ -369,33 +245,6 @@ const isHidden = ref(false);
 const isScrolled = ref(false);
 const activeDropdown = ref(null);
 const mobileMenuOpen = ref(false);
-
-// Liste complète des univers thématiques + The Construct
-const universes = [
-  { path: '/construct', icon: '🖥️', name: 'The Construct', desc: 'Admin Hub 3D immersif' },
-  { path: '/matrix', icon: '🐇', name: 'Matrix', desc: 'Réveille-toi Neo' },
-  { path: '/matrix-resurrections', icon: '🔴', name: 'Matrix Resurrections', desc: 'Retour à la Matrice' },
-  { path: '/inception', icon: '🌀', name: 'Inception', desc: 'Niveaux de rêve' },
-  { path: '/tron', icon: '💠', name: 'TRON', desc: 'La Grille' },
-  { path: '/ghost-in-the-shell', icon: '🧠', name: 'Ghost in the Shell', desc: 'Cyberespace' },
-  { path: '/minority-report', icon: '👁️', name: 'Minority Report', desc: 'Précognition' },
-  { path: '/blade-runner', icon: '🌧️', name: 'Blade Runner', desc: 'Néon-noir' },
-  { path: '/v-for-vendetta', icon: '🎭', name: 'V pour Vendetta', desc: 'Révolution' },
-  { path: '/jupiter-ascending', icon: '👑', name: 'Jupiter Ascending', desc: 'Héritage cosmique' },
-  { path: '/howard-the-duck', icon: '🦆', name: 'Howard the Duck', desc: 'Perle rare héroïque' },
-  { path: '/the-mask', icon: '💚', name: 'The Mask', desc: 'SSSSMOKIN!' },
-  { path: '/deadpool', icon: '💀', name: 'Deadpool', desc: 'Maximum Effort' },
-  { path: '/alice-turing', icon: '🐰', name: 'Alice & Turing', desc: 'Pays des merveilles logique' },
-  { path: '/asimov', icon: '🤖', name: 'Asimov', desc: 'Lois robotique' },
-  { path: '/cloud-atlas', icon: '☁️', name: 'Cloud Atlas', desc: 'Connexions éternelles' },
-  { path: '/mecha-mascot', icon: '🌿', name: 'GL Spirit', desc: 'Esprit Ghibli' },
-  { path: '/jardin-de-mam', icon: '🌸', name: 'Jardin de Mam\'', desc: 'Hommage floral' },
-  { path: '/iron-man', icon: '🦾', name: 'Iron Man', desc: 'Arc Reactor' },
-  { path: '/dragon-ball-z', icon: '🐉', name: 'Dragon Ball Z', desc: 'Plus de 9000!' },
-  { path: '/ready-player-one', icon: '🎮', name: 'Ready Player One', desc: 'L\'OASIS' },
-  { path: '/samus-elements', icon: '🔥', name: 'Samus & Les Éléments', desc: '19/20 au collège' },
-  { path: '/arkadia', icon: '🦖', name: 'ARKADIA', desc: 'Cluster ARK Survival' },
-];
 
 let lastScroll = 0;
 

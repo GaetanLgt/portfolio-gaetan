@@ -46,29 +46,10 @@
     <!-- Self-Diagnostic Bar (Footer fixe) — réservée aux pages lore/expériences -->
     <SelfDiagnosticBar v-if="isLoaded && !isFullscreenGame && !isShowcasePage" />
     
-    <!-- Back to Hub Button (Multivers pages) -->
-    <BackToHub v-if="isLoaded && !isFullscreenGame" />
-    
-    <!-- Universe Progress Tracker -->
-    <UniverseTracker v-if="isLoaded && !isFullscreenGame" />
-    
-    <!-- Achievements System -->
-    <AchievementsSystem v-if="isLoaded && !isFullscreenGame" />
-    
-    <!-- Sound Manager -->
-    <SoundManager v-if="isLoaded && !isFullscreenGame" />
-    
-    <!-- Easter Eggs (Konami, Matrix) -->
-    <EasterEggs v-if="isLoaded && !isFullscreenGame" />
-    
-    <!-- Command Palette (Ctrl+K) -->
-    <CommandPalette v-if="isLoaded && !isFullscreenGame" />
+    <!-- Back to Hub et UniverseTracker retirés : ils suivaient les univers Multivers supprimés -->
     
     <!-- Toast Notifications -->
     <ToastNotifications v-if="isLoaded && !isFullscreenGame" />
-    
-    <!-- Confetti Effect -->
-    <ConfettiEffect v-if="isLoaded && !isFullscreenGame" />
     
     <!-- Keyboard Navigator -->
     <KeyboardNavigator v-if="isLoaded && !isFullscreenGame" />
@@ -99,15 +80,8 @@ import NoiseOverlay from '@/components/common/NoiseOverlay.vue';
 import CustomCursor from '@/components/common/CustomCursor.vue';
 import ScrollToTop from '@/components/common/ScrollToTop.vue';
 import ScrollProgressBar from '@/components/common/ScrollProgressBar.vue';
-import BackToHub from '@/components/common/BackToHub.vue';
-import UniverseTracker from '@/components/common/UniverseTracker.vue';
 import ReactiveParticles from '@/components/common/ReactiveParticles.vue';
-import AchievementsSystem from '@/components/common/AchievementsSystem.vue';
-import SoundManager from '@/components/common/SoundManager.vue';
-import EasterEggs from '@/components/common/EasterEggs.vue';
-import CommandPalette from '@/components/common/CommandPalette.vue';
 import ToastNotifications from '@/components/common/ToastNotifications.vue';
-import ConfettiEffect from '@/components/common/ConfettiEffect.vue';
 import KeyboardNavigator from '@/components/common/KeyboardNavigator.vue';
 import PWAUpdatePrompt from '@/components/common/PWAUpdatePrompt.vue';
 // Fonds decoratifs charges a la demande : un seul est affiche a la fois, et
@@ -122,9 +96,9 @@ import FloatingElements from '@/components/ui/FloatingElements.vue';
 const isLoaded = ref(false);
 const route = useRoute();
 
-// Mode fullscreen pour les jeux (cache header/footer/decorations)
+// Mode plein écran réservé aux expériences immersives (plus de jeu construct)
 const isFullscreenGame = computed(() => {
-  return route.path.startsWith('/play/') || route.path === '/construct';
+  return route.path.startsWith('/play/');
 });
 
 // Auto-load pour les jeux fullscreen (pas de Loader)
@@ -163,22 +137,9 @@ const isShowcasePage = computed(() => {
 // derrière un texte commercial = lag inutile + distraction).
 const showAnimatedBackground = computed(() => !isShowcasePage.value);
 
-// Transitions adaptatives selon la route
-const getTransitionName = (targetRoute) => {
-  const path = targetRoute.path;
-  
-  // Transitions spéciales pour le Multivers
-  if (path.includes('multivers')) return 'portal';
-  if (path.includes('matrix')) return 'glitch';
-  if (path.includes('tron')) return 'digitize';
-  if (path.includes('inception')) return 'dream';
-  if (path.includes('blade-runner')) return 'rain';
-  if (path.includes('dragon-ball')) return 'power';
-  if (path.includes('ready-player')) return 'arcade';
-  
-  // Transition par défaut
-  return 'page';
-};
+// Transition par défaut (les transitions spéciales Multivers ont été retirées
+// avec les pages d'univers)
+const getTransitionName = () => 'page';
 
 // Callbacks de transition
 const onBeforeEnter = () => {

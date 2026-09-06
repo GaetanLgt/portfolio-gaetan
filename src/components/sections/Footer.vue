@@ -66,16 +66,15 @@
           </nav>
         </div>
         
-        <!-- Expériences -->
+        <!-- Équipage & Réalisations -->
         <div class="footer__section">
-          <h4 class="footer__title">Expériences</h4>
+          <h4 class="footer__title">Équipage & Travaux</h4>
           <nav class="footer__nav">
-            <router-link to="/creations">🎨 Galerie Créations</router-link>
-            <router-link to="/arcade">🕹️ Arcade</router-link>
-            <router-link to="/multivers">🌌 Multivers (21)</router-link>
-            <router-link to="/apps">🧰 Applications</router-link>
-            <router-link to="/construct">🕳️ The Construct</router-link>
-            <router-link to="/simulation">💊 Simulation</router-link>
+            <router-link to="/agents">L'Équipage des 6 Lois</router-link>
+            <router-link to="/tower">GL Tower — Visite</router-link>
+            <router-link to="/workflows">Workflows n8n</router-link>
+            <router-link to="/projets">Réalisations</router-link>
+            <router-link to="/arkadia">Case Study ARKADIA</router-link>
           </nav>
         </div>
         

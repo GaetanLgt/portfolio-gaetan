@@ -34,10 +34,6 @@
             <span class="stat-label">Apps</span>
           </div>
           <div class="stat-item">
-            <span class="stat-value">{{ totalUnivers }}</span>
-            <span class="stat-label">Univers</span>
-          </div>
-          <div class="stat-item">
             <span class="stat-value">{{ totalFormations }}</span>
             <span class="stat-label">Formations</span>
           </div>
@@ -169,21 +165,9 @@
             <span class="quick-icon">🏠</span>
             <span class="quick-label">Accueil</span>
           </router-link>
-          <router-link to="/apps" class="quick-card">
-            <span class="quick-icon">🧰</span>
-            <span class="quick-label">Applications</span>
-          </router-link>
-          <router-link to="/multivers" class="quick-card">
-            <span class="quick-icon">🌌</span>
-            <span class="quick-label">Multivers</span>
-          </router-link>
           <router-link to="/agents" class="quick-card">
             <span class="quick-icon">🤖</span>
             <span class="quick-label">Agents IA</span>
-          </router-link>
-          <router-link to="/arcade" class="quick-card">
-            <span class="quick-icon">🎮</span>
-            <span class="quick-label">Arcade</span>
           </router-link>
           <router-link to="/contact" class="quick-card">
             <span class="quick-icon">📧</span>
@@ -242,7 +226,7 @@
 import { ref, computed } from 'vue';
 
 const viewMode = ref('tree');
-const expandedSections = ref(['core', 'apps', 'multivers']);
+const expandedSections = ref(['core', 'apps']);
 
 const sections = ref([
   {
@@ -276,39 +260,7 @@ const sections = ref([
     pages: [
       { name: 'ARKADIA', path: '/arkadia', icon: '🦖', featured: true },
       { name: 'VoyageoPro', path: '/voyageo-pro', icon: '✈️' },
-      { name: 'MyTV Database', path: '/tv', icon: '📺' },
-      { name: 'Zombunny', path: '/zombunny', icon: '🧟' },
       { name: 'Workflows n8n', path: '/workflows', icon: '⚙️' },
-      { name: 'Simulation', path: '/simulation', icon: '🌐' },
-    ]
-  },
-  {
-    id: 'multivers',
-    title: 'Multivers',
-    icon: '🌌',
-    pages: [
-      { name: 'Hub Multivers', path: '/multivers', icon: '🌌', featured: true },
-      { name: 'Matrix', path: '/matrix', icon: '💊' },
-      { name: 'Matrix Resurrections', path: '/matrix-resurrections', icon: '🔄' },
-      { name: 'TRON', path: '/tron', icon: '🔵' },
-      { name: 'Blade Runner', path: '/blade-runner', icon: '🌃' },
-      { name: 'Ghost in the Shell', path: '/ghost-in-the-shell', icon: '👻' },
-      { name: 'Inception', path: '/inception', icon: '🌀' },
-      { name: 'Minority Report', path: '/minority-report', icon: '👁️' },
-      { name: 'Iron Man', path: '/iron-man', icon: '🦾' },
-      { name: 'Dragon Ball Z', path: '/dragon-ball-z', icon: '🔥' },
-      { name: 'Ready Player One', path: '/ready-player-one', icon: '🎮' },
-      { name: 'Deadpool', path: '/deadpool', icon: '💀' },
-      { name: 'The Mask', path: '/the-mask', icon: '🎭' },
-      { name: 'V pour Vendetta', path: '/v-for-vendetta', icon: '🎪' },
-      { name: 'Cloud Atlas', path: '/cloud-atlas', icon: '☁️' },
-      { name: 'Jupiter Ascending', path: '/jupiter-ascending', icon: '🪐' },
-      { name: 'Howard the Duck', path: '/howard-the-duck', icon: '🦆' },
-      { name: 'Alice au Pays de Turing', path: '/alice-turing', icon: '🐇' },
-      { name: 'Asimov', path: '/asimov', icon: '🤖' },
-      { name: 'Mecha Mascot', path: '/mecha-mascot', icon: '🌸' },
-      { name: 'Jardin de Mam\'', path: '/jardin-de-mam', icon: '🌻' },
-      { name: 'Samus Elements', path: '/samus-elements', icon: '🔫' },
     ]
   },
   {
@@ -316,47 +268,14 @@ const sections = ref([
     title: 'Applications',
     icon: '🧰',
     pages: [
-      { name: 'Hub Applications', path: '/apps', icon: '🧰', featured: true },
-      // Apps Métier
-      { name: 'ARK Config Manager', path: '/apps/ark-config', icon: '🦖', isNew: true },
-      { name: '3D Print Manager', path: '/apps/print3d-manager', icon: '🖨️', isNew: true },
-      { name: 'Prof Assistant IA', path: '/apps/teacher-assistant', icon: '🎓', isNew: true },
-      // Outils IA
-      { name: 'Prompt Builder', path: '/apps/prompt-builder', icon: '🧠' },
-      { name: 'Token Counter', path: '/apps/token-counter', icon: '🔢' },
-      { name: 'JSON Schema', path: '/apps/json-schema', icon: '📐' },
-      { name: 'API Tester', path: '/apps/api-tester', icon: '🔌' },
-      { name: 'Cron Builder', path: '/apps/cron-builder', icon: '⏰' },
-      { name: 'JWT Decoder', path: '/apps/jwt-decoder', icon: '🔐' },
-      { name: 'Webhook Tester', path: '/apps/webhook-tester', icon: '🪝' },
-      { name: 'OpenAPI Viewer', path: '/apps/openapi', icon: '📖' },
-      // Convertisseurs
-      { name: 'Color Converter', path: '/apps/colors', icon: '🎨' },
-      { name: 'Timestamp', path: '/apps/timestamp', icon: '⏱️' },
-      { name: 'CSV ↔ JSON', path: '/apps/csv-json', icon: '📊' },
-      // Formateurs
-      { name: 'JSON Formatter', path: '/apps/json', icon: '📋' },
-      { name: 'Regex Tester', path: '/apps/regex', icon: '🔍' },
-      { name: 'Markdown Preview', path: '/apps/markdown', icon: '📝' },
-      { name: 'Markdown Table', path: '/apps/markdown-table', icon: '📋' },
-      { name: 'Diff Checker', path: '/apps/diff', icon: '📊' },
-      // Encodeurs
-      { name: 'Hash Generator', path: '/apps/hash', icon: '🔐' },
-      { name: 'Base64', path: '/apps/base64', icon: '🔒' },
-      // Générateurs
-      { name: 'Lorem Ipsum', path: '/apps/lorem', icon: '📄' },
-      { name: 'Password Generator', path: '/apps/password', icon: '🔑' },
-      { name: 'UUID Generator', path: '/apps/uuid', icon: '🆔' },
-      { name: 'QR Code', path: '/apps/qr-code', icon: '📱' },
-      { name: 'Text Animator', path: '/apps/text-animator', icon: '✨' },
-      // Builders
-      { name: 'FAQ Generator', path: '/apps/faq', icon: '❓' },
-      { name: 'Chatbot Builder', path: '/apps/chatbot', icon: '🤖' },
-      // Blueprints
-      { name: 'Flowchart', path: '/apps/flowchart', icon: '🔀' },
-      { name: 'ERD Designer', path: '/apps/erd', icon: '🗄️' },
-      { name: 'Wireframe', path: '/apps/wireframe', icon: '🖼️' },
-      { name: 'Sitemap', path: '/apps/sitemap', icon: '🗺️' },
+      // Applications conservées
+      { name: 'Wa Router', path: '/apps/agent/wa', icon: '🧭' },
+      { name: 'Makoto Scanner', path: '/apps/agent/makoto', icon: '🛡️' },
+      { name: 'Dou Monitor', path: '/apps/agent/dou', icon: '📊' },
+      { name: 'Watashi Knowledge Base', path: '/apps/agent/watashi', icon: '🗄️' },
+      { name: 'Jitsu Pipeline', path: '/apps/agent/jitsu', icon: '🚀' },
+      { name: 'SEO Content Generator', path: '/apps/seo-content', icon: '📈' },
+      { name: 'Invoice Generator', path: '/apps/invoice-generator', icon: '🧾' },
     ]
   },
   {
@@ -372,18 +291,6 @@ const sections = ref([
       { name: '実 Jitsu - Backend & Livraison', path: '/agents/jitsu', icon: '🚀' },
       { name: '動 Dou - Monitoring & Veille', path: '/agents/dou', icon: '📊' },
       { name: '私 Watashi - Mémoire & RAG', path: '/agents/watashi', icon: '🗄️' },
-    ]
-  },
-  {
-    id: 'arcade',
-    title: 'Arcade',
-    icon: '🎮',
-    pages: [
-      { name: 'Hub Arcade', path: '/arcade', icon: '🎮', featured: true },
-      { name: 'GL Cards', path: '/arcade/cards', icon: '🃏' },
-      { name: 'Memory', path: '/arcade/memory', icon: '🧠' },
-      { name: 'Terminal Hacker', path: '/arcade/terminal', icon: '💻' },
-      { name: 'Slots', path: '/arcade/slots', icon: '🎰' },
     ]
   },
   {
@@ -415,11 +322,6 @@ const totalPages = computed(() => {
 const totalApps = computed(() => {
   const appsSection = sections.value.find(s => s.id === 'apps');
   return appsSection ? appsSection.pages.length : 0;
-});
-
-const totalUnivers = computed(() => {
-  const multiversSection = sections.value.find(s => s.id === 'multivers');
-  return multiversSection ? multiversSection.pages.length - 1 : 0; // -1 pour le hub
 });
 
 const totalFormations = computed(() => {

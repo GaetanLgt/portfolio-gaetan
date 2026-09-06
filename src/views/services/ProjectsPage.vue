@@ -295,49 +295,6 @@ const projects = ref([
     casestudy: null
   },
   {
-    id: 'mytv',
-    name: 'MyTV Database',
-    icon: '📺',
-    category: 'vue',
-    year: '2021',
-    featured: false,
-    shortDesc: 'Explorateur de séries TV utilisant l\'API TVMaze.',
-    fullDesc: 'Application Vue.js permettant de rechercher et explorer des séries TV via l\'API TVMaze. Interface responsive avec cards, modals et recherche instantanée.',
-    stack: ['Vue.js', 'API TVMaze', 'JavaScript', 'CSS3', 'Firebase Hosting'],
-    features: [
-      'Recherche instantanée',
-      'Affichage détaillé des séries',
-      'Responsive design',
-      'Déploiement Firebase'
-    ],
-    learnings: 'Intégration d\'APIs REST, gestion d\'état Vue, et déploiement cloud.',
-    github: 'https://github.com/GaetanLgt/mytv',
-    demo: 'https://mytv-maze.firebaseapp.com/',
-    casestudy: '/tv'
-  },
-  {
-    id: 'zombunny',
-    name: 'Zombunny',
-    icon: '🧬',
-    category: 'gaming',
-    year: '2020',
-    featured: true,
-    shortDesc: 'Étude des algorithmes génétiques avec Unity et C#.',
-    fullDesc: 'Simulation évolutionnaire où des créatures développent des comportements émergents via sélection naturelle, mutation et croisement génétique. Projet d\'exploration de l\'IA bio-inspirée.',
-    stack: ['Unity', 'C#', 'Algorithmes Génétiques', 'IA Évolutionnaire'],
-    features: [
-      'Sélection par fitness',
-      'Crossover génétique',
-      'Mutation aléatoire',
-      'Comportements émergents',
-      'Visualisation temps réel'
-    ],
-    learnings: 'Algorithmes bio-inspirés, optimisation par évolution, et développement de jeux.',
-    github: 'https://github.com/GaetanLgt/zombunny',
-    demo: null,
-    casestudy: '/zombunny'
-  },
-  {
     id: 'agents',
     name: 'Workflows & Automatisations',
     icon: '🔄',
