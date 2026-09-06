@@ -129,7 +129,7 @@ const backgroundComponent = computed(() => {
 const isShowcasePage = computed(() => {
   const p = route.path;
   return p === '/' || p === '/services' || p === '/projets' || p === '/contact'
-    || p === '/cv' || p === '/sitemap' || p === '/stack-ia'
+    || p === '/sitemap'
     || p.startsWith('/mentions-legales') || p.startsWith('/confidentialite') || p.startsWith('/cgv');
 });
 

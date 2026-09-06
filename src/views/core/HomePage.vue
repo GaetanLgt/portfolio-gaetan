@@ -62,8 +62,8 @@
                   <router-link to="/services" class="quick-link">
                     <span>⚡</span> Services
                   </router-link>
-                  <router-link to="/conseil" class="quick-link">
-                    <span>🤖</span> Conseil IA
+                  <router-link to="/agents" class="quick-link">
+                    <span>🤖</span> Équipage IA
                   </router-link>
                 </div>
               </div>
@@ -296,9 +296,6 @@
                   </div>
                 </div>
               </div>
-              <router-link to="/stack-ia" class="stack-card__link">
-                Explorer la stack complète →
-              </router-link>
             </div>
           </TiltCard>
         </ScrollReveal>

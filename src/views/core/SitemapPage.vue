@@ -173,9 +173,9 @@
             <span class="quick-icon">📧</span>
             <span class="quick-label">Contact</span>
           </router-link>
-          <router-link to="/cv" class="quick-card">
-            <span class="quick-icon">📄</span>
-            <span class="quick-label">CV</span>
+          <router-link to="/carte-holistique" class="quick-card">
+            <span class="quick-icon">🗺️</span>
+            <span class="quick-label">Carte</span>
           </router-link>
         </div>
       </div>
@@ -239,16 +239,6 @@ const sections = ref([
       { name: 'Services', path: '/services', icon: '💼' },
       { name: 'Projets', path: '/projets', icon: '📂' },
       { name: 'Contact', path: '/contact', icon: '📧' },
-      { name: 'CV', path: '/cv', icon: '📄' },
-    ]
-  },
-  {
-    id: 'parcours',
-    title: 'Approche & Vision',
-    icon: '🛤️',
-    pages: [
-      { name: 'Conseil IA', path: '/conseil', icon: '🤖' },
-      { name: 'Stack IA Souveraine', path: '/stack-ia', icon: '🧠' },
       { name: 'Carte Holistique', path: '/carte-holistique', icon: '🗺️' },
     ]
   },

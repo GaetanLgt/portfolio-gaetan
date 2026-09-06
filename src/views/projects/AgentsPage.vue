@@ -330,9 +330,6 @@
             <router-link to="/contact" class="btn btn--primary">
               Discuter de votre projet →
             </router-link>
-            <router-link to="/stack-ia" class="btn btn--secondary">
-              Voir la stack technique
-            </router-link>
           </div>
         </div>
       </div>

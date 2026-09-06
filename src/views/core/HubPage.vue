@@ -62,10 +62,10 @@
             <span class="link-text">Workflows</span>
             <span class="link-desc">Automatisations n8n</span>
           </router-link>
-          <router-link to="/stack-ia" class="hero-link hero-link--multivers">
-            <span class="link-icon">⚡</span>
-            <span class="link-text">Stack IA Locale</span>
-            <span class="link-desc">Infrastructure souveraine</span>
+          <router-link to="/carte-holistique" class="hero-link hero-link--multivers">
+            <span class="link-icon">🗺️</span>
+            <span class="link-text">Carte Holistique</span>
+            <span class="link-desc">Vue d'ensemble interactive</span>
           </router-link>
           <router-link to="/services" class="hero-link">
             <span class="link-icon">⚡</span>
@@ -264,10 +264,10 @@
             <h4>Projets</h4>
             <p>Case studies</p>
           </router-link>
-          <router-link to="/stack-ia" class="quick-card">
-            <span class="quick-icon">🧠</span>
-            <h4>Stack IA</h4>
-            <p>Infrastructure locale</p>
+          <router-link to="/workflows" class="quick-card">
+            <span class="quick-icon">🔄</span>
+            <h4>Workflows</h4>
+            <p>Automatisations n8n</p>
           </router-link>
           <router-link to="/contact" class="quick-card quick-card--primary">
             <span class="quick-icon">📞</span>

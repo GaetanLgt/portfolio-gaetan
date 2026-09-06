@@ -8,7 +8,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/views/core/HomePage.vue';
 const HubPage = () => import('@/views/core/HubPage.vue');
 const ContactPage = () => import('@/views/core/ContactPage.vue');
-const CvPage = () => import('@/views/core/CvPage.vue');
 const SitemapPage = () => import('@/views/core/SitemapPage.vue');
 const NotFound = () => import('@/views/core/NotFound.vue');
 
@@ -17,8 +16,6 @@ const ServicesPage = () => import('@/views/services/ServicesPage.vue');
 const ProjectsPage = () => import('@/views/services/ProjectsPage.vue');
 
 // PARCOURS - Histoire et parcours
-const ConseilAgents = () => import('@/views/parcours/ConseilAgents.vue');
-const StackIA = () => import('@/views/parcours/StackIA.vue');
 const HolisticMapPage = () => import('@/views/parcours/HolisticMapPage.vue');
 
 // PROJECTS - Case studies
@@ -96,15 +93,6 @@ const routes = [
     }
   },
   {
-    path: '/cv',
-    name: 'CvPage',
-    component: CvPage,
-    meta: { 
-      title: 'CV Gaëtan LANGLET | Développeur Full-Stack',
-      description: 'CV de Gaëtan LANGLET, développeur full-stack spécialisé Symfony, Vue.js et intégration IA. Somme, Hauts-de-France.'
-    }
-  },
-  {
     path: '/sitemap',
     name: 'SitemapPage',
     component: SitemapPage,
@@ -139,24 +127,6 @@ const routes = [
   // -------------------------------------------------------------------------
   // PARCOURS
   // -------------------------------------------------------------------------
-  {
-    path: '/conseil',
-    name: 'ConseilAgents',
-    component: ConseilAgents,
-    meta: { 
-      title: 'Le Conseil des Agents',
-      description: 'Ma vision de l\'IA en entreprise : un écosystème d\'agents spécialisés qui travaillent ensemble. 100% souverain, 0% cloud US.'
-    }
-  },
-  {
-    path: '/stack-ia',
-    name: 'StackIA',
-    component: StackIA,
-    meta: { 
-      title: 'Stack IA Souveraine',
-      description: 'Infrastructure IA locale : Nemotron, ChromaDB, n8n, OpenWebUI. Zéro dépendance cloud US, déployable on-premise.'
-    }
-  },
   {
     path: '/carte-holistique',
     name: 'HolisticMap',

@@ -53,18 +53,6 @@
           </nav>
         </div>
         
-        <!-- Approche -->
-        <div class="footer__section">
-          <h4 class="footer__title">Approche</h4>
-          <nav class="footer__nav">
-            <router-link to="/conseil">Conseil IA</router-link>
-            <router-link to="/stack-ia">Stack IA Locale</router-link>
-            <router-link to="/arkadia">Case Study ARKADIA</router-link>
-            <router-link to="/carte-holistique">Carte Holistique</router-link>
-            <router-link to="/cv">Mon CV</router-link>
-          </nav>
-        </div>
-        
         <!-- Équipage & Réalisations -->
         <div class="footer__section">
           <h4 class="footer__title">Équipage & Travaux</h4>
@@ -72,7 +60,6 @@
             <router-link to="/agents">L'Équipage des 6 Lois</router-link>
             <router-link to="/tower">GL Tower — Visite</router-link>
             <router-link to="/workflows">Workflows n8n</router-link>
-            <router-link to="/projets">Réalisations</router-link>
             <router-link to="/arkadia">Case Study ARKADIA</router-link>
           </nav>
         </div>

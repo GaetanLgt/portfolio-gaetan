@@ -73,57 +73,14 @@
                   <span class="nav-dropdown__desc">Automatisations en production</span>
                 </div>
               </router-link>
-              <router-link to="/stack-ia" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">⚡</span>
-                <div>
-                  <span class="nav-dropdown__title">Stack IA Locale</span>
-                  <span class="nav-dropdown__desc">Infrastructure souveraine</span>
-                </div>
-              </router-link>
             </div>
           </Transition>
         </div>
         
-        <!-- Dropdown Parcours -->
-        <div class="nav-dropdown">
-          <button 
-            class="nav-link nav-dropdown__trigger"
-            @click="toggleDropdown('parcours')"
-            :aria-expanded="activeDropdown === 'parcours'"
-            aria-haspopup="true"
-          >
-            <span class="nav-link__num">03</span>
-            À PROPOS
-            <svg class="nav-dropdown__arrow" :class="{ 'rotate': activeDropdown === 'parcours' }" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </button>
-          <Transition name="dropdown">
-            <div v-if="activeDropdown === 'parcours'" class="nav-dropdown__menu">
-              <router-link to="/carte-holistique" class="nav-dropdown__item nav-dropdown__item--featured" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🗺️</span>
-                <div>
-                  <span class="nav-dropdown__title">Carte Holistique</span>
-                  <span class="nav-dropdown__desc">Vue d'ensemble interactive</span>
-                </div>
-              </router-link>
-              <router-link to="/conseil" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🤖</span>
-                <div>
-                  <span class="nav-dropdown__title">Conseil</span>
-                  <span class="nav-dropdown__desc">Vision de l'IA en entreprise</span>
-                </div>
-              </router-link>
-              <router-link to="/cv" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">📄</span>
-                <div>
-                  <span class="nav-dropdown__title">Mon CV</span>
-                  <span class="nav-dropdown__desc">Télécharger / Imprimer</span>
-                </div>
-              </router-link>
-            </div>
-          </Transition>
-        </div>
+        <router-link to="/carte-holistique" class="nav-link">
+          <span class="nav-link__num">03</span>
+          CARTE
+        </router-link>
         
         <!-- FORMATION - Masqué temporairement (droits en attente)
         <router-link to="/formation" class="nav-link nav-link--formation">
@@ -183,22 +140,8 @@
         <router-link to="/workflows" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
           → Workflows n8n
         </router-link>
-        <router-link to="/stack-ia" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Stack IA Locale
-        </router-link>
-        
-        <!-- À Propos Section -->
-        <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">03 À PROPOS</span>
-        </div>
-        <router-link to="/carte-holistique" class="nav-mobile__link nav-mobile__link--featured" @click="closeMobile">
-          <span class="nav-link__num">🗺️</span> Carte Holistique
-        </router-link>
-        <router-link to="/conseil" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Conseil
-        </router-link>
-        <router-link to="/cv" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Mon CV
+        <router-link to="/carte-holistique" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
+          → 🗺️ Carte Holistique
         </router-link>
 
         <!-- FORMATION - Masqué temporairement (droits en attente)
