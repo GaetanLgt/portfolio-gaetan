@@ -91,10 +91,13 @@ Write-Host "http://localhost:5173/hub" -ForegroundColor Cyan
 Write-Host "   Carte:   " -NoNewline -ForegroundColor Gray
 Write-Host "http://localhost:5173/carte-holistique" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "🏢 GL Tower - 13 Agents IA opérationnels" -ForegroundColor Yellow
-Write-Host "   7 Ops (Niveaux 1-6 + Penthouse)" -ForegroundColor Gray
-Write-Host "   5 Dev Lab (Sous-sols)" -ForegroundColor Gray
-Write-Host "   1 Back Office (PEPPER)" -ForegroundColor Gray
+Write-Host "🏢 GL Tower - L'Équipage des 6 Lois ARKADIA" -ForegroundColor Yellow
+Write-Host "   和 Wa (Penthouse) — Orchestration" -ForegroundColor Gray
+Write-Host "   誠 Makoto (6) — Sécurité & QA" -ForegroundColor Gray
+Write-Host "   美 Bi (5) — Frontend & Design" -ForegroundColor Gray
+Write-Host "   実 Jitsu (4) — Backend & Livraison" -ForegroundColor Gray
+Write-Host "   動 Dou (3) — Monitoring & Alertes" -ForegroundColor Gray
+Write-Host "   私 Watashi (2) — Mémoire & RAG" -ForegroundColor Gray
 Write-Host ""
 
 # Ask to start dev server

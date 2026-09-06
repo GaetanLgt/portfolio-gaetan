@@ -5,7 +5,7 @@ title GL Digital Lab - Installation
 echo.
 echo ================================================
 echo    GL DIGITAL LAB - Portfolio Setup
-echo    GL Tower ^| 13 Agents IA
+echo    GL Tower ^| Equipage des 6 Lois ARKADIA
 echo ================================================
 echo.
 
