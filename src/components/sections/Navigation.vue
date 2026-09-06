@@ -19,6 +19,16 @@
       
       <!-- Desktop Navigation -->
       <nav class="nav-desktop" aria-label="Navigation principale">
+        <!-- SOLUTIONS & RÉALISATIONS : la vente d'abord -->
+        <router-link to="/services" class="nav-link">
+          <span class="nav-link__num">01</span>
+          SOLUTIONS
+        </router-link>
+        <router-link to="/projets" class="nav-link">
+          <span class="nav-link__num">02</span>
+          RÉALISATIONS
+        </router-link>
+
         <!-- GL Tower Dropdown -->
         <div class="nav-dropdown">
           <button 
@@ -28,7 +38,7 @@
             aria-haspopup="true"
           >
             <span class="nav-link__num">🏢</span>
-            GL TOWER
+            ÉQUIPAGE
             <svg class="nav-dropdown__arrow" :class="{ 'rotate': activeDropdown === 'tower' }" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"/>
             </svg>
@@ -38,8 +48,8 @@
               <router-link to="/hub" class="nav-dropdown__item nav-dropdown__item--featured" @click="closeDropdown">
                 <span class="nav-dropdown__icon">🏢</span>
                 <div>
-                  <span class="nav-dropdown__title">GL Tower Overview</span>
-                  <span class="nav-dropdown__desc">Vue d'ensemble de la tour</span>
+                  <span class="nav-dropdown__title">GL Tower — Le QG</span>
+                  <span class="nav-dropdown__desc">L'équipage et l'infrastructure</span>
                 </div>
               </router-link>
               <router-link to="/tower" class="nav-dropdown__item nav-dropdown__item--interactive" @click="closeDropdown">
@@ -52,8 +62,8 @@
               <router-link to="/agents" class="nav-dropdown__item nav-dropdown__item--agents" @click="closeDropdown">
                 <span class="nav-dropdown__icon">🤖</span>
                 <div>
-                  <span class="nav-dropdown__title">Bureau des Agents</span>
-                  <span class="nav-dropdown__desc">15 IAs Marvel en action</span>
+                  <span class="nav-dropdown__title">Équipage des 6 Lois</span>
+                  <span class="nav-dropdown__desc">Les agents ARKADIA</span>
                 </div>
               </router-link>
               <router-link to="/workflows" class="nav-dropdown__item" @click="closeDropdown">
@@ -82,7 +92,7 @@
             :aria-expanded="activeDropdown === 'parcours'"
             aria-haspopup="true"
           >
-            <span class="nav-link__num">01</span>
+            <span class="nav-link__num">03</span>
             PARCOURS
             <svg class="nav-dropdown__arrow" :class="{ 'rotate': activeDropdown === 'parcours' }" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6 9 12 15 18 9"/>
@@ -107,57 +117,8 @@
               <router-link to="/conseil" class="nav-dropdown__item" @click="closeDropdown">
                 <span class="nav-dropdown__icon">🤖</span>
                 <div>
-                  <span class="nav-dropdown__title">Conseil des Agents</span>
-                  <span class="nav-dropdown__desc">Vision IA multi-agents</span>
-                </div>
-              </router-link>
-              <router-link to="/stack-ia" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">⚡</span>
-                <div>
-                  <span class="nav-dropdown__title">Stack IA Locale</span>
-                  <span class="nav-dropdown__desc">Infrastructure souveraine</span>
-                </div>
-              </router-link>
-              <router-link to="/arkadia" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🦖</span>
-                <div>
-                  <span class="nav-dropdown__title">ARKADIA</span>
-                  <span class="nav-dropdown__desc">Case study DevOps</span>
-                </div>
-              </router-link>
-              <router-link to="/ark-admin" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">⚙️</span>
-                <div>
-                  <span class="nav-dropdown__title">ARK Admin Portal</span>
-                  <span class="nav-dropdown__desc">Snippets INI serveur</span>
-                </div>
-              </router-link>
-              <router-link to="/voyageo-pro" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">✈️</span>
-                <div>
-                  <span class="nav-dropdown__title">VoyageoPro</span>
-                  <span class="nav-dropdown__desc">Case study B2B SaaS</span>
-                </div>
-              </router-link>
-              <router-link to="/workflows" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🔄</span>
-                <div>
-                  <span class="nav-dropdown__title">Workflows</span>
-                  <span class="nav-dropdown__desc">Automatisations n8n</span>
-                </div>
-              </router-link>
-              <router-link to="/tv" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">📺</span>
-                <div>
-                  <span class="nav-dropdown__title">MyTV Database</span>
-                  <span class="nav-dropdown__desc">API TVMaze</span>
-                </div>
-              </router-link>
-              <router-link to="/zombunny" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🧬</span>
-                <div>
-                  <span class="nav-dropdown__title">Zombunny</span>
-                  <span class="nav-dropdown__desc">Algorithmes génétiques</span>
+                  <span class="nav-dropdown__title">Conseil</span>
+                  <span class="nav-dropdown__desc">Vision de l'IA en entreprise</span>
                 </div>
               </router-link>
               <router-link to="/cv" class="nav-dropdown__item" @click="closeDropdown">
@@ -167,34 +128,10 @@
                   <span class="nav-dropdown__desc">Télécharger / Imprimer</span>
                 </div>
               </router-link>
-              <router-link to="/ressources/tutoriels" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">📖</span>
-                <div>
-                  <span class="nav-dropdown__title">Tutoriels</span>
-                  <span class="nav-dropdown__desc">Guides techniques</span>
-                </div>
-              </router-link>
-              <router-link to="/simulation" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">💊</span>
-                <div>
-                  <span class="nav-dropdown__title">Simulation</span>
-                  <span class="nav-dropdown__desc">Le désert du réel</span>
-                </div>
-              </router-link>
             </div>
           </Transition>
         </div>
         
-        <router-link to="/services" class="nav-link">
-          <span class="nav-link__num">02</span>
-          SOLUTIONS
-        </router-link>
-        
-        <router-link to="/projets" class="nav-link">
-          <span class="nav-link__num">03</span>
-          PROJETS
-        </router-link>
-
         <!-- Dropdown Multivers -->
         <div class="nav-dropdown">
           <button 
@@ -280,10 +217,18 @@
         <router-link to="/" class="nav-mobile__link" @click="closeMobile">
           <span class="nav-link__num">00</span> ACCUEIL
         </router-link>
+
+        <!-- VENTE D'ABORD : Solutions & Réalisations -->
+        <router-link to="/services" class="nav-mobile__link nav-mobile__link--solutions" @click="closeMobile">
+          <span class="nav-link__num">01</span> SOLUTIONS
+        </router-link>
+        <router-link to="/projets" class="nav-mobile__link nav-mobile__link--projets" @click="closeMobile">
+          <span class="nav-link__num">02</span> RÉALISATIONS
+        </router-link>
         
-        <!-- GL Tower Section -->
+        <!-- Équipage Section -->
         <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">🏢 GL TOWER</span>
+          <span class="nav-mobile__section-title">🏢 ÉQUIPAGE</span>
         </div>
         <router-link to="/hub" class="nav-mobile__link nav-mobile__link--tower" @click="closeMobile">
           <span class="nav-link__num">🏢</span> Vue d'ensemble
@@ -292,7 +237,7 @@
           → 🗼 Visite Interactive 3D
         </router-link>
         <router-link to="/agents" class="nav-mobile__link nav-mobile__link--sub nav-mobile__link--agents" @click="closeMobile">
-          → Bureau des Agents (15 IAs)
+          → Équipage des 6 Lois
         </router-link>
         <router-link to="/workflows" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
           → Workflows n8n
@@ -303,7 +248,7 @@
         
         <!-- Parcours Section -->
         <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">01 PARCOURS</span>
+          <span class="nav-mobile__section-title">03 PARCOURS</span>
         </div>
         <router-link to="/carte-holistique" class="nav-mobile__link nav-mobile__link--featured" @click="closeMobile">
           <span class="nav-link__num">🗺️</span> Carte Holistique
@@ -312,47 +257,12 @@
           → Gaming → Dev
         </router-link>
         <router-link to="/conseil" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Conseil des Agents
-        </router-link>
-        <router-link to="/stack-ia" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Stack IA Locale
-        </router-link>
-        <router-link to="/arkadia" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Case Study ARKADIA
-        </router-link>
-        <router-link to="/ark-admin" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → ARK Admin Portal
-        </router-link>
-        <router-link to="/voyageo-pro" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Case Study VoyageoPro
-        </router-link>
-        <router-link to="/workflows" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Workflows n8n
-        </router-link>
-        <router-link to="/tv" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → MyTV Database
-        </router-link>
-        <router-link to="/zombunny" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Zombunny
+          → Conseil
         </router-link>
         <router-link to="/cv" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
           → Mon CV
         </router-link>
-        <router-link to="/ressources/tutoriels" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Tutoriels
-        </router-link>
-        <router-link to="/simulation" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Simulation
-        </router-link>
         
-        <!-- Solutions & Projets -->
-        <router-link to="/services" class="nav-mobile__link" @click="closeMobile">
-          <span class="nav-link__num">02</span> SOLUTIONS
-        </router-link>
-        <router-link to="/projets" class="nav-mobile__link" @click="closeMobile">
-          <span class="nav-link__num">03</span> PROJETS
-        </router-link>
-
         <!-- Multivers Mobile -->
         <div class="nav-mobile__section">
           <span class="nav-mobile__section-title">🌌 MULTIVERS ({{ universes.length }})</span>

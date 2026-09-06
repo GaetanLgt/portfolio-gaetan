@@ -107,7 +107,7 @@
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// 02 SERVICES</span>
+            <span class="mono-tag" aria-hidden="true">/// 01 SERVICES</span>
             <h2 id="services-title"><GlitchText text="Ce que je peux créer pour vous" /></h2>
             <p class="section-header__desc">
               Du site vitrine à l'application métier, chaque projet est conçu sur-mesure pour répondre à VOS besoins.
@@ -220,7 +220,7 @@
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="oeth__card">
-            <span class="mono-tag" aria-hidden="true">/// 04 DISPOSITIF OETH</span>
+            <span class="mono-tag" aria-hidden="true">/// 02 DISPOSITIF OETH</span>
 
             <h2 id="oeth-title" class="oeth__title">
               Vous employez plus de 20 salariés ?<br>
@@ -281,7 +281,7 @@
           <TiltCard :max-tilt="5" :glare="true" :max-glare="0.15">
             <div class="stack-card glass">
               <div class="stack-card__header">
-                <span class="mono-tag">/// RACK TECHNIQUE</span>
+                <span class="mono-tag">/// 03 STACK TECHNIQUE</span>
                 <h3><TextScramble text="Architecture Souveraine" :scramble-on-hover="true" /></h3>
               </div>
               <div class="stack-card__grid">
