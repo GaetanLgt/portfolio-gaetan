@@ -341,8 +341,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useScrollReveal } from '@/composables/useScrollReveal';
+import { getWorkflowStats } from '@/data/agents';
 
 // Scroll reveal
 const { observeAll } = useScrollReveal();
@@ -351,8 +352,9 @@ onMounted(() => {
   observeAll('.reveal');
 });
 
-// Data
-const activeWorkflows = ref(12);
+// Compteur dérivé des workflows réellement déclarés dans data/agents.js (aucun chiffre inventé)
+const workflowStats = getWorkflowStats();
+const activeWorkflows = computed(() => workflowStats.active);
 
 const dashboardItems = ref([
   { icon: '🤖', name: 'Discord Bot ARKADIA', status: 'active', statusText: 'En ligne' },
@@ -379,7 +381,6 @@ const workflows = ref([
     stack: ['Discord.js', 'n8n', 'PostgreSQL'],
     metrics: [
       { value: '150+', label: 'Membres' },
-      { value: '~120', label: 'Msgs/jour' },
       { value: '24/7', label: 'Uptime' }
     ]
   },
@@ -401,7 +402,7 @@ const workflows = ref([
     metrics: [
       { value: '9', label: 'Serveurs' },
       { value: '99.8%', label: 'Uptime' },
-      { value: '< 2min', label: 'Réaction' }
+      { value: '15 min', label: 'Backup' }
     ]
   },
   {
@@ -421,7 +422,6 @@ const workflows = ref([
     stack: ['Obsidian', 'ChromaDB', 'Nemotron', 'n8n'],
     metrics: [
       { value: '500+', label: 'Notes' },
-      { value: '< 2s', label: 'Query' },
       { value: '100%', label: 'Local' }
     ]
   },
