@@ -94,7 +94,7 @@
             <div class="pricing-card__icon">💬</div>
             <h3 class="pricing-card__title">Consulting</h3>
             <p class="pricing-card__price">90€ <span>/ heure</span></p>
-            <p class="pricing-card__desc">Conseil stratégique, architecture, choix technologiques.</p>
+            <p class="pricing-card__desc">Conseil stratégique ponctuel, à l'heure (visio ou sur site). Le développement au forfait est au TJM.</p>
             <ul class="pricing-card__details">
               <li>Visio ou présentiel</li>
               <li>Architecture technique</li>

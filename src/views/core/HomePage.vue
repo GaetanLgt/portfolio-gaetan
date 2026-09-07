@@ -156,7 +156,7 @@
 
               <h2 id="proof-title" class="proof__title">
                 ARKADIA<br>
-                <span class="text-gradient"><GlitchText text="150 joueurs, 0 problème" /></span>
+                <span class="text-gradient"><GlitchText text="150 joueurs, 18 mois d'exploitation" /></span>
               </h2>
 
               <p class="proof__desc">
@@ -380,10 +380,10 @@ const solutions = [
   {
     icon: '🤖',
     title: 'IA & automatisation locale',
-    price: 'Audit dès 1 500 € HT',
+    price: 'Audit + prototype dès 1 500 € HT',
     description: 'De l\'IA qui tourne sur vos serveurs. Vos documents et vos données ne sortent pas de votre réseau.',
     outputs: [
-      'Audit et prototype sur un cas d\'usage réel',
+      'Audit + prototype sur un cas d\'usage réel',
       'Hébergement dans votre environnement',
       'Aucune donnée envoyée hors de France',
       'Chiffrage du déploiement à l\'issue de l\'audit'
