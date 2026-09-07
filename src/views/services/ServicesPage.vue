@@ -65,7 +65,7 @@
           <div class="pricing-card glass">
             <div class="pricing-card__icon">📅</div>
             <h3 class="pricing-card__title">Taux Journalier</h3>
-            <p class="pricing-card__price">550€ <span>/ jour</span></p>
+            <p class="pricing-card__price">450€ <span>/ jour</span></p>
             <p class="pricing-card__desc">Développement, intégration, conseil technique. Minimum 2 jours.</p>
             <ul class="pricing-card__details">
               <li>Développement Symfony / Vue.js</li>
@@ -277,6 +277,47 @@
             
             <div class="offer-card__footer">
               <span class="offer-card__duration">6-10 semaines</span>
+              <router-link to="/contact" class="offer-card__cta">SÉLECTIONNER</router-link>
+            </div>
+          </article>
+          
+          <!-- RAG MÉMOIRE -->
+          <article 
+            v-show="filter === 'all' || filter === 'ai'" 
+            class="offer-card"
+          >
+            <div class="offer-card__bg-icon">
+              <svg width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            
+            <div class="offer-card__header">
+              <div class="offer-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                </svg>
+              </div>
+              <span class="offer-card__tag">MÉMOIRE</span>
+            </div>
+            
+            <h3 class="offer-card__title">RAG MÉMOIRE</h3>
+            <p class="offer-card__price">3k€ – 15k€</p>
+            
+            <p class="offer-card__desc">
+              Assistant interne qui répond aux questions de votre entreprise à partir de VOS documents. Hébergé en France, réponses sourcées, zéro hallucination.
+            </p>
+            
+            <ul class="offer-card__features">
+              <li><span class="check">✓</span> Indexation de vos documents (PDF, Word, mails)</li>
+              <li><span class="check">✓</span> Réponses sourcées (chaque réponse cite son document)</li>
+              <li><span class="check">✓</span> Hébergement France — données jamais utilisées pour entraîner</li>
+              <li><span class="check">✓</span> RGPD : suppression sur demande (droit à l'effacement)</li>
+              <li><span class="check">✓</span> 3 niveaux : Découverte 3k€ · Standard 8k€ · Sur-mesure 15k€</li>
+            </ul>
+            
+            <div class="offer-card__footer">
+              <span class="offer-card__duration">1-4 semaines</span>
               <router-link to="/contact" class="offer-card__cta">SÉLECTIONNER</router-link>
             </div>
           </article>

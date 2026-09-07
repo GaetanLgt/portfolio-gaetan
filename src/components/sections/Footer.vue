@@ -31,7 +31,7 @@
             <p>Gaëtan LANGLET</p>
             <p>Harponville, Somme (80) — Hauts-de-France</p>
             <p>
-              <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
+              <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
             </p>
             <p>
               <a href="tel:+33686474610">06 86 47 46 10</a>

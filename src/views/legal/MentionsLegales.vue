@@ -14,7 +14,7 @@
             <strong>GL Digital Lab</strong><br>
             Gaëtan LANGLET<br>
             80560 Harponville, Somme, Hauts-de-France, France<br>
-            Email : <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a><br>
+            Email : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a><br>
             Téléphone : <a href="tel:+33686474610">06 86 47 46 10</a>
           </p>
           <p v-if="siret">
@@ -31,7 +31,7 @@
           <h2>2. Directeur de publication</h2>
           <p>
             Le directeur de la publication est <strong>Gaëtan LANGLET</strong>, en sa qualité de fondateur de GL Digital Lab.<br>
-            Contact : <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
+            Contact : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
           </p>
         </section>
         
@@ -71,7 +71,7 @@
           </p>
           <p>
             Pour exercer ces droits, contactez-nous à : 
-            <a href="mailto:gtn.langlet@gmail.com">gtn.langlet@gmail.com</a>
+            <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
           </p>
           <p>
             Pour plus d'informations sur le traitement de vos données, consultez notre 
