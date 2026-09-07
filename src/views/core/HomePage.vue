@@ -379,7 +379,7 @@ const solutions = [
   },
   {
     icon: '🤖',
-    title: 'IA &amp; automatisation locale',
+    title: 'IA & automatisation locale',
     price: 'Audit dès 1 500 € HT',
     description: 'De l\'IA qui tourne sur vos serveurs. Vos documents et vos données ne sortent pas de votre réseau.',
     outputs: [
