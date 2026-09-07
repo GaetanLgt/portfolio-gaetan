@@ -388,13 +388,25 @@ const solutions = [
       'Aucune donnée envoyée hors de France',
       'Chiffrage du déploiement à l\'issue de l\'audit'
     ]
+  },
+  {
+    icon: '📚',
+    title: 'RAG MÉMOIRE',
+    price: 'Dès 3 000 € HT · 3 niveaux',
+    description: 'Un assistant interne qui répond aux questions de votre entreprise à partir de VOS documents — réponses sourcées, zéro hallucination.',
+    outputs: [
+      'Indexation de vos documents (PDF, Word, mails)',
+      'Chaque réponse cite son document d\'origine',
+      'Hébergement France, données jamais utilisées pour entraîner',
+      'RGPD : suppression sur demande · Découverte 3k · Standard 8k · Sur-mesure 15k'
+    ]
   }
 ];
 
 const stackItems = [
   { category: 'BACKEND', techs: [{ name: 'Symfony 8' }, { name: 'PHP 8.3+' }, { name: 'PostgreSQL' }] },
   { category: 'FRONTEND', techs: [{ name: 'Vue 3' }, { name: 'Three.js' }, { name: 'GSAP' }] },
-  { category: 'IA LOCALE', techs: [{ name: 'Nemotron', highlight: true }, { name: 'ChromaDB' }, { name: 'n8n' }] },
+  { category: 'IA LOCALE', techs: [{ name: 'Ollama', highlight: true }, { name: 'Qwen 3' }, { name: 'RAG Open WebUI' }] },
   { category: 'INFRA', techs: [{ name: 'Docker' }, { name: 'Hébergement FR', highlight: true }, { name: 'Linux' }] }
 ];
 
