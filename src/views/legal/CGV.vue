@@ -43,8 +43,8 @@
         <section class="legal-section">
           <h2>Article 4 - Tarifs et paiement</h2>
           <p>
-            Les tarifs sont indiqués en euros hors taxes (HT). La TVA n'est pas applicable 
-            (article 293B du CGI - régime micro-entreprise).
+            Les tarifs sont indiqués en euros hors taxes (HT). TVA non applicable 
+            (article 293 B du CGI — franchise en base de TVA).
           </p>
           <p><strong>Modalités de paiement :</strong></p>
           <ul>

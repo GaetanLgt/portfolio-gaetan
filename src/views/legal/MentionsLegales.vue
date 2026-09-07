@@ -19,7 +19,7 @@
           </p>
           <p v-if="siret">
             SIRET : {{ siret }}<br>
-            Statut : Entrepreneur individuel (EI) / Micro-entreprise<br>
+            Statut : Société par Actions Simplifiée Unipersonnelle (SASU)<br>
             Code APE : 6201Z - Programmation informatique
           </p>
           <p v-else class="legal-pending">
