@@ -156,7 +156,7 @@
 
               <h2 id="proof-title" class="proof__title">
                 ARKADIA<br>
-                <span class="text-gradient"><GlitchText text="150 joueurs, 18 mois d'exploitation" /></span>
+                <span class="text-gradient">150 joueurs, 18 mois d'exploitation</span>
               </h2>
 
               <p class="proof__desc">
