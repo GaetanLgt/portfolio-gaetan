@@ -3,9 +3,6 @@ import App from './App.vue'
 import router from './router'
 import { useMatomo } from './composables/useMatomo'
 
-// Naive UI
-import naive from 'naive-ui'
-
 // Fonts self-hosted (performance)
 import './assets/styles/fonts.css'
 
@@ -19,7 +16,6 @@ import './assets/styles/polish.css'
 const app = createApp(App)
 
 app.use(router)
-app.use(naive)
 
 // Mount app
 app.mount('#app')

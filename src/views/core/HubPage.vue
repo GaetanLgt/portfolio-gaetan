@@ -283,7 +283,7 @@
       <div class="container">
         <div class="teaser-content">
           <h2 id="proof-title">🦖 Une preuve : ARKADIA FRANCE</h2>
-          <p><strong>18 mois d'exploitation</strong> d'un cluster de 9 serveurs de jeux — 150+ joueurs, 99,8 % d'uptime, sauvegardes automatisées et rollback en moins de 10 minutes.</p>
+          <p><strong>18 mois d'exploitation</strong> d'un cluster de 9 serveurs de jeux — 150+ joueurs, sauvegardes automatisées et rollback en moins de 10 minutes.</p>
           <router-link to="/arkadia" class="teaser-cta">
             Voir l'étude de cas complète →
           </router-link>

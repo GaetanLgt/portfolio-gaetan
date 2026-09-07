@@ -172,12 +172,12 @@
               
               <div class="proof__metrics">
                 <div class="proof-metric">
-                  <span class="proof-metric__value"><AnimatedCounter :value="99.8" :decimals="1" /><span class="proof-metric__unit">%</span></span>
-                  <span class="proof-metric__label">Uptime (18 mois)</span>
+                  <span class="proof-metric__value"><AnimatedCounter :value="9" /><span class="proof-metric__unit"></span></span>
+                  <span class="proof-metric__label">Serveurs de jeux synchronisés</span>
                 </div>
                 <div class="proof-metric">
-                  <span class="proof-metric__value"><AnimatedCounter :value="15" /><span class="proof-metric__unit">min</span></span>
-                  <span class="proof-metric__label">RTO (Recovery Time)</span>
+                  <span class="proof-metric__value">&lt;10<span class="proof-metric__unit"> min</span></span>
+                  <span class="proof-metric__label">Rollback (restauration T-1h)</span>
                 </div>
               </div>
               
@@ -195,18 +195,18 @@
             <TiltCard :max-tilt="10" :glare="true">
               <div class="proof__gauges glass">
                 <GaugeCircle 
-                  :value="99.8" 
-                  :max="100" 
+                  :value="150" 
+                  :max="200" 
                   :size="130" 
-                  label="DISPONIBILITÉ"
-                  suffix="%"
+                  label="JOUEURS"
+                  suffix="+"
                 />
                 <GaugeCircle 
-                  :value="85" 
-                  :max="100" 
+                  :value="9" 
+                  :max="10" 
                   :size="130" 
-                  label="RECOVERY"
-                  suffix="%"
+                  label="SERVEURS"
+                  suffix=""
                 />
               </div>
             </TiltCard>
@@ -380,10 +380,10 @@ const solutions = [
   {
     icon: '🤖',
     title: 'IA & automatisation locale',
-    price: 'Audit + prototype dès 1 500 € HT',
+    price: 'Audit IA + prototype dès 1 500 € HT',
     description: 'De l\'IA qui tourne sur vos serveurs. Vos documents et vos données ne sortent pas de votre réseau.',
     outputs: [
-      'Audit + prototype sur un cas d\'usage réel',
+      'Audit IA + prototype sur un cas d\'usage réel',
       'Hébergement dans votre environnement',
       'Aucune donnée envoyée hors de France',
       'Chiffrage du déploiement à l\'issue de l\'audit'

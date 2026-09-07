@@ -78,9 +78,9 @@
           <!-- Audit -->
           <div class="pricing-card glass">
             <div class="pricing-card__icon">🔍</div>
-            <h3 class="pricing-card__title">Audit Flash</h3>
-            <p class="pricing-card__price">800€ <span>/ audit</span></p>
-            <p class="pricing-card__desc">Diagnostic complet de votre site ou application en 1-2 jours.</p>
+            <h3 class="pricing-card__title">Audit Web Flash</h3>
+            <p class="pricing-card__price">800€ <span>/ site audité</span></p>
+            <p class="pricing-card__desc">Diagnostic d'un site ou d'une application <strong>existants</strong> en 1-2 jours. (Offre distincte de l'audit IA + prototype — voir Accueil / RAG MÉMOIRE.)</p>
             <ul class="pricing-card__details">
               <li>Audit performance (Lighthouse)</li>
               <li>Audit sécurité (OWASP)</li>
