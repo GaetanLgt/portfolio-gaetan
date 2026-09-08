@@ -1123,13 +1123,15 @@ const steps = [
 }
 
 .awakening-card__status--blue {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3B82F6;
+  background: var(--paper-alt);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
 }
 
 .awakening-card__status--red {
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: var(--paper-alt);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
 }
 
 .awakening-card ul {
@@ -1234,7 +1236,7 @@ const steps = [
   text-align: center;
   padding: var(--space-lg);
   border-radius: 1.5rem;
-  border: 1px solid rgba(166, 63, 38, 0.2);
+  border: 1px solid var(--rule);
   max-width: 700px;
   margin: 0 auto;
 }

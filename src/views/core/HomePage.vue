@@ -212,9 +212,9 @@
             </div>
           </ScrollReveal>
           
-          <!-- Gauges Panel — TiltCard retiré (audit) -->
+          <!-- Gauges Panel — TiltCard retiré (audit) ; fond unifié section inversée -->
           <ScrollReveal animation="zoom">
-              <div class="proof__gauges glass">
+              <div class="proof__gauges">
                 <GaugeCircle 
                   :value="150" 
                   :max="200" 
@@ -1191,7 +1191,7 @@ const handleAvatarError = (id) => {
 
 .proof-metric__unit {
   font-size: 1rem;
-  color: var(--accent-inv);
+  color: var(--paper);
 }
 
 .proof-metric__label {
@@ -1211,22 +1211,22 @@ const handleAvatarError = (id) => {
   border: 1px solid rgba(244, 241, 234, 0.16);
 }
 
-/* Jauges (GaugeCircle) en section inversée */
+/* Jauges (GaugeCircle) en section inversée — couleurs forcées */
 .proof :deep(.gauge__track) {
-  stroke: rgba(244, 241, 234, 0.16);
+  stroke: rgba(244, 241, 234, 0.16) !important;
 }
 
 .proof :deep(.gauge__progress) {
-  stroke: var(--accent-inv);
-  filter: none;
+  stroke: var(--accent-inv) !important;
+  filter: none !important;
 }
 
 .proof :deep(.gauge__value) {
-  color: var(--paper);
+  color: var(--paper) !important;
 }
 
 .proof :deep(.gauge__label) {
-  color: rgba(244, 241, 234, 0.92);
+  color: rgba(244, 241, 234, 0.92) !important;
 }
 
 /* Bouton outline inversé : papier sur encre */
