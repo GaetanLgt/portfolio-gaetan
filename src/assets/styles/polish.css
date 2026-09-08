@@ -379,3 +379,33 @@ select:focus-visible,
   --text-muted: #D4D4D8;
   --text-dark: #A1A1AA;
 }
+
+/* --------------------- MND — AMBIANCE HERO PAGES (2026-10) ---------------------
+   Une seule couche globale : tous les heros des pages vitrine qui utilisent
+   <section class="hero"> reçoivent l'ambiance émeraude MND, SANS écraser leur
+   fond existant (dégradé ajouté par-dessus via ::before, non destructif).
+   Si une page a son propre fond hero, ce dégradé se superpose discrètement. */
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 20%, rgba(0, 255, 65, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 20% 80%, rgba(0, 255, 65, 0.06) 0%, transparent 55%);
+  mix-blend-mode: screen;
+}
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Réduction de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation: none; }
+}
