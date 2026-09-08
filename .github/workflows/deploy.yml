@@ -143,13 +143,35 @@ jobs:
           name: dist
           path: dist/
 
-      - name: 🚀 Deploy via FTP
+      - name: 🚀 Deploy assets (hors index.html)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
+          server-dir: /public_html/
+          dangerous-clean-slate: false
+          exclude: |
+            **/index.html
+
+      # ⚠️ CRITIQUE : index.html est uploadé EN DERNIER. L'ancien index.html
+      # (qui référence les anciens assets, toujours présents sur le serveur)
+      # reste servi pendant tout l'upload des nouveaux assets → AUCUNE fenêtre
+      # de page blanche. Le nouveau HTML n'arrive que quand tous ses assets
+      # existent déjà.
+      - name: 📦 Préparer index.html seul
+        run: |
+          mkdir -p dist-html
+          cp dist/index.html dist-html/index.html
+
+      - name: 🚀 Deploy index.html (dernier, anti-page-blanche)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist-html/
           server-dir: /public_html/
           dangerous-clean-slate: false
 

@@ -224,27 +224,27 @@
     <!-- STACK -->
     <section class="stack">
       <div class="container">
-        <ScrollReveal animation="flip">
-          <TiltCard :max-tilt="5" :glare="true" :max-glare="0.15">
-            <div class="stack-card glass">
-              <div class="stack-card__header">
-                <span class="mono-tag">/// 02 STACK TECHNIQUE</span>
-                <h3><TextScramble text="Architecture Souveraine" :scramble-on-hover="true" /></h3>
-              </div>
-              <div class="stack-card__grid">
-                <div v-for="stack in stackItems" :key="stack.category" class="stack-item">
-                  <span class="stack-item__category">{{ stack.category }}</span>
-                  <div class="stack-item__techs">
-                    <span 
-                      v-for="tech in stack.techs" 
-                      :key="tech.name"
-                      :class="{ 'stack-item__tech--highlight': tech.highlight }"
-                    >{{ tech.name }}</span>
-                  </div>
+        <!-- flip 3D + tilt-card + backdrop-filter(glass) = artefacts de
+             rendu/clignotement Firefox : reveal en fade-up, carte statique -->
+        <ScrollReveal animation="fade-up">
+          <div class="stack-card glass">
+            <div class="stack-card__header">
+              <span class="mono-tag">/// 02 STACK TECHNIQUE</span>
+              <h3><TextScramble text="Architecture Souveraine" :scramble-on-hover="true" /></h3>
+            </div>
+            <div class="stack-card__grid">
+              <div v-for="stack in stackItems" :key="stack.category" class="stack-item">
+                <span class="stack-item__category">{{ stack.category }}</span>
+                <div class="stack-item__techs">
+                  <span 
+                    v-for="tech in stack.techs" 
+                    :key="tech.name"
+                    :class="{ 'stack-item__tech--highlight': tech.highlight }"
+                  >{{ tech.name }}</span>
                 </div>
               </div>
             </div>
-          </TiltCard>
+          </div>
         </ScrollReveal>
       </div>
     </section>

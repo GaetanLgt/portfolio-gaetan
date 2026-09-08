@@ -16,7 +16,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#10B981" />
+    <meta name="theme-color" content="#00FF41" />
     
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -68,7 +68,7 @@
           "url": "https://gldigitallab.fr",
           "logo": "https://gldigitallab.fr/favicon-512x512.png",
           "image": "https://gldigitallab.fr/og-image.png",
-          "email": "gtn.langlet@gmail.com",
+          "email": "gtn.langlet+lab@gmail.com",
           "telephone": "+33686474610",
           "address": {
             "@type": "PostalAddress",
@@ -190,7 +190,7 @@
                 },
                 "priceSpecification": {
                   "@type": "UnitPriceSpecification",
-                  "price": "550",
+                  "price": "450",
                   "priceCurrency": "EUR",
                   "unitCode": "DAY"
                 }
@@ -199,11 +199,12 @@
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Audit Flash"
+                  "name": "Audit Web — 48 h"
                 },
                 "priceSpecification": {
                   "@type": "PriceSpecification",
-                  "price": "800",
+                  "minPrice": "149",
+                  "maxPrice": "199",
                   "priceCurrency": "EUR"
                 }
               },
@@ -242,20 +243,26 @@
     
     <!-- FONTS : Self-hosted pour performance (voir /public/fonts) -->
     <!-- Preload des fonts critiques -->
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/Inter-Regular.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/JetBrainsMono-Regular.woff2" crossorigin>
-
-    <!-- Ces deux faces sont declarees ici, et non uniquement dans fonts.css :
-         fonts.css est importe depuis main.js, donc apres le bundle JS. Le
-         preload ci-dessus se declenchait avant que la @font-face existe et
-         restait inutilise. Les autres graisses restent dans fonts.css. -->
+    <!-- Ces faces sont declarees ici (dans le <head>), et non uniquement dans
+         fonts.css (importe depuis main.js, donc apres le bundle JS).
+         PAS de <link rel="preload"> : dans une SPA le HTML est vide au premier
+         rendu, les fonts ne sont sollicitees qu'au montage Vue -> Firefox
+         signalerait « preload not used ». Le @font-face inline suffit : le
+         navigateur decouvre et charge la font au parse du head. -->
     <style>
       @font-face {
-        font-family: 'Inter';
+        font-family: 'Fraunces';
         font-style: normal;
-        font-weight: 400;
+        font-weight: 300 700;
         font-display: swap;
-        src: url('/fonts/Inter-Regular.woff2') format('woff2');
+        src: url('/fonts/Fraunces-Regular.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Space Grotesk';
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: url('/fonts/SpaceGrotesk-Regular.woff2') format('woff2');
       }
       @font-face {
         font-family: 'JetBrains Mono';
