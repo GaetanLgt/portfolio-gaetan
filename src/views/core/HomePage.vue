@@ -831,7 +831,7 @@ const handleAvatarError = (id) => {
 .mono-tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   letter-spacing: 0.1em;
   opacity: 0.9;
 }
@@ -972,7 +972,7 @@ const handleAvatarError = (id) => {
 .mono-tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -1008,11 +1008,11 @@ const handleAvatarError = (id) => {
 }
 
 .solution-card:hover {
-  border-color: var(--primary);
+  border-color: var(--rule-strong);
 }
 
 .solution-card--featured {
-  border-color: rgba(16, 185, 129, 0.3);
+  border-color: var(--rule-strong);
 }
 
 .solution-card__badge {
@@ -1020,8 +1020,8 @@ const handleAvatarError = (id) => {
   top: -10px;
   right: var(--space-sm);
   padding: 0.25rem 0.75rem;
-  background: var(--primary);
-  color: var(--bg);
+  background: var(--ink);
+  color: var(--paper);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.5rem;
   font-weight: 700;
@@ -1048,10 +1048,10 @@ const handleAvatarError = (id) => {
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   padding: 0.25rem 0.5rem;
-  background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 4px;
   margin-bottom: var(--space-sm);
 }
@@ -1082,13 +1082,13 @@ const handleAvatarError = (id) => {
   content: '→';
   position: absolute;
   left: 0;
-  color: var(--primary);
+  color: var(--ink-soft);
 }
 
 .solution-card__cta {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -1317,7 +1317,8 @@ const handleAvatarError = (id) => {
 }
 
 .stack-item__tech--highlight {
-  color: var(--primary) !important;
+  color: var(--ink) !important;
+  font-weight: 700;
 }
 
 .stack-card__link {
@@ -1325,13 +1326,13 @@ const handleAvatarError = (id) => {
   text-align: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  color: var(--primary);
+  color: var(--ink);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .stack-card__link:hover {
-  color: var(--text-main);
+  color: var(--accent);
 }
 
 /* MULTIVERS TEASER */
@@ -1371,7 +1372,7 @@ const handleAvatarError = (id) => {
   margin: 0 auto;
   padding: var(--space-xl);
   border-radius: 1.5rem;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--rule);
   text-align: center;
 }
 
@@ -1466,10 +1467,7 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
   transform: scale(1.15) rotate(-5deg);
 }
 
-/* Price tag glow on hover */
-.solution-card:hover .solution-card__price {
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-}
+/* Price tag : halo retiré (D1) */
 
 /* Universe card float */
 .universe-card:hover {
@@ -1582,7 +1580,7 @@ html {
 }
 
 .mnd-position__text strong {
-  color: var(--primary);
+  color: var(--ink);
 }
 
 .mnd-position__list {
@@ -1607,27 +1605,26 @@ html {
   content: '◈';
   position: absolute;
   left: 0;
-  color: var(--primary);
+  color: var(--ink-soft);
 }
 
-/* Visuel « the-one » : l'humain au centre (carré, cadre premium) */
+/* Visuel « the-one » : l'humain au centre (carré, cadre premium) — cadre
+   papier, la couleur reste portée par l'image elle-même (contenu) */
 .mnd-theone {
   aspect-ratio: 1 / 1;
   width: 100%;
   max-width: 480px;
   margin-left: auto;
   border-radius: 1.25rem;
-  border: 1px solid rgba(16, 185, 129, 0.18);
-  background-color: rgba(16, 185, 129, 0.03);
+  border: 1px solid var(--rule);
+  background-color: var(--paper-alt);
   background-image:
-    radial-gradient(circle at 50% 42%, rgba(16, 185, 129, 0.1), transparent 65%),
+    radial-gradient(circle at 50% 42%, rgba(166, 63, 38, 0.06), transparent 65%),
     url('/images/mnd/the-one-v2.png');
   background-size: auto, contain;
   background-position: center;
   background-repeat: no-repeat;
-  box-shadow:
-    0 0 70px rgba(16, 185, 129, 0.07),
-    inset 0 0 90px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-md);
 }
 
 /* Équipage : bandeau des six Lois */
@@ -1640,7 +1637,7 @@ html {
 .mnd-crew__label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-align: center;

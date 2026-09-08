@@ -512,7 +512,7 @@ function closeProject() {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(166, 63, 38, 0.2);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.55rem;
@@ -916,7 +916,7 @@ function closeProject() {
 }
 
 .project-modal__link--primary:hover {
-  background: #059669;
+  background: #7E2E1A;
   color: var(--bg);
 }
 
@@ -956,8 +956,8 @@ function closeProject() {
 }
 
 .projects-cta__btn:hover {
-  background: #059669;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  background: #7E2E1A;
+  box-shadow: 0 0 20px rgba(166, 63, 38, 0.4);
 }
 
 /* TRANSITIONS */
