@@ -17,7 +17,15 @@
       
       <!-- Avatar -->
       <div class="agent-card__avatar">
-        <span class="avatar-emoji">{{ agent.avatar }}</span>
+        <img
+          v-if="avatarSrc"
+          class="avatar-image"
+          :src="avatarSrc"
+          alt=""
+          loading="lazy"
+          @error="avatarFailed = true"
+        />
+        <span v-else class="avatar-emoji" aria-hidden="true">{{ agent.avatar }}</span>
       </div>
       
       <!-- Info -->
@@ -68,6 +76,8 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 const props = defineProps({
   agent: {
     type: Object,
@@ -76,8 +86,17 @@ const props = defineProps({
   variant: {
     type: String,
     default: 'default' // default, devlab, compact
+  },
+  // Visuel MND optionnel (avatar PNG de la Loi). Si absent ou si l'image
+  // échoue à charger, l'emoji d'origine est affiché à la place.
+  avatarSrc: {
+    type: String,
+    default: ''
   }
 });
+
+// Bascule vers l'emoji si le PNG MND n'est pas (encore) copié dans /public
+const avatarFailed = ref(false);
 
 const formatLevel = (level) => {
   if (level === 'Penthouse') return '🏠';
@@ -162,6 +181,14 @@ const formatLevel = (level) => {
 
 .avatar-emoji {
   font-size: 1.75rem;
+}
+
+/* Avatar MND (PNG de la Loi) : remplit le cercle, garde le cadre coloré */
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 /* Info */

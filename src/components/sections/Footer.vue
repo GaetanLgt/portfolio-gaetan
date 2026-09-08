@@ -134,7 +134,13 @@ function openCookieSettings() {
 
 <style scoped>
 .footer {
-  background: var(--surface);
+  /* MND : fond premium discret (footer-bg-v2) sous un voile quasi opaque */
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.96)),
+    url('/images/mnd/footer-bg-v2.png');
+  background-size: cover;
+  background-position: center bottom;
   border-top: 1px solid var(--border);
   padding: var(--space-lg) 0 var(--space-md);
   /* Espace pour la SelfDiagnosticBar fixe (~2.5rem) */

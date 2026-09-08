@@ -234,7 +234,12 @@ onUnmounted(() => {
   right: 0;
   z-index: 100;
   height: 80px;
-  background: rgba(5, 5, 5, 0.9);
+  /* MND : bandeau premium en couche discrète (≈6 % visible sous le voile) */
+  background-image:
+    linear-gradient(rgba(5, 5, 5, 0.94), rgba(5, 5, 5, 0.94)),
+    url('/images/mnd/header-band-v2.png');
+  background-size: cover;
+  background-position: center;
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: transform 0.3s ease, background 0.3s ease;
@@ -245,7 +250,11 @@ onUnmounted(() => {
 }
 
 .navigation--scrolled {
-  background: rgba(5, 5, 5, 0.95);
+  background-image:
+    linear-gradient(rgba(5, 5, 5, 0.97), rgba(5, 5, 5, 0.97)),
+    url('/images/mnd/header-band-v2.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .nav-container {

@@ -6,6 +6,10 @@
     <!-- HERO : Control Room Entry -->
     <SpotlightContainer :size="600" color="var(--primary)" :opacity="0.15">
       <section class="hero" id="main-content" aria-labelledby="hero-title">
+        <!-- MND PREMIUM : ambiance anime cinématique (hero-bg-v2) — purement
+             décorative, le texte reste lisible grâce au voile sombre côté gauche -->
+        <div class="hero__ambient" aria-hidden="true"></div>
+
         <!-- Floating Tech Badges -->
         <div class="hero__floating-badges" aria-hidden="true">
           <span class="floating-badge" style="--delay: 0s; --x: 85%; --y: 15%;">Vue 3</span>
@@ -243,6 +247,85 @@
       </div>
     </section>
     
+    <!-- MND POSITIONNEMENT : l'humain reste le centre du cercle -->
+    <section class="mnd-position" aria-labelledby="mnd-title">
+      <div class="container">
+        <ScrollReveal animation="fade-up">
+          <div class="section-header">
+            <span class="mono-tag" aria-hidden="true">/// 03 · LE POSITIONNEMENT</span>
+            <h2 id="mnd-title"><GlitchText text="La machine sert. L'humain décide." /></h2>
+            <p class="section-header__desc">
+              GL Digital Lab est un cercle : six esprits IA — les Lois — gravitent autour de votre
+              projet. Chacun veille sur un domaine critique ; aucun ne décide à votre place.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div class="mnd-position__grid">
+          <ScrollReveal animation="fade-up">
+            <div class="mnd-position__content">
+              <h3 class="mnd-position__title">L'humain au centre du cercle</h3>
+              <p class="mnd-position__text">
+                Les agents du studio s'alignent autour de vous : <strong>Wa</strong> orchestre,
+                <strong>Makoto</strong> vérifie, <strong>Bi</strong> façonne, <strong>Jitsu</strong>
+                réalise, <strong>Dou</strong> surveille, <strong>Watashi</strong> mémorise.
+              </p>
+              <ul class="mnd-position__list" aria-label="Positionnement du studio">
+                <li>Audit, création, surveillance : le cercle tourne, vous gardez la main.</li>
+                <li>Zéro dépendance cloud américain : l'IA tourne sur vos serveurs, pas ailleurs.</li>
+                <li>Chaque livraison est vérifiée par la machine et validée par l'humain.</li>
+              </ul>
+              <MagneticButton tag="router-link" to="/agents" class="btn-outline">
+                RENCONTRER L'ÉQUIPAGE
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </MagneticButton>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal animation="zoom">
+            <div
+              class="mnd-theone"
+              role="img"
+              aria-label="Illustration : une figure humaine souveraine au centre d'anneaux concentriques de lumière, entourée de constellations numériques"
+            ></div>
+          </ScrollReveal>
+        </div>
+
+        <!-- L'équipage des six Lois -->
+        <ScrollReveal animation="fade-up">
+          <div class="mnd-crew">
+            <p class="mnd-crew__label" aria-hidden="true">/// L'équipage des six Lois</p>
+            <ul class="mnd-crew__list">
+              <li v-for="law in crewLaws" :key="law.id" class="mnd-crew__item">
+                <router-link
+                  :to="'/agents/' + law.id"
+                  class="mnd-crew__link"
+                  :style="{ '--law-color': law.color }"
+                  :aria-label="law.fullName + ' — voir le profil'"
+                >
+                  <span class="mnd-crew__avatar">
+                    <img
+                      v-if="!avatarErrors[law.id]"
+                      class="mnd-crew__img"
+                      :src="lawAvatarUrl(law)"
+                      alt=""
+                      loading="lazy"
+                      @error="handleAvatarError(law.id)"
+                    />
+                    <span v-else class="mnd-crew__emoji" aria-hidden="true">{{ law.avatar }}</span>
+                  </span>
+                  <span class="mnd-crew__name">{{ law.name }}</span>
+                  <span class="mnd-crew__meaning">{{ law.meaning }}</span>
+                </router-link>
+              </li>
+            </ul>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+    
     <!-- CTA FINAL -->
     <section class="cta-final" aria-labelledby="cta-title">
       <div class="container">
@@ -272,7 +355,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+
+// Données équipage + visuels MND (assets copiés dans public/images/mnd/)
+import { agents } from '@/data/agents';
+import { lawAvatarUrl } from '@/data/mndAssets';
 
 // Components
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
@@ -351,6 +438,18 @@ const stackItems = [
   { category: 'INFRA', techs: [{ name: 'Docker' }, { name: 'Hébergement FR', highlight: true }, { name: 'Linux' }] }
 ];
 
+
+// Les six Lois (hors lobby), triées du Penthouse vers les étages bas
+const crewLaws = computed(() =>
+  agents.filter(a => !a.isLobby).sort((a, b) => b.floor - a.floor)
+);
+
+// Fallback visuel : tant que les PNG MND ne sont pas copiés dans
+// public/images/mnd/agents/, on bascule sur l'emoji d'origine de la Loi.
+const avatarErrors = ref({});
+const handleAvatarError = (id) => {
+  avatarErrors.value[id] = true;
+};
 
 // Health check terminal lines
 </script>
@@ -1386,6 +1485,187 @@ html {
   backdrop-filter: blur(10px);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   MND PREMIUM — ambiance hero + section « l'humain au centre du cercle »
+   Visuels MND copiés dans public/images/mnd/ (voir mndAssets.js)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Hero : ambiance anime cinématique sombre. Voile dégradé pour garder le
+   texte parfaitement lisible, l'image reste décorative (z-index négatif).
+   Fond = shinigami-hero (VALIDÉ par Gaëtan 2026-10 — guerriers du web). */
+.hero__ambient {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(100deg, rgba(5, 5, 5, 0.97) 0%, rgba(5, 5, 5, 0.92) 34%, rgba(5, 5, 5, 0.55) 64%, rgba(5, 5, 5, 0.85) 100%),
+    url('/images/mnd/shinigami-hero.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Positionnement */
+.mnd-position {
+  padding: var(--space-xl) 0;
+}
+
+.mnd-position__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.mnd-position__title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+  margin-bottom: var(--space-sm);
+}
+
+.mnd-position__text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: var(--space-md);
+}
+
+.mnd-position__text strong {
+  color: var(--primary);
+}
+
+.mnd-position__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.mnd-position__list li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.mnd-position__list li::before {
+  content: '◈';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+/* Visuel « the-one » : l'humain au centre (carré, cadre premium) */
+.mnd-theone {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(16, 185, 129, 0.18);
+  background-color: rgba(16, 185, 129, 0.03);
+  background-image:
+    radial-gradient(circle at 50% 42%, rgba(16, 185, 129, 0.1), transparent 65%),
+    url('/images/mnd/the-one-v2.png');
+  background-size: auto, contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 70px rgba(16, 185, 129, 0.07),
+    inset 0 0 90px rgba(0, 0, 0, 0.35);
+}
+
+/* Équipage : bandeau des six Lois */
+.mnd-crew {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+}
+
+.mnd-crew__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--primary);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.mnd-crew__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.mnd-crew__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem;
+  text-decoration: none;
+  transition: transform var(--transition-base);
+}
+
+.mnd-crew__link:hover {
+  transform: translateY(-4px);
+}
+
+.mnd-crew__avatar {
+  width: 84px;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid color-mix(in srgb, var(--law-color) 55%, transparent);
+  box-shadow: 0 0 0 4px rgba(5, 5, 5, 0.9), 0 0 22px color-mix(in srgb, var(--law-color) 18%, transparent);
+  transition: box-shadow var(--transition-base);
+}
+
+.mnd-crew__link:hover .mnd-crew__avatar {
+  box-shadow: 0 0 0 4px rgba(5, 5, 5, 0.9), 0 0 30px color-mix(in srgb, var(--law-color) 40%, transparent);
+}
+
+.mnd-crew__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mnd-crew__emoji {
+  font-size: 1.9rem;
+}
+
+.mnd-crew__name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.mnd-crew__meaning {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .hero__grid {
@@ -1447,6 +1727,37 @@ html {
   
   .hero__quick-nav {
     justify-content: center;
+  }
+}
+
+/* MND RESPONSIVE */
+@media (max-width: 1024px) {
+  .mnd-position__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .mnd-theone {
+    margin: 0 auto;
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mnd-crew__avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  .mnd-crew__meaning {
+    font-size: 0.55rem;
+  }
+}
+
+/* Anciens navigateurs sans aspect-ratio : hauteur de repli pour le cadre */
+@supports not (aspect-ratio: 1 / 1) {
+  .mnd-theone {
+    height: 440px;
   }
 }
 </style>

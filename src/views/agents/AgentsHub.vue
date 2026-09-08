@@ -44,6 +44,7 @@
             v-for="agent in mainAgents" 
             :key="agent.id" 
             :agent="agent"
+            :avatar-src="lawAvatarUrl(agent)"
           />
         </div>
       </div>
@@ -100,6 +101,7 @@
 import { computed } from 'vue';
 import { agents } from '@/data/agents';
 import AgentCard from '@/components/agents/AgentCard.vue';
+import { lawAvatarUrl } from '@/data/mndAssets';
 
 // Les agents de l'Équipage (hors lobby), triés du Penthouse vers les étages bas
 const mainAgents = computed(() => 
