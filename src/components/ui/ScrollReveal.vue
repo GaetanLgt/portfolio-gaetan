@@ -31,6 +31,7 @@ const props = defineProps({
 const elementRef = ref(null);
 const isVisible = ref(false);
 let observer = null;
+let failsafeTimer = null;
 
 const revealStyle = computed(() => ({
   '--delay': props.delay + 'ms',
@@ -70,9 +71,25 @@ onMounted(() => {
   if (elementRef.value) {
     observer.observe(elementRef.value);
   }
+
+  // REPLI DE SÉCURITÉ (anti-page-blanche) : si l'observer ne s'est pas
+  // déclenché (JS lent, onglet en arrière-plan, cas observé en réel),
+  // on force l'affichage après 2,5 s — jamais de contenu invisible.
+  failsafeTimer = window.setTimeout(() => {
+    if (!isVisible.value) {
+      isVisible.value = true;
+      if (observer && elementRef.value) {
+        observer.unobserve(elementRef.value);
+        observer.disconnect();
+      }
+    }
+  }, 2500);
 });
 
 onUnmounted(() => {
+  if (failsafeTimer) {
+    window.clearTimeout(failsafeTimer);
+  }
   if (observer && elementRef.value) {
     observer.unobserve(elementRef.value);
     observer.disconnect();

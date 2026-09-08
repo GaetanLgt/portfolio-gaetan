@@ -231,6 +231,17 @@ a:hover {
   border: 0;
 }
 
+/* REPLI NO-JS (anti-page-blanche) : si JavaScript ne s'exécute pas,
+   tous les blocs .scroll-reveal (opacity:0 par défaut) redeviennent
+   visibles. Le <html> porte class="no-js", retirée par un script inline
+   dès que JS tourne. Garantit 100 % de contenu visible sans JS. */
+html.no-js .scroll-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+
 /* ANIMATIONS */
 @keyframes fadeIn {
   from { opacity: 0; }
