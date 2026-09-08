@@ -10,6 +10,17 @@
              décorative, le texte reste lisible grâce au voile sombre côté gauche -->
         <div class="hero__ambient" aria-hidden="true"></div>
 
+        <!-- SIGNATURE ORBITE : le point humain reste fixe, les anneaux
+             (système) recalcule sa trajectoire. Purement décoratif CSS
+             (transform rotate = GPU), zéro WebGL, zéro déformation.
+             Le point central ne bouge JAMAIS. -->
+        <div class="hero__orbit" aria-hidden="true">
+          <span class="hero__orbit-core"></span>
+          <span class="hero__orbit-ring hero__orbit-ring--1"></span>
+          <span class="hero__orbit-ring hero__orbit-ring--2"></span>
+          <span class="hero__orbit-ring hero__orbit-ring--3"></span>
+        </div>
+
         <!-- Floating Tech Badges -->
         <div class="hero__floating-badges" aria-hidden="true">
           <span class="floating-badge" style="--delay: 0s; --x: 85%; --y: 15%;">Vue 3</span>
@@ -1781,5 +1792,70 @@ html {
   .mnd-theone {
     height: 440px;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SIGNATURE ORBITE (2026-10, d'après recherche Awwwards)
+   « La technologie peut bouger ; le centre de gravité ne bouge pas. »
+   Point émeraude FIXE + anneaux pointillés qui tournent (transform = GPU).
+   Décoratif (aria-hidden), zéro WebGL, réduit avec prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.hero__orbit {
+  position: absolute;
+  top: 50%;
+  right: clamp(-40px, -2vw, 0px);
+  width: clamp(320px, 42vw, 560px);
+  aspect-ratio: 1 / 1;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* point central : le centre de gravité — immobile */
+.hero__orbit-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow:
+    0 0 12px var(--primary-glow),
+    0 0 34px rgba(0, 255, 65, 0.25);
+  animation: orbit-core-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes orbit-core-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.95; }
+  50%      { transform: scale(1.25); opacity: 1; }
+}
+
+/* anneaux pointillés qui tournent — le système recalcule sa trajectoire */
+.hero__orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 255, 65, 0.22);
+  transform: translate(-50%, -50%);
+}
+
+.hero__orbit-ring--1 { width: 34%; height: 34%; animation: orbit-spin 42s linear infinite; }
+.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(0, 255, 65, 0.14); }
+.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(0, 255, 65, 0.07); }
+
+@keyframes orbit-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* A11Y : mouvement coupé, motif figé mais présent */
+@media (prefers-reduced-motion: reduce) {
+  .hero__orbit-core,
+  .hero__orbit-ring { animation: none !important; }
+  .hero__orbit { opacity: 0.5; }
 }
 </style>
