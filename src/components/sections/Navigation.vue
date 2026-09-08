@@ -17,78 +17,21 @@
         </div>
       </router-link>
       
-      <!-- Desktop Navigation -->
+      <!-- Desktop Navigation — parcours prospect épuré (audit Awwwards D2) -->
       <nav class="nav-desktop" aria-label="Navigation principale">
-        <!-- SOLUTIONS & RÉALISATIONS : la vente d'abord -->
         <router-link to="/services" class="nav-link">
           <span class="nav-link__num">01</span>
-          SOLUTIONS
+          OFFRE
         </router-link>
         <router-link to="/projets" class="nav-link">
           <span class="nav-link__num">02</span>
           RÉALISATIONS
         </router-link>
-
-        <!-- GL Tower Dropdown -->
-        <div class="nav-dropdown">
-          <button 
-            class="nav-link nav-dropdown__trigger nav-link--tower"
-            @click="toggleDropdown('tower')"
-            :aria-expanded="activeDropdown === 'tower'"
-            aria-haspopup="true"
-          >
-            <span class="nav-link__num">🏢</span>
-            ÉQUIPAGE
-            <svg class="nav-dropdown__arrow" :class="{ 'rotate': activeDropdown === 'tower' }" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </button>
-          <Transition name="dropdown">
-            <div v-if="activeDropdown === 'tower'" class="nav-dropdown__menu nav-dropdown__menu--tower">
-              <router-link to="/hub" class="nav-dropdown__item nav-dropdown__item--featured" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🏢</span>
-                <div>
-                  <span class="nav-dropdown__title">GL Tower — Le QG</span>
-                  <span class="nav-dropdown__desc">L'équipage et l'infrastructure</span>
-                </div>
-              </router-link>
-              <router-link to="/tower" class="nav-dropdown__item nav-dropdown__item--interactive" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🗼</span>
-                <div>
-                  <span class="nav-dropdown__title">Visite Interactive</span>
-                  <span class="nav-dropdown__desc">Explorez la tour en 3D</span>
-                </div>
-              </router-link>
-              <router-link to="/agents" class="nav-dropdown__item nav-dropdown__item--agents" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🤖</span>
-                <div>
-                  <span class="nav-dropdown__title">Équipage des 6 Lois</span>
-                  <span class="nav-dropdown__desc">Six principes autour de vous</span>
-                </div>
-              </router-link>
-              <router-link to="/workflows" class="nav-dropdown__item" @click="closeDropdown">
-                <span class="nav-dropdown__icon">🔄</span>
-                <div>
-                  <span class="nav-dropdown__title">Workflows n8n</span>
-                  <span class="nav-dropdown__desc">Automatisations en production</span>
-                </div>
-              </router-link>
-            </div>
-          </Transition>
-        </div>
-        
-        <router-link to="/carte-holistique" class="nav-link">
+        <router-link to="/arkadia" class="nav-link">
           <span class="nav-link__num">03</span>
-          CARTE
+          PREUVE
         </router-link>
-        
-        <!-- FORMATION - Masqué temporairement (droits en attente)
-        <router-link to="/formation" class="nav-link nav-link--formation">
-          <span class="nav-link__num">🎓</span>
-          FORMATION
-        </router-link>
-        -->
-        
+
         <router-link to="/contact" class="nav-cta">
           RÉSERVER UN AUDIT
         </router-link>
@@ -116,52 +59,17 @@
           <span class="nav-link__num">00</span> ACCUEIL
         </router-link>
 
-        <!-- VENTE D'ABORD : Solutions & Réalisations -->
+        <!-- Parcours prospect épuré (audit Awwwards D2) -->
         <router-link to="/services" class="nav-mobile__link nav-mobile__link--solutions" @click="closeMobile">
-          <span class="nav-link__num">01</span> SOLUTIONS
+          <span class="nav-link__num">01</span> OFFRE
         </router-link>
         <router-link to="/projets" class="nav-mobile__link nav-mobile__link--projets" @click="closeMobile">
           <span class="nav-link__num">02</span> RÉALISATIONS
         </router-link>
-        
-        <!-- Équipage Section -->
-        <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">🏢 ÉQUIPAGE</span>
-        </div>
-        <router-link to="/hub" class="nav-mobile__link nav-mobile__link--tower" @click="closeMobile">
-          <span class="nav-link__num">🏢</span> Vue d'ensemble
-        </router-link>
-        <router-link to="/tower" class="nav-mobile__link nav-mobile__link--sub nav-mobile__link--interactive" @click="closeMobile">
-          → 🗼 Visite Interactive 3D
-        </router-link>
-        <router-link to="/agents" class="nav-mobile__link nav-mobile__link--sub nav-mobile__link--agents" @click="closeMobile">
-          → Équipage des 6 Lois
-        </router-link>
-        <router-link to="/workflows" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Workflows n8n
-        </router-link>
-        <router-link to="/carte-holistique" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → 🗺️ Carte Holistique
+        <router-link to="/arkadia" class="nav-mobile__link" @click="closeMobile">
+          <span class="nav-link__num">03</span> PREUVE — ARKADIA
         </router-link>
 
-        <!-- FORMATION - Masqué temporairement (droits en attente)
-        <div class="nav-mobile__section">
-          <span class="nav-mobile__section-title">🎓 FORMATION</span>
-        </div>
-        <router-link to="/formation" class="nav-mobile__link nav-mobile__link--formation" @click="closeMobile">
-          <span class="nav-link__num">🎓</span> Catalogue Formations
-        </router-link>
-        <router-link to="/formation/symfony-fondamentaux" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Symfony 7 Fondamentaux
-        </router-link>
-        <router-link to="/formation/vue3-complet" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Vue.js 3 Complet
-        </router-link>
-        <router-link to="/formation/integration-ia-web" class="nav-mobile__link nav-mobile__link--sub" @click="closeMobile">
-          → Intégration IA Web
-        </router-link>
-        -->
-        
         <!-- CTA -->
         <router-link to="/contact" class="nav-mobile__cta" @click="closeMobile">
           RÉSERVER UN AUDIT

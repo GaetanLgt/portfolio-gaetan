@@ -40,27 +40,26 @@
           <p class="footer__response">SLA réponse : 24h</p>
         </div>
         
-        <!-- Navigation Principale -->
+        <!-- Navigation Principale — parcours prospect (audit Awwwards D2) -->
         <div class="footer__section">
           <h4 class="footer__title">Navigation</h4>
           <nav class="footer__nav">
             <router-link to="/">Accueil</router-link>
-            <router-link to="/hub">🏢 GL Tower</router-link>
-            <router-link to="/carte-holistique">🗺️ Carte Holistique</router-link>
-            <router-link to="/services">Services</router-link>
-            <router-link to="/projets">Projets</router-link>
+            <router-link to="/services">Offre &amp; audits</router-link>
+            <router-link to="/projets">Réalisations</router-link>
+            <router-link to="/arkadia">Preuve — ARKADIA</router-link>
             <router-link to="/contact">Contact</router-link>
           </nav>
         </div>
         
-        <!-- Équipage & Réalisations -->
+        <!-- Manifeste & coulisses (lore interne, discret — D2) -->
         <div class="footer__section">
-          <h4 class="footer__title">Équipage & Travaux</h4>
+          <h4 class="footer__title">Manifeste &amp; coulisses</h4>
           <nav class="footer__nav">
-            <router-link to="/agents">L'Équipage des 6 Lois</router-link>
-            <router-link to="/tower">GL Tower — Visite</router-link>
-            <router-link to="/workflows">Workflows n8n</router-link>
-            <router-link to="/arkadia">Case Study ARKADIA</router-link>
+            <router-link to="/agents">Méthode de vérification</router-link>
+            <router-link to="/hub">GL Tower</router-link>
+            <router-link to="/workflows">Automatisations</router-link>
+            <router-link to="/carte-holistique">Carte de l'écosystème</router-link>
           </nav>
         </div>
         
