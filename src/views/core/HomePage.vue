@@ -6,9 +6,9 @@
     <!-- HERO : Control Room Entry -->
     <SpotlightContainer :size="600" color="var(--primary)" :opacity="0.15">
       <section class="hero" id="main-content" aria-labelledby="hero-title">
-        <!-- MND PREMIUM : ambiance anime cinématique (hero-bg-v2) — purement
-             décorative, le texte reste lisible grâce au voile sombre côté gauche -->
-        <div class="hero__ambient" aria-hidden="true"></div>
+        <!-- DS clair (D1) : fond papier nu — l'ambiance anime sombre MND
+             (hero-bg) est retirée, elle cassait le fond clair et pesait
+             plusieurs centaines de Ko. L'orbite reste la seule signature. -->
 
         <!-- SIGNATURE ORBITE : le point humain reste fixe, les anneaux
              (système) recalcule sa trajectoire. Purement décoratif CSS
@@ -592,25 +592,19 @@ const handleAvatarError = (id) => {
   line-height: 1.6;
 }
 
-.code-keyword { color: #c792ea; }
-.code-var { color: #82aaff; }
-.code-prop { color: #f78c6c; }
-.code-string { color: #c3e88d; }
-.code-func { color: #82aaff; }
-.code-method { color: #ffcb6b; }
-.code-comment { color: #546e7a; font-style: italic; }
+/* Fenêtre code décorative (aria-hidden) — DS clair : code sobre, encre
+   seule, plus de couleurs de terminal sombre ni de halo. */
+.code-keyword { color: var(--ink); font-weight: 700; }
+.code-var { color: var(--ink-soft); }
+.code-prop { color: var(--ink-soft); }
+.code-string { color: var(--ink-soft); }
+.code-func { color: var(--ink); }
+.code-method { color: var(--ink); }
+.code-comment { color: var(--ink-faint); font-style: italic; }
 
-/* Button Glow */
+/* Button Glow — DS clair : plus de halo émeraude pulsé (D1) */
 .btn-glow {
-  box-shadow: 
-    0 0 20px rgba(16, 185, 129, 0.4),
-    0 0 40px rgba(16, 185, 129, 0.2);
-  animation: btnPulse 2s ease-in-out infinite;
-}
-
-@keyframes btnPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2); }
-  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6), 0 0 60px rgba(16, 185, 129, 0.3); }
+  box-shadow: var(--shadow-md);
 }
 
 /* Scroll Indicator */
@@ -670,7 +664,7 @@ const handleAvatarError = (id) => {
 }
 
 .hero__subtitle strong {
-  color: #fff;
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -702,12 +696,9 @@ const handleAvatarError = (id) => {
   50% { transform: scale(1.2); opacity: 0.7; }
 }
 
-/* Neon text glow effect */
+/* Neon text glow — supprimé (D1 : plus de halo) */
 .neon-text {
-  text-shadow: 
-    0 0 10px rgba(16, 185, 129, 0.5),
-    0 0 20px rgba(16, 185, 129, 0.3),
-    0 0 40px rgba(16, 185, 129, 0.1);
+  /* halo retiré — le gradient clair fait le travail */
 }
 
 /* Hero actions spacing */
@@ -720,15 +711,15 @@ const handleAvatarError = (id) => {
   left: var(--x);
   top: var(--y);
   padding: 0.4rem 0.8rem;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   animation: floatBadge 6s ease-in-out infinite;
   animation-delay: var(--delay);
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .quick-link {
@@ -736,8 +727,8 @@ const handleAvatarError = (id) => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 2rem;
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -750,13 +741,13 @@ const handleAvatarError = (id) => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(26, 26, 24, 0.04);
+  border-bottom: 1px solid var(--rule);
 }
 
 .code-window__body {
   padding: 1.25rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: transparent;
 }
 
 .code-window__title {
@@ -792,13 +783,11 @@ const handleAvatarError = (id) => {
 
 .hero__code-window {
   border-radius: 12px;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--rule);
   overflow: hidden;
   transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
   transition: transform 0.5s ease;
-  box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(16, 185, 129, 0.1);
+  box-shadow: var(--shadow-md);
 }
 
 .hero__actions {
@@ -861,20 +850,25 @@ const handleAvatarError = (id) => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.55rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   letter-spacing: 0.15em;
   margin-bottom: var(--space-md);
+}
+
+/* pendant l'animation de scramble, pas de couleur d'accent : on hérite */
+.status-badge :deep(.text-scramble--active) {
+  color: inherit;
 }
 
 .status-badge__dot {
   width: 6px;
   height: 6px;
-  background: var(--primary);
+  background: var(--ink-soft);
   border-radius: 50%;
   animation: pulse-slow 2s infinite;
 }
@@ -1122,11 +1116,13 @@ const handleAvatarError = (id) => {
   opacity: 0.7;
 }
 
+/* PROOF — bandeau preuve ARKADIA en SECTION INVERSÉE (fond encre, DS D1).
+   Une des 1-2 sections sombres max de la home, pour rythmer. */
 .proof {
   padding: var(--space-xl) 0;
-  background: rgba(10, 10, 10, 0.5);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  background: var(--ink);
+  border-top: 1px solid rgba(244, 241, 234, 0.12);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.12);
 }
 
 .proof__grid {
@@ -1142,7 +1138,7 @@ const handleAvatarError = (id) => {
   gap: 0.5rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
-  color: var(--primary);
+  color: var(--accent-inv);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -1150,7 +1146,7 @@ const handleAvatarError = (id) => {
 .proof__badge-dot {
   width: 8px;
   height: 8px;
-  background: var(--primary);
+  background: var(--accent-inv);
   border-radius: 50%;
   animation: pulse-slow 2s infinite;
 }
@@ -1158,7 +1154,7 @@ const handleAvatarError = (id) => {
 /* Projet cloture : ni point pulsant ni couleur d'accent — le badge ne doit
    pas suggerer un service encore en ligne. */
 .proof__badge--closed {
-  color: var(--text-muted, #8a9099);
+  color: rgba(244, 241, 234, 0.78);
   border: 1px solid currentColor;
   border-radius: 3px;
   padding: 0.25rem 0.6rem;
@@ -1168,17 +1164,18 @@ const handleAvatarError = (id) => {
   font-size: 2.5rem;
   font-weight: 700;
   margin: var(--space-sm) 0 var(--space-md);
+  color: var(--paper);
 }
 
 .proof__desc {
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: rgba(244, 241, 234, 0.85);
   line-height: 1.8;
   margin-bottom: var(--space-sm);
 }
 
 .proof__desc strong {
-  color: var(--text-main);
+  color: var(--paper);
 }
 
 .proof__metrics {
@@ -1189,8 +1186,8 @@ const handleAvatarError = (id) => {
 
 .proof-metric {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 0, 0, 0.4);
-  border-left: 2px solid var(--primary);
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 2px solid var(--accent-inv);
 }
 
 .proof-metric__value {
@@ -1198,18 +1195,18 @@ const handleAvatarError = (id) => {
   font-family: 'JetBrains Mono', monospace;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--paper);
 }
 
 .proof-metric__unit {
   font-size: 1rem;
-  color: var(--primary);
+  color: var(--accent-inv);
 }
 
 .proof-metric__label {
   display: block;
   font-size: 0.6rem;
-  color: var(--text-dark);
+  color: rgba(244, 241, 234, 0.68);
   text-transform: uppercase;
   margin-top: 0.25rem;
 }
@@ -1220,7 +1217,46 @@ const handleAvatarError = (id) => {
   gap: var(--space-lg);
   padding: var(--space-lg);
   border-radius: 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(244, 241, 234, 0.16);
+}
+
+/* Jauges (GaugeCircle) en section inversée */
+.proof :deep(.gauge__track) {
+  stroke: rgba(244, 241, 234, 0.16);
+}
+
+.proof :deep(.gauge__progress) {
+  stroke: var(--accent-inv);
+  filter: none;
+}
+
+.proof :deep(.gauge__value) {
+  color: var(--paper);
+}
+
+.proof :deep(.gauge__label) {
+  color: rgba(244, 241, 234, 0.68);
+}
+
+/* Bouton outline inversé : papier sur encre */
+.proof .btn-outline {
+  color: var(--paper) !important;
+  border-color: var(--paper) !important;
+  background: transparent !important;
+}
+
+.proof .btn-outline:hover {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  border-color: var(--paper) !important;
+}
+
+/* Gradient du titre ARKADIA : version inversée (papier → terre cuite claire) */
+.proof .text-gradient {
+  background: linear-gradient(135deg, var(--paper), var(--accent-inv));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* SYSTEM CHECK */
@@ -1323,15 +1359,15 @@ const handleAvatarError = (id) => {
 
 
 .quick-link:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(166, 63, 38, 0.06);
 }
 
 
 .quick-link--featured:hover {
-  border-color: #FBBF24;
-  background: rgba(251, 191, 36, 0.2);
+  border-color: var(--accent);
+  background: rgba(166, 63, 38, 0.08);
 }
 
 /* CTA FINAL */
@@ -1468,11 +1504,7 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
   padding-right: 2.5rem;
 }
 
-/* Metric value counter glow */
-
-.metric-mini:hover .metric-mini__value {
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-}
+/* Metric value counter glow — supprimé (D1) */
 
 /* Proof metric border animation */
 .proof-metric {
@@ -1480,24 +1512,24 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 }
 
 .proof-metric:hover {
-  border-color: var(--primary);
-  background: rgba(16, 185, 129, 0.05);
+  border-color: var(--accent-inv);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* Stack tech highlight pulse */
+/* Stack tech highlight pulse (sans halo) */
 .stack-item__tech--highlight {
   animation: techPulse 3s ease-in-out infinite;
 }
 
 @keyframes techPulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; text-shadow: 0 0 10px var(--primary); }
+  50% { opacity: 0.7; }
 }
 
 /* Selection style */
 ::selection {
-  background: rgba(16, 185, 129, 0.3);
-  color: #fff;
+  background: rgba(166, 63, 38, 0.28);
+  color: var(--ink);
 }
 
 /* Smooth scroll */
@@ -1513,40 +1545,23 @@ html {
 
 /* UTILITIES */
 .text-gradient {
-  background: linear-gradient(135deg, var(--primary), var(--secondary, #60a5fa));
+  background: linear-gradient(135deg, var(--ink), #6E6352);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(10px);
+  border: 1px solid var(--rule);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MND PREMIUM — ambiance hero + section « l'humain au centre du cercle »
-   Visuels MND copiés dans public/images/mnd/ (voir mndAssets.js)
+   DS CLAIR (D1) — section « l'humain au centre du cercle »
+   L'ambiance anime sombre .hero__ambient (shinigami-hero.png + voile) est
+   SUPPRIMÉE : fond papier oblige, plus d'image lourde ni de voile sombre.
    ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Hero : ambiance anime cinématique sombre. Voile dégradé pour garder le
-   texte parfaitement lisible, l'image reste décorative (z-index négatif).
-   Fond = shinigami-hero (VALIDÉ par Gaëtan 2026-10 — guerriers du web). */
-.hero__ambient {
-  position: absolute;
-  /* commence SOUS la navbar fixe (80px) pour ne pas être coupée par elle */
-  top: 80px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(100deg, rgba(5, 5, 5, 0.97) 0%, rgba(5, 5, 5, 0.92) 34%, rgba(5, 5, 5, 0.55) 64%, rgba(5, 5, 5, 0.85) 100%),
-    url('/images/mnd/shinigami-hero.png');
-  background-size: cover;
-  background-position: center;
-}
 
 /* Positionnement */
 .mnd-position {
@@ -1807,8 +1822,9 @@ html {
 /* ═══════════════════════════════════════════════════════════════════════════
    SIGNATURE ORBITE (2026-10, d'après recherche Awwwards)
    « La technologie peut bouger ; le centre de gravité ne bouge pas. »
-   Point émeraude FIXE + anneaux pointillés qui tournent (transform = GPU).
+   Point brique FIXE + anneaux pointillés qui tournent (transform = GPU).
    Décoratif (aria-hidden), zéro WebGL, réduit avec prefers-reduced-motion.
+   DS clair (D1) : le vert émeraude devient brique — seul accent du site.
    ═══════════════════════════════════════════════════════════════════════════ */
 .hero__orbit {
   position: absolute;
@@ -1831,10 +1847,8 @@ html {
   height: 10px;
   margin: -5px;
   border-radius: 50%;
-  background: var(--primary);
-  box-shadow:
-    0 0 12px var(--primary-glow),
-    0 0 34px rgba(0, 255, 65, 0.25);
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(166, 63, 38, 0.4);
   animation: orbit-core-pulse 3.5s ease-in-out infinite;
 }
 
@@ -1849,13 +1863,13 @@ html {
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  border: 1px dashed rgba(0, 255, 65, 0.22);
+  border: 1px dashed rgba(166, 63, 38, 0.28);
   transform: translate(-50%, -50%);
 }
 
 .hero__orbit-ring--1 { width: 34%; height: 34%; animation: orbit-spin 42s linear infinite; }
-.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(0, 255, 65, 0.14); }
-.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(0, 255, 65, 0.07); }
+.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(166, 63, 38, 0.18); }
+.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(166, 63, 38, 0.09); }
 
 @keyframes orbit-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -1900,14 +1914,32 @@ html {
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: var(--primary);
-  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
   padding: 0.15rem 0.45rem;
   border-radius: 0.3rem;
   flex-shrink: 0;
 }
 
 .hero__path--cto .hero__path-tag {
-  color: var(--text-muted);
+  color: var(--ink-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   OVERRIDES DS CLAIR (D1) — boutons MagneticButton du parcours.
+   Le composant appose ses propres couleurs (brique + hover #fff) par-dessus
+   .btn-primary/.btn-outline : on force l'état « bouton plein brique » sur
+   papier et « outline papier » sur la section inversée (proof).
+   ═══════════════════════════════════════════════════════════════════════ */
+.btn-primary.magnetic-button {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--paper) !important;
+}
+
+.btn-primary.magnetic-button:hover {
+  background: var(--accent-ink) !important;
+  border-color: var(--accent-ink) !important;
+  color: var(--paper) !important;
 }
 </style>

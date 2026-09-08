@@ -618,9 +618,8 @@ const steps = [
 }
 
 .offer-card {
-  background: rgba(15, 15, 15, 0.6);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(10px);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 1.5rem;
   padding: var(--space-md);
   position: relative;
@@ -632,21 +631,21 @@ const steps = [
 }
 
 .offer-card:hover {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-glow-strong);
+  border-color: var(--rule-strong);
+  box-shadow: var(--shadow-md);
   transform: translateY(-8px);
 }
 
 .offer-card--featured {
-  border-color: rgba(16, 185, 129, 0.3);
+  border-color: var(--rule-strong);
 }
 
 .offer-card__ribbon {
   position: absolute;
   top: 1.5rem;
   right: -2.5rem;
-  background: var(--primary);
-  color: var(--bg);
+  background: var(--ink);
+  color: var(--paper);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
   font-weight: 700;
@@ -659,14 +658,14 @@ const steps = [
   top: 0;
   right: 0;
   padding: 1.5rem;
-  opacity: 0.05;
-  color: var(--primary);
+  opacity: 0.06;
+  color: var(--ink);
   transition: var(--transition-base);
   pointer-events: none;
 }
 
 .offer-card:hover .offer-card__bg-icon {
-  opacity: 0.15;
+  opacity: 0.12;
   transform: scale(1.1);
 }
 
@@ -681,27 +680,26 @@ const steps = [
   width: 48px;
   height: 48px;
   background: var(--surface-light);
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
   border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--primary);
+  color: var(--ink);
   transition: var(--transition-base);
 }
 
 .offer-card:hover .offer-card__icon {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-glow);
+  border-color: var(--rule-strong);
 }
 
 .offer-card__tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
   font-weight: 700;
-  color: var(--primary);
-  background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: var(--ink-soft);
+  background: transparent;
+  border: 1px solid var(--rule);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
 }
@@ -712,10 +710,6 @@ const steps = [
   color: var(--text-main);
   margin-bottom: 0.25rem;
   transition: var(--transition-base);
-}
-
-.offer-card:hover .offer-card__title {
-  color: var(--primary);
 }
 
 .offer-card__price {
@@ -752,7 +746,7 @@ const steps = [
 }
 
 .offer-card__features .check {
-  color: var(--primary);
+  color: var(--ink-soft);
   font-weight: 700;
 }
 
@@ -774,19 +768,19 @@ const steps = [
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--ink);
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule-strong);
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
+  text-decoration: none;
   transition: var(--transition-base);
 }
 
 .offer-card__cta:hover {
-  background: var(--primary);
-  color: var(--bg);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-glow);
+  background: var(--accent);
+  color: var(--paper);
+  border-color: var(--accent);
 }
 
 /* PROCESS */

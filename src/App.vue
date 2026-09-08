@@ -199,7 +199,7 @@ const onLoaded = () => {
   font-weight: 700;
   text-decoration: none;
   border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+  box-shadow: var(--shadow-md);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
