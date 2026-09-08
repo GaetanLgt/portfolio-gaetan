@@ -520,6 +520,9 @@ const handleAvatarError = (id) => {
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  /* au-dessus de l'ambient MND (z-index 0) */
+  position: relative;
+  z-index: 1;
   }
 
 .hero__content {
@@ -1495,8 +1498,12 @@ html {
    Fond = shinigami-hero (VALIDÉ par Gaëtan 2026-10 — guerriers du web). */
 .hero__ambient {
   position: absolute;
-  inset: 0;
-  z-index: -1;
+  /* commence SOUS la navbar fixe (80px) pour ne pas être coupée par elle */
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
   pointer-events: none;
   background-image:
     linear-gradient(100deg, rgba(5, 5, 5, 0.97) 0%, rgba(5, 5, 5, 0.92) 34%, rgba(5, 5, 5, 0.55) 64%, rgba(5, 5, 5, 0.85) 100%),
