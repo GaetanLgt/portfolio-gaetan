@@ -39,31 +39,40 @@
                   <TextScramble text="Disponible pour vos projets" :scramble-on-mount="true" />
                 </div>
                 
-                <!-- Main Title -->
+                <!-- Main Title — message éditorial fort -->
                 <h1 id="hero-title" class="hero__title">
-                  Vos outils métier,<br>
-                  <span class="text-gradient neon-text">vos données</span>,<br>
-                  <span class="hero__title-sub">chez vous 🇫🇷</span>
+                  La machine sert.<br>
+                  <span class="text-gradient neon-text">L'humain décide.</span>
                 </h1>
                 
-                <!-- Subtitle with Typewriter -->
+                <!-- Subtitle — la valeur concrète pour la PME -->
                 <p class="hero__subtitle">
-                  <strong>PME des Hauts-de-France</strong> : je bâtis vos outils web sur-mesure
-                  et votre IA <strong>dans votre environnement</strong> — jamais dans un cloud
-                  étranger. La machine travaille, <strong>l'humain décide</strong>.
+                  Vos outils web sur-mesure et votre IA tournent <strong>dans votre
+                  environnement</strong> — jamais dans un cloud étranger.
+                  Vos données restent chez vous. En 48 h, nous rendons visible ce qui
+                  freine votre système.
                 </p>
                 
-                <!-- CTA Buttons -->
+                <!-- CTA : le premier engagement commercial = l'audit -->
                 <div class="hero__actions">
                   <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large btn-glow" :strength="40" :text-strength="50">
-                    💬 Demander un échange de cadrage (30 min)
+                    Commencer par voir clair
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                     </svg>
                   </MagneticButton>
-                  <MagneticButton tag="router-link" to="/services" class="btn-outline" :strength="25" :text-strength="35">
-                    ⚡ Voir les services
-                  </MagneticButton>
+                </div>
+                
+                <!-- Chemins selon le visiteur (principe 7) -->
+                <div class="hero__paths">
+                  <router-link to="/contact" class="hero__path hero__path--pme">
+                    <span class="hero__path-tag">PME</span>
+                    Vous dirigez une entreprise ? Commencez par l'audit 48 h.
+                  </router-link>
+                  <router-link to="/projets" class="hero__path hero__path--cto">
+                    <span class="hero__path-tag">TECH</span>
+                    Vous pilotez la technique ? Voir l'architecture.
+                  </router-link>
                 </div>
                 
                 <!-- Quick Navigation -->
@@ -265,11 +274,12 @@
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// 03 · LE POSITIONNEMENT</span>
-            <h2 id="mnd-title"><GlitchText text="La machine sert. L'humain décide." /></h2>
+            <span class="mono-tag" aria-hidden="true">/// 03 · LE CERCLE</span>
+            <h2 id="mnd-title"><GlitchText text="Six esprits IA. Un seul décideur : vous." /></h2>
             <p class="section-header__desc">
-              GL Digital Lab est un cercle : six esprits IA — les Lois — gravitent autour de votre
-              projet. Chacun veille sur un domaine critique ; aucun ne décide à votre place.
+              La machine sert, l'humain décide. GL Digital Lab est un cercle : six esprits IA —
+              les Lois — gravitent autour de votre projet. Chacun veille sur un domaine
+              critique ; aucun ne décide à votre place.
             </p>
           </div>
         </ScrollReveal>
@@ -1857,5 +1867,47 @@ html {
   .hero__orbit-core,
   .hero__orbit-ring { animation: none !important; }
   .hero__orbit { opacity: 0.5; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CHEMINS VISITEUR (principe 7) : deux portes lisibles sous le CTA
+   PME → audit 48 h · TECH → architecture. Discrets, pas de pill tape-à-l'œil.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.hero__paths {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  margin-top: 2rem;
+}
+
+.hero__path {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.hero__path:hover {
+  color: var(--text-main);
+}
+
+.hero__path-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--primary);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.3rem;
+  flex-shrink: 0;
+}
+
+.hero__path--cto .hero__path-tag {
+  color: var(--text-muted);
 }
 </style>
