@@ -4,12 +4,12 @@
     <section class="hero">
       <div class="container">
         <div class="tag animate-pulse-slow">
-          <span>🔴</span> CHOISISSEZ VOTRE PILULE
+          <span>🛡️</span> REPRENEZ LE CONTRÔLE
         </div>
         
         <h1 class="hero__title">
-          DÉBRANCHEZ-VOUS DE LA<br>
-          <span class="text-gradient neon-text">MATRICE CLOUD.</span>
+          DÉPENDRE DU CLOUD,<br>
+          <span class="text-gradient neon-text">CE N'EST PAS UNE FATALITÉ.</span>
         </h1>
         
         <p class="hero__subtitle">
@@ -19,13 +19,13 @@
       </div>
     </section>
     
-    <!-- Matrix Awakening -->
+    <!-- Awakening (métaphore générique : dépendance au cloud) -->
     <section class="matrix-awakening">
       <div class="container">
         <div class="awakening-grid">
           <div class="awakening-card glass">
             <span class="awakening-card__icon">💊</span>
-            <h3>Pilule Bleue</h3>
+            <h3>Rester dépendant</h3>
             <p class="awakening-card__status awakening-card__status--blue">Votre situation actuelle</p>
             <ul>
               <li>Données sur serveurs US (GAFAM)</li>
@@ -39,7 +39,7 @@
           </div>
           <div class="awakening-card awakening-card--red glass">
             <span class="awakening-card__icon">🔴</span>
-            <h3>Pilule Rouge</h3>
+            <h3>Reprendre le contrôle</h3>
             <p class="awakening-card__status awakening-card__status--red">Après notre collaboration</p>
             <ul>
               <li>Infrastructure 100% souveraine</li>
