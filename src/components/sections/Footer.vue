@@ -4,7 +4,7 @@
       <!-- Decorative top line -->
       <div class="footer__deco">
         <div class="footer__deco-line"></div>
-        <span class="footer__deco-text">TRANSMISSION SÉCURISÉE</span>
+        <span class="footer__deco-text">LA MACHINE SERT · L'HUMAIN DÉCIDE</span>
         <div class="footer__deco-line"></div>
       </div>
       
@@ -18,8 +18,8 @@
               <span class="logo-name">GL DIGITAL LAB</span>
             </div>
             <p class="footer__tagline">
-              Architecte de vos systèmes critiques.<br>
-              Souveraineté · Observabilité · Fiabilité
+              Un cercle de six Lois veille sur vos outils.<br>
+              Vous restez au centre — l'humain décide.
             </p>
           </div>
         </div>

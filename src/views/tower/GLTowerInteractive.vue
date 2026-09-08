@@ -168,7 +168,7 @@ const tourSteps = [
   },
   {
     title: 'L\'Équipage — Six Lois',
-    description: 'Chaque Loi agit selon un principe : Wa orchestre, Makoto vérifie, Bi embellit, Jitsu réalise, Dou surveille, Watashi se souvient. Trinity, la Grande Architecte, veille au-dessus.',
+    description: 'Chaque Loi agit selon un principe : Wa orchestre, Makoto vérifie, Bi embellit, Jitsu réalise, Dou surveille, Watashi se souvient. Au centre du cercle : l\'humain décide.',
     target: 'main',
     icon: '🏢'
   },

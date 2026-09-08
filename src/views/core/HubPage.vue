@@ -26,13 +26,13 @@
         <h1 id="hero-title" class="hero-title">
           <span class="title-pre">BIENVENUE DANS</span>
           <span class="title-main">GL TOWER</span>
-          <span class="title-sub">QG des Agents IA • GL Digital Lab</span>
+          <span class="title-sub">Le cercle des six Lois • GL Digital Lab</span>
         </h1>
 
         <p class="hero-intro">
-          Chaque niveau de la tour est couvert par un <strong>agent IA spécialisé</strong>. 
-          Infrastructure humaine augmentée. Automatisation intelligente. 
-          <em>Zéro dépendance cloud US.</em>
+          Chaque domaine est couvert par une <strong>Loi spécialisée</strong>. 
+          Infrastructure humaine augmentée. La machine travaille, 
+          <em>l'humain décide</em>.
         </p>
 
         <div class="tower-stats">
@@ -300,7 +300,7 @@
           </p>
           <router-link to="/contact" class="footer-cta">
             <span class="cta-icon">🎯</span>
-            Planifier un Audit avec l'Équipage ARKADIA
+            Planifier un audit avec le cercle des six Lois
           </router-link>
         </div>
       </div>

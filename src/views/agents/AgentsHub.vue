@@ -20,8 +20,8 @@
           <p class="hub-hero__tagline">Bureau des Agents IA</p>
           
           <p class="hub-hero__desc">
-            {{ mainAgents.length }} Lois organisées selon l'Équipage ARKADIA.
-            De l'orchestration à la mémoire, chaque Loi couvre un domaine critique.
+            {{ mainAgents.length }} Lois gravitent autour de votre projet.
+            De l'orchestration à la mémoire, chacune couvre un domaine critique.
           </p>
         </div>
       </div>
@@ -34,7 +34,7 @@
           <div class="zone-icon">🏢</div>
           <div class="zone-info">
             <h2 id="zone-main-title">L'Équipage — Six Lois</h2>
-            <p>Chaque Loi agit selon un principe. Trinity, la Grande Architecte, veille au-dessus.</p>
+            <p>Six principes, un cercle autour de vous. La machine travaille, l'humain décide.</p>
           </div>
           <div class="zone-floors">Penthouse → Lobby</div>
         </div>
@@ -59,8 +59,7 @@
           <div class="lobby-content">
             <h3>LOBBY</h3>
             <p>Accueil Visiteurs</p>
-            <p class="lobby-desc">Point d'entrée de GL Tower. Découvrez nos services et planifiez un audit.</p>
-          </div>
+            <p class="lobby-desc">Point d'entrée de GL Tower. Découvrez nos services et planifiez un audit.</p>          </div>
           <div class="lobby-links">
             <router-link to="/services" class="lobby-link">Services</router-link>
             <router-link to="/contact" class="lobby-link lobby-link--primary">Réserver un Audit</router-link>

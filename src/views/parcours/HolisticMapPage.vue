@@ -15,7 +15,7 @@
       </h1>
       
       <p class="map-subtitle">
-        Écosystème GL Digital Lab : 6 Lois IA (équipage ARKADIA) • Infrastructure • Services • Ambition 2026
+        Écosystème GL Digital Lab : 6 Lois IA (l'équipage du cercle) • Infrastructure • Services • Ambition 2026
       </p>
     </header>
     
@@ -393,21 +393,21 @@ const nodes = ref([
   { 
     id: 'gltower', 
     label: 'GL TOWER', 
-    fullLabel: 'GL TOWER - QG de l\'équipage ARKADIA',
-    description: 'Centre de commandement. Infrastructure humaine augmentée par l\'équipage ARKADIA : 6 Lois souveraines.',
+    fullLabel: 'GL TOWER - QG du cercle',
+    description: 'Centre de commandement. Infrastructure humaine augmentée par six Lois souveraines — l\'humain reste au centre.',
     type: 'tower', 
     level: 1, 
     x: 500, y: 380 
   },
   
   // ========================================
-  // NIVEAU 2 - L'Équipage ARKADIA : 6 Lois
+  // NIVEAU 2 - L'Équipage du cercle : 6 Lois
   // ========================================
   { 
     id: 'wa', 
     label: '和 Wa', 
     fullLabel: 'Wa — L\'Harmonie · Orchestration & Coordination',
-    description: 'Orchestrer l\'équipage et coordonner les vaisseaux : routage des requêtes, synthèse, équilibrage des charges.',
+    description: 'Orchestrer le cercle : routage des requêtes, synthèse, équilibrage des charges autour de votre projet.',
     type: 'agent', 
     level: 2, 
     x: 500, y: 280,
@@ -643,7 +643,7 @@ const nodes = ref([
     id: 'proj_multivers', 
     label: 'MULTIVERS', 
     fullLabel: '17+ Univers Parallèles',
-    description: 'Portails dimensionnels : Matrix, Blade Runner, Tron...',
+    description: 'Portails dimensionnels : néo-noir, low-poly, anime, réaliste...',
     type: 'project', 
     level: 3, 
     x: 450, y: 650 

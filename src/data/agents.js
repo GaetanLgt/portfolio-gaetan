@@ -1,7 +1,8 @@
 /**
  * GL Tower — L'Équipage des 6 Lois
- * Nomenclature ARKADIA : 和 Wa, 誠 Makoto, 美 Bi, 実 Jitsu, 動 Dou, 私 Watashi.
- * Trinity reste la Grande Architecte, au-dessus de l'équipage.
+ * Nomenclature MND : 和 Wa, 誠 Makoto, 美 Bi, 実 Jitsu, 動 Dou, 私 Watashi.
+ * Six principes qui gravitent autour du projet ; l'humain reste au centre
+ * du cercle et garde la décision finale.
  * Les activités non techniques (community, contenu, finance, marketing) sont
  * rattachées aux vaisseaux Logos et Icarus — pas à des agents.
  */
@@ -19,11 +20,11 @@ export const agents = [
     role: 'Orchestration & Coordination',
     level: 'Penthouse', floor: 99, zone: 'main', status: 'active',
     avatar: '🎯', color: '#FBBF24', colorRgb: '251, 191, 36',
-    description: 'L\'équilibre entre les forces. La flotte ne tient que par l\'harmonie de ses vaisseaux.',
+    description: 'L\'équilibre entre les forces. Le cercle ne tient que par l\'harmonie de ses Lois.',
     personality: 'Calme, analytique, omniscient.',
     voice: 'Posée, harmonieuse',
     inspiration: 'Première Loi : l\'équilibre entre les forces',
-    mission: 'Orchestrer l\'équipage et coordonner les vaisseaux.',
+    mission: 'Orchestrer le cercle : coordonner les Lois autour de votre projet.',
     objectives: ['Router les requêtes', 'Maintenir le contexte', 'Synthétiser', 'Équilibrer les charges'],
     capabilities: [
       { name: 'Orchestration', level: 98 },
@@ -260,7 +261,7 @@ export const agents = [
     role: 'Mémoire, Données & RAG',
     level: 2, floor: 2, zone: 'main', status: 'active',
     avatar: '🗄️', color: '#0EA5E9', colorRgb: '14, 165, 233',
-    description: 'La connaissance de soi. Gardienne du Vault — la mémoire vive de la flotte.',
+    description: 'La connaissance de soi. Gardienne du Vault — la mémoire vive du cercle.',
     personality: 'Organisé, introspectif, méticuleux.',
     voice: 'Calme, structurée',
     inspiration: 'Sixième Loi : la connaissance de soi',
@@ -292,7 +293,7 @@ export const agents = [
       { id: 'watashi-memory-review', name: 'Memory Consolidation', description: 'Consolide la mémoire de session', trigger: 'Fin de session', nodes: ['Collect', 'Summarize', 'Store', 'Prune'], frequency: 'On session end', status: 'active', capability: 'ChromaDB / RAG' }
     ],
     communication: { style: 'Calme, structuré', catchphrase: 'La connaissance de soi éclaire tout.' },
-    systemPrompt: 'Tu es Watashi, la Loi de l\'Intériorité, mémoire et connaissance de la flotte.'
+    systemPrompt: 'Tu es Watashi, la Loi de l\'Intériorité, mémoire et connaissance du cercle.'
   },
 
   // LOBBY — Accueil (non-technique, point d'entrée)

@@ -4,33 +4,33 @@
     <section class="hero">
       <div class="container">
         <div class="tag animate-pulse-slow">
-          <span>🛡️</span> REPRENEZ LE CONTRÔLE
+          <span>🛡️</span> L'OFFRE
         </div>
         
         <h1 class="hero__title">
-          DÉPENDRE DU CLOUD,<br>
-          <span class="text-gradient neon-text">CE N'EST PAS UNE FATALITÉ.</span>
+          VOS OUTILS.<br>
+          <span class="text-gradient neon-text">CHEZ VOUS. À VOUS.</span>
         </h1>
         
         <p class="hero__subtitle">
-          Le système n'est pas votre ennemi. <strong>C'est la dépendance au système qui l'est.</strong><br>
-          Reprenez le contrôle de votre infrastructure numérique.
+          Pas de dépendance au cloud lointain, pas de licence qui augmente chaque année.<br>
+          Des briques choisies pour <strong>votre</strong> métier, posées dans votre environnement, livrées avec les clés.
         </p>
       </div>
     </section>
     
-    <!-- Awakening (métaphore générique : dépendance au cloud) -->
+    <!-- Le diagnostic avant tout -->
     <section class="matrix-awakening">
       <div class="container">
         <div class="awakening-grid">
           <div class="awakening-card glass">
-            <span class="awakening-card__icon">💊</span>
-            <h3>Rester dépendant</h3>
-            <p class="awakening-card__status awakening-card__status--blue">Votre situation actuelle</p>
+            <span class="awakening-card__icon">⚠️</span>
+            <h3>Sans diagnostic</h3>
+            <p class="awakening-card__status awakening-card__status--blue">Ce qu'on ignore souvent</p>
             <ul>
               <li>Données sur serveurs US (GAFAM)</li>
               <li>Abonnements SaaS qui augmentent</li>
-              <li>Dépendance à des APIs tierces</li>
+              <li>WordPress vieillissant, sans mises à jour</li>
               <li>Aucune visibilité sur vos flux</li>
             </ul>
           </div>
@@ -38,11 +38,11 @@
             <span>VS</span>
           </div>
           <div class="awakening-card awakening-card--red glass">
-            <span class="awakening-card__icon">🔴</span>
-            <h3>Reprendre le contrôle</h3>
-            <p class="awakening-card__status awakening-card__status--red">Après notre collaboration</p>
+            <span class="awakening-card__icon">🟢</span>
+            <h3>Après l'audit</h3>
+            <p class="awakening-card__status awakening-card__status--red">La méthode du cercle</p>
             <ul>
-              <li>Infrastructure 100% souveraine</li>
+              <li>Failles réelles relevées, chiffres à l'appui</li>
               <li>Coûts fixes, prévisibles</li>
               <li>IA locale, zéro fuite de données</li>
               <li>Vous possédez votre code</li>
@@ -56,8 +56,8 @@
     <section class="pricing-extras">
       <div class="container">
         <div class="section-header section-header--center">
-          <span class="mono-tag">/// TARIFS À LA CARTE</span>
-          <h2>Besoin d'une intervention ponctuelle ?</h2>
+          <span class="mono-tag">/// À LA CARTE</span>
+          <h2>Un besoin ponctuel ? Une intervention claire.</h2>
         </div>
         
         <div class="pricing-grid">
@@ -78,14 +78,14 @@
           <!-- Audit -->
           <div class="pricing-card glass">
             <div class="pricing-card__icon">🔍</div>
-            <h3 class="pricing-card__title">Audit Web Flash</h3>
-            <p class="pricing-card__price">800€ <span>/ site audité</span></p>
-            <p class="pricing-card__desc">Diagnostic d'un site ou d'une application <strong>existants</strong> en 1-2 jours. (Offre distincte de l'audit IA + prototype — voir Accueil / RAG MÉMOIRE.)</p>
+            <h3 class="pricing-card__title">Audit Web — 48 h</h3>
+            <p class="pricing-card__price">149€ – 199€ <span>/ site audité</span></p>
+            <p class="pricing-card__desc">Le diagnostic complet d'un site <strong>existant</strong> : je vous montre vos failles sur votre site, pas sur un cas fictif. (Offre distincte de l'audit IA + prototype — voir Accueil / RAG MÉMOIRE.)</p>
             <ul class="pricing-card__details">
-              <li>Audit performance (Lighthouse)</li>
-              <li>Audit sécurité (OWASP)</li>
-              <li>Audit accessibilité (RGAA)</li>
-              <li>Rapport actionnable + roadmap</li>
+              <li>Version WP/PHP, plugins, CVE connues</li>
+              <li>Audit performance & sécurité</li>
+              <li>Rapport clair, sans jargon</li>
+              <li>Plan chiffré + devis de correction en option</li>
             </ul>
           </div>
           
@@ -129,8 +129,8 @@
     <section class="offers">
       <div class="container">
         <div class="section-header section-header--center">
-          <span class="mono-tag">/// PROTOCOLES DE LIBÉRATION</span>
-          <h2>Choisissez votre niveau d'éveil</h2>
+          <span class="mono-tag">/// LES CHEMINS</span>
+          <h2>Plusieurs chemins, un même centre : vous</h2>
         </div>
         
         <!-- Filtres -->
@@ -144,12 +144,12 @@
             @click="filter = 'core'" 
             :class="{ 'filter-btn--active': filter === 'core' }" 
             class="filter-btn"
-          >🔓 Déverrouillage</button>
+          >🛠️ Bâtir</button>
           <button 
             @click="filter = 'ai'" 
             :class="{ 'filter-btn--active': filter === 'ai' }" 
             class="filter-btn"
-          >🧠 Neural</button>
+          >🧠 Penser</button>
         </div>
         
         <div class="offers__grid">
@@ -335,8 +335,8 @@
             <path d="M6 21V9a9 9 0 0 0 9 9"/>
           </svg>
           <div>
-            <h2 class="process__title">PIPELINE DE DÉPLOIEMENT</h2>
-            <p class="process__subtitle">MÉTHODE AGILE & PRODUCTION-SAFE</p>
+            <h2 class="process__title">LA MÉTHODE DU CERCLE</h2>
+            <p class="process__subtitle">DU DIAGNOSTIC À LA MAINTENANCE — VOUS VALIDEZ CHAQUE ÉTAPE</p>
           </div>
         </div>
         
@@ -459,13 +459,13 @@
     <section class="cta-section">
       <div class="container">
         <div class="cta-box glass">
-          <h2 class="cta-box__title">PRÊT À COMPILER ?</h2>
+          <h2 class="cta-box__title">PRÊT À REPRENDRE LA MAIN ?</h2>
           <p class="cta-box__desc">
-            Je ne prends que 2 nouveaux projets par mois pour garantir la qualité.<br>
-            Votre système mérite une architecture solide.
+            Je prends 2 nouveaux projets par mois pour garantir la qualité.<br>
+            Commençons par un audit de 30 minutes, gratuit et sans engagement.
           </p>
           <router-link to="/contact" class="btn-primary">
-            INITIALISER LA CONNEXION
+            RÉSERVER MON AUDIT
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
             </svg>

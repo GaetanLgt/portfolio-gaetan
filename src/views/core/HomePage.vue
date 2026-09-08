@@ -37,9 +37,9 @@
                 
                 <!-- Subtitle with Typewriter -->
                 <p class="hero__subtitle">
-                  J'aide les <strong>PME des Hauts-de-France</strong> à supprimer les ressaisies
-                  et les tâches répétitives — avec des applications web et de l'IA qui tournent
-                  dans <strong>votre environnement</strong>, pas dans un cloud américain.
+                  <strong>PME des Hauts-de-France</strong> : je bâtis vos outils web sur-mesure
+                  et votre IA <strong>dans votre environnement</strong> — jamais dans un cloud
+                  étranger. La machine travaille, <strong>l'humain décide</strong>.
                 </p>
                 
                 <!-- CTA Buttons -->
@@ -111,10 +111,12 @@
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// 01 SERVICES</span>
-            <h2 id="services-title"><GlitchText text="Ce que je peux créer pour vous" /></h2>
+            <span class="mono-tag" aria-hidden="true">/// 01 · L'OFFRE</span>
+            <h2 id="services-title"><GlitchText text="Du diagnostic au sur-mesure" /></h2>
             <p class="section-header__desc">
-              Du site vitrine à l'application métier, chaque projet est conçu sur-mesure pour répondre à VOS besoins.
+              Pas de catalogue : chaque mission part de <strong>votre</strong> situation réelle.
+              Commencez par un <strong>audit en 48 h</strong> — je vous montre, sur votre site,
+              ce qui l'expose et ce qu'il faut corriger. Ensuite seulement, on construit.
               <br><span class="section-header__caveat">Budget final après atelier de cadrage : le prix dépend des
               interfaces, des règles métier, des reprises de données et du niveau d'exigence sécurité.</span>
             </p>
@@ -379,6 +381,19 @@ import {
 // Data
 
 const solutions = [
+  {
+    icon: '🔍',
+    title: 'Audit WordPress — 48 h',
+    price: '149 € – 199 € HT',
+    description: 'Je relève sur VOTRE site les failles réelles : version obsolète, plugin vulnérable, absence de mises à jour. Chiffres à l\'appui, avant qu\'un pirate ou Google ne s\'en charge.',
+    outputs: [
+      'Analyse 100 % locale — aucune donnée ne quitte votre machine',
+      'Rapport clair, sans jargon, avec les risques en une phrase',
+      'Plan chiffré des corrections, devis en option',
+      'Résultat sous 48 h'
+    ],
+    badge: 'L\'ENTRÉE DU CERCLE'
+  },
   {
     icon: '🌐',
     title: 'Site web',

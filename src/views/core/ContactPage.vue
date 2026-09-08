@@ -4,16 +4,17 @@
     <section class="hero">
       <div class="container">
         <div class="tag animate-pulse-slow">
-          <span class="tag__dot"></span> DISPONIBLE
+          <span class="tag__dot"></span> DISPONIBLE — RÉPONSE SOUS 24 H
         </div>
         
         <h1 class="hero__title">
-          OUVRIR UN <span class="text-gradient neon-text">CANAL SÉCURISÉ</span>
+          PARLONS DE <span class="text-gradient neon-text">VOTRE PROJET</span>
         </h1>
         
         <p class="hero__subtitle">
-          Audit gratuit de 30 minutes. On définit ensemble l'architecture,<br>
-          les risques à éviter, et les garde-fous à mettre en place.
+          Premier échange gratuit, 30 minutes, sans engagement. On écoute votre besoin,
+          on identifie les risques réels — et vous repartez avec une vision claire,
+          que vous travailliez avec moi ou non.
         </p>
       </div>
     </section>
@@ -26,8 +27,8 @@
           <div class="contact-card__info">
             <div class="contact-card__header">
               <span class="mono-tag">/// CONTACT</span>
-              <h2>Planifier un Entretien</h2>
-              <p>Expliquez-moi votre projet. Je reviens vers vous sous 24h avec une première analyse.</p>
+              <h2>Votre projet, votre premier cercle</h2>
+              <p>Décrivez votre besoin en quelques lignes. Je reviens vers vous sous 24 h avec une première lecture honnête.</p>
             </div>
             
             <div class="contact-card__details">
@@ -228,13 +229,13 @@ const { fadeInUp, scaleIn } = useScrollAnimations();
 // Terminal lines
 const terminalLines = ref([
   { type: 'prompt', text: 'whoami' },
-  { type: 'output', text: 'Gaëtan L. — Architecte Logiciel & SRE' },
+  { type: 'output', text: 'Gaëtan L. — Développeur & Architecte' },
   { type: 'prompt', text: 'cat /etc/stack.conf' },
-  { type: 'output', text: 'Symfony 8 | Vue 3 | Three.js | n8n | Nemotron | PostgreSQL | Docker' },
+  { type: 'output', text: 'Symfony 8 | Vue 3 | Three.js | n8n | IA locale | PostgreSQL | Docker' },
   { type: 'prompt', text: 'uptime --production' },
-  { type: 'output', text: '5+ years | 99.8% availability | 0 critical incidents' },
+  { type: 'output', text: 'ARKADIA : 18 mois, 9 serveurs, 99.8% dispo constatée' },
   { type: 'prompt', text: 'status --capacity' },
-  { type: 'output', text: 'Accepting 2 new projects for Q1 2026', highlight: true },
+  { type: 'output', text: 'Place pour 2 nouveaux projets par mois', highlight: true },
 ]);
 
 const formStatus = ref('idle'); // idle | sending | success | error

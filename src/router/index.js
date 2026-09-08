@@ -70,8 +70,8 @@ const routes = [
     name: 'Home',
     component: HomePage,
     meta: { 
-      title: 'Sites web et applications sur-mesure pour PME',
-      description: 'Développeur indépendant dans la Somme : sites web, applications métier et IA locale pour PME françaises. Vos données restent chez vous. Devis gratuit sous 24h.'
+      title: 'Sites web & IA sur-mesure pour PME | GL Digital Lab',
+      description: 'Applications web et IA locales pour PME françaises : vos outils, vos données, chez vous. La machine travaille, l\'humain décide. Audit 48h, devis gratuit sous 24h.'
     }
   },
   {
@@ -79,8 +79,8 @@ const routes = [
     name: 'Hub',
     component: HubPage,
     meta: { 
-      title: 'GL TOWER | QG des Agents IA',
-      description: 'Centre de commandement GL Digital Lab. L\'équipage des six Lois couvre tous les niveaux de votre infrastructure : orchestration, sécurité, frontend, backend, monitoring, mémoire.'
+      title: 'GL TOWER | QG des six Lois',
+      description: 'Centre de commandement GL Digital Lab. L\'équipage des six Lois couvre tous les niveaux de votre infrastructure : orchestration, sécurité, frontend, backend, monitoring, mémoire. L\'humain garde la main.'
     }
   },
   {
@@ -88,8 +88,8 @@ const routes = [
     name: 'Contact',
     component: ContactPage,
     meta: { 
-      title: 'Ouvrir un Canal Sécurisé',
-      description: 'Planifiez un audit gratuit de 30 minutes. On définit ensemble l\'architecture, les risques à éviter et les garde-fous.'
+      title: 'Contact | Audit 30 min gratuit',
+      description: 'Parlons de votre projet : premier échange gratuit de 30 minutes, sans engagement. Réponse sous 24h. Sites web, applications métier et IA locale pour PME.'
     }
   },
   {
@@ -110,8 +110,8 @@ const routes = [
     name: 'Services',
     component: ServicesPage,
     meta: { 
-      title: 'Débranchez-vous de la Matrice Cloud',
-      description: 'Performance, Digital Factory, Neural Ops : trois protocoles pour reprendre le contrôle de votre infrastructure. Solutions souveraines pour PME.'
+      title: 'Services | Audit, sites, applications, IA locale',
+      description: 'Audit web 48h, sites sur-mesure, applications métier et IA locale pour PME. Vos outils, chez vous : hébergement souverain, code à vous, l\'humain décide.'
     }
   },
   {
@@ -163,8 +163,8 @@ const routes = [
     name: 'AgentsHub',
     component: AgentsHub,
     meta: { 
-      title: 'Bureau des Agents IA',
-      description: 'L\'équipe d\'intelligences artificielles qui pilote GL Digital Lab et ARKADIA. Chaque agent a son rôle, ses outils et ses processus définis.'
+      title: 'Équipage des 6 Lois | GL Digital Lab',
+      description: 'Six principes — Harmonie, Sincérité, Beauté, Réalisation, Mouvement, Intériorité — gravitent autour de votre projet. La machine travaille, l\'humain décide.'
     }
   },
   {

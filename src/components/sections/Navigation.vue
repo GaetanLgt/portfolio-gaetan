@@ -13,7 +13,7 @@
         <div class="nav-logo__icon">GL</div>
         <div class="nav-logo__text">
           <span class="nav-logo__name">DIGITAL LAB</span>
-          <span class="nav-logo__tagline">Architecture Souveraine</span>
+          <span class="nav-logo__tagline">L'humain au centre</span>
         </div>
       </router-link>
       
@@ -63,7 +63,7 @@
                 <span class="nav-dropdown__icon">🤖</span>
                 <div>
                   <span class="nav-dropdown__title">Équipage des 6 Lois</span>
-                  <span class="nav-dropdown__desc">Les agents ARKADIA</span>
+                  <span class="nav-dropdown__desc">Six principes autour de vous</span>
                 </div>
               </router-link>
               <router-link to="/workflows" class="nav-dropdown__item" @click="closeDropdown">
