@@ -6,9 +6,9 @@
     <!-- HERO : Control Room Entry -->
     <SpotlightContainer :size="600" color="var(--primary)" :opacity="0.15">
       <section class="hero" id="main-content" aria-labelledby="hero-title">
-        <!-- MND PREMIUM : ambiance anime cinématique (hero-bg-v2) — purement
-             décorative, le texte reste lisible grâce au voile sombre côté gauche -->
-        <div class="hero__ambient" aria-hidden="true"></div>
+        <!-- DS clair (D1) : fond papier nu — l'ambiance anime sombre MND
+             (hero-bg) est retirée, elle cassait le fond clair et pesait
+             plusieurs centaines de Ko. L'orbite reste la seule signature. -->
 
         <!-- SIGNATURE ORBITE : le point humain reste fixe, les anneaux
              (système) recalcule sa trajectoire. Purement décoratif CSS
@@ -31,8 +31,8 @@
         
         <div class="container">
           <div class="hero__grid">
-            <ScrollReveal animation="fade-up" :delay="0">
-              <div class="hero__content">
+            <!-- HERO peint par HTML/CSS, jamais animé au reveal (audit) -->
+            <div class="hero__content">
                 <!-- Status Badge -->
                 <div class="status-badge">
                   <span class="status-badge__dot"></span>
@@ -91,11 +91,9 @@
                   </router-link>
                 </div>
               </div>
-            </ScrollReveal>
-            
+
             <!-- Code Window Décoratif -->
-            <ScrollReveal animation="fade-left" :delay="300">
-              <div class="hero__code-window glass" aria-hidden="true">
+            <div class="hero__code-window glass" aria-hidden="true">
                 <div class="code-window__header">
                   <span class="code-dot code-dot--red"></span>
                   <span class="code-dot code-dot--yellow"></span>
@@ -114,7 +112,6 @@
 <span class="code-comment">// ✨ Votre site est en ligne !</span></code></pre>
                 </div>
               </div>
-            </ScrollReveal>
           </div>
         </div>
         
@@ -132,7 +129,7 @@
         <ScrollReveal animation="fade-up">
           <div class="section-header">
             <span class="mono-tag" aria-hidden="true">/// 01 · L'OFFRE</span>
-            <h2 id="services-title"><GlitchText text="Du diagnostic au sur-mesure" /></h2>
+            <h2 id="services-title">Du diagnostic au sur-mesure</h2>
             <p class="section-header__desc">
               Pas de catalogue : chaque mission part de <strong>votre</strong> situation réelle.
               Commencez par un <strong>audit en 48 h</strong> — je vous montre, sur votre site,
@@ -145,8 +142,8 @@
         
         <div class="solutions-grid" role="list">
           <ScrollReveal v-for="(solution, i) in solutions" :key="solution.title" animation="fade-up" :delay="i * 150">
-            <TiltCard :max-tilt="8" :scale="1.02" :glare="true" :max-glare="0.2">
-              <article class="solution-card glass" :class="{ 'solution-card--featured': solution.featured }" role="listitem">
+            <!-- tilt 3D retiré (audit Awwwards : tilt-card banni) -->
+            <article class="solution-card glass" :class="{ 'solution-card--featured': solution.featured }" role="listitem">
                 <router-link :to="'/services#' + solution.title.toLowerCase().replace(/ /g, '-')" class="solution-card__link-wrapper" :aria-label="solution.title + ' - ' + solution.price">
                   <span v-if="solution.badge" class="solution-card__badge" aria-label="Service populaire">{{ solution.badge }}</span>
                   <div class="solution-card__icon" aria-hidden="true">{{ solution.icon }}</div>
@@ -161,7 +158,6 @@
                   <span class="solution-card__cta" aria-hidden="true">Découvrir →</span>
                 </router-link>
               </article>
-            </TiltCard>
           </ScrollReveal>
         </div>
       </div>
@@ -216,10 +212,9 @@
             </div>
           </ScrollReveal>
           
-          <!-- Gauges Panel -->
+          <!-- Gauges Panel — TiltCard retiré (audit) ; fond unifié section inversée -->
           <ScrollReveal animation="zoom">
-            <TiltCard :max-tilt="10" :glare="true">
-              <div class="proof__gauges glass">
+              <div class="proof__gauges">
                 <GaugeCircle 
                   :value="150" 
                   :max="200" 
@@ -235,7 +230,6 @@
                   suffix=""
                 />
               </div>
-            </TiltCard>
           </ScrollReveal>
         </div>
       </div>
@@ -250,7 +244,7 @@
           <div class="stack-card glass">
             <div class="stack-card__header">
               <span class="mono-tag">/// 02 STACK TECHNIQUE</span>
-              <h3><TextScramble text="Architecture Souveraine" :scramble-on-hover="true" /></h3>
+              <h3>Architecture Souveraine</h3>
             </div>
             <div class="stack-card__grid">
               <div v-for="stack in stackItems" :key="stack.category" class="stack-item">
@@ -275,7 +269,7 @@
         <ScrollReveal animation="fade-up">
           <div class="section-header">
             <span class="mono-tag" aria-hidden="true">/// 03 · LE CERCLE</span>
-            <h2 id="mnd-title"><GlitchText text="Six esprits IA. Un seul décideur : vous." /></h2>
+            <h2 id="mnd-title">Six esprits IA. Un seul décideur : vous.</h2>
             <p class="section-header__desc">
               La machine sert, l'humain décide. GL Digital Lab est un cercle : six esprits IA —
               les Lois — gravitent autour de votre projet. Chacun veille sur un domaine
@@ -355,7 +349,7 @@
         <ScrollReveal animation="zoom">
           <SpotlightContainer :size="400" color="var(--primary)" :opacity="0.15">
             <div class="cta-final__box glass">
-              <h2 id="cta-title"><GlitchText text="Un projet en tête ?" /></h2>
+              <h2 id="cta-title">Un projet en tête ?</h2>
               <p>Racontez-moi votre idée. Je vous réponds sous 24h avec une première estimation gratuite et sans engagement.</p>
               <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large" :strength="35" :text-strength="45">
                 💬 Parlons-en !
@@ -390,10 +384,7 @@ import GaugeCircle from '@/components/common/GaugeCircle.vue';
 
 // UI Components
 import { 
-  TiltCard, 
   MagneticButton, 
-  GlitchText, 
-  TypeWriter, 
   TextScramble,
   ScrollReveal, 
   SpotlightContainer 
@@ -592,25 +583,19 @@ const handleAvatarError = (id) => {
   line-height: 1.6;
 }
 
-.code-keyword { color: #c792ea; }
-.code-var { color: #82aaff; }
-.code-prop { color: #f78c6c; }
-.code-string { color: #c3e88d; }
-.code-func { color: #82aaff; }
-.code-method { color: #ffcb6b; }
-.code-comment { color: #546e7a; font-style: italic; }
+/* Fenêtre code décorative (aria-hidden) — DS clair : code sobre, encre
+   seule, plus de couleurs de terminal sombre ni de halo. */
+.code-keyword { color: var(--ink); font-weight: 700; }
+.code-var { color: var(--ink-soft); }
+.code-prop { color: var(--ink-soft); }
+.code-string { color: var(--ink-soft); }
+.code-func { color: var(--ink); }
+.code-method { color: var(--ink); }
+.code-comment { color: var(--ink-faint); font-style: italic; }
 
-/* Button Glow */
+/* Button Glow — DS clair : plus de halo émeraude pulsé (D1) */
 .btn-glow {
-  box-shadow: 
-    0 0 20px rgba(16, 185, 129, 0.4),
-    0 0 40px rgba(16, 185, 129, 0.2);
-  animation: btnPulse 2s ease-in-out infinite;
-}
-
-@keyframes btnPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2); }
-  50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.6), 0 0 60px rgba(16, 185, 129, 0.3); }
+  box-shadow: var(--shadow-md);
 }
 
 /* Scroll Indicator */
@@ -670,7 +655,7 @@ const handleAvatarError = (id) => {
 }
 
 .hero__subtitle strong {
-  color: #fff;
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -702,12 +687,9 @@ const handleAvatarError = (id) => {
   50% { transform: scale(1.2); opacity: 0.7; }
 }
 
-/* Neon text glow effect */
+/* Neon text glow — supprimé (D1 : plus de halo) */
 .neon-text {
-  text-shadow: 
-    0 0 10px rgba(16, 185, 129, 0.5),
-    0 0 20px rgba(16, 185, 129, 0.3),
-    0 0 40px rgba(16, 185, 129, 0.1);
+  /* halo retiré — le gradient clair fait le travail */
 }
 
 /* Hero actions spacing */
@@ -720,15 +702,15 @@ const handleAvatarError = (id) => {
   left: var(--x);
   top: var(--y);
   padding: 0.4rem 0.8rem;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   animation: floatBadge 6s ease-in-out infinite;
   animation-delay: var(--delay);
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .quick-link {
@@ -736,8 +718,8 @@ const handleAvatarError = (id) => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 2rem;
   font-size: 0.75rem;
   color: var(--text-muted);
@@ -750,13 +732,13 @@ const handleAvatarError = (id) => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
-  background: rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(26, 26, 24, 0.04);
+  border-bottom: 1px solid var(--rule);
 }
 
 .code-window__body {
   padding: 1.25rem;
-  background: rgba(0, 0, 0, 0.3);
+  background: transparent;
 }
 
 .code-window__title {
@@ -792,13 +774,11 @@ const handleAvatarError = (id) => {
 
 .hero__code-window {
   border-radius: 12px;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--rule);
   overflow: hidden;
   transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
   transition: transform 0.5s ease;
-  box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(16, 185, 129, 0.1);
+  box-shadow: var(--shadow-md);
 }
 
 .hero__actions {
@@ -851,7 +831,7 @@ const handleAvatarError = (id) => {
 .mono-tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   letter-spacing: 0.1em;
   opacity: 0.9;
 }
@@ -861,20 +841,25 @@ const handleAvatarError = (id) => {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.55rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   letter-spacing: 0.15em;
   margin-bottom: var(--space-md);
+}
+
+/* pendant l'animation de scramble, pas de couleur d'accent : on hérite */
+.status-badge :deep(.text-scramble--active) {
+  color: inherit;
 }
 
 .status-badge__dot {
   width: 6px;
   height: 6px;
-  background: var(--primary);
+  background: var(--ink-soft);
   border-radius: 50%;
   animation: pulse-slow 2s infinite;
 }
@@ -987,7 +972,7 @@ const handleAvatarError = (id) => {
 .mono-tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -1023,11 +1008,11 @@ const handleAvatarError = (id) => {
 }
 
 .solution-card:hover {
-  border-color: var(--primary);
+  border-color: var(--rule-strong);
 }
 
 .solution-card--featured {
-  border-color: rgba(16, 185, 129, 0.3);
+  border-color: var(--rule-strong);
 }
 
 .solution-card__badge {
@@ -1035,8 +1020,8 @@ const handleAvatarError = (id) => {
   top: -10px;
   right: var(--space-sm);
   padding: 0.25rem 0.75rem;
-  background: var(--primary);
-  color: var(--bg);
+  background: var(--ink);
+  color: var(--paper);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.5rem;
   font-weight: 700;
@@ -1063,10 +1048,10 @@ const handleAvatarError = (id) => {
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   padding: 0.25rem 0.5rem;
-  background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 4px;
   margin-bottom: var(--space-sm);
 }
@@ -1097,13 +1082,13 @@ const handleAvatarError = (id) => {
   content: '→';
   position: absolute;
   left: 0;
-  color: var(--primary);
+  color: var(--ink-soft);
 }
 
 .solution-card__cta {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -1122,11 +1107,13 @@ const handleAvatarError = (id) => {
   opacity: 0.7;
 }
 
+/* PROOF — bandeau preuve ARKADIA en SECTION INVERSÉE (fond encre, DS D1).
+   Une des 1-2 sections sombres max de la home, pour rythmer. */
 .proof {
   padding: var(--space-xl) 0;
-  background: rgba(10, 10, 10, 0.5);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  background: var(--ink);
+  border-top: 1px solid rgba(244, 241, 234, 0.12);
+  border-bottom: 1px solid rgba(244, 241, 234, 0.12);
 }
 
 .proof__grid {
@@ -1142,7 +1129,7 @@ const handleAvatarError = (id) => {
   gap: 0.5rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
-  color: var(--primary);
+  color: var(--accent-inv);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -1150,7 +1137,7 @@ const handleAvatarError = (id) => {
 .proof__badge-dot {
   width: 8px;
   height: 8px;
-  background: var(--primary);
+  background: var(--accent-inv);
   border-radius: 50%;
   animation: pulse-slow 2s infinite;
 }
@@ -1158,7 +1145,7 @@ const handleAvatarError = (id) => {
 /* Projet cloture : ni point pulsant ni couleur d'accent — le badge ne doit
    pas suggerer un service encore en ligne. */
 .proof__badge--closed {
-  color: var(--text-muted, #8a9099);
+  color: rgba(244, 241, 234, 0.78);
   border: 1px solid currentColor;
   border-radius: 3px;
   padding: 0.25rem 0.6rem;
@@ -1168,17 +1155,18 @@ const handleAvatarError = (id) => {
   font-size: 2.5rem;
   font-weight: 700;
   margin: var(--space-sm) 0 var(--space-md);
+  color: var(--paper);
 }
 
 .proof__desc {
   font-size: 0.95rem;
-  color: var(--text-muted);
+  color: rgba(244, 241, 234, 0.85);
   line-height: 1.8;
   margin-bottom: var(--space-sm);
 }
 
 .proof__desc strong {
-  color: var(--text-main);
+  color: var(--paper);
 }
 
 .proof__metrics {
@@ -1189,8 +1177,8 @@ const handleAvatarError = (id) => {
 
 .proof-metric {
   padding: var(--space-sm) var(--space-md);
-  background: rgba(0, 0, 0, 0.4);
-  border-left: 2px solid var(--primary);
+  background: rgba(255, 255, 255, 0.06);
+  border-left: 2px solid var(--accent-inv);
 }
 
 .proof-metric__value {
@@ -1198,18 +1186,18 @@ const handleAvatarError = (id) => {
   font-family: 'JetBrains Mono', monospace;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--paper);
 }
 
 .proof-metric__unit {
   font-size: 1rem;
-  color: var(--primary);
+  color: var(--paper);
 }
 
 .proof-metric__label {
   display: block;
   font-size: 0.6rem;
-  color: var(--text-dark);
+  color: rgba(244, 241, 234, 0.68);
   text-transform: uppercase;
   margin-top: 0.25rem;
 }
@@ -1220,7 +1208,46 @@ const handleAvatarError = (id) => {
   gap: var(--space-lg);
   padding: var(--space-lg);
   border-radius: 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(244, 241, 234, 0.16);
+}
+
+/* Jauges (GaugeCircle) en section inversée — couleurs forcées */
+.proof :deep(.gauge__track) {
+  stroke: rgba(244, 241, 234, 0.16) !important;
+}
+
+.proof :deep(.gauge__progress) {
+  stroke: var(--accent-inv) !important;
+  filter: none !important;
+}
+
+.proof :deep(.gauge__value) {
+  color: var(--paper) !important;
+}
+
+.proof :deep(.gauge__label) {
+  color: rgba(244, 241, 234, 0.92) !important;
+}
+
+/* Bouton outline inversé : papier sur encre */
+.proof .btn-outline {
+  color: var(--paper) !important;
+  border-color: var(--paper) !important;
+  background: transparent !important;
+}
+
+.proof .btn-outline:hover {
+  background: var(--paper) !important;
+  color: var(--ink) !important;
+  border-color: var(--paper) !important;
+}
+
+/* Gradient du titre ARKADIA : version inversée (papier → terre cuite claire) */
+.proof .text-gradient {
+  background: linear-gradient(135deg, var(--paper), var(--accent-inv));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* SYSTEM CHECK */
@@ -1290,7 +1317,8 @@ const handleAvatarError = (id) => {
 }
 
 .stack-item__tech--highlight {
-  color: var(--primary) !important;
+  color: var(--ink) !important;
+  font-weight: 700;
 }
 
 .stack-card__link {
@@ -1298,13 +1326,13 @@ const handleAvatarError = (id) => {
   text-align: center;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
-  color: var(--primary);
+  color: var(--ink);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .stack-card__link:hover {
-  color: var(--text-main);
+  color: var(--accent);
 }
 
 /* MULTIVERS TEASER */
@@ -1323,15 +1351,15 @@ const handleAvatarError = (id) => {
 
 
 .quick-link:hover {
-  border-color: var(--primary);
-  color: var(--primary);
-  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(166, 63, 38, 0.06);
 }
 
 
 .quick-link--featured:hover {
-  border-color: #FBBF24;
-  background: rgba(251, 191, 36, 0.2);
+  border-color: var(--accent);
+  background: rgba(166, 63, 38, 0.08);
 }
 
 /* CTA FINAL */
@@ -1344,7 +1372,7 @@ const handleAvatarError = (id) => {
   margin: 0 auto;
   padding: var(--space-xl);
   border-radius: 1.5rem;
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--rule);
   text-align: center;
 }
 
@@ -1439,10 +1467,7 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
   transform: scale(1.15) rotate(-5deg);
 }
 
-/* Price tag glow on hover */
-.solution-card:hover .solution-card__price {
-  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-}
+/* Price tag : halo retiré (D1) */
 
 /* Universe card float */
 .universe-card:hover {
@@ -1468,11 +1493,7 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
   padding-right: 2.5rem;
 }
 
-/* Metric value counter glow */
-
-.metric-mini:hover .metric-mini__value {
-  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-}
+/* Metric value counter glow — supprimé (D1) */
 
 /* Proof metric border animation */
 .proof-metric {
@@ -1480,24 +1501,24 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 }
 
 .proof-metric:hover {
-  border-color: var(--primary);
-  background: rgba(16, 185, 129, 0.05);
+  border-color: var(--accent-inv);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* Stack tech highlight pulse */
+/* Stack tech highlight pulse (sans halo) */
 .stack-item__tech--highlight {
   animation: techPulse 3s ease-in-out infinite;
 }
 
 @keyframes techPulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; text-shadow: 0 0 10px var(--primary); }
+  50% { opacity: 0.7; }
 }
 
 /* Selection style */
 ::selection {
-  background: rgba(16, 185, 129, 0.3);
-  color: #fff;
+  background: rgba(166, 63, 38, 0.28);
+  color: var(--ink);
 }
 
 /* Smooth scroll */
@@ -1513,40 +1534,23 @@ html {
 
 /* UTILITIES */
 .text-gradient {
-  background: linear-gradient(135deg, var(--primary), var(--secondary, #60a5fa));
+  background: linear-gradient(135deg, var(--ink), #6E6352);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(10px);
+  border: 1px solid var(--rule);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MND PREMIUM — ambiance hero + section « l'humain au centre du cercle »
-   Visuels MND copiés dans public/images/mnd/ (voir mndAssets.js)
+   DS CLAIR (D1) — section « l'humain au centre du cercle »
+   L'ambiance anime sombre .hero__ambient (shinigami-hero.png + voile) est
+   SUPPRIMÉE : fond papier oblige, plus d'image lourde ni de voile sombre.
    ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Hero : ambiance anime cinématique sombre. Voile dégradé pour garder le
-   texte parfaitement lisible, l'image reste décorative (z-index négatif).
-   Fond = shinigami-hero (VALIDÉ par Gaëtan 2026-10 — guerriers du web). */
-.hero__ambient {
-  position: absolute;
-  /* commence SOUS la navbar fixe (80px) pour ne pas être coupée par elle */
-  top: 80px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(100deg, rgba(5, 5, 5, 0.97) 0%, rgba(5, 5, 5, 0.92) 34%, rgba(5, 5, 5, 0.55) 64%, rgba(5, 5, 5, 0.85) 100%),
-    url('/images/mnd/shinigami-hero.png');
-  background-size: cover;
-  background-position: center;
-}
 
 /* Positionnement */
 .mnd-position {
@@ -1576,7 +1580,7 @@ html {
 }
 
 .mnd-position__text strong {
-  color: var(--primary);
+  color: var(--ink);
 }
 
 .mnd-position__list {
@@ -1601,27 +1605,26 @@ html {
   content: '◈';
   position: absolute;
   left: 0;
-  color: var(--primary);
+  color: var(--ink-soft);
 }
 
-/* Visuel « the-one » : l'humain au centre (carré, cadre premium) */
+/* Visuel « the-one » : l'humain au centre (carré, cadre premium) — cadre
+   papier, la couleur reste portée par l'image elle-même (contenu) */
 .mnd-theone {
   aspect-ratio: 1 / 1;
   width: 100%;
   max-width: 480px;
   margin-left: auto;
   border-radius: 1.25rem;
-  border: 1px solid rgba(16, 185, 129, 0.18);
-  background-color: rgba(16, 185, 129, 0.03);
+  border: 1px solid var(--rule);
+  background-color: var(--paper-alt);
   background-image:
-    radial-gradient(circle at 50% 42%, rgba(16, 185, 129, 0.1), transparent 65%),
+    radial-gradient(circle at 50% 42%, rgba(166, 63, 38, 0.06), transparent 65%),
     url('/images/mnd/the-one-v2.png');
   background-size: auto, contain;
   background-position: center;
   background-repeat: no-repeat;
-  box-shadow:
-    0 0 70px rgba(16, 185, 129, 0.07),
-    inset 0 0 90px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-md);
 }
 
 /* Équipage : bandeau des six Lois */
@@ -1634,7 +1637,7 @@ html {
 .mnd-crew__label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-align: center;
@@ -1807,8 +1810,9 @@ html {
 /* ═══════════════════════════════════════════════════════════════════════════
    SIGNATURE ORBITE (2026-10, d'après recherche Awwwards)
    « La technologie peut bouger ; le centre de gravité ne bouge pas. »
-   Point émeraude FIXE + anneaux pointillés qui tournent (transform = GPU).
+   Point brique FIXE + anneaux pointillés qui tournent (transform = GPU).
    Décoratif (aria-hidden), zéro WebGL, réduit avec prefers-reduced-motion.
+   DS clair (D1) : le vert émeraude devient brique — seul accent du site.
    ═══════════════════════════════════════════════════════════════════════════ */
 .hero__orbit {
   position: absolute;
@@ -1831,10 +1835,8 @@ html {
   height: 10px;
   margin: -5px;
   border-radius: 50%;
-  background: var(--primary);
-  box-shadow:
-    0 0 12px var(--primary-glow),
-    0 0 34px rgba(0, 255, 65, 0.25);
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(166, 63, 38, 0.4);
   animation: orbit-core-pulse 3.5s ease-in-out infinite;
 }
 
@@ -1849,13 +1851,13 @@ html {
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  border: 1px dashed rgba(0, 255, 65, 0.22);
+  border: 1px dashed rgba(166, 63, 38, 0.28);
   transform: translate(-50%, -50%);
 }
 
 .hero__orbit-ring--1 { width: 34%; height: 34%; animation: orbit-spin 42s linear infinite; }
-.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(0, 255, 65, 0.14); }
-.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(0, 255, 65, 0.07); }
+.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(166, 63, 38, 0.18); }
+.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(166, 63, 38, 0.09); }
 
 @keyframes orbit-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -1900,14 +1902,32 @@ html {
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.14em;
-  color: var(--primary);
-  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
   padding: 0.15rem 0.45rem;
   border-radius: 0.3rem;
   flex-shrink: 0;
 }
 
 .hero__path--cto .hero__path-tag {
-  color: var(--text-muted);
+  color: var(--ink-soft);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   OVERRIDES DS CLAIR (D1) — boutons MagneticButton du parcours.
+   Le composant appose ses propres couleurs (brique + hover #fff) par-dessus
+   .btn-primary/.btn-outline : on force l'état « bouton plein brique » sur
+   papier et « outline papier » sur la section inversée (proof).
+   ═══════════════════════════════════════════════════════════════════════ */
+.btn-primary.magnetic-button {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--paper) !important;
+}
+
+.btn-primary.magnetic-button:hover {
+  background: var(--accent-ink) !important;
+  border-color: var(--accent-ink) !important;
+  color: var(--paper) !important;
 }
 </style>

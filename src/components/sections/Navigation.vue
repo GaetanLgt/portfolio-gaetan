@@ -142,14 +142,10 @@ onUnmounted(() => {
   right: 0;
   z-index: 100;
   height: 80px;
-  /* MND : bandeau premium en couche discrète (≈6 % visible sous le voile) */
-  background-image:
-    linear-gradient(rgba(5, 5, 5, 0.94), rgba(5, 5, 5, 0.94)),
-    url('/images/mnd/header-band-v2.png');
-  background-size: cover;
-  background-position: center;
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  /* DS clair (D1) : bandeau papier translucide — plus d'image sombre */
+  background: rgba(244, 241, 234, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--rule);
   transition: transform 0.3s ease, background 0.3s ease;
 }
 
@@ -158,11 +154,8 @@ onUnmounted(() => {
 }
 
 .navigation--scrolled {
-  background-image:
-    linear-gradient(rgba(5, 5, 5, 0.97), rgba(5, 5, 5, 0.97)),
-    url('/images/mnd/header-band-v2.png');
-  background-size: cover;
-  background-position: center;
+  background: rgba(244, 241, 234, 0.97);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-container {
@@ -192,7 +185,7 @@ onUnmounted(() => {
   width: 32px;
   height: 32px;
   background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid var(--rule);
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
@@ -518,12 +511,11 @@ onUnmounted(() => {
   text-decoration: none;
   border-radius: 0.5rem;
   transition: var(--transition-base);
-  box-shadow: 0 4px 20px var(--primary-glow);
 }
 
 .nav-cta:hover {
-  background: var(--text-main);
-  box-shadow: 0 4px 25px rgba(255, 255, 255, 0.2);
+  background: var(--primary-dark);
+  color: var(--bg);
 }
 
 /* MOBILE TOGGLE */
@@ -568,9 +560,10 @@ onUnmounted(() => {
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(5, 5, 5, 0.98);
+  background: rgba(244, 241, 234, 0.98);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--rule);
+  box-shadow: var(--shadow-md);
   padding: var(--space-md);
   display: flex;
   flex-direction: column;
@@ -770,7 +763,7 @@ onUnmounted(() => {
 }
 
 .nav-mobile::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.3);
+  background: var(--rule-strong);
   border-radius: 2px;
 }
 </style>

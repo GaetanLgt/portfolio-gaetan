@@ -512,7 +512,7 @@ function closeProject() {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background: var(--primary-soft);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(166, 63, 38, 0.2);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.55rem;
@@ -638,9 +638,9 @@ function closeProject() {
 }
 
 .project-card:hover {
-  border-color: var(--primary);
+  border-color: var(--rule-strong);
   transform: translateY(-4px);
-  box-shadow: 0 10px 40px rgba(16, 185, 129, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 .project-card__header {
@@ -665,19 +665,29 @@ function closeProject() {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
   background: var(--surface);
+  border: 1px solid var(--rule);
   color: var(--text-muted);
 }
 
+/* DS clair (D1) : les variantes colorées étaient illisibles sur papier
+   (1,4-3:1). Toutes les pastilles deviennent neutres et AA — le contenu
+   (emoji, texte) porte l'information, pas la couleur. */
 .badge--featured {
-  background: rgba(251, 191, 36, 0.2);
-  color: #FBBF24;
+  background: var(--surface);
+  border-color: var(--rule-strong);
+  color: var(--ink);
+  font-weight: 700;
 }
 
-.badge--symfony { background: rgba(99, 102, 241, 0.2); color: #818CF8; }
-.badge--vue { background: rgba(16, 185, 129, 0.2); color: #10B981; }
-.badge--wordpress { background: rgba(59, 130, 246, 0.2); color: #3B82F6; }
-.badge--gaming { background: rgba(168, 85, 247, 0.2); color: #A855F7; }
-.badge--fullstack { background: rgba(236, 72, 153, 0.2); color: #EC4899; }
+.badge--symfony,
+.badge--vue,
+.badge--wordpress,
+.badge--gaming,
+.badge--fullstack {
+  background: var(--surface);
+  border-color: var(--rule);
+  color: var(--ink-soft);
+}
 
 .project-card__content {
   flex: 1;
@@ -713,9 +723,9 @@ function closeProject() {
 }
 
 .tech-tag--more {
-  background: var(--primary-soft);
-  border-color: rgba(16, 185, 129, 0.3);
-  color: var(--primary);
+  background: var(--surface);
+  border-color: var(--rule);
+  color: var(--ink-soft);
 }
 
 .project-card__footer {
@@ -735,7 +745,7 @@ function closeProject() {
 .project-card__action {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--primary);
+  color: var(--ink-soft);
 }
 
 /* MODAL */
@@ -906,7 +916,7 @@ function closeProject() {
 }
 
 .project-modal__link--primary:hover {
-  background: #059669;
+  background: #7E2E1A;
   color: var(--bg);
 }
 
@@ -946,8 +956,8 @@ function closeProject() {
 }
 
 .projects-cta__btn:hover {
-  background: #059669;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+  background: #7E2E1A;
+  box-shadow: 0 0 20px rgba(166, 63, 38, 0.4);
 }
 
 /* TRANSITIONS */
