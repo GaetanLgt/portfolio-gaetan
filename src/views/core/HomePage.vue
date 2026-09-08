@@ -31,8 +31,8 @@
         
         <div class="container">
           <div class="hero__grid">
-            <ScrollReveal animation="fade-up" :delay="0">
-              <div class="hero__content">
+            <!-- HERO peint par HTML/CSS, jamais animé au reveal (audit) -->
+            <div class="hero__content">
                 <!-- Status Badge -->
                 <div class="status-badge">
                   <span class="status-badge__dot"></span>
@@ -91,11 +91,9 @@
                   </router-link>
                 </div>
               </div>
-            </ScrollReveal>
-            
+
             <!-- Code Window Décoratif -->
-            <ScrollReveal animation="fade-left" :delay="300">
-              <div class="hero__code-window glass" aria-hidden="true">
+            <div class="hero__code-window glass" aria-hidden="true">
                 <div class="code-window__header">
                   <span class="code-dot code-dot--red"></span>
                   <span class="code-dot code-dot--yellow"></span>
@@ -114,7 +112,6 @@
 <span class="code-comment">// ✨ Votre site est en ligne !</span></code></pre>
                 </div>
               </div>
-            </ScrollReveal>
           </div>
         </div>
         
@@ -132,7 +129,7 @@
         <ScrollReveal animation="fade-up">
           <div class="section-header">
             <span class="mono-tag" aria-hidden="true">/// 01 · L'OFFRE</span>
-            <h2 id="services-title"><GlitchText text="Du diagnostic au sur-mesure" /></h2>
+            <h2 id="services-title">Du diagnostic au sur-mesure</h2>
             <p class="section-header__desc">
               Pas de catalogue : chaque mission part de <strong>votre</strong> situation réelle.
               Commencez par un <strong>audit en 48 h</strong> — je vous montre, sur votre site,
@@ -145,8 +142,8 @@
         
         <div class="solutions-grid" role="list">
           <ScrollReveal v-for="(solution, i) in solutions" :key="solution.title" animation="fade-up" :delay="i * 150">
-            <TiltCard :max-tilt="8" :scale="1.02" :glare="true" :max-glare="0.2">
-              <article class="solution-card glass" :class="{ 'solution-card--featured': solution.featured }" role="listitem">
+            <!-- tilt 3D retiré (audit Awwwards : tilt-card banni) -->
+            <article class="solution-card glass" :class="{ 'solution-card--featured': solution.featured }" role="listitem">
                 <router-link :to="'/services#' + solution.title.toLowerCase().replace(/ /g, '-')" class="solution-card__link-wrapper" :aria-label="solution.title + ' - ' + solution.price">
                   <span v-if="solution.badge" class="solution-card__badge" aria-label="Service populaire">{{ solution.badge }}</span>
                   <div class="solution-card__icon" aria-hidden="true">{{ solution.icon }}</div>
@@ -161,7 +158,6 @@
                   <span class="solution-card__cta" aria-hidden="true">Découvrir →</span>
                 </router-link>
               </article>
-            </TiltCard>
           </ScrollReveal>
         </div>
       </div>
@@ -216,9 +212,8 @@
             </div>
           </ScrollReveal>
           
-          <!-- Gauges Panel -->
+          <!-- Gauges Panel — TiltCard retiré (audit) -->
           <ScrollReveal animation="zoom">
-            <TiltCard :max-tilt="10" :glare="true">
               <div class="proof__gauges glass">
                 <GaugeCircle 
                   :value="150" 
@@ -235,7 +230,6 @@
                   suffix=""
                 />
               </div>
-            </TiltCard>
           </ScrollReveal>
         </div>
       </div>
@@ -250,7 +244,7 @@
           <div class="stack-card glass">
             <div class="stack-card__header">
               <span class="mono-tag">/// 02 STACK TECHNIQUE</span>
-              <h3><TextScramble text="Architecture Souveraine" :scramble-on-hover="true" /></h3>
+              <h3>Architecture Souveraine</h3>
             </div>
             <div class="stack-card__grid">
               <div v-for="stack in stackItems" :key="stack.category" class="stack-item">
@@ -275,7 +269,7 @@
         <ScrollReveal animation="fade-up">
           <div class="section-header">
             <span class="mono-tag" aria-hidden="true">/// 03 · LE CERCLE</span>
-            <h2 id="mnd-title"><GlitchText text="Six esprits IA. Un seul décideur : vous." /></h2>
+            <h2 id="mnd-title">Six esprits IA. Un seul décideur : vous.</h2>
             <p class="section-header__desc">
               La machine sert, l'humain décide. GL Digital Lab est un cercle : six esprits IA —
               les Lois — gravitent autour de votre projet. Chacun veille sur un domaine
@@ -355,7 +349,7 @@
         <ScrollReveal animation="zoom">
           <SpotlightContainer :size="400" color="var(--primary)" :opacity="0.15">
             <div class="cta-final__box glass">
-              <h2 id="cta-title"><GlitchText text="Un projet en tête ?" /></h2>
+              <h2 id="cta-title">Un projet en tête ?</h2>
               <p>Racontez-moi votre idée. Je vous réponds sous 24h avec une première estimation gratuite et sans engagement.</p>
               <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large" :strength="35" :text-strength="45">
                 💬 Parlons-en !
@@ -390,10 +384,7 @@ import GaugeCircle from '@/components/common/GaugeCircle.vue';
 
 // UI Components
 import { 
-  TiltCard, 
   MagneticButton, 
-  GlitchText, 
-  TypeWriter, 
   TextScramble,
   ScrollReveal, 
   SpotlightContainer 
@@ -1235,7 +1226,7 @@ const handleAvatarError = (id) => {
 }
 
 .proof :deep(.gauge__label) {
-  color: rgba(244, 241, 234, 0.68);
+  color: rgba(244, 241, 234, 0.92);
 }
 
 /* Bouton outline inversé : papier sur encre */

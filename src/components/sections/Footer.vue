@@ -133,14 +133,10 @@ function openCookieSettings() {
 
 <style scoped>
 .footer {
-  /* MND : fond premium discret (footer-bg-v2) sous un voile quasi opaque */
+  /* DS clair (D1) : fond papier altéré + filet — le voile noir et l'image
+     footer-bg-v2 (thème MND sombre) sont retirés. */
   background-color: var(--surface);
-  background-image:
-    linear-gradient(rgba(10, 10, 10, 0.96), rgba(10, 10, 10, 0.96)),
-    url('/images/mnd/footer-bg-v2.png');
-  background-size: cover;
-  background-position: center bottom;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--rule);
   padding: var(--space-lg) 0 var(--space-md);
   /* Espace pour la SelfDiagnosticBar fixe (~2.5rem) */
   padding-bottom: calc(var(--space-md) + 2.5rem);
@@ -159,13 +155,13 @@ function openCookieSettings() {
 .footer__deco-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  background: linear-gradient(90deg, transparent, var(--rule-strong), transparent);
 }
 
 .footer__deco-text {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
-  color: var(--primary);
+  color: var(--ink-soft);
   letter-spacing: 0.2em;
   white-space: nowrap;
 }
@@ -228,7 +224,7 @@ function openCookieSettings() {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
   font-weight: 700;
-  color: var(--primary);
+  color: var(--ink);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: var(--space-xs);
@@ -253,7 +249,7 @@ function openCookieSettings() {
 .footer__response {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
-  color: var(--primary);
+  color: var(--ink);
   margin-top: var(--space-xs);
 }
 

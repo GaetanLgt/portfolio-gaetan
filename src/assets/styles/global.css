@@ -188,13 +188,18 @@ a:hover {
   color: var(--ink);
 }
 
-/* CUSTOM CURSOR - Awwwards style */
+/* Curseur NATIF sur les pages vitrine (D1) — le curseur custom ne s'affiche
+   que sur les pages lore/expériences (#app.app--lore) qui, elles, masquent
+   le curseur système pour ne garder que le custom. */
 @media (pointer: fine) {
-  html {
-    cursor: none;
-  }
-  
-  a, button, [role="button"], input, select, textarea, label[for] {
+  #app.app--lore,
+  #app.app--lore a,
+  #app.app--lore button,
+  #app.app--lore [role="button"],
+  #app.app--lore input,
+  #app.app--lore select,
+  #app.app--lore textarea,
+  #app.app--lore label[for] {
     cursor: none;
   }
 }

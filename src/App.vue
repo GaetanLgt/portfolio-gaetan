@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{ 'app--loaded': isLoaded }">
+  <div id="app" :class="{ 'app--loaded': isLoaded, 'app--lore': isLoaded && !isShowcasePage }">
     <!-- Skip Link (Opquast A11Y) -->
     <a href="#main-content" class="skip-link">
       Passer au contenu principal
@@ -57,8 +57,8 @@
     <!-- Cookie Banner RGPD -->
     <CookieBanner v-if="isLoaded && !isFullscreenGame" />
     
-    <!-- Custom Cursor (Awwwards) -->
-    <CustomCursor v-if="isLoaded && !isFullscreenGame" />
+    <!-- Custom Cursor — réservé aux pages lore/expériences (vitrine = curseur natif) -->
+    <CustomCursor v-if="isLoaded && !isFullscreenGame && !isShowcasePage" />
     
     <!-- Scroll to Top -->
     <ScrollToTop v-if="isLoaded && !isFullscreenGame" />
@@ -129,7 +129,7 @@ const backgroundComponent = computed(() => {
 const isShowcasePage = computed(() => {
   const p = route.path;
   return p === '/' || p === '/services' || p === '/projets' || p === '/contact'
-    || p === '/sitemap'
+    || p === '/arkadia' || p === '/sitemap'
     || p.startsWith('/mentions-legales') || p.startsWith('/confidentialite') || p.startsWith('/cgv');
 });
 

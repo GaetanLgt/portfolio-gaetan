@@ -70,8 +70,7 @@ onUnmounted(() => {
 }
 
 .scroll-top:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 20px var(--primary-glow);
+  border-color: var(--rule-strong);
   transform: translateY(-3px);
 }
 

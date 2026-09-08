@@ -164,11 +164,11 @@ defineExpose({ showBanner, consent });
   max-width: 600px;
   background: rgba(10, 10, 15, 0.98);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(217, 105, 74, 0.35);
   border-radius: 1rem;
   padding: 1.5rem;
   z-index: 9999;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .cookie-content {
@@ -197,7 +197,7 @@ defineExpose({ showBanner, consent });
 }
 
 .cookie-text a {
-  color: #10b981;
+  color: #D9694A;
   text-decoration: underline;
 }
 
@@ -219,13 +219,13 @@ defineExpose({ showBanner, consent });
 }
 
 .cookie-btn--accept {
-  background: #10b981;
-  color: #000;
+  background: #A63F26;
+  color: #F4F1EA;
   flex: 1;
 }
 
 .cookie-btn--accept:hover {
-  background: #34d399;
+  background: #7E2E1A;
   transform: translateY(-1px);
 }
 
@@ -242,19 +242,19 @@ defineExpose({ showBanner, consent });
 
 .cookie-btn--settings {
   background: transparent;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #10b981;
+  border: 1px solid rgba(217, 105, 74, 0.4);
+  color: #D9694A;
 }
 
 .cookie-btn--settings:hover {
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(217, 105, 74, 0.12);
 }
 
 .cookie-btn--save {
   width: 100%;
   margin-top: 1rem;
-  background: #10b981;
-  color: #000;
+  background: #A63F26;
+  color: #F4F1EA;
 }
 
 /* Settings Panel */
