@@ -164,7 +164,8 @@
     </section>
 
 
-    <!-- PROOF : ARKADIA -->
+    <!-- PROOF : ARKADIA FRANCE PvE — cluster ARK: Survival Ascended clôturé
+         (distinct du réseau social ArkAdiA, arkadia.gldigitallab.fr) -->
     <section class="proof" aria-labelledby="proof-title">
       <div class="container">
         <div class="proof__grid">
@@ -172,18 +173,19 @@
             <div class="proof__content">
               <div class="proof__header">
                 <span class="proof__badge proof__badge--closed">
-                  🎮 PROJET CLÔTURÉ · 18 MOIS D'EXPLOITATION
+                  ARK: SURVIVAL ASCENDED · PROJET CLÔTURÉ
                 </span>
               </div>
 
               <h2 id="proof-title" class="proof__title">
-                ARKADIA<br>
+                ARKADIA FRANCE PvE<br>
                 <span class="text-gradient">150 joueurs, 18 mois d'exploitation</span>
               </h2>
 
               <p class="proof__desc">
-                Pendant 18 mois, j'ai exploité un <strong>cluster de 9 serveurs de jeux</strong>
-                avec de vrais utilisateurs qui comptaient sur une disponibilité <strong>24/7</strong>.
+                Pendant 18 mois, j'ai exploité <strong>ARKADIA France PvE</strong>, un cluster de
+                9 serveurs <strong>ARK: Survival Ascended</strong> synchronisés, avec de vrais
+                utilisateurs qui comptaient sur une disponibilité <strong>24/7</strong>.
               </p>
 
               <p class="proof__desc">

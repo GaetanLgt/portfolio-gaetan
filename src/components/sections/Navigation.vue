@@ -67,7 +67,7 @@
           <span class="nav-link__num">02</span> RÉALISATIONS
         </router-link>
         <router-link to="/arkadia" class="nav-mobile__link" @click="closeMobile">
-          <span class="nav-link__num">03</span> PREUVE — ARKADIA
+          <span class="nav-link__num">03</span> PREUVE — ARKADIA France (ARK)
         </router-link>
 
         <!-- CTA -->

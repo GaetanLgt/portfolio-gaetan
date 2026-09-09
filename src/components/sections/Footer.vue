@@ -47,7 +47,7 @@
             <router-link to="/">Accueil</router-link>
             <router-link to="/services">Offre &amp; audits</router-link>
             <router-link to="/projets">Réalisations</router-link>
-            <router-link to="/arkadia">Preuve — ARKADIA</router-link>
+            <router-link to="/arkadia">Preuve — ARKADIA France (ARK)</router-link>
             <router-link to="/contact">Contact</router-link>
           </nav>
         </div>

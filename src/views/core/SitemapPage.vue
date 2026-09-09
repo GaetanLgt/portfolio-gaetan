@@ -247,7 +247,7 @@ const sections = ref([
     title: 'Case Studies',
     icon: '📊',
     pages: [
-      { name: 'ARKADIA', path: '/arkadia', icon: '🦖', featured: true },
+      { name: 'ARKADIA France (ARK)', path: '/arkadia', icon: '🦖', featured: true },
       { name: 'VoyageoPro', path: '/voyageo-pro', icon: '✈️' },
       { name: 'Workflows n8n', path: '/workflows', icon: '⚙️' },
     ]

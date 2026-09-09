@@ -145,7 +145,7 @@ const routes = [
     name: 'ArkadiaCase',
     component: ArkadiaCase,
     meta: { 
-      title: 'Case Study ARKADIA',
+      title: 'Case Study ARKADIA France (ARK)',
       description: 'Administration de cluster ARK: Survival Ascended. 9 serveurs, 150+ utilisateurs, 99.8% uptime. DevOps appliqué au gaming.'
     }
   },
