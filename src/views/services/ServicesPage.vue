@@ -335,7 +335,7 @@
             <path d="M6 21V9a9 9 0 0 0 9 9"/>
           </svg>
           <div>
-            <h2 class="process__title">LA MÉTHODE DU CERCLE</h2>
+            <h2 class="process__title">LA MÉTHODE</h2>
             <p class="process__subtitle">DU DIAGNOSTIC À LA MAINTENANCE — VOUS VALIDEZ CHAQUE ÉTAPE</p>
           </div>
         </div>
@@ -450,6 +450,34 @@
               <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/>
             </svg>
             <span>SUPPORT 3 MOIS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREUVE : construit pour nous-mêmes (ArkAdiA) -->
+    <section class="preuve-arkadia" aria-labelledby="preuve-arkadia-title">
+      <div class="container">
+        <div class="preuve-arkadia__box">
+          <div class="preuve-arkadia__texte">
+            <span class="mono-tag" aria-hidden="true">/// LA PREUVE</span>
+            <h2 id="preuve-arkadia-title" class="preuve-arkadia__titre">
+              Ce service, on l'a d'abord construit pour nous-mêmes
+            </h2>
+            <p class="preuve-arkadia__desc">
+              <strong>ArkAdiA</strong> — notre réseau social souverain (comptes, communautés,
+              messagerie temps réel, IA 100 % locale, zéro traceur) — tourne en production.
+              Même rigueur, mêmes standards pour vos outils : code sur-mesure, données qui ne
+              sortent pas, hébergement en France.
+            </p>
+            <div class="preuve-arkadia__actions">
+              <a class="btn-outline preuve-arkadia__lien" href="https://arkadia.gldigitallab.fr" target="_blank" rel="noopener noreferrer">
+                Voir ArkAdiA ↗
+              </a>
+              <router-link class="btn-primary" to="/contact">
+                Parler de mon projet
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -1281,4 +1309,14 @@ const steps = [
     font-size: 0.75rem;
   }
 }
+
+/* Preuve ArkAdiA — bande de crédibilité (09/09/2026) */
+.preuve-arkadia { padding: var(--space-xl) 0; }
+.preuve-arkadia__box { background: var(--surface-light); border: 1px solid var(--rule); border-radius: 1.1rem; padding: clamp(24px, 4vw, 40px); }
+.preuve-arkadia__titre { font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-weight: 700; color: var(--text-main); margin: 10px 0 12px; line-height: 1.25; }
+.preuve-arkadia__desc { color: var(--text-muted); line-height: 1.75; max-width: 60ch; margin: 0 0 20px; }
+.preuve-arkadia__desc strong { color: var(--text-main); }
+.preuve-arkadia__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.preuve-arkadia__actions .btn-primary, .preuve-arkadia__actions .btn-outline { text-decoration: none; }
+.preuve-arkadia__lien { display: inline-flex; align-items: center; }
 </style>
