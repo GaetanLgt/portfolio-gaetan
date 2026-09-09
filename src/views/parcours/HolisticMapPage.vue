@@ -295,8 +295,8 @@
     
     <!-- Back link -->
     <div class="map-back">
-      <router-link to="/hub" class="back-link">
-        ← Retour à GL Tower
+      <router-link to="/" class="back-link">
+        ← Retour à l'accueil
       </router-link>
     </div>
   </div>

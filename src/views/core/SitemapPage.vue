@@ -165,10 +165,6 @@
             <span class="quick-icon">🏠</span>
             <span class="quick-label">Accueil</span>
           </router-link>
-          <router-link to="/agents" class="quick-card">
-            <span class="quick-icon">🤖</span>
-            <span class="quick-label">Agents IA</span>
-          </router-link>
           <router-link to="/contact" class="quick-card">
             <span class="quick-icon">📧</span>
             <span class="quick-label">Contact</span>
@@ -249,7 +245,6 @@ const sections = ref([
     pages: [
       { name: 'ARKADIA France (ARK)', path: '/arkadia', icon: '🦖', featured: true },
       { name: 'VoyageoPro', path: '/voyageo-pro', icon: '✈️' },
-      { name: 'Workflows n8n', path: '/workflows', icon: '⚙️' },
     ]
   },
   {
@@ -265,21 +260,6 @@ const sections = ref([
       { name: 'Jitsu Pipeline', path: '/apps/agent/jitsu', icon: '🚀' },
       { name: 'SEO Content Generator', path: '/apps/seo-content', icon: '📈' },
       { name: 'Invoice Generator', path: '/apps/invoice-generator', icon: '🧾' },
-    ]
-  },
-  {
-    id: 'agents',
-    title: 'Agents IA',
-    icon: '🤖',
-    pages: [
-      { name: 'Bureau des Agents', path: '/agents', icon: '🤖', featured: true },
-      // L'Équipage des six Lois (GL Tower)
-      { name: '和 Wa - Orchestration', path: '/agents/wa', icon: '🎯' },
-      { name: '誠 Makoto - Sécurité & QA', path: '/agents/makoto', icon: '🛡️' },
-      { name: '美 Bi - Frontend & Design', path: '/agents/bi', icon: '💜' },
-      { name: '実 Jitsu - Backend & Livraison', path: '/agents/jitsu', icon: '🚀' },
-      { name: '動 Dou - Monitoring & Veille', path: '/agents/dou', icon: '📊' },
-      { name: '私 Watashi - Mémoire & RAG', path: '/agents/watashi', icon: '🗄️' },
     ]
   },
   {

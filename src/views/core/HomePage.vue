@@ -86,9 +86,6 @@
                   <router-link to="/services" class="quick-link">
                     <span>⚡</span> Services
                   </router-link>
-                  <router-link to="/agents" class="quick-link">
-                    <span>🤖</span> Équipage IA
-                  </router-link>
                 </div>
               </div>
 
@@ -265,81 +262,37 @@
       </div>
     </section>
     
-    <!-- MND POSITIONNEMENT : l'humain reste le centre du cercle -->
-    <section class="mnd-position" aria-labelledby="mnd-title">
+    <!-- MÉTHODE : fonctionnement du studio, présenté de façon pragmatique (2026-09) -->
+    <section class="method" aria-labelledby="method-title">
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// 03 · LE CERCLE</span>
-            <h2 id="mnd-title">Six esprits IA. Un seul décideur : vous.</h2>
+            <span class="mono-tag" aria-hidden="true">/// 03 · LA MÉTHODE</span>
+            <h2 id="method-title">Comment fonctionne le studio</h2>
             <p class="section-header__desc">
-              La machine sert, l'humain décide. GL Digital Lab est un cercle : six esprits IA —
-              les Lois — gravitent autour de votre projet. Chacun veille sur un domaine
-              critique ; aucun ne décide à votre place.
+              GL Digital Lab est un studio indépendant (SASU) dirigé par un développeur senior.
+              L'IA y est un outil de production — exécution, rédaction, audit — contrôlé à chaque
+              étape, jamais un intermédiaire qui décide à votre place.
             </p>
           </div>
         </ScrollReveal>
 
-        <div class="mnd-position__grid">
-          <ScrollReveal animation="fade-up">
-            <div class="mnd-position__content">
-              <h3 class="mnd-position__title">L'humain au centre du cercle</h3>
-              <p class="mnd-position__text">
-                Les agents du studio s'alignent autour de vous : <strong>Wa</strong> orchestre,
-                <strong>Makoto</strong> vérifie, <strong>Bi</strong> façonne, <strong>Jitsu</strong>
-                réalise, <strong>Dou</strong> surveille, <strong>Watashi</strong> mémorise.
-              </p>
-              <ul class="mnd-position__list" aria-label="Positionnement du studio">
-                <li>Audit, création, surveillance : le cercle tourne, vous gardez la main.</li>
-                <li>Zéro dépendance cloud américain : l'IA tourne sur vos serveurs, pas ailleurs.</li>
-                <li>Chaque livraison est vérifiée par la machine et validée par l'humain.</li>
-              </ul>
-              <MagneticButton tag="router-link" to="/agents" class="btn-outline">
-                RENCONTRER L'ÉQUIPAGE
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                </svg>
-              </MagneticButton>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal animation="zoom">
-            <div
-              class="mnd-theone"
-              role="img"
-              aria-label="Illustration : une figure humaine souveraine au centre d'anneaux concentriques de lumière, entourée de constellations numériques"
-            ></div>
+        <div class="method__grid">
+          <ScrollReveal v-for="(step, i) in methodSteps" :key="step.title" animation="fade-up" :delay="i * 120">
+            <article class="method-step">
+              <span class="method-step__num" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
+              <h3 class="method-step__title">{{ step.title }}</h3>
+              <p class="method-step__text">{{ step.text }}</p>
+            </article>
           </ScrollReveal>
         </div>
 
-        <!-- L'équipage des six Lois -->
         <ScrollReveal animation="fade-up">
-          <div class="mnd-crew">
-            <p class="mnd-crew__label" aria-hidden="true">/// L'équipage des six Lois</p>
-            <ul class="mnd-crew__list">
-              <li v-for="law in crewLaws" :key="law.id" class="mnd-crew__item">
-                <router-link
-                  :to="'/agents/' + law.id"
-                  class="mnd-crew__link"
-                  :style="{ '--law-color': law.color }"
-                  :aria-label="law.fullName + ' — voir le profil'"
-                >
-                  <span class="mnd-crew__avatar">
-                    <img
-                      v-if="!avatarErrors[law.id]"
-                      class="mnd-crew__img"
-                      :src="lawAvatarUrl(law)"
-                      alt=""
-                      loading="lazy"
-                      @error="handleAvatarError(law.id)"
-                    />
-                    <span v-else class="mnd-crew__emoji" aria-hidden="true">{{ law.avatar }}</span>
-                  </span>
-                  <span class="mnd-crew__name">{{ law.name }}</span>
-                  <span class="mnd-crew__meaning">{{ law.meaning }}</span>
-                </router-link>
-              </li>
-            </ul>
+          <div class="method__guarantees">
+            <div v-for="g in methodGuarantees" :key="g.title" class="method-guarantee">
+              <h3 class="method-guarantee__title">{{ g.title }}</h3>
+              <p class="method-guarantee__text">{{ g.text }}</p>
+            </div>
           </div>
         </ScrollReveal>
       </div>
@@ -374,12 +327,6 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-
-// Données équipage + visuels MND (assets copiés dans public/images/mnd/)
-import { agents } from '@/data/agents';
-import { lawAvatarUrl } from '@/data/mndAssets';
-
 // Components
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 import GaugeCircle from '@/components/common/GaugeCircle.vue';
@@ -406,7 +353,7 @@ const solutions = [
       'Plan chiffré des corrections, devis en option',
       'Résultat sous 48 h'
     ],
-    badge: 'L\'ENTRÉE DU CERCLE'
+    badge: 'POUR COMMENCER'
   },
   {
     icon: '🌐',
@@ -468,19 +415,40 @@ const stackItems = [
 ];
 
 
-// Les six Lois (hors lobby), triées du Penthouse vers les étages bas
-const crewLaws = computed(() =>
-  agents.filter(a => !a.isLobby).sort((a, b) => b.floor - a.floor)
-);
+// Déroulé de travail (méthode, présentée sans détour)
+const methodSteps = [
+  {
+    title: 'Audit 48 h',
+    text: 'État des lieux factuel — sécurité, performance, SEO — avec les risques en une phrase et un plan chiffré, sans jargon.'
+  },
+  {
+    title: 'Cadrage',
+    text: 'Périmètre, ergonomie et budget figés ensemble, par écrit, avant toute ligne de code.'
+  },
+  {
+    title: 'Développement',
+    text: 'Code sur-mesure (Symfony, Vue 3) livré par étapes visibles et testables, dans votre environnement si besoin.'
+  },
+  {
+    title: 'Mise en ligne & suivi',
+    text: 'Déploiement, formation de vos équipes, maintenance et supervision continue.'
+  }
+];
 
-// Fallback visuel : tant que les PNG MND ne sont pas copiés dans
-// public/images/mnd/agents/, on bascule sur l'emoji d'origine de la Loi.
-const avatarErrors = ref({});
-const handleAvatarError = (id) => {
-  avatarErrors.value[id] = true;
-};
-
-// Health check terminal lines
+const methodGuarantees = [
+  {
+    title: 'Données souveraines',
+    text: 'L\'IA est exécutée en local ou en France : vos documents ne quittent pas votre réseau.'
+  },
+  {
+    title: 'Vérification systématique',
+    text: 'Chaque livraison passe un contrôle qualité indépendant : sources citées, tests, zéro métrique inventée.'
+  },
+  {
+    title: 'Vous gardez la main',
+    text: 'Aucune décision — technique, visuelle, budgétaire — n\'est verrouillée sans votre validation.'
+  }
+];
 </script>
 
 <style scoped>
@@ -1549,171 +1517,78 @@ html {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   DS CLAIR (D1) — section « l'humain au centre du cercle »
-   L'ambiance anime sombre .hero__ambient (shinigami-hero.png + voile) est
-   SUPPRIMÉE : fond papier oblige, plus d'image lourde ni de voile sombre.
+   LA MÉTHODE — fonctionnement du studio (remplace la section « cercle » lore,
+   09/2026) : message pragmatique, étapes de travail + garanties.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Positionnement */
-.mnd-position {
+.method {
   padding: var(--space-xl) 0;
 }
 
-.mnd-position__grid {
+.method__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
-  align-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
 }
 
-.mnd-position__title {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+.method-step {
+  height: 100%;
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
+  border-radius: 0.9rem;
+  padding: var(--space-md);
+}
+
+.method-step__num {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  margin-bottom: var(--space-xs);
+}
+
+.method-step__title {
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-main);
-  line-height: 1.2;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
 }
 
-.mnd-position__text {
-  font-size: 0.95rem;
+.method-step__text {
+  font-size: 0.85rem;
   color: var(--text-muted);
-  line-height: 1.8;
-  margin-bottom: var(--space-md);
+  line-height: 1.65;
+  margin: 0;
 }
 
-.mnd-position__text strong {
-  color: var(--ink);
-}
-
-.mnd-position__list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-}
-
-.mnd-position__list li {
-  position: relative;
-  padding-left: 1.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-
-.mnd-position__list li::before {
-  content: '◈';
-  position: absolute;
-  left: 0;
-  color: var(--ink-soft);
-}
-
-/* Visuel « the-one » : l'humain au centre (carré, cadre premium) — cadre
-   papier, la couleur reste portée par l'image elle-même (contenu) */
-.mnd-theone {
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  max-width: 480px;
-  margin-left: auto;
-  border-radius: 1.25rem;
-  border: 1px solid var(--rule);
-  background-color: var(--paper-alt);
-  background-image:
-    radial-gradient(circle at 50% 42%, rgba(166, 63, 38, 0.06), transparent 65%),
-    url('/images/mnd/the-one-v2.png');
-  background-size: auto, contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: var(--shadow-md);
-}
-
-/* Équipage : bandeau des six Lois */
-.mnd-crew {
-  margin-top: var(--space-xl);
+.method__guarantees {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
   padding-top: var(--space-lg);
   border-top: 1px solid var(--border);
 }
 
-.mnd-crew__label {
+.method-guarantee__title {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
-  color: var(--ink-soft);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-align: center;
-  margin-bottom: var(--space-lg);
-}
-
-.mnd-crew__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-md);
-}
-
-.mnd-crew__link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem;
-  text-decoration: none;
-  transition: transform var(--transition-base);
-}
-
-.mnd-crew__link:hover {
-  transform: translateY(-4px);
-}
-
-.mnd-crew__avatar {
-  width: 84px;
-  height: 84px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid color-mix(in srgb, var(--law-color) 55%, transparent);
-  box-shadow: 0 0 0 4px rgba(5, 5, 5, 0.9), 0 0 22px color-mix(in srgb, var(--law-color) 18%, transparent);
-  transition: box-shadow var(--transition-base);
-}
-
-.mnd-crew__link:hover .mnd-crew__avatar {
-  box-shadow: 0 0 0 4px rgba(5, 5, 5, 0.9), 0 0 30px color-mix(in srgb, var(--law-color) 40%, transparent);
-}
-
-.mnd-crew__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.mnd-crew__emoji {
-  font-size: 1.9rem;
-}
-
-.mnd-crew__name {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
   font-weight: 700;
-  color: var(--text-main);
-  white-space: nowrap;
-}
-
-.mnd-crew__meaning {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--text-dark);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  color: var(--text-main);
+  margin: 0 0 var(--space-xs);
 }
 
+.method-guarantee__text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin: 0;
+}
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .hero__grid {
@@ -1778,37 +1653,22 @@ html {
   }
 }
 
-/* MND RESPONSIVE */
+/* MÉTHODE RESPONSIVE */
 @media (max-width: 1024px) {
-  .mnd-position__grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+  .method__grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .mnd-theone {
-    margin: 0 auto;
-    max-width: 420px;
+  .method__guarantees {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 640px) {
-  .mnd-crew__avatar {
-    width: 72px;
-    height: 72px;
-  }
-
-  .mnd-crew__meaning {
-    font-size: 0.55rem;
+  .method__grid {
+    grid-template-columns: 1fr;
   }
 }
-
-/* Anciens navigateurs sans aspect-ratio : hauteur de repli pour le cadre */
-@supports not (aspect-ratio: 1 / 1) {
-  .mnd-theone {
-    height: 440px;
-  }
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════
    SIGNATURE ORBITE (2026-10, d'après recherche Awwwards)
    « La technologie peut bouger ; le centre de gravité ne bouge pas. »

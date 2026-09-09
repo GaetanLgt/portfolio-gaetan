@@ -10,7 +10,7 @@
     
     <!-- Floating Particles (spores, fireflies) -->
     <div class="ark-particles" aria-hidden="true">
-      <span v-for="n in 20" :key="n" class="ark-particle" :style="getParticleStyle(n)"></span>
+      <span v-for="n in 12" :key="n" class="ark-particle" :style="getParticleStyle(n)"></span>
     </div>
 
     <!-- Hero Section - Immersive ARK Style -->
@@ -803,13 +803,14 @@ const uptimeAccessibleData = ref([
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  transition: all 2s ease;
+  transform: translateZ(0);
+  /* perf : pas de « transition: all » — le fondu est géré sur .ark-ambient__sky */
 }
 
 .ark-ambient__sky {
   position: absolute;
   inset: 0;
-  transition: background 3s ease;
+  transition: background 1.2s ease;
 }
 
 /* Time of day variations */
@@ -887,7 +888,7 @@ const uptimeAccessibleData = ref([
   bottom: -10px;
   animation: floatUp var(--duration) ease-in-out infinite;
   animation-delay: var(--delay);
-  filter: blur(1px);
+  /* perf : pas de filter — l'animation reste transform/opacity pure (GPU) */
 }
 
 @keyframes floatUp {
@@ -931,7 +932,7 @@ const uptimeAccessibleData = ref([
   background-size: contain;
   background-repeat: no-repeat;
   opacity: 0.1;
-  filter: blur(1px);
+  /* perf : pas de filter sur élément animé — transform/opacity pure */
 }
 
 .silhouette--rex {
@@ -1318,8 +1319,10 @@ const uptimeAccessibleData = ref([
   left: -50%;
   width: 200%;
   height: 200%;
-  opacity: 0.1;
-  filter: blur(40px);
+  opacity: 0.12;
+  /* perf : halo en masque radial au lieu de blur(40px) — même rendu, zéro coût GPU */
+  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 62%);
+  mask-image: radial-gradient(circle, #000 0%, transparent 62%);
   transition: opacity 0.3s ease;
 }
 
@@ -1446,8 +1449,8 @@ const uptimeAccessibleData = ref([
 }
 
 @keyframes obeliskPulse {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.2); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
 }
 
 @keyframes obeliskGlow {

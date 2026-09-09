@@ -314,7 +314,7 @@ const projects = ref([
     learnings: 'Orchestration de workflows, intégration LLM local, automatisation métier.',
     github: null,
     demo: null,
-    casestudy: '/agents'
+    casestudy: null
   },
   {
     id: 'mevnstack',

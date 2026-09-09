@@ -52,14 +52,13 @@
           </nav>
         </div>
         
-        <!-- Manifeste & coulisses (lore interne, discret — D2) -->
+        <!-- Ressources (ex-rubrique « Manifeste & coulisses » — lore retiré 09/2026) -->
         <div class="footer__section">
-          <h4 class="footer__title">Manifeste &amp; coulisses</h4>
+          <h4 class="footer__title">Ressources</h4>
           <nav class="footer__nav">
-            <router-link to="/agents">Méthode de vérification</router-link>
-            <router-link to="/hub">GL Tower</router-link>
-            <router-link to="/workflows">Automatisations</router-link>
-            <router-link to="/carte-holistique">Carte de l'écosystème</router-link>
+            <router-link to="/ressources/tutoriels">Tutoriels &amp; guides</router-link>
+            <router-link to="/components">Composants réutilisables</router-link>
+            <router-link to="/ark-admin">Snippets ARK (INI)</router-link>
           </nav>
         </div>
         

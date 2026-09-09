@@ -6,7 +6,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // CORE - Pages principales (HomePage chargée immédiatement)
 import HomePage from '@/views/core/HomePage.vue';
-const HubPage = () => import('@/views/core/HubPage.vue');
 const ContactPage = () => import('@/views/core/ContactPage.vue');
 const SitemapPage = () => import('@/views/core/SitemapPage.vue');
 const NotFound = () => import('@/views/core/NotFound.vue');
@@ -21,7 +20,6 @@ const HolisticMapPage = () => import('@/views/parcours/HolisticMapPage.vue');
 // PROJECTS - Case studies
 const ArkadiaCase = () => import('@/views/projects/ArkadiaCase.vue');
 const VoyageoProCase = () => import('@/views/projects/VoyageoProCase.vue');
-const AgentsPage = () => import('@/views/projects/AgentsPage.vue');
 
 // LEGAL - Pages légales
 const MentionsLegales = () => import('@/views/legal/MentionsLegales.vue');
@@ -44,13 +42,6 @@ const JitsuPipeline = () => import(/* webpackChunkName: "apps-agents" */ '@/view
 const SeoContentGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/SeoContentGenerator.vue');
 const InvoiceGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/InvoiceGenerator.vue');
 
-// AGENTS - Bureau des Agents IA
-const AgentsHub = () => import('@/views/agents/AgentsHub.vue');
-const AgentProfile = () => import('@/views/agents/AgentProfile.vue');
-
-// GL TOWER - Visite interactive
-const GLTowerInteractive = () => import(/* webpackChunkName: "tower" */ '@/views/tower/GLTowerInteractive.vue');
-
 // FORMATION - Pôle éducation
 const FormationHub = () => import(/* webpackChunkName: "formation" */ '@/views/formation/FormationHub.vue');
 const FormationDetail = () => import(/* webpackChunkName: "formation" */ '@/views/formation/FormationDetail.vue');
@@ -72,15 +63,6 @@ const routes = [
     meta: { 
       title: 'Sites web & IA sur-mesure pour PME | GL Digital Lab',
       description: 'Applications web et IA locales pour PME françaises : vos outils, vos données, chez vous. La machine travaille, l\'humain décide. Audit 48h, devis gratuit sous 24h.'
-    }
-  },
-  {
-    path: '/hub',
-    name: 'Hub',
-    component: HubPage,
-    meta: { 
-      title: 'GL TOWER | QG des six Lois',
-      description: 'Centre de commandement GL Digital Lab. L\'équipage des six Lois couvre tous les niveaux de votre infrastructure : orchestration, sécurité, frontend, backend, monitoring, mémoire. L\'humain garde la main.'
     }
   },
   {
@@ -156,42 +138,6 @@ const routes = [
     meta: { 
       title: 'Case Study VoyageoPro | Plateforme B2B Tourisme',
       description: 'Transformation digitale d\'une agence de voyage B2B. De Excel à une plateforme SaaS : -70% temps de traitement, +180% volume de devis.'
-    }
-  },
-  {
-    path: '/agents',
-    name: 'AgentsHub',
-    component: AgentsHub,
-    meta: { 
-      title: 'Équipage des 6 Lois | GL Digital Lab',
-      description: 'Six principes — Harmonie, Sincérité, Beauté, Réalisation, Mouvement, Intériorité — gravitent autour de votre projet. La machine travaille, l\'humain décide.'
-    }
-  },
-  {
-    path: '/tower',
-    name: 'GLTowerInteractive',
-    component: GLTowerInteractive,
-    meta: { 
-      title: 'GL TOWER | Visite Interactive du QG',
-      description: 'Explorez GL Tower de manière interactive : l\'équipage des six Lois, leurs workflows automatisés, et découvrez comment votre site est produit de A à Z.'
-    }
-  },
-  {
-    path: '/agents/:id',
-    name: 'AgentProfile',
-    component: AgentProfile,
-    meta: { 
-      title: 'Profil Agent IA',
-      description: 'Fiche détaillée d\'un agent IA : mission, capacités, outils, processus et métriques de performance.'
-    }
-  },
-  {
-    path: '/workflows',
-    name: 'AgentsPage',
-    component: AgentsPage,
-    meta: { 
-      title: 'Workflows & Automatisations',
-      description: 'Workflows n8n en production : Discord bots, monitoring, RAG, automatisations métier. Stack 100% souveraine, zéro cloud US.'
     }
   },
 
