@@ -41,8 +41,8 @@
                 
                 <!-- Main Title — message éditorial fort -->
                 <h1 id="hero-title" class="hero__title">
-                  La machine sert.<br>
-                  <span class="text-gradient neon-text">L'humain décide.</span>
+                  La machine travaille.<br>
+                  <span class="text-gradient neon-text">Vous décidez.</span>
                 </h1>
                 
                 <!-- Subtitle — la valeur concrète : systèmes multi-agents locaux -->
