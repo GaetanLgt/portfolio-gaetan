@@ -13,8 +13,9 @@
         </h1>
         
         <p class="hero__subtitle">
-          Pas de dépendance au cloud lointain, pas de licence qui augmente chaque année.<br>
-          Des briques choisies pour <strong>votre</strong> métier, posées dans votre environnement, livrées avec les clés.
+          Des systèmes multi-agents locaux — agents, mémoire, automatisations — conçus pour
+          <strong>votre</strong> métier, posés dans votre environnement, livrés avec les clés.
+          Pas de dépendance au cloud lointain, pas de licence qui augmente chaque année.
         </p>
       </div>
     </section>
@@ -40,7 +41,7 @@
           <div class="awakening-card awakening-card--red glass">
             <span class="awakening-card__icon">🟢</span>
             <h3>Après l'audit</h3>
-            <p class="awakening-card__status awakening-card__status--red">La méthode du cercle</p>
+            <p class="awakening-card__status awakening-card__status--red">Ce qui change</p>
             <ul>
               <li>Failles réelles relevées, chiffres à l'appui</li>
               <li>Coûts fixes, prévisibles</li>

@@ -36,7 +36,7 @@
                 <!-- Status Badge -->
                 <div class="status-badge">
                   <span class="status-badge__dot"></span>
-                  <TextScramble text="Disponible pour vos projets" :scramble-on-mount="true" />
+                  <TextScramble text="Studio indépendant · IA 100 % locale ou France" :scramble-on-mount="true" />
                 </div>
                 
                 <!-- Main Title — message éditorial fort -->
@@ -45,11 +45,11 @@
                   <span class="text-gradient neon-text">L'humain décide.</span>
                 </h1>
                 
-                <!-- Subtitle — la valeur concrète pour la PME -->
+                <!-- Subtitle — la valeur concrète : systèmes multi-agents locaux -->
                 <p class="hero__subtitle">
-                  Vos outils web sur-mesure et votre IA tournent <strong>dans votre
-                  environnement</strong> — jamais dans un cloud étranger.
-                  Vos données restent chez vous. En 48 h, nous rendons visible ce qui
+                  Des agents IA — rédaction, code, audit, visuels — orchestrent votre
+                  production <strong>dans votre environnement</strong>, jamais dans un cloud
+                  étranger. Vos données restent chez vous. En 48 h, nous rendons visible ce qui
                   freine votre système.
                 </p>
                 
@@ -126,11 +126,12 @@
         <ScrollReveal animation="fade-up">
           <div class="section-header">
             <span class="mono-tag" aria-hidden="true">/// 01 · L'OFFRE</span>
-            <h2 id="services-title">Du diagnostic au sur-mesure</h2>
+            <h2 id="services-title">Des systèmes, pas des outils</h2>
             <p class="section-header__desc">
-              Pas de catalogue : chaque mission part de <strong>votre</strong> situation réelle.
-              Commencez par un <strong>audit en 48 h</strong> — je vous montre, sur votre site,
-              ce qui l'expose et ce qu'il faut corriger. Ensuite seulement, on construit.
+              Chaque mission part de <strong>votre</strong> situation réelle : un
+              <strong>audit en 48 h</strong> pour voir clair, puis un système multi-agents
+              local (contenu, RAG, automatisation) ou une application sur-mesure — construit,
+              testé, livré par étapes visibles.
               <br><span class="section-header__caveat">Budget final après atelier de cadrage : le prix dépend des
               interfaces, des règles métier, des reprises de données et du niveau d'exigence sécurité.</span>
             </p>
@@ -157,6 +158,56 @@
               </article>
           </ScrollReveal>
         </div>
+      </div>
+    </section>
+
+
+    <!-- PREUVE PRODUIT : ArkAdiA, réseau social souverain EN LIGNE — bande claire
+         (la preuve moderne : le studio s'est construit un produit en production avec
+         sa stack d'agents IA locaux). Distinct de la preuve d'exploitation ARKADIA
+         France PvE (section sombre plus bas). -->
+    <section class="preuve-arkadia" aria-labelledby="preuve-arkadia-title">
+      <div class="container">
+        <ScrollReveal animation="fade-up">
+          <div class="preuve-arkadia__box">
+            <div class="preuve-arkadia__texte">
+              <span class="mono-tag" aria-hidden="true">/// LA PREUVE</span>
+              <h2 id="preuve-arkadia-title" class="preuve-arkadia__titre">
+                On l'a fait pour nous-mêmes.<br>
+                <span class="text-gradient">Ça tourne. En production.</span>
+              </h2>
+              <p class="preuve-arkadia__desc">
+                <strong>ArkAdiA</strong> — notre réseau social souverain (comptes, communautés,
+                messagerie temps réel, modération humaine, IA 100 % locale, zéro traceur) —
+                tourne en ligne sur <strong>arkadia.gldigitallab.fr</strong>. C'est notre
+                démonstration permanente, pas une maquette.
+              </p>
+              <p class="preuve-arkadia__desc">
+                La même stack d'agents et d'IA locale qui fait tourner ArkAdiA, nous la déployons
+                chez nos clients : systèmes multi-agents, RAG mémoire, automatisations —
+                dans leur environnement, jamais dans un cloud étranger.
+              </p>
+              <div class="preuve-arkadia__actions">
+                <a class="btn-outline preuve-arkadia__lien" href="https://arkadia.gldigitallab.fr" target="_blank" rel="noopener noreferrer">
+                  Voir ArkAdiA en ligne ↗
+                </a>
+                <router-link class="btn-primary" to="/contact">
+                  Parler de mon projet
+                </router-link>
+              </div>
+            </div>
+            <div class="preuve-arkadia__reperes" role="list" aria-label="Repères ArkAdiA">
+              <div class="preuve-arkadia__repere" role="listitem">
+                <span class="preuve-arkadia__valeur">EN LIGNE</span>
+                <span class="preuve-arkadia__label">Production réelle</span>
+              </div>
+              <div class="preuve-arkadia__repere" role="listitem">
+                <span class="preuve-arkadia__valeur">16 ANS +</span>
+                <span class="preuve-arkadia__label">Politique produit assumée</span>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
 
@@ -268,10 +319,11 @@
         <ScrollReveal animation="fade-up">
           <div class="section-header">
             <span class="mono-tag" aria-hidden="true">/// 03 · LA MÉTHODE</span>
-            <h2 id="method-title">Comment fonctionne le studio</h2>
+            <h2 id="method-title">Comment travaille le studio</h2>
             <p class="section-header__desc">
-              GL Digital Lab est un studio indépendant (SASU) dirigé par un développeur senior.
-              L'IA y est un outil de production — exécution, rédaction, audit — contrôlé à chaque
+              GL Digital Lab est un studio indépendant (SASU) dirigé par un architecte de
+              systèmes multi-agents. Des agents IA spécialisés — orchestration, rédaction,
+              code, audit, mémoire — sont nos outils de production : contrôlés à chaque
               étape, jamais un intermédiaire qui décide à votre place.
             </p>
           </div>
@@ -419,19 +471,19 @@ const stackItems = [
 const methodSteps = [
   {
     title: 'Audit 48 h',
-    text: 'État des lieux factuel — sécurité, performance, SEO — avec les risques en une phrase et un plan chiffré, sans jargon.'
+    text: 'État des lieux factuel — sécurité, performance, automatisation possible — avec les risques en une phrase et un plan chiffré, sans jargon.'
   },
   {
-    title: 'Cadrage',
-    text: 'Périmètre, ergonomie et budget figés ensemble, par écrit, avant toute ligne de code.'
+    title: 'Conception du système',
+    text: 'Quels agents, quelle mémoire, quelles données : le système multi-agents est conçu pour VOTRE métier, dans votre environnement ou hébergé en France.'
   },
   {
-    title: 'Développement',
-    text: 'Code sur-mesure (Symfony, Vue 3) livré par étapes visibles et testables, dans votre environnement si besoin.'
+    title: 'Construction',
+    text: 'Agents, RAG, interfaces : livrés par étapes visibles et testables, contrôlés par une vérification qualité indépendante à chaque livraison.'
   },
   {
-    title: 'Mise en ligne & suivi',
-    text: 'Déploiement, formation de vos équipes, maintenance et supervision continue.'
+    title: 'Mise en route & suivi',
+    text: 'Déploiement, formation de vos équipes, supervision continue. Vous gardez la main : chaque décision est validée par vous.'
   }
 ];
 
@@ -1791,5 +1843,92 @@ html {
   background: var(--accent-ink) !important;
   border-color: var(--accent-ink) !important;
   color: var(--paper) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PREUVE ARKADIA (bande claire, 09/09/2026) — « On l'a fait pour nous-mêmes »
+   Section claire : ne PAS reprendre .proof (fond encre) pour éviter deux
+   bandeaux sombres consécutifs avec la preuve ARKADIA France PvE.
+   ═══════════════════════════════════════════════════════════════════════ */
+.preuve-arkadia {
+  padding: var(--space-xl) 0;
+}
+
+.preuve-arkadia__box {
+  background: var(--surface-light);
+  border: 1px solid var(--rule);
+  border-radius: 1.1rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.preuve-arkadia__titre {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.15;
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.preuve-arkadia__desc {
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 62ch;
+  margin: 0 0 var(--space-sm);
+}
+
+.preuve-arkadia__desc strong {
+  color: var(--text-main);
+}
+
+.preuve-arkadia__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: var(--space-sm);
+}
+
+.preuve-arkadia__actions .btn-primary,
+.preuve-arkadia__actions .btn-outline {
+  text-decoration: none;
+}
+
+.preuve-arkadia__reperes {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.preuve-arkadia__repere {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 0.5rem;
+}
+
+.preuve-arkadia__valeur {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.preuve-arkadia__label {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 900px) {
+  .preuve-arkadia__box {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
