@@ -103,6 +103,30 @@ RewriteRule ^(.*)$ $1/index.html [L]
   
   # Permissions Policy (ex-Feature-Policy)
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+  # ---------------------------------------------------------------------------
+  # Content-Security-Policy — AJOUTÉE le 10/09/2026
+  #
+  # Constat mesuré : ce site était le SEUL de l'écosystème sans CSP (le point de
+  # contrôle et arkadia.gldigitallab.fr l'ont). Il ne manquait que celle-là.
+  #
+  # Chaque origine autorisée est JUSTIFIÉE PAR UNE MESURE, pas par précaution :
+  #   · analytics.gldigitallab.fr — Matomo. Le composable `useMatomo.js` charge
+  #     `matomo.js` depuis VITE_MATOMO_URL (= https://analytics.gldigitallab.fr,
+  #     voir .env.production) et poste sur `matomo.php`. Vérifié en observant les
+  #     requêtes réelles de la page : une requête vers cette origine.
+  #     ⚠️ Piège payé : mon premier outil de vérification classait ce sous-domaine
+  #     comme « même origine » (comparaison par sous-chaîne) et annonçait « aucune
+  #     origine tierce ». Une CSP `connect-src 'self'` aurait donc tué l'analytics
+  #     EN SILENCE. L'outil compare désormais les origines exactes.
+  #   · les polices sont AUTO-HÉBERGÉES (/fonts/*.woff2, observé) : aucune
+  #     authorization Google Fonts n'est nécessaire ici — contrairement à arkadia.
+  #   · `unsafe-inline` sur script/style : Vite et le prérendu injectent des
+  #     scripts en ligne ; sans lui la page ne s'hydrate pas.
+  #
+  # `upgrade-insecure-requests` : toute ressource en clair est promue en HTTPS.
+  # ---------------------------------------------------------------------------
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.gldigitallab.fr; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://analytics.gldigitallab.fr; font-src 'self' data:; connect-src 'self' https://analytics.gldigitallab.fr; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
   
   # Cache control pour assets hashés
   <FilesMatch "\.(js|css|woff2?)$">
