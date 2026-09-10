@@ -86,6 +86,19 @@ const routes = [
     }
   },
   {
+    path: '/liens',
+    name: 'Liens',
+    // Page de liens du studio (10/09/2026) : elle remplace le « Linktree » que les
+    // fiches de communication prescrivaient — un service tiers qui hébergerait nos
+    // liens, contre la doctrine local-first du studio. Ses quatre cibles sont des
+    // pages QUI EXISTENT DÉJÀ : aucun lien mort, c'est la raison de ce choix.
+    component: () => import('@/views/core/LiensPage.vue'),
+    meta: {
+      title: 'Liens | Audit WordPress 48 h, projets, prestations | GL Digital Lab',
+      description: 'Tous les liens du studio en un seul endroit : audit WordPress 48 h, projets et études de cas, prestations et prix publiés, contact. Page hébergée chez nous, sans traqueur ni service tiers.'
+    }
+  },
+  {
     path: '/sitemap',
     name: 'SitemapPage',
     component: SitemapPage,

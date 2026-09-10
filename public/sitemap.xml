@@ -133,6 +133,17 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <!-- Page de liens (10/09/2026) : elle remplace le « Linktree » que les fiches
+         de communication prescrivaient — un service tiers qui hébergerait nos liens,
+         contre la doctrine local-first du studio. Déclarée ici parce qu'elle REND
+         une page réelle : c'est la règle de ce fichier. Ses quatre cibles pointent
+         vers des pages qui existent, donc aucun lien mort. -->
+    <loc>https://gldigitallab.fr/liens</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
 
   <!-- ── Pages légales ────────────────────────────────────────────────────── -->
   <url>
