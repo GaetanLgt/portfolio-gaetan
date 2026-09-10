@@ -82,6 +82,19 @@
             >
               Gérer les cookies
             </button>
+            <!-- MODE SOBRE (engagement de la charte, décision D5) : coupe tous
+                 les effets du site. Réversible, mémorisé, et neutre — le
+                 contenu ne change pas. C'est un argument, pas une concession :
+                 un visiteur qui travaille n'a pas à subir une direction
+                 artistique. -->
+            <button
+              type="button"
+              class="footer__cookie-btn"
+              :aria-pressed="modeSobre ? 'true' : 'false'"
+              @click="basculerModeSobre"
+            >
+              {{ modeSobre ? 'Rétablir les effets' : 'Mode sobre' }}
+            </button>
           </nav>
         </div>
         
@@ -123,6 +136,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import { modeSobre, basculerModeSobre } from '@/composables/mode-sobre.js';
 
 const currentYear = computed(() => new Date().getFullYear());
 const siret = null; // TODO: Remplacer par ton vrai SIRET

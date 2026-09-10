@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{ 'app--loaded': isLoaded }">
+  <div id="app" :class="{ 'app--loaded': isLoaded, 'app--sobre': modeSobre }">
     <!-- Skip Link (Opquast A11Y) -->
     <a href="#main-content" class="skip-link">
       Passer au contenu principal
@@ -105,6 +105,8 @@ const ParticlesBackground = defineAsyncComponent(() => import('@/components/thre
 const GridBackground = defineAsyncComponent(() => import('@/components/three/GridBackground.vue'));
 const MatrixBackground = defineAsyncComponent(() => import('@/components/three/MatrixBackground.vue'));
 import FloatingElements from '@/components/ui/FloatingElements.vue'; // non monté (D5)
+// Mode sobre : préférence explicite du visiteur, distincte de reduced-motion.
+import { modeSobre } from '@/composables/mode-sobre.js';
 
 const isLoaded = ref(false);
 const route = useRoute();
