@@ -66,7 +66,7 @@
         <div class="footer__section">
           <h4 class="footer__title">Légal & Site</h4>
           <nav class="footer__nav" aria-label="Navigation légale">
-            <router-link to="/sitemap">🗺️ Plan du site</router-link>
+            <router-link to="/sitemap">Plan du site</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>
@@ -76,7 +76,7 @@
               @click="openCookieSettings"
               aria-label="Gérer les préférences de cookies"
             >
-              🍪 Gérer les cookies
+              Gérer les cookies
             </button>
           </nav>
         </div>

@@ -41,14 +41,12 @@
              donc la console habille la scène sans jamais gêner la lecture. -->
         <ConsoleOverlay />
 
-        <!-- Floating Tech Badges -->
-        <div class="hero__floating-badges" aria-hidden="true">
-          <span class="floating-badge" style="--delay: 0s; --x: 85%; --y: 15%;">Vue 3</span>
-          <span class="floating-badge" style="--delay: 0.5s; --x: 90%; --y: 35%;">Symfony</span>
-          <span class="floating-badge" style="--delay: 1s; --x: 80%; --y: 55%;">Three.js</span>
-          <span class="floating-badge" style="--delay: 1.5s; --x: 88%; --y: 75%;">IA Locale</span>
-        </div>
-        
+        <!-- Floating Tech Badges retirés (D5, décision du directeur artistique) :
+             Vue 3 / Symfony / Three.js / IA Locale sont des choix d'outillage
+             INTERNES. Un client ne choisit pas un studio parce qu'il utilise Vue
+             plutôt que React, et ces badges flottants coûtaient une animation CSS
+             permanente pour aucune information utile au visiteur. -->
+
         <div class="container">
           <div class="hero__grid">
             <!-- HERO peint par HTML/CSS, jamais animé au reveal (audit) -->
@@ -101,38 +99,19 @@
                   </router-link>
                 </div>
                 
-                <!-- Quick Navigation -->
+                <!-- Quick Navigation (D5) : emojis retirés (verrou D1 : aucun
+                     emoji en icône d'interface) et lien « Carte Holistique »
+                     retiré — il violait D2 (« GL Tower, Carte Holistique,
+                     Workflows n8n, portraits des Lois : hors nav »,
+                     decisions-refonte-awwwards-2026.md ligne 22). Les deux liens
+                     restants sont sobres et ne dupliquent pas la navigation. -->
                 <div class="hero__quick-nav">
-                  <router-link to="/carte-holistique" class="quick-link quick-link--featured">
-                    <span>🗺️</span> Carte Holistique
-                  </router-link>
                   <router-link to="/arkadia" class="quick-link">
-                    <span>🦖</span> Case Study
+                    Voir la preuve — ARKADIA en production
                   </router-link>
                   <router-link to="/services" class="quick-link">
-                    <span>⚡</span> Services
+                    Voir l'offre et les tarifs
                   </router-link>
-                </div>
-              </div>
-
-            <!-- Code Window Décoratif -->
-            <div class="hero__code-window glass" aria-hidden="true">
-                <div class="code-window__header">
-                  <span class="code-dot code-dot--red"></span>
-                  <span class="code-dot code-dot--yellow"></span>
-                  <span class="code-dot code-dot--green"></span>
-                  <span class="code-window__title">votre-projet.ts</span>
-                </div>
-                <div class="code-window__body">
-                  <pre><code><span class="code-keyword">const</span> <span class="code-var">votreProjet</span> = {
-  <span class="code-prop">objectif</span>: <span class="code-string">"Gagner du temps"</span>,
-  <span class="code-prop">budget</span>: <span class="code-string">"Sur-mesure"</span>,
-  <span class="code-prop">délai</span>: <span class="code-string">"Rapide"</span>,
-  <span class="code-prop">données</span>: <span class="code-string">"🇫🇷 Restent en France"</span>
-};
-
-<span class="code-keyword">await</span> <span class="code-func">glDigitalLab</span>.<span class="code-method">build</span>(votreProjet);
-<span class="code-comment">// ✨ Votre site est en ligne !</span></code></pre>
                 </div>
               </div>
           </div>
@@ -170,7 +149,7 @@
             <article class="solution-card glass" :class="{ 'solution-card--featured': solution.featured }" role="listitem">
                 <router-link :to="'/services#' + solution.title.toLowerCase().replace(/ /g, '-')" class="solution-card__link-wrapper" :aria-label="solution.title + ' - ' + solution.price">
                   <span v-if="solution.badge" class="solution-card__badge" aria-label="Service populaire">{{ solution.badge }}</span>
-                  <div class="solution-card__icon" aria-hidden="true">{{ solution.icon }}</div>
+                  <div class="solution-card__icon" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</div>
                   <div class="solution-card__content">
                     <h3>{{ solution.title }}</h3>
                     <span class="solution-card__price">{{ solution.price }}</span>
@@ -385,7 +364,7 @@
               <h2 id="cta-title">Un projet en tête ?</h2>
               <p>Racontez-moi votre idée. Je vous réponds sous 24h avec une première estimation gratuite et sans engagement.</p>
               <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large" :strength="35" :text-strength="45">
-                💬 Parlons-en !
+                Parlons-en !
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                 </svg>
@@ -427,7 +406,6 @@ import {
 
 const solutions = [
   {
-    icon: '🔍',
     title: 'Audit WordPress — 48 h',
     price: '149 € – 199 € HT',
     description: 'Je relève sur VOTRE site les failles réelles : version obsolète, plugin vulnérable, absence de mises à jour. Chiffres à l\'appui, avant qu\'un pirate ou Google ne s\'en charge.',
@@ -440,7 +418,6 @@ const solutions = [
     badge: 'POUR COMMENCER'
   },
   {
-    icon: '🌐',
     title: 'Site web',
     price: 'Dès 2 500 € HT',
     description: 'Vitrine ou refonte : un site qui charge vite, se met à jour sans technicien et fait venir des demandes.',
@@ -452,7 +429,6 @@ const solutions = [
     ]
   },
   {
-    icon: '⚙️',
     title: 'Application métier',
     price: 'Dès 8 000 € HT',
     description: 'Un outil interne taillé sur vos processus, pour supprimer les ressaisies et les fichiers Excel qui circulent.',
@@ -466,7 +442,6 @@ const solutions = [
     badge: 'LE PLUS DEMANDÉ'
   },
   {
-    icon: '🤖',
     title: 'IA & automatisation locale',
     price: 'Audit IA + prototype dès 1 500 € HT',
     description: 'De l\'IA qui tourne sur vos serveurs. Vos documents et vos données ne sortent pas de votre réseau.',
@@ -478,7 +453,6 @@ const solutions = [
     ]
   },
   {
-    icon: '📚',
     title: 'RAG MÉMOIRE',
     price: 'Dès 3 000 € HT · 3 niveaux',
     description: 'Un assistant interne qui répond aux questions de votre entreprise à partir de VOS documents — réponses sourcées, zéro hallucination.',
@@ -613,40 +587,6 @@ const methodGuarantees = [
 /* Floating Tech Badges */
 
 
-@keyframes floatBadge {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(3deg); }
-}
-
-/* Code Window */
-
-.hero__code-window:hover {
-  transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-}
-
-
-
-.code-dot--yellow { background: #ffbd2e; }
-
-
-
-.code-window__body pre {
-  margin: 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  line-height: 1.6;
-}
-
-/* Fenêtre code décorative (aria-hidden) — DS clair : code sobre, encre
-   seule, plus de couleurs de terminal sombre ni de halo. */
-.code-keyword { color: var(--ink); font-weight: 700; }
-.code-var { color: var(--ink-soft); }
-.code-prop { color: var(--ink-soft); }
-.code-string { color: var(--ink-soft); }
-.code-func { color: var(--ink); }
-.code-method { color: var(--ink); }
-.code-comment { color: var(--ink-faint); font-style: italic; }
-
 /* Button Glow — DS clair : plus de halo émeraude pulsé (D1) */
 .btn-glow {
   box-shadow: var(--shadow-md);
@@ -751,21 +691,6 @@ const methodGuarantees = [
 
 
 
-.floating-badge {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  padding: 0.4rem 0.8rem;
-  background: var(--paper-alt);
-  border: 1px solid var(--rule);
-  border-radius: 2rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--ink-soft);
-  animation: floatBadge 6s ease-in-out infinite;
-  animation-delay: var(--delay);
-  opacity: 0.9;
-}
 
 .quick-link {
   display: inline-flex;
@@ -781,42 +706,7 @@ const methodGuarantees = [
   transition: all 0.3s ease;
 }
 
-.code-window__header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: rgba(26, 26, 24, 0.04);
-  border-bottom: 1px solid var(--rule);
-}
 
-.code-window__body {
-  padding: 1.25rem;
-  background: transparent;
-}
-
-.code-window__title {
-  margin-left: auto;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
-
-.code-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.hero__floating-badges {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
 
 .hero__quick-nav {
   display: flex;
@@ -826,14 +716,6 @@ const methodGuarantees = [
   flex-wrap: wrap;
 }
 
-.hero__code-window {
-  border-radius: 12px;
-  border: 1px solid var(--rule);
-  overflow: hidden;
-  transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
-  transition: transform 0.5s ease;
-  box-shadow: var(--shadow-md);
-}
 
 .hero__actions {
   display: flex;
@@ -1411,10 +1293,6 @@ const methodGuarantees = [
 }
 
 
-.quick-link--featured:hover {
-  border-color: var(--accent);
-  background: rgba(0, 255, 65, 0.08);
-}
 
 /* CTA FINAL */
 .cta-final {
@@ -1512,13 +1390,22 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Icon bounce on card hover */
+/* Numérotation technique des cartes (D5) : un index monospace remplace les
+   emojis d'icône. L'ADN technique vient de la mise en forme, pas d'un pictogramme
+   dont le rendu dépend du système d'exploitation du visiteur. */
 .solution-card__icon {
-  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--neon-cyan);
+  opacity: 0.85;
+  transition: color var(--transition-base);
 }
 
 .solution-card:hover .solution-card__icon {
-  transform: scale(1.15) rotate(-5deg);
+  color: var(--accent);
+  opacity: 1;
 }
 
 /* Price tag : halo retiré (D1) */
@@ -1678,16 +1565,6 @@ html {
   .hero__grid {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-  
-  .hero__code-window {
-    transform: none;
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .hero__floating-badges {
-    display: none;
   }
   
   .proof__grid {
@@ -1851,7 +1728,9 @@ html {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-family: 'Space Grotesk', sans-serif;
+  /* Pile système (D5) — plus aucune famille réseau en dehors de Fraunces et
+     JetBrains Mono. */
+  font-family: inherit;
   font-size: 0.8rem;
   color: var(--text-muted);
   text-decoration: none;

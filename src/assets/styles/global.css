@@ -11,7 +11,11 @@ html {
 }
 
 body {
-  font-family: 'Space Grotesk', sans-serif;
+  /* Corps de texte en pile SYSTÈME (D5) : Space Grotesk était une 3e famille
+     chargée en réseau alors que le verrou en autorise 2. Le corps n'a pas
+     besoin d'une signature forte — Fraunces (titres) et JetBrains Mono
+     (technique) portent l'identité. Gain : un fichier de police en moins. */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg);
   color: var(--text-main);
   line-height: 1.7;
@@ -19,7 +23,7 @@ body {
   overflow-x: clip;
 }
 
-/* TYPOGRAPHY — titres éditoriaux Fraunces, corps Space Grotesk */
+/* TYPOGRAPHY — titres éditoriaux Fraunces, corps en pile système */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Fraunces', Georgia, serif;
   font-weight: 500;

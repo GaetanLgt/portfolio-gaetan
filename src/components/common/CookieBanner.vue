@@ -2,7 +2,6 @@
   <Transition name="cookie-banner">
     <div v-if="showBanner" class="cookie-banner" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-desc">
       <div class="cookie-content">
-        <div class="cookie-icon">🍪</div>
         <div class="cookie-text">
           <h3 id="cookie-title">Respect de votre vie privée</h3>
           <p id="cookie-desc">
@@ -15,7 +14,7 @@
       
       <div class="cookie-actions">
         <button class="cookie-btn cookie-btn--settings" @click="showSettings = !showSettings">
-          ⚙️ Personnaliser
+          Personnaliser
         </button>
         <button class="cookie-btn cookie-btn--reject" @click="rejectAll">
           Refuser
