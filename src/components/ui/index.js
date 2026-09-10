@@ -20,3 +20,5 @@ export { default as FloatingElements } from './FloatingElements.vue';
 
 // D5 — couche « console » (scanlines, cadres techniques, hachures d'alerte)
 export { default as ConsoleOverlay } from './ConsoleOverlay.vue';
+// D5 — la Grille (apport TRON) : structure, cyan, horizon
+export { default as TronFloor } from './TronFloor.vue';

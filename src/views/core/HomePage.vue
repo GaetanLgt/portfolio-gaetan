@@ -21,9 +21,14 @@
           <span class="hero__orbit-ring hero__orbit-ring--3"></span>
         </div>
 
+        <!-- LA GRILLE (apport TRON, D5) : le sol du poste. Placée avant la 3D
+             pour que les unités se tiennent DESSUS. C'est le seul endroit où
+             le numérique affleure sur du réel — doctrine §1bis. -->
+        <TronFloor />
+
         <!-- LES 6 LOIS EN 3D (three.js) : avatars MND réactifs à la souris
-             et au scroll. Décision D1 respectée : AUCUN fond sombre injecté,
-             le canvas est transparent (alpha) → le fond papier clair reste nu.
+             et au scroll. Canvas transparent (alpha) → le fond reste nu
+             derrière les unités. La Grille passe donc sous leurs pieds.
              Pour désactiver : retirer ce bloc (aucun autre impact). -->
         <div class="hero__lois" aria-hidden="true">
           <CharactersHero />
@@ -413,6 +418,7 @@ import {
   TextScramble,
   GlitchText,
   ConsoleOverlay,
+  TronFloor,
   ScrollReveal, 
   SpotlightContainer 
 } from '@/components/ui';
