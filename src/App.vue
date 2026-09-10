@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="{ 'app--loaded': isLoaded, 'app--lore': isLoaded && !isShowcasePage }">
+  <div id="app" :class="{ 'app--loaded': isLoaded }">
     <!-- Skip Link (Opquast A11Y) -->
     <a href="#main-content" class="skip-link">
       Passer au contenu principal
@@ -57,8 +57,12 @@
     <!-- Cookie Banner RGPD -->
     <CookieBanner v-if="isLoaded && !isFullscreenGame" />
     
-    <!-- Custom Cursor — réservé aux pages lore/expériences (vitrine = curseur natif) -->
-    <CustomCursor v-if="isLoaded && !isFullscreenGame && !isShowcasePage" />
+    <!-- Curseur personnalisé RETIRÉ (D5, 10/09) : le verrou de signature
+         qualité impose « curseur natif », et Claude (directeur artistique)
+         l'a relevé comme non-conformité : la home n'était pas dans
+         `isShowcasePage`, donc elle recevait `app--lore` → curseur système
+         masqué + curseur custom. La règle est désormais appliquée au
+         parcours ENTIER. Le composant reste sur disque, non monté. -->
     
     <!-- Scroll to Top -->
     <ScrollToTop v-if="isLoaded && !isFullscreenGame" />
@@ -77,7 +81,8 @@ import SelfDiagnosticBar from '@/components/sections/SelfDiagnosticBar.vue';
 import CookieBanner from '@/components/common/CookieBanner.vue';
 import Loader from '@/components/common/Loader.vue';
 import NoiseOverlay from '@/components/common/NoiseOverlay.vue';
-import CustomCursor from '@/components/common/CustomCursor.vue';
+// CustomCursor volontairement NON importé (D5) : voir le commentaire dans le
+// gabarit. Le fichier reste sur disque pour les expériences immersives futures.
 import ScrollToTop from '@/components/common/ScrollToTop.vue';
 import ScrollProgressBar from '@/components/common/ScrollProgressBar.vue';
 import ReactiveParticles from '@/components/common/ReactiveParticles.vue';

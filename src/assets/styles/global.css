@@ -191,21 +191,12 @@ a:hover {
   color: var(--ink);
 }
 
-/* Curseur NATIF sur les pages vitrine (D1) — le curseur custom ne s'affiche
-   que sur les pages lore/expériences (#app.app--lore) qui, elles, masquent
-   le curseur système pour ne garder que le custom. */
-@media (pointer: fine) {
-  #app.app--lore,
-  #app.app--lore a,
-  #app.app--lore button,
-  #app.app--lore [role="button"],
-  #app.app--lore input,
-  #app.app--lore select,
-  #app.app--lore textarea,
-  #app.app--lore label[for] {
-    cursor: none;
-  }
-}
+/* Curseur NATIF partout (signature qualité + D5). La règle qui masquait le
+   curseur système (`#app.app--lore { cursor: none }`) a été retirée le
+   10/09/2026 en même temps que le composant de curseur personnalisé : les
+   deux allaient ensemble, et laisser `cursor: none` sans curseur custom
+   aurait laissé le visiteur SANS AUCUN curseur — panne d'accessibilité
+   majeure. Ne jamais réintroduire l'un sans l'autre. */
 
 /* FOCUS VISIBLE - Accessibilité */
 :focus {
