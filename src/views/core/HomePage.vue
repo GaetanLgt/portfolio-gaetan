@@ -21,6 +21,14 @@
           <span class="hero__orbit-ring hero__orbit-ring--3"></span>
         </div>
 
+        <!-- LES 6 LOIS EN 3D (three.js) : avatars MND réactifs à la souris
+             et au scroll. Décision D1 respectée : AUCUN fond sombre injecté,
+             le canvas est transparent (alpha) → le fond papier clair reste nu.
+             Pour désactiver : retirer ce bloc (aucun autre impact). -->
+        <div class="hero__lois" aria-hidden="true">
+          <CharactersHero />
+        </div>
+
         <!-- Floating Tech Badges -->
         <div class="hero__floating-badges" aria-hidden="true">
           <span class="floating-badge" style="--delay: 0s; --x: 85%; --y: 15%;">Vue 3</span>
@@ -382,6 +390,9 @@
 // Components
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 import GaugeCircle from '@/components/common/GaugeCircle.vue';
+// 3D : les 6 Lois MND (chargé en async : n'alourdit pas le premier rendu)
+import { defineAsyncComponent } from 'vue';
+const CharactersHero = defineAsyncComponent(() => import('@/components/three/CharactersHero.vue'));
 
 // UI Components
 import { 
@@ -1738,6 +1749,26 @@ html {
   z-index: 0;
   pointer-events: none;
   opacity: 0.85;
+}
+
+/* LES 6 LOIS EN 3D — surimpression transparente (fond papier préservé, D1).
+   Zone : moitié droite du hero, derrière le contenu texte. */
+.hero__lois {
+  position: absolute;
+  top: 50%;
+  right: clamp(-60px, -3vw, 0px);
+  width: clamp(420px, 52vw, 820px);
+  height: min(88vh, 760px);
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+@media (max-width: 1024px) {
+  .hero__lois { opacity: 0.6; }
+}
+@media (max-width: 768px) {
+  /* mobile : la scène 3D passe en fond discret, le texte reste prioritaire */
+  .hero__lois { right: 0; width: 100%; height: 60vh; opacity: 0.4; }
 }
 
 /* point central : le centre de gravité — immobile */
