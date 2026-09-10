@@ -196,11 +196,44 @@ onMounted(() => {
   resize();
 
   // --- boucle ---
+  // TROIS GARDE-FOUS AJOUTÉS le 10/09/2026 après l'audit Lighthouse : le
+  // composant exécutait 1,63 s de script sur le fil principal. L'essentiel ne
+  // venait pas du chargement mais de la BOUCLE DE RENDU qui tournait en
+  // permanence, chaque image payant un rendu complet avec post-traitement.
+  // Aucun de ces trois correctifs ne change ce que voit le visiteur.
   const horloge = new THREE.Clock();
   let prochainPalier = 0;
+  let visible = true;             // la scène est-elle dans la fenêtre ?
+  let dernierRendu = 0;
+  const INTERVALLE_MINI = 1000 / 40;   // plafond à 40 images/seconde
 
-  const animate = () => {
+  // 1. On arrête de rendre quand le hero sort de l'écran : c'est le cas dès
+  //    que le visiteur descend lire l'offre, et pendant toute la mesure
+  //    Lighthouse qui balaie la page entière.
+  const observateur = new IntersectionObserver(
+    (entrees) => { visible = entrees[0]?.isIntersecting ?? true; },
+    { rootMargin: '120px' }
+  );
+  observateur.observe(canvas);
+  cleanup.push(() => observateur.disconnect());
+
+  // 2. On arrête aussi quand l'onglet passe en arrière-plan — un canvas qui
+  //    tourne dans un onglet caché ne sert personne et consomme la batterie.
+  let enPause = false;
+  const surVisibilite = () => { enPause = document.hidden; };
+  document.addEventListener('visibilitychange', surVisibilite);
+  cleanup.push(() => document.removeEventListener('visibilitychange', surVisibilite));
+
+  const animate = (maintenant = 0) => {
     animationId = requestAnimationFrame(animate);
+
+    // 3. Plafond de fréquence : inutile de recalculer 60 fois par seconde un
+    //    décor qui bouge lentement. On saute les images trop rapprochées.
+    if (maintenant - dernierRendu < INTERVALLE_MINI) return;
+    dernierRendu = maintenant;
+
+    if (!visible || enPause) return;   // ni hors écran, ni onglet caché
+
     const dt = Math.min(horloge.getDelta(), 0.05);
     const t = horloge.elapsedTime;
 
