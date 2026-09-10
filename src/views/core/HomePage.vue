@@ -312,7 +312,7 @@
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// 01 · L'OFFRE</span>
+            <span class="mono-tag" aria-hidden="true">/// 01 · LE CHANTIER NAVAL</span>
             <h2 id="services-title">Des systèmes, pas des outils</h2>
             <p class="section-header__desc">
               Chaque mission part de <strong>votre</strong> situation réelle : un
@@ -333,6 +333,11 @@
                   <span v-if="solution.badge" class="solution-card__badge" aria-label="Service populaire">{{ solution.badge }}</span>
                   <div class="solution-card__icon" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</div>
                   <div class="solution-card__content">
+                    <!-- Rôle au chantier naval : ce que l'on construit, dit avec
+                         le vocabulaire du navire. Le nom commercial reste
+                         inchangé juste en dessous — la métaphore habille
+                         l'offre, elle ne la remplace pas. -->
+                    <span class="solution-card__role">{{ solution.role }}</span>
                     <h3>{{ solution.title }}</h3>
                     <span class="solution-card__price">{{ solution.price }}</span>
                     <p>{{ solution.description }}</p>
@@ -345,6 +350,29 @@
               </article>
           </ScrollReveal>
         </div>
+
+        <!-- LE CHANTIER NAVAL : le renversement du concept. On construit le
+             navire, mais c'est le client qui commande — et c'est une vraie
+             règle de travail, pas une image : aucune décision n'est verrouillée
+             sans lui. -->
+        <ScrollReveal animation="fade-up">
+          <div class="chantier">
+            <div class="chantier__texte">
+              <h3 class="chantier__titre">Au chantier, on construit. À la barre, c'est vous.</h3>
+              <p>
+                Nous livrons un navire, pas un équipage qui décide à votre place. Vous fixez
+                la destination et le budget ; nous tenons la coque, la propulsion et la cale.
+                Chaque étape est visible, chaque livraison est testable, et rien ne part en
+                production sans que vous ayez dit oui.
+              </p>
+            </div>
+            <ul class="chantier__points">
+              <li><strong>Nous construisons</strong><span>coque, propulsion, cale, voiles</span></li>
+              <li><strong>Vous commandez</strong><span>destination, budget, priorités</span></li>
+              <li><strong>Personne d'autre</strong><span>aucun intermédiaire, aucun sous-traitant opaque</span></li>
+            </ul>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
 
@@ -592,6 +620,7 @@ import {
 const solutions = [
   {
     title: 'Audit WordPress — 48 h',
+    role: 'La sonde',
     price: '149 € – 199 € HT',
     description: 'Je relève sur VOTRE site les failles réelles : version obsolète, plugin vulnérable, absence de mises à jour. Chiffres à l\'appui, avant qu\'un pirate ou Google ne s\'en charge.',
     outputs: [
@@ -604,6 +633,7 @@ const solutions = [
   },
   {
     title: 'Site web',
+    role: 'Votre première voile',
     price: 'Dès 2 500 € HT',
     description: 'Vitrine ou refonte : un site qui charge vite, se met à jour sans technicien et fait venir des demandes.',
     outputs: [
@@ -615,6 +645,7 @@ const solutions = [
   },
   {
     title: 'Application métier',
+    role: 'La coque, ajustée à votre métier',
     price: 'Dès 8 000 € HT',
     description: 'Un outil interne taillé sur vos processus, pour supprimer les ressaisies et les fichiers Excel qui circulent.',
     outputs: [
@@ -628,6 +659,7 @@ const solutions = [
   },
   {
     title: 'IA & automatisation locale',
+    role: 'La propulsion',
     price: 'Audit IA + prototype dès 1 500 € HT',
     description: 'De l\'IA qui tourne sur vos serveurs. Vos documents et vos données ne sortent pas de votre réseau.',
     outputs: [
@@ -639,6 +671,7 @@ const solutions = [
   },
   {
     title: 'RAG MÉMOIRE',
+    role: 'La cale',
     price: 'Dès 3 000 € HT · 3 niveaux',
     description: 'Un assistant interne qui répond aux questions de votre entreprise à partir de VOS documents — réponses sourcées, zéro hallucination.',
     outputs: [
@@ -1591,6 +1624,82 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 .solution-card:hover .solution-card__icon {
   color: var(--accent);
   opacity: 1;
+}
+
+/* ── Rôle au chantier naval (D5) : le vocabulaire du navire posé sur l'offre,
+   au-dessus du nom commercial qui reste, lui, parfaitement clair. ── */
+.solution-card__role {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  margin-bottom: 0.35rem;
+}
+
+/* ── LE CHANTIER NAVAL : le renversement du concept, en fin de section offre ── */
+.chantier {
+  margin-top: 3rem;
+  padding: 2rem 2.25rem;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--neon-cyan);
+  background: var(--paper-alt);
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.chantier__titre {
+  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
+  margin-bottom: 0.85rem;
+}
+
+.chantier__texte p {
+  color: var(--ink-soft);
+  line-height: 1.75;
+  max-width: 62ch;
+}
+
+.chantier__points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.chantier__points li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.chantier__points li:last-child {
+  border-bottom: 0;
+}
+
+.chantier__points strong {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.chantier__points span {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 860px) {
+  .chantier {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
 }
 
 /* Price tag : halo retiré (D1) */
