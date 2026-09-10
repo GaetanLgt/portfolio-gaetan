@@ -61,8 +61,8 @@ const routes = [
     name: 'Home',
     component: HomePage,
     meta: { 
-      title: 'Sites web & IA sur-mesure pour PME | GL Digital Lab',
-      description: 'Applications web et IA locales pour PME françaises : vos outils, vos données, chez vous. La machine travaille, l\'humain décide. Audit 48h, devis gratuit sous 24h.'
+      title: 'Sites web & IA sur-mesure pour PME',
+      description: 'Sites web, applications métier et agents d\'IA exécutés sur notre propre machine, dans la Somme. Vos données restent dans la cale. Audit 48 h, réponse sous 24 h.'
     }
   },
   {
@@ -101,7 +101,7 @@ const routes = [
     name: 'ProjectsPage',
     component: ProjectsPage,
     meta: { 
-      title: 'Projets & Réalisations | GL Digital Lab',
+      title: 'Projets & Réalisations',
       description: 'Portfolio de projets Symfony, Vue.js, WordPress et gaming. Découvrez mes réalisations techniques et créatives.'
     }
   },
@@ -114,7 +114,7 @@ const routes = [
     name: 'HolisticMap',
     component: HolisticMapPage,
     meta: { 
-      title: 'Carte Holistique | Neo / GL Digital Lab',
+      title: 'Carte Holistique | Neo',
       description: 'Visualisation interactive de l\'écosystème GL Digital Lab : rôles, compétences, projets, services et vision. Carte conceptuelle du portfolio.'
     }
   },

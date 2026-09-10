@@ -54,7 +54,7 @@
                 <!-- Status Badge -->
                 <div class="status-badge">
                   <span class="status-badge__dot"></span>
-                  <TextScramble text="Studio indépendant · IA 100 % locale ou France" :scramble-on-mount="true" />
+                  <TextScramble text="Un seul navire · IA locale · Harponville, Somme" :scramble-on-mount="true" />
                 </div>
                 
                 <!-- Main Title — message éditorial fort
@@ -69,12 +69,16 @@
                   </span>
                 </h1>
                 
-                <!-- Subtitle — la valeur concrète : systèmes multi-agents locaux -->
+                <!-- Subtitle — la valeur concrète, dite avec le vocabulaire du
+                     bord sans jamais noyer le propos commercial. La phrase est
+                     vérifiable : les agents tournent bien sur une machine
+                     identifiée, en France. -->
                 <p class="hero__subtitle">
-                  Des agents IA — rédaction, code, audit, visuels — orchestrent votre
-                  production <strong>dans votre environnement</strong>, jamais dans un cloud
-                  étranger. Vos données restent chez vous. En 48 h, nous rendons visible ce qui
-                  freine votre système.
+                  Nos agents — rédaction, code, audit, visuels — ne tournent pas dans
+                  un <strong>cloud que vous ne pouvez pas nommer</strong> : ils
+                  travaillent sur notre propre navire, à Harponville. Vos documents
+                  restent dans la cale. En 48 h, nous rendons visible ce qui freine
+                  votre système.
                 </p>
                 
                 <!-- CTA : le premier engagement commercial = l'audit -->
@@ -204,15 +208,15 @@
                   <td>La carte mère</td>
                   <td>La pièce qui tient tout le reste. On la connaît par son modèle, pas par un numéro de parc.</td>
                 </tr>
-                <tr>
-                  <th scope="row">Les mâts</th>
+                <tr class="vaisseau__rang--clef">
+                  <th scope="row">La propulsion</th>
                   <td>Les cartes graphiques</td>
-                  <td>La structure qui porte la puissance. C'est elle qui fait tourner les modèles d'IA sur place.</td>
+                  <td><strong>C'est notre propulsion.</strong> C'est ce qui pousse le navire et fait tourner les modèles d'IA à bord — pas une machine louée à l'heure dans un autre pays.</td>
                 </tr>
                 <tr class="vaisseau__rang--clef">
                   <th scope="row">Les voiles</th>
                   <td>Les sites et applications que nous livrons</td>
-                  <td><strong>Chaque site livré est une voile.</strong> C'est lui qui capte le vent et fait avancer votre activité. Une voile mal taillée, et le navire n'avance pas — quel que soit le moteur.</td>
+                  <td><strong>Chaque site livré est une voile.</strong> C'est lui qui capte le vent et fait avancer votre activité. Une voile mal taillée, et le navire n'avance pas — même avec toute la propulsion du monde.</td>
                 </tr>
                 <tr>
                   <th scope="row">La cale</th>
@@ -539,8 +543,8 @@
         <ScrollReveal animation="zoom">
           <SpotlightContainer :size="400" color="var(--primary)" :opacity="0.15">
             <div class="cta-final__box glass">
-              <h2 id="cta-title">Un projet en tête ?</h2>
-              <p>Racontez-moi votre idée. Je vous réponds sous 24h avec une première estimation gratuite et sans engagement.</p>
+              <h2 id="cta-title">Qu'est-ce qu'on fait avancer&nbsp;?</h2>
+              <p>Dites-moi ce qui vous ralentit. Je réponds sous 24 h, avec une première estimation gratuite et sans engagement — et si votre besoin n'est pas de notre ressort, je vous le dis aussi.</p>
               <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large" :strength="35" :text-strength="45">
                 Parlons-en !
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
