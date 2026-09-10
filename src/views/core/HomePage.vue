@@ -2166,83 +2166,9 @@ html {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    LE PAVILLON (apport ALBATOR, concept D5)
-   Rôle unique dans la doctrine : la liberté, la signature du corsaire. Il ne
-   sert JAMAIS de décoration — le pavillon ne se hisse qu'aux moments de
-   décision : entrée, engagement, prise de contact. Ici, au survol ou au focus
-   du seul bouton d'action.
-   CSS pur, aria-hidden, jamais hissé en reduced-motion.
+   Son style est défini dans global.css — il sert aussi sur la page Contact,
+   dans le bouton d'envoi. Une seule définition, deux usages.
    ═══════════════════════════════════════════════════════════════════════════ */
-.pavillon {
-  position: relative;
-  width: 34px;
-  height: 54px;
-  flex: none;
-  pointer-events: none;
-}
-
-/* Le mât : un simple trait vertical, comme une drisse. */
-.pavillon__mat {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 1px;
-  height: 100%;
-  background: var(--rule-strong);
-}
-
-/* L'étoffe, ferlée par défaut (hauteur nulle), hissée au survol. */
-.pavillon__etoffe {
-  position: absolute;
-  left: 1px;
-  top: 0;
-  width: 30px;
-  height: 20px;
-  transform-origin: 0% 50%;
-  transform: scaleX(0);
-  transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  background: var(--accent);
-  box-shadow: var(--glow-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Le sceau du bord : le cercle-à-point, jamais un crâne. */
-.pavillon__sceau {
-  width: 8px;
-  height: 8px;
-  border: 1.5px solid var(--paper);
-  border-radius: 50%;
-  position: relative;
-}
-.pavillon__sceau::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 3px;
-  height: 3px;
-  transform: translate(-50%, -50%);
-  background: var(--paper);
-  border-radius: 50%;
-}
-
-/* Hissage : au survol du bouton, ou au focus clavier (accessibilité). */
-.hero__actions:has(.btn-primary:hover) .pavillon__etoffe,
-.hero__actions:has(.btn-primary:focus-visible) .pavillon__etoffe {
-  transform: scaleX(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pavillon__etoffe {
-    transition: none !important;
-    transform: scaleX(1) !important;   /* hissé d'emblée : pas de mouvement */
-  }
-}
-
-@media (max-width: 560px) {
-  .pavillon { display: none; }
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    LE VAISSEAU (concept D5) — ARKADIA SS00999

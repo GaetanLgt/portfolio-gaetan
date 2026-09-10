@@ -26,9 +26,9 @@
           <!-- Left Panel - Info -->
           <div class="contact-card__info">
             <div class="contact-card__header">
-              <span class="mono-tag">/// CONTACT</span>
-              <h2>Votre projet, votre premier cercle</h2>
-              <p>Décrivez votre besoin en quelques lignes. Je reviens vers vous sous 24 h avec une première lecture honnête.</p>
+              <span class="mono-tag">/// L'EMBARQUEMENT</span>
+              <h2>Dites-moi où vous voulez aller</h2>
+              <p>Décrivez votre besoin en quelques lignes. Je reviens vers vous sous 24 h avec une première lecture honnête : ce qui est faisable, ce qui ne l'est pas, et ce que ça coûte.</p>
             </div>
             
             <div class="contact-card__details">
@@ -172,7 +172,15 @@
                 ></textarea>
               </div>
               
+              <!-- LE PAVILLON (apport ALBATOR, D5) : il se hisse au moment de
+                   décision. Ici c'est l'envoi du formulaire — le seul geste
+                   d'engagement de la page. Décoratif, CSS pur, hissé aussi au
+                   focus clavier, jamais animé en reduced-motion. -->
               <button type="submit" class="form-submit" :disabled="formStatus === 'sending'">
+                <span class="pavillon" aria-hidden="true">
+                  <span class="pavillon__mat"></span>
+                  <span class="pavillon__etoffe"></span>
+                </span>
                 <span v-if="formStatus === 'sending'">TRANSMISSION EN COURS...</span>
                 <span v-else>ENVOYER LA DEMANDE</span>
                 <svg v-if="formStatus !== 'sending'" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

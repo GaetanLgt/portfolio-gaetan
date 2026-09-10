@@ -195,6 +195,114 @@ a:hover {
   color: var(--ink);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   LE PAVILLON (apport ALBATOR, concept D5)
+   Rôle unique dans la doctrine : la liberté, la signature du corsaire. Il ne
+   sert JAMAIS de décoration — il ne se hisse qu'aux MOMENTS DE DÉCISION :
+   l'entrée, l'engagement, la prise de contact.
+
+   Défini ici et pas dans un composant : il sert sur la page d'accueil (à côté
+   du bouton d'action) et sur la page Contact (dans le bouton d'envoi). Une
+   seule définition, deux usages — deux copies auraient divergé.
+
+   CSS pur, aria-hidden chez les appelants, jamais hissé en reduced-motion.
+   Le sceau du bord est le cercle-à-point, jamais un crâne (garde-fou juridique).
+   ═══════════════════════════════════════════════════════════════════════════ */
+.pavillon {
+  position: relative;
+  width: 34px;
+  height: 54px;
+  flex: none;
+  pointer-events: none;
+}
+
+.pavillon__mat {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--rule-strong);
+}
+
+.pavillon__etoffe {
+  position: absolute;
+  left: 1px;
+  top: 0;
+  width: 30px;
+  height: 20px;
+  transform-origin: 0% 50%;
+  transform: scaleX(0);
+  transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  background: var(--accent);
+  box-shadow: var(--glow-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pavillon__sceau {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--paper);
+  border-radius: 50%;
+  position: relative;
+}
+.pavillon__sceau::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  transform: translate(-50%, -50%);
+  background: var(--paper);
+  border-radius: 50%;
+}
+
+/* Hissage. Deux dispositions couvertes : le pavillon DANS le bouton (page
+   Contact) et le pavillon À CÔTÉ du bouton (page d'accueil). Le focus clavier
+   est traité comme le survol — sans quoi l'effet serait réservé à la souris. */
+button:hover .pavillon__etoffe,
+button:focus-visible .pavillon__etoffe,
+a:hover .pavillon__etoffe,
+a:focus-visible .pavillon__etoffe,
+.hero__actions:has(.btn-primary:hover) .pavillon__etoffe,
+.hero__actions:has(.btn-primary:focus-visible) .pavillon__etoffe {
+  transform: scaleX(1);
+}
+
+/* Variante DANS UN BOUTON (page Contact) : format compact, et surtout l'étoffe
+   prend l'encre sombre — le bouton d'envoi est émeraude, un pavillon émeraude
+   dessus aurait été invisible. */
+button .pavillon {
+  width: 22px;
+  height: 30px;
+}
+
+button .pavillon__mat {
+  background: currentColor;
+  opacity: 0.45;
+}
+
+button .pavillon__etoffe {
+  width: 20px;
+  height: 13px;
+  background: var(--paper);
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pavillon__etoffe {
+    transition: none !important;
+    transform: scaleX(1) !important;   /* hissé d'emblée : aucun mouvement */
+  }
+}
+
+@media (max-width: 560px) {
+  .pavillon { display: none; }
+}
+
 /* Curseur NATIF partout (signature qualité + D5). La règle qui masquait le
    curseur système (`#app.app--lore { cursor: none }`) a été retirée le
    10/09/2026 en même temps que le composant de curseur personnalisé : les
