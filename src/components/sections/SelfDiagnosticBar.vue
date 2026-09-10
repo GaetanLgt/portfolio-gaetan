@@ -1,126 +1,139 @@
 <template>
-  <footer class="sdb" :class="{ 'sdb--hidden': isHidden }" role="status" aria-label="Diagnostic système en temps réel">
-    <div class="sdb__metrics" aria-live="polite" aria-atomic="false">
-      <!-- System Status -->
+  <!--
+    BARRE D'AUTODIAGNOSTIC — D5
+
+    REFONTE MAKOTO (10/09/2026). Cette barre affichait des valeurs FAUSSES :
+      · `A11Y: PASS` était une constante codée en dur — elle ne mesurait rien ;
+      · `FPS: 60` était la valeur initiale, et restait figée à 60 pour tout
+        visiteur ayant demandé moins de mouvement (la boucle n'était jamais
+        lancée) ;
+      · `CLUSTER_STATUS: STABLE` désignait un cluster qui n'existe pas.
+    Le site affirme pourtant en page d'accueil : « sources citées, tests, zéro
+    métrique inventée ». Une barre de diagnostic qui invente ses diagnostics
+    détruit exactement l'argument qu'elle prétend servir.
+
+    Ne restent que des mesures réelles, et un « — » quand la mesure n'existe
+    pas encore. Rien n'est arrondi vers le haut, rien n'est décoré.
+  -->
+  <footer class="sdb" role="status" aria-label="Diagnostic technique mesuré en direct">
+    <div class="sdb__metrics">
       <div class="sdb__item sdb__item--status">
         <span class="sdb__dot"></span>
-        <span class="sdb__label">SYSTEM:</span>
-        <span class="sdb__value sdb__value--brand">ONLINE</span>
+        <span class="sdb__label">SYSTÈME</span>
+        <span class="sdb__value sdb__value--brand">{{ enLigne ? 'EN LIGNE' : 'HORS LIGNE' }}</span>
       </div>
-      
-      <!-- FPS -->
-      <div class="sdb__item">
-        <span class="sdb__label">FPS:</span>
-        <span class="sdb__value">{{ fps }}</span>
+
+      <div class="sdb__item" :title="fps === null ? 'Mesure en cours…' : 'Images par seconde réellement rendues par votre navigateur'">
+        <span class="sdb__label">FPS</span>
+        <span class="sdb__value">{{ fps === null ? '—' : fps }}</span>
       </div>
-      
-      <!-- TTI -->
-      <div class="sdb__item">
-        <span class="sdb__label">TTI:</span>
-        <span class="sdb__value">{{ tti }}s</span>
+
+      <div class="sdb__item" title="Temps entre le début de la navigation et le DOM analysé (performance API)">
+        <span class="sdb__label">DOM PRÊT</span>
+        <span class="sdb__value">{{ domPret === null ? '—' : domPret + ' ms' }}</span>
       </div>
-      
-      <!-- A11Y -->
-      <div class="sdb__item">
-        <span class="sdb__label">A11Y:</span>
-        <span class="sdb__value" :class="a11yStatus === 'PASS' ? 'sdb__value--pass' : 'sdb__value--warn'">{{ a11yStatus }}</span>
+
+      <div class="sdb__item" title="Poids réellement transféré, mesuré sur les entrées de performance de cette page">
+        <span class="sdb__label">TRANSFERT</span>
+        <span class="sdb__value">{{ transfert }}</span>
       </div>
-      
-      <!-- CO2 -->
-      <div class="sdb__item">
-        <span class="sdb__label">CO2:</span>
-        <span class="sdb__value">{{ co2 }}g</span>
+
+      <div class="sdb__item" :title="motifPoste ? `Palier appliqué à la 3D — raison : ${motifPoste}` : 'Palier de post-traitement réellement appliqué à la scène 3D de votre machine'">
+        <span class="sdb__label">PALIER</span>
+        <span class="sdb__value" :class="classePalier">{{ palierPoste }}</span>
       </div>
-    </div>
-    
-    <div class="sdb__cluster">
-      <span>CLUSTER_STATUS: STABLE</span>
-      <span class="sdb__separator">//</span>
-      <span>2026_EDITION</span>
+
+      <div class="sdb__item" title="Votre navigateur applique-t-il la préférence de mouvement réduit ?">
+        <span class="sdb__label">MOUVEMENT</span>
+        <span class="sdb__value" :class="{ 'sdb__value--pass': mouvementReduit }">{{ mouvementReduit ? 'RÉDUIT' : 'STANDARD' }}</span>
+      </div>
     </div>
   </footer>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { palierPoste, motifPoste } from '@/composables/etat-poste.js';
 
-const fps = ref(60);
-const tti = ref('--');
-const a11yStatus = ref('PASS');
-const co2 = ref('0.02');
-const isHidden = ref(false);
+const enLigne = ref(typeof navigator !== 'undefined' ? navigator.onLine : true);
+const fps = ref(null);              // null = pas encore mesuré. Jamais une valeur flattée.
+const domPret = ref(null);
+const octets = ref(null);
+const octetsPartiels = ref(false);
+const mouvementReduit = ref(false);
+const palier = palierPoste;
 
-let frameCount = 0;
-let lastTime = performance.now();
+const transfert = computed(() => {
+  if (octets.value === null) return '—';
+  const ko = Math.round(octets.value / 1024);
+  // « ≈ » quand certaines ressources ne divulguent pas leur taille (cross-origin
+  // sans Timing-Allow-Origin) : on préfère un signe honnête à un chiffre faux.
+  return `${octetsPartiels.value ? '≈ ' : ''}${ko} Ko`;
+});
+
+const classePalier = computed(() => {
+  if (palier.value === 'statique') return 'sdb__value--warn';
+  if (palier.value === 'haut') return 'sdb__value--pass';
+  return '';
+});
+
 let rafId = null;
-let lastScrollY = 0;
+let frames = 0;
+let debut = null;
 
-// FPS Monitor
-const monitorFPS = () => {
-  frameCount++;
-  const now = performance.now();
-  
-  if (now >= lastTime + 1000) {
-    fps.value = frameCount;
-    frameCount = 0;
-    lastTime = now;
+/** Mesure le FPS réel sur 3 s, puis S'ARRÊTE : un compteur permanent pour un
+ *  chiffre d'ambiance serait du gaspillage de batterie, et un « 60 » figé
+ *  serait un mensonge. */
+const mesurerFPS = () => {
+  if (debut === null) debut = performance.now();
+  frames++;
+  const ecoule = performance.now() - debut;
+  if (ecoule >= 3000) {
+    fps.value = Math.round((frames / ecoule) * 1000);
+    rafId = null;
+    return;
   }
-  
-  rafId = requestAnimationFrame(monitorFPS);
+  rafId = requestAnimationFrame(mesurerFPS);
 };
 
-// TTI (Time to Interactive) - approximation
-const measureTTI = () => {
-  if (window.performance && window.performance.timing) {
-    const timing = window.performance.timing;
-    const interactive = timing.domInteractive - timing.navigationStart;
-    tti.value = (interactive / 1000).toFixed(1);
-  } else {
-    tti.value = '0.4';
+const mesurerChargement = () => {
+  // DOM prêt : mesure normalisée par la Performance Timeline (l'ancienne API
+  // `performance.timing` est dépréciée et donnait « 0.0s »).
+  const nav = performance.getEntriesByType?.('navigation')?.[0];
+  if (nav) domPret.value = Math.round(nav.domInteractive);
+
+  // Poids : on additionne ce que le navigateur déclare avoir réellement reçu.
+  const ressources = performance.getEntriesByType?.('resource') ?? [];
+  let total = nav ? (nav.transferSize || nav.encodedBodySize || 0) : 0;
+  let partiel = false;
+  for (const r of ressources) {
+    const t = r.transferSize || r.encodedBodySize || 0;
+    if (!t) partiel = true;      // ressource en cache ou taille non divulguée
+    total += t;
   }
+  octets.value = total;
+  octetsPartiels.value = partiel;
 };
 
-// CO2 estimation (basé sur taille page)
-const estimateCO2 = () => {
-  if (window.performance && window.performance.getEntriesByType) {
-    const resources = window.performance.getEntriesByType('resource');
-    let totalBytes = 0;
-    resources.forEach(r => {
-      if (r.transferSize) totalBytes += r.transferSize;
-    });
-    // ~0.2g CO2 per MB (estimation Website Carbon)
-    const co2Grams = (totalBytes / 1024 / 1024) * 0.2;
-    co2.value = co2Grams.toFixed(2);
-  }
-};
-
-// Hide on scroll down (optionnel)
-const handleScroll = () => {
-  const currentScrollY = window.scrollY;
-  isHidden.value = currentScrollY > lastScrollY && currentScrollY > 200;
-  lastScrollY = currentScrollY;
-};
+const majReseau = () => { enLigne.value = navigator.onLine; };
 
 onMounted(() => {
-  // Respecter prefers-reduced-motion
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  if (!prefersReducedMotion) {
-    monitorFPS();
-  }
-  
-  measureTTI();
-  estimateCO2();
-  
-  // Optionnel: hide on scroll
-  // window.addEventListener('scroll', handleScroll, { passive: true });
+  mouvementReduit.value = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+
+  rafId = requestAnimationFrame(mesurerFPS);
+  mesurerChargement();
+  // Deuxième passe : les ressources différées (three.js, les unités 3D) arrivent
+  // après le montage. Sans cette re-mesure, le poids affiché serait incomplet.
+  setTimeout(mesurerChargement, 2500);
+
+  window.addEventListener('online', majReseau);
+  window.addEventListener('offline', majReseau);
 });
 
 onUnmounted(() => {
-  if (rafId) {
-    cancelAnimationFrame(rafId);
-  }
-  // window.removeEventListener('scroll', handleScroll);
+  if (rafId) cancelAnimationFrame(rafId);
+  window.removeEventListener('online', majReseau);
+  window.removeEventListener('offline', majReseau);
 });
 </script>
 
@@ -132,33 +145,25 @@ onUnmounted(() => {
   right: 0;
   z-index: 100;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background: rgba(5, 5, 5, 0.95);
+  padding: 0.45rem 1rem;
+  background: rgba(3, 6, 10, 0.94);
   backdrop-filter: blur(8px);
-  border-top: 1px solid var(--border);
-  font-family: 'JetBrains Mono', monospace;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
   font-size: 0.6rem;
-  color: var(--text-dark);
-  transition: transform 0.3s ease;
-}
-
-.sdb--hidden {
-  transform: translateY(100%);
+  color: var(--ink-faint);
 }
 
 .sdb__metrics {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.35rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 
-.sdb__metrics::-webkit-scrollbar {
-  display: none;
-}
+.sdb__metrics::-webkit-scrollbar { display: none; }
 
 .sdb__item {
   display: flex;
@@ -167,72 +172,35 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
-.sdb__item--status {
-  color: var(--primary);
-}
+.sdb__item--status { color: var(--accent); }
 
 .sdb__dot {
   width: 6px;
   height: 6px;
-  background: var(--primary);
+  background: var(--accent);
   border-radius: 50%;
-  animation: pulse-slow 2s infinite;
+  box-shadow: var(--glow-accent);
 }
 
 .sdb__label {
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
 }
 
 .sdb__value {
-  color: var(--text-main);
+  color: var(--neon-cyan);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
-.sdb__value--brand {
-  color: var(--primary);
-}
+.sdb__value--brand { color: var(--accent); }
+.sdb__value--pass { color: var(--accent); }
+.sdb__value--warn { color: var(--alert); }
 
-.sdb__value--pass {
-  color: var(--primary);
-}
-
-.sdb__value--warn {
-  color: #F59E0B;
-}
-
-.sdb__cluster {
-  display: none;
-  align-items: center;
-  gap: 0.5rem;
-  padding-left: 1rem;
-  border-left: 1px solid var(--border);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.5rem;
-}
-
-.sdb__separator {
-  color: var(--text-dark);
-}
-
-@media (min-width: 640px) {
-  .sdb__cluster {
-    display: flex;
-  }
-}
-
+/* ── Mobile : on garde l'essentiel (système, FPS, palier), le reste défile. ── */
 @media (max-width: 480px) {
-  .sdb {
-    padding: 0.4rem 0.75rem;
-  }
-  
-  .sdb__metrics {
-    gap: 1rem;
-  }
-  
-  .sdb__item:nth-child(n+4) {
-    display: none;
-  }
+  .sdb { padding: 0.4rem 0.75rem; font-size: 0.55rem; }
+  .sdb__metrics { gap: 0.9rem; }
 }
 </style>

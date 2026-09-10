@@ -12,6 +12,7 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { creerPoste, detecterPalier } from './postfx.js';
 
 const LOIS = ['wa', 'makoto', 'bi', 'jitsu', 'dou', 'watashi'];
 
@@ -19,6 +20,7 @@ const canvasRef = ref(null);
 let renderer = null;
 let animationId = null;
 let scene = null;
+let poste = null;
 let cleanup = [];
 
 onMounted(() => {
@@ -100,6 +102,8 @@ onMounted(() => {
   cleanup.push(() => window.removeEventListener('scroll', onScroll));
 
   // --- resize ---
+  // Le composer est redimensionné ici aussi : sans ça, la chaîne de passes
+  // rendrait à la taille de création et l'image serait étirée après un resize.
   const resize = () => {
     const parent = canvas.parentElement;
     const w = parent?.clientWidth || window.innerWidth;
@@ -107,6 +111,7 @@ onMounted(() => {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    poste?.setSize(w, h);
   };
   resize();
   const ro = new ResizeObserver(resize);
@@ -114,6 +119,15 @@ onMounted(() => {
   window.addEventListener('resize', resize);
   cleanup.push(() => window.removeEventListener('resize', resize));
   cleanup.push(() => ro.disconnect());
+
+  // --- post-traitement (D5) : bloom + balayage + aberration + vignette.
+  // Palier décidé sur le matériel déclaré ; la chaîne se vérifie elle-même
+  // (transparence du canvas) et se dégrade seule si les FPS chutent.
+  poste = creerPoste(renderer, scene, camera, detecterPalier(), ({ palier, motif }) => {
+    // Trace exploitable : on saura TOUJOURS pourquoi un visiteur n'a pas l'effet.
+    console.info(`[poste] palier → ${palier} (${motif})`);
+  });
+  resize();
 
   // --- boucle ---
   const horloge = new THREE.Clock();
@@ -132,12 +146,26 @@ onMounted(() => {
     groupe.rotation.x = souris.y * 0.05;
 
     rim.intensity = 24 + Math.sin(t * 1.4) * 6;
-    renderer.render(scene, camera);
+
+    // La chaîne de post-traitement renvoie false si elle a abandonné (FPS trop
+    // bas ou transparence perdue) : on repasse alors au rendu direct, sans
+    // jamais laisser d'écran figé. Quand elle est abandonnée, on la démonte
+    // pour rendre la mémoire GPU.
+    if (poste) {
+      const rendu = poste.render(dt);
+      if (!rendu) {
+        poste.dispose();
+        poste = null;
+        renderer.render(scene, camera);
+      }
+    } else {
+      renderer.render(scene, camera);
+    }
   };
 
   if (reducedMotion) {
     // pas d'animation continue : un rendu unique (contenu visible, zéro mouvement)
-    renderer.render(scene, camera);
+    if (!poste || !poste.render(0)) renderer.render(scene, camera);
   } else {
     animate();
   }
@@ -148,6 +176,8 @@ onUnmounted(() => {
   if (animationId) cancelAnimationFrame(animationId);
   cleanup.forEach((fn) => fn());
   cleanup = [];
+  poste?.dispose();
+  poste = null;
   scene?.traverse((o) => {
     if (o.isMesh) {
       o.geometry?.dispose?.();
