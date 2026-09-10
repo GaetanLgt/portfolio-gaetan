@@ -42,9 +42,17 @@
         
         <section class="legal-section">
           <h2>Article 4 - Tarifs et paiement</h2>
+          <!--
+            CORRIGÉ le 10/09/2026 (validation de Gaëtan).
+            Avant : « Les tarifs sont indiqués en euros hors taxes (HT). TVA non applicable
+            (article 293 B du CGI — franchise en base de TVA). »
+            L'article 293 B est un régime RÉSERVÉ à une entreprise déclarée : l'invoquer alors
+            que la société n'est pas immatriculée revient à revendiquer un droit qu'on n'a pas.
+            La nouvelle rédaction dit la même chose sans rien affirmer de faux.
+          -->
           <p>
-            Les tarifs sont indiqués en euros hors taxes (HT). TVA non applicable 
-            (article 293 B du CGI — franchise en base de TVA).
+            Les tarifs sont indiqués en euros. Le régime de TVA applicable sera mentionné
+            sur chaque facture dès l'immatriculation de l'entreprise.
           </p>
           <p><strong>Modalités de paiement :</strong></p>
           <ul>

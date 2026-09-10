@@ -31,20 +31,30 @@
       </header>
 
       <!-- ── 1. L'ENTREPRISE ───────────────────────────────────────────── -->
+      <!--
+        TEXTES JURIDIQUES CORRIGÉS le 10/09/2026 (validation de Gaëtan).
+        Avant : « GL Digital Lab — SASU de droit français » (statut déclaré au présent alors que
+        la société n'est pas immatriculée : aucun SIREN, aucun SIRET), et « Références légales
+        SIREN, SIRET, code APE et numéro de TVA : SUR DEMANDE » — une promesse impossible à tenir,
+        puisque ces références n'existent pas encore.
+        Après : le même contenu, sans rien affirmer de faux ni promettre ce qui n'existe pas.
+        Les obligations citées viennent de la page officielle « Mentions obligatoires sur le site
+        internet d'un entrepreneur » (Entreprendre Service Public, vérifiée le 31/07/2023) :
+        voir modeles/juridique-textes-a-valider-2026-09-10.md dans le dépôt de l'agence.
+      -->
       <section class="dossier__section" aria-labelledby="entreprise">
         <h2 id="entreprise">1. L'entreprise</h2>
         <dl class="dossier__fiche">
-          <div><dt>Dénomination</dt><dd>GL Digital Lab — SASU de droit français</dd></div>
+          <div><dt>Dénomination</dt><dd>GL Digital Lab — studio indépendant français, en cours d'immatriculation</dd></div>
           <div><dt>Dirigeant</dt><dd>Gaëtan Langlet</dd></div>
           <div><dt>Adresse</dt><dd>Harponville, Somme (80), Hauts-de-France</dd></div>
           <div><dt>Activité</dt><dd>Développement web, applications métier, intégration d'intelligences artificielles exécutées localement ou en France</dd></div>
           <div><dt>Contact</dt><dd><a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a> · <a href="tel:+33686474610">06 86 47 46 10</a></dd></div>
-          <div><dt>Références légales</dt><dd>SIREN, SIRET, code APE et numéro de TVA : sur demande, ou en pied de facture</dd></div>
+          <div><dt>Références légales</dt><dd>Les références légales (SIREN, SIRET, code APE, numéro de TVA) figureront en pied de facture dès l'immatriculation. Aucune facture n'est émise avant.</dd></div>
         </dl>
         <p class="dossier__note">
-          Entreprise individuelle au sens économique : un seul interlocuteur, pas
-          de sous-traitance, pas de chaîne de prestataires. C'est un choix, et
-          c'est aussi une limite — elle est décrite au point 6.
+          Un seul interlocuteur : Gaëtan Langlet, pas de sous-traitance, pas de chaîne de
+          prestataires. C'est un choix, et c'est aussi une limite — elle est décrite au point 6.
         </p>
       </section>
 
