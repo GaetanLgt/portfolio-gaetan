@@ -46,6 +46,39 @@ générées), **le fond d'écran** (déjà appliqué), et **la section du vaisse
 sans ton accord, parce que remplacer ta vitrine en ligne par une refonte non
 validée n'est pas une décision d'agent.
 
+⚠️ **ATTENTION — LE PIÈGE À CONNAÎTRE** : le workflow
+`.github/workflows/deploy.yml` **déploie automatiquement en production à chaque
+push sur `main`** (via FTP, avec les secrets `FTP_SERVER`, `FTP_USERNAME`,
+`FTP_PASSWORD` déjà configurés côté GitHub).
+
+Autrement dit : **pousser, c'est déployer.** Il n'y a pas d'étape intermédiaire,
+pas de préproduction. Si tu fais un `git push` pour sauvegarder ton travail ou
+par réflexe, la refonte part en ligne immédiatement.
+
+État vérifié le 10/09/2026 :
+
+| | |
+|---|---|
+| Dépôt distant | `github.com/GaetanLgt/portfolio-gaetan.git` |
+| Branche locale | **30 commits en avance** sur `origin/main` |
+| Push effectué | **aucun** — la production est intacte |
+| Site en ligne | `gldigitallab.fr` — toujours l'ancienne version |
+
+**Trois façons de procéder, à ton choix :**
+
+1. **Pousser sur une branche** (`git push origin main:refonte-arkadia`) pour
+   sauvegarder sans rien déployer, puis fusionner quand tu as validé.
+2. **Pousser sur main** quand tu es prêt : le déploiement se fait tout seul en
+   quelques minutes, et la refonte remplace l'ancienne vitrine.
+3. **Déployer à la main en FTP** si tu préfères garder la main sur le moment —
+   le contenu à envoyer est dans `dist/`, **sans oublier `dist/api/contact.php`**
+   (c'est le formulaire auto-hébergé ; sans lui, le formulaire de contact ne
+   fonctionne plus).
+
+Dans tous les cas : après déploiement, **teste le formulaire de contact pour de
+vrai** et vérifie que l'e-mail arrive. Il a été testé en local, où l'expédition
+échoue faute de serveur mail — **l'envoi réel n'a jamais été confirmé**.
+
 ---
 
 ## Cinq décisions qui t'appartiennent
