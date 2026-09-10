@@ -30,6 +30,10 @@
     <!-- Navigation -->
     <Navigation v-if="isLoaded && !isFullscreenGame" />
     
+    <!-- LE BALAYAGE : le scan qui traverse l'écran au changement de page.
+         Décoratif (aria-hidden), CSS pur, coupé en reduced-motion. -->
+    <div v-if="balayageEnCours" class="balayage" aria-hidden="true"></div>
+
     <!-- Main Content with Enhanced Transitions -->
     <main id="main-content" class="main-content" role="main" tabindex="-1" aria-label="Contenu principal">
       <router-view v-slot="{ Component, route }">
@@ -151,8 +155,31 @@ const showAnimatedBackground = computed(() => !isShowcasePage.value);
 // avec les pages d'univers)
 const getTransitionName = () => 'page';
 
+// ── LE BALAYAGE (expérience signature n°3 de la doctrine D5) ────────────────
+// Un scan traverse l'écran au changement de page : le poste « lit » la page
+// avant de la poser. Purement décoratif, CSS uniquement.
+// Il ne retarde RIEN : la nouvelle page s'affiche pendant le balayage, le scan
+// passe par-dessus. Aucune attente n'est imposée au visiteur.
+const balayageEnCours = ref(false);
+let minuteurBalayage = null;
+
+const lancerBalayage = () => {
+  if (typeof window === 'undefined') return;
+  // Coupé si le visiteur a demandé moins de mouvement — sans exception.
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // On repasse par false pour que l'animation redémarre même sur deux
+  // navigations rapprochées : sinon la seconde n'aurait aucun balayage.
+  balayageEnCours.value = false;
+  requestAnimationFrame(() => {
+    balayageEnCours.value = true;
+    if (minuteurBalayage) clearTimeout(minuteurBalayage);
+    minuteurBalayage = setTimeout(() => { balayageEnCours.value = false; }, 520);
+  });
+};
+
 // Callbacks de transition
 const onBeforeEnter = () => {
+  lancerBalayage();
   // Scroll to top before entering new page
   window.scrollTo({ top: 0, behavior: 'instant' });
 };
@@ -221,6 +248,69 @@ const onLoaded = () => {
 /* ═══════════════════════════════════════════════════════════════════════════
    PAGE TRANSITIONS - Default
    ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── LE BALAYAGE (doctrine D5, expérience signature n°3) ──────────────────
+   Un trait lumineux traverse l'écran horizontalement, suivi d'un voile qui
+   s'efface : le poste « lit » la page avant de la poser.
+   CSS pur, aucune image, aucun JavaScript pendant l'animation.
+   Il ne bloque rien : la page est déjà affichée dessous. */
+.balayage {
+  position: fixed;
+  inset: 0;
+  z-index: 400;          /* au-dessus du contenu, sous la navigation (500) */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Le voile : une teinte sombre qui balaie de gauche à droite puis disparaît. */
+.balayage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 229, 255, 0.06) 38%,
+    rgba(0, 255, 65, 0.10) 50%,
+    rgba(0, 229, 255, 0.06) 62%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: balayage-voile 420ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Le trait : une ligne nette qui mène le balayage, comme un rayon de lecture. */
+.balayage::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 24px 4px rgba(0, 255, 65, 0.55);
+  transform: translateX(-10px);
+  animation: balayage-trait 420ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes balayage-voile {
+  from { transform: translateX(-100%); opacity: 1; }
+  70%  { opacity: 1; }
+  to   { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes balayage-trait {
+  from { transform: translateX(-10px); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  to   { transform: translateX(100vw); opacity: 0; }
+}
+
+/* Réduction de mouvement : on ne masque pas le balayage, on ne le joue pas.
+   Le composant ne le monte déjà pas dans ce cas — cette règle est la seconde
+   ceinture, au cas où une animation serait déclenchée autrement. */
+@media (prefers-reduced-motion: reduce) {
+  .balayage { display: none; }
+}
 
 .page-enter-active,
 .page-leave-active {
