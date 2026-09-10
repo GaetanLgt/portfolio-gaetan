@@ -83,6 +83,7 @@ function loadMatomoScript() {
     
     // Si consentement déjà donné, active le tracking
     if (consentGiven.value) {
+      marquerNatureVisiteur();
       window._paq.push(['setConsentGiven']);
       window._paq.push(['trackPageView']);
     }
@@ -99,10 +100,85 @@ function loadMatomoScript() {
  */
 function trackPageView(path, title) {
   if (consentGiven.value && window._paq) {
+    marquerNatureVisiteur();
     window._paq.push(['setCustomUrl', path]);
     window._paq.push(['setDocumentTitle', title || document.title]);
     window._paq.push(['trackPageView']);
   }
+}
+
+/**
+ * NATURE DU VISITEUR (ajouté le 13/09/2026)
+ *
+ * Pourquoi : la dimension « type de visiteur » demandée par Gaëtan sert à
+ * répondre à une seule question — est-ce que le travail d'ouverture aux agents
+ * IA amène quelque chose ? Encore faut-il ne pas la deviner.
+ *
+ * Deux signaux, tous deux vérifiables, aucun déduit :
+ *   · `navigator.webdriver` vaut true quand la page est pilotée par un outil
+ *     d'automatisation (c'est un signal standard, pas une supposition) ;
+ *   · une liste d'empreintes d'agents connues, comparée au user-agent.
+ *
+ * CE QUE CE CODE NE PEUT PAS FAIRE, et il faut le dire : un robot d'indexation
+ * n'exécute pas JavaScript. Il ne verra donc jamais ce code. Et le consentement
+ * étant requis, un visiteur qui n'a pas accepté n'est pas compté. Compter les
+ * robots demande une autre voie : l'import des journaux serveur dans Matomo
+ * (import_logs.py), qui lit les journaux d'accès o2switch. C'est une action
+ * côté hébergement, pas côté site.
+ */
+const EMPREINTES_AGENT = [
+  'gptbot', 'chatgpt-user', 'oai-searchbot', 'claudebot', 'claude-user',
+  'anthropic-ai', 'perplexitybot', 'perplexity-user', 'ccbot', 'bytespider',
+  'amazonbot', 'applebot', 'meta-externalagent', 'duckassistbot', 'youbot',
+  'cohere-ai', 'mistralai', 'diffbot', 'timpibot', 'omgili', 'googleother',
+  'google-extended', 'petalbot', 'ai2bot'
+];
+
+function natureDuVisiteur() {
+  const ua = (navigator.userAgent || '').toLowerCase();
+  if (EMPREINTES_AGENT.some((m) => ua.includes(m))) return 'robot-ia';
+  if (navigator.webdriver === true) return 'automatisation';
+  return 'humain';
+}
+
+/**
+ * Marque la visite. Deux mécanismes volontairement doublés :
+ *   · une variable personnalisée de portée « visite » — elle fonctionne tout de
+ *     suite, sans aucun réglage dans Matomo ;
+ *   · une dimension personnalisée (identifiant 1) — plus propre si Gaëtan la
+ *     crée dans Administration > Dimensions personnalisées. Tant qu'elle
+ *     n'existe pas, Matomo ignore simplement la ligne.
+ */
+function marquerNatureVisiteur() {
+  if (!window._paq) return;
+  const nature = natureDuVisiteur();
+  window._paq.push(['setCustomVariable', 1, 'Nature du visiteur', nature, 'visit']);
+  window._paq.push(['setCustomDimension', 1, nature]);
+}
+
+/**
+ * Suivi des liens de contact directs (courriel et téléphone).
+ *
+ * `enableLinkTracking` de Matomo ne couvre ni `mailto:` ni `tel:` : ces clics
+ * étaient donc invisibles. Or ce sont les conversions les plus directes du
+ * site. Un seul écouteur global couvre toutes les pages (pied de page, page de
+ * contact, dossier, mentions légales, confidentialité) plutôt que de modifier
+ * cinq fichiers.
+ */
+let ecouteurContactPose = false;
+
+function suivreLiensDeContact() {
+  if (ecouteurContactPose || typeof document === 'undefined') return;
+  ecouteurContactPose = true;
+
+  document.addEventListener('click', (e) => {
+    const lien = e.target && e.target.closest ? e.target.closest('a[href^="mailto:"], a[href^="tel:"]') : null;
+    if (!lien) return;
+    const estTelephone = lien.getAttribute('href').startsWith('tel:');
+    // On ne transmet ni l'adresse ni le numéro : seulement le fait qu'un
+    // visiteur a choisi ce canal, et sur quelle page.
+    trackEvent('Contact', estTelephone ? 'clic-telephone' : 'clic-courriel', window.location.pathname);
+  }, { passive: true });
 }
 
 /**
@@ -117,7 +193,8 @@ export function useMatomo() {
       console.log('[Matomo] Disabled - skipping init');
       return;
     }
-    
+
+    suivreLiensDeContact();
     loadMatomoScript();
   }
   
@@ -150,6 +227,7 @@ export function useMatomo() {
     }
     
     if (window._paq) {
+      marquerNatureVisiteur();
       window._paq.push(['rememberConsentGiven']);
       window._paq.push(['setConsentGiven']);
       window._paq.push(['trackPageView']);

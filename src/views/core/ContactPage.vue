@@ -87,7 +87,22 @@
           
           <!-- Right Panel - Form -->
           <div class="contact-card__form">
-            <form @submit.prevent="handleSubmit" v-if="formStatus === 'idle'">
+            <!--
+              WebMCP — API déclarative (décision Gaëtan, 13/09/2026).
+              Deux attributs suffisent à déclarer ce formulaire comme une
+              CAPACITÉ offerte aux agents, et non comme une simple page à lire :
+              un agent peut demander un audit au nom d'un client. C'est ce que
+              mesure l'audit « WebMCP form coverage » de Lighthouse, qui était
+              jusqu'ici « non applicable » faute de déclaration.
+              Choix assumé : le formulaire reste protégé par son anti-spam et
+              son horodatage ; rien n'est ouvert en écriture directe.
+            -->
+            <form
+              @submit.prevent="handleSubmit"
+              v-if="formStatus === 'idle'"
+              toolname="demander_un_audit"
+              tooldescription="Demander un audit ou un devis à GL Digital Lab. Transmet au studio le besoin d'un client — nom ou entreprise, courriel professionnel, type de projet, budget, délai et description — et le studio répond sous 24 heures. À utiliser quand un client veut un chiffre ou une date avant de s'engager."
+            >
               <div class="form-group">
                 <label for="name" class="form-label">NOM / ENTREPRISE</label>
                 <input 
@@ -244,6 +259,7 @@ import { ref, reactive, onMounted } from 'vue';
 import MagneticButton from '@/components/common/MagneticButton.vue';
 import SystemTerminal from '@/components/common/SystemTerminal.vue';
 import { useScrollAnimations } from '@/composables/useScrollAnimations';
+import { useMatomo } from '@/composables/useMatomo';
 
 const { fadeInUp, scaleIn } = useScrollAnimations();
 
@@ -259,6 +275,7 @@ const terminalLines = ref([
   { type: 'output', text: 'Place pour 2 nouveaux projets par mois', highlight: true },
 ]);
 
+const matomo = useMatomo();
 const formStatus = ref('idle'); // idle | sending | success | error
 const erreurEnvoi = ref('');
 
@@ -312,6 +329,16 @@ const handleSubmit = async () => {
 
     if (response.ok && donnees.ok) {
       formStatus.value = 'success';
+      // OBJECTIF MATOMO (décision Gaëtan, 13/09/2026) : c'est la conversion qui
+      // compte — un formulaire réellement transmis. On enregistre le type de
+      // projet et la gamme de budget tels quels : ce sont des choix proposés par
+      // le formulaire, pas des données libres, et ils disent quelle offre est
+      // demandée. Aucun nom, aucun courriel, aucun message ne part ici.
+      matomo.trackEvent(
+        'Contact',
+        'formulaire-envoye',
+        `${form.project || 'projet-non-precise'} / ${form.budget || 'budget-non-precise'}`
+      );
       return;
     }
     // Le serveur explique en français ce qui ne va pas : on l'affiche tel quel
