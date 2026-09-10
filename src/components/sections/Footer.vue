@@ -26,7 +26,7 @@
         
         <!-- Contact (Opquast N°100, N°102) -->
         <div class="footer__section">
-          <h4 class="footer__title">Contact</h4>
+          <h3 class="footer__title">Contact</h3>
           <address class="footer__address">
             <p>Gaëtan LANGLET</p>
             <p>Harponville, Somme (80) — Hauts-de-France</p>
@@ -42,7 +42,7 @@
         
         <!-- Navigation Principale — parcours prospect (audit Awwwards D2) -->
         <div class="footer__section">
-          <h4 class="footer__title">Navigation</h4>
+          <h3 class="footer__title">Navigation</h3>
           <nav class="footer__nav">
             <router-link to="/">Accueil</router-link>
             <router-link to="/services">Offre &amp; audits</router-link>
@@ -54,7 +54,7 @@
         
         <!-- Ressources (ex-rubrique « Manifeste & coulisses » — lore retiré 09/2026) -->
         <div class="footer__section">
-          <h4 class="footer__title">Ressources</h4>
+          <h3 class="footer__title">Ressources</h3>
           <nav class="footer__nav">
             <router-link to="/ressources/tutoriels">Tutoriels &amp; guides</router-link>
             <router-link to="/components">Composants réutilisables</router-link>
@@ -64,7 +64,7 @@
         
         <!-- Legal (Opquast N°45) -->
         <div class="footer__section">
-          <h4 class="footer__title">Légal & Site</h4>
+          <h3 class="footer__title">Légal & Site</h3>
           <nav class="footer__nav" aria-label="Navigation légale">
             <router-link to="/sitemap">Plan du site</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>

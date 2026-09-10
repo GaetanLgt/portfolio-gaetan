@@ -408,7 +408,8 @@
               <p class="preuve-arkadia__desc">
                 La même stack d'agents et d'IA locale qui fait tourner ArkAdiA, nous la déployons
                 chez nos clients : systèmes multi-agents, RAG mémoire, automatisations —
-                dans leur environnement, jamais dans un cloud étranger.
+                exécutés sur du matériel identifié, en France. Le détail de chaque flux de
+                données est publié, sans formule absolue.
               </p>
               <div class="preuve-arkadia__actions">
                 <a class="btn-outline preuve-arkadia__lien" href="https://arkadia.gldigitallab.fr" target="_blank" rel="noopener noreferrer">
@@ -632,12 +633,15 @@ const solutions = [
     price: '149 € – 199 € HT',
     description: 'Je relève sur VOTRE site les failles réelles : version obsolète, plugin vulnérable, absence de mises à jour. Chiffres à l\'appui, avant qu\'un pirate ou Google ne s\'en charge.',
     outputs: [
-      'Analyse 100 % locale — aucune donnée ne quitte votre machine',
+      'Analyse exécutée sur notre machine, en France — aucun service d\'analyse tiers',
       'Rapport clair, sans jargon, avec les risques en une phrase',
       'Plan chiffré des corrections, devis en option',
       'Résultat sous 48 h'
     ],
-    badge: 'POUR COMMENCER'
+    badge: 'POUR COMMENCER',
+    // L'audit lit un site PUBLIC : prétendre qu'« aucune donnée ne quitte votre
+    // machine » était faux. Formulation corrigée après l'audit Perplexity.
+    flux: 'Lecture seule sur un site public. Détail des flux : /flux-de-donnees'
   },
   {
     title: 'Site web',
@@ -669,7 +673,7 @@ const solutions = [
     title: 'IA & automatisation locale',
     role: 'La propulsion',
     price: 'Audit IA + prototype dès 1 500 € HT',
-    description: 'De l\'IA qui tourne sur vos serveurs. Vos documents et vos données ne sortent pas de votre réseau.',
+    description: 'De l\'IA qui s\'exécute sur votre matériel ou sur le nôtre, en France. Le détail de ce qui sort et de ce qui ne sort pas est publié, sans formule absolue.',
     outputs: [
       'Audit IA + prototype sur un cas d\'usage réel',
       'Hébergement dans votre environnement',
@@ -721,8 +725,8 @@ const methodSteps = [
 
 const methodGuarantees = [
   {
-    title: 'Données souveraines',
-    text: 'L\'IA est exécutée en local ou en France : vos documents ne quittent pas votre réseau.'
+    title: 'Données sous votre contrôle',
+    text: 'L\'IA s\'exécute sur votre matériel ou sur le nôtre, en France. Ce qui sort et ce qui ne sort pas est écrit noir sur blanc, sans formule absolue.'
   },
   {
     title: 'Vérification systématique',

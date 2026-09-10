@@ -45,6 +45,36 @@
         </section>
         
         <section class="legal-section">
+          <h2>Destinataires et transferts hors Union européenne</h2>
+          <!-- AJOUT 10/09/2026, après l'audit Perplexity : le formulaire de
+               contact passe par Formspree (société américaine). Ce transfert
+               n'était déclaré NULLE PART — c'est un manquement, pas un détail.
+               Il est désormais écrit ici, avant les sections qui suivent. -->
+          <p>
+            Le formulaire de contact de ce site est acheminé par <strong>Formspree</strong>
+            (Formspree, Inc., États-Unis), qui agit comme sous-traitant et transmet le message
+            à notre boîte e-mail. Cela implique un <strong>transfert de vos données hors de
+            l'Union européenne</strong>, encadré par les clauses contractuelles types de la
+            Commission européenne et le <em>Data Privacy Framework</em>.
+          </p>
+          <p>Les données concernées sont uniquement celles que vous saisissez :</p>
+          <ul>
+            <li>votre nom, votre adresse e-mail et le contenu de votre message ;</li>
+            <li>l'horodatage de l'envoi et l'adresse IP transmise par le protocole.</li>
+          </ul>
+          <p>
+            Aucune autre donnée n'est transmise à un tiers. L'analyse d'audience est réalisée
+            par une instance <strong>Matomo auto-hébergée en France</strong> (§ suivant), et non
+            par un service externe.
+          </p>
+          <p class="legal-note">
+            Vous préférez éviter ce transfert ? Écrivez directement à
+            <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a> ou appelez
+            le 06 86 47 46 10 : aucun intermédiaire, aucune donnée hors UE.
+          </p>
+        </section>
+
+        <section class="legal-section">
           <h2>Durée de conservation</h2>
           <p>
             Vos données de contact sont conservées pendant une durée de 3 ans à compter 
@@ -242,6 +272,17 @@ function handleResetConsent() {
 
 .legal-section a {
   color: var(--primary);
+}
+
+/* Encadré de note : sert à signaler une exception ou une alternative concrète
+   (ici, la possibilité d'écrire directement pour éviter le transfert hors UE). */
+.legal-note {
+  margin-top: 1rem;
+  padding: 0.9rem 1.1rem;
+  border-left: 3px solid var(--neon-cyan);
+  background: var(--paper-alt);
+  font-size: 0.92rem;
+  color: var(--ink-soft);
 }
 
 .legal-section code {
