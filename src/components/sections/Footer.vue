@@ -17,16 +17,41 @@
               <div class="logo-icon">GL</div>
               <span class="logo-name">GL DIGITAL LAB</span>
             </div>
+            <!--
+              FORMULATION CORRIGÉE (13/09/2026, décision Gaëtan — option A).
+
+              L'ancienne phrase disait : « Un cercle de six Lois veille sur vos
+              outils. Vous restez au centre — l'humain décide. » Trois problèmes,
+              et elle s'affichait sur TOUTES les pages :
+
+              1. Elle répétait la bande décorative située vingt pixels plus haut
+                 (« LA MACHINE SERT · L'HUMAIN DÉCIDE »). La version courte était
+                 la meilleure des deux : on ne garde que celle-là.
+              2. « six Lois » est du vocabulaire interne, jamais défini sur le
+                 site public. Un dirigeant de PME ne sait pas si c'est un
+                 logiciel, une équipe ou une méthode.
+              3. Surtout, elle était fausse : « veille sur VOS outils » décrit une
+                 surveillance des systèmes du client. Les six agents travaillent
+                 dans NOTRE atelier, sur NOS machines, pour produire le travail.
+                 Une phrase qui se trompe sur la nature de ce qu'elle décrit,
+                 répétée sur chaque page, est exactement ce que la charte
+                 interdit.
+
+              Le terme « six Lois » reste en interne, sur décision de Gaëtan. Le
+              site public parle au client dans sa langue, et dit une chose
+              vérifiable : des agents d'IA tournent ici, en France, sur nos
+              propres machines — ce que le poste démontre tous les jours.
+            -->
             <p class="footer__tagline">
-              Un cercle de six Lois veille sur vos outils.<br>
-              Vous restez au centre — l'humain décide.
+              Six agents d'IA travaillent dans notre atelier,<br>
+              sur nos machines, en France.
             </p>
           </div>
         </div>
         
         <!-- Contact (Opquast N°100, N°102) -->
         <div class="footer__section">
-          <h3 class="footer__title">Contact</h3>
+          <h2 class="footer__title">Contact</h2>
           <address class="footer__address">
             <p>Gaëtan LANGLET</p>
             <p>Harponville, Somme (80) — Hauts-de-France</p>
@@ -42,7 +67,7 @@
         
         <!-- Navigation Principale — parcours prospect (audit Awwwards D2) -->
         <div class="footer__section">
-          <h3 class="footer__title">Navigation</h3>
+          <h2 class="footer__title">Navigation</h2>
           <nav class="footer__nav">
             <router-link to="/">Accueil</router-link>
             <router-link to="/services">Offre &amp; audits</router-link>
@@ -77,7 +102,7 @@
         
         <!-- Legal (Opquast N°45) -->
         <div class="footer__section">
-          <h3 class="footer__title">Légal & Site</h3>
+          <h2 class="footer__title">Légal & Site</h2>
           <nav class="footer__nav" aria-label="Navigation légale">
             <router-link to="/sitemap">Plan du site</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>

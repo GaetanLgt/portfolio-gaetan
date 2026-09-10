@@ -394,7 +394,11 @@ BabyMatureSpeedMultiplier=10.0
 bDisableStructurePlacementCollision=true</code></pre>
               </div>
               
-              <h4>🔄 Cycle de vie des Mods</h4>
+              <!-- NIVEAU CORRIGÉ (13/09/2026) : c'était un h4 placé sous un h2,
+                   sans h3 intercalé. Sauter un niveau casse la navigation par
+                   titres d'un lecteur d'écran ; Lighthouse le relève sous
+                   « heading-order ». La règle de style a suivi le changement. -->
+              <h3>🔄 Cycle de vie des Mods</h3>
               <div class="mod-cycle">
                 <div class="mod-step">
                   <span class="mod-step__num">01</span>
@@ -437,7 +441,7 @@ cheat destroytarget  # Suppression chirurgicale</code></pre>
               </div>
               
               <div class="scenario glass">
-                <h4>📍 Scénario vécu</h4>
+                <h3>📍 Scénario vécu</h3>
                 <p>
                   Une tribu construit une base qui fait chuter les FPS du secteur. 
                   Je me téléporte, analyse la structure, et supprime chirurgicalement 
@@ -1635,7 +1639,7 @@ const uptimeAccessibleData = ref([
   line-height: 1.8;
 }
 
-.timeline__content h4 {
+.timeline__content h3 {
   font-size: 0.9rem;
   color: var(--primary);
   margin: var(--space-md) 0 var(--space-sm);
@@ -1767,7 +1771,7 @@ const uptimeAccessibleData = ref([
   margin: var(--space-sm) 0;
 }
 
-.scenario h4 {
+.scenario h3 {
   font-size: 0.85rem;
   color: var(--primary);
   margin: 0 0 0.5rem 0;

@@ -84,7 +84,11 @@
             
             <!-- Content -->
             <div class="project-card__content">
-              <h3 class="project-card__title">{{ project.name }}</h3>
+              <!-- NIVEAU CORRIGÉ (13/09/2026) : h1 puis h3, sans h2 intercalé.
+                   Lighthouse (heading-order) le relevait sur chaque carte. Le
+                   titre des cartes est le niveau juste sous le titre de page : ce
+                   sont des h2. Le style ne bouge pas, il passe par la classe. -->
+              <h2 class="project-card__title">{{ project.name }}</h2>
               <p class="project-card__desc">{{ project.shortDesc }}</p>
             </div>
             
@@ -135,7 +139,7 @@
             
             <!-- Features -->
             <div v-if="selectedProject.features" class="project-modal__features">
-              <h4>Fonctionnalités clés</h4>
+              <h3>Fonctionnalités clés</h3>
               <ul>
                 <li v-for="feature in selectedProject.features" :key="feature">
                   {{ feature }}
@@ -145,7 +149,7 @@
             
             <!-- Stack -->
             <div class="project-modal__stack">
-              <h4>Stack technique</h4>
+              <h3>Stack technique</h3>
               <div class="project-modal__tags">
                 <span v-for="tech in selectedProject.stack" :key="tech" class="tech-tag tech-tag--large">
                   {{ tech }}
@@ -155,7 +159,7 @@
             
             <!-- Learnings -->
             <div v-if="selectedProject.learnings" class="project-modal__learnings">
-              <h4>Apprentissages</h4>
+              <h3>Apprentissages</h3>
               <p>{{ selectedProject.learnings }}</p>
             </div>
             
@@ -833,9 +837,9 @@ function closeProject() {
   margin-bottom: 1.5rem;
 }
 
-.project-modal__features h4,
-.project-modal__stack h4,
-.project-modal__learnings h4 {
+.project-modal__features h3,
+.project-modal__stack h3,
+.project-modal__learnings h3 {
   font-size: 0.85rem;
   color: var(--primary);
   margin-bottom: 0.75rem;
