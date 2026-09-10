@@ -10,6 +10,19 @@
         <div class="app-intro">
           <h1><span class="app-icon">📢</span> Content Generator</h1>
           <p>Générez du contenu optimisé SEO pour vos projets</p>
+          <!--
+            AVERTISSEMENT AJOUTÉ le 10/09/2026 (règle Makoto).
+            Ce générateur propose des modèles pré-remplis. Certains portent des noms
+            d'entreprises FICTIVES et des chiffres de démonstration (« 200+ projets »,
+            « 15 experts ») : sans cette mention, un visiteur peut les prendre pour des
+            références réelles du studio. Un des modèles portait même notre propre nom
+            avec des affirmations non mesurées — il a été vidé de ces chiffres.
+          -->
+          <p class="avert-exemples">
+            Les modèles pré-remplis sont des <strong>exemples fictifs</strong> : les noms
+            d'entreprises et les chiffres y sont inventés pour la démonstration.
+            Remplacez-les toujours par vos faits vérifiables.
+          </p>
         </div>
 
         <!-- CONTENT TYPE -->
@@ -65,7 +78,11 @@
             </div>
             <div class="input-group">
               <label>⭐ Points forts (optionnel)</label>
-              <input type="text" v-model="highlights" placeholder="10 ans d'expérience, 50+ projets, 100% satisfaction" class="text-input">
+              <!-- Exemple neutre : l'ancien texte (« 10 ans d'expérience, 50+ projets,
+                   100% satisfaction ») était indexable par les moteurs sur cette page
+                   et ressemblait à NOS chiffres. Un exemple ne doit pas pouvoir être
+                   pris pour une preuve. -->
+              <input type="text" v-model="highlights" placeholder="vos faits réels : nombre de sites livrés, années d'activité…" class="text-input">
             </div>
           </div>
 
@@ -632,12 +649,22 @@ function downloadFile(content, filename, type) {
 function loadTemplate(type) {
   const templates = {
     gldigital: {
+      // ⚠️ CORRIGÉ le 10/09/2026 — RÈGLE MAKOTO.
+      // Ce modèle portait `highlights: '50+ projets livrés, 100% clients satisfaits,
+      // Expert Symfony certifié'`. Aucune de ces trois affirmations n'est mesurée :
+      // le nombre de projets livrés n'est pas tenu à jour, « 100 % de clients
+      // satisfaits » n'est vérifiable par personne, et « Expert Symfony certifié »
+      // revendique une certification. Ce fichier est PUBLIC (bundle téléchargeable
+      // et page indexée), sur le site d'un studio qui vend des audits : une métrique
+      // inventée y est une faute professionnelle, pas une maladresse.
+      // On laisse le champ VIDE : à remplir avec des faits vérifiables, jamais avec
+      // un chiffre de vitrine.
       brief: 'GL Digital Lab est une agence web spécialisée dans le développement d\'applications sur-mesure avec Symfony et Vue.js. Nous accompagnons les PME des Hauts-de-France dans leur transformation digitale avec une approche pragmatique et orientée résultats.',
       company: 'GL Digital Lab',
       location: 'Amiens, Hauts-de-France',
       keywords: 'développement web, Symfony, Vue.js, agence web Amiens',
       audience: 'PME et ETI',
-      highlights: '50+ projets livrés, 100% clients satisfaits, Expert Symfony certifié',
+      highlights: '',
       technologies: 'Symfony 7, Vue.js 3, PostgreSQL, Docker, API REST',
       cta: 'Demander un audit gratuit',
       tone: 'professional',
@@ -731,6 +758,17 @@ function loadTemplate(type) {
 .app-main { padding: var(--space-lg) 0; }
 .app-intro { text-align: center; margin-bottom: 2rem; }
 .app-intro h1 { display: flex; justify-content: center; gap: 0.5rem; font-size: 1.75rem; }
+/* Mention des exemples fictifs : elle doit se VOIR, sinon elle ne sert à rien. */
+.avert-exemples {
+  margin: 0.75rem auto 0;
+  max-width: 62ch;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--rule, #d8d2c6);
+  border-radius: 8px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
 .app-icon { font-size: 2rem; }
 
 h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-main); }
