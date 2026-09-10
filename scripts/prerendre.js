@@ -36,6 +36,7 @@ const option = (nom, defaut) => {
   return i >= 0 && args[i + 1] && !args[i + 1].startsWith('--') ? args[i + 1] : defaut
 }
 const DIST = path.resolve(option('dist', 'dist'))
+const RACINE = path.resolve(DIST, '..')
 const PORT = Number(option('port', 4178))
 const DEBUG_PORT = PORT + 1
 const ECRIRE = !args.includes('--titre-seulement')
@@ -115,14 +116,34 @@ class Cdp {
 const attendre = (ms) => new Promise((r) => setTimeout(r, ms))
 
 async function principal() {
-  /* ---------- routes depuis le sitemap ---------- */
+  /* ---------- routes : le plan de site ∪ les routes réelles du routeur ----------
+     Deux listes, deux rôles :
+       - sitemap.xml  = ce qu'on DÉCLARE à l'indexation ;
+       - src/router   = ce qui EXISTE et doit donc avoir une page HTML, même sans
+         être déclaré (/sitemap, /ark-admin — décision Gaëtan : joignables mais
+         pas proposés à l'indexation).
+     Sans la seconde, retirer le repli SPA du .htaccess casserait ces pages. */
   const sitemap = path.join(DIST, 'sitemap.xml')
   if (!fs.existsSync(sitemap)) { console.error('dist/sitemap.xml introuvable'); process.exit(1) }
   const xml = fs.readFileSync(sitemap, 'utf8')
-  const routes = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
+  const urlsSitemap = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
     .map((m) => { try { return new URL(m[1]).pathname.replace(/\/+$/, '') || '/' } catch { return null } })
-    .filter((v, i, a) => v !== null && a.indexOf(v) === i)
-  console.log(`Prérendu — ${routes.length} URL(s) déclarée(s) dans sitemap.xml`)
+    .filter((v) => v !== null)
+  const routeur = path.join(RACINE, 'src', 'router', 'index.js')
+  let urlsRouteur = []
+  if (fs.existsSync(routeur)) {
+    // Les blocs commentés retirés AVANT lecture : le routeur contient un
+    // « FORMATION — masqué temporairement (droits en attente) » mis en
+    // commentaire. Sans ce nettoyage, on tenterait de prérendre /formation,
+    // qui rend la page 404 — et le build échouerait pour une route désactivée
+    // volontairement.
+    const src = fs.readFileSync(routeur, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
+    urlsRouteur = [...src.matchAll(/path:\s*'([^']+)'/g)]
+      .map((m) => m[1])
+      .filter((p) => !p.includes(':') && !p.includes('*'))
+  }
+  const routes = [...new Set([...urlsSitemap, ...urlsRouteur])]
+  console.log(`Prérendu — ${urlsSitemap.length} URL(s) au sitemap, ${urlsRouteur.length} route(s) au routeur, ${routes.length} à rendre`)
 
   const serveur = await servir()
   const profil = fs.mkdtempSync(path.join(os.tmpdir(), 'prerendu-'))
@@ -201,6 +222,37 @@ async function principal() {
       ecrits++
     }
     rapport.push({ route, ok: true, titre, octets: html.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/' })
+  }
+
+  /* ---------- page 404 ----------
+     Une adresse inconnue doit répondre 404 avec CETTE page (ErrorDocument du
+     .htaccess), et non 200 avec la page d'accueil. Mesuré le 10/09/2026 : le
+     repli SPA renvoyait la coquille de l'accueil en HTTP 200 pour /arcade, /cv…
+     — un doublon de l'accueil aux yeux d'un moteur, pas un 404. */
+  const cheminIntrouvable = '/__page-introuvable__'
+  await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
+  let etat404 = null
+  for (let i = 0; i < 40; i++) {
+    await attendre(250)
+    const brut = await cdp.evaluer(`JSON.stringify({
+      texte: (document.body && document.body.innerText || '').length,
+      app: !!(document.querySelector('#app') && document.querySelector('#app').children.length),
+      titre: document.title
+    })`)
+    try { etat404 = JSON.parse(brut) } catch { etat404 = null }
+    if (etat404 && etat404.app && etat404.texte > 200) break
+  }
+  const html404brut = await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
+  if (typeof html404brut === 'string' && etat404 && /404|non trouv/i.test(etat404.titre)) {
+    // Le routeur a posé un canonical sur le chemin de test : sur une page servie
+    // à TOUTES les adresses inconnues, il ne désigne rien. On le retire.
+    const html404 = html404brut.replace(/\s*<link rel="canonical"[^>]*>/i, '')
+    fs.writeFileSync(path.join(DIST, '404.html'), html404, 'utf8')
+    ecrits++
+    rapport.push({ route: '404.html', ok: true, titre: etat404.titre, octets: html404.length, ecrit: true })
+  } else {
+    rapport.push({ route: '404.html', ok: false, motif: 'page 404 non reconnue (titre : ' + ((etat404 && etat404.titre) || '?') + ')' })
+    echecs++
   }
 
   cdp.fermer(); proc.kill(); serveur.close()

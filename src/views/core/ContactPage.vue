@@ -108,6 +108,7 @@
                 <input 
                   type="text" 
                   id="name" 
+                  name="name"
                   v-model="form.name"
                   required
                   autocomplete="name"
@@ -121,6 +122,7 @@
                 <input 
                   type="email" 
                   id="email" 
+                  name="email"
                   v-model="form.email"
                   required
                   autocomplete="email"
@@ -133,6 +135,7 @@
                 <label for="project" class="form-label">TYPE DE PROJET</label>
                 <select 
                   id="project" 
+                  name="project"
                   v-model="form.project"
                   required
                   class="form-select"
@@ -149,6 +152,7 @@
                 <label for="budget" class="form-label">BUDGET ESTIMÉ</label>
                 <select 
                   id="budget" 
+                  name="budget"
                   v-model="form.budget"
                   class="form-select"
                 >
@@ -165,6 +169,7 @@
                 <label for="deadline" class="form-label">ÉCHÉANCE SOUHAITÉE</label>
                 <select
                   id="deadline"
+                  name="deadline"
                   v-model="form.deadline"
                   class="form-select"
                 >
@@ -180,7 +185,11 @@
                    clavier (tabindex="-1", aria-hidden, masqué en CSS). Un
                    humain ne le voit ni ne le remplit ; le script serveur
                    rejette silencieusement toute soumission qui le contient.
-                   Ne jamais le supprimer sans retirer le contrôle serveur. -->
+                   Ne jamais le supprimer sans retirer le contrôle serveur.
+                   ⚠ VOLONTAIREMENT SANS `name` (10/09/2026) : les champs nommés
+                   entrent dans le schéma de l'outil WebMCP « demander_un_audit ».
+                   Le nommer ferait remplir le piège par un agent — et la
+                   soumission serait rejetée comme du spam. -->
               <div class="form-piege" aria-hidden="true">
                 <label for="site_web">Site web (ne pas remplir)</label>
                 <input id="site_web" v-model="form.site_web" type="text" tabindex="-1" autocomplete="off">
@@ -190,6 +199,7 @@
                 <label for="message" class="form-label">VOTRE PROJET</label>
                 <textarea 
                   id="message" 
+                  name="message"
                   v-model="form.message"
                   rows="4"
                   placeholder="Décrivez brièvement votre besoin..."
