@@ -85,6 +85,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { jouerSignal } from '@/composables/audio-poste.js';
 
 /**
  * Table des commandes. Tout le contenu est PUBLIC et déjà présent sur le site :
@@ -182,6 +183,10 @@ const executer = (brut) => {
   const reponse = REPONSES[commande];
   if (reponse) {
     reponse.forEach((l) => ecrire(l));
+    // Signal d'interface : ne joue QUE si le visiteur a activé le son. La
+    // fonction vérifie elle-même les deux conditions (son actif, mode sobre
+    // inactif) — l'appelant n'a pas à s'en soucier.
+    jouerSignal('console');
   } else {
     ecrire(`Commande inconnue : « ${commande} ». Tapez « aide ».`, 'erreur');
   }

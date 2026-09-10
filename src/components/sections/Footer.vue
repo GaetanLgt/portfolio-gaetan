@@ -95,6 +95,19 @@
             >
               {{ modeSobre ? 'Rétablir les effets' : 'Mode sobre' }}
             </button>
+            <!-- AUDIO DU POSTE (doctrine D5, expérience signature n°5) :
+                 DÉSACTIVÉ par défaut. Aucun son ne se déclenche tant que le
+                 visiteur ne l'a pas demandé — un site qui fait du bruit à
+                 l'arrivée est une nuisance. Tout est synthétisé en Web Audio :
+                 zéro fichier son à télécharger. -->
+            <button
+              type="button"
+              class="footer__cookie-btn"
+              :aria-pressed="audioActif ? 'true' : 'false'"
+              @click="basculerAudio"
+            >
+              {{ audioActif ? 'Couper le son' : 'Activer le son' }}
+            </button>
           </nav>
         </div>
         
@@ -137,6 +150,7 @@
 <script setup>
 import { computed } from 'vue';
 import { modeSobre, basculerModeSobre } from '@/composables/mode-sobre.js';
+import { audioActif, basculerAudio } from '@/composables/audio-poste.js';
 
 const currentYear = computed(() => new Date().getFullYear());
 const siret = null; // TODO: Remplacer par ton vrai SIRET
