@@ -11,11 +11,28 @@
     <!-- Loader -->
     <Loader v-if="!isFullscreenGame" @loaded="onLoaded" />
     
-    <!-- Backgrounds (choix via backgroundType) — coupé sur les pages vitrine -->
-    <component :is="backgroundComponent" v-if="isLoaded && !isFullscreenGame && showAnimatedBackground" />
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         DÉCOR ANIMÉ RETIRÉ (10/09/2026, décision Gaëtan).
+
+         Verdict après relecture : « enlève le WebGL qui ressemble à rien ».
+         Sont donc supprimés du rendu — pas déplacés, supprimés :
+           · la pluie de code en canvas (MatrixBackground)
+           · les particules réactives au curseur (ReactiveParticles)
+           · la Grille TRON en perspective (TronFloor)
+           · la couche console, scanlines et vignette (ConsoleOverlay)
+           · les six unités 3D générées (UnitesHero)
+           · le balayage de transition entre pages
+           · les anciens fonds décoratifs (Grid, Particles)
+
+         Raison de fond, au-delà du goût : un site d'artisan qui vend des sites
+         web n'a pas à faire une démonstration graphique avant de dire ce qu'il
+         vend. Le décor coûtait 47 % du poids de la page, plusieurs centaines de
+         millisecondes d'exécution, et il détournait l'attention de l'offre.
+
+         Les composants restent sur disque, non montés : le travail n'est pas
+         perdu, il est simplement hors du parcours.
+         ═══════════════════════════════════════════════════════════════════════ -->
     
-    <!-- Reactive Particles (follows cursor) — coupé sur les pages vitrine -->
-    <ReactiveParticles v-if="isLoaded && !isFullscreenGame && showAnimatedBackground" />
     
     <!-- Floating Decorative Elements -->
     <!-- Éléments flottants décoratifs RETIRÉS (D5, liste de suppression du

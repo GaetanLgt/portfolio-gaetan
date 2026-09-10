@@ -10,41 +10,12 @@
              (hero-bg) est retirée, elle cassait le fond clair et pesait
              plusieurs centaines de Ko. L'orbite reste la seule signature. -->
 
-        <!-- SIGNATURE ORBITE : le point humain reste fixe, les anneaux
-             (système) recalcule sa trajectoire. Purement décoratif CSS
-             (transform rotate = GPU), zéro WebGL, zéro déformation.
-             Le point central ne bouge JAMAIS. -->
-        <div class="hero__orbit" aria-hidden="true">
-          <span class="hero__orbit-core"></span>
-          <span class="hero__orbit-ring hero__orbit-ring--1"></span>
-          <span class="hero__orbit-ring hero__orbit-ring--2"></span>
-          <span class="hero__orbit-ring hero__orbit-ring--3"></span>
-        </div>
-
-        <!-- LA GRILLE (apport TRON, D5) : le sol du poste. Placée avant la 3D
-             pour que les unités se tiennent DESSUS. C'est le seul endroit où
-             le numérique affleure sur du réel — doctrine §1bis. -->
-        <TronFloor />
-
-        <!-- LES SIX UNITÉS EN 3D — montées APRÈS le premier rendu utile.
-             Audit Lighthouse du 10/09/2026 : la scène 3D (three.js + six
-             modèles + post-traitement) était chargée et exécutée pendant la
-             fenêtre de Largest Contentful Paint, ce qui plombait la performance
-             (score 49 à 61 pour une cible de 95). Elle ne sert pourtant à rien
-             avant que le visiteur regarde le hero : on la diffère jusqu'au
-             premier moment d'inactivité du navigateur.
-             Le canvas reste transparent (alpha) → la Grille TRON passe sous
-             les unités. Pour désactiver : retirer ce bloc. -->
-        <div class="hero__lois" aria-hidden="true">
-          <UnitesHero v-if="unitesPretes" />
-        </div>
-
-        <!-- COUCHE CONSOLE (D5) : scanlines, vignette, cadres d'angle,
-             hachures d'alerte, horloge réelle. Décoratif, zéro WebGL.
-             Placé APRÈS la 3D et AVANT le contenu : la même valeur de
-             z-index (1) fait passer le texte au-dessus dans l'ordre du DOM,
-             donc la console habille la scène sans jamais gêner la lecture. -->
-        <ConsoleOverlay />
+        <!-- DÉCOR DU HERO RETIRÉ (10/09/2026, décision Gaëtan : « enlève le
+             WebGL qui ressemble à rien »). Partis d'ici : les anneaux orbitaux,
+             la Grille TRON, les six unités 3D et la couche console avec ses
+             scanlines. Le hero ne contient plus que ce qui informe : l'offre,
+             le titre, la promesse, le bouton, et les deux chemins visiteur.
+             Les composants restent sur disque, non montés. -->
 
         <!-- Floating Tech Badges retirés (D5, décision du directeur artistique) :
              Vue 3 / Symfony / Three.js / IA Locale sont des choix d'outillage
@@ -365,74 +336,6 @@
          le visiteur a vu le navire, puis il l'interroge. -->
     <TerminalMnd />
 
-    <!-- SOLUTIONS / SERVICES -->
-    <section class="solutions" aria-labelledby="services-title">
-      <div class="container">
-        <ScrollReveal animation="fade-up">
-          <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// 01 · LE CHANTIER NAVAL</span>
-            <h2 id="services-title">Des systèmes, pas des outils</h2>
-            <p class="section-header__desc">
-              Chaque mission part de <strong>votre</strong> situation réelle : un
-              <strong>audit en 48 h</strong> pour voir clair, puis un système multi-agents
-              local (contenu, RAG, automatisation) ou une application sur-mesure — construit,
-              testé, livré par étapes visibles.
-              <br><span class="section-header__caveat">Budget final après atelier de cadrage : le prix dépend des
-              interfaces, des règles métier, des reprises de données et du niveau d'exigence sécurité.</span>
-            </p>
-          </div>
-        </ScrollReveal>
-        
-        <div class="solutions-grid" role="list">
-          <ScrollReveal v-for="(solution, i) in solutions" :key="solution.title" animation="fade-up" :delay="i * 150">
-            <!-- tilt 3D retiré (audit Awwwards : tilt-card banni) -->
-            <article class="solution-card glass" :class="{ 'solution-card--featured': solution.featured }" role="listitem">
-                <router-link :to="'/services#' + solution.title.toLowerCase().replace(/ /g, '-')" class="solution-card__link-wrapper" :aria-label="solution.title + ' - ' + solution.price">
-                  <span v-if="solution.badge" class="solution-card__badge" aria-label="Service populaire">{{ solution.badge }}</span>
-                  <div class="solution-card__icon" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</div>
-                  <div class="solution-card__content">
-                    <!-- Rôle au chantier naval : ce que l'on construit, dit avec
-                         le vocabulaire du navire. Le nom commercial reste
-                         inchangé juste en dessous — la métaphore habille
-                         l'offre, elle ne la remplace pas. -->
-                    <span class="solution-card__role">{{ solution.role }}</span>
-                    <h3>{{ solution.title }}</h3>
-                    <span class="solution-card__price">{{ solution.price }}</span>
-                    <p>{{ solution.description }}</p>
-                    <ul class="solution-card__outputs" aria-label="Ce qui est inclus">
-                      <li v-for="output in solution.outputs" :key="output">{{ output }}</li>
-                    </ul>
-                  </div>
-                  <span class="solution-card__cta" aria-hidden="true">Découvrir →</span>
-                </router-link>
-              </article>
-          </ScrollReveal>
-        </div>
-
-        <!-- LE CHANTIER NAVAL : le renversement du concept. On construit le
-             navire, mais c'est le client qui commande — et c'est une vraie
-             règle de travail, pas une image : aucune décision n'est verrouillée
-             sans lui. -->
-        <ScrollReveal animation="fade-up">
-          <div class="chantier">
-            <div class="chantier__texte">
-              <h3 class="chantier__titre">Au chantier, on construit. À la barre, c'est vous.</h3>
-              <p>
-                Nous livrons un navire, pas un équipage qui décide à votre place. Vous fixez
-                la destination et le budget ; nous tenons la coque, la propulsion et la cale.
-                Chaque étape est visible, chaque livraison est testable, et rien ne part en
-                production sans que vous ayez dit oui.
-              </p>
-            </div>
-            <ul class="chantier__points">
-              <li><strong>Nous construisons</strong><span>coque, propulsion, cale, voiles</span></li>
-              <li><strong>Vous commandez</strong><span>destination, budget, priorités</span></li>
-              <li><strong>Personne d'autre</strong><span>aucun intermédiaire, aucun sous-traitant opaque</span></li>
-            </ul>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
 
 
     <!-- PREUVE PRODUIT : ArkAdiA, réseau social souverain EN LIGNE — bande claire
@@ -488,104 +391,7 @@
 
     <!-- PROOF : ARKADIA FRANCE PvE — cluster ARK: Survival Ascended clôturé
          (distinct du réseau social ArkAdiA, arkadia.gldigitallab.fr) -->
-    <section class="proof" aria-labelledby="proof-title">
-      <div class="container">
-        <div class="proof__grid">
-          <ScrollReveal animation="fade-right">
-            <div class="proof__content">
-              <div class="proof__header">
-                <span class="proof__badge proof__badge--closed">
-                  ARK: SURVIVAL ASCENDED · PROJET CLÔTURÉ
-                </span>
-              </div>
 
-              <h2 id="proof-title" class="proof__title">
-                ARKADIA FRANCE PvE<br>
-                <span class="text-gradient">150 joueurs, 18 mois d'exploitation</span>
-              </h2>
-
-              <p class="proof__desc">
-                Pendant 18 mois, j'ai exploité <strong>ARKADIA France PvE</strong>, un cluster de
-                9 serveurs <strong>ARK: Survival Ascended</strong> synchronisés, avec de vrais
-                utilisateurs qui comptaient sur une disponibilité <strong>24/7</strong>.
-              </p>
-
-              <p class="proof__desc">
-                Ça a été mon terrain d'entraînement : monitoring temps réel, sauvegardes automatiques,
-                gestion de crises, communication avec la communauté. Le service a été arrêté,
-                les chiffres ci-dessous sont ceux constatés sur toute la période.
-              </p>
-              
-              <div class="proof__metrics">
-                <div class="proof-metric">
-                  <span class="proof-metric__value"><AnimatedCounter :value="9" /><span class="proof-metric__unit"></span></span>
-                  <span class="proof-metric__label">Serveurs de jeux synchronisés</span>
-                </div>
-                <div class="proof-metric">
-                  <span class="proof-metric__value">&lt;10<span class="proof-metric__unit"> min</span></span>
-                  <span class="proof-metric__label">Rollback (restauration T-1h)</span>
-                </div>
-              </div>
-              
-              <MagneticButton tag="router-link" to="/arkadia" class="btn-outline">
-                VOIR L'ÉTUDE COMPLÈTE
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                </svg>
-              </MagneticButton>
-            </div>
-          </ScrollReveal>
-          
-          <!-- Gauges Panel — TiltCard retiré (audit) ; fond unifié section inversée -->
-          <ScrollReveal animation="zoom">
-              <div class="proof__gauges">
-                <GaugeCircle 
-                  :value="150" 
-                  :max="200" 
-                  :size="130" 
-                  label="JOUEURS"
-                  suffix="+"
-                />
-                <GaugeCircle 
-                  :value="9" 
-                  :max="10" 
-                  :size="130" 
-                  label="SERVEURS"
-                  suffix=""
-                />
-              </div>
-          </ScrollReveal>
-        </div>
-      </div>
-    </section>
-
-    <!-- STACK -->
-    <section class="stack">
-      <div class="container">
-        <!-- flip 3D + tilt-card + backdrop-filter(glass) = artefacts de
-             rendu/clignotement Firefox : reveal en fade-up, carte statique -->
-        <ScrollReveal animation="fade-up">
-          <div class="stack-card glass">
-            <div class="stack-card__header">
-              <span class="mono-tag">/// 02 STACK TECHNIQUE</span>
-              <h3>Architecture Souveraine</h3>
-            </div>
-            <div class="stack-card__grid">
-              <div v-for="stack in stackItems" :key="stack.category" class="stack-item">
-                <span class="stack-item__category">{{ stack.category }}</span>
-                <div class="stack-item__techs">
-                  <span 
-                    v-for="tech in stack.techs" 
-                    :key="tech.name"
-                    :class="{ 'stack-item__tech--highlight': tech.highlight }"
-                  >{{ tech.name }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
     
     <!-- MÉTHODE : fonctionnement du studio, présenté de façon pragmatique (2026-09) -->
     <section class="method" aria-labelledby="method-title">
@@ -661,7 +467,6 @@ import GaugeCircle from '@/components/common/GaugeCircle.vue';
 // allègement web. 407 Ko pour les six, contre 938 Ko pour les anciens avatars
 // fabriqués en primitives Blender.
 import { defineAsyncComponent, ref, onMounted } from 'vue';
-const UnitesHero = defineAsyncComponent(() => import('@/components/three/UnitesHero.vue'));
 
 /**
  * DÉCALAGE DE LA 3D HORS DU CHEMIN CRITIQUE (10/09/2026, audit Lighthouse).
@@ -696,8 +501,7 @@ import {
   MagneticButton, 
   TextScramble,
   GlitchText,
-  ConsoleOverlay,
-  TronFloor,
+
   TerminalMnd,
   ScrollReveal, 
   SpotlightContainer 
