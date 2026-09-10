@@ -82,18 +82,17 @@
             >
               Gérer les cookies
             </button>
-            <!-- MODE SOBRE (engagement de la charte, décision D5) : coupe tous
-                 les effets du site. Réversible, mémorisé, et neutre — le
-                 contenu ne change pas. C'est un argument, pas une concession :
-                 un visiteur qui travaille n'a pas à subir une direction
-                 artistique. -->
+            <!-- DÉCOR DE SCIENCE-FICTION (inversé le 10/09/2026) : le site
+                 s'ouvre SOBRE. Ce bouton propose le décor à qui le veut —
+                 pluie de code, scène 3D, Grille, halos. Avant, c'était
+                 l'inverse : on imposait le spectacle et on offrait le calme. -->
             <button
               type="button"
               class="footer__cookie-btn"
-              :aria-pressed="modeSobre ? 'true' : 'false'"
-              @click="basculerModeSobre"
+              :aria-pressed="decorActif ? 'true' : 'false'"
+              @click="basculerDecor"
             >
-              {{ modeSobre ? 'Rétablir les effets' : 'Mode sobre' }}
+              {{ decorActif ? 'Revenir au mode sobre' : 'Activer le décor' }}
             </button>
             <!-- AUDIO DU POSTE (doctrine D5, expérience signature n°5) :
                  DÉSACTIVÉ par défaut. Aucun son ne se déclenche tant que le
@@ -149,7 +148,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import { modeSobre, basculerModeSobre } from '@/composables/mode-sobre.js';
+import { decorActif, basculerDecor } from '@/composables/mode-sobre.js';
 import { audioActif, basculerAudio } from '@/composables/audio-poste.js';
 
 const currentYear = computed(() => new Date().getFullYear());

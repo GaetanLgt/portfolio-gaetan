@@ -1,48 +1,65 @@
 /**
- * MODE SOBRE — engagement de la charte du studio.
+ * MODE SOBRE — INVERSÉ LE 10/09/2026. Désormais ACTIF PAR DÉFAUT.
  *
- * Principe : un interrupteur qui coupe TOUS les effets du site — pluie de code,
- * scène 3D, Grille, scanlines, glitchs, balayages, particules, bruit. Neutre
- * (il n'ajoute rien, il retire), réversible (un second clic rétablit tout), et
- * mémorisé d'une visite à l'autre.
+ * Pourquoi ce renversement, après relecture par Gaëtan : le site ouvrait sur
+ * une pluie de code, une scène 3D, du post-traitement, des scanlines et six
+ * univers superposés. Le verdict a été net — trop sombre, trop chargé, la 3D
+ * nuit au sérieux, et le propos se noie. Un visiteur qui cherche un artisan
+ * pour un site web recevait un spectacle avant de recevoir une réponse.
  *
- * Pourquoi c'est un engagement et pas un gadget : un visiteur qui a des
- * difficultés visuelles, un appareil modeste, une connexion lente ou simplement
- * l'esprit au travail n'a pas à subir une direction artistique. Le mode sobre
- * est aussi ce qui permet de vendre ce site à une collectivité sans avoir à
- * défendre ses effets.
+ * La nouvelle règle : **le site s'ouvre clair et sobre**. Le décor de science-
+ * fiction n'a pas disparu, il est devenu ce qu'il aurait dû être depuis le
+ * début — une proposition, pas une imposition. Un bouton dans le pied de page
+ * l'active pour qui le veut.
  *
- * Il est distinct de `prefers-reduced-motion` : celui-ci est une préférence du
- * système d'exploitation, le mode sobre est un choix explicite du visiteur.
- * Les deux se cumulent sans se contredire.
+ * Conséquence assumée : la direction artistique n'est plus la première chose
+ * qu'on voit. C'est exactement ce qui était demandé.
+ *
+ * Note : le mode sobre coupe les effets visuels (pluie, 3D, Grille, scanlines,
+ * halos, bruit, animations). Il ne touche jamais au contenu, aux prix, aux
+ * liens ni aux repères d'accessibilité.
  */
 import { ref, watch } from 'vue';
 
-const CLE = 'gldl-mode-sobre';
+const CLE = 'gldl-decor-scifi';
 
-/** Lu une seule fois au chargement, puis conservé en mémoire. */
+/**
+ * true = le visiteur a demandé le décor de science-fiction.
+ * FAUX PAR DÉFAUT : le site s'ouvre sobre.
+ */
 function lirePreference() {
   if (typeof window === 'undefined') return false;
   try {
     return window.localStorage.getItem(CLE) === '1';
   } catch {
-    // Navigation privée ou stockage refusé : on ne casse rien, on repart à zéro.
     return false;
   }
 }
 
-export const modeSobre = ref(lirePreference());
+/** Le décor est-il actif ? Faux au premier chargement, toujours. */
+export const decorActif = ref(lirePreference());
 
-watch(modeSobre, (actif) => {
+/** Raccourci de lecture : le mode sobre est simplement l'inverse. */
+export const modeSobre = ref(!lirePreference());
+
+watch(decorActif, (actif) => {
+  modeSobre.value = !actif;
+});
+
+export function basculerModeSobre() {
+  decorActif.value = !decorActif.value;
+}
+
+export function basculerDecor() {
+  decorActif.value = !decorActif.value;
+}
+
+watch(decorActif, (actif) => {
   if (typeof window === 'undefined') return;
   try {
     if (actif) window.localStorage.setItem(CLE, '1');
     else window.localStorage.removeItem(CLE);
   } catch {
-    /* stockage indisponible : le mode reste actif pour la session en cours */
+    /* stockage indisponible : le réglage vaut pour la session en cours */
   }
 });
-
-export function basculerModeSobre() {
-  modeSobre.value = !modeSobre.value;
-}
