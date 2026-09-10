@@ -1,0 +1,59 @@
+# GL Digital Lab
+
+> Studio indépendant français (SASU) établi à Harponville, dans la Somme
+> (Hauts-de-France). Il conçoit des sites web, des applications métier et des
+> systèmes d'intelligence artificielle exécutés sur du matériel local ou hébergé
+> en France, jamais dans un cloud étranger. Interlocuteur unique : Gaëtan Langlet.
+
+Informations vérifiables : les prix sont publics, les limites du studio sont
+écrites noir sur blanc, et aucune donnée de contact ne quitte l'Union européenne.
+Le site est en français.
+
+Public visé : PME, TPE, artisans, collectivités et administrations françaises.
+
+## Prestations
+
+- [Audit WordPress — 48 h](https://gldigitallab.fr/dossier) : relevé des failles réelles d'un site (version obsolète, extension vulnérable, absence de mises à jour), avec chiffres à l'appui. 149 à 199 € HT, résultat sous 48 heures.
+- [Site web](https://gldigitallab.fr/dossier) : vitrine ou refonte, jusqu'à 8 pages, responsive, SEO technique, RGPD, formation à l'administration incluse. À partir de 2 500 € HT, livré en 4 à 6 semaines.
+- [Application métier](https://gldigitallab.fr/dossier) : outil interne taillé sur les processus du client, pour supprimer les ressaisies. À partir de 8 000 € HT, après atelier de cadrage.
+- [IA et automatisation locale](https://gldigitallab.fr/dossier) : agents d'intelligence artificielle exécutés sur le matériel du client ou sur celui du studio, en France. À partir de 1 500 € HT.
+- [Mémoire documentaire (RAG)](https://gldigitallab.fr/dossier) : assistant interne qui répond à partir des documents de l'entreprise, avec réponses sourcées. 3 000, 8 000 ou 15 000 € HT selon le volume.
+
+## Pages du site
+
+- [Accueil](https://gldigitallab.fr/) : présentation du studio et de son approche.
+- [Dossier professionnel](https://gldigitallab.fr/dossier) : prestations, prix publics hors taxes, délais, méthode, traitement des données, et **limites assumées**. Document imprimable.
+- [Offre et tarifs](https://gldigitallab.fr/services) : détail des prestations par besoin.
+- [Réalisations](https://gldigitallab.fr/projets) : projets livrés.
+- [Preuve — ArkAdiA](https://gldigitallab.fr/arkadia) : réseau social souverain en production, exploité par le studio.
+- [Contact](https://gldigitallab.fr/contact) : formulaire, adresse électronique et téléphone. Réponse sous 24 heures.
+- [Mentions légales](https://gldigitallab.fr/mentions-legales) · [Politique de confidentialité](https://gldigitallab.fr/confidentialite) · [Conditions générales de vente](https://gldigitallab.fr/cgv)
+
+## Traitement des données
+
+- L'analyse d'audience est assurée par une instance Matomo auto-hébergée **en France**. Aucun outil d'analyse tiers.
+- Le formulaire de contact est traité par un script hébergé sur le serveur du studio, **en France**. Aucun transfert de données hors de l'Union européenne.
+- Les traitements d'intelligence artificielle s'exécutent sur le matériel du studio ou sur celui du client.
+- Les données de contact sont conservées trois ans à compter du dernier échange.
+- Détail complet : [politique de confidentialité](https://gldigitallab.fr/confidentialite).
+
+## Limites assumées
+
+- Un seul interlocuteur : en cas d'indisponibilité prolongée du dirigeant, l'activité s'interrompt. Aucun plan de continuité formalisé.
+- Une seule unité de calcul, dédiée à la recherche, au prototypage et à la démonstration. Elle ne prétend pas à la haute disponibilité, et la continuité de service n'est jamais garantie par ce seul poste.
+- Aucune conformité RGAA revendiquée : les livrables visent le niveau WCAG AA, vérifié par mesure, sans attestation d'un tiers.
+- Aucune référence client nominative publiée à ce jour.
+
+## Contact
+
+- Adresse électronique : gtn.langlet+lab@gmail.com
+- Téléphone : 06 86 47 46 10
+- Adresse : Harponville, Somme (80), Hauts-de-France, France
+- Site : https://gldigitallab.fr
+
+## Note sur ce fichier
+
+Ce fichier suit la proposition `llms.txt` : il donne aux modèles de langage un
+résumé structuré et vérifiable du site, en texte brut. Il ne remplace pas les
+pages du site, il en donne la carte. Les informations qu'il contient sont celles
+qui figurent publiquement sur le site, à la date indiquée sur chaque page.
