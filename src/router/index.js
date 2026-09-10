@@ -66,6 +66,17 @@ const routes = [
     }
   },
   {
+    path: '/dossier',
+    name: 'Dossier',
+    // Chargement différé : cette page est sobre et rarement visitée, elle n'a
+    // pas à peser sur le paquet initial du site.
+    component: () => import('@/views/core/DossierPage.vue'),
+    meta: {
+      title: 'Dossier professionnel | Prestations, prix, méthode et limites',
+      description: 'Prestations, prix publics hors taxes, délais, méthode et limites assumées de GL Digital Lab, studio indépendant dans la Somme. Document imprimable, sans animation.'
+    }
+  },
+  {
     path: '/contact',
     name: 'Contact',
     component: ContactPage,

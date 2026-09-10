@@ -135,7 +135,7 @@ const backgroundComponent = computed(() => {
 const isShowcasePage = computed(() => {
   const p = route.path;
   return p === '/services' || p === '/projets' || p === '/contact'
-    || p === '/arkadia' || p === '/sitemap'
+    || p === '/arkadia' || p === '/sitemap' || p === '/dossier'
     || p.startsWith('/mentions-legales') || p.startsWith('/confidentialite') || p.startsWith('/cgv');
 });
 

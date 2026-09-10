@@ -48,6 +48,10 @@
             <router-link to="/services">Offre &amp; audits</router-link>
             <router-link to="/projets">Réalisations</router-link>
             <router-link to="/arkadia">Preuve — ARKADIA France (ARK)</router-link>
+            <!-- Dossier professionnel : la porte d'entrée sobre, pour les
+                 acheteurs publics et les appels d'offres, qui n'ont pas à
+                 traverser le récit du site concept pour trouver les prix. -->
+            <router-link to="/dossier">Dossier professionnel (prix, méthode, limites)</router-link>
             <router-link to="/contact">Contact</router-link>
           </nav>
         </div>
