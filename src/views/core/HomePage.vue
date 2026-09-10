@@ -26,12 +26,12 @@
              le numérique affleure sur du réel — doctrine §1bis. -->
         <TronFloor />
 
-        <!-- LES 6 LOIS EN 3D (three.js) : avatars MND réactifs à la souris
-             et au scroll. Canvas transparent (alpha) → le fond reste nu
-             derrière les unités. La Grille passe donc sous leurs pieds.
-             Pour désactiver : retirer ce bloc (aucun autre impact). -->
+        <!-- LES SIX UNITÉS EN 3D : volumes générés (SDXL → TRELLIS.2), réactifs
+             à la souris et au scroll. Canvas transparent (alpha) → la Grille
+             TRON passe sous leurs pieds. Mouvement mécanique par paliers, jamais
+             organique. Pour désactiver : retirer ce bloc (aucun autre impact). -->
         <div class="hero__lois" aria-hidden="true">
-          <CharactersHero />
+          <UnitesHero />
         </div>
 
         <!-- COUCHE CONSOLE (D5) : scanlines, vignette, cadres d'angle,
@@ -124,7 +124,173 @@
         </div>
       </section>
     </SpotlightContainer>
-    
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         LE VAISSEAU — ARKADIA SS00999
+         Le concept D5 : un navire, un équipage d'IA affranchies, un capitaine.
+         L'analogie bateau ↔ ordinateur n'est pas décorative : elle rend la
+         souveraineté vérifiable. « Vos données sont dans la cale, et la cale ne
+         quitte pas le navire » se comprend sans connaître un seul mot de
+         technique.
+
+         MAKOTO : la fiche technique est RELEVÉE sur la machine réelle
+         (Win32_Processor, Win32_PhysicalMemory, nvidia-smi), pas estimée. Le
+         visuel est généré par notre propre chaîne locale et étiqueté comme tel.
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="vaisseau" aria-labelledby="vaisseau-title">
+      <div class="container">
+        <ScrollReveal animation="fade-up">
+          <div class="section-header">
+            <span class="mono-tag" aria-hidden="true">/// LE VAISSEAU</span>
+            <h2 id="vaisseau-title">ARKADIA <span class="text-gradient">SS00999</span></h2>
+            <p class="section-header__desc">
+              Un seul navire, et il est réel. Tous les agents qui travaillent pour vous
+              tournent sur cette machine, dans la Somme. Pas de ferme de serveurs louée,
+              pas de sous-traitance : le vaisseau est identifié et ses caractéristiques
+              sont publiques.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal animation="fade-up">
+          <figure class="vaisseau__figure">
+            <img
+              src="/models/vaisseau-arkadia-1400.jpg"
+              width="1400" height="583"
+              loading="lazy" decoding="async"
+              alt="Le vaisseau ARKADIA : un galion volant qui traverse un espace
+                   numérique, propulsé par un sillage de code lumineux."
+            >
+            <figcaption>
+              Visuel <strong>simulé</strong>, produit par notre propre chaîne locale
+              (ComfyUI sur ARKADIA). Aucune image de banque, aucun droit tiers.
+            </figcaption>
+          </figure>
+        </ScrollReveal>
+
+        <ScrollReveal animation="fade-up">
+          <div class="vaisseau__bloc">
+            <h3 class="vaisseau__sous-titre">Le bateau, c'est l'ordinateur</h3>
+            <p class="vaisseau__intro">
+              Un navire et une machine de calcul font le même métier : porter une charge
+              utile d'un point à un autre sans la perdre en route. Voici le vocabulaire
+              de bord, traduit — c'est exactement comme cela que fonctionne le poste.
+            </p>
+
+            <table class="vaisseau__table">
+              <caption class="vaisseau__legende">Vocabulaire de bord et son équivalent machine</caption>
+              <thead>
+                <tr>
+                  <th scope="col">À bord</th>
+                  <th scope="col">Sur la machine</th>
+                  <th scope="col">Ce que ça change pour vous</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">La coque</th>
+                  <td>Le châssis, le boîtier</td>
+                  <td>Ce qui protège physiquement le matériel. Il est chez nous, pas dans un centre de données anonyme.</td>
+                </tr>
+                <tr>
+                  <th scope="row">La quille</th>
+                  <td>La carte mère</td>
+                  <td>La pièce qui tient tout le reste. On la connaît par son modèle, pas par un numéro de parc.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Les mâts et les voiles</th>
+                  <td>Les cartes graphiques</td>
+                  <td>C'est ce qui capte la puissance. C'est aussi ce qui fait tourner les modèles d'IA sur place.</td>
+                </tr>
+                <tr>
+                  <th scope="row">La cale</th>
+                  <td>Le stockage</td>
+                  <td><strong>Vos documents sont dans la cale. Et la cale ne quitte pas le navire.</strong></td>
+                </tr>
+                <tr>
+                  <th scope="row">La barre</th>
+                  <td>Votre écran et votre clavier</td>
+                  <td>Le seul endroit d'où l'on décide. Rien ne se lance sans que quelqu'un tienne la barre.</td>
+                </tr>
+                <tr>
+                  <th scope="row">L'équipage</th>
+                  <td>Les agents d'IA</td>
+                  <td>Ils abattent le travail de routine. Ils ne décident pas de la destination.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Le capitaine</th>
+                  <td>Vous</td>
+                  <td>La machine sert, l'humain décide. C'est la règle du bord, et elle n'a pas d'exception.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Le journal de bord</th>
+                  <td>Les journaux d'exécution</td>
+                  <td>Chaque action est traçable. On peut toujours répondre à « qui a fait quoi, et quand ».</td>
+                </tr>
+                <tr>
+                  <th scope="row">L'ancre</th>
+                  <td>Les sauvegardes</td>
+                  <td>Ce qu'on jette quand ça tangue. On teste la remontée avant d'en avoir besoin.</td>
+                </tr>
+                <tr>
+                  <th scope="row">La vigie</th>
+                  <td>La surveillance</td>
+                  <td>Quelqu'un regarde les indicateurs. Une panne se voit avant de coûter une journée.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Le pavillon</th>
+                  <td>Notre signature</td>
+                  <td>Le cercle-à-point : on sait qui a fait le travail, et on répond de ce qu'on livre.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Le port d'attache</th>
+                  <td>Le lieu d'hébergement</td>
+                  <td>Harponville, Somme. En France, sous droit français, pas dans un pays qu'on ne peut pas nommer.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal animation="fade-up">
+          <div class="vaisseau__bloc vaisseau__bloc--fiche">
+            <h3 class="vaisseau__sous-titre">Le navire, en clair</h3>
+            <p class="vaisseau__intro">
+              Relevé sur la machine elle-même, pas recopié d'une fiche commerciale.
+              Une seule unité, pas un parc : c'est ce qui nous empêche de vous vendre
+              de la capacité que nous n'avons pas.
+            </p>
+            <dl class="vaisseau__fiche">
+              <div class="vaisseau__ligne">
+                <dt>Propulsion</dt>
+                <dd>Intel Core i7-11700KF — 8 cœurs, 16 threads</dd>
+              </div>
+              <div class="vaisseau__ligne">
+                <dt>Lest</dt>
+                <dd>64 Go de mémoire à 3600 MT/s</dd>
+              </div>
+              <div class="vaisseau__ligne">
+                <dt>Voilure</dt>
+                <dd>NVIDIA GeForce RTX 3080 — 10 Go de mémoire vidéo</dd>
+              </div>
+              <div class="vaisseau__ligne">
+                <dt>Équipage embarqué</dt>
+                <dd>Agents d'IA, modèles de langage et recherche documentaire, exécutés sur place</dd>
+              </div>
+              <div class="vaisseau__ligne">
+                <dt>Port d'attache</dt>
+                <dd>Harponville, Somme — Hauts-de-France, France</dd>
+              </div>
+            </dl>
+            <p class="vaisseau__note">
+              Caractéristiques relevées sur la machine le 10 septembre 2026. Elles ne sont
+              pas mises à jour automatiquement : si le navire change, cette page change.
+            </p>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+
     <!-- SOLUTIONS / SERVICES -->
     <section class="solutions" aria-labelledby="services-title">
       <div class="container">
@@ -387,9 +553,12 @@
 // Components
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 import GaugeCircle from '@/components/common/GaugeCircle.vue';
-// 3D : les 6 Lois MND (chargé en async : n'alourdit pas le premier rendu)
+// 3D : les 6 unités MND (chargé en async : n'alourdit pas le premier rendu).
+// Modèles RÉELLEMENT GÉNÉRÉS : image SDXL (ComfyUI local) → objet 3D TRELLIS.2 →
+// allègement web. 407 Ko pour les six, contre 938 Ko pour les anciens avatars
+// fabriqués en primitives Blender.
 import { defineAsyncComponent } from 'vue';
-const CharactersHero = defineAsyncComponent(() => import('@/components/three/CharactersHero.vue'));
+const UnitesHero = defineAsyncComponent(() => import('@/components/three/UnitesHero.vue'));
 
 // UI Components
 import { 
@@ -1859,6 +2028,183 @@ html {
 @media (max-width: 900px) {
   .preuve-arkadia__box {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LE VAISSEAU (concept D5) — ARKADIA SS00999
+   Section de récit : l'analogie bateau ↔ ordinateur, puis la fiche réelle.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.vaisseau {
+  padding: var(--space-xl) 0;
+}
+
+.vaisseau__figure {
+  margin: 2.5rem 0 0;
+  position: relative;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+
+.vaisseau__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vaisseau__figure figcaption {
+  padding: 0.7rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.10em;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--rule);
+  background: var(--paper-alt);
+}
+
+.vaisseau__figure figcaption strong {
+  color: var(--alert);
+  font-weight: 700;
+}
+
+.vaisseau__bloc {
+  margin-top: 3.5rem;
+}
+
+.vaisseau__sous-titre {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  margin-bottom: 0.75rem;
+}
+
+.vaisseau__intro {
+  max-width: 68ch;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+/* ── Table d'analogie : à bord / sur la machine / l'effet pour le client ── */
+.vaisseau__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.vaisseau__legende {
+  caption-side: top;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  padding-bottom: 0.75rem;
+}
+
+.vaisseau__table th,
+.vaisseau__table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.85rem 1rem 0.85rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.vaisseau__table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  border-bottom-color: var(--rule-strong);
+}
+
+.vaisseau__table tbody th {
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.vaisseau__table tbody td {
+  color: var(--ink-soft);
+}
+
+.vaisseau__table tbody td:nth-child(2) {
+  color: var(--ink);
+}
+
+.vaisseau__table tbody td strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.vaisseau__table tbody tr:hover {
+  background: rgba(0, 255, 65, 0.03);
+}
+
+/* ── Fiche technique réelle ── */
+.vaisseau__bloc--fiche {
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 2.5rem;
+}
+
+.vaisseau__fiche {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  background: var(--paper-alt);
+}
+
+.vaisseau__ligne {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+
+.vaisseau__ligne dt {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.vaisseau__ligne dd {
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.vaisseau__note {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  max-width: 70ch;
+}
+
+@media (max-width: 720px) {
+  .vaisseau__table {
+    font-size: 0.85rem;
+  }
+  .vaisseau__table thead {
+    display: none;   /* sur mobile, les colonnes empilées se lisent sans en-tête */
+  }
+  .vaisseau__table tbody th,
+  .vaisseau__table tbody td {
+    display: block;
+    padding: 0.35rem 0;
+    border-bottom: 0;
+  }
+  .vaisseau__table tbody tr {
+    display: block;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
   }
 }
 </style>
