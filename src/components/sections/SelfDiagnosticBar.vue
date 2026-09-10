@@ -147,12 +147,16 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   padding: 0.45rem 1rem;
-  background: rgba(3, 6, 10, 0.94);
-  backdrop-filter: blur(8px);
+  /* VESTIGE DE LA DA SOMBRE CORRIGÉ (10/09/2026) : ce fond était un
+     rgba(3, 6, 10, 0.94) codé en dur — un noir de l'ancien thème — alors que
+     le texte au-dessus suivait la palette papier. Résultat mesuré par
+     Lighthouse : 2,84:1 sur les libellés et 2,95:1 sur les valeurs, très en
+     dessous du seuil de 4,5:1. La barre reprend donc les fonds de la charte. */
+  background: var(--paper-alt);
   border-top: 1px solid var(--rule);
   font-family: var(--font-mono);
   font-size: 0.6rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .sdb__metrics {
@@ -189,7 +193,7 @@ onUnmounted(() => {
 }
 
 .sdb__value {
-  color: var(--neon-cyan);
+  color: var(--ink);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }

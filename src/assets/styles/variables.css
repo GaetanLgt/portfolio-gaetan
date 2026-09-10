@@ -16,7 +16,7 @@
   /* ── Encre ── */
   --ink: #1A1A18;        /* noir chaud — jamais #000 */
   --ink-soft: #5F5E5A;   /* texte secondaire */
-  --ink-faint: #8B8578;  /* texte tertiaire — réservé au texte de grande taille */
+  --ink-faint: #6E5F51;  /* texte tertiaire — réservé au texte de grande taille */
 
   /* ── Trait ── */
   --rule: #D6D1C4;       /* filets 1px — jamais de texte dans cette valeur */
