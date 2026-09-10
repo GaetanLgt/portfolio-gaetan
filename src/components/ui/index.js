@@ -22,3 +22,5 @@ export { default as FloatingElements } from './FloatingElements.vue';
 export { default as ConsoleOverlay } from './ConsoleOverlay.vue';
 // D5 — la Grille (apport TRON) : structure, cyan, horizon
 export { default as TronFloor } from './TronFloor.vue';
+// D5 — le terminal du poste : démonstration scénarisée, réponses déterministes
+export { default as TerminalMnd } from './TerminalMnd.vue';

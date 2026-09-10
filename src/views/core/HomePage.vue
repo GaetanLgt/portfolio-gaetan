@@ -320,6 +320,12 @@
       </div>
     </section>
 
+    <!-- LE TERMINAL DU POSTE (D5) : démonstration scénarisée, réponses
+         déterministes. Aucun agent d'IA connecté, et la page le dit en tête et
+         sans possibilité de le masquer. Placement après la section du vaisseau :
+         le visiteur a vu le navire, puis il l'interroge. -->
+    <TerminalMnd />
+
     <!-- SOLUTIONS / SERVICES -->
     <section class="solutions" aria-labelledby="services-title">
       <div class="container">
@@ -653,6 +659,7 @@ import {
   GlitchText,
   ConsoleOverlay,
   TronFloor,
+  TerminalMnd,
   ScrollReveal, 
   SpotlightContainer 
 } from '@/components/ui';
