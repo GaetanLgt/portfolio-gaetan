@@ -18,7 +18,11 @@
     <ReactiveParticles v-if="isLoaded && !isFullscreenGame && showAnimatedBackground" />
     
     <!-- Floating Decorative Elements -->
-    <FloatingElements v-if="isLoaded && !isFullscreenGame" />
+    <!-- Éléments flottants décoratifs RETIRÉS (D5, liste de suppression du
+         directeur artistique) : des emojis (🚀 ✨ ⚡) et des formes qui suivaient
+         la souris, sans aucune valeur pour le visiteur et contraires au verrou
+         D1 « aucun emoji en icône ». Le composant reste sur disque. -->
+    
     
     <!-- Noise Overlay -->
     <NoiseOverlay v-if="isLoaded && !isFullscreenGame" />
@@ -96,7 +100,7 @@ import PWAUpdatePrompt from '@/components/common/PWAUpdatePrompt.vue';
 const ParticlesBackground = defineAsyncComponent(() => import('@/components/three/ParticlesBackground.vue'));
 const GridBackground = defineAsyncComponent(() => import('@/components/three/GridBackground.vue'));
 const MatrixBackground = defineAsyncComponent(() => import('@/components/three/MatrixBackground.vue'));
-import FloatingElements from '@/components/ui/FloatingElements.vue';
+import FloatingElements from '@/components/ui/FloatingElements.vue'; // non monté (D5)
 
 const isLoaded = ref(false);
 const route = useRoute();

@@ -4,7 +4,7 @@
     <section class="hero">
       <div class="container">
         <div class="tag animate-pulse-slow">
-          <span>🛡️</span> L'OFFRE
+          L'OFFRE
         </div>
         
         <h1 class="hero__title">
@@ -22,8 +22,15 @@
     </section>
     
     <!-- Le diagnostic avant tout -->
-    <section class="matrix-awakening">
+    <section class="matrix-awakening" aria-labelledby="sonde-titre">
       <div class="container">
+        <!-- Titre de section : il manquait, et les cartes ci-dessous étant des
+             h3, la page sautait de h1 à h3. Un lecteur d'écran qui navigue par
+             titres perdait le fil de la structure. -->
+        <div class="section-header section-header--center">
+          <span class="mono-tag" aria-hidden="true">/// LA SONDE</span>
+          <h2 id="sonde-titre">On mesure avant de s'engager</h2>
+        </div>
         <div class="awakening-grid">
           <div class="awakening-card glass">
             <!-- Emoji remplacé par une bande hachurée d'alerte (motif du système
@@ -68,7 +75,7 @@
         <div class="pricing-grid">
           <!-- TJM -->
           <div class="pricing-card glass">
-            <div class="pricing-card__icon">📅</div>
+            <div class="pricing-card__icon" aria-hidden="true">01</div>
             <h3 class="pricing-card__title">Taux Journalier</h3>
             <p class="pricing-card__price">450€ <span>/ jour</span></p>
             <p class="pricing-card__desc">Développement, intégration, conseil technique. Minimum 2 jours.</p>
@@ -82,7 +89,7 @@
           
           <!-- Audit -->
           <div class="pricing-card glass">
-            <div class="pricing-card__icon">🔍</div>
+            <div class="pricing-card__icon" aria-hidden="true">02</div>
             <h3 class="pricing-card__title">Audit Web — 48 h</h3>
             <p class="pricing-card__price">149€ – 199€ <span>/ site audité</span></p>
             <p class="pricing-card__desc">Le diagnostic complet d'un site <strong>existant</strong> : je vous montre vos failles sur votre site, pas sur un cas fictif. (Offre distincte de l'audit IA + prototype — voir Accueil / RAG MÉMOIRE.)</p>
@@ -96,7 +103,7 @@
           
           <!-- Consulting -->
           <div class="pricing-card glass">
-            <div class="pricing-card__icon">💬</div>
+            <div class="pricing-card__icon" aria-hidden="true">03</div>
             <h3 class="pricing-card__title">Consulting</h3>
             <p class="pricing-card__price">90€ <span>/ heure</span></p>
             <p class="pricing-card__desc">Conseil stratégique ponctuel, à l'heure (visio ou sur site). Le développement au forfait est au TJM.</p>
@@ -111,7 +118,7 @@
           <!-- Maintenance -->
           <div class="pricing-card glass pricing-card--highlight">
             <div class="pricing-card__badge">RECOMMANDÉ</div>
-            <div class="pricing-card__icon">🛡️</div>
+            <div class="pricing-card__icon" aria-hidden="true">04</div>
             <h3 class="pricing-card__title">Maintenance</h3>
             <p class="pricing-card__price">350€ <span>/ mois</span></p>
             <p class="pricing-card__desc">Surveillance, mises à jour et support réactif pour votre application.</p>
@@ -149,12 +156,12 @@
             @click="filter = 'core'" 
             :class="{ 'filter-btn--active': filter === 'core' }" 
             class="filter-btn"
-          >🛠️ Bâtir</button>
+          >Bâtir</button>
           <button 
             @click="filter = 'ai'" 
             :class="{ 'filter-btn--active': filter === 'ai' }" 
             class="filter-btn"
-          >🧠 Penser</button>
+          >Penser</button>
         </div>
         
         <div class="offers__grid">
@@ -1049,8 +1056,16 @@ const steps = [
   border-radius: 2rem;
 }
 
+/* Numérotation technique : un index monospace remplace l'emoji d'icône.
+   Même traitement que les cartes de la page d'accueil — l'ADN technique vient
+   de la mise en forme, pas d'un pictogramme dont le rendu dépend du système
+   d'exploitation du visiteur. */
 .pricing-card__icon {
-  font-size: 2.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--neon-cyan);
   margin-bottom: var(--space-sm);
 }
 
