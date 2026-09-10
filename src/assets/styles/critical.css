@@ -97,10 +97,22 @@ body {
   justify-content: center;
 }
 
-/* Verre sombre (DA Matrix) — panneaux translucides teintés vert code */
+/* Verre sombre (DA Matrix) — panneaux OPAQUES depuis le 10/09/2026.
+   Historique de la décision, pour ne pas la défaire par inadvertance :
+   1. le fond était à 0,62 d'opacité : le contraste du texte dépendait alors de
+      ce qui passait DERRIÈRE la carte (pluie de code, Grille TRON). La
+      conformité WCAG n'était pas garantie, seulement probable ;
+   2. `backdrop-filter` empêchait axe-core — le moteur d'accessibilité de
+      Lighthouse — de calculer le fond. Il retournait sa couleur d'incertitude
+      (#8e8f91) et signalait 68 éléments en contraste insuffisant, à tort mais
+      de façon visible pour tout auditeur externe ;
+   3. comme l'arrière-plan de la page est quasi noir, l'effet de flou ne se
+      voyait quasiment pas : le rendre opaque ne coûte rien visuellement et
+      règle les deux problèmes d'un coup.
+   Si un jour un effet de verre est vraiment voulu ici, il faudra accepter la
+   perte du point d'accessibilité dans Lighthouse et le documenter. */
 .glass {
-  background: rgba(8, 16, 15, 0.62);
-  backdrop-filter: blur(18px);
+  background: #08100F;
   border: 1px solid var(--border);
   box-shadow: inset 0 1px 0 rgba(0, 255, 65, 0.06);
 }

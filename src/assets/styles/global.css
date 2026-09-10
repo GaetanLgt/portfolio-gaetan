@@ -62,27 +62,23 @@ a:hover {
   padding: 0 1.5rem;
 }
 
-/* GLASS EFFECT */
+/* GLASS EFFECT
+   VESTIGE DE LA DA CLAIRE (D1) CORRIGÉ le 10/09/2026. Cette règle posait un
+   fond BLANC à 60 % d'opacité, alors que critical.css posait un fond sombre :
+   deux définitions de .glass se contredisaient, et la couleur effective
+   dépendait de l'ordre de chargement. C'est ce blanc qui faisait calculer à
+   axe-core (le moteur de Lighthouse) un fond clair #8e8f91 derrière le texte
+   des cartes d'offres — signalé comme contraste insuffisant sur 68 éléments.
+   Les deux définitions sont désormais alignées sur la DA sombre. */
 .glass {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(12px);
+  background: #08100F;
   border: 1px solid var(--rule);
 }
 
-/* CYBER CARD */
-.cyber-card {
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid var(--rule);
-  backdrop-filter: blur(10px);
-  border-radius: 1rem;
-  transition: var(--transition-bounce);
-}
-
-.cyber-card:hover {
-  border-color: var(--rule-strong);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-5px);
-}
+/* `.cyber-card` SUPPRIMÉE le 10/09/2026 : aucune utilisation dans le code
+   (vérifié par recherche sur toutes les vues) et elle portait un fond BLANC à
+   55 % — un vestige de la DA claire D1, qui aurait cassé la lisibilité de
+   n'importe quel texte de la DA sombre si quelqu'un l'avait employée. */
 
 /* BUTTONS
    D5 (fusion) : l'ACTION est jaune (apport Cyberpunk 2077), jamais verte.
