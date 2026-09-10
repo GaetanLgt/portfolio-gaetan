@@ -12,22 +12,56 @@
         </h1>
         <p class="page-desc">
           La page de liens du studio — hébergée chez nous, pas chez un service tiers.
-          Quatre entrées, aucune collecte, aucun traqueur : ce que vous voyez ici est
-          tout ce qu'il y a.
+          Nos pages, et nos productions : aucune collecte, aucun traqueur, rien d'autre
+          que ce que vous voyez ici.
         </p>
       </div>
     </header>
 
     <main class="container">
+      <h2 class="section-titre">Nos pages</h2>
       <ul class="liens">
         <li v-for="lien in liens" :key="lien.href">
-          <RouterLink :to="lien.href" :class="['lien', lien.principal ? 'lien--principal' : '']">
+          <a v-if="lien.externe" :href="lien.href" class="lien" rel="noopener">
+            <span class="lien__icone" aria-hidden="true">{{ lien.icone }}</span>
+            <span class="lien__corps">
+              <span class="lien__titre">{{ lien.titre }}</span>
+              <span class="lien__desc">{{ lien.desc }}</span>
+            </span>
+            <span class="lien__hors" aria-hidden="true">↗</span>
+          </a>
+          <RouterLink v-else :to="lien.href" :class="['lien', lien.principal ? 'lien--principal' : '']">
             <span class="lien__icone" aria-hidden="true">{{ lien.icone }}</span>
             <span class="lien__corps">
               <span class="lien__titre">{{ lien.titre }}</span>
               <span class="lien__desc">{{ lien.desc }}</span>
             </span>
           </RouterLink>
+        </li>
+      </ul>
+
+      <!--
+        SECTION « NOS PRODUCTIONS » (ajoutée le 10/09/2026).
+        Constat mesuré : cette page listait quatre pages du site, mais AUCUNE de nos
+        productions — alors que l'objectif du studio est un écosystème relié. Le site
+        citait déjà ArkAdiA depuis la page Services : le lien manquait ici, au seul
+        endroit prévu pour regrouper nos adresses.
+        Volontairement ABSENTE : la page de contrôle interne
+        (controle.gldigitallab.fr), qui porte `X-Robots-Tag: noindex` — l'afficher
+        ici la rendrait publique, ce qui contredirait le choix de la garder
+        discrète. Décision à Gaëtan si tu veux l'ajouter.
+      -->
+      <h2 class="section-titre">Nos productions</h2>
+      <ul class="liens">
+        <li v-for="lien in productions" :key="lien.href">
+          <a :href="lien.href" class="lien" rel="noopener">
+            <span class="lien__icone" aria-hidden="true">{{ lien.icone }}</span>
+            <span class="lien__corps">
+              <span class="lien__titre">{{ lien.titre }}</span>
+              <span class="lien__desc">{{ lien.desc }}</span>
+            </span>
+            <span class="lien__hors" aria-hidden="true">↗</span>
+          </a>
         </li>
       </ul>
 
@@ -76,6 +110,17 @@ const liens = [
     icone: '✉️',
     titre: 'Nous ecrire',
     desc: 'Premier echange de 30 minutes, gratuit et sans engagement.',
+  },
+];
+
+// Nos productions publiques. Une seule règle : ne lister QUE ce qui est réellement
+// en ligne et joignable — vérifié le 10/09/2026 (arkadia.gldigitallab.fr → HTTP 200).
+const productions = [
+  {
+    href: 'https://arkadia.gldigitallab.fr',
+    icone: '🕸️',
+    titre: 'ArkAdiA — le réseau triple A',
+    desc: 'Notre réseau social : amitié, aventure, art. Landing publique sur notre domaine, moteur sur notre serveur.',
   },
 ];
 </script>
@@ -155,6 +200,29 @@ const liens = [
   padding: 0;
   display: grid;
   gap: var(--space-sm);
+}
+
+/* Titre de section : deux groupes sur cette page (nos pages / nos productions),
+   donc il faut les nommer — sinon la liste paraît hétérogène. */
+.section-titre {
+  margin: var(--space-lg) 0 var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.section-titre:first-of-type {
+  margin-top: var(--space-sm);
+}
+
+/* Marqueur de lien sortant : le visiteur doit savoir qu'il quitte le domaine. */
+.lien__hors {
+  margin-left: auto;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  line-height: 1;
 }
 
 .lien {
