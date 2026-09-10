@@ -42,11 +42,13 @@ const JitsuPipeline = () => import(/* webpackChunkName: "apps-agents" */ '@/view
 const SeoContentGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/SeoContentGenerator.vue');
 const InvoiceGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/InvoiceGenerator.vue');
 
-// FORMATION - Pôle éducation
-const FormationHub = () => import(/* webpackChunkName: "formation" */ '@/views/formation/FormationHub.vue');
-const FormationDetail = () => import(/* webpackChunkName: "formation" */ '@/views/formation/FormationDetail.vue');
-const FormationPath = () => import(/* webpackChunkName: "formation" */ '@/views/formation/FormationPath.vue');
-const ChallengesHub = () => import(/* webpackChunkName: "formation" */ '@/views/formation/ChallengesHub.vue');
+// FORMATION — imports retirés le 10/09/2026 (décision Gaëtan : abandonner la section).
+// Les quatre composants (FormationHub, FormationDetail, FormationPath, ChallengesHub)
+// n'étaient référencés QUE par le bloc de routes ci-dessous, lui-même commenté depuis
+// le « masquage temporaire (droits en attente) ». Vérifié avant retrait : 0 occurrence
+// hors de ce fichier. Ils n'étaient donc jamais chargés — le retrait ne change rien au
+// comportement, il enlève seulement du code mort et rend l'intention lisible.
+// Le contenu source a été archivé, pas supprimé : voir modeles/archives/ si rétabli.
 
 // ============================================================================
 // ROUTES

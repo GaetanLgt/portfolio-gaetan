@@ -33,10 +33,6 @@
             <span class="stat-value">{{ totalApps }}</span>
             <span class="stat-label">Apps</span>
           </div>
-          <div class="stat-item">
-            <span class="stat-value">{{ totalFormations }}</span>
-            <span class="stat-label">Formations</span>
-          </div>
         </div>
 
         <!-- View Toggle -->
@@ -292,10 +288,11 @@ const totalApps = computed(() => {
   return appsSection ? appsSection.pages.length : 0;
 });
 
-const totalFormations = computed(() => {
-  const formationSection = sections.value.find(s => s.id === 'formation');
-  return formationSection ? formationSection.pages.length - 2 : 0; // -2 pour hub et challenges
-});
+// `totalFormations` retiré le 10/09/2026 (décision Gaëtan : section formation abandonnée).
+// Le compteur cherchait une section « formation » qui n'existe plus : il valait donc 0.
+// Un compteur à zéro sur la page publique ne prouve pas que le motif n'a rien trouvé —
+// il affiche « Formations : 0 » à un visiteur, ce qui est un faux signal. La doctrine du
+// studio dit : mesurer plutôt que déduire, et ne pas laisser un zéro faire office de réponse.
 
 const allPages = computed(() => {
   const pages = [];
