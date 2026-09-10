@@ -32,11 +32,15 @@ async function generateFavicons() {
 
   for (const { name, size } of sizes) {
     try {
+      // Options explicites — même raison que dans generate-og-image.js : le défaut de
+      // `.png()` a changé avec `sharp 0.35`, et la sortie était devenue plus lourde sans
+      // qu'on ait touché au SVG. `palette: false` : on garde du sans perte (vérifié au
+      // RMSE), la version à palette dégradait les images.
       await sharp(faviconSvg)
         .resize(size, size)
-        .png()
+        .png({ compressionLevel: 9, effort: 10, palette: false })
         .toFile(join(publicDir, name));
-      
+
       console.log(`✅ ${name} (${size}x${size})`);
     } catch (error) {
       console.error(`❌ Erreur pour ${name}:`, error.message);

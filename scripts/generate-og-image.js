@@ -19,10 +19,17 @@ async function generateOgImage() {
 
   try {
     const ogSvg = readFileSync(join(publicDir, 'og-image.svg'));
-    
+
+    // Options de compression EXPLICITES (ajoutées le 10/09/2026).
+    // Pourquoi : `sharp 0.33 → 0.35` a changé le défaut de `.png()`, et la sortie est
+    // passée de 41 395 à 49 644 octets (+20 %) sans qu'on ait touché au SVG. Une montée
+    // de dépendance ne doit pas dégrader le poids livré en silence.
+    // `palette: false` est DÉLIBÉRÉ : la version à palette tombait à 17 429 o, mais la
+    // comparaison objective (RMSE 14,6) montrait une perte visible sur les dégradés.
+    // On garde donc du SANS PERTE (RMSE 0,000) : 36 576 o, soit 11,6 % de moins qu'avant.
     await sharp(ogSvg)
       .resize(1200, 630)
-      .png()
+      .png({ compressionLevel: 9, effort: 10, palette: false })
       .toFile(join(publicDir, 'og-image.png'));
     
     console.log('✅ og-image.png (1200x630) généré !');
