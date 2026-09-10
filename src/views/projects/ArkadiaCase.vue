@@ -638,6 +638,22 @@ cheat destroytarget  # Suppression chirurgicale</code></pre>
               <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
             </svg>
           </router-link>
+
+          <!--
+            MAILLAGE DE L'ÉCOSYSTÈME — ajouté le 10/09/2026.
+            Constat mesuré : cette page est celle qui parle le PLUS d'ArkAdiA, et c'était
+            la seule qui n'y renvoyait PAS. Vérifié sur les 5 fichiers qui le mentionnent :
+            LiensPage et ServicesPage avaient un vrai lien, DossierPage une simple mention
+            textuelle, et HomePage une référence enfermée dans un commentaire HTML (donc
+            invisible). L'exigence « chacune reliée aux autres » n'était donc pas tenue
+            depuis la page la plus concernée.
+          -->
+          <p class="cta-box__prod">
+            <a href="https://arkadia.gldigitallab.fr" target="_blank" rel="noopener noreferrer" class="btn-outline">
+              VOIR ARKADIA EN LIGNE
+            </a>
+          </p>
+
         </div>
       </div>
     </section>
@@ -2009,6 +2025,16 @@ const uptimeAccessibleData = ref([
   font-size: 1rem;
   margin-bottom: var(--space-md);
   line-height: 1.8;
+}
+
+/* Maillage de l'écosystème (ajouté le 10/09/2026) : un second bouton, sous le premier,
+   pour aller voir le produit dont cette page parle. On réutilise la classe globale
+   `btn-outline` — un style existant et déjà employé sur le même site — plutôt que
+   d'inventer une couleur. Vérifié avant emploi : `--accent` N'EXISTE PAS dans
+   global.css, un lien qui s'y référerait serait resté invisible. */
+.cta-box__prod {
+  margin-top: var(--space-md);
+  margin-bottom: 0;
 }
 
 /* ============================================
