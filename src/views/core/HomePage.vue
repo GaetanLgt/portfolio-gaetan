@@ -26,12 +26,17 @@
              le numérique affleure sur du réel — doctrine §1bis. -->
         <TronFloor />
 
-        <!-- LES SIX UNITÉS EN 3D : volumes générés (SDXL → TRELLIS.2), réactifs
-             à la souris et au scroll. Canvas transparent (alpha) → la Grille
-             TRON passe sous leurs pieds. Mouvement mécanique par paliers, jamais
-             organique. Pour désactiver : retirer ce bloc (aucun autre impact). -->
+        <!-- LES SIX UNITÉS EN 3D — montées APRÈS le premier rendu utile.
+             Audit Lighthouse du 10/09/2026 : la scène 3D (three.js + six
+             modèles + post-traitement) était chargée et exécutée pendant la
+             fenêtre de Largest Contentful Paint, ce qui plombait la performance
+             (score 49 à 61 pour une cible de 95). Elle ne sert pourtant à rien
+             avant que le visiteur regarde le hero : on la diffère jusqu'au
+             premier moment d'inactivité du navigateur.
+             Le canvas reste transparent (alpha) → la Grille TRON passe sous
+             les unités. Pour désactiver : retirer ce bloc. -->
         <div class="hero__lois" aria-hidden="true">
-          <UnitesHero />
+          <UnitesHero v-if="unitesPretes" />
         </div>
 
         <!-- COUCHE CONSOLE (D5) : scanlines, vignette, cadres d'angle,
@@ -610,8 +615,36 @@ import GaugeCircle from '@/components/common/GaugeCircle.vue';
 // Modèles RÉELLEMENT GÉNÉRÉS : image SDXL (ComfyUI local) → objet 3D TRELLIS.2 →
 // allègement web. 407 Ko pour les six, contre 938 Ko pour les anciens avatars
 // fabriqués en primitives Blender.
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent, ref, onMounted } from 'vue';
 const UnitesHero = defineAsyncComponent(() => import('@/components/three/UnitesHero.vue'));
+
+/**
+ * DÉCALAGE DE LA 3D HORS DU CHEMIN CRITIQUE (10/09/2026, audit Lighthouse).
+ *
+ * Mesuré : la scène 3D s'exécutait pendant la fenêtre de Largest Contentful
+ * Paint — 9 secondes de travail sur le fil principal, LCP à 6,8 s, score de
+ * performance entre 49 et 61 pour une cible de 95. Or ces 2,5 Mo de travail
+ * (three.js + six modèles + post-traitement) ne servent à rien avant que le
+ * visiteur ait vu le hero.
+ *
+ * On attend donc le premier moment d'inactivité du navigateur, avec un délai
+ * de repli si `requestIdleCallback` n'existe pas. La page est complète et
+ * lisible avant : le titre, le sous-titre, le CTA et la Grille TRON sont en
+ * HTML et CSS purs.
+ */
+const unitesPretes = ref(false);
+
+onMounted(() => {
+  const reveiller = () => { unitesPretes.value = true; };
+  if (typeof window === 'undefined') return;
+  if ('requestIdleCallback' in window) {
+    // Le délai de 2500 ms garantit que la 3D arrive même sur une page qui ne
+    // devient jamais inactive (onglet au premier plan, animations continues).
+    window.requestIdleCallback(reveiller, { timeout: 2500 });
+  } else {
+    window.setTimeout(reveiller, 1200);
+  }
+});
 
 // UI Components
 import { 

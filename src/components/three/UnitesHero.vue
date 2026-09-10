@@ -50,7 +50,12 @@ onMounted(() => {
   camera.lookAt(0, 1.15, 0);
 
   renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // Plafond de résolution ramené de 2 à 1,5 (audit Lighthouse du 10/09/2026) :
+  // le composant exécutait 1,6 s de script sur le fil principal. Le coût du
+  // post-traitement (bloom, aberration) est proportionnel au NOMBRE DE PIXELS :
+  // à 1,5 au lieu de 2, on retire environ 44 % de pixels à traiter, pour une
+  // différence invisible sur une scène sombre de volumes mats.
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   // --- éclairage : la lumière ambiante domine, l'émeraude reste secondaire
