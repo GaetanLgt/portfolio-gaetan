@@ -255,82 +255,87 @@ onUnmounted(() => {
 
 .nav-link--multivers:hover,
 .nav-link--multivers.router-link-active {
-  color: #a855f7;
+  color: var(--accent);
 }
 
+/* Pastille neutre : les cinq variantes (tour, applis, arcade, galerie,
+   formation) portaient chacune un code couleur propre a l'ancienne direction
+   artistique. La charte D1 ne prevoit qu'UN accent. */
 .nav-link--tower {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(180, 83, 9, 0.1));
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
   border-radius: 0.5rem;
   padding: 0.4rem 0.75rem !important;
 }
 
 .nav-link--tower:hover,
 .nav-link--tower.router-link-active {
-  color: #FBBF24;
-  border-color: #FBBF24;
-  background: rgba(251, 191, 36, 0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--primary-soft);
 }
 
 .nav-link--apps {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(16, 185, 129, 0.1));
-  border: 1px solid rgba(6, 182, 212, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
   border-radius: 0.5rem;
   padding: 0.4rem 0.75rem !important;
 }
 
 .nav-link--apps:hover,
 .nav-link--apps.router-link-active {
-  color: #06B6D4;
-  border-color: #06B6D4;
-  background: rgba(6, 182, 212, 0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--primary-soft);
 }
 
 .nav-link--arcade {
-  background: linear-gradient(135deg, rgba(244, 114, 182, 0.1), rgba(168, 85, 247, 0.1));
-  border: 1px solid rgba(244, 114, 182, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
   border-radius: 0.5rem;
   padding: 0.4rem 0.75rem !important;
 }
 
 .nav-link--arcade:hover,
 .nav-link--arcade.router-link-active {
-  color: #F472B6;
-  border-color: #F472B6;
-  background: rgba(244, 114, 182, 0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--primary-soft);
 }
 
 .nav-link--gallery {
-  background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(6, 182, 212, 0.1));
-  border: 1px solid rgba(0, 255, 65, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
   border-radius: 0.5rem;
   padding: 0.4rem 0.75rem !important;
 }
 
 .nav-link--gallery:hover,
 .nav-link--gallery.router-link-active {
-  color: #00ff41;
-  border-color: #00ff41;
-  background: rgba(0, 255, 65, 0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--primary-soft);
 }
 
 .nav-link--formation {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
   border-radius: 0.5rem;
   padding: 0.4rem 0.75rem !important;
 }
 
 .nav-link--formation:hover,
 .nav-link--formation.router-link-active {
-  color: #FBBF24;
-  border-color: #FBBF24;
-  background: rgba(251, 191, 36, 0.15);
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--primary-soft);
 }
 
+/* CONTRASTE CORRIGE (13/09/2026) : l'accent a 50 % d'opacite sur le papier
+   donnait #cd9888, soit 2,2:1 pour du texte de 11 px — sous le seuil de 4,5:1.
+   L'opacite est supprimee et la couleur passe au jeton tertiaire (5,45:1). */
 .nav-link__num {
-  color: var(--primary);
-  opacity: 0.5;
+  color: var(--ink-faint);
 }
 
 .nav-link__num::before {
@@ -362,12 +367,14 @@ onUnmounted(() => {
   left: 50%;
   transform: translateX(-50%);
   width: 280px;
-  background: rgba(15, 15, 15, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
+  /* CORRIGE (13/09/2026) : le panneau etait un noir opaque de l'ancienne
+     direction artistique. Comme il est ferme pendant un audit automatique,
+     aucun outil ne le voyait — c'etait le dernier vrai trou de contraste. */
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
   border-radius: 1rem;
   padding: 0.5rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 40px rgba(26, 26, 24, 0.14);
   max-height: 70vh;
   overflow-y: auto;
 }
@@ -379,15 +386,15 @@ onUnmounted(() => {
 
 .multivers-header {
   padding: 1rem 1.25rem;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
-  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+  background: var(--paper-alt);
+  border-bottom: 1px solid var(--rule);
 }
 
 .multivers-title {
   display: block;
   font-size: 0.85rem;
   font-weight: 700;
-  color: #a855f7;
+  color: var(--ink);
   margin-bottom: 0.25rem;
 }
 
@@ -421,52 +428,52 @@ onUnmounted(() => {
 }
 
 .nav-dropdown__item--featured {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(16, 185, 129, 0.1));
-  border: 1px solid rgba(251, 191, 36, 0.2);
+  background: var(--primary-soft);
+  border: 1px solid var(--accent);
   margin-bottom: 0.5rem;
 }
 
 .nav-dropdown__item--featured:hover {
-  background: rgba(251, 191, 36, 0.15);
-  border-color: rgba(251, 191, 36, 0.4);
+  background: var(--primary-soft);
+  border-color: var(--accent-ink);
 }
 
 .nav-dropdown__menu--tower {
   width: 280px;
-  background: linear-gradient(180deg, rgba(251, 191, 36, 0.05), rgba(15, 15, 15, 0.95));
-  border-color: rgba(251, 191, 36, 0.2);
+  background: var(--paper);
+  border-color: var(--rule-strong);
 }
 
 .nav-dropdown__item--agents {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.1));
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
 }
 
 .nav-dropdown__item--agents:hover {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: rgba(16, 185, 129, 0.4);
+  background: var(--primary-soft);
+  border-color: var(--accent);
 }
 
 .nav-dropdown__item--agents .nav-dropdown__title {
-  color: var(--primary);
+  color: var(--ink);
 }
 
 .nav-dropdown__item--interactive {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
 }
 
 .nav-dropdown__item--interactive:hover {
-  background: rgba(139, 92, 246, 0.15);
-  border-color: rgba(139, 92, 246, 0.4);
+  background: var(--primary-soft);
+  border-color: var(--accent);
 }
 
 .nav-dropdown__item--interactive .nav-dropdown__title {
-  color: #8B5CF6;
+  color: var(--ink);
 }
 
 .nav-dropdown__item--featured .nav-dropdown__title {
-  color: #FBBF24;
+  color: var(--accent);
 }
 
 .nav-dropdown__item--universe {
@@ -475,7 +482,7 @@ onUnmounted(() => {
 }
 
 .nav-dropdown__item--universe:hover {
-  background: rgba(168, 85, 247, 0.15);
+  background: var(--primary-soft);
 }
 
 .nav-dropdown__icon {
@@ -611,17 +618,17 @@ onUnmounted(() => {
 }
 
 .nav-mobile__link--universe:hover {
-  color: #a855f7;
+  color: var(--accent);
 }
 
 .nav-mobile__link--tower {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(180, 83, 9, 0.1));
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
 }
 
 .nav-mobile__link--tower:hover {
-  background: rgba(251, 191, 36, 0.15);
-  color: #FBBF24;
+  background: var(--primary-soft);
+  color: var(--accent);
 }
 
 .nav-mobile__link--agents {
@@ -630,55 +637,55 @@ onUnmounted(() => {
 }
 
 .nav-mobile__link--agents:hover {
-  background: rgba(16, 185, 129, 0.15);
+  background: var(--primary-soft);
 }
 
 .nav-mobile__link--interactive {
-  color: #8B5CF6 !important;
+  color: var(--ink) !important;
 }
 
 .nav-mobile__link--interactive:hover {
-  background: rgba(139, 92, 246, 0.15);
+  background: var(--primary-soft);
 }
 
 .nav-mobile__link--apps {
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(16, 185, 129, 0.1));
-  border: 1px solid rgba(6, 182, 212, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
 }
 
 .nav-mobile__link--apps:hover {
-  background: rgba(6, 182, 212, 0.15);
-  color: #06B6D4;
+  background: var(--primary-soft);
+  color: var(--accent);
 }
 
 .nav-mobile__link--formation {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.1));
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
 }
 
 .nav-mobile__link--formation:hover {
-  background: rgba(251, 191, 36, 0.15);
-  color: #FBBF24;
+  background: var(--primary-soft);
+  color: var(--accent);
 }
 
 .nav-mobile__link--gallery {
-  background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(6, 182, 212, 0.1));
-  border: 1px solid rgba(0, 255, 65, 0.3);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
 }
 
 .nav-mobile__link--gallery:hover {
-  background: rgba(0, 255, 65, 0.15);
-  color: #00ff41;
+  background: var(--primary-soft);
+  color: var(--accent);
 }
 
 .nav-mobile__link--featured {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(16, 185, 129, 0.1));
-  border: 1px solid rgba(251, 191, 36, 0.2);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
 }
 
 .nav-mobile__link--featured:hover {
-  background: rgba(251, 191, 36, 0.15);
-  color: #FBBF24;
+  background: var(--primary-soft);
+  color: var(--accent);
 }
 
 .universe-icon {
@@ -759,7 +766,7 @@ onUnmounted(() => {
 
 .nav-dropdown__menu::-webkit-scrollbar-thumb,
 .multivers-grid::-webkit-scrollbar-thumb {
-  background: rgba(168, 85, 247, 0.3);
+  background: var(--rule-strong);
   border-radius: 2px;
 }
 

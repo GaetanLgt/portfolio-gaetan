@@ -65,11 +65,13 @@ onUnmounted(() => {
   align-items: center;
   gap: 1rem;
   padding: 1rem 1.25rem;
-  background: rgba(15, 15, 15, 0.95);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--primary);
+  /* CORRIGÉ (13/09/2026) : bandeau noir de l'ancienne direction artistique.
+     Sur le thème papier, il redevenait un pavé sombre avec un texte à
+     --text-main (encre) — donc illisible. */
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
   border-radius: 0.75rem;
-  box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 12px 40px rgba(26, 26, 24, 0.14);
 }
 
 .pwa-update-icon {

@@ -85,7 +85,8 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  /* Piste : un blanc à 10 % était invisible sur le papier clair. */
+  background: var(--rule);
   overflow: hidden;
 }
 
@@ -117,8 +118,8 @@ onUnmounted(() => {
   top: 8px;
   font-size: 0.6rem;
   font-family: 'JetBrains Mono', monospace;
-  color: var(--progress-color);
-  background: rgba(0, 0, 0, 0.8);
+  color: var(--ink);
+  background: var(--paper-alt);
   padding: 0.15rem 0.4rem;
   border-radius: 2px;
 }

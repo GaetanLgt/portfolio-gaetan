@@ -77,13 +77,26 @@ const showSettings = ref(false);
 
 const consent = reactive({
   essential: true, // Toujours true
-  analytics: true,
-  preferences: true
+  // CORRIGÉ (10/09/2026) : analytics et preferences étaient à `true` par défaut.
+  // Des cases pré-cochées ne constituent pas un consentement valide (RGPD,
+  // considérant 32 : « le silence, les cases à cocher cochées par défaut ou
+  // l'inactivité ne devraient pas constituer un consentement »). Les deux
+  // cases démarrent donc éteintes ; seul « essentiel » reste acquis.
+  analytics: false,
+  preferences: false
 });
 
 const CONSENT_KEY = 'gl_cookie_consent';
 
 // Vérifier si consentement déjà donné
+// Handler nommé : la version précédente retirait un écouteur anonyme, donc
+// JAMAIS le bon — l'écouteur d'origine restait attaché (fuite + réouverture
+// fantôme du bandeau après démontage).
+const ouvrirParametres = () => {
+  showBanner.value = true;
+  showSettings.value = true;
+};
+
 onMounted(() => {
   const savedConsent = localStorage.getItem(CONSENT_KEY);
   if (!savedConsent) {
@@ -97,16 +110,13 @@ onMounted(() => {
     Object.assign(consent, parsed);
     applyConsent();
   }
-  
+
   // CNIL : Écoute l'événement pour rouvrir le bandeau
-  window.addEventListener('open-cookie-settings', () => {
-    showBanner.value = true;
-    showSettings.value = true;
-  });
+  window.addEventListener('open-cookie-settings', ouvrirParametres);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('open-cookie-settings', () => {});
+  window.removeEventListener('open-cookie-settings', ouvrirParametres);
 });
 
 const acceptAll = () => {
@@ -161,13 +171,20 @@ defineExpose({ showBanner, consent });
   left: 1.5rem;
   right: 1.5rem;
   max-width: 600px;
-  background: rgba(10, 10, 15, 0.98);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(217, 105, 74, 0.35);
+  /* FOND CORRIGÉ (10/09/2026) : c'était rgba(10, 10, 15, 0.98), un noir opaque
+     de l'ancienne direction artistique. Sur le thème papier, le bandeau restait
+     donc un pavé sombre — et une fois le texte repassé en encre de la charte,
+     le contraste tombait à 1,09:1, c'est-à-dire illisible. Le bandeau reprend
+     les fonds et filets de la charte. */
+  background: var(--paper-alt);
+  border: 1px solid var(--rule-strong);
+  border-left: 3px solid var(--accent);
   border-radius: 1rem;
   padding: 1.5rem;
   z-index: 9999;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  /* Ombre allégée : 0 20px 60px rgba(0,0,0,0.5) était calibré pour un fond noir.
+     Sur papier, une ombre à 50 % écrasait le bandeau. */
+  box-shadow: 0 12px 40px rgba(26, 26, 24, 0.14);
 }
 
 .cookie-content {
@@ -184,7 +201,7 @@ defineExpose({ showBanner, consent });
 .cookie-text h3 {
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--ink);
   margin-bottom: 0.5rem;
 }
 
@@ -196,7 +213,7 @@ defineExpose({ showBanner, consent });
 }
 
 .cookie-text a {
-  color: #D9694A;
+  color: var(--accent);
   text-decoration: underline;
 }
 
@@ -237,18 +254,19 @@ defineExpose({ showBanner, consent });
 
 .cookie-btn--reject:hover {
   border-color: var(--accent);
-  color: #fff;
+  color: var(--ink);
 }
 
 .cookie-btn--settings {
-  /* D5 : « paramétrer » n'est ni une action franche ni une alerte → cyan. */
+  /* « Paramétrer » n'est ni une action franche ni une alerte : filet neutre,
+     même poids visuel que « Refuser ». */
   background: transparent;
-  border: 1px solid rgba(0, 229, 255, 0.4);
-  color: var(--neon-cyan);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
 }
 
 .cookie-btn--settings:hover {
-  background: rgba(0, 229, 255, 0.12);
+  background: var(--paper);
 }
 
 .cookie-btn--save {
@@ -285,7 +303,7 @@ defineExpose({ showBanner, consent });
   display: block;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--ink);
   margin-bottom: 0.25rem;
 }
 
@@ -303,8 +321,9 @@ defineExpose({ showBanner, consent });
 }
 
 .setting-badge--required {
-  background: rgba(16, 185, 129, 0.2);
-  color: #10b981;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
 }
 
 /* Toggle Switch */
@@ -337,13 +356,13 @@ defineExpose({ showBanner, consent });
   width: 18px;
   left: 3px;
   bottom: 3px;
-  background: #fff;
+  background: var(--paper);
   border-radius: 50%;
   transition: 0.3s;
 }
 
 .toggle input:checked + .toggle-slider {
-  background: #10b981;
+  background: var(--accent);
 }
 
 .toggle input:checked + .toggle-slider::before {

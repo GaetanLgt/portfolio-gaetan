@@ -15,7 +15,18 @@
     Ne restent que des mesures réelles, et un « — » quand la mesure n'existe
     pas encore. Rien n'est arrondi vers le haut, rien n'est décoré.
   -->
-  <footer class="sdb" role="status" aria-label="Diagnostic technique mesuré en direct">
+  <!--
+    ÉLÉMENT CORRIGÉ (13/09/2026). C'était <footer class="sdb" role="status">.
+    Deux défauts : un `role="status"` est INTERDIT sur un élément `footer`
+    (Lighthouse : « N'utilise des rôles ARIA que sur des éléments
+    compatibles »), et le site se retrouvait avec deux repères `contentinfo`.
+    C'est désormais un `aside` : le rôle `complementary` est celui de l'élément,
+    donc aucun rôle explicite à écrire, et une zone de diagnostic est bien du
+    contenu complémentaire. Pas de `role="status"` non plus : la barre affiche
+    des valeurs qui bougent en continu, un lecteur d'écran les annoncerait sans
+    arrêt.
+  -->
+  <aside class="sdb" aria-label="Diagnostic technique mesuré en direct">
     <div class="sdb__metrics">
       <div class="sdb__item sdb__item--status">
         <span class="sdb__dot"></span>
@@ -48,7 +59,7 @@
         <span class="sdb__value" :class="{ 'sdb__value--pass': mouvementReduit }">{{ mouvementReduit ? 'RÉDUIT' : 'STANDARD' }}</span>
       </div>
     </div>
-  </footer>
+  </aside>
 </template>
 
 <script setup>
