@@ -102,6 +102,12 @@ jobs:
           name: dist
           path: dist/
           retention-days: 1
+          # ⚠ INDISPENSABLE : par défaut, upload-artifact écarte les fichiers
+          # cachés. Vérifié le 10/09/2026 en téléchargeant l'artefact : il ne
+          # contenait AUCUN fichier commençant par un point, donc `public/.htaccess`
+          # n'arrivait jamais jusqu'au job de déploiement — les règles Apache du
+          # serveur étaient restées figées à leur version d'origine.
+          include-hidden-files: true
 
   # ═══════════════════════════════════════════════════════════════════════════
   # JOB 3: Lighthouse Audit (on PR only)
@@ -156,6 +162,30 @@ jobs:
           local-dir: ./dist/
           server-dir: /public_html/
           dangerous-clean-slate: false
+
+      # ⚠ `.htaccess` : DEUX barrières l'empêchaient d'arriver sur le serveur
+      # (constaté le 10/09/2026, journal du déploiement et artefact à l'appui) :
+      #   1. `upload-artifact` écartait les fichiers cachés (corrigé ci-dessus) ;
+      #   2. l'action FTP n'en parle jamais dans son plan d'envoi (164 fichiers
+      #      listés, zéro `.htaccess`) — elle aussi ignore les fichiers cachés.
+      # Conséquence mesurée en production : `/arcade` répondait encore 200 avec la
+      # page d'accueil alors que le nouveau .htaccess prévoyait un vrai 404, et
+      # /assets/ listait toujours ses fichiers. On l'envoie donc explicitement,
+      # et l'étape ÉCHOUE si l'envoi échoue : un routage non appliqué en silence
+      # est exactement le piège qu'on vient de payer.
+      - name: 📄 Envoyer .htaccess (fichier caché, ignoré par les deux étapes)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          echo "envoi de dist/.htaccess ($(wc -c < dist/.htaccess) octets)"
+          curl --fail --silent --show-error --ftp-create-dirs \
+            --user "$FTP_USERNAME:$FTP_PASSWORD" \
+            --upload-file dist/.htaccess \
+            "ftp://$FTP_SERVER/public_html/.htaccess"
+          echo "✅ .htaccess envoyé"
 
       - name: ✅ Deployment Summary
         run: |
