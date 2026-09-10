@@ -151,7 +151,7 @@
             <strong>ArkAdiA</strong> — réseau social souverain en production
             publique : comptes, communautés, messagerie temps réel, modération
             humaine, analyse d'audience auto-hébergée. Accessible à l'adresse
-            arkadia.gldigitallab.fr. <em>Preuve technique et opérationnelle.</em>
+            <a class="dossier__lien" href="https://arkadia.gldigitallab.fr" target="_blank" rel="noopener noreferrer">arkadia.gldigitallab.fr</a>. <em>Preuve technique et opérationnelle.</em>
           </li>
           <li>
             <strong>ARKADIA France PvE</strong> — cluster de jeu exploité
