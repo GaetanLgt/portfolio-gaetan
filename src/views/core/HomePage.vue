@@ -307,10 +307,36 @@
                 <dd>Agents d'IA, modèles de langage et recherche documentaire, exécutés sur place</dd>
               </div>
               <div class="vaisseau__ligne">
+                <dt>Rôle du navire</dt>
+                <dd>
+                  <strong>Unité de R&amp;D et de démonstration</strong> — pas une
+                  infrastructure de production critique
+                </dd>
+              </div>
+              <div class="vaisseau__ligne">
                 <dt>Port d'attache</dt>
                 <dd>Harponville, Somme — Hauts-de-France, France</dd>
               </div>
             </dl>
+            <!-- REQUALIFICATION (10/09/2026) — cette précision vient d'un audit
+                 externe qui a classé la « machine unique » en risque critique :
+                 tout faire reposer sur un seul poste, c'est un point de
+                 défaillance unique. La réponse n'est pas de le cacher ni de
+                 promettre une redondance que nous n'avons pas, mais de dire
+                 exactement ce que cette machine EST : un poste de recherche et
+                 de démonstration de pointe, pas un centre de production.
+                 Les environnements qui portent une activité critique se
+                 dimensionnent au cas par cas, avec le client, selon ses
+                 exigences de continuité. -->
+            <p class="vaisseau__note vaisseau__note--alerte">
+              <strong>Ce que ce navire n'est pas.</strong> C'est une unité de
+              recherche et de démonstration : elle ne prétend pas à la haute
+              disponibilité, et <strong>la continuité de service n'est jamais
+              garantie par ce seul poste</strong>. Un projet dont l'activité ne
+              peut pas s'interrompre se conçoit sur une architecture dédiée,
+              dimensionnée avec vous — nous le disons avant la signature, pas
+              après.
+            </p>
             <p class="vaisseau__note">
               Caractéristiques relevées sur la machine le 10 septembre 2026. Elles ne sont
               pas mises à jour automatiquement : si le navire change, cette page change.
@@ -2404,6 +2430,26 @@ html {
   letter-spacing: 0.08em;
   color: var(--ink-faint);
   max-width: 70ch;
+}
+
+/* Note d'alerte : sert à énoncer une limite assumée, pas un argument.
+   Bande orange à gauche + fond opaque, pour qu'elle ne passe pas inaperçue
+   sans pour autant crier. */
+.vaisseau__note--alerte {
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--alert);
+  background: var(--paper-alt);
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  letter-spacing: normal;
+  color: var(--ink-soft);
+  max-width: 76ch;
+  margin-top: 1.5rem;
+}
+
+.vaisseau__note--alerte strong {
+  color: var(--ink);
 }
 
 @media (max-width: 720px) {
