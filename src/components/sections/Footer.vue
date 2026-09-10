@@ -74,11 +74,18 @@
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>
+            <!-- aria-label RETIRÉ (10/09/2026) : le bouton porte déjà le texte
+                 visible « Gérer les cookies », qui est un nom accessible
+                 parfaitement valable. L'ancien aria-label « Gérer les
+                 préférences de cookies » ne correspondait pas au texte affiché,
+                 ce que Lighthouse signale comme un défaut — un lecteur d'écran
+                 annonçait autre chose que ce que l'utilisateur voyait, et un
+                 agent IA ne pouvait pas faire le lien. Un texte visible clair
+                 vaut mieux qu'un aria-label redondant. -->
             <button 
               type="button" 
               class="footer__cookie-btn" 
               @click="openCookieSettings"
-              aria-label="Gérer les préférences de cookies"
             >
               Gérer les cookies
             </button>

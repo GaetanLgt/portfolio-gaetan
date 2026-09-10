@@ -190,7 +190,7 @@ defineExpose({ showBanner, consent });
 
 .cookie-text p {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--ink-soft);
   line-height: 1.5;
   margin: 0;
 }
@@ -231,12 +231,12 @@ defineExpose({ showBanner, consent });
 
 .cookie-btn--reject {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
 }
 
 .cookie-btn--reject:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -262,7 +262,7 @@ defineExpose({ showBanner, consent });
 .cookie-settings {
   margin-top: 1.25rem;
   padding-top: 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--rule);
 }
 
 .setting-item {
@@ -270,7 +270,7 @@ defineExpose({ showBanner, consent });
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--rule);
 }
 
 .setting-item:last-of-type {
@@ -292,7 +292,7 @@ defineExpose({ showBanner, consent });
 .setting-desc {
   display: block;
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--ink-faint);
 }
 
 .setting-badge {
@@ -325,7 +325,7 @@ defineExpose({ showBanner, consent });
 .toggle-slider {
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--primary-soft);
   border-radius: 24px;
   transition: 0.3s;
 }

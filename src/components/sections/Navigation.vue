@@ -8,8 +8,17 @@
     }"
   >
     <div class="container nav-container">
-      <!-- Logo -->
-      <router-link to="/" class="nav-logo" aria-label="Accueil GL Digital Lab">
+      <!-- Logo — aria-label RETIRÉ (10/09/2026, deuxième tentative).
+           Première correction : un aria-label plus long contenant le texte
+           visible. Insuffisant — Lighthouse signalait toujours « le texte
+           intérieur n'est pas inclus dans le nom accessible ».
+           La bonne réponse est la plus simple : ce lien contient DÉJÀ un texte
+           visible (« GL », « DIGITAL LAB », « Studio de systèmes multi-agents
+           locaux ») qui forme un nom accessible parfaitement valable. Un
+           aria-label posé par-dessus ne fait qu'introduire un risque de
+           divergence entre ce qui est lu et ce qui est vu.
+           Règle retenue : pas d'aria-label là où il y a du texte visible. -->
+      <router-link to="/" class="nav-logo">
         <div class="nav-logo__icon">GL</div>
         <div class="nav-logo__text">
           <span class="nav-logo__name">DIGITAL LAB</span>
