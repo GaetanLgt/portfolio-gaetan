@@ -81,6 +81,18 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- ── Index des applications (ajouté le 10/09/2026) ──
+       Les 7 pages d'applications portaient un lien « ← Retour aux Apps » vers /apps,
+       qui n'existait pas : en ligne, /apps répondait 403. La page a été créée pour
+       que le libellé soit vrai. Même défaut que /agents avant elle (« retiré : il
+       n'existait pas ») : une adresse citée sans page derrière. ── -->
+  <url>
+    <loc>https://gldigitallab.fr/apps</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- ── Outils et démonstrations (remplacent /agents, retiré : il n'existait
        pas ; les vraies pages sont celles-ci, chacune avec son titre propre) ── -->
   <url>

@@ -9,6 +9,10 @@ import HomePage from '@/views/core/HomePage.vue';
 const ContactPage = () => import('@/views/core/ContactPage.vue');
 const SitemapPage = () => import('@/views/core/SitemapPage.vue');
 const NotFound = () => import('@/views/core/NotFound.vue');
+// Page listant les applications (créée le 10/09/2026) : les 7 pages d'apps portaient un
+// lien « ← Retour aux Apps » vers /apps, une adresse qui n'existait pas — en ligne elle
+// répondait 403, donc les sept boutons de retour menaient à une erreur.
+const AppsPage = () => import('@/views/core/AppsPage.vue');
 
 // SERVICES - Offres et solutions
 const ServicesPage = () => import('@/views/services/ServicesPage.vue');
@@ -221,6 +225,20 @@ const routes = [
     meta: { 
       title: 'ARK Admin Portal | Snippets INI',
       description: 'Collection de configurations INI optimisées pour serveurs ARK: Survival Ascended. Taux, breeding, dinos, cluster.'
+    }
+  },
+
+  // -------------------------------------------------------------------------
+  // APPLICATIONS - page d'index (créée le 10/09/2026)
+  // Les 7 pages d'applications renvoyaient toutes vers /apps, qui n'existait pas.
+  // -------------------------------------------------------------------------
+  {
+    path: '/apps',
+    name: 'Apps',
+    component: AppsPage,
+    meta: {
+      title: 'Applications | Les outils de l\'équipage',
+      description: 'Les applications du studio : orchestrateur multi-agent, audit de sécurité, supervision système, base de connaissances, CI/CD, contenu SEO, devis et factures.'
     }
   },
 
