@@ -1,20 +1,36 @@
-# ===========================================
-# GL Digital Lab - robots.txt
-# ===========================================
+# ============================================================================
+# GL Digital Lab — robots.txt
+# ============================================================================
+# CORRIGÉ LE 10/09/2026. La version précédente contenait :
+#
+#     Disallow: /assets/*.js$
+#     Disallow: /assets/*.css$
+#
+# Ces deux lignes étaient une ERREUR, pour trois raisons :
+#
+#   1. Google recommande explicitement d'AUTORISER le JavaScript et le CSS.
+#      Sans eux, il ne peut pas rendre la page — et ce site est une
+#      application montée côté client : bloquer son script revient à demander
+#      aux moteurs de ne rien voir.
+#   2. Cela n'aurait rien protégé : ces fichiers sont servis à tout visiteur
+#      qui ouvre le site. Les interdire au robot ne les cache à personne.
+#   3. Cela aggravait le seul vrai problème d'indexation du site, celui du
+#      contenu produit par JavaScript.
+#
+# Un robot qui ne peut ni lire ni exécuter le script ne verra que le contenu
+# de secours — c'est-à-dire presque rien.
+# ============================================================================
 
-# Autoriser tous les robots
 User-agent: *
 Allow: /
 
-# Bloquer les assets techniques
-Disallow: /assets/*.js$
-Disallow: /assets/*.css$
+# Seule exclusion : les formations, non commercialisées à ce jour.
+Disallow: /formation
 
-# Sitemap
+# Les fichiers techniques restent ouverts (voir l'explication en tête).
+# Ne pas réintroduire de Disallow sur /assets/.
+
 Sitemap: https://gldigitallab.fr/sitemap.xml
 
-# Crawl-delay (optionnel, respecté par certains bots)
+# Crawl-delay : respecté par certains robots, ignoré par d'autres.
 Crawl-delay: 1
-
-# Formations non commercialisees pour le moment
-Disallow: /formation
