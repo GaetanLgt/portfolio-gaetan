@@ -2,6 +2,30 @@
 
 > **À lire avant de croire un chiffre de performance sur ce projet.**
 > Constat établi le 10/09/2026 après six tirs Lighthouse successifs.
+>
+> ⚠️ **CORRECTION DU 10/09/2026 (soir) — LE DIAGNOSTIC DE CE DOCUMENT EST FAUX.**
+> Les six tirs à 45–61 décrits ci-dessous ne venaient **pas** d'un rendu logiciel de
+> la machine : ils venaient du **serveur de développement** (`vite dev`). Mesuré le
+> même jour, même machine, protocole **identique** (Lighthouse 13.4.1, 3 tirs par
+> mode, **médiane** retenue, poste « Other » vérifié, `benchmarkIndex` relevé) :
+>
+> | Environnement | Mobile | Desktop | Poids | Requêtes |
+> |---|---|---|---|---|
+> | `vite dev` — serveur de développement | **56** (56/56/56) | 77 | **2 113 Ko** | **86** |
+> | `vite preview` — aperçu du build | 84 | 99 | 295 Ko | 12 |
+> | **Production** (`gldigitallab.fr`) | **91** (91/91/92) | **100** (100/100/100) | 317 Ko | 12 |
+>
+> Le serveur de développement **déballe** le code (86 requêtes, 2,1 Mo) au lieu de le
+> **regrouper** (12 requêtes, ~300 Ko). La performance de ce site **est mesurable**,
+> elle l'a toujours été : il ne fallait pas mesurer le bon environnement.
+> En production, le poste « Other » vaut 27 à 38 % — il ne domine pas.
+> Rejeu et détail : `C:\IA\gl-digital-lab\modeles\performance-site-enigme-resolue-2026-09-10.md`.
+>
+> **Ce qui reste à faire avant de publier un engagement chiffré** : refaire les tirs
+> **depuis une autre machine**, pour savoir si 91 en mobile est un plancher dû à la
+> lenteur de ce poste (`benchmarkIndex` 1 885 à 3 287, contre ~1 000 sur un poste
+> rapide) ou la valeur réelle. Et balayer les autres pages : **seul l'accueil est
+> mesuré** — une leçon déjà payée sur l'accessibilité.
 
 ---
 
@@ -102,9 +126,19 @@ La charte du studio exige « Lighthouse ≥ 95 ». En l'état :
 
 - **Accessibilité, bonnes pratiques, référencement** : la cible est atteinte ou
   dépassée, et c'est **prouvé**.
-- **Performance** : **non démontrée**, et non démontrable depuis cette machine.
+- **Performance** : ~~**non démontrée**, et non démontrable depuis cette machine.~~
+  **CORRIGÉ le 10/09/2026 : elle est mesurée.** Production, 3 tirs, médiane :
+  **91 en mobile, 100 en desktop** (accueil). La cible « Lighthouse ≥ 95 » est donc
+  **atteinte en desktop** et à 4 points en mobile.
 
-Deux voies, à trancher par Gaëtan :
+**Conséquence : la dégradation n'est pas justifiée.** La voie 2 ci-dessous (retirer
+le post-traitement et les modèles au premier chargement) n'a plus de motif : elle
+dégraderait un produit dont la performance est mesurée bonne, sur la foi d'un
+diagnostic faux. La question ouverte n'est plus « faut-il dégrader ? » mais
+**« 91 en mobile est-il un plancher dû au poste, ou la valeur réelle ? »** — ce qui
+se tranche par des tirs depuis une autre machine, pas par une décision de design.
+
+Les deux voies qui avaient été proposées, conservées pour mémoire :
 
 1. **Assumer la scène 3D** et faire mesurer la performance sur un vrai navigateur
    avec GPU pour connaître le chiffre réel avant de décider.
