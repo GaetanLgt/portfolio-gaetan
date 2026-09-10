@@ -320,7 +320,7 @@ onMounted(() => {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background: var(--primary-soft);
-  border: 1px solid rgba(166, 63, 38, 0.2);
+  border: 1px solid rgba(0, 255, 65, 0.2);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;

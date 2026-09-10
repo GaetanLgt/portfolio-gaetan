@@ -21,7 +21,7 @@ textarea:focus-visible,
 [tabindex="0"]:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(166, 63, 38, 0.18);
+  box-shadow: 0 0 0 4px rgba(0, 255, 65, 0.18);
 }
 
 /* Cards et éléments cliquables */
@@ -35,7 +35,7 @@ textarea:focus-visible,
 .nav-dropdown__item:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 4px;
-  box-shadow: 0 0 0 6px rgba(166, 63, 38, 0.12);
+  box-shadow: 0 0 0 6px rgba(0, 255, 65, 0.12);
 }
 
 /* Remove default focus styles on mouse interactions */

@@ -17,3 +17,6 @@ export { default as MorphingText } from './MorphingText.vue';
 // Animations
 export { default as ScrollReveal } from './ScrollReveal.vue';
 export { default as FloatingElements } from './FloatingElements.vue';
+
+// D5 — couche « console » (scanlines, cadres techniques, hachures d'alerte)
+export { default as ConsoleOverlay } from './ConsoleOverlay.vue';

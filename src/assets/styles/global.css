@@ -80,16 +80,19 @@ a:hover {
   transform: translateY(-5px);
 }
 
-/* BUTTONS */
+/* BUTTONS
+   D5 (fusion) : l'ACTION est jaune (apport Cyberpunk 2077), jamais verte.
+   Le vert code reste le signal MND — un bouton vert diluait les deux
+   registres. Contraste texte sombre sur jaune : 15,44:1 (mesuré, AAA). */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  background: var(--accent);
-  color: var(--paper);
-  font-family: 'JetBrains Mono', monospace;
+  background: var(--action);
+  color: var(--action-ink);
+  font-family: var(--font-mono);
   font-weight: 700;
   font-size: 0.875rem;
   border: none;
@@ -100,10 +103,10 @@ a:hover {
 }
 
 .btn-primary:hover {
-  background: var(--accent-ink);
-  color: var(--paper);
+  background: var(--action-dark);
+  color: var(--action-ink);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--glow-action), var(--shadow-md);
 }
 
 .btn-outline {
@@ -184,7 +187,7 @@ a:hover {
 
 /* SELECTION */
 ::selection {
-  background: rgba(166, 63, 38, 0.28);
+  background: rgba(0, 255, 65, 0.28);
   color: var(--ink);
 }
 

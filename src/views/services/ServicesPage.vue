@@ -857,7 +857,7 @@ const steps = [
   bottom: 0;
   left: 15px;
   width: 2px;
-  background: linear-gradient(to bottom, var(--primary), rgba(166, 63, 38, 0.1));
+  background: linear-gradient(to bottom, var(--primary), rgba(0, 255, 65, 0.1));
 }
 
 .timeline__item {
@@ -1027,8 +1027,8 @@ const steps = [
 }
 
 .pricing-card--highlight {
-  border-color: rgba(166, 63, 38, 0.4);
-  background: rgba(166, 63, 38, 0.05);
+  border-color: rgba(0, 255, 65, 0.4);
+  background: rgba(0, 255, 65, 0.05);
 }
 
 .pricing-card__badge {
@@ -1127,8 +1127,8 @@ const steps = [
 }
 
 .awakening-card--red {
-  border-color: rgba(166, 63, 38, 0.4);
-  background: rgba(166, 63, 38, 0.05);
+  border-color: rgba(0, 255, 65, 0.4);
+  background: rgba(0, 255, 65, 0.05);
 }
 
 .awakening-card__icon {

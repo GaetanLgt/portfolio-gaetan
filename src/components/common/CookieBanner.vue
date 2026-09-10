@@ -219,13 +219,14 @@ defineExpose({ showBanner, consent });
 }
 
 .cookie-btn--accept {
-  background: #A63F26;
-  color: #F4F1EA;
+  /* D5 : accepter est une ACTION → jaune, texte sombre (15,44:1 mesuré). */
+  background: var(--action);
+  color: var(--action-ink);
   flex: 1;
 }
 
 .cookie-btn--accept:hover {
-  background: #7E2E1A;
+  background: var(--action-dark);
   transform: translateY(-1px);
 }
 
@@ -241,20 +242,21 @@ defineExpose({ showBanner, consent });
 }
 
 .cookie-btn--settings {
+  /* D5 : « paramétrer » n'est ni une action franche ni une alerte → cyan. */
   background: transparent;
-  border: 1px solid rgba(217, 105, 74, 0.4);
-  color: #D9694A;
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: var(--neon-cyan);
 }
 
 .cookie-btn--settings:hover {
-  background: rgba(217, 105, 74, 0.12);
+  background: rgba(0, 229, 255, 0.12);
 }
 
 .cookie-btn--save {
   width: 100%;
   margin-top: 1rem;
-  background: #A63F26;
-  color: #F4F1EA;
+  background: var(--action);
+  color: var(--action-ink);
 }
 
 /* Settings Panel */

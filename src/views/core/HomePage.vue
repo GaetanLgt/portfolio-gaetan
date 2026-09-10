@@ -29,6 +29,13 @@
           <CharactersHero />
         </div>
 
+        <!-- COUCHE CONSOLE (D5) : scanlines, vignette, cadres d'angle,
+             hachures d'alerte, horloge réelle. Décoratif, zéro WebGL.
+             Placé APRÈS la 3D et AVANT le contenu : la même valeur de
+             z-index (1) fait passer le texte au-dessus dans l'ordre du DOM,
+             donc la console habille la scène sans jamais gêner la lecture. -->
+        <ConsoleOverlay />
+
         <!-- Floating Tech Badges -->
         <div class="hero__floating-badges" aria-hidden="true">
           <span class="floating-badge" style="--delay: 0s; --x: 85%; --y: 15%;">Vue 3</span>
@@ -405,6 +412,7 @@ import {
   MagneticButton, 
   TextScramble,
   GlitchText,
+  ConsoleOverlay,
   ScrollReveal, 
   SpotlightContainer 
 } from '@/components/ui';
@@ -1393,13 +1401,13 @@ const methodGuarantees = [
 .quick-link:hover {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(166, 63, 38, 0.06);
+  background: rgba(0, 255, 65, 0.06);
 }
 
 
 .quick-link--featured:hover {
   border-color: var(--accent);
-  background: rgba(166, 63, 38, 0.08);
+  background: rgba(0, 255, 65, 0.08);
 }
 
 /* CTA FINAL */
@@ -1557,7 +1565,7 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 
 /* Selection style */
 ::selection {
-  background: rgba(166, 63, 38, 0.28);
+  background: rgba(0, 255, 65, 0.28);
   color: var(--ink);
 }
 
@@ -1742,9 +1750,8 @@ html {
 /* ═══════════════════════════════════════════════════════════════════════════
    SIGNATURE ORBITE (2026-10, d'après recherche Awwwards)
    « La technologie peut bouger ; le centre de gravité ne bouge pas. »
-   Point brique FIXE + anneaux pointillés qui tournent (transform = GPU).
+   Point émeraude FIXE + anneaux pointillés qui tournent (transform = GPU).
    Décoratif (aria-hidden), zéro WebGL, réduit avec prefers-reduced-motion.
-   DS clair (D1) : le vert émeraude devient brique — seul accent du site.
    ═══════════════════════════════════════════════════════════════════════════ */
 .hero__orbit {
   position: absolute;
@@ -1788,7 +1795,7 @@ html {
   margin: -5px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 8px rgba(166, 63, 38, 0.4);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
   animation: orbit-core-pulse 3.5s ease-in-out infinite;
 }
 
@@ -1803,13 +1810,13 @@ html {
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  border: 1px dashed rgba(166, 63, 38, 0.28);
+  border: 1px dashed rgba(0, 255, 65, 0.28);
   transform: translate(-50%, -50%);
 }
 
 .hero__orbit-ring--1 { width: 34%; height: 34%; animation: orbit-spin 42s linear infinite; }
-.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(166, 63, 38, 0.18); }
-.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(166, 63, 38, 0.09); }
+.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(0, 255, 65, 0.20); }
+.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(0, 229, 255, 0.12); }
 
 @keyframes orbit-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }

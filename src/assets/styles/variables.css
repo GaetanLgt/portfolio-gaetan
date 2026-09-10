@@ -45,6 +45,42 @@
   --glow-cyan: 0 0 24px rgba(0, 229, 255, 0.32);
 
   /* ═══════════════════════════════════════════════════════════════════════
+     D5 — SITE CONCEPT FLAGSHIP (2026-09-10)
+     Doctrine de fusion : UNE SOURCE = UN RÔLE, jamais deux.
+       MND        → le SENS   (émeraude, cercle-à-point) — sacré, < 1 % du pixel
+       Matrix     → la MATIÈRE (noir, vert code, verre)   — jamais l'action
+       Evangelion → la TENSION (hachures, orange, mono)   — états système
+       Cyberpunk  → l'ÉNERGIE (jaune, néons)              — action uniquement
+     Détail complet : modeles/decisions-concept-flagship-d5.md
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  /* ── Action (apport Cyberpunk 2077) : réservée aux CTA. Aucun bouton
+     n'est vert Matrix : le vert reste le signal MND, jamais l'action. ── */
+  --action: #FCEE0A;        /* jaune électrique — CTA primaire */
+  --action-ink: #16120A;    /* texte posé SUR le jaune */
+  --action-dark: #D6C808;   /* survol / état pressé */
+
+  /* ── États système (apport Evangelion) : jamais décoratifs ── */
+  --alert: #FF6A00;         /* avertissement, module dégradé */
+  --critical: #FF0033;      /* rupture, erreur (très rare) */
+  --alert-ink: #1C0A00;
+
+  /* ── Hachures d'alerte (bande de danger, motif Evangelion/chantier) ── */
+  --hatch-action: repeating-linear-gradient(45deg,
+      var(--action) 0 8px, #0B0A02 8px 16px);
+  --hatch-alert: repeating-linear-gradient(45deg,
+      var(--alert) 0 8px, #170700 8px 16px);
+
+  /* ── Monospace système : l'ADN technique Evangelion/Cyberpunk. JetBrains Mono
+     est déjà auto-hébergée dans /fonts/ (donc 2 familles chargées au total,
+     verrou D1 tenu) — les suivantes ne servent que de repli. ── */
+  --font-mono: 'JetBrains Mono', ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  /* ── Halos des nouvelles couleurs ── */
+  --glow-action: 0 0 26px rgba(252, 238, 10, 0.38);
+  --glow-alert: 0 0 26px rgba(255, 106, 0, 0.40);
+
+  /* ═══════════════════════════════════════════════════════════════════════
      ALIASES LEGACY — mêmes noms que le DS précédent, remappés vers la DA
      Matrix : aucun composant ne casse, l'ensemble bascule d'un coup.
      ═══════════════════════════════════════════════════════════════════════ */
