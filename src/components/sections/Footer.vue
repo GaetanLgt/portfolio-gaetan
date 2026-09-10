@@ -81,24 +81,9 @@
           </nav>
         </div>
         
-        <!-- COLONNE « RESSOURCES » RETIRÉE (13/09/2026, décision Gaëtan).
-             Elle contenait trois liens qui menaient bien quelque part — mais pas
-             au bon endroit :
-               · « Snippets ARK (INI) » ouvrait une page de configuration de
-                 serveur de JEU (ARK: Survival Ascended). Vestige du volet jeu du
-                 projet ArkAdiA, sans aucun rapport avec l'offre du studio : sites
-                 web, applications métier, IA locale. Elle était en plus déclarée
-                 dans le sitemap, donc proposée à l'indexation par Google.
-               · « Composants réutilisables » ouvrait une bibliothèque de
-                 composants Vue 3 / Symfony — un artefact de développeur, qui ne
-                 veut rien dire pour un dirigeant de PME ou un agent de
-                 collectivité.
-               · « Tutoriels & guides » était le seul lien défendable pour un
-                 studio. Il reste accessible par son adresse directe
-                 (/ressources/tutoriels) et n'a pas à occuper une colonne du pied
-                 de page sur chaque page du site.
-             Retirer une colonne qui dessert le visiteur vaut mieux que la
-             remplir. -->
+        <!-- COLONNE « RESSOURCES » RETIRÉE le 13/09/2026 (décision Gaëtan) :
+             elle menait vers une page de config de serveur de jeu et une
+             bibliothèque de composants, hors offre. Détail au commit. -->
         
         <!-- Legal (Opquast N°45) -->
         <div class="footer__section">
@@ -108,49 +93,54 @@
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>
-            <!-- aria-label RETIRÉ (10/09/2026) : le bouton porte déjà le texte
-                 visible « Gérer les cookies », qui est un nom accessible
-                 parfaitement valable. L'ancien aria-label « Gérer les
-                 préférences de cookies » ne correspondait pas au texte affiché,
-                 ce que Lighthouse signale comme un défaut — un lecteur d'écran
-                 annonçait autre chose que ce que l'utilisateur voyait, et un
-                 agent IA ne pouvait pas faire le lien. Un texte visible clair
-                 vaut mieux qu'un aria-label redondant. -->
-            <button 
-              type="button" 
-              class="footer__cookie-btn" 
-              @click="openCookieSettings"
-            >
-              Gérer les cookies
-            </button>
-            <!-- DÉCOR DE SCIENCE-FICTION (inversé le 10/09/2026) : le site
-                 s'ouvre SOBRE. Ce bouton propose le décor à qui le veut —
-                 pluie de code, scène 3D, Grille, halos. Avant, c'était
-                 l'inverse : on imposait le spectacle et on offrait le calme. -->
-            <button
-              type="button"
-              class="footer__cookie-btn"
-              :aria-pressed="decorActif ? 'true' : 'false'"
-              @click="basculerDecor"
-            >
-              {{ decorActif ? 'Revenir au mode sobre' : 'Activer le décor' }}
-            </button>
-            <!-- AUDIO DU POSTE (doctrine D5, expérience signature n°5) :
-                 DÉSACTIVÉ par défaut. Aucun son ne se déclenche tant que le
-                 visiteur ne l'a pas demandé — un site qui fait du bruit à
-                 l'arrivée est une nuisance. Tout est synthétisé en Web Audio :
-                 zéro fichier son à télécharger. -->
-            <button
-              type="button"
-              class="footer__cookie-btn"
-              :aria-pressed="audioActif ? 'true' : 'false'"
-              @click="basculerAudio"
-            >
-              {{ audioActif ? 'Couper le son' : 'Activer le son' }}
-            </button>
           </nav>
         </div>
         
+      </div>
+
+      <!-- PRÉFÉRENCES DU VISITEUR — déplacées ici le 13/09/2026.
+           Elles étaient rangées dans le <nav aria-label="Navigation légale">,
+           juste après les liens légaux. Ce <nav> contenait donc deux natures de
+           contenu : un lecteur d'écran annonçait « navigation légale » et
+           tombait sur trois boutons de réglage, un agent IA y voyait des liens
+           là où il n'y en avait plus. Et trois réglages affichés au même poids
+           que les mentions légales, sur chaque page, c'est trop de place pour
+           des fonctions que peu de visiteurs utilisent.
+           Elles ont maintenant leur propre groupe, nommé, hors de la
+           navigation — la place d'un réglage est à côté d'un réglage. -->
+      <div class="footer__preferences">
+        <h2 class="footer__preferences-title">Préférences d'affichage</h2>
+        <div class="footer__preferences-actions">
+          <button 
+            type="button" 
+            class="footer__cookie-btn" 
+            @click="openCookieSettings"
+          >
+            Gérer les cookies
+          </button>
+          <!-- DÉCOR DE SCIENCE-FICTION (inversé le 10/09/2026) : le site s'ouvre
+               SOBRE. Ce bouton propose le décor à qui le veut. Avant, c'était
+               l'inverse : on imposait le spectacle et on offrait le calme. -->
+          <button
+            type="button"
+            class="footer__cookie-btn"
+            :aria-pressed="decorActif ? 'true' : 'false'"
+            @click="basculerDecor"
+          >
+            {{ decorActif ? 'Revenir au mode sobre' : 'Activer le décor' }}
+          </button>
+          <!-- AUDIO DU POSTE : désactivé par défaut. Aucun son ne se déclenche
+               tant que le visiteur ne l'a pas demandé. Tout est synthétisé en
+               Web Audio : zéro fichier son à télécharger. -->
+          <button
+            type="button"
+            class="footer__cookie-btn"
+            :aria-pressed="audioActif ? 'true' : 'false'"
+            @click="basculerAudio"
+          >
+            {{ audioActif ? 'Couper le son' : 'Activer le son' }}
+          </button>
+        </div>
       </div>
       
       <!-- Bottom -->
@@ -426,4 +416,28 @@ function openCookieSettings() {
     text-align: center;
   }
 }
+/* PRÉFÉRENCES DU VISITEUR — groupe propre, hors de la navigation légale.
+   Ces trois boutons étaient rangés dans le <nav> des liens légaux. */
+.footer__preferences {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.footer__preferences-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  margin: 0 0 0.75rem;
+}
+
+.footer__preferences-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 </style>
