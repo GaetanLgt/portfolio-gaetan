@@ -161,6 +161,16 @@
                 </select>
               </div>
 
+              <!-- PIÈGE À ROBOT : ce champ est invisible et hors du parcours
+                   clavier (tabindex="-1", aria-hidden, masqué en CSS). Un
+                   humain ne le voit ni ne le remplit ; le script serveur
+                   rejette silencieusement toute soumission qui le contient.
+                   Ne jamais le supprimer sans retirer le contrôle serveur. -->
+              <div class="form-piege" aria-hidden="true">
+                <label for="site_web">Site web (ne pas remplir)</label>
+                <input id="site_web" v-model="form.site_web" type="text" tabindex="-1" autocomplete="off">
+              </div>
+
               <div class="form-group">
                 <label for="message" class="form-label">VOTRE PROJET</label>
                 <textarea 
@@ -203,7 +213,10 @@
             <div v-else-if="formStatus === 'error'" class="form-error" role="alert">
               <div class="form-error__icon">!</div>
               <h3>Erreur d'envoi</h3>
-              <p>Une erreur est survenue. Veuillez réessayer ou me contacter directement par email.</p>
+              <!-- Le message vient du serveur : il explique en français ce qui
+                   ne va pas (champ manquant, trop d'envois, panne d'expédition)
+                   au lieu d'un « une erreur est survenue » qui n'aide personne. -->
+              <p>{{ erreurEnvoi || 'Une erreur est survenue. Réessayez, écrivez à gtn.langlet+lab@gmail.com ou appelez le 06 86 47 46 10.' }}</p>
               <button @click="resetForm" class="form-error__retry">
                 Réessayer
               </button>
@@ -247,9 +260,19 @@ const terminalLines = ref([
 ]);
 
 const formStatus = ref('idle'); // idle | sending | success | error
+const erreurEnvoi = ref('');
 
-// FORMSPREE : Formulaire contact GL Digital Lab
-const FORMSPREE_ID = 'mdakrrdb';
+// ENDPOINT AUTO-HÉBERGÉ (10/09/2026) — remplace Formspree.
+// Formspree est une société américaine : le nom, l'e-mail et le message du
+// visiteur traversaient l'Atlantique sans que ce soit déclaré, ce qui
+// contredisait l'argument de souveraineté du site. Le script PHP vit sur
+// l'hébergement o2switch, en France, et n'écrit nulle part ailleurs.
+const ENDPOINT = '/api/contact.php';
+
+// Horodatage d'arrivée sur la page : le script serveur refuse un formulaire
+// rempli en moins de deux secondes (comportement de robot). Ce n'est pas une
+// mesure affichée, seulement un signal transmis.
+const arrivee = Date.now();
 
 const form = reactive({
   name: '',
@@ -257,14 +280,17 @@ const form = reactive({
   project: '',
   budget: '',
   deadline: '',
-  message: ''
+  message: '',
+  // Champ appât : invisible pour un humain, il ne doit jamais être rempli.
+  site_web: ''
 });
 
 const handleSubmit = async () => {
   formStatus.value = 'sending';
-  
+  erreurEnvoi.value = '';
+
   try {
-    const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+    const response = await fetch(ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -277,18 +303,24 @@ const handleSubmit = async () => {
         budget: form.budget,
         deadline: form.deadline,
         message: form.message,
-        _subject: `[GL Digital Lab] Nouvelle demande de ${form.name}`
+        site_web: form.site_web,
+        horodatage: arrivee
       })
     });
-    
-    if (response.ok) {
+
+    const donnees = await response.json().catch(() => ({}));
+
+    if (response.ok && donnees.ok) {
       formStatus.value = 'success';
-      console.log('Form submitted successfully');
-    } else {
-      throw new Error('Form submission failed');
+      return;
     }
+    // Le serveur explique en français ce qui ne va pas : on l'affiche tel quel
+    // plutôt qu'un « une erreur est survenue » qui n'aide personne.
+    erreurEnvoi.value = donnees.erreur || 'L\'envoi a échoué.';
+    formStatus.value = 'error';
   } catch (error) {
     console.error('Form error:', error);
+    erreurEnvoi.value = 'Connexion impossible. Écrivez à gtn.langlet+lab@gmail.com ou appelez le 06 86 47 46 10.';
     formStatus.value = 'error';
   }
 };
@@ -464,6 +496,17 @@ onMounted(() => {
 /* FORM */
 .form-group {
   margin-bottom: var(--space-sm);
+}
+
+/* Piège à robot : présent dans le DOM (donc soumis), invisible, et hors du
+   parcours clavier grâce à tabindex="-1". On ne le masque pas avec
+   display:none — certains robots le détectent — on le sort de l'écran. */
+.form-piege {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .form-label {

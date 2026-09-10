@@ -46,31 +46,35 @@
         
         <section class="legal-section">
           <h2>Destinataires et transferts hors Union européenne</h2>
-          <!-- AJOUT 10/09/2026, après l'audit Perplexity : le formulaire de
-               contact passe par Formspree (société américaine). Ce transfert
-               n'était déclaré NULLE PART — c'est un manquement, pas un détail.
-               Il est désormais écrit ici, avant les sections qui suivent. -->
+          <!-- MISE À JOUR 10/09/2026 (2e) : Formspree a été RETIRÉ. Le
+               formulaire est désormais traité par un script hébergé sur
+               o2switch, en France. Il n'y a donc PLUS de transfert hors UE
+               pour le formulaire — la section le dit, preuve à l'appui, plutôt
+               que de laisser une déclaration devenue fausse. -->
           <p>
-            Le formulaire de contact de ce site est acheminé par <strong>Formspree</strong>
-            (Formspree, Inc., États-Unis), qui agit comme sous-traitant et transmet le message
-            à notre boîte e-mail. Cela implique un <strong>transfert de vos données hors de
-            l'Union européenne</strong>, encadré par les clauses contractuelles types de la
-            Commission européenne et le <em>Data Privacy Framework</em>.
+            <strong>Aucun transfert de données hors de l'Union européenne n'est
+            effectué pour le formulaire de contact.</strong> Il est traité par un script
+            hébergé sur notre propre hébergement <strong>o2switch, en France</strong>,
+            qui se contente d'envoyer un e-mail à notre boîte de réception.
           </p>
-          <p>Les données concernées sont uniquement celles que vous saisissez :</p>
+          <p>Concrètement, lorsque vous envoyez le formulaire :</p>
           <ul>
-            <li>votre nom, votre adresse e-mail et le contenu de votre message ;</li>
-            <li>l'horodatage de l'envoi et l'adresse IP transmise par le protocole.</li>
+            <li>nom, adresse e-mail et contenu du message sont transmis à notre hébergeur en France ;</li>
+            <li>l'adresse IP est utilisée <em>en mémoire, sous forme d'empreinte non réversible</em>,
+                uniquement pour limiter les envois abusifs, et n'est pas conservée en clair ;</li>
+            <li>aucun service tiers (américain ou autre) n'intervient dans cet acheminement ;</li>
+            <li>aucune base de données ne conserve le contenu de votre message : il n'existe
+                que dans l'e-mail reçu.</li>
           </ul>
           <p>
-            Aucune autre donnée n'est transmise à un tiers. L'analyse d'audience est réalisée
-            par une instance <strong>Matomo auto-hébergée en France</strong> (§ suivant), et non
-            par un service externe.
+            L'analyse d'audience est elle aussi auto-hébergée : <strong>Matomo installé sur
+            notre serveur, en France</strong> (§ suivant). Aucun outil d'analyse externe
+            n'est utilisé.
           </p>
           <p class="legal-note">
-            Vous préférez éviter ce transfert ? Écrivez directement à
-            <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a> ou appelez
-            le 06 86 47 46 10 : aucun intermédiaire, aucune donnée hors UE.
+            Une question sur ce point, ou une demande d'accès ? Écrivez à
+            <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+            ou appelez le 06 86 47 46 10.
           </p>
         </section>
 
