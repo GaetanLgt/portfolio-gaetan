@@ -83,6 +83,14 @@
                 
                 <!-- CTA : le premier engagement commercial = l'audit -->
                 <div class="hero__actions">
+                  <!-- LE PAVILLON (apport ALBATOR, D5) : il ne se hisse qu'aux
+                       moments de décision. Ici, c'est le CTA principal — le seul
+                       endroit où le visiteur s'engage. Décoratif (aria-hidden),
+                       CSS pur, jamais hissé en reduced-motion. -->
+                  <span class="pavillon" aria-hidden="true">
+                    <span class="pavillon__mat"></span>
+                    <span class="pavillon__etoffe"><span class="pavillon__sceau"></span></span>
+                  </span>
                   <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large btn-glow" :strength="40" :text-strength="50">
                     Commencer par voir clair
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2154,6 +2162,86 @@ html {
   .preuve-arkadia__box {
     grid-template-columns: 1fr;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LE PAVILLON (apport ALBATOR, concept D5)
+   Rôle unique dans la doctrine : la liberté, la signature du corsaire. Il ne
+   sert JAMAIS de décoration — le pavillon ne se hisse qu'aux moments de
+   décision : entrée, engagement, prise de contact. Ici, au survol ou au focus
+   du seul bouton d'action.
+   CSS pur, aria-hidden, jamais hissé en reduced-motion.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.pavillon {
+  position: relative;
+  width: 34px;
+  height: 54px;
+  flex: none;
+  pointer-events: none;
+}
+
+/* Le mât : un simple trait vertical, comme une drisse. */
+.pavillon__mat {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 100%;
+  background: var(--rule-strong);
+}
+
+/* L'étoffe, ferlée par défaut (hauteur nulle), hissée au survol. */
+.pavillon__etoffe {
+  position: absolute;
+  left: 1px;
+  top: 0;
+  width: 30px;
+  height: 20px;
+  transform-origin: 0% 50%;
+  transform: scaleX(0);
+  transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  background: var(--accent);
+  box-shadow: var(--glow-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Le sceau du bord : le cercle-à-point, jamais un crâne. */
+.pavillon__sceau {
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--paper);
+  border-radius: 50%;
+  position: relative;
+}
+.pavillon__sceau::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  transform: translate(-50%, -50%);
+  background: var(--paper);
+  border-radius: 50%;
+}
+
+/* Hissage : au survol du bouton, ou au focus clavier (accessibilité). */
+.hero__actions:has(.btn-primary:hover) .pavillon__etoffe,
+.hero__actions:has(.btn-primary:focus-visible) .pavillon__etoffe {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pavillon__etoffe {
+    transition: none !important;
+    transform: scaleX(1) !important;   /* hissé d'emblée : pas de mouvement */
+  }
+}
+
+@media (max-width: 560px) {
+  .pavillon { display: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
