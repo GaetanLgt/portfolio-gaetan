@@ -62,6 +62,19 @@
                   <TextScramble text="Un seul navire · IA locale · Harponville, Somme" :scramble-on-mount="true" />
                 </div>
                 
+                <!-- CE QUE NOUS VENDONS — EN PREMIER ÉCRAN (10/09/2026).
+                     Constat après relecture : le hero racontait un univers mais
+                     ne disait ni ce qu'on vend, ni pour qui, ni à quel prix. Un
+                     dirigeant de PME arrivait sur un vaisseau et repartait sans
+                     savoir si c'était pour lui. La direction artistique reste,
+                     mais l'offre passe devant le récit.
+                     Aucun chiffre inventé : ce sont les prix publics du studio. -->
+                <p class="hero__offre">
+                  <strong>Sites web</strong> · <strong>Applications métier</strong> ·
+                  <strong>IA locale</strong> — pour PME et collectivités.
+                  À partir de <strong>1 500 € HT</strong>.
+                </p>
+
                 <!-- Main Title — message éditorial fort
                      DA D4 : glitch Matrix Resurrections sur la seule ligne accentuée
                      (intensité « light » : les clones restent à 40 % et le texte réel
@@ -933,6 +946,25 @@ const methodGuarantees = [
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
+}
+
+/* L'offre en premier écran : sobre, lisible, jamais criarde. Elle passe AVANT
+   le titre éditorial parce qu'un visiteur doit savoir en deux secondes ce qu'on
+   vend. Les prix sont les prix publics du studio, pas une accroche. */
+.hero__offre {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-bottom: 1.25rem;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--action);
+}
+
+.hero__offre strong {
+  color: var(--ink);
+  font-weight: 700;
 }
 
 /* Improved subtitle contrast */
