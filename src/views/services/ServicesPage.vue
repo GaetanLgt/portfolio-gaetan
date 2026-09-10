@@ -14,8 +14,9 @@
         
         <p class="hero__subtitle">
           Des systèmes multi-agents locaux — agents, mémoire, automatisations — conçus pour
-          <strong>votre</strong> métier, posés dans votre environnement, livrés avec les clés.
-          Pas de dépendance au cloud lointain, pas de licence qui augmente chaque année.
+          <strong>votre</strong> métier. Nous construisons le navire, <strong>vous en devenez le
+          capitaine</strong> : vos outils, vos données, vos clés. Pas de dépendance au cloud
+          lointain, pas de licence qui augmente chaque année.
         </p>
       </div>
     </section>
@@ -25,9 +26,12 @@
       <div class="container">
         <div class="awakening-grid">
           <div class="awakening-card glass">
-            <span class="awakening-card__icon">⚠️</span>
-            <h3>Sans diagnostic</h3>
-            <p class="awakening-card__status awakening-card__status--blue">Ce qu'on ignore souvent</p>
+            <!-- Emoji remplacé par une bande hachurée d'alerte (motif du système
+                 de design) : le verrou D1 interdit les emojis en icône, et leur
+                 rendu dépend du système d'exploitation du visiteur. -->
+            <span class="awakening-card__icon" aria-hidden="true"></span>
+            <h3>La sonde</h3>
+            <p class="awakening-card__status awakening-card__status--blue">On mesure avant de s'engager — sans diagnostic</p>
             <ul>
               <li>Données sur serveurs US (GAFAM)</li>
               <li>Abonnements SaaS qui augmentent</li>
@@ -39,13 +43,13 @@
             <span>VS</span>
           </div>
           <div class="awakening-card awakening-card--red glass">
-            <span class="awakening-card__icon">🟢</span>
-            <h3>Après l'audit</h3>
+            <span class="awakening-card__icon awakening-card__icon--apres" aria-hidden="true"></span>
+            <h3>Après la sonde</h3>
             <p class="awakening-card__status awakening-card__status--red">Ce qui change</p>
             <ul>
               <li>Failles réelles relevées, chiffres à l'appui</li>
               <li>Coûts fixes, prévisibles</li>
-              <li>IA locale, zéro fuite de données</li>
+              <li>IA exécutée localement — flux de données décrits, sans formule absolue</li>
               <li>Vous possédez votre code</li>
             </ul>
           </div>
@@ -1131,10 +1135,19 @@ const steps = [
   background: rgba(0, 255, 65, 0.05);
 }
 
+/* Marqueur de carte : une bande hachurée d'alerte (motif du système de design)
+   remplace l'emoji d'origine. Le verrou D1 interdit les emojis en icône, et
+   leur rendu dépend du système d'exploitation du visiteur. */
 .awakening-card__icon {
-  font-size: 2.5rem;
   display: block;
+  width: 58px;
+  height: 12px;
   margin-bottom: var(--space-sm);
+  background: var(--hatch-alert);
+}
+
+.awakening-card__icon--apres {
+  background: repeating-linear-gradient(45deg, var(--accent) 0 8px, #04120A 8px 16px);
 }
 
 .awakening-card h3 {
