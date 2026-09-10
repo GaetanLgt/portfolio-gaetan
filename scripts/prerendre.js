@@ -194,7 +194,21 @@ async function principal() {
     }
     if (!etat) { rapport.push({ route, ok: false, motif: 'rendu illisible' }); echecs++; continue }
 
-    const html = await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
+    // ── Retrait des scripts INJECTÉS À L'EXÉCUTION ────────────────────────
+    // Cette ligne capture `documentElement.outerHTML` APRÈS exécution du JS :
+    // tout script que l'application injecte dans <head> se retrouve donc FIGÉ
+    // dans le HTML statique livré.
+    // Constaté le 10/09/2026 (Matomo) : la balise
+    //   <script async src="https://analytics.gldigitallab.fr/matomo.js">
+    // était cuite dans les 12 pages prérendues SANS aucune configuration `_paq`.
+    // Conséquence mesurée : matomo.js chargeait sans tracker et journalisait un
+    // avertissement console sur chacune de ces pages → bonnes pratiques
+    // Lighthouse à 96 au lieu de 100. L'accueil, lui, n'est jamais écrasé par
+    // cette passe (voir plus bas) : c'est pourquoi il était la seule page propre.
+    // Règle : un script injecté à l'exécution n'a rien à faire dans un HTML figé.
+    // Il sera réinjecté normalement par l'application, côté navigateur.
+    const html = (await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML'))
+      .replace(/<script[^>]+src="[^"]*matomo\.js"[^>]*>\s*<\/script>/gi, '')
     const titre = etat.titre || ''
     const ok = typeof html === 'string' && html.length > 2000 && titre
     if (!ok) { rapport.push({ route, ok: false, motif: 'capture vide ou sans titre', titre }); echecs++; continue }
