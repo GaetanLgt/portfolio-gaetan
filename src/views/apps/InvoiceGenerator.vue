@@ -227,7 +227,7 @@ const company = ref({
   name: 'GL Digital Lab',
   address: 'Somme, France',
   siret: '123 456 789 00012',
-  email: 'contact@gl-digitallab.fr'
+  email: 'contact@gldigitallab.fr'
 });
 
 const client = ref({
