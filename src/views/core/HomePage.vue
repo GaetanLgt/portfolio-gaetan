@@ -177,6 +177,13 @@
               de bord, traduit — c'est exactement comme cela que fonctionne le poste.
             </p>
 
+            <!-- La phrase du capitaine : c'est le cœur du concept, pas une
+                 décoration. Toute la production du studio se lit à partir d'elle. -->
+            <blockquote class="vaisseau__citation">
+              <p>Les pages web que nous faisons sont nos voiles.</p>
+              <cite>Gaëtan Langlet — capitaine du navire</cite>
+            </blockquote>
+
             <table class="vaisseau__table">
               <caption class="vaisseau__legende">Vocabulaire de bord et son équivalent machine</caption>
               <thead>
@@ -198,9 +205,14 @@
                   <td>La pièce qui tient tout le reste. On la connaît par son modèle, pas par un numéro de parc.</td>
                 </tr>
                 <tr>
-                  <th scope="row">Les mâts et les voiles</th>
+                  <th scope="row">Les mâts</th>
                   <td>Les cartes graphiques</td>
-                  <td>C'est ce qui capte la puissance. C'est aussi ce qui fait tourner les modèles d'IA sur place.</td>
+                  <td>La structure qui porte la puissance. C'est elle qui fait tourner les modèles d'IA sur place.</td>
+                </tr>
+                <tr class="vaisseau__rang--clef">
+                  <th scope="row">Les voiles</th>
+                  <td>Les sites et applications que nous livrons</td>
+                  <td><strong>Chaque site livré est une voile.</strong> C'est lui qui capte le vent et fait avancer votre activité. Une voile mal taillée, et le navire n'avance pas — quel que soit le moteur.</td>
                 </tr>
                 <tr>
                   <th scope="row">La cale</th>
@@ -2081,6 +2093,41 @@ html {
   color: var(--ink-soft);
   line-height: 1.75;
   margin-bottom: 2rem;
+}
+
+/* ── La phrase du capitaine : mise en avant, mais jamais criée ── */
+.vaisseau__citation {
+  margin: 0 0 2.5rem;
+  padding: 1.5rem 0 1.5rem 1.75rem;
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(to right, rgba(0, 255, 65, 0.05), transparent 70%);
+}
+
+.vaisseau__citation p {
+  font-size: clamp(1.3rem, 3.2vw, 2rem);
+  line-height: 1.25;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.vaisseau__citation cite {
+  display: block;
+  margin-top: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-style: normal;
+}
+
+/* La ligne des voiles est la clé de voûte du concept : elle se distingue. */
+.vaisseau__rang--clef {
+  background: rgba(0, 229, 255, 0.04);
+}
+
+.vaisseau__rang--clef th[scope="row"] {
+  color: var(--neon-cyan);
 }
 
 /* ── Table d'analogie : à bord / sur la machine / l'effet pour le client ── */
