@@ -106,12 +106,18 @@
                      Workflows n8n, portraits des Lois : hors nav »,
                      decisions-refonte-awwwards-2026.md ligne 22). Les deux liens
                      restants sont sobres et ne dupliquent pas la navigation. -->
+                <!-- PORTE COMMERCIALE (10/09/2026) : le dossier professionnel
+                     est mis EN AVANT, en premier dans la liste, parce que c'est
+                     lui qui porte l'offre, les prix, la méthode et les limites.
+                     Gaëtan : « le site est une démonstration technique, l'offre
+                     est dans le dossier ». Ce lien doit donc se voir depuis le
+                     premier écran, pas se chercher dans le pied de page. -->
                 <div class="hero__quick-nav">
-                  <router-link to="/arkadia" class="quick-link">
-                    Voir la preuve — ARKADIA en production
+                  <router-link to="/dossier" class="quick-link quick-link--porte">
+                    <strong>Le dossier</strong> — offres, prix, délais et limites
                   </router-link>
-                  <router-link to="/services" class="quick-link">
-                    Voir l'offre et les tarifs
+                  <router-link to="/arkadia" class="quick-link">
+                    La preuve — ARKADIA en production
                   </router-link>
                 </div>
               </div>
@@ -330,63 +336,6 @@
       </div>
     </section>
 
-    <!-- LE TERMINAL DU POSTE (D5) : démonstration scénarisée, réponses
-         déterministes. Aucun agent d'IA connecté, et la page le dit en tête et
-         sans possibilité de le masquer. Placement après la section du vaisseau :
-         le visiteur a vu le navire, puis il l'interroge. -->
-    <TerminalMnd />
-
-
-
-    <!-- PREUVE PRODUIT : ArkAdiA, réseau social souverain EN LIGNE — bande claire
-         (la preuve moderne : le studio s'est construit un produit en production avec
-         sa stack d'agents IA locaux). Distinct de la preuve d'exploitation ARKADIA
-         France PvE (section sombre plus bas). -->
-    <section class="preuve-arkadia" aria-labelledby="preuve-arkadia-title">
-      <div class="container">
-        <ScrollReveal animation="fade-up">
-          <div class="preuve-arkadia__box">
-            <div class="preuve-arkadia__texte">
-              <span class="mono-tag" aria-hidden="true">/// LA PREUVE</span>
-              <h2 id="preuve-arkadia-title" class="preuve-arkadia__titre">
-                On l'a fait pour nous-mêmes.<br>
-                <span class="text-gradient">Ça tourne. En production.</span>
-              </h2>
-              <p class="preuve-arkadia__desc">
-                <strong>ArkAdiA</strong> — notre réseau social souverain (comptes, communautés,
-                messagerie temps réel, modération humaine, IA 100 % locale, zéro traceur) —
-                tourne en ligne sur <strong>arkadia.gldigitallab.fr</strong>. C'est notre
-                démonstration permanente, pas une maquette.
-              </p>
-              <p class="preuve-arkadia__desc">
-                La même stack d'agents et d'IA locale qui fait tourner ArkAdiA, nous la déployons
-                chez nos clients : systèmes multi-agents, RAG mémoire, automatisations —
-                exécutés sur du matériel identifié, en France. Le détail de chaque flux de
-                données est publié, sans formule absolue.
-              </p>
-              <div class="preuve-arkadia__actions">
-                <a class="btn-outline preuve-arkadia__lien" href="https://arkadia.gldigitallab.fr" target="_blank" rel="noopener noreferrer">
-                  Voir ArkAdiA en ligne ↗
-                </a>
-                <router-link class="btn-primary" to="/contact">
-                  Parler de mon projet
-                </router-link>
-              </div>
-            </div>
-            <div class="preuve-arkadia__reperes" role="list" aria-label="Repères ArkAdiA">
-              <div class="preuve-arkadia__repere" role="listitem">
-                <span class="preuve-arkadia__valeur">EN LIGNE</span>
-                <span class="preuve-arkadia__label">Production réelle</span>
-              </div>
-              <div class="preuve-arkadia__repere" role="listitem">
-                <span class="preuve-arkadia__valeur">16 ANS +</span>
-                <span class="preuve-arkadia__label">Politique produit assumée</span>
-              </div>
-            </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
 
 
     <!-- PROOF : ARKADIA FRANCE PvE — cluster ARK: Survival Ascended clôturé
@@ -501,8 +450,6 @@ import {
   MagneticButton, 
   TextScramble,
   GlitchText,
-
-  TerminalMnd,
   ScrollReveal, 
   SpotlightContainer 
 } from '@/components/ui';
@@ -1421,7 +1368,33 @@ const methodGuarantees = [
 .quick-link:hover {
   border-color: var(--accent);
   color: var(--accent);
-  background: rgba(0, 255, 65, 0.06);
+  /* Résidu de la DA Matrix corrigé : c'était un vert néon en dur
+     (var(--primary-soft)) dans un thème papier. Remplacé par la version
+     douce de l'accent D1 — sinon la couleur jure et ne suit pas le thème. */
+  background: var(--primary-soft);
+}
+
+/* LA PORTE COMMERCIALE — le lien vers le dossier n'est pas une commodité,
+   c'est l'accès à l'offre, aux prix et aux limites. Il se distingue donc des
+   autres liens rapides : bordure d'accent, fond teinté, mot mis en avant. */
+.quick-link--porte {
+  border-color: var(--accent);
+  color: var(--ink);
+  background: var(--primary-soft);
+}
+
+.quick-link--porte strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.quick-link--porte:hover {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.quick-link--porte:hover strong {
+  color: var(--paper);
 }
 
 
@@ -1666,7 +1639,7 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 
 /* Selection style */
 ::selection {
-  background: rgba(0, 255, 65, 0.28);
+  background: var(--primary-soft);
   color: var(--ink);
 }
 
@@ -1886,7 +1859,7 @@ html {
   margin: -5px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+  box-shadow: 0 0 8px var(--primary-soft);
   animation: orbit-core-pulse 3.5s ease-in-out infinite;
 }
 
@@ -1901,13 +1874,13 @@ html {
   top: 50%;
   left: 50%;
   border-radius: 50%;
-  border: 1px dashed rgba(0, 255, 65, 0.28);
+  border: 1px dashed var(--primary-soft);
   transform: translate(-50%, -50%);
 }
 
 .hero__orbit-ring--1 { width: 34%; height: 34%; animation: orbit-spin 42s linear infinite; }
-.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: rgba(0, 255, 65, 0.20); }
-.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: rgba(0, 229, 255, 0.12); }
+.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: var(--primary-soft); }
+.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: var(--primary-soft); }
 
 @keyframes orbit-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -2133,7 +2106,7 @@ html {
   margin: 0 0 2.5rem;
   padding: 1.5rem 0 1.5rem 1.75rem;
   border-left: 3px solid var(--accent);
-  background: linear-gradient(to right, rgba(0, 255, 65, 0.05), transparent 70%);
+  background: linear-gradient(to right, var(--primary-soft), transparent 70%);
 }
 
 .vaisseau__citation p {
@@ -2156,7 +2129,7 @@ html {
 
 /* La ligne des voiles est la clé de voûte du concept : elle se distingue. */
 .vaisseau__rang--clef {
-  background: rgba(0, 229, 255, 0.04);
+  background: var(--primary-soft);
 }
 
 .vaisseau__rang--clef th[scope="row"] {
@@ -2218,7 +2191,7 @@ html {
 }
 
 .vaisseau__table tbody tr:hover {
-  background: rgba(0, 255, 65, 0.03);
+  background: var(--primary-soft);
 }
 
 /* ── Fiche technique réelle ── */
