@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================================
+     Plan de site — GL Digital Lab
+     CORRIGÉ le 10/09/2026. La version précédente déclarait 25 URLs dont
+     QUATORZE rendaient la page « Non Trouvée » :
+       /parcours /conseil /stack-ia /samus-elements /tv /zombunny /cv /agents
+       /simulation /arcade /arcade/cards /arcade/memory /arcade/terminal /arcade/slots
+     Vérifié en rendant chaque URL dans un vrai navigateur (scripts/prerendre.js).
+     Un plan de site qui envoie les moteurs sur des 404 leur apprend à s'en méfier :
+     c'est pire que pas de plan de site.
+
+     Règle désormais : une URL n'entre ici que si elle REND une page réelle.
+     Ne rien rajouter « pour plus tard » — une route qui n'existe pas encore se
+     déclare le jour où elle existe.
+     ============================================================================ -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ── Pages principales ─────────────────────────────────────────────────── -->
   <url>
     <loc>https://gldigitallab.fr/</loc>
     <lastmod>2026-09-10</lastmod>
@@ -7,10 +23,10 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <!-- Dossier professionnel : ajouté au plan de site le 10/09/2026.
-         La page existait mais n'était déclarée nulle part — invisible pour les
-         moteurs et pour les moteurs de réponse IA, alors que son objet même est
-         d'être trouvée par des acheteurs publics et des appels d'offres. -->
+    <!-- Dossier professionnel : ajouté le 10/09/2026. La page existait mais
+         n'était déclarée nulle part — invisible pour les moteurs et pour les
+         moteurs de réponse IA, alors que son objet même est d'être trouvée par
+         des acheteurs publics et des appels d'offres. -->
     <loc>https://gldigitallab.fr/dossier</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -23,141 +39,117 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gldigitallab.fr/parcours</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gldigitallab.fr/conseil</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://gldigitallab.fr/stack-ia</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://gldigitallab.fr/arkadia</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <!-- /ark-admin RETIRÉ du sitemap le 13/09/2026 (décision Gaëtan).
-       La page existe toujours et reste joignable par son adresse directe, mais
-       elle n'a plus à être proposée à l'indexation : c'est une page de
-       configuration de serveur de jeu ARK, sans rapport avec l'offre du studio.
-       Demander à Google d'indexer du contenu hors offre brouille le
-       positionnement et dilue le référencement des pages qui comptent. -->
-  <url>
-    <loc>https://gldigitallab.fr/samus-elements</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://gldigitallab.fr/voyageo-pro</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gldigitallab.fr/tv</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://gldigitallab.fr/zombunny</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://gldigitallab.fr/projets</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://gldigitallab.fr/cv</loc>
-    <lastmod>2026-01-05</lastmod>
+    <!-- REMPLACE /parcours (10/09/2026) : la page a été renommée, l'ancienne
+         adresse rendait un 404 alors qu'elle était déclarée. -->
+    <loc>https://gldigitallab.fr/carte-holistique</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ── Études de cas ────────────────────────────────────────────────────── -->
+  <url>
+    <loc>https://gldigitallab.fr/arkadia</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gldigitallab.fr/agents</loc>
-    <lastmod>2026-01-05</lastmod>
+    <loc>https://gldigitallab.fr/voyageo-pro</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- ── Ressources ───────────────────────────────────────────────────────── -->
   <url>
     <loc>https://gldigitallab.fr/ressources/tutoriels</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gldigitallab.fr/simulation</loc>
-    <lastmod>2026-01-05</lastmod>
+    <loc>https://gldigitallab.fr/components</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
-  <!-- ARCADE -->
+
+  <!-- ── Outils et démonstrations (remplacent /agents, retiré : il n'existait
+       pas ; les vraies pages sont celles-ci, chacune avec son titre propre) ── -->
   <url>
-    <loc>https://gldigitallab.fr/arcade</loc>
-    <lastmod>2026-01-05</lastmod>
+    <loc>https://gldigitallab.fr/apps/agent/wa</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gldigitallab.fr/arcade/cards</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gldigitallab.fr/arcade/memory</loc>
-    <lastmod>2026-01-05</lastmod>
+    <loc>https://gldigitallab.fr/apps/agent/makoto</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gldigitallab.fr/arcade/terminal</loc>
-    <lastmod>2026-01-05</lastmod>
+    <loc>https://gldigitallab.fr/apps/agent/dou</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://gldigitallab.fr/arcade/slots</loc>
-    <lastmod>2026-01-05</lastmod>
+    <loc>https://gldigitallab.fr/apps/agent/watashi</loc>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://gldigitallab.fr/apps/agent/jitsu</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gldigitallab.fr/apps/seo-content</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gldigitallab.fr/apps/invoice-generator</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ── Contact ──────────────────────────────────────────────────────────── -->
   <url>
     <loc>https://gldigitallab.fr/contact</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- ── Pages légales ────────────────────────────────────────────────────── -->
   <url>
     <loc>https://gldigitallab.fr/mentions-legales</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://gldigitallab.fr/confidentialite</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://gldigitallab.fr/cgv</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-09-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

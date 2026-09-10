@@ -19,7 +19,11 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '20'
+  # Node 22 et non 20 : le prérendu (scripts/prerendre.js) pilote Chrome par le
+  # protocole de débogage et a besoin du WebSocket global, absent de Node 20.
+  # Le build ÉCHOUE si une URL du sitemap rend une page 404 — c'est voulu :
+  # le déploiement ne doit pas partir avec un plan de site faux.
+  NODE_VERSION: '22'
 
 jobs:
   # ═══════════════════════════════════════════════════════════════════════════

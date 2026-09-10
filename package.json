@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:assets && vite build",
+    "build": "npm run generate:assets && vite build && npm run prerendre",
+    "prerendre": "node scripts/prerendre.js",
     "preview": "vite preview",
     "generate:favicons": "node scripts/generate-favicons.js",
     "generate:og": "node scripts/generate-og-image.js",

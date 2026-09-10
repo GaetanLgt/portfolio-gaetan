@@ -231,7 +231,6 @@ const sections = ref([
     icon: '🏠',
     pages: [
       { name: 'Accueil', path: '/', icon: '🏠', featured: true },
-      { name: 'Hub / QG', path: '/hub', icon: '🎯' },
       { name: 'Services', path: '/services', icon: '💼' },
       { name: 'Projets', path: '/projets', icon: '📂' },
       { name: 'Contact', path: '/contact', icon: '📧' },

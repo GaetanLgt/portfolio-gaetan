@@ -63,7 +63,7 @@
           <span class="links-label">Accès rapide :</span>
           <router-link to="/services">Services</router-link>
           <router-link to="/arkadia">Case Study</router-link>
-          <router-link to="/parcours">Parcours</router-link>
+          <router-link to="/carte-holistique">Parcours</router-link>
         </div>
       </div>
     </div>
