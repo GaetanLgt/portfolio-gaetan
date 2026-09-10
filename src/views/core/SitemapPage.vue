@@ -325,8 +325,12 @@ const toggleSection = (sectionId) => {
 <style scoped>
 .sitemap-page {
   min-height: 100vh;
-  background: var(--bg-primary, #0a0a0a);
-  color: var(--text-main, #f5f5f5);
+  /* CORRIGÉ (13/09/2026) : `var(--bg-primary, #0a0a0a)` — et `--bg-primary`
+     n'existe plus dans la charte D1, donc c'est le REPLI qui s'appliquait :
+     un quasi-noir. Tout le texte de la page se retrouvait en encre sur du noir
+     (1,08:1 mesuré sur les titres de branche). */
+  background: var(--paper);
+  color: var(--ink);
   position: relative;
 }
 
@@ -489,7 +493,9 @@ const toggleSection = (sectionId) => {
 .view-toggle button.active {
   background: var(--primary);
   border-color: var(--primary);
-  color: #000;
+  /* CORRIGÉ (13/09/2026) : c'était #000 sur la brique — 3,36:1, sous le seuil.
+     Le papier de la charte donne 5,49:1 sur ce même fond. */
+  color: var(--paper);
 }
 
 /* Main Content */
@@ -544,8 +550,10 @@ const toggleSection = (sectionId) => {
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* CORRIGÉ (13/09/2026) : blancs translucides à 3 % et 10 %, pensés pour un
+     fond sombre — invisibles ou grisâtres sur le papier. Jetons de la charte. */
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s;
@@ -553,7 +561,7 @@ const toggleSection = (sectionId) => {
 
 .branch-header:hover {
   border-color: var(--primary);
-  background: rgba(0, 255, 136, 0.05);
+  background: var(--primary-soft);
 }
 
 .branch-toggle {
@@ -570,7 +578,8 @@ const toggleSection = (sectionId) => {
 }
 
 .branch-count {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--paper);
+  border: 1px solid var(--rule);
   padding: 0.2rem 0.5rem;
   border-radius: 1rem;
   font-size: 0.75rem;
@@ -590,14 +599,14 @@ const toggleSection = (sectionId) => {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   text-decoration: none;
-  color: var(--text-secondary);
+  color: var(--ink-soft);
   border-radius: 0.5rem;
   transition: all 0.2s;
 }
 
 .tree-leaf:hover {
-  background: rgba(0, 255, 136, 0.1);
-  color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--accent);
 }
 
 .leaf-icon { font-size: 1rem; }

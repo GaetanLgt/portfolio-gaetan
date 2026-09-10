@@ -56,15 +56,24 @@
           </nav>
         </div>
         
-        <!-- Ressources (ex-rubrique « Manifeste & coulisses » — lore retiré 09/2026) -->
-        <div class="footer__section">
-          <h3 class="footer__title">Ressources</h3>
-          <nav class="footer__nav">
-            <router-link to="/ressources/tutoriels">Tutoriels &amp; guides</router-link>
-            <router-link to="/components">Composants réutilisables</router-link>
-            <router-link to="/ark-admin">Snippets ARK (INI)</router-link>
-          </nav>
-        </div>
+        <!-- COLONNE « RESSOURCES » RETIRÉE (13/09/2026, décision Gaëtan).
+             Elle contenait trois liens qui menaient bien quelque part — mais pas
+             au bon endroit :
+               · « Snippets ARK (INI) » ouvrait une page de configuration de
+                 serveur de JEU (ARK: Survival Ascended). Vestige du volet jeu du
+                 projet ArkAdiA, sans aucun rapport avec l'offre du studio : sites
+                 web, applications métier, IA locale. Elle était en plus déclarée
+                 dans le sitemap, donc proposée à l'indexation par Google.
+               · « Composants réutilisables » ouvrait une bibliothèque de
+                 composants Vue 3 / Symfony — un artefact de développeur, qui ne
+                 veut rien dire pour un dirigeant de PME ou un agent de
+                 collectivité.
+               · « Tutoriels & guides » était le seul lien défendable pour un
+                 studio. Il reste accessible par son adresse directe
+                 (/ressources/tutoriels) et n'a pas à occuper une colonne du pied
+                 de page sur chaque page du site.
+             Retirer une colonne qui dessert le visiteur vaut mieux que la
+             remplir. -->
         
         <!-- Legal (Opquast N°45) -->
         <div class="footer__section">

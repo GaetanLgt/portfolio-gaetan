@@ -1364,19 +1364,29 @@ const closeTutorial = () => {
   border-radius: 2rem;
 }
 
+/* CORRIGÉ (13/09/2026). Ces trois badges de niveau portaient un feu tricolore
+   codé en dur — vert #22C55E, ambre #F59E0B, rouge #EF4444 — sur des fonds
+   translucides clairs. Résultat mesuré : 1,64:1 pour l'ambre et 2,71:1 pour le
+   rouge, sur du texte de 10,4 px. Illisible, et hors charte.
+   La charte D1 ne prévoit qu'un accent : le niveau est écrit en toutes lettres
+   dans le badge (« Débutant », « Intermédiaire », « Avancé »), donc le mot porte
+   déjà l'information. On garde trois intensités d'encre, pas trois couleurs. */
 .tuto-card__level--beginner {
-  background: rgba(34, 197, 94, 0.1);
-  color: #22C55E;
+  background: var(--paper-alt);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule-strong);
 }
 
 .tuto-card__level--intermediate {
-  background: rgba(245, 158, 11, 0.1);
-  color: #F59E0B;
+  background: var(--paper-alt);
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
 .tuto-card__level--advanced {
-  background: rgba(239, 68, 68, 0.1);
-  color: #EF4444;
+  background: var(--paper-alt);
+  color: var(--ink);
+  border: 1px solid var(--ink);
 }
 
 /* Modal */

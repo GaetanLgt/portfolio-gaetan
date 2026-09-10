@@ -46,12 +46,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://gldigitallab.fr/ark-admin</loc>
-    <lastmod>2026-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+  <!-- /ark-admin RETIRÉ du sitemap le 13/09/2026 (décision Gaëtan).
+       La page existe toujours et reste joignable par son adresse directe, mais
+       elle n'a plus à être proposée à l'indexation : c'est une page de
+       configuration de serveur de jeu ARK, sans rapport avec l'offre du studio.
+       Demander à Google d'indexer du contenu hors offre brouille le
+       positionnement et dilue le référencement des pages qui comptent. -->
   <url>
     <loc>https://gldigitallab.fr/samus-elements</loc>
     <lastmod>2026-01-05</lastmod>

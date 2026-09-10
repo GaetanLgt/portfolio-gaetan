@@ -93,11 +93,16 @@ body {
   justify-content: center;
 }
 
-/* Glass effect critique */
+/* Glass effect critique.
+   CORRIGÉ (13/09/2026) : ce bloc était le dernier vestige de la DA claire côté
+   « critique » alors que global.css imposait un fond sombre — et inversement
+   maintenant que la charte D1 claire est en place. Les deux définitions
+   doivent donner la MÊME surface, sinon la couleur dépend de l'ordre de
+   chargement des feuilles. Le flou est retiré : sur un fond opaque il ne se
+   voit pas et coûte un calque de composition au navigateur. */
 .glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
+  background: var(--paper-alt);
+  border: 1px solid var(--rule);
 }
 
 /* Animations critiques (composite-friendly) */

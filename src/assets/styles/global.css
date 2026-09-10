@@ -66,12 +66,19 @@ a:hover {
    VESTIGE DE LA DA CLAIRE (D1) CORRIGÉ le 10/09/2026. Cette règle posait un
    fond BLANC à 60 % d'opacité, alors que critical.css posait un fond sombre :
    deux définitions de .glass se contredisaient, et la couleur effective
-   dépendait de l'ordre de chargement. C'est ce blanc qui faisait calculer à
-   axe-core (le moteur de Lighthouse) un fond clair #8e8f91 derrière le texte
-   des cartes d'offres — signalé comme contraste insuffisant sur 68 éléments.
-   Les deux définitions sont désormais alignées sur la DA sombre. */
+   dépendait de l'ordre de chargement. Ma correction du 10/09/2026 avait aligné
+   les DEUX sur la direction artistique SOMBRE — le commentaire disait même
+   « alignées sur la DA sombre » comme si c'était la bonne réponse.
+
+   C'était l'inverse qu'il fallait faire, et je ne l'ai vu que le 13/09/2026,
+   parce que Gaëtan a regardé la page /services : les cartes d'offres y
+   gardaient un fond #08100F, soit du texte en encre (#1A1A18) sur du quasi-noir.
+   Contraste mesuré par Lighthouse : 1,1:1. Illisible.
+
+   Aligner deux définitions contradictoires ne suffit pas : il faut les aligner
+   sur la BONNE. La bonne, c'est la surface claire de la charte D1. */
 .glass {
-  background: #08100F;
+  background: var(--paper-alt);
   border: 1px solid var(--rule);
 }
 

@@ -298,13 +298,17 @@ function handleResetConsent() {
   color: var(--primary);
 }
 
-/* Consent Status */
+/* Consent Status
+   CORRIGÉ (13/09/2026) : l'encadré portait un fond noir à 30 % d'opacité —
+   vestige de la DA sombre. Sur le papier, il donnait un gris #a5a29b sur lequel
+   le texte secondaire tombait à 2,54:1. Le fond reprend la surface alternée de
+   la charte. */
 .consent-status {
   margin: var(--space-sm) 0;
   padding: var(--space-sm);
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--paper-alt);
   border-radius: 4px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--rule);
 }
 
 .consent-status p {
@@ -323,22 +327,27 @@ function handleResetConsent() {
   white-space: nowrap;
 }
 
+/* Les trois états étaient en vert, rouge et ambre codés en dur — trois couleurs
+   hors charte, dont un ambre à 1,16:1, c'est-à-dire illisible. La charte D1 ne
+   prévoit qu'un accent : le sens est porté par le mot (« activé », « désactivé »,
+   « en attente »), déjà présent dans le texte, et par le contraste, pas par un
+   feu tricolore. */
 .status-badge--active {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--primary);
-  border: 1px solid var(--primary);
+  background: var(--paper);
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
 .status-badge--inactive {
-  background: rgba(239, 68, 68, 0.2);
-  color: #EF4444;
-  border: 1px solid #EF4444;
+  background: var(--paper);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule-strong);
 }
 
 .status-badge--pending {
-  background: rgba(245, 158, 11, 0.2);
-  color: #F59E0B;
-  border: 1px solid #F59E0B;
+  background: var(--paper);
+  color: var(--ink-faint);
+  border: 1px solid var(--rule-strong);
 }
 
 .consent-btn {
