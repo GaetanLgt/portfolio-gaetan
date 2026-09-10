@@ -123,12 +123,13 @@ const backgroundComponent = computed(() => {
   }
 });
 
-// Pages "vitrine" : fond épuré, pas d'ornements animés qui coûtent du CPU
-// et distraient un prospect. Les ambiances (Matrix, particules, barre de
-// diagnostic) restent sur les pages lore/expériences.
+// MAJ 10/09 (DA D4 — Matrix Resurrections) : la HOME reçoit le digital rain,
+// c'est la vitrine « wow ». Les pages commerciales (services, projets,
+// contact, légal) restent SANS canvas animé derrière le texte : la DA
+// s'applique au style, jamais à la lisibilité du contenu.
 const isShowcasePage = computed(() => {
   const p = route.path;
-  return p === '/' || p === '/services' || p === '/projets' || p === '/contact'
+  return p === '/services' || p === '/projets' || p === '/contact'
     || p === '/arkadia' || p === '/sitemap'
     || p.startsWith('/mentions-legales') || p.startsWith('/confidentialite') || p.startsWith('/cgv');
 });

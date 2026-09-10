@@ -16,16 +16,17 @@ let drops = [];
 let resizeHandler = null;
 
 const props = defineProps({
-  chars: { type: String, default: '01GLX' },
-  fontSize: { type: Number, default: 14 },
+  // Glyphes : binaire Matrix + katakana + les 6 kanji des Lois MND (signature studio)
+  chars: { type: String, default: '0101ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿ和誠美実動私' },
+  fontSize: { type: Number, default: 15 },
   speed: { type: Number, default: 50 }, // ms entre frames
-  opacity: { type: Number, default: 0.12 },
-  color: { type: String, default: '#10b981' }
+  opacity: { type: Number, default: 0.18 },
+  color: { type: String, default: '#00FF41' } // vert code Matrix (DA D4)
 });
 
 const draw = () => {
-  // Fade effect
-  ctx.fillStyle = 'rgba(5, 5, 5, 0.05)';
+  // Fade : teinte du fond Matrice (#03060A) pour un fondu cohérent
+  ctx.fillStyle = 'rgba(3, 6, 10, 0.06)';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
   // Characters
