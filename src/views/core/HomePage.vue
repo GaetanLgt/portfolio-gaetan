@@ -47,10 +47,16 @@
                   <TextScramble text="Studio indépendant · IA 100 % locale ou France" :scramble-on-mount="true" />
                 </div>
                 
-                <!-- Main Title — message éditorial fort -->
+                <!-- Main Title — message éditorial fort
+                     DA D4 : glitch Matrix Resurrections sur la seule ligne accentuée
+                     (intensité « light » : les clones restent à 40 % et le texte réel
+                     n'est jamais décalé — la lisibilité commerciale est préservée.
+                     prefers-reduced-motion annule les clones dans GlitchText.vue). -->
                 <h1 id="hero-title" class="hero__title">
                   La machine travaille.<br>
-                  <span class="text-gradient neon-text">Vous décidez.</span>
+                  <span class="text-gradient neon-text">
+                    <GlitchText text="Vous décidez." always-active intensity="light" />
+                  </span>
                 </h1>
                 
                 <!-- Subtitle — la valeur concrète : systèmes multi-agents locaux -->
@@ -398,6 +404,7 @@ const CharactersHero = defineAsyncComponent(() => import('@/components/three/Cha
 import { 
   MagneticButton, 
   TextScramble,
+  GlitchText,
   ScrollReveal, 
   SpotlightContainer 
 } from '@/components/ui';

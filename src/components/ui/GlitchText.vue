@@ -59,14 +59,20 @@ const onMouseLeave = () => {
   opacity: 0.8;
 }
 
+/* DA D4 (Matrix Resurrections) : cyan et magenta de la palette, pas les
+   primaires pures #00ffff/#ff00ff. -webkit-text-fill-color est forcé car il
+   l'emporte sur color : sans lui, les clones resteraient invisibles dès que le
+   titre parent utilise .text-gradient (fill transparent). */
 .glitch-text--active .glitch-text__clone--1 {
-  color: #00ffff;
+  color: #00E5FF;
+  -webkit-text-fill-color: #00E5FF;
   animation: glitch1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }
 
 .glitch-text--active .glitch-text__clone--2 {
-  color: #ff00ff;
+  color: #FF2D95;
+  -webkit-text-fill-color: #FF2D95;
   animation: glitch2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite reverse;
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
 }

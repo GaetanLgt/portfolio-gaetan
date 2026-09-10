@@ -37,12 +37,17 @@ onMounted(() => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-  // --- éclairage (mêmes principes que nos rendus : key + fill + rim émeraude) ---
+  // --- éclairage (mêmes principes que nos rendus : key + fill + rim émeraude)
+  // DA D4 : fond noir Matrice + avatars anthracite = risque de silhouettes qui se
+  // noient. La key est passée du crème chaud au blanc froid MND #E8F7EE (le chaud
+  // jurait avec une scène verte/cyan) et un rim cyan latéral détache les épaules
+  // du fond sans éclaircir le visage.
   scene.add(new THREE.HemisphereLight(0x224433, 0x02080a, 0.85));
-  const key = new THREE.DirectionalLight(0xfff6e8, 2.2); key.position.set(3, 5, 4); scene.add(key);
+  const key = new THREE.DirectionalLight(0xE8F7EE, 2.2); key.position.set(3, 5, 4); scene.add(key);
   const fill = new THREE.DirectionalLight(0xd8e6ff, 0.7); fill.position.set(-4, 2, 3); scene.add(fill);
   const rim = new THREE.PointLight(0x00ff41, 26, 14); rim.position.set(0, 2.6, -3.4); scene.add(rim);
   const amb = new THREE.PointLight(0x00ff41, 6, 12); amb.position.set(0, 1, 3.2); scene.add(amb);
+  const rimCyan = new THREE.PointLight(0x00E5FF, 14, 16); rimCyan.position.set(-5.2, 2.2, -1.8); scene.add(rimCyan);
 
   // --- groupe des Lois (arc de cercle) ---
   const groupe = new THREE.Group();
