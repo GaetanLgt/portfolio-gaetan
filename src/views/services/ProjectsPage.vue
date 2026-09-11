@@ -238,8 +238,8 @@ const projects = ref([
     category: 'fullstack',
     year: '2025',
     featured: true,
-    shortDesc: 'Plateforme SaaS B2B pour agence de voyage : devis, catalogue fournisseurs, automatisations.',
-    fullDesc: 'Transformation digitale complète d\'une agence de voyage B2B. Passage de 15 fichiers Excel à une plateforme unifiée gérant devis, catalogue de 800+ fournisseurs, facturation et relances automatisées.',
+    shortDesc: 'Démonstration (scénario) — plateforme SaaS B2B pour agence de voyage : devis, catalogue fournisseurs, automatisations.',
+    fullDesc: 'Scénario de démonstration : le client, les chiffres et le témoignage sont des exemples. Transformation digitale complète d\'une agence de voyage B2B. Passage de 15 fichiers Excel à une plateforme unifiée gérant devis, catalogue de 800+ fournisseurs, facturation et relances automatisées.',
     stack: ['Symfony 7', 'Vue 3', 'PostgreSQL', 'Redis', 'n8n', 'Docker', 'Stripe'],
     features: [
       'Générateur de devis avec calcul de marges',
@@ -261,8 +261,8 @@ const projects = ref([
     category: 'gaming',
     year: '2023-2026',
     featured: true,
-    shortDesc: 'Cluster ARK Survival avec 150+ joueurs, Discord actif, et infrastructure DevOps complète.',
-    fullDesc: 'Cluster de serveurs ARK Survival Ascended gérant une communauté de 150+ joueurs. Infrastructure complète avec API Nitrado, bots Discord, systèmes économiques in-game, et gestion événementielle.',
+    shortDesc: 'Cluster ARK Survival pour une communauté de joueurs, avec Discord actif et infrastructure DevOps complète.',
+    fullDesc: 'Cluster de serveurs ARK Survival Ascended animant une communauté active. Infrastructure complète avec API Nitrado, bots Discord, systèmes économiques in-game, et gestion événementielle.',
     stack: ['Nitrado API', 'Discord.js', 'Node.js', 'n8n', 'Docker', 'PostgreSQL'],
     features: [
       'Gestion multi-serveurs via API',
@@ -431,18 +431,22 @@ const projects = ref([
     casestudy: null
   },
   {
-    id: 'pokemon-memory',
-    name: 'Pokémon Memory',
+    id: 'memory-jeu',
+    name: 'Memory — jeu de mémoire',
     icon: '🎴',
     category: 'symfony',
     year: '2023',
     featured: false,
-    shortDesc: 'Jeu Memory thème Pokémon avec Symfony et API PokeAPI.',
-    fullDesc: 'Jeu vidéo de type Memory sur le thème Pokémon, développé en collaboration avec Julien Holtz. Application Symfony complète avec authentification, profils utilisateurs, et intégration API pour charger dynamiquement les cartes Pokémon.',
+    shortDesc: 'Jeu de mémoire développé en Symfony, alimenté par une API de données publique.',
+    // Dernière occurrence du nom de franchise retirée le 11/09/2026 : la sentinelle
+    // la relevait dans le TEXTE SERVI sur https://gldigitallab.fr/projets (alerte HAUTE).
+    // Le nom du projet, son résumé, ses fonctionnalités et le lien GitHub avaient été
+    // nettoyés ; `fullDesc` avait été oublié — la page restait donc exposée.
+    fullDesc: 'Jeu vidéo de type memory, développé en collaboration avec Julien Holtz. Application Symfony complète avec authentification, profils utilisateurs, et intégration d’une API de données publique pour charger dynamiquement les cartes du jeu.',
     stack: ['Symfony', 'PHP', 'Twig', 'JavaScript', 'SCSS', 'Docker', 'Webpack', 'API REST'],
     features: [
       'Jeu Memory interactif',
-      'Intégration API Pokémon',
+      'Intégration d’une API de données externe',
       'Système d\'authentification',
       'Profils utilisateurs',
       'Animations CSS (Animista)',
@@ -450,7 +454,7 @@ const projects = ref([
       'Docker-ready'
     ],
     learnings: 'Travail collaboratif, intégration API externe, et game design avec Symfony.',
-    github: 'https://github.com/JulienHltz/Pokemon_MemoryGame',
+    // Lien retiré le 11/09/2026 : son adresse portait la marque d'une franchise du registre.
     demo: null,
     casestudy: null
   }

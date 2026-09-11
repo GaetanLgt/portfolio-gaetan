@@ -497,7 +497,7 @@ const nodes = ref([
   { 
     id: 'arkadia', 
     label: 'ARKADIA', 
-    fullLabel: 'ARKADIA FRANCE (150+ joueurs)',
+    fullLabel: 'ARKADIA FRANCE',
     description: 'Cluster ARK Survival Ascended. Case study infrastructure & community management.',
     type: 'project', 
     level: 2, 

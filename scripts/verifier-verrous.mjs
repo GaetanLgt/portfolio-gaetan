@@ -180,15 +180,29 @@ if (!fichierVariables) {
 
 // ─── VERROU 4 : les noms protégés ne sortent pas dans le contenu visible ────
 console.log('\n  ── Garde-fou juridique ──');
-const PROTEGES = ['Albator', 'Harlock', 'Matrix Resurrections', 'Evangelion', 'Cyberpunk 2077', 'TRON'];
+const PROTEGES = [
+  // Marques et noms de code du studio (D5, charte)
+  'Albator', 'Harlock', 'Matrix Resurrections', 'Evangelion', 'Cyberpunk 2077', 'TRON',
+  // Franchises du registre `licences-refusees.md` — AJOUTÉES LE 11/09/2026.
+  // Motif MESURÉ : « Pokémon Memory » était le nom PUBLIC d'un projet servi sur
+  // https://gldigitallab.fr/projets, et ce verrou affichait [ok] au même moment.
+  // Deux causes, cumulées : (1) ces termes n'étaient pas dans la liste — une
+  // interdiction qui n'est pas cherchée n'est pas une interdiction ; (2) le contrôle
+  // ne lisait QUE le <template>, alors que le nom venait du tableau `projects[]` du
+  // <script setup>. Un verrou qui ne lit qu'une moitié du composant ne peut pas voir
+  // la moitié qui est arrivée en production.
+  'Nintendo', 'Pokémon', 'Zelda', 'Mario', 'Metroid', 'Splatoon',
+  'Palworld', 'Pocketpair', 'Grapeshot',
+];
 const fuites = [];
 for (const f of sources) {
   if (!f.endsWith('.vue')) continue;
   const code = sansCommentaires(readFileSync(f, 'utf8'));
-  // On ne garde que le <template>, et on retire les commentaires HTML déjà ôtés.
-  const tpl = (code.match(/<template>([\s\S]*)<\/template>/) || [, ''])[1];
+  // ⚠️ ON LIT LE COMPOSANT ENTIER, PLUS SEULEMENT SON <template> (corrigé le 11/09/2026).
+  // Les commentaires sont déjà retirés par `sansCommentaires` : les mentions internes
+  // gardent le droit d'exister, seule la chaîne réellement rendue est surveillée.
   for (const nom of PROTEGES) {
-    if (tpl.includes(nom)) fuites.push(`${f.split(/[\\/]/).pop()} → ${nom}`);
+    if (code.includes(nom)) fuites.push(`${f.split(/[\\/]/).pop()} → ${nom}`);
   }
 }
 dire(fuites.length === 0, 'aucun nom protégé dans le contenu visible des pages',

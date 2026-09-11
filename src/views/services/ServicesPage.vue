@@ -153,11 +153,6 @@
             class="filter-btn"
           >Tous</button>
           <button 
-            @click="filter = 'core'" 
-            :class="{ 'filter-btn--active': filter === 'core' }" 
-            class="filter-btn"
-          >Bâtir</button>
-          <button 
             @click="filter = 'ai'" 
             :class="{ 'filter-btn--active': filter === 'ai' }" 
             class="filter-btn"
@@ -165,133 +160,6 @@
         </div>
         
         <div class="offers__grid">
-          
-          <!-- PERFORMANCE -->
-          <article 
-            v-show="filter === 'all' || filter === 'core'" 
-            class="offer-card" 
-            :class="{ 'offer-card--expanded': expandedCard === 'perf' }"
-          >
-            <div class="offer-card__bg-icon">
-              <svg width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-            </div>
-            
-            <div class="offer-card__header">
-              <div class="offer-card__icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                </svg>
-              </div>
-              <span class="offer-card__tag">VITESSE</span>
-            </div>
-            
-            <h3 class="offer-card__title">PERFORMANCE</h3>
-            <p class="offer-card__price">8k€ – 15k€</p>
-            
-            <p class="offer-card__desc">
-              Audit complet et refonte d'architecture pour diviser vos temps de chargement par 3. Migration legacy vers PWA moderne.
-            </p>
-            
-            <ul class="offer-card__features">
-              <li><span class="check">✓</span> Audit Lighthouse & Core Vitals</li>
-              <li><span class="check">✓</span> Refonte Architecture Vue 3</li>
-              <li><span class="check">✓</span> Optimisation BDD & Cache</li>
-              <li><span class="check">✓</span> PWA (Progressive Web App)</li>
-              <li><span class="check">✓</span> Formation équipe incluse</li>
-            </ul>
-            
-            <div class="offer-card__footer">
-              <span class="offer-card__duration">4-6 semaines</span>
-              <router-link to="/contact" class="offer-card__cta">SÉLECTIONNER</router-link>
-            </div>
-          </article>
-          
-          <!-- DIGITAL FACTORY -->
-          <article 
-            v-show="filter === 'all' || filter === 'core'" 
-            class="offer-card offer-card--featured"
-          >
-            <div class="offer-card__ribbon">POPULAIRE</div>
-            <div class="offer-card__bg-icon">
-              <svg width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
-              </svg>
-            </div>
-            
-            <div class="offer-card__header">
-              <div class="offer-card__icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/>
-                </svg>
-              </div>
-              <span class="offer-card__tag">MÉTIER</span>
-            </div>
-            
-            <h3 class="offer-card__title">DIGITAL FACTORY</h3>
-            <p class="offer-card__price">15k€ – 30k€</p>
-            
-            <p class="offer-card__desc">
-              L'alternative aux ERP lourds. Une application sur-mesure conçue spécifiquement pour vos processus, sans licence récurrente.
-            </p>
-            
-            <ul class="offer-card__features">
-              <li><span class="check">✓</span> App Sur-Mesure Symfony 8</li>
-              <li><span class="check">✓</span> Dashboard Temps Réel</li>
-              <li><span class="check">✓</span> API Platform & Docker</li>
-              <li><span class="check">✓</span> Hébergement Souverain</li>
-              <li><span class="check">✓</span> Support 3 mois inclus</li>
-            </ul>
-            
-            <div class="offer-card__footer">
-              <span class="offer-card__duration">8-12 semaines</span>
-              <router-link to="/contact" class="offer-card__cta">SÉLECTIONNER</router-link>
-            </div>
-          </article>
-          
-          <!-- NEURAL OPS -->
-          <article 
-            v-show="filter === 'all' || filter === 'ai'" 
-            class="offer-card"
-          >
-            <div class="offer-card__bg-icon">
-              <svg width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
-                <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
-              </svg>
-            </div>
-            
-            <div class="offer-card__header">
-              <div class="offer-card__icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
-                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
-                </svg>
-              </div>
-              <span class="offer-card__tag">INTELLIGENCE</span>
-            </div>
-            
-            <h3 class="offer-card__title">NEURAL OPS</h3>
-            <p class="offer-card__price">12k€ – 25k€</p>
-            
-            <p class="offer-card__desc">
-              Déploiement d'IA locale (sans Cloud US) pour analyser vos données et automatiser vos tâches cognitives.
-            </p>
-            
-            <ul class="offer-card__features">
-              <li><span class="check">✓</span> IA Locale (Nemotron)</li>
-              <li><span class="check">✓</span> RAG (Chat avec vos données)</li>
-              <li><span class="check">✓</span> Automatisation n8n</li>
-              <li><span class="check">✓</span> 100% Souverain</li>
-              <li><span class="check">✓</span> Formation IA incluse</li>
-            </ul>
-            
-            <div class="offer-card__footer">
-              <span class="offer-card__duration">6-10 semaines</span>
-              <router-link to="/contact" class="offer-card__cta">SÉLECTIONNER</router-link>
-            </div>
-          </article>
           
           <!-- RAG MÉMOIRE -->
           <article 
@@ -478,7 +346,9 @@
             </h2>
             <p class="preuve-arkadia__desc">
               <strong>ArkAdiA</strong> — notre réseau social souverain (comptes, communautés,
-              messagerie temps réel, IA 100 % locale, zéro traceur) — tourne en production.
+              messagerie temps réel, IA 100 % locale, zéro traceur) — est aujourd'hui une
+              <strong>preuve de concept en développement</strong> : sa propre page l'annonce,
+              l'interface finale reste à valider visuellement. Ce n'est pas encore un réseau ouvert.
               Même rigueur, mêmes standards pour vos outils : code sur-mesure, données qui ne
               sortent pas, hébergement en France.
             </p>

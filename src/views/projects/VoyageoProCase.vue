@@ -31,7 +31,7 @@
 
         <div class="case-badge reveal">
           <span class="badge-icon">✈️</span>
-          <span class="badge-text">ÉTUDE DE CAS</span>
+          <span class="badge-text">ÉTUDE DE CAS · DÉMONSTRATION</span>
         </div>
 
         <h1 id="case-title" class="case-title reveal">
@@ -40,8 +40,11 @@
         </h1>
 
         <p class="case-intro reveal">
-          Transformation digitale d'une agence de voyage professionnelle.
-          De la gestion Excel à une plateforme SaaS moderne et automatisée.
+          <strong>Démonstration.</strong> Ce cas est un <strong>scénario</strong> : le client,
+          les chiffres présentés et le témoignage sont des <strong>exemples</strong>, pas une
+          référence cliente. Il sert à montrer la méthode et le type de résultat visé.
+          Transformation digitale d'une agence de voyage professionnelle — de la gestion Excel
+          à une plateforme SaaS moderne et automatisée.
         </p>
 
         <div class="case-meta reveal">
@@ -55,7 +58,7 @@
           </div>
           <div class="meta-item">
             <span class="meta-label">Équipe</span>
-            <span class="meta-value">1 dev + 1 PO client</span>
+            <span class="meta-value">1 dev + 1 PO (scénario)</span>
           </div>
           <div class="meta-item">
             <span class="meta-label">Budget</span>
@@ -68,7 +71,7 @@
     <!-- KPIs Section -->
     <section class="case-kpis" aria-labelledby="kpi-title">
       <div class="container">
-        <h2 id="kpi-title" class="section-title reveal">Résultats Mesurés</h2>
+        <h2 id="kpi-title" class="section-title reveal">Résultats du scénario</h2>
         
         <div class="kpis-grid">
           <div class="kpi-card kpi-card--primary reveal">
@@ -118,9 +121,9 @@
             <h2 id="context-title" class="section-title reveal">Le Contexte</h2>
             
             <div class="client-profile reveal">
-              <h3>Le Client</h3>
+              <h3>Le client du scénario</h3>
               <p>
-                <strong>VoyageoPro</strong> est une agence de voyage B2B basée à Lyon, 
+                <strong>VoyageoPro</strong> est l'agence fictive du scénario : une agence de voyage B2B basée à Lyon, 
                 spécialisée dans l'organisation de séminaires, incentives et voyages d'affaires 
                 pour les entreprises du CAC40 et ETI.
               </p>
@@ -627,7 +630,7 @@
     <!-- Testimonial Section -->
     <section class="case-testimonial" aria-labelledby="testimonial-title">
       <div class="container">
-        <h2 id="testimonial-title" class="sr-only">Témoignage client</h2>
+        <h2 id="testimonial-title" class="sr-only">Témoignage du scénario</h2>
         
         <blockquote class="testimonial-quote reveal">
           <div class="quote-icon" aria-hidden="true">"</div>
@@ -640,7 +643,7 @@
             <div class="author-avatar">SL</div>
             <div class="author-info">
               <cite class="author-name">Sophie Laurent</cite>
-              <span class="author-role">Directrice Générale, VoyageoPro</span>
+              <span class="author-role">Directrice Générale — persona du scénario</span>
             </div>
           </footer>
         </blockquote>

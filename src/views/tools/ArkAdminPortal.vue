@@ -144,7 +144,7 @@
       <div class="container">
         <div class="cta-card">
           <h2>🎮 Rejoignez ARKADIA FRANCE</h2>
-          <p>Cluster PvE français • 9 serveurs • 150+ joueurs</p>
+          <p>Cluster PvE français • 9 serveurs</p>
           <div class="cta-buttons">
             <a href="https://discord.gg/arkadia" target="_blank" class="cta-btn cta-btn--primary">🎯 Discord</a>
             <router-link to="/arkadia" class="cta-btn cta-btn--secondary">📖 Case Study</router-link>

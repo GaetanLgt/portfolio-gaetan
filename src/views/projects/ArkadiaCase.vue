@@ -39,7 +39,7 @@
           
           <p class="hero__subtitle">
             Le cluster français de référence sur ARK: Survival Ascended.<br>
-            <strong>150+ survivants</strong> · <strong>9 cartes</strong> · <strong>99.8% uptime</strong><br>
+            <strong>Communauté de survivants</strong> · <strong>9 cartes</strong> · <strong>99.8% uptime</strong><br>
             <span class="hero__closed">Service clôturé — chiffres constatés sur 18 mois d'exploitation</span>
           </p>
           
@@ -54,7 +54,7 @@
             </span>
             <span class="badge badge--community">
               <span class="badge__icon">👥</span>
-              150+ Joueurs
+              Communauté de joueurs
             </span>
             <span class="badge badge--automation">
               <span class="badge__icon">🤖</span>
@@ -67,11 +67,6 @@
             <div class="quickstat">
               <span class="quickstat__value">9</span>
               <span class="quickstat__label">CARTES</span>
-            </div>
-            <div class="quickstat__divider"></div>
-            <div class="quickstat">
-              <span class="quickstat__value">150+</span>
-              <span class="quickstat__label">SURVIVANTS</span>
             </div>
             <div class="quickstat__divider"></div>
             <div class="quickstat">
@@ -196,7 +191,7 @@
             <h2>L'HISTOIRE D'ARKADIA</h2>
             <p class="intro__lead">
               ARKADIA FRANCE n'est pas qu'un serveur de jeu. C'est un <strong>écosystème vivant</strong> 
-              où 150+ survivants construisent, explorent et dominent ensemble depuis 2024.
+              où la communauté construit, explore et domine ensemble depuis 2024.
             </p>
             <p>
               Administrer ce cluster, c'est jongler entre <strong>infrastructure critique</strong>, 
@@ -289,7 +284,7 @@
         <div class="charts__grid reveal">
           <ChartPanel
             title="Charge CPU Cluster (%)"
-            subtitle="Intervalle: 24h // Node Capacity: 150+ Users"
+            subtitle="Intervalle: 24h // Activité du cluster"
             peak="95%"
             type="line"
             :data="loadChartData"
