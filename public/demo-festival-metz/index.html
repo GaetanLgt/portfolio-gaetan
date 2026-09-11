@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Festival Pop Culture — Metz, 26 et 27 septembre 2026</title>
+<meta name="description" content="Deux jours de culture japonaise à Metz : exposants, cosplay, concerts et gastronomie. Les 26 et 27 septembre 2026. Billetterie en ligne.">
+
+<!-- ===================================================================
+     DÉMONSTRATION TECHNIQUE — GL Digital Lab
+     Cette page est un MODÈLE, pas un site réel. Le contenu éditorial est
+     un emplacement à remplir. Le nom du client n'apparaît volontairement
+     nulle part : la démonstration porte sur la TECHNIQUE, pas sur l'identité.
+
+     CE QU'ELLE DÉMONTRE, ET CE SONT LES TROIS DÉFAUTS MESURÉS DANS L'AUDIT :
+       1. un titre de niveau 1, unique sur la page — absent des deux sites principaux ;
+       2. une méta description rédigée — absente sur le plus grand site ;
+       3. un balisage Event complet — absent de la tournée multi-villes.
+     (Le titre est écrit ici sans ses chevrons : la balise citée dans un
+      commentaire faisait compter DEUX titres au contrôle automatique. Le
+      navigateur l'ignorait, mais un contrôle qui compte faux ne sert à rien.)
+
+     VOLONTAIREMENT : aucune bibliothèque externe, aucune police téléchargée,
+     aucun script. La page pèse quelques kilo-octets et s'affiche sans réseau.
+     =================================================================== -->
+
+<style>
+/* --- Palette DA5 : valeurs MESURÉES, contraste vérifié sur ce fond --- */
+:root{
+  --paper:#03060A;
+  --paper-alt:#08100F;
+  --ink:#E8F7EE;        /* 18,34:1 sur le fond  — AAA */
+  --ink-soft:#A9C4B4;   /* 10,87:1              — AAA */
+  --accent:#00FF41;     /* 14,87:1              — AAA */
+  --action:#FCEE0A;     /* 15,44:1              — AAA */
+  --filet:#1C2A28;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);color:var(--ink);
+  font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  padding-bottom:4rem;
+}
+.wrap{max-width:56rem;margin:0 auto;padding:0 1.25rem}
+
+/* Bandeau de démonstration : visible, et il ne doit pas disparaître */
+.demo{
+  background:var(--action);color:#16120A;
+  font-size:.8125rem;font-weight:700;letter-spacing:.04em;
+  text-align:center;padding:.5rem 1rem;text-transform:uppercase;
+}
+
+header{padding:3rem 0 2rem;border-bottom:1px solid var(--filet)}
+h1{font-size:clamp(1.9rem,6vw,3.1rem);line-height:1.08;letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+.dates{margin-top:.9rem;font-size:1.0625rem;color:var(--ink-soft)}
+.lieu{margin-top:.2rem;color:var(--ink-soft)}
+.actions{margin-top:1.8rem;display:flex;flex-wrap:wrap;gap:.75rem}
+.btn{
+  display:inline-block;padding:.8rem 1.4rem;border-radius:.4rem;
+  font-weight:700;text-decoration:none;border:2px solid transparent;
+}
+.btn-principal{background:var(--action);color:#16120A}
+.btn-secondaire{background:transparent;color:var(--accent);border-color:var(--accent)}
+
+section{padding:2.5rem 0;border-bottom:1px solid var(--filet)}
+h2{font-size:1.4rem;margin-bottom:1.1rem;letter-spacing:-.01em}
+h2::before{content:"";display:inline-block;width:.55rem;height:.55rem;
+  background:var(--accent);margin-right:.6rem;vertical-align:middle;border-radius:1px}
+p{color:var(--ink-soft);margin-bottom:.9rem}
+p strong{color:var(--ink)}
+
+.prog{list-style:none;display:grid;gap:1rem}
+.prog li{
+  background:var(--paper-alt);border-left:3px solid var(--accent);
+  padding:1rem 1.1rem;border-radius:.25rem;
+}
+.prog .heure{color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+.prog .quoi{color:var(--ink);font-weight:600;display:block;margin-top:.15rem}
+.prog .note{font-size:.875rem;margin-top:.35rem}
+
+.infos{display:grid;gap:1rem;grid-template-columns:1fr}
+@media(min-width:40rem){.infos{grid-template-columns:repeat(3,1fr)}}
+.info{background:var(--paper-alt);padding:1rem 1.1rem;border-radius:.25rem}
+.info dt{color:var(--accent);font-size:.75rem;text-transform:uppercase;
+  letter-spacing:.06em;font-weight:700}
+.info dd{margin-top:.35rem;color:var(--ink-soft);font-size:.9375rem}
+
+.a-remplir{
+  background:var(--action);color:#16120A;font-size:.75rem;font-weight:700;
+  padding:.15rem .4rem;border-radius:.2rem;text-transform:uppercase;
+}
+footer{padding:2rem 0;color:var(--ink-soft);font-size:.875rem}
+footer a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--action);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="demo">Démonstration technique — GL Digital Lab — page modèle, non commerciale</div>
+
+<div class="wrap">
+
+<header>
+  <h1>Festival Pop Culture<br><span>Metz</span> — 4ᵉ édition</h1>
+  <p class="dates">Samedi 26 et dimanche 27 septembre 2026 · 10h – 19h</p>
+  <p class="lieu">Parc des Expositions de Metz · Hall 2</p>
+  <div class="actions">
+    <a class="btn btn-principal" href="#billetterie">Billetterie en ligne</a>
+    <a class="btn btn-secondaire" href="#programme">Voir le programme</a>
+  </div>
+</header>
+
+<section>
+  <h2>L'édition de Metz</h2>
+  <p>Deux jours de culture japonaise : <strong>exposants</strong>, <strong>cosplay</strong>,
+     <strong>concerts</strong>, <strong>gastronomie</strong> et espaces de jeu. Une édition
+     pensée pour être trouvée localement — et pour que l'audience d'une ville serve la suivante.</p>
+  <p><span class="a-remplir">à remplir</span> Nombre d'exposants, invités, jauge attendue :
+     ces chiffres viendront de l'organisation. <strong>Aucun n'est inventé ici.</strong></p>
+</section>
+
+<section id="programme">
+  <h2>Programme</h2>
+  <ul class="prog">
+    <li>
+      <span class="heure">10h00</span>
+      <span class="quoi">Ouverture des portes</span>
+      <span class="note"><span class="a-remplir">à remplir</span> — cérémonie d'ouverture</span>
+    </li>
+    <li>
+      <span class="heure">14h00</span>
+      <span class="quoi">Concours cosplay</span>
+      <span class="note"><span class="a-remplir">à remplir</span> — scène principale</span>
+    </li>
+    <li>
+      <span class="heure">18h30</span>
+      <span class="quoi">Concert de clôture</span>
+      <span class="note"><span class="a-remplir">à remplir</span> — artiste à confirmer</span>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>Infos pratiques</h2>
+  <dl class="infos">
+    <div class="info">
+      <dt>Accès</dt>
+      <dd>Metz · Parc des Expositions<br><span class="a-remplir">à remplir</span> — lignes de transport</dd>
+    </div>
+    <div class="info">
+      <dt>Tarifs</dt>
+      <dd>Pass journée et pass week-end<br><span class="a-remplir">à remplir</span> — grille tarifaire</dd>
+    </div>
+    <div class="info">
+      <dt>Accessibilité</dt>
+      <dd>Accès de plain-pied, places réservées<br><span class="a-remplir">à remplir</span> — contact dédié</dd>
+    </div>
+  </dl>
+</section>
+
+<section id="billetterie">
+  <h2>Billetterie</h2>
+  <p>Le billet est acheté en ligne et présenté sur téléphone à l'entrée. Le tunnel est
+     <strong>testé de bout en bout avant chaque édition</strong> — c'est le point qui casse le
+     plus souvent la veille d'un festival.</p>
+  <p><span class="a-remplir">à remplir</span> Lien de billetterie.</p>
+</section>
+
+<footer>
+  <p>Page de démonstration réalisée par <a href="/">GL Digital Lab</a>.
+     Contenu éditorial volontairement incomplet : rien n'y est inventé.
+     Aucun nom d'organisateur ni de client n'y figure.</p>
+</footer>
+
+</div>
+
+<!-- ===================================================================
+     DONNÉES STRUCTURÉES : c'est LA pièce qui distingue cette page.
+     Un événement balisé ainsi peut apparaître dans les résultats avec sa
+     DATE, son LIEU et sa BILLETTERIE — sans que le visiteur ait à cliquer.
+     Mesure de l'audit : le plus grand site du groupe possède ce balisage,
+     la tournée multi-villes non. C'est l'inverse de ce qu'il faudrait.
+     =================================================================== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Festival Pop Culture — Metz 2026",
+  "startDate": "2026-09-26T10:00:00+02:00",
+  "endDate": "2026-09-27T19:00:00+02:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Parc des Expositions de Metz",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Metz",
+      "addressRegion": "Grand Est",
+      "addressCountry": "FR"
+    }
+  },
+  "description": "Deux jours de culture japonaise à Metz : exposants, cosplay, concerts et gastronomie.",
+  "organizer": { "@type": "Organization", "name": "Organisateur — à renseigner" },
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock",
+    "priceCurrency": "EUR",
+    "url": "#billetterie"
+  }
+}
+</script>
+</body>
+</html>
