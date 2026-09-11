@@ -72,7 +72,11 @@ const routes = [
     name: 'Home',
     component: HomePage,
     meta: { 
-      title: 'Sites web & IA sur-mesure pour PME',
+      // Baseline assumée (décision Gaëtan, 11/09/2026) : elle était portée par og:title
+      // et par le JSON-LD, mais ni par le <title> servi ni par le titre de route — trois
+      // formulations coexistaient pour une même page. Le nom du studio ne change pas
+      // (D12) : c'est la baseline qui reprend sa place ici.
+      title: 'Architecture Numérique Souveraine',
       description: 'Sites web, applications métier et agents d\'IA exécutés sur notre propre machine, dans la Somme. Vos données restent dans la cale. Audit 48 h, réponse sous 24 h.'
     }
   },
