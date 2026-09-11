@@ -24,9 +24,10 @@
 User-agent: *
 Allow: /
 
-# Seule exclusion : les formations, non commercialisées à ce jour.
+# AUCUNE exclusion de chemin. La section /formation a été supprimée le 11/09/2026
 # Les fichiers techniques restent ouverts (voir l'explication en tête).
 # Ne pas réintroduire de Disallow sur /assets/.
+# (décision Gaëtan) : son « Disallow: /formation » est parti avec elle.
 
 Sitemap: https://gldigitallab.fr/sitemap.xml
 
