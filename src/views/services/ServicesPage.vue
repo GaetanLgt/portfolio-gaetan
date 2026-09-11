@@ -372,10 +372,11 @@
           <h2 class="cta-box__title">PRÊT À REPRENDRE LA MAIN ?</h2>
           <p class="cta-box__desc">
             Je prends 2 nouveaux projets par mois pour garantir la qualité.<br>
-            Commençons par un audit de 30 minutes, gratuit et sans engagement.
+            Commençons par un <strong>diagnostic de 30 minutes</strong>, gratuit et sans engagement.
+            L'audit complet, lui, est livré en 48 h.
           </p>
           <router-link to="/contact" class="btn-primary">
-            RÉSERVER MON AUDIT
+            RÉSERVER MON DIAGNOSTIC
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
             </svg>

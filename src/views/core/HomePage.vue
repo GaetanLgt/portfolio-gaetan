@@ -92,7 +92,7 @@
                 <div class="hero__paths">
                   <router-link to="/contact" class="hero__path hero__path--pme">
                     <span class="hero__path-tag">PME</span>
-                    Vous dirigez une entreprise ? Commencez par l'audit 48 h.
+                    Vous dirigez une entreprise ? Commencez par le diagnostic 30 min.
                   </router-link>
                   <router-link to="/projets" class="hero__path hero__path--cto">
                     <span class="hero__path-tag">TECH</span>

@@ -96,7 +96,11 @@ const routes = [
     name: 'Contact',
     component: ContactPage,
     meta: { 
-      title: 'Contact | Audit 30 min gratuit',
+      // « Diagnostic » et non « audit » : le site appelait « audit » DEUX choses
+      // différentes — le rendez-vous gratuit de 30 min (l'entrée) et la prestation
+      // payante livrée en 48 h (le produit). Deux choses, un seul mot : le prospect
+      // ne savait pas ce qu'il réservait. Décision Gaëtan, 11/09/2026.
+      title: 'Contact | Diagnostic 30 min gratuit',
       description: 'Parlons de votre projet : premier échange gratuit de 30 minutes, sans engagement. Réponse sous 24h. Sites web, applications métier et IA locale pour PME.'
     }
   },
