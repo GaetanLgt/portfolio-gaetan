@@ -175,12 +175,18 @@ async function principal() {
   await attendre(2000)
   const titreAccueil = (await cdp.evaluer('document.title')) || ''
   const rapport = []
+  // Routes où le Loader n'a jamais laissé passer `app--loaded` dans la fenêtre :
+  // signalées, jamais bloquantes — le site part quand même, mais on le DIT.
+  const sansCoquille = []
   let ecrits = 0, echecs = 0
 
   for (const route of routes) {
     const url = `http://127.0.0.1:${PORT}${route}`
     await cdp.envoyer('Page.navigate', { url })
-    // attente active : la vue doit avoir rendu du texte, pas seulement la coquille
+    // ── PREMIÈRE ATTENTE : LE CONTENU ─────────────────────────────────────────
+    // La vue doit avoir rendu du texte, pas seulement la coquille. C'est cette
+    // attente — et elle seule, jusqu'au 11/09/2026 — qui décidait du moment de la
+    // capture. C'est elle qui a produit le défaut décrit ci-dessous.
     let etat = null
     for (let i = 0; i < 40; i++) {
       await attendre(250)
@@ -191,6 +197,65 @@ async function principal() {
       })`)
       try { etat = JSON.parse(brut) } catch { etat = null }
       if (etat && etat.app && etat.texte > 400) break
+    }
+    if (!etat) { rapport.push({ route, ok: false, motif: 'rendu illisible' }); echecs++; continue }
+
+    // ── DEUXIÈME ATTENTE : LA COQUILLE ────────────────────────────────────────
+    // POURQUOI ELLE EXISTE — mesuré le 11/09/2026, sur les 23 routes :
+    //   isLoaded (classe app--loaded) au moment de la capture : 0 / 23
+    //   header.navigation + footer.footer présents : 0 / 23
+    //
+    // `App.vue` conditionne TOUTE la coquille à `isLoaded` :
+    //   <Navigation v-if="isLoaded && !isFullscreenGame" />
+    //   <Footer     v-if="isLoaded && !isFullscreenGame" />
+    //   <CookieBanner v-if="isLoaded && !isFullscreenGame" />
+    // et `isLoaded` ne passe à `true` qu'à l'événement `@loaded` du <Loader>. La
+    // première boucle s'arrête dès que `#app` contient du TEXTE — ce qui arrive
+    // bien avant. On photographiait donc la page pendant que le Loader tournait.
+    //
+    // Conséquence : le HTML livré portait le contenu mais NI navigation, NI pied de
+    // page, NI bandeau de consentement. Un visiteur AVEC JavaScript ne voit aucun
+    // défaut (il regarde le Loader, puis tout apparaît) ; un robot, un aperçu de
+    // lien ou un visiteur SANS JavaScript reçoit un HTML sans navigation — alors
+    // que la charte promet un contenu « lisible ET navigable sans JavaScript ».
+    //
+    // On attend donc le signal réel, `app--loaded`, et non un proxy. Plafond
+    // volontaire : si le Loader n'émet pas `loaded` (il a un failsafe de 3 000 ms,
+    // mais un failsafe peut cesser de fonctionner à la faveur d'une refonte), la
+    // route est écrite SANS coquille et signalée — jamais bloquante.
+    let tourCharge = null
+    for (let i = 0; i < 20; i++) {   // 20 × 250 ms = 5 s au plus
+      // ⚠️ ON SORT SUR LA CIBLE, PAS SUR UN PROXY — troisième correction du jour.
+      //
+      // Deux détecteurs faux avant celui-ci, et les deux ont produit un verdict faux :
+      //  1. `querySelector('nav')` : il n'y a AUCUN <nav> dans ce site.
+      //  2. `querySelector('#app').className.includes('app--loaded')` : le HTML livré
+      //     porte `<div id="app" data-v-app="">` — SANS classe. La classe `app--loaded`
+      //     existe bien (1 occurrence mesurée dans le fichier écrit), mais pas sur cet
+      //     élément : le chercher là donnait « jamais chargé » sur 23 routes alors que
+      //     la coquille était présente partout. Le script affichait alors deux lignes
+      //     qui se contredisaient — « 23/23 ont la coquille » et « 23 routes sans
+      //     coquille ». Un rapport qui se contredit ne vaut rien.
+      //
+      // Le critère est donc ce qu'on veut RÉELLEMENT obtenir : les deux balises de la
+      // coquille, présentes dans le DOM au moment de la capture. `app--loaded` reste
+      // mesuré, mais à titre d'information, jamais comme condition.
+      const brut = await cdp.evaluer(`JSON.stringify({
+        charge: !!document.querySelector('.app--loaded'),
+        coquille: !!(document.querySelector('header.navigation') && document.querySelector('footer.footer'))
+      })`)
+      let vu = null
+      try { vu = JSON.parse(brut) } catch { vu = null }
+      if (vu) {
+        etat.charge = vu.charge
+        etat.coquille = vu.coquille
+        if (vu.coquille) { tourCharge = i + 1; break }
+      }
+      await attendre(250)
+    }
+    if (tourCharge === null) {
+      // Signalé, pas bloquant : le site part quand même. Mais on le DIT.
+      sansCoquille.push(route)
     }
     if (!etat) { rapport.push({ route, ok: false, motif: 'rendu illisible' }); echecs++; continue }
 
@@ -249,7 +314,7 @@ async function principal() {
         : html
       fs.writeFileSync(cible, fusion, 'utf8')
       ecrits++
-      rapport.push({ route, ok: true, titre, octets: fusion.length, ecrit: true, motif: `accueil prérendu, en-tête préservé (${teteCoquille ? teteCoquille.length : 0} o)` })
+      rapport.push({ route, ok: true, titre, octets: fusion.length, ecrit: true, tourCharge, coquille: etat.coquille, motif: `accueil prérendu, en-tête préservé (${teteCoquille ? teteCoquille.length : 0} o)` })
       continue
     }
     if (ECRIRE) {
@@ -257,7 +322,7 @@ async function principal() {
       fs.writeFileSync(cible, html, 'utf8')
       ecrits++
     }
-    rapport.push({ route, ok: true, titre, octets: html.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/' })
+    rapport.push({ route, ok: true, titre, octets: html.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/', tourCharge, coquille: etat.coquille })
   }
 
   /* ---------- page 404 ----------
@@ -363,6 +428,27 @@ async function principal() {
   const doublons = rapport.filter((r) => r.memeTitre).length
   console.log(`\ncoquille servie aujourd'hui : ${coquille} octets`)
   console.log(`titres distincts : ${distincts} / ${rapport.length} routes`)
+  // ── La coquille est-elle DANS LE HTML LIVRÉ ? ─────────────────────────────
+  // On ne mesure plus un proxy : on compte ce qui a réellement été écrit.
+  // (Erreur évitée ici : une version précédente testait `querySelector('nav')`.
+  //  Il n'y a aucun `<nav>` dans ce site — Navigation.vue rend un
+  //  `<header class="navigation">`. Le verdict « jamais vue sur 22 routes » était
+  //  donc un artefact de mesure, pas un fait sur le site. Corrigé sur les signaux
+  //  réels : la classe `app--loaded` et les balises effectives.)
+  const routesEvaluees = rapport.filter((r) => 'coquille' in r).length
+  const avecCoquille = rapport.filter((r) => r.coquille === true).length
+  const delais = rapport.map((r) => r.tourCharge).filter((n) => typeof n === 'number')
+  const maxTour = delais.length ? Math.max(...delais) : null
+  console.log(`coquille (header.navigation + footer.footer) dans le HTML LIVRÉ : ${avecCoquille} / ${routesEvaluees} routes`)
+  if (sansCoquille.length) {
+    console.log(`  ⚠ ${sansCoquille.length} route(s) écrites SANS coquille : le Loader n'a pas laissé passer app--loaded.`)
+    console.log(`     ${sansCoquille.slice(0, 8).join(', ')}${sansCoquille.length > 8 ? ' …' : ''}`)
+    console.log('     Conséquence pour ces routes : ni nav, ni footer, ni bandeau pour un robot ou un aperçu de lien.')
+  } else {
+    console.log(`  ✅ coquille prérendue sur toutes les routes · attente la plus longue : ${maxTour ? maxTour * 250 + ' ms' : 'n/a'}`)
+  }
+  console.log('  (sans coquille, le HTML livré n\'a ni nav, ni footer, ni bandeau : défaut réel')
+  console.log('   pour les robots et les aperçus de lien, invisible pour un visiteur AVEC JavaScript)')
   console.log(`routes portant le titre de l'accueil (le défaut mesuré) : ${doublons}`)
   console.log(`${ECRIRE ? 'fichiers écrits' : 'mode rapport'} : ${ecrits}${echecs ? ` · échecs : ${echecs}` : ''}`)
   console.log(`propreté : ${commentairesRetires} commentaire(s) de travail retiré(s), ${octetsRetires} octets rendus au visiteur`)
