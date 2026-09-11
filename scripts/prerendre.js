@@ -291,6 +291,66 @@ async function principal() {
     echecs++
   }
 
+  /* ---------- propreté du HTML LIVRÉ ----------
+     Constaté le 11/09/2026 sur la production : le head de l'accueil (conservé tel
+     quel par la fusion ci-dessus) portait 16 commentaires de travail. Livrés, ils
+     pesaient environ 1 700 octets sur 30 867 — 5,5 % de la page, téléchargés par
+     chaque visiteur — et ils EXPOSAIENT des notes internes sur un site public.
+     L'un d'eux publiait même un diagnostic depuis démenti : il affirmait que le
+     vendor Vue recevait un 429 et que l'application ne se montait pas, alors que
+     ces 429 venaient de l'outil de mesure lui-même.
+
+     La substance a été déplacée dans `docs/decisions-index-html.md`, à la source
+     (index.html). Cette passe est la CEINTURE : elle garantit qu'aucun commentaire
+     de travail ne repartira dans le HTML livré, même ajouté plus tard par
+     inadvertance. Un commentaire n'est pas un livrable.
+
+     ⚠ CE QU'ON NE TOUCHE PAS : les commentaires VIDES. Vue 3 les pose comme
+     ancres de fragment (`<!---->`, `<!--[-->`, `<!--]-->`) et s'en sert pour
+     l'hydratation. Mesuré : 11 dans la page d'accueil prérendue. Les retirer
+     « pour nettoyer » casserait le montage — c'est-à-dire exactement ce que ce
+     dépôt a payé cinq fois. On ne retire donc que ce qui porte du TEXTE. */
+  const MOTIF_COMMENTAIRE = /<!--([\s\S]*?)-->/g
+  const retirerCommentaires = (h) =>
+    h.replace(MOTIF_COMMENTAIRE, (entier, interieur) =>
+      /[^\s[\]]/.test(interieur) ? '' : entier);
+
+  const fichiersHtml = [];
+  (function parcourir(dossier) {
+    for (const entree of fs.readdirSync(dossier, { withFileTypes: true })) {
+      const chemin = path.join(dossier, entree.name);
+      if (entree.isDirectory()) parcourir(chemin);
+      else if (entree.name.endsWith('.html')) fichiersHtml.push(chemin);
+    }
+  })(DIST);
+
+  let commentairesRetires = 0;
+  let octetsRetires = 0;
+  const restants = [];
+  for (const fichier of fichiersHtml) {
+    const avant = fs.readFileSync(fichier, 'utf8');
+    const apres = retirerCommentaires(avant);
+    if (apres !== avant) {
+      commentairesRetires += (avant.match(MOTIF_COMMENTAIRE) || []).length
+        - (apres.match(MOTIF_COMMENTAIRE) || []).length;
+      octetsRetires += avant.length - apres.length;
+      fs.writeFileSync(fichier, apres, 'utf8');
+    }
+    // Contrôle APRÈS écriture : la règle est tenue par une mesure, pas par la
+    // confiance accordée à la fonction ci-dessus.
+    for (const m of apres.matchAll(MOTIF_COMMENTAIRE)) {
+      if (/[^\s[\]]/.test(m[1])) {
+        restants.push(path.relative(DIST, fichier) + ' → ' + m[1].trim().slice(0, 60));
+      }
+    }
+  }
+  if (restants.length) {
+    echecs++;
+    rapport.push({ route: 'propreté', ok: false, motif: `${restants.length} commentaire(s) de travail encore livré(s) : ${restants.slice(0, 3).join(' ; ')}` });
+  } else {
+    rapport.push({ route: 'propreté', ok: true, titre: `${commentairesRetires} commentaire(s) de travail retiré(s)`, octets: octetsRetires, ecrit: true });
+  }
+
   cdp.fermer(); proc.kill(); serveur.close()
 
   /* ---------- rapport ---------- */
@@ -305,6 +365,8 @@ async function principal() {
   console.log(`titres distincts : ${distincts} / ${rapport.length} routes`)
   console.log(`routes portant le titre de l'accueil (le défaut mesuré) : ${doublons}`)
   console.log(`${ECRIRE ? 'fichiers écrits' : 'mode rapport'} : ${ecrits}${echecs ? ` · échecs : ${echecs}` : ''}`)
+  console.log(`propreté : ${commentairesRetires} commentaire(s) de travail retiré(s), ${octetsRetires} octets rendus au visiteur`)
+  console.log('           (les ancres de fragment Vue, vides, sont conservées : l\'hydratation en dépend)')
   if (echecs) process.exitCode = 1
 }
 

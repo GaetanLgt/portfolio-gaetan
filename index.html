@@ -4,31 +4,13 @@
     <script>document.documentElement.classList.remove('no-js');</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Opquast N°98 : Title identifie le site -->
-    <title>GL Digital Lab | Architecture Numérique Souveraine</title>
-    
-    <!-- Opquast N°98 : Meta description -->
-    <meta name="description" content="Studio indépendant dans la Somme : sites web, applications métier et agents d'IA qui tournent sur notre propre machine, en France. Audit en 48 h, réponse sous 24 h." />
-    
-    <!-- Favicons — RÉDUITS DE 4 À 2 LE 11/09/2026, et le motif est mesuré.
-         Le premier chargement déclenchait 14 requêtes, dont TROIS icônes
-         (svg + 32x32 + 16x16) : le navigateur les téléchargeait toutes pour
-         choisir — observé dans `performance.getEntriesByType('resource')`.
-         Or o2switch limite les rafales à ~20 requêtes rapprochées : la marge
-         était d'une page et demie. Le vendor (Vue) recevait un 429, donc
-         l'application ne se montait pas et le visiteur perdait menu, pied de
-         page et bandeau cookies.
-         Le SVG suffit à tous les navigateurs modernes ; l'apple-touch-icon
-         reste pour iOS. Les deux PNG restent dans `public/` : la décision est
-         réversible en deux lignes. -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<title>GL Digital Lab | Architecture Numérique Souveraine</title>
+<meta name="description" content="Studio indépendant dans la Somme : sites web, applications métier et agents d'IA qui tournent sur notre propre machine, en France. Audit en 48 h, réponse sous 24 h." />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#03060A" />
-    
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+<meta property="og:type" content="website" />
     <meta property="og:title" content="GL Digital Lab | Architecture Numérique Souveraine" />
     <meta property="og:description" content="Sites web, applications métier et agents d'IA sur notre propre machine, dans la Somme. Audit en 48 h." />
     <meta property="og:image" content="https://gldigitallab.fr/og-image.png" />
@@ -38,34 +20,22 @@
     <meta property="og:site_name" content="GL Digital Lab" />
     <meta property="og:url" content="https://gldigitallab.fr" />
     <meta property="og:locale" content="fr_FR" />
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GL Digital Lab | Architecture Numérique Souveraine" />
     <meta name="twitter:description" content="Sites web, applications métier et agents d'IA sur notre propre machine, en France." />
     <meta name="twitter:image" content="https://gldigitallab.fr/og-image.png" />
     <meta name="twitter:image:alt" content="GL Digital Lab - Architecture Numérique Souveraine" />
-    
-    <!-- SEO -->
-    <meta name="author" content="Gaëtan LANGLET - GL Digital Lab" />
+<meta name="author" content="Gaëtan LANGLET - GL Digital Lab" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
     <meta name="bingbot" content="index, follow" />
     <link rel="canonical" href="https://gldigitallab.fr" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-    
-    <!-- Google Search Console -->
-    <meta name="google-site-verification" content="9VCKd68WLGM0VJTj5PMkZOLG8uAID2RCo6OhEDsBM7k" />
-    
-    <!-- Mots-clés (moins important mais toujours utile) -->
-    <meta name="keywords" content="développeur web Somme, développeur web Amiens, Symfony, Vue.js, développement sur-mesure, IA locale, architecture logicielle, PME France, freelance développeur" />
-    
-    <!-- Géolocalisation (Opquast N°100) -->
-    <meta name="geo.region" content="FR-HDF" />
+<meta name="google-site-verification" content="9VCKd68WLGM0VJTj5PMkZOLG8uAID2RCo6OhEDsBM7k" />
+<meta name="keywords" content="développeur web Somme, développeur web Amiens, Symfony, Vue.js, développement sur-mesure, IA locale, architecture logicielle, PME France, freelance développeur" />
+<meta name="geo.region" content="FR-HDF" />
     <meta name="geo.placename" content="Harponville, Somme" />
-    
-    <!-- Schema.org JSON-LD : LocalBusiness + Person -->
-    <script type="application/ld+json">
+<script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
@@ -210,16 +180,8 @@
       ]
     }
     </script>
-    
-    <!-- FONTS : Self-hosted pour performance (voir /public/fonts) -->
-    <!-- Preload des fonts critiques -->
-    <!-- Ces faces sont declarees ici (dans le <head>), et non uniquement dans
-         fonts.css (importe depuis main.js, donc apres le bundle JS).
-         PAS de <link rel="preload"> : dans une SPA le HTML est vide au premier
-         rendu, les fonts ne sont sollicitees qu'au montage Vue -> Firefox
-         signalerait « preload not used ». Le @font-face inline suffit : le
-         navigateur decouvre et charge la font au parse du head. -->
-    <style>
+
+<style>
       @font-face {
         font-family: 'Fraunces';
         font-style: normal;
@@ -239,34 +201,8 @@
   </head>
   <body class="antialiased">
     <div id="app">
-      <!-- ═══════════════════════════════════════════════════════════════════
-           CONTENU SANS JAVASCRIPT — engagement de la charte du studio
-           (« contenu 100 % lisible et navigable sans JavaScript »).
 
-           Constat du 10/09/2026 : le site est une application montée côté
-           client. Sans JavaScript, le visiteur voyait une PAGE BLANCHE — aucun
-           contenu, aucun prix, aucun contact. C'était la violation la plus
-           grave de la charte, et elle concernait aussi les robots d'indexation
-           et les moteurs de réponse IA, qui n'exécutent pas toujours le script.
-
-           Ce bloc est du HTML pur, placé DANS #app : Vue le remplace au
-           montage dès que JavaScript est actif. Il ne s'affiche donc jamais
-           deux fois, et il sert exactement à ceux qui en ont besoin.
-
-           Règle : ce bloc doit rester AUTONOME et SANS STYLE EXTERNE — les
-           feuilles de style peuvent ne pas être chargées. Ne pas y mettre de
-           composant, ne pas y mettre d'image.
-           ═══════════════════════════════════════════════════════════════════ -->
-<!--
-             PALETTE D5 (corrigée le 11/09/2026). Ce bloc était resté en DA
-             claire papier (#F4F1EA, texte #1A1A18, accent #A63F26) alors que la
-             charte est passée en sombre (D5). Un visiteur sans JavaScript
-             recevait donc l'ancien univers à l'envers — fond blanc, texte noir.
-             Les couleurs sont ici en sombre et en dur, volontairement : ce bloc
-             doit rester autonome, les feuilles de style pouvant ne pas être
-             chargées.
-             ═══════════════════════════════════════════════════════════════════ -->
-      <noscript>
+<noscript>
         <div style="max-width:52rem;margin:0 auto;padding:2rem 1.25rem;background:#03060A;color:#E8F7EE;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.7">
           <p style="font-family:ui-monospace,Consolas,monospace;font-size:.72rem;letter-spacing:.2em;color:#00FF41;margin:0 0 1rem">
             GL DIGITAL LAB — HARPONVILLE, SOMME
@@ -315,12 +251,7 @@
                 <a href="/confidentialite" style="color:#00FF41">Confidentialité</a> ·
                 <a href="/cgv" style="color:#00FF41">CGV</a></li>
           </ul>
-
-          <!-- Phrase corrigée le 11/09/2026 : elle annonçait une direction
-               artistique animée par défaut et un mode sobre facultatif. C'est
-               l'inverse — le site s'affiche sobre, et le décor est ce qu'on
-               active. -->
-          <p style="margin:0;padding:.9rem 1.1rem;border-left:3px solid #00FF41;background:#08100F;color:#A9C4B4;font-size:.92rem">
+<p style="margin:0;padding:.9rem 1.1rem;border-left:3px solid #00FF41;background:#08100F;color:#A9C4B4;font-size:.92rem">
             <strong style="color:#E8F7EE">Note sur les effets.</strong> Le site s'affiche
             sobre par défaut : aucune animation de fond n'est chargée. Un décor animé peut
             être activé depuis le pied de page, et le réglage système « réduire les
