@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suivi de conformité et d'échéances — démonstration</title>
+<meta name="description" content="Démonstration d'un système de suivi des habilitations et des documents obligatoires : échéances, alertes, dossiers centralisés. Les données restent sur votre machine.">
+
+<!-- ===================================================================
+     DÉMONSTRATION TECHNIQUE — GL Digital Lab
+     Aucun nom de client, aucun nom d'organisme, aucune donnée réelle.
+     Les personnes et les dates sont FICTIVES et servent à montrer le
+     fonctionnement. Le bandeau de démonstration est visible, en haut.
+
+     CE QUE CETTE PAGE DÉMONTRE
+     Un « site web » ne se vend plus. Ce qui se vend, c'est un SYSTÈME qui
+     règle une douleur précise. Ici : une habilitation qui expire sans
+     qu'on l'ait vue, et une activité qui s'arrête.
+
+     LE DIFFÉRENCIANT, ET IL EST ÉCRIT SUR LA PAGE
+     Le système tourne en local. Les dossiers du personnel ne sont envoyés
+     à aucun service tiers. C'est le seul argument qui ne se discute pas
+     par le prix.
+
+     ZÉRO DÉPENDANCE : aucune bibliothèque, aucun script, aucune police
+     téléchargée, aucun appel réseau. La page fonctionne hors ligne.
+     =================================================================== -->
+
+<style>
+:root{
+  --paper:#03060A; --paper-alt:#08100F; --carte:#0B1512;
+  --ink:#E8F7EE;          /* 18,34:1 sur le fond — AAA */
+  --ink-soft:#A9C4B4;     /* 10,87:1             — AAA */
+  --ink-faint:#6F8C7C;    /*  5,53:1             — AA  */
+  --accent:#00FF41;       /* 14,87:1             — AAA */
+  --action:#FCEE0A;       /* 15,44:1             — AAA */
+  --alerte:#FF6A00;       /*  6,69:1             — AA  */
+  --critique:#FF0033;     /*  5,12:1             — AA  */
+  --filet:#1C2A28;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:4rem}
+.wrap{max-width:64rem;margin:0 auto;padding:0 1.25rem}
+.demo{background:var(--action);color:#16120A;font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-align:center;padding:.5rem 1rem;text-transform:uppercase}
+
+header{padding:2.5rem 0 1.5rem}
+h1{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.1;letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+.sous{margin-top:.6rem;color:var(--ink-soft);max-width:50rem}
+.douleur{margin-top:1.2rem;padding:.9rem 1.1rem;background:var(--carte);border-left:3px solid var(--critique);border-radius:.25rem}
+.douleur strong{color:var(--critique)}
+
+section{padding:2rem 0;border-top:1px solid var(--filet)}
+h2{font-size:1.2rem;margin-bottom:1rem}
+h2::before{content:"";display:inline-block;width:.5rem;height:.5rem;background:var(--accent);margin-right:.55rem;vertical-align:middle;border-radius:1px}
+h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);margin:1.5rem 0 .6rem}
+
+/* Compteurs */
+.compteurs{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))}
+.compteur{background:var(--paper-alt);border-radius:.3rem;padding:1rem 1.1rem;border-top:3px solid var(--filet)}
+.compteur.c2{border-top-color:var(--alerte)}
+.compteur.c3{border-top-color:var(--critique)}
+.compteur .n{font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.compteur.c1 .n{color:var(--accent)} .compteur.c2 .n{color:var(--alerte)} .compteur.c3 .n{color:var(--critique)}
+.compteur .t{margin-top:.4rem;font-size:.8rem;color:var(--ink-soft)}
+
+/* Tableau */
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+caption{text-align:left;color:var(--ink-faint);font-size:.8rem;padding-bottom:.6rem}
+th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-faint);padding:.5rem .6rem;border-bottom:1px solid var(--filet)}
+td{padding:.6rem;border-bottom:1px solid var(--filet);color:var(--ink-soft)}
+td:first-child{color:var(--ink);font-weight:600}
+.etat{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .5rem;border-radius:.2rem;text-transform:uppercase;letter-spacing:.04em}
+.ok{background:rgba(0,255,65,.14);color:var(--accent)}
+.bientot{background:rgba(255,106,0,.16);color:var(--alerte)}
+.depasse{background:rgba(255,0,51,.16);color:var(--critique)}
+.manque{background:rgba(255,255,255,.08);color:var(--ink-faint)}
+
+/* Argument */
+.argument{margin-top:1.2rem;padding:1.1rem 1.3rem;background:var(--carte);border-left:3px solid var(--action);border-radius:.25rem}
+.argument strong{color:var(--action)}
+.local{margin-top:1.2rem;padding:1.1rem 1.3rem;background:var(--carte);border:1px solid var(--accent);border-radius:.25rem}
+.local h4{color:var(--accent);font-size:.95rem;margin-bottom:.4rem}
+ul{margin:.5rem 0 0 1.1rem;color:var(--ink-soft)} li{margin-bottom:.3rem}
+
+footer{padding:2rem 0;color:var(--ink-faint);font-size:.85rem;border-top:1px solid var(--filet)}
+footer a{color:var(--accent)}
+.remplir{background:var(--action);color:#16120A;font-size:.72rem;font-weight:700;padding:.12rem .4rem;border-radius:.2rem;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="demo">Démonstration technique — GL Digital Lab — données fictives, aucun client réel</div>
+
+<div class="wrap">
+
+<header>
+  <h1>Suivi des <span>habilitations</span> et des documents obligatoires</h1>
+  <p class="sous">Un tableau unique qui dit, aujourd'hui, <strong>qui est en règle, qui ne l'est plus,
+     et qui va l'être dans trois semaines</strong>. Plus de tableur, plus de post-it, plus de
+     « je crois que le dossier de X est à jour ».</p>
+
+  <div class="douleur">
+    <strong>La douleur, en une phrase :</strong> une habilitation qui expire sans qu'on l'ait vue,
+    c'est une personne qui ne peut plus travailler — et une activité qui s'arrête le jour du contrôle.
+  </div>
+</header>
+
+<section>
+  <h2>Ce que voit le responsable, en arrivant</h2>
+  <div class="compteurs">
+    <div class="compteur c1"><div class="n">23</div><div class="t">dossiers à jour</div></div>
+    <div class="compteur c2"><div class="n">4</div><div class="t">échéances sous 30 jours</div></div>
+    <div class="compteur c3"><div class="n">2</div><div class="t">documents manquants</div></div>
+    <div class="compteur"><div class="n">29</div><div class="t">personnes suivies</div></div>
+  </div>
+  <p class="sous" style="margin-top:1rem;font-size:.9rem">
+    <span class="remplir">à remplir</span> Ces chiffres viennent de l'activité réelle du client.
+    <strong>Ils sont fictifs ici</strong> — je ne les invente pas pour un vrai dossier.
+  </p>
+</section>
+
+<section>
+  <h2>Le tableau des échéances</h2>
+  <table>
+    <caption>Extrait, données fictives. Le tri par urgence est le défaut — on ne cherche pas, on lit.</caption>
+    <thead>
+      <tr><th>Personne</th><th>Habilitation</th><th>Échéance</th><th>État</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Dossier 01</td><td>Carte professionnelle</td><td>dépassée de 12 j</td><td><span class="etat depasse">Expirée</span></td></tr>
+      <tr><td>Dossier 02</td><td>Recyclage périodique</td><td>dans 6 jours</td><td><span class="etat bientot">Urgent</span></td></tr>
+      <tr><td>Dossier 03</td><td>Attestation de secourisme</td><td>manquante</td><td><span class="etat manque">Manquant</span></td></tr>
+      <tr><td>Dossier 04</td><td>Autorisation préalable</td><td>dans 24 jours</td><td><span class="etat bientot">À prévoir</span></td></tr>
+      <tr><td>Dossier 05</td><td>Carte professionnelle</td><td>dans 7 mois</td><td><span class="etat ok">À jour</span></td></tr>
+      <tr><td>Dossier 06</td><td>Attestation de secourisme</td><td>dans 11 mois</td><td><span class="etat ok">À jour</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Ce que le système fait sans qu'on le lui demande</h2>
+  <h3>Alertes</h3>
+  <ul>
+    <li><strong>À 60, 30 et 7 jours</strong> de l'échéance : une alerte au responsable, et une au salarié.</li>
+    <li><strong>Le jour du dépassement</strong> : la personne passe en rouge sur le tableau, sans action de personne.</li>
+    <li><strong>Document manquant</strong> : signalé au moment de l'embauche, pas trois mois après le contrôle.</li>
+  </ul>
+  <h3>Documents</h3>
+  <ul>
+    <li>Chaque pièce est <strong>rattachée à une personne et à une date d'expiration</strong> — plus de dossier papier introuvable.</li>
+    <li><strong>Un champ s'ajoute à la demande</strong> quand la réglementation change, sans toucher au reste.</li>
+    <li>L'historique est conservé : on sait <strong>ce qui était valide à telle date</strong>, ce qui se demande lors d'un contrôle.</li>
+  </ul>
+  <h3>Ce que ça remplace</h3>
+  <ul>
+    <li>Le tableau à plusieurs onglets, que personne ne tient à jour.</li>
+    <li>Le rappel dans l'agenda d'une seule personne — qui part en congés.</li>
+    <li>Un logiciel généraliste facturé <strong>au prix de fonctions dont vous n'utilisez pas le quart</strong>.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Le retour sur investissement, dit simplement</h2>
+  <div class="argument">
+    <p><strong>Une habilitation expirée, c'est une personne qui ne travaille pas.</strong>
+       Le jour où vous le découvrez, vous ne le découvrez pas par une alerte : vous le découvrez
+       par un contrôle, ou parce que quelqu'un ne peut pas prendre son poste.</p>
+    <p style="margin-top:.7rem">Le système coûte moins qu'<strong>une seule journée d'activité perdue</strong>.
+       Nous ne chiffrons pas le gain à votre place — nous constatons le coût d'une échéance ratée.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Et le point qui nous distingue</h2>
+  <div class="local">
+    <h4>Vos dossiers ne quittent pas votre machine.</h4>
+    <p class="sous">Le système tourne <strong>en local</strong>. Les pièces d'identité, les
+       attestations, les données du personnel — <strong>tout reste chez vous</strong>. Aucun
+       envoi à un service tiers, aucun sous-traitant, aucun serveur à l'étranger.</p>
+    <p style="margin-top:.7rem">Ce n'est pas une promesse commerciale : c'est une
+       <strong>architecture</strong>. Et c'est vérifiable, parce que le réseau ne transporte rien.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Page de démonstration réalisée par <a href="/">GL Digital Lab</a>.
+     Les dossiers, dates et chiffres sont <strong>fictifs</strong> : ils illustrent le fonctionnement,
+     ils ne représentent aucune personne ni aucune entreprise réelle.<br>
+     Aucune bibliothèque, aucun script, aucune police téléchargée — cette page fonctionne hors ligne.</p>
+</footer>
+
+</div>
+</body>
+</html>
