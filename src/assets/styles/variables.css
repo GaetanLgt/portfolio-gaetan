@@ -41,12 +41,18 @@
   /* ── Trait ──
      Deux jetons, deux rôles, et la distinction n'est pas cosmétique :
        --rule        habille (1,44:1). Sous 3:1, WCAG 1.4.11 ne s'applique pas.
-       --rule-strong délimite un CONTRÔLE (3,14:1). Un bouton, un champ ou un
-                     état de focus dont la bordure est à 1,44:1 n'est pas
-                     distinguable — c'est le défaut que la maquette La Barre
-                     portait, et qu'un contrôle a attrapé. */
+       --rule-strong délimite un CONTRÔLE. Un bouton, un champ ou un état de
+                     focus dont la bordure est à 1,44:1 n'est pas distinguable.
+
+     ⚠️ VALEUR CORRIGÉE LE 11/09/2026 — #2E685C était FAUSSE.
+     Elle donnait 3,14:1 sur --paper (donc conforme) mais **2,98:1 sur
+     --paper-alt** : le seuil de 3:1 n'est atteint que sur le fond de page, et
+     manqué dès qu'une bordure est posée sur une CARTE — c'est-à-dire presque
+     partout. « Ça passe » dépend du fond : un jeton doit être vérifié sur les
+     DEUX. #357A6B donne 4,01:1 sur le fond et 3,80:1 sur les cartes.
+     Défaut trouvé en migrant la maquette La Barre, pas en relisant ce fichier. */
   --rule: #16302A;
-  --rule-strong: #2E685C;
+  --rule-strong: #357A6B;
 
   /* ── Accent — vert code Matrix ── */
   --accent: #00FF41;     /* titres, liens, point MND — « sacré », reste rare */

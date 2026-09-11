@@ -131,29 +131,42 @@ if (!fichierVariables) {
   for (const m of css.matchAll(/(--[a-z0-9-]+)\s*:\s*(#[0-9A-Fa-f]{3,8})\s*;/g)) jetons[m[1]] = m[2];
 
   const fond = jetons['--paper'] || jetons['--bg'];
+  const fondAlt = jetons['--paper-alt'] || jetons['--surface'] || fond;
   if (!fond) {
     dire(false, 'jeton de fond (--paper ou --bg) introuvable');
   } else {
-    // Les couples qui portent du TEXTE, plus les bordures fonctionnelles.
-    // Liste alignée sur les jetons de la DA en vigueur (D5) : un jeton absent est
-    // simplement ignoré, donc la même liste sert pour D1 et pour D5.
+    // ON TESTE LES DEUX FONDS, ET CE N'EST PAS DU ZÈLE.
+    // Le 11/09/2026, `--rule-strong: #2E685C` donnait 3,14:1 sur `--paper` —
+    // conforme — mais 2,98:1 sur `--paper-alt`. Une bordure de bouton posée sur
+    // une carte passait donc SOUS le seuil, alors que le contrôle annonçait
+    // « verrou tenu ». Un jeton ne « passe » pas dans l'absolu : il passe SUR UN
+    // FOND DONNÉ. Tester un seul fond, c'est tester la moitié du produit.
+    //
+    // Défaut trouvé en migrant la maquette La Barre vers D5 — pas en relisant ce
+    // fichier. C'est la seconde fois aujourd'hui qu'un travail de conception
+    // révèle un défaut qu'aucun contrôle ne cherchait.
     const couples = [
-      ['--ink', fond, 4.5, 'texte principal'],
-      ['--ink-soft', fond, 4.5, 'texte secondaire'],
-      ['--ink-faint', fond, 3.0, 'texte tertiaire (grand texte seulement)'],
-      ['--accent', fond, 3.0, 'accent (grand texte / composant)'],
-      ['--action', fond, 4.5, 'action / CTA (texte)'],
-      ['--alert', fond, 4.5, 'alerte (texte)'],
-      ['--critical', fond, 4.5, 'erreur (texte)'],
-      ['--neon-cyan', fond, 4.5, 'micro-labels'],
-      ['--neon-magenta', fond, 3.0, 'ponctuations'],
-      ['--rule-strong', fond, 3.0, 'bordure fonctionnelle'],
+      ['--ink', 4.5, 'texte principal'],
+      ['--ink-soft', 4.5, 'texte secondaire'],
+      ['--ink-faint', 3.0, 'texte tertiaire (grand texte seulement)'],
+      ['--accent', 3.0, 'accent (grand texte / composant)'],
+      ['--action', 4.5, 'action / CTA (texte)'],
+      ['--alert', 4.5, 'alerte (texte)'],
+      ['--critical', 4.5, 'erreur (texte)'],
+      ['--neon-cyan', 4.5, 'micro-labels'],
+      ['--neon-magenta', 3.0, 'ponctuations'],
+      ['--rule-strong', 3.0, 'bordure fonctionnelle'],
     ];
-    for (const [nom, arriere, seuil, quoi] of couples) {
+    for (const [nom, seuil, quoi] of couples) {
       const avant = jetons[nom];
       if (!avant) continue;   // jeton absent de cette DA : rien à juger
-      const r = contraste(avant, arriere);
-      dire(r >= seuil, `${nom} sur le fond : ${r.toFixed(2)}:1`, `seuil ${seuil} — ${quoi}`);
+      const rFond = contraste(avant, fond);
+      const rCarte = contraste(avant, fondAlt);
+      const pire = Math.min(rFond, rCarte);
+      const ou = rFond <= rCarte ? 'fond' : 'cartes';
+      dire(pire >= seuil,
+        `${nom} : ${rFond.toFixed(2)}:1 sur le fond, ${rCarte.toFixed(2)}:1 sur les cartes`,
+        `seuil ${seuil} — ${quoi}` + (pire < seuil ? ` — ÉCHEC sur le ${ou}` : ''));
     }
     // Le cas qui a mordu deux fois : le filet décoratif.
     if (jetons['--rule']) {
