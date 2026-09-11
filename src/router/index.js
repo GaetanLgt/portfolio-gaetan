@@ -35,7 +35,7 @@ const TutorielsPage = () => import('@/views/resources/TutorielsPage.vue');
 const ComponentsLibrary = () => import('@/views/resources/components-library/ComponentsLibrary.vue');
 
 // TOOLS - Outils admin
-const ArkAdminPortal = () => import('@/views/tools/ArkAdminPortal.vue');
+// /ark-admin retirée du build le 11/09/2026 (décision Gaëtan) — voir la section TOOLS.
 
 // ÉQUIPAGE - Outils des Agents IA (7 conservés, accès direct)
 const WaRouter = () => import(/* webpackChunkName: "apps-agents" */ '@/views/apps/WaRouter.vue');
@@ -227,15 +227,16 @@ const routes = [
   // -------------------------------------------------------------------------
   // TOOLS
   // -------------------------------------------------------------------------
-  {
-    path: '/ark-admin',
-    name: 'ArkAdminPortal',
-    component: ArkAdminPortal,
-    meta: { 
-      title: 'ARK Admin Portal | Snippets INI',
-      description: 'Collection de configurations INI optimisées pour serveurs ARK: Survival Ascended. Taux, breeding, dinos, cluster.'
-    }
-  },
+  // /ark-admin a été RETIRÉE DU BUILD le 11/09/2026 (décision Gaëtan).
+  // Deux défauts mesurés, pas supposés :
+  //   · la page était PUBLIQUE (HTTP 200) et absente de TOUT sitemap — ni le
+  //     sitemap du site, ni les noms de fichiers publiés ne la voyaient ;
+  //   · son titre servi portait une marque tierce : « ARK Admin Portal » et
+  //     « ARK: Survival Ascended », sur le domaine du studio.
+  // Une page d'administration n'a pas à être publiée sans décision explicite.
+  // La vue `ArkAdminPortal.vue` reste dans les sources : elle n'est simplement
+  // plus construite ni servie. La rouvrir demande une décision écrite.
+  // -------------------------------------------------------------------------
 
   // -------------------------------------------------------------------------
   // APPLICATIONS - page d'index (créée le 10/09/2026)

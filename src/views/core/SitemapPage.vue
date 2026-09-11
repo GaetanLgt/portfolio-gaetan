@@ -272,7 +272,6 @@ const sections = ref([
     title: 'Outils Admin',
     icon: '🔧',
     pages: [
-      { name: 'ARK Admin Portal', path: '/ark-admin', icon: '🦖' },
       { name: 'Tutoriels', path: '/ressources/tutoriels', icon: '📚' },
     ]
   },
