@@ -23,7 +23,7 @@
     <div class="console__bar">
       <span class="console__tape"></span>
       <span class="console__tag">POSTE 01 · HARPONVILLE · SOMME</span>
-      <span class="console__tag console__tag--dim">MND CONTROL</span>
+      <span class="console__tag console__tag--dim">POSTE DE CONTRÔLE</span>
       <span class="console__clock">{{ heure }}</span>
     </div>
   </div>

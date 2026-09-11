@@ -415,12 +415,12 @@ const projects = ref([
     category: 'vue',
     year: '2026',
     featured: true,
-    shortDesc: 'Ce portfolio ! Architecture Vue 3 + Three.js, ambiance MND émeraude.',
-    fullDesc: 'Portfolio professionnel développé avec Vue 3 Composition API et Three.js. Univers MND : cercle à point central, ambiance émeraude sur fond noir, animations GSAP, SEO optimisé, analytics RGPD-compliant.',
+    shortDesc: 'Ce portfolio ! Architecture Vue 3 + Three.js, ambiance émeraude sur fond sombre.',
+    fullDesc: 'Portfolio professionnel développé avec Vue 3 Composition API et Three.js. Univers maison : cercle à point central, ambiance émeraude sur fond noir, animations GSAP, SEO optimisé, analytics RGPD-compliant.',
     stack: ['Vue 3', 'Three.js', 'Vite', 'GSAP', 'Matomo', 'O2Switch'],
     features: [
       'Animations Three.js',
-      'Design system MND (cercle & émeraude)',
+      'Design system maison (cercle & émeraude)',
       'SEO optimisé (Schema.org)',
       'Analytics RGPD (Matomo)',
       'Performance Lighthouse 90+'

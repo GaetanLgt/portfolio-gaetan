@@ -36,7 +36,7 @@
       <div class="loader__content">
         <div class="loader__head">
           <span class="loader__seal" aria-hidden="true"></span>
-          <span class="loader__title">MND CONTROL</span>
+          <span class="loader__title">POSTE DE CONTRÔLE</span>
           <span class="loader__sub">POSTE 01 · HARPONVILLE · SOMME</span>
         </div>
 
