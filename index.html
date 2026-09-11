@@ -11,10 +11,18 @@
     <!-- Opquast N°98 : Meta description -->
     <meta name="description" content="Studio indépendant dans la Somme : sites web, applications métier et agents d'IA qui tournent sur notre propre machine, en France. Audit en 48 h, réponse sous 24 h." />
     
-    <!-- Opquast N°99 : Favicon complet -->
+    <!-- Favicons — RÉDUITS DE 4 À 2 LE 11/09/2026, et le motif est mesuré.
+         Le premier chargement déclenchait 14 requêtes, dont TROIS icônes
+         (svg + 32x32 + 16x16) : le navigateur les téléchargeait toutes pour
+         choisir — observé dans `performance.getEntriesByType('resource')`.
+         Or o2switch limite les rafales à ~20 requêtes rapprochées : la marge
+         était d'une page et demie. Le vendor (Vue) recevait un 429, donc
+         l'application ne se montait pas et le visiteur perdait menu, pied de
+         page et bandeau cookies.
+         Le SVG suffit à tous les navigateurs modernes ; l'apple-touch-icon
+         reste pour iOS. Les deux PNG restent dans `public/` : la décision est
+         réversible en deux lignes. -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#03060A" />
