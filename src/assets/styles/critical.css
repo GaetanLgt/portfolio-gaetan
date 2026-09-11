@@ -31,7 +31,13 @@
 }
 
 body {
-  font-family: 'Space Grotesk', sans-serif;
+  /* Pile SYSTÈME, comme le reste du site (décision du directeur artistique).
+     Cette ligne citait 'Space Grotesk', une famille DONT LE @font-face N'EXISTE
+     PLUS : la référence ne résolvait donc plus rien et retombait sur le
+     `sans-serif` générique. Deux `body{font-family:…}` cohabitaient dans le
+     bundle construit — le dernier (global.css) l'emportait par chance, pas par
+     conception. La DA interdit de recharger une 3e famille : on s'aligne. */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg);
   color: var(--text-main);
   line-height: 1.7;

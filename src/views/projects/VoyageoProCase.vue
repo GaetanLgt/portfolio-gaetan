@@ -821,7 +821,9 @@ onMounted(() => {
   background: var(--bg);
   color: var(--text-main);
   min-height: 100vh;
-  font-family: 'Inter', -apple-system, sans-serif;
+  /* 'Inter' n'est déclarée nulle part sur ce site : la déclaration retombait
+     sur le repli suivant. On hérite de la DA, sans famille orpheline. */
+  font-family: inherit;
 }
 
 /* =============================================================================

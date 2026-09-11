@@ -291,6 +291,40 @@ for (const f of aScanner) {
 dire(residus.length === 0, 'aucune valeur de l\'ancienne DA claire dans le code actif',
   residus.length ? residus.join(' ; ') : `${DA_CLAIRE.length} valeur(s) surveillée(s), ${aScanner.length} fichier(s)`);
 
+// ─── VERROU 8 : une famille citée doit être une famille déclarée ────────────
+// 11/09/2026 : `critical.css` demandait `'Space Grotesk'` alors que le @font-face
+// de cette famille avait été RETIRÉ du réseau par la direction artistique. La
+// déclaration ne résolvait plus rien : elle retombait en silence sur le
+// `sans-serif` générique, et deux `body{font-family:…}` se marchaient dessus dans
+// le bundle. Le verrou existant ne le voyait pas : il ne reliait jamais une
+// `font-family` aux `@font-face` qui la déclarent.
+console.log('\n  ── Typographie : une famille citée est une famille déclarée ──');
+const SYSTEME = /^(inherit|initial|unset|revert|serif|sans-serif|monospace|cursive|fantasy|system-ui|ui-\w+|emoji|math|fangsong|-apple-system|blinkmacsystemfont|segoe ui|roboto|helvetica neue|arial|helvetica|georgia|times|cambria|consolas|menlo|courier|var\()/i;
+const cssVue = sources
+  .filter((f) => /\.(css|vue)$/.test(f))
+  .map((f) => ({ f, code: sansCommentaires(readFileSync(f, 'utf8')) }));
+const declarees = new Set();
+for (const { code } of cssVue) {
+  for (const m of code.matchAll(/@font-face\s*\{[\s\S]{0,400}?font-family\s*:\s*([^;]+);/g)) {
+    declarees.add(m[1].trim().replace(/^['"]|['"]$/g, '').toLowerCase());
+  }
+}
+const orphelines = [];
+for (const { f, code } of cssVue) {
+  for (const m of code.matchAll(/font-family\s*:\s*([^;}]+)/g)) {
+    const premiere = m[1].split(',')[0].trim().replace(/^['"]|['"]$/g, '');
+    if (!premiere || SYSTEME.test(premiere)) continue;
+    if (declarees.has(premiere.toLowerCase())) continue;
+    orphelines.push(`${f.split(/[\\/]/).pop()} → « ${premiere} »`);
+  }
+}
+dire(orphelines.length === 0, 'aucune famille citée sans @font-face déclaré',
+  orphelines.length
+    ? [...new Set(orphelines)].join(' ; ')
+    : `${declarees.size} famille(s) déclarée(s) : ${[...declarees].join(', ')}`);
+dire(declarees.size <= 2, 'deux familles réseau au maximum (verrou de non-régression)',
+  `${declarees.size} déclarée(s)`);
+
 console.log('\n' + '='.repeat(72));
 if (echecs === 0) {
   console.log('  Tous les verrous sont tenus.');

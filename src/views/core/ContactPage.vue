@@ -564,7 +564,11 @@ onMounted(() => {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 0.5rem;
-  font-family: 'Inter', sans-serif;
+  /* `inherit` : les champs de formulaire ne reçoivent PAS la police du body par
+     défaut. Cette ligne demandait 'Inter', une famille sans @font-face sur ce
+     site — elle retombait donc en silence sur le `sans-serif` générique.
+     En héritant, la famille reste alignée sur la DA quoi qu'il arrive. */
+  font-family: inherit;
   font-size: 0.85rem;
   color: var(--text-main);
   transition: var(--transition-base);
