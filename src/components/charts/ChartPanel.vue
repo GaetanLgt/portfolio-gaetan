@@ -67,7 +67,7 @@ Chart.register(
 
 const props = defineProps({
   title: { type: String, default: 'Charge CPU Cluster (%)' },
-  subtitle: { type: String, default: 'Intervalle: 24h // Node Capacity: 150+ Users' },
+  subtitle: { type: String, default: 'Intervalle: 24h // Activité du nœud' },
   peak: { type: String, default: null },
   accessibleDescription: { type: String, default: '' },
   accessibleData: { type: Array, default: () => [] }, // [{ label: '00:00', value: '15%' }, ...]

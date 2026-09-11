@@ -219,12 +219,6 @@
             <span class="stat-card__detail">The Island, Ragnarok, Aberration...</span>
           </div>
           <div class="stat-card cyber-card">
-            <div class="stat-card__icon">👥</div>
-            <span class="stat-card__value"><AnimatedCounter :value="150" suffix="+" /></span>
-            <span class="stat-card__label">Survivants actifs</span>
-            <span class="stat-card__detail">Communauté Discord</span>
-          </div>
-          <div class="stat-card cyber-card">
             <div class="stat-card__icon">⚡</div>
             <span class="stat-card__value"><AnimatedCounter :value="99.8" suffix="%" :decimals="1" /></span>
             <span class="stat-card__label">Uptime annuel</span>
