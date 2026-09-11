@@ -178,6 +178,9 @@ async function principal() {
   // Routes où le Loader n'a jamais laissé passer `app--loaded` dans la fenêtre :
   // signalées, jamais bloquantes — le site part quand même, mais on le DIT.
   const sansCoquille = []
+  // Routes où le Loader n'a JAMAIS quitté le DOM : il resterait un calque plein écran
+  // invisible (opacity:0 suite à la transition) qui intercepte les clics.
+  const loaderBloquant = []
   let ecrits = 0, echecs = 0
 
   for (const route of routes) {
@@ -229,33 +232,48 @@ async function principal() {
       //
       // Deux détecteurs faux avant celui-ci, et les deux ont produit un verdict faux :
       //  1. `querySelector('nav')` : il n'y a AUCUN <nav> dans ce site.
-      //  2. `querySelector('#app').className.includes('app--loaded')` : le HTML livré
-      //     porte `<div id="app" data-v-app="">` — SANS classe. La classe `app--loaded`
-      //     existe bien (1 occurrence mesurée dans le fichier écrit), mais pas sur cet
-      //     élément : le chercher là donnait « jamais chargé » sur 23 routes alors que
-      //     la coquille était présente partout. Le script affichait alors deux lignes
-      //     qui se contredisaient — « 23/23 ont la coquille » et « 23 routes sans
-      //     coquille ». Un rapport qui se contredit ne vaut rien.
+      //  2. `querySelector('#app').className.includes('app--loaded')` : écrit trop vite,
+      //     alors que le HTML livré porte bien `<div id="app" class="app--loaded">`.
       //
-      // Le critère est donc ce qu'on veut RÉELLEMENT obtenir : les deux balises de la
-      // coquille, présentes dans le DOM au moment de la capture. `app--loaded` reste
-      // mesuré, mais à titre d'information, jamais comme condition.
+      // ⚠️ ET UNE TROISIÈME CONDITION, AJOUTÉE LE 11/09/2026 APRÈS MESURE — LE LOADER.
+      //
+      // Le Loader est un calque PLEIN ÉCRAN, mesuré dans le CSS livré :
+      //     .loader { position:fixed; inset:0; background:var(--bg); z-index:9999 }
+      // Or la capture se faisait pendant sa TRANSITION DE SORTIE, ce que le HTML livré
+      // prouvait : `class="loader loader-leave-active loader-leave-to"`, et
+      //     .loader-leave-to { opacity: 0 }
+      //
+      // Conséquence exacte, et il ne faut pas la confondre avec « il masque tout » :
+      // le Loader était INVISIBLE, donc la coquille et le contenu se voyaient bien —
+      // mais un calque `position:fixed; inset:0; z-index:9999` restait posé au-dessus,
+      // et `opacity:0` **ne désactive pas les événements pointeur**. Un visiteur sans
+      // JavaScript voyait donc la navigation... sans pouvoir cliquer dedans : le calque
+      // invisible interceptait chaque clic. Et sans JS, il ne partira jamais tout seul.
+      //
+      // Pour un visiteur AVEC JavaScript, rien de tout cela n'existe : Vue hydrate, la
+      // transition s'achève, le Loader est retiré du DOM. Le défaut ne concerne que ce
+      // que reçoivent les robots, les aperçus de lien et les visiteurs sans JS.
+      //
+      // On attend donc la disparition RÉELLE du Loader, pas sa sortie de transition.
       const brut = await cdp.evaluer(`JSON.stringify({
         charge: !!document.querySelector('.app--loaded'),
-        coquille: !!(document.querySelector('header.navigation') && document.querySelector('footer.footer'))
+        coquille: !!(document.querySelector('header.navigation') && document.querySelector('footer.footer')),
+        loader: !!document.querySelector('.loader')
       })`)
       let vu = null
       try { vu = JSON.parse(brut) } catch { vu = null }
       if (vu) {
         etat.charge = vu.charge
         etat.coquille = vu.coquille
-        if (vu.coquille) { tourCharge = i + 1; break }
+        etat.loader = vu.loader
+        if (vu.coquille && !vu.loader) { tourCharge = i + 1; break }
       }
       await attendre(250)
     }
     if (tourCharge === null) {
       // Signalé, pas bloquant : le site part quand même. Mais on le DIT.
       sansCoquille.push(route)
+      if (etat && etat.loader) loaderBloquant.push(route)
     }
     if (!etat) { rapport.push({ route, ok: false, motif: 'rendu illisible' }); echecs++; continue }
 
@@ -314,7 +332,7 @@ async function principal() {
         : html
       fs.writeFileSync(cible, fusion, 'utf8')
       ecrits++
-      rapport.push({ route, ok: true, titre, octets: fusion.length, ecrit: true, tourCharge, coquille: etat.coquille, motif: `accueil prérendu, en-tête préservé (${teteCoquille ? teteCoquille.length : 0} o)` })
+      rapport.push({ route, ok: true, titre, octets: fusion.length, ecrit: true, tourCharge, coquille: etat.coquille, loader: etat.loader, motif: `accueil prérendu, en-tête préservé (${teteCoquille ? teteCoquille.length : 0} o)` })
       continue
     }
     if (ECRIRE) {
@@ -322,7 +340,7 @@ async function principal() {
       fs.writeFileSync(cible, html, 'utf8')
       ecrits++
     }
-    rapport.push({ route, ok: true, titre, octets: html.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/', tourCharge, coquille: etat.coquille })
+    rapport.push({ route, ok: true, titre, octets: html.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/', tourCharge, coquille: etat.coquille, loader: etat.loader })
   }
 
   /* ---------- page 404 ----------
@@ -332,16 +350,29 @@ async function principal() {
      — un doublon de l'accueil aux yeux d'un moteur, pas un 404. */
   const cheminIntrouvable = '/__page-introuvable__'
   await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
+  // ⚠ MÊME ATTENTE QUE POUR LES ROUTES, ET ELLE COMPTE ENCORE PLUS ICI.
+  // La 404 est servie à TOUT visiteur qui se trompe d'adresse. Constaté le 11/09/2026 :
+  // cette page était la SEULE des 24 fichiers livrés à conserver encore un Loader, parce
+  // que ce bloc-là gardait l'ancienne condition (`texte > 200`) quand les routes avaient
+  // été corrigées. Un demi-correctif sur les 23 routes et pas sur la 404, c'est un
+  // correctif qui laisse le défaut exactement là où un visiteur perdu le rencontre.
+  //
+  // Le Loader laissé est un calque `position:fixed; inset:0; z-index:9999` rendu
+  // transparent par sa classe de sortie : il n'empêche pas de VOIR la page, mais
+  // `opacity:0` ne désactive pas les clics — sur une page dont tout l'intérêt est de
+  // proposer des liens de secours, c'est le pire endroit pour poser un intercepteur.
   let etat404 = null
   for (let i = 0; i < 40; i++) {
     await attendre(250)
     const brut = await cdp.evaluer(`JSON.stringify({
       texte: (document.body && document.body.innerText || '').length,
       app: !!(document.querySelector('#app') && document.querySelector('#app').children.length),
-      titre: document.title
+      titre: document.title,
+      coquille: !!(document.querySelector('header.navigation') && document.querySelector('footer.footer')),
+      loader: !!document.querySelector('.loader')
     })`)
     try { etat404 = JSON.parse(brut) } catch { etat404 = null }
-    if (etat404 && etat404.app && etat404.texte > 200) break
+    if (etat404 && etat404.coquille && !etat404.loader) break
   }
   const html404brut = await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
   if (typeof html404brut === 'string' && etat404 && /404|non trouv/i.test(etat404.titre)) {
@@ -446,6 +477,17 @@ async function principal() {
     console.log('     Conséquence pour ces routes : ni nav, ni footer, ni bandeau pour un robot ou un aperçu de lien.')
   } else {
     console.log(`  ✅ coquille prérendue sur toutes les routes · attente la plus longue : ${maxTour ? maxTour * 250 + ' ms' : 'n/a'}`)
+  }
+  const loaderPresents = rapport.filter((r) => r.loader === true).length
+  if (loaderBloquant.length) {
+    console.log(`  ⚠ ${loaderBloquant.length} route(s) où le Loader est ENCORE dans le DOM à la capture.`)
+    console.log('     Le CSS livré le pose en `position:fixed; inset:0; z-index:9999` et la classe')
+    console.log('     de sortie le rend transparent (`opacity:0`) — mais `opacity` ne désactive PAS')
+    console.log('     les clics : ce calque invisible intercepterait chaque clic d\'un visiteur sans')
+    console.log('     JavaScript, qui voit alors la navigation sans pouvoir s\'en servir.')
+  } else {
+    console.log('  ✅ aucun Loader résiduel : pas de calque plein écran laissé au-dessus du contenu')
+    console.log('     (un Loader en `position:fixed; z-index:9999`, même invisible, capterait les clics)')
   }
   console.log('  (sans coquille, le HTML livré n\'a ni nav, ni footer, ni bandeau : défaut réel')
   console.log('   pour les robots et les aperçus de lien, invisible pour un visiteur AVEC JavaScript)')
