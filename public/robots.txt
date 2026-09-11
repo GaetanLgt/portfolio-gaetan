@@ -25,8 +25,6 @@ User-agent: *
 Allow: /
 
 # Seule exclusion : les formations, non commercialisées à ce jour.
-Disallow: /formation
-
 # Les fichiers techniques restent ouverts (voir l'explication en tête).
 # Ne pas réintroduire de Disallow sur /assets/.
 

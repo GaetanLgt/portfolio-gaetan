@@ -46,13 +46,18 @@ const JitsuPipeline = () => import(/* webpackChunkName: "apps-agents" */ '@/view
 const SeoContentGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/SeoContentGenerator.vue');
 const InvoiceGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/apps/InvoiceGenerator.vue');
 
-// FORMATION — imports retirés le 10/09/2026 (décision Gaëtan : abandonner la section).
-// Les quatre composants (FormationHub, FormationDetail, FormationPath, ChallengesHub)
-// n'étaient référencés QUE par le bloc de routes ci-dessous, lui-même commenté depuis
-// le « masquage temporaire (droits en attente) ». Vérifié avant retrait : 0 occurrence
-// hors de ce fichier. Ils n'étaient donc jamais chargés — le retrait ne change rien au
-// comportement, il enlève seulement du code mort et rend l'intention lisible.
-// Le contenu source a été archivé, pas supprimé : voir modeles/archives/ si rétabli.
+// FORMATION — section abandonnée (décision Gaëtan du 10/09/2026).
+// Historique, pour qui se demanderait où elle est passée :
+//   · 10/09 — imports retirés. Les quatre composants (FormationHub, FormationDetail,
+//     FormationPath, ChallengesHub) n'étaient référencés que par le bloc de routes ;
+//     vérifié avant retrait : 0 occurrence hors de ce fichier.
+//   · 11/09 — le bloc de 4 routes, DÉJÀ ENTIÈREMENT COMMENTÉ depuis le « masquage
+//     temporaire (droits en attente) », a été supprimé à son tour. Il ne servait rien :
+//     du code mort dans un commentaire n'est pas du code — et il faussait le comptage
+//     des routes, qui annonçait 29 là où le routeur en déclare 25.
+// Le contenu source est archivé, pas perdu : modeles/archives/formation-2026-09-10/.
+// Le `Disallow: /formation` de robots.txt a été retiré en même temps : un Disallow sur
+// un chemin qui n'existe plus est un vestige, pas une protection.
 
 // ============================================================================
 // ROUTES
@@ -308,48 +313,6 @@ const routes = [
       description: 'Créez des devis et factures professionnels en quelques clics.'
     }
   },
-
-  // -------------------------------------------------------------------------
-  // FORMATION - Masqué temporairement (droits en attente)
-  // -------------------------------------------------------------------------
-  /*
-  {
-    path: '/formation',
-    name: 'FormationHub',
-    component: FormationHub,
-    meta: { 
-      title: 'Formations Développement Web & IA | GL Academy',
-      description: 'Formations professionnelles Symfony, Vue.js, IA, DevOps. Formateur expert terrain, petits groupes, certifications. Éligible CPF.'
-    }
-  },
-  {
-    path: '/formation/challenges',
-    name: 'ChallengesHub',
-    component: ChallengesHub,
-    meta: { 
-      title: 'Challenges Développement | GL Academy',
-      description: 'Challenges de code professionnels pour construire votre portfolio. 15+ projets sur 5 niveaux, du débutant à l\'expert.'
-    }
-  },
-  {
-    path: '/formation/parcours/:slug',
-    name: 'FormationPath',
-    component: FormationPath,
-    meta: { 
-      title: 'Parcours de Formation | GL Academy',
-      description: 'Parcours complet de formation pour atteindre vos objectifs professionnels.'
-    }
-  },
-  {
-    path: '/formation/:slug',
-    name: 'FormationDetail',
-    component: FormationDetail,
-    meta: { 
-      title: 'Formation | GL Academy',
-      description: 'Découvrez le programme complet, les objectifs et les prochaines sessions de cette formation.'
-    }
-  },
-  */
 
   // -------------------------------------------------------------------------
   // RESOURCES - Bibliothèque de composants
