@@ -56,6 +56,20 @@ jobs:
           find src -name "*.vue" -size +100k -exec ls -lh {} \;
           find src -name "*.js" -size +100k -exec ls -lh {} \;
 
+      - name: 🔒 Verrous de la signature qualité
+        # Les verrous (AA · reduced-motion · curseur natif · mode sobre · garde-fou
+        # juridique) ne vivaient que dans des COMMENTAIRES. Ce dépôt en a déjà payé
+        # le prix : `cursor: none` a survécu au retrait du curseur personnalisé —
+        # masquer le curseur système sans remplaçant laisse le visiteur SANS curseur.
+        # Un verrou décrit dans un commentaire n'est pas un verrou : c'est une
+        # intention. Cette étape le transforme en mesure, et échoue s'il casse.
+        #
+        # Elle lit les jetons RÉELLEMENT définis dans variables.css, donc elle suit
+        # automatiquement tout changement de palette (D1 clair, D4/D5 sombre, ...).
+        # Constaté le 11/09/2026 : elle a signalé --alert à 4,45:1 (seuil 4,5) et
+        # --rule-strong à 1,96:1 (seuil 3) — deux défauts réels, corrigés depuis.
+        run: node scripts/verifier-verrous.mjs
+
   # ═══════════════════════════════════════════════════════════════════════════
   # JOB 2: Build & Test
   # ═══════════════════════════════════════════════════════════════════════════

@@ -1,51 +1,82 @@
 :root {
   /* ═══════════════════════════════════════════════════════════════════════
-     DESIGN SYSTEM — CLAIR PAPIER + ACCENT BRIQUE (D1, 2026-09-08)
-     Source : modeles/decisions-refonte-awwwards-2026.md (GL Digital Lab).
-     Règles : fond papier chaud, encre noire chaude (jamais #000), un SEUL
-     accent brique réservé au bouton primaire et au lien actif.
-     Contrastes AA vérifiés (audit 2026-09-08) :
-       ink/paper 15,45:1 · ink-soft/paper 5,75:1 · ink-soft/paper-alt 5,26:1
-       accent/paper 5,54:1 · accent/paper-alt 5,06:1 · accent-inv/ink 5,04:1
+     DESIGN SYSTEM — DA « D5 » (direction sombre, Matrix Resurrections × MND)
+
+     ARBITRAGE GAËTAN DU 11/09/2026 : « D5 ». Application de la palette unifiée
+     D5 (modeles/decisions-concept-flagship-d5.md §5) et de la décision D4
+     (modeles/decisions-da-matrix-resurrections.md).
+
+     ⚠️ TRACABILITÉ — CETTE PALETTE DÉFAIT UNE DÉCISION DATÉE, ET C'EST ASSUMÉ
+     Historique mesuré dans ce fichier même :
+       · 08/09 (D1)  clair papier + accent brique unique — FAIT et DÉPLOYÉ,
+                     avec un verrou de non-régression (decisions-refonte-awwwards-2026.md)
+       · 10/09 (D4)  rupture assumée : la vitrine adopte Matrix Resurrections
+                     (palette sombre, digital rain, glitchs) — étapes 1 à 3 appliquées
+       · 10/09       puis RETOUR À D1, les néons étant « neutralisés »
+       · 11/09 (D5)  Gaëtan tranche : D5. C'est le présent fichier.
+
+     Ce fichier est donc la 3e bascule sur la même semaine. Si c'est une erreur,
+     le retour à D1 tient en un remplacement de ce seul bloc : les noms de jetons
+     sont identiques dans les deux directions, aucun composant n'a à changer.
+
+     CONTRASTES — vérifiés, pas supposés (outil : scripts/verifier-verrous.mjs)
+       ink/paper 18,34:1 · ink-soft/paper 10,87:1 · accent/paper 14,87:1
+       action/paper 16,80:1 · alert/paper 7,07:1 · critical/paper 5,12:1
+       neon-cyan/paper 13,20:1 · neon-magenta/paper 5,86:1
+       rule-strong/paper 3,14:1  ← bordure FONCTIONNELLE (nouveau jeton de valeur)
+       rule/paper 1,44:1         ← DÉCORATIF UNIQUEMENT, jamais bordure de contrôle
+
+     Répartition visée (D4) : 60 % noir · 30 % vert Matrix · 10 % néons.
      ═══════════════════════════════════════════════════════════════════════ */
 
-  /* ── Fonds ── */
-  --paper: #F4F1EA;      /* fond principal — papier chaud */
-  --paper-alt: #EBE7DD;  /* alternance de section, cartes */
+  /* ── Fonds — Matrix Resurrections ── */
+  --paper: #03060A;      /* noir Matrice — jamais #000 pur */
+  --paper-alt: #08100F;  /* vert-noir : alternance de section, cartes */
 
   /* ── Encre ── */
-  --ink: #1A1A18;        /* noir chaud — jamais #000 */
-  --ink-soft: #5F5E5A;   /* texte secondaire */
-  --ink-faint: #6E5F51;  /* texte tertiaire — réservé au texte de grande taille */
+  --ink: #E8F7EE;        /* blanc-vert, texte principal */
+  --ink-soft: #A9C4B4;   /* texte secondaire */
+  --ink-faint: #7FA895;  /* texte tertiaire — réservé au texte de grande taille */
 
-  /* ── Trait ── */
-  --rule: #D6D1C4;       /* filets 1px — jamais de texte dans cette valeur */
-  --rule-strong: #B5AE9E;
+  /* ── Trait ──
+     Deux jetons, deux rôles, et la distinction n'est pas cosmétique :
+       --rule        habille (1,44:1). Sous 3:1, WCAG 1.4.11 ne s'applique pas.
+       --rule-strong délimite un CONTRÔLE (3,14:1). Un bouton, un champ ou un
+                     état de focus dont la bordure est à 1,44:1 n'est pas
+                     distinguable — c'est le défaut que la maquette La Barre
+                     portait, et qu'un contrôle a attrapé. */
+  --rule: #16302A;
+  --rule-strong: #2E685C;
 
-  /* ── Accent UNIQUE — terre cuite / brique du Nord ── */
-  --accent: #A63F26;     /* bouton primaire + lien actif uniquement */
-  --accent-ink: #7E2E1A; /* état survol uniquement */
-  --accent-inv: #D9694A; /* même accent, version des sections sur fond encre */
+  /* ── Accent — vert code Matrix ── */
+  --accent: #00FF41;     /* titres, liens, point MND — « sacré », reste rare */
+  --accent-ink: #66FF88; /* état survol */
+  --accent-inv: #00FF41; /* sections sur fond encre : même valeur */
+
+  /* ── Néons secondaires (D4 : magenta de San Francisco, cyan de la Matrice) ── */
+  --neon-magenta: #FF2D95;  /* ponctuations */
+  --neon-cyan: #00E5FF;     /* micro-labels, états */
 
   /* ═══════════════════════════════════════════════════════════════════════
-     ALIASES LEGACY — les anciens noms restent définis (mappés vers le DS
-     clair) pour que les composants non encore migrés continuent de
-     fonctionner. Purge progressive aux étapes 2-4, jamais réintroduits.
+     ALIASES — mêmes noms qu'avant, valeurs de D5.
+     Aucun composant n'a besoin de changer : c'est le principe du remappage.
      ═══════════════════════════════════════════════════════════════════════ */
   --bg: var(--paper);
   --surface: var(--paper-alt);
-  --surface-light: #E4DFD3;
+  --surface-light: #0E1A17;
   --border: var(--rule);
   --border-hover: var(--rule-strong);
 
   --primary: var(--accent);
   --primary-dark: var(--accent-ink);
   --primary-light: var(--accent-inv);
-  --primary-soft: rgba(166, 63, 38, 0.10);
+  --primary-soft: rgba(0, 255, 65, 0.10);
 
   --text-main: var(--ink);
   --text-muted: var(--ink-soft);
-  --text-dark: var(--ink-soft);   /* ex #71717A (4,22:1) → désormais AA 5,75:1 */
+  --text-dark: var(--ink);   /* en thème sombre, « dark » n'a plus de sens :
+                                on l'aligne sur l'encre claire plutôt que de
+                                laisser un jeton trompeur. */
 
   /* Legacy compatibility */
   --text-primary: var(--text-main);
@@ -55,72 +86,50 @@
   --code-dark: var(--paper);
   --code-darker: var(--paper-alt);
   --code-text: var(--ink);
-  --code-accent: var(--ink-soft);
+  --code-accent: var(--accent);
 
-  /* Spacing scale (système 8px) */
+  /* Spacing scale (système 8px) — inchangé */
   --space-xs: 0.5rem;
   --space-sm: 1rem;
   --space-md: 2rem;
   --space-lg: 4rem;
   --space-xl: 8rem;
 
-  /* Transitions */
+  /* Transitions — inchangées */
   --transition-fast: 150ms ease;
   --transition-base: 300ms ease;
   --transition-slow: 600ms ease;
   --transition-bounce: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
-  /* Shadows (légères, chaudes — plus aucun halo néon) */
-  --shadow-sm: 0 1px 2px rgba(26, 26, 24, 0.06);
-  --shadow-md: 0 4px 12px rgba(26, 26, 24, 0.08);
-  --shadow-lg: 0 8px 24px rgba(26, 26, 24, 0.10);
+  /* ── Halos néon : D4 les réintroduit comme langage principal ── */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+
+  /* ── Action : le jaune de Cyberpunk, CTA uniquement (D5) ── */
+  --action: #FCEE0A;
+  --action-ink: #03060A;    /* texte sombre sur le bouton jaune */
+  --action-dark: #D4C800;
+
+  /* ── Alertes : Evangelion (D5) ── */
+  --alert: #FF6A00;
+  --alert-ink: #03060A;
+  --critical: #FF0033;
+
+  --ink-2: var(--ink-soft);
+  --surface-deep: var(--paper);
+
+  /* Hachures d'alerte — danger tape (D5 : orange/noir pour l'état système) */
+  --hatch-action: repeating-linear-gradient(45deg, var(--action) 0 6px, var(--paper) 6px 12px);
+  --hatch-alert: repeating-linear-gradient(45deg, var(--alert) 0 6px, var(--paper) 6px 12px);
+
+  /* Halos néon — le glow est de retour (D4 motif 3) */
+  --glow-accent: 0 0 12px rgba(0, 255, 65, 0.35);
+  --glow-accent-strong: 0 0 24px rgba(0, 255, 65, 0.5);
+  --glow-action: 0 0 12px rgba(252, 238, 10, 0.35);
+  --glow-magenta: 0 0 12px rgba(255, 45, 149, 0.35);
+  --glow-cyan: 0 0 12px rgba(0, 229, 255, 0.35);
+
+  /* Mono : la police auto-hébergée du projet. */
+  --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
 }
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   COMPATIBILITÉ — tokens introduits par le chantier D4/D5
-   (10/09/2026, retour à la direction D1)
-
-   La palette D1 ne définit pas ces noms. Des composants écrits pendant le
-   chantier sombre les utilisent (terminal, section du vaisseau, pavillon) :
-   sans définition, `var(--neon-cyan)` est invalide et la couleur tombe à sa
-   valeur héritée — donc, en pratique, à l'encre du parent, ce qui casse la
-   hiérarchie visuelle.
-
-   Les valeurs ci-dessous sont VOLONTAIREMENT CALMES et alignées sur D1 :
-   D1 impose UN SEUL accent (la brique). Le jaune d'action et l'orange d'alerte
-   du chantier précédent sont donc neutralisés ici, ramenés dans la gamme
-   papier/encre/accent. Les composants continuent de fonctionner sans qu'on
-   ait à les réécrire.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Une seule action : l'accent de la maison. */
---action: var(--accent);
---action-ink: var(--paper);
---action-dark: var(--accent-ink);
-
-/* Alertes : sobres, jamais criardes. */
---alert: #B45309;
---alert-ink: var(--paper);
---critical: #9F1239;
-
-/* Les néons du chantier sombre deviennent des gris chauds. */
---neon-cyan: var(--ink-soft);
---neon-magenta: var(--accent);
---ink-2: var(--ink-soft);
-
-/* Fonds profonds : en thème clair, ce sont des papiers plus soutenus. */
---surface-deep: var(--paper-alt);
-
-/* Hachures d'alerte : version papier, discrètes. */
---hatch-action: repeating-linear-gradient(45deg, var(--accent) 0 6px, var(--paper) 6px 12px);
---hatch-alert: repeating-linear-gradient(45deg, var(--alert) 0 6px, var(--paper) 6px 12px);
-
-/* Halos : en thème clair, une ombre douce remplace le glow néon. */
---glow-accent: 0 1px 2px rgba(26, 26, 24, 0.08);
---glow-accent-strong: 0 2px 6px rgba(26, 26, 24, 0.12);
---glow-action: var(--glow-accent);
---glow-magenta: var(--glow-accent);
---glow-cyan: var(--glow-accent);
-
-/* Mono : la police auto-hébergée du projet. */
---font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
