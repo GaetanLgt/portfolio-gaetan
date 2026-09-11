@@ -227,7 +227,29 @@ async function principal() {
     // Le fichier d'accueil n'est JAMAIS écrasé par cette passe : il porte le
     // JSON-LD et les métadonnées écrites à la main. On le signale seulement.
     if (route === '/' && ECRIRE) {
-      rapport.push({ route, ok: true, titre, octets: html.length, ecrit: false, motif: 'accueil préservé (coquille maintenue)' })
+      // CORRIGÉ LE 11/09/2026 — l'accueil EST prérendu, mais son en-tête est gardé.
+      //
+      // Avant, cette passe SAUTAIT l'accueil pour ne pas écraser le JSON-LD et les
+      // métadonnées écrites à la main. La règle protégeait la bonne chose et
+      // produisait la mauvaise : la page d'accueil était la SEULE sans contenu dans
+      // son HTML. Mesuré : sur les trois textes attendus par audit-routes.py, seul
+      // « ARKADIA » sortait — parce qu'il figure dans le <noscript>. « La machine
+      // travaille » et « Interrogez le poste » étaient absents, comme tout le reste.
+      // Un visiteur sans JavaScript, un moteur qui n'exécute pas, un aperçu de lien
+      // social : tous ne voyaient que la coquille.
+      //
+      // On ne remplace donc plus l'accueil : on FUSIONNE. L'en-tête de la coquille
+      // (JSON-LD, métadonnées, theme-color) est reposé tel quel sur le corps rendu.
+      // Le fichier écrit à la main reste la source de l'en-tête ; le rendu apporte
+      // le contenu. Les deux sont préservés, et rien n'est plus perdu.
+      const coquille = fs.readFileSync(cible, 'utf8')
+      const teteCoquille = (coquille.match(/<head[\s\S]*?<\/head>/i) || [])[0]
+      const fusion = teteCoquille
+        ? html.replace(/<head[\s\S]*?<\/head>/i, teteCoquille)
+        : html
+      fs.writeFileSync(cible, fusion, 'utf8')
+      ecrits++
+      rapport.push({ route, ok: true, titre, octets: fusion.length, ecrit: true, motif: `accueil prérendu, en-tête préservé (${teteCoquille ? teteCoquille.length : 0} o)` })
       continue
     }
     if (ECRIRE) {
