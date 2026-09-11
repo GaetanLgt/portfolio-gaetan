@@ -7,7 +7,7 @@
  * CharactersHero — les 6 Lois MND en 3D dans le hero de la vitrine.
  * Réagit à la souris (parallaxe) et au scroll (rotation du groupe).
  * respecte prefers-reduced-motion (accessibilité : la vitrine est auditée a11y).
- * Assets : public/models/avatar_mnd_*.glb (~940 Ko au total, meshes low-poly sans texture).
+ * Assets : public/models/avatar_*.glb (~940 Ko au total, meshes low-poly sans texture).
  */
 import { ref, onMounted, onUnmounted } from 'vue';
 import * as THREE from 'three';
@@ -58,7 +58,7 @@ onMounted(() => {
 
   const loader = new GLTFLoader();
   LOIS.forEach((loi, i) => {
-    loader.load(`/models/avatar_mnd_${loi}.glb`, (gltf) => {
+    loader.load(`/models/avatar_${loi}.glb`, (gltf) => {
       const av = gltf.scene;
       // centrer horizontalement + poser au sol
       const box = new THREE.Box3().setFromObject(av);

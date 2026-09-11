@@ -6,7 +6,7 @@
 /**
  * UnitesHero — les six unites MND dans le hero.
  *
- * REFONTE (D5, 10/09/2026). La version precedente chargeait `avatar_mnd_*.glb` :
+ * REFONTE (D5, 10/09/2026). La version precedente chargeait `avatar_*.glb` :
  * six silhouettes humanoïdes fabriquees avec des primitives Blender (cuboides,
  * ellipsoides). Deux problemes : la geometrie etait pauvre (des « mascottes »
  * low-poly), et le nom des fichiers comme le vocabulaire du code decrivaient des
@@ -141,7 +141,7 @@ onMounted(() => {
       undefined,
       () => {
         // Repli documenté : l'unité générée n'est pas encore livrée.
-        loader.load(`/models/avatar_mnd_${cle}.glb`, (gltf) => {
+        loader.load(`/models/avatar_${cle}.glb`, (gltf) => {
           gltf.scene.traverse((o) => {
             if (o.isMesh && o.material) {
               const mats = Array.isArray(o.material) ? o.material : [o.material];
