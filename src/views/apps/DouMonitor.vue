@@ -10,7 +10,19 @@
       <div class="container">
         <div class="app-intro">
           <h1><span class="app-icon">📊</span> System Monitor</h1>
-          <p>Surveillez vos services et métriques en temps réel</p>
+          <p>L'état réel des services du studio — mesuré, jamais estimé</p>
+        </div>
+
+        <!--
+          PROVENANCE DE LA DONNÉE — ajouté le 11/09/2026.
+          Sans cette ligne, un visiteur ne peut pas savoir si les chiffres qu'il
+          lit ont été mesurés ou écrits à la main. C'est la règle du dépôt :
+          étiqueter une mesure datée, ne jamais présenter une simulation comme
+          réelle. Le libellé change selon ce qui a RÉELLEMENT répondu.
+        -->
+        <div class="provenance" :class="source === 'direct' ? 'provenance--direct' : 'provenance--releve'">
+          <span class="provenance__pastille"></span>
+          <span class="provenance__texte">{{ provenance }}</span>
         </div>
 
         <!-- STATUS OVERVIEW -->
@@ -21,7 +33,7 @@
               <div class="status-label">Statut Global</div>
               <div class="status-value">{{ overallStatus === 'healthy' ? 'Tous systèmes opérationnels' : overallStatus === 'degraded' ? 'Performances dégradées' : 'Incident en cours' }}</div>
             </div>
-            <div class="status-uptime">Uptime: {{ uptimePercent }}%</div>
+            <div class="status-uptime">{{ services.filter(s => s.status === 'up').length }}/{{ services.length }} en ligne</div>
           </div>
         </div>
 
@@ -37,7 +49,9 @@
               <div class="service-icon">{{ service.icon }}</div>
               <div class="service-name">{{ service.name }}</div>
               <div class="service-latency" v-if="service.latency">{{ service.latency }}ms</div>
-              <div class="service-uptime">{{ service.uptime }}% uptime</div>
+              <!-- Avant : « {{ service.uptime }}% uptime », un chiffre inventé.
+                   Maintenant : le PORT, qui est une donnée réelle et vérifiable. -->
+              <div class="service-uptime">port {{ service.port }}</div>
             </div>
           </div>
         </div>
@@ -66,23 +80,41 @@
                 <div class="metric-fill" :style="{ width: metrics.ram + '%' }" :class="getMetricClass(metrics.ram)"></div>
               </div>
             </div>
-            <div class="metric-card">
+            <!--
+              DISQUE et RÉSEAU : la supervision ne les mesure PAS.
+              Avant, la page affichait « 48 % » et « 156 Mb/s » — des valeurs qui
+              ne venaient d'aucune source. On écrit « non mesuré » : c'est plus
+              honnête qu'un chiffre inventé, et ça dit exactement où s'arrête la
+              mesure. Brancher un capteur est un travail séparé, pas un mensonge.
+            -->
+            <div class="metric-card metric-card--non-mesure">
               <div class="metric-header">
                 <span class="metric-icon">💿</span>
                 <span class="metric-name">Disk</span>
               </div>
-              <div class="metric-value" :class="getMetricClass(metrics.disk)">{{ metrics.disk }}%</div>
-              <div class="metric-bar">
-                <div class="metric-fill" :style="{ width: metrics.disk + '%' }" :class="getMetricClass(metrics.disk)"></div>
-              </div>
+              <div class="metric-value metric-value--non-mesure">non mesuré</div>
+              <div class="metric-sub">la supervision ne relève pas le disque</div>
             </div>
-            <div class="metric-card">
+            <div class="metric-card metric-card--non-mesure">
               <div class="metric-header">
                 <span class="metric-icon">🌐</span>
-                <span class="metric-name">Network</span>
+                <span class="metric-name">Réseau</span>
               </div>
-              <div class="metric-value">{{ metrics.network }} Mb/s</div>
-              <div class="metric-sub">↑ {{ metrics.networkUp }} ↓ {{ metrics.networkDown }}</div>
+              <div class="metric-value metric-value--non-mesure">non mesuré</div>
+              <div class="metric-sub">débit non relevé</div>
+            </div>
+            <!--
+              Remplacé par une mesure RÉELLE, et elle vaut le détour : le CPU est
+              une moyenne entre deux relevés de os.cpus(), annoncée comme telle,
+              et la RAM est la mémoire libre réelle de la machine.
+            -->
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-icon">🧮</span>
+                <span class="metric-name">Machine</span>
+              </div>
+              <div class="metric-value">{{ metrics.ramLibreGo }} Go libres</div>
+              <div class="metric-sub">sur {{ metrics.ramTotalGo }} · {{ metrics.cpus }} cœurs</div>
             </div>
           </div>
         </div>
@@ -111,15 +143,27 @@
           </div>
         </div>
 
-        <!-- UPTIME HISTORY -->
+        <!--
+          HISTORIQUE — CETTE SECTION AFFICHAIT SEPT JOURS QUI N'ONT JAMAIS EXISTÉ.
+          Elle montrait une barre par jour, avec des taux (100 %, 99,8 %, 98,5 %…)
+          et des dates de **2024**. Aucune de ces mesures n'avait été prise : la
+          supervision ne conserve aucun historique.
+
+          On ne fabrique donc pas sept points. On affiche ce qu'on a : le relevé
+          réel du jour, et la raison pour laquelle il n'y en a qu'un.
+        -->
         <div class="uptime-section">
-          <h3>📅 Historique des 7 derniers jours</h3>
+          <h3>📅 Relevé du jour</h3>
           <div class="uptime-grid">
             <div v-for="day in uptimeHistory" :key="day.date" class="uptime-day">
-              <div class="uptime-bar" :style="{ height: day.uptime + '%' }" :class="getUptimeClass(day.uptime)"></div>
-              <div class="uptime-label">{{ day.day }}</div>
+              <div class="uptime-bar" :style="{ height: (parseFloat(uptimePercent) || 0) + '%' }" :class="getUptimeClass(parseFloat(uptimePercent) || 0)"></div>
+              <div class="uptime-label">{{ day.date.slice(5) }}</div>
             </div>
           </div>
+          <p class="uptime-note">
+            Un seul point : aucun historique n'est conservé. Une courbe sur sept jours
+            demanderait sept jours de relevés réels — pas sept valeurs inventées.
+          </p>
         </div>
       </div>
     </main>
@@ -128,68 +172,142 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import etatReel from '@/data/etat-services.json';
 
-const services = ref([
-  { id: 1, name: 'API Backend', icon: '⚙️', status: 'up', latency: 45, uptime: 99.9 },
-  { id: 2, name: 'Database', icon: '🗄️', status: 'up', latency: 12, uptime: 99.99 },
-  { id: 3, name: 'Redis Cache', icon: '🔴', status: 'up', latency: 2, uptime: 99.95 },
-  { id: 4, name: 'CDN', icon: '🌐', status: 'up', latency: 28, uptime: 99.8 },
-  { id: 5, name: 'Email Service', icon: '📧', status: 'up', latency: 156, uptime: 99.5 },
-  { id: 6, name: 'Worker Queue', icon: '⚡', status: 'up', latency: 8, uptime: 99.7 }
-]);
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * CETTE PAGE AFFICHAIT DES CHIFFRES INVENTÉS. ELLE AFFICHE DES MESURES.
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Avant le 11/09/2026 : six services qui n'existent pas (API Backend, Database,
+ * Redis Cache, CDN, Email Service, Worker Queue), des latences écrites en dur,
+ * des alertes fictives (« CPU spike resolved »), un historique d'uptime daté de
+ * **2024**, et un `setInterval` qui faisait varier le tout avec `Math.random()`.
+ *
+ * Le dépôt interdit *« une simulation présentée comme réelle »*. Une page qui
+ * affirme « Tous systèmes opérationnels » sans avoir rien mesuré n'est pas une
+ * démo : c'est un mensonge affiché, et il est servi à chaque visiteur.
+ *
+ * Ce que la page affiche désormais, et d'où cela vient :
+ *   · `src/data/etat-services.json` — un RELEVÉ RÉEL, produit par
+ *     `forge-ia/api-supervision.mjs` : huit connexions TCP réellement ouvertes et
+ *     chronométrées, plus le CPU et la RAM de la machine du studio.
+ *   · Si la supervision locale répond (`127.0.0.1:8134`), la page se RAFRAÎCHIT en
+ *     direct — c'est le cas sur la machine du studio.
+ *   · Sinon (tout visiteur distant : il ne peut pas joindre la boucle locale), la
+ *     page affiche le relevé daté, ET LE DIT.
+ *
+ * Les données qui n'ont pas de source réelle ne sont pas inventées : le disque et
+ * le réseau ne sont pas mesurés par la supervision, et les alertes sont vides
+ * parce qu'il n'y en a aucune. Un zéro honnête vaut mieux qu'un chiffre inventé.
+ */
 
+const RELEVE = etatReel;
+const ICONES = {
+  Ollama: '🧠', 'Open WebUI': '📚', ComfyUI: '🎨', worker: '⚡',
+  API: '⚙️', portail: '🚪', 'assistant local': '💬', 'DSH web': '🖥️',
+};
+
+const source = ref('releve');           // 'releve' = instantané daté · 'direct' = temps réel local
+const horodatage = ref(RELEVE.horodatage);
+const latenceMoyenne = ref(RELEVE.latence_moyenne_ms);
+
+const services = ref(
+  RELEVE.services.map((s, i) => ({
+    id: i + 1,
+    name: s.nom,
+    icon: ICONES[s.nom] || '🔧',
+    // « status » attendu par le gabarit : up / down. C'est la seule valeur que
+    // la mesure produit — pas de « degraded » inventé.
+    status: s.etat === 'up' ? 'up' : 'down',
+    latency: s.etat === 'up' ? s.ms : null,
+    role: s.role,
+    port: s.port,
+    detail: s.detail || null,
+  })),
+);
+
+const machine = RELEVE.machine_metriques;
+
+// CPU et RAM : mesurés. Disque et réseau : PAS mesurés par la supervision —
+// on ne met donc pas de valeur. (Avant : 48 % et 156 kb/s, sortis de nulle part.)
 const metrics = ref({
-  cpu: 34,
-  ram: 62,
-  disk: 48,
-  network: 156,
-  networkUp: 45,
-  networkDown: 111
+  cpu: machine.cpu_pct,
+  ram: machine.ram_pct,
+  disk: null,
+  network: null,
+  ramLibreGo: machine.ram_libre_go,
+  ramTotalGo: machine.ram_total_go,
+  cpus: machine.cpus,
 });
 
-const alerts = ref([
-  { id: 1, time: '14:32', severity: 'warning', message: 'High memory usage detected', service: 'Worker Queue' },
-  { id: 2, time: '12:15', severity: 'info', message: 'Scheduled maintenance completed', service: 'Database' },
-  { id: 3, time: '09:45', severity: 'resolved', message: 'CPU spike resolved', service: 'API Backend' }
-]);
+/** Aucune alerte n'est inventée : la liste est vide parce qu'il n'y en a pas. */
+const alerts = ref([]);
 
-const uptimeHistory = ref([
-  { day: 'Lun', date: '2024-01-01', uptime: 100 },
-  { day: 'Mar', date: '2024-01-02', uptime: 99.8 },
-  { day: 'Mer', date: '2024-01-03', uptime: 99.9 },
-  { day: 'Jeu', date: '2024-01-04', uptime: 100 },
-  { day: 'Ven', date: '2024-01-05', uptime: 98.5 },
-  { day: 'Sam', date: '2024-01-06', uptime: 100 },
-  { day: 'Dim', date: '2024-01-07', uptime: 99.95 }
-]);
+/**
+ * Pas d'historique fabriqué. On garde UN point : celui du relevé réel.
+ * Le taux affiché se calcule donc sur les SERVICES observés — pas sur un
+ * historique de sept jours daté de 2024, qui n'a jamais existé.
+ */
+const uptimeHistory = ref([{ day: 'Relevé', date: RELEVE.horodatage.slice(0, 10), uptime: null }]);
 
 const overallStatus = computed(() => {
-  const downCount = services.value.filter(s => s.status === 'down').length;
+  const downCount = services.value.filter((s) => s.status === 'down').length;
   if (downCount > 1) return 'critical';
   if (downCount === 1) return 'degraded';
   return 'healthy';
 });
 
 const uptimePercent = computed(() => {
-  const avg = uptimeHistory.value.reduce((s, d) => s + d.uptime, 0) / uptimeHistory.value.length;
-  return avg.toFixed(2);
+  const up = services.value.filter((s) => s.status === 'up').length;
+  return services.value.length ? ((up / services.value.length) * 100).toFixed(1) : '—';
 });
 
+/** Libellé lisible de la provenance, affiché dans l'interface. */
+const provenance = computed(() =>
+  source.value === 'direct'
+    ? 'mesure directe, rafraîchie toutes les 15 s — supervision locale du studio'
+    : `relevé du ${new Date(horodatage.value).toLocaleString('fr-FR')} — mesure datée, pas de temps réel`,
+);
+
 let interval;
+
+/**
+ * Rafraîchissement : on interroge la VRAIE supervision si elle est joignable.
+ * Sur la machine du studio elle répond ; depuis un navigateur distant, non —
+ * et dans ce cas on ne simule RIEN, on garde le relevé daté.
+ */
+async function rafraichir() {
+  try {
+    const r = await fetch('http://127.0.0.1:8134/etat', { cache: 'no-store' });
+    if (!r.ok) return;
+    const j = await r.json();
+    source.value = 'direct';
+    horodatage.value = j.horodatage;
+    latenceMoyenne.value = j.latence_moyenne_ms;
+    services.value = j.services.map((s, i) => ({
+      id: i + 1,
+      name: s.nom,
+      icon: ICONES[s.nom] || '🔧',
+      status: s.etat === 'up' ? 'up' : 'down',
+      latency: s.etat === 'up' ? s.ms : null,
+      role: s.role,
+      port: s.port,
+      detail: s.detail || null,
+    }));
+    metrics.value.cpu = j.machine_metriques.cpu_pct;
+    metrics.value.ram = j.machine_metriques.ram_pct;
+    metrics.value.ramLibreGo = j.machine_metriques.ram_libre_go;
+  } catch {
+    // Supervision locale injoignable : c'est le cas NORMAL pour un visiteur.
+    // On ne bascule pas sur des valeurs inventées — on garde le relevé daté.
+    source.value = 'releve';
+  }
+}
+
 onMounted(() => {
-  interval = setInterval(() => {
-    // Simulate live metrics
-    metrics.value.cpu = Math.max(10, Math.min(95, metrics.value.cpu + (Math.random() - 0.5) * 10));
-    metrics.value.ram = Math.max(30, Math.min(90, metrics.value.ram + (Math.random() - 0.5) * 5));
-    metrics.value.network = Math.max(50, Math.min(300, metrics.value.network + (Math.random() - 0.5) * 30));
-    
-    // Update latencies
-    services.value.forEach(s => {
-      if (s.latency) {
-        s.latency = Math.max(1, s.latency + Math.floor((Math.random() - 0.5) * 10));
-      }
-    });
-  }, 2000);
+  rafraichir();
+  interval = setInterval(rafraichir, 15000);
 });
 
 onUnmounted(() => clearInterval(interval));
@@ -207,24 +325,43 @@ function getUptimeClass(value) {
   return 'critical';
 }
 
+/**
+ * Avant : `services.forEach(s => s.latency = Math.random() * 100 + 5)`.
+ * Le bouton « Actualiser » INVENTAIT donc des latences — un clic, et la page
+ * affichait des nombres nouveaux qui ne venaient d'aucune mesure. C'est le
+ * défaut le plus trompeur de cette page : l'utilisateur croit rafraîchir une
+ * donnée, et il en fabrique une.
+ *
+ * Maintenant : on interroge la VRAIE supervision. Si elle ne répond pas (cas
+ * normal d'un visiteur distant), on ne remplace rien — le relevé daté reste
+ * affiché, avec son horodatage. Pas de valeurs de remplacement.
+ */
 function refreshAll() {
-  services.value.forEach(s => s.latency = Math.floor(Math.random() * 100) + 5);
+  rafraichir();
 }
 
 function restartService() {
-  alert('Restart service... (simulation)');
+  // Redémarrer un service est une action SYSTÈME, pas une action de navigateur.
+  // On ne fait donc pas semblant : on dit ce que c'est.
+  alert('Action non automatisée : redémarrer un service se fait sur le poste, pas depuis cette page.');
 }
 
 function clearCache() {
-  alert('Cache cleared! (simulation)');
+  alert('Action non automatisée : vider un cache se fait sur le poste, pas depuis cette page.');
 }
 
 function exportMetrics() {
-  const data = { services: services.value, metrics: metrics.value, timestamp: new Date().toISOString() };
+  const data = {
+    _provenance: provenance.value,
+    services: services.value,
+    metrics: metrics.value,
+    horodatage_releve: horodatage.value,
+    exporte_le: new Date().toISOString(),
+  };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'metrics-export.json';
+  a.download = 'etat-services.json';
   a.click();
 }
 </script>
@@ -314,4 +451,40 @@ h3 { font-size: 1rem; margin-bottom: 1rem; }
 .uptime-bar.warning { background: #F59E0B; }
 .uptime-bar.critical { background: #EF4444; }
 .uptime-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PROVENANCE DE LA DONNÉE — ajouté le 11/09/2026.
+   Un seul rôle : que le visiteur sache si ce qu'il lit est mesuré ou écrit à la
+   main, et QUAND. La pastille change de couleur selon la source réelle :
+   verte = la supervision locale répond (temps réel), ambre = relevé daté.
+   ───────────────────────────────────────────────────────────────────────────── */
+.provenance {
+  display: flex; align-items: center; gap: 0.6rem;
+  margin: 0 auto 1.5rem; padding: 0.6rem 1rem;
+  max-width: 100%;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-family: var(--font-mono, monospace);
+  line-height: 1.4;
+}
+.provenance--direct { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.28); }
+.provenance--releve { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.28); }
+.provenance__pastille {
+  flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%;
+}
+.provenance--direct .provenance__pastille { background: #10B981; box-shadow: 0 0 8px rgba(16,185,129,0.8); }
+.provenance--releve .provenance__pastille { background: #F59E0B; }
+.provenance__texte { color: var(--text-muted); }
+
+/* Une donnée qu'on n'a pas mesurée se dit « non mesuré », elle ne s'invente pas. */
+.metric-card--non-mesure { opacity: 0.55; }
+.metric-value--non-mesure {
+  font-size: 0.95rem; font-family: var(--font-mono, monospace);
+  color: var(--text-muted); font-style: italic;
+}
+
+.uptime-note {
+  margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted);
+  line-height: 1.5; max-width: 42rem;
+}
 </style>

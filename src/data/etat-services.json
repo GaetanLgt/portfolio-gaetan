@@ -1,0 +1,78 @@
+{
+  "_note": "Relevé réel produit par forge-ia/api-supervision.mjs. Ce n'est pas du temps réel : c'est une mesure datée.",
+  "_source": "api-supervision.mjs",
+  "horodatage": "2026-09-11T19:11:54.825Z",
+  "machine": "EVA01",
+  "total": 8,
+  "up": 8,
+  "down": 0,
+  "latence_moyenne_ms": 3.71,
+  "machine_metriques": {
+    "methode": "moyenne sur 200 ms, entre deux relevés de os.cpus()",
+    "cpu_pct": 15.6,
+    "ram_pct": 56.8,
+    "ram_libre_go": 27.53,
+    "ram_total_go": 63.68,
+    "cpus": 16,
+    "plateforme": "win32 10.0.26200",
+    "uptime_poste_h": 20.8
+  },
+  "services": [
+    {
+      "nom": "Ollama",
+      "port": 11434,
+      "role": "modeles de langage locaux",
+      "etat": "up",
+      "ms": 3.82
+    },
+    {
+      "nom": "Open WebUI",
+      "port": 8080,
+      "role": "RAG et carnets",
+      "etat": "up",
+      "ms": 3.72
+    },
+    {
+      "nom": "ComfyUI",
+      "port": 8188,
+      "role": "images, videos, 3D",
+      "etat": "up",
+      "ms": 3.66
+    },
+    {
+      "nom": "worker",
+      "port": 8124,
+      "role": "file de taches",
+      "etat": "up",
+      "ms": 3.68
+    },
+    {
+      "nom": "API",
+      "port": 8125,
+      "role": "API du studio",
+      "etat": "up",
+      "ms": 3.7
+    },
+    {
+      "nom": "portail",
+      "port": 8130,
+      "role": "portail de gestion",
+      "etat": "up",
+      "ms": 3.7
+    },
+    {
+      "nom": "assistant local",
+      "port": 8133,
+      "role": "assistant de poste",
+      "etat": "up",
+      "ms": 3.71
+    },
+    {
+      "nom": "DSH web",
+      "port": 3080,
+      "role": "console de direction",
+      "etat": "up",
+      "ms": 3.73
+    }
+  ]
+}
