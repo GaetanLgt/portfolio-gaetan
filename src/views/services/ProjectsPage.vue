@@ -920,7 +920,7 @@ function closeProject() {
 }
 
 .project-modal__link--primary:hover {
-  background: #7E2E1A;
+  background: var(--primary-dark);
   color: var(--bg);
 }
 
@@ -960,7 +960,7 @@ function closeProject() {
 }
 
 .projects-cta__btn:hover {
-  background: #7E2E1A;
+  background: var(--primary-dark);
   box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
 }
 

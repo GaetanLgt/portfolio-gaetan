@@ -1122,13 +1122,18 @@ const methodGuarantees = [
   opacity: 0.7;
 }
 
-/* PROOF — bandeau preuve ARKADIA en SECTION INVERSÉE (fond encre, DS D1).
-   Une des 1-2 sections sombres max de la home, pour rythmer. */
+/* PROOF — bandeau preuve ARKADIA en SECTION INVERSÉE.
+   « Inversée » veut dire : son texte ne suit PAS le fond de la page, il reste
+   clair, et son accent est --accent-inv (que variables.css documente comme
+   « sections sur fond encre »). Ce bandeau prenait son fond sur --ink, qui valait
+   #1A1A18 (sombre) en D1 mais #E8F7EE (clair) en D5 : le fond est donc devenu
+   clair alors que le texte l'était resté — illisible. Le fond vient désormais de
+   --paper-alt, la surface sombre de D5 prévue pour alterner les sections. */
 .proof {
   padding: var(--space-xl) 0;
-  background: var(--ink);
-  border-top: 1px solid rgba(244, 241, 234, 0.12);
-  border-bottom: 1px solid rgba(244, 241, 234, 0.12);
+  background: var(--paper-alt);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
 }
 
 .proof__grid {
@@ -1160,7 +1165,7 @@ const methodGuarantees = [
 /* Projet cloture : ni point pulsant ni couleur d'accent — le badge ne doit
    pas suggerer un service encore en ligne. */
 .proof__badge--closed {
-  color: rgba(244, 241, 234, 0.78);
+  color: color-mix(in srgb, var(--ink) 78%, transparent);
   border: 1px solid currentColor;
   border-radius: 3px;
   padding: 0.25rem 0.6rem;
@@ -1170,18 +1175,18 @@ const methodGuarantees = [
   font-size: 2.5rem;
   font-weight: 700;
   margin: var(--space-sm) 0 var(--space-md);
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .proof__desc {
   font-size: 0.95rem;
-  color: rgba(244, 241, 234, 0.85);
+  color: color-mix(in srgb, var(--ink) 85%, transparent);
   line-height: 1.8;
   margin-bottom: var(--space-sm);
 }
 
 .proof__desc strong {
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .proof__metrics {
@@ -1201,18 +1206,18 @@ const methodGuarantees = [
   font-family: 'JetBrains Mono', monospace;
   font-size: 2rem;
   font-weight: 700;
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .proof-metric__unit {
   font-size: 1rem;
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .proof-metric__label {
   display: block;
   font-size: 0.6rem;
-  color: rgba(244, 241, 234, 0.68);
+  color: color-mix(in srgb, var(--ink) 68%, transparent);
   text-transform: uppercase;
   margin-top: 0.25rem;
 }
@@ -1223,12 +1228,12 @@ const methodGuarantees = [
   gap: var(--space-lg);
   padding: var(--space-lg);
   border-radius: 1rem;
-  border: 1px solid rgba(244, 241, 234, 0.16);
+  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
 }
 
 /* Jauges (GaugeCircle) en section inversée — couleurs forcées */
 .proof :deep(.gauge__track) {
-  stroke: rgba(244, 241, 234, 0.16) !important;
+  stroke: color-mix(in srgb, var(--ink) 16%, transparent) !important;
 }
 
 .proof :deep(.gauge__progress) {
@@ -1237,29 +1242,29 @@ const methodGuarantees = [
 }
 
 .proof :deep(.gauge__value) {
-  color: var(--paper) !important;
+  color: var(--ink) !important;
 }
 
 .proof :deep(.gauge__label) {
-  color: rgba(244, 241, 234, 0.92) !important;
+  color: color-mix(in srgb, var(--ink) 92%, transparent) !important;
 }
 
 /* Bouton outline inversé : papier sur encre */
 .proof .btn-outline {
-  color: var(--paper) !important;
-  border-color: var(--paper) !important;
+  color: var(--ink) !important;
+  border-color: var(--ink) !important;
   background: transparent !important;
 }
 
 .proof .btn-outline:hover {
-  background: var(--paper) !important;
-  color: var(--ink) !important;
-  border-color: var(--paper) !important;
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+  border-color: var(--ink) !important;
 }
 
-/* Gradient du titre ARKADIA : version inversée (papier → terre cuite claire) */
+/* Gradient du titre ARKADIA : version inversée (clair → vert d'accent) */
 .proof .text-gradient {
-  background: linear-gradient(135deg, var(--paper), var(--accent-inv));
+  background: linear-gradient(135deg, var(--ink), var(--accent-inv));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1656,15 +1661,16 @@ html {
 
 /* UTILITIES */
 .text-gradient {
-  background: linear-gradient(135deg, var(--ink), #6E6352);
+  background: linear-gradient(135deg, var(--ink), var(--ink-faint));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(10px);
+  /* Style scopé : il l'emporte sur le .glass global. Il servait un blanc à
+     55 % (DA claire) — sur le fond noir de D5, c'était un panneau délavé. */
+  background: var(--paper-alt);
   border: 1px solid var(--rule);
 }
 

@@ -209,6 +209,88 @@ console.log('\n  ── Poids ──');
 console.log('  [--]  non mesuré ici : voir l\'étape « Check file sizes » de deploy.yml,');
 console.log('        qui mesure les fichiers CONSTRUITS. Un total de sources ne dirait rien.');
 
+// ─── VERROU 6 : les jetons de COULEUR n'ont qu'un seul foyer ────────────────
+// 11/09/2026 : gldigitallab.fr s'affichait en CLAIR alors que la charte D5 est
+// sombre. Cause mesurée : `critical.css` redéclarait --bg, --text-main, --primary…
+// dans un `:root` INCONDITIONNEL, et main.js l'importe APRÈS variables.css. À
+// spécificité égale le dernier gagne : `body { background: var(--bg) }` recevait
+// donc #F4F1EA, le papier de l'ancienne DA.
+//
+// Le commentaire de ce fichier disait « les valeurs DOIVENT rester alignées ».
+// Elles ne l'étaient pas, et RIEN ne le mesurait. C'est le même motif d'échec que
+// le curseur natif et les contrastes : un contrôle qui valide une intention au
+// lieu de valider le code. Ce verrou lit les déclarations réelles.
+console.log('\n  ── Jetons de couleur : un seul foyer ──');
+if (!fichierVariables) {
+  dire(false, 'variables.css introuvable', 'impossible de savoir quels jetons font foi');
+} else {
+  const canoniques = new Set(
+    [...readFileSync(fichierVariables, 'utf8').matchAll(/(--[a-z0-9-]+)\s*:/g)].map((m) => m[1]),
+  );
+  // Un jeton est « de couleur » si sa VALEUR en est une. On ne juge pas au nom :
+  // --action contient #FCEE0A, --surface contient var(--paper-alt).
+  const VALEUR_COULEUR = /^\s*(#[0-9A-Fa-f]{3,8}\b|rgba?\(|hsla?\(|var\(--(paper|ink|accent|action|alert|critical|rule|border|bg|surface|primary|text|neon|glow|code|card))/;
+  /** Spans [début, fin] des blocs @media, par comptage d'accolades. */
+  const spansMedia = (code) => {
+    const spans = [];
+    for (let i = code.indexOf('@media'); i !== -1; i = code.indexOf('@media', i + 1)) {
+      const ouvrante = code.indexOf('{', i);
+      if (ouvrante === -1) break;
+      let profondeur = 0;
+      for (let j = ouvrante; j < code.length; j++) {
+        if (code[j] === '{') profondeur++;
+        else if (code[j] === '}') {
+          profondeur--;
+          if (profondeur === 0) { spans.push([i, j]); break; }
+        }
+      }
+    }
+    return spans;
+  };
+  const collisions = [];
+  for (const f of sources) {
+    if (f === fichierVariables) continue;
+    const code = sansCommentaires(readFileSync(f, 'utf8'));
+    const medias = spansMedia(code);
+    for (const m of code.matchAll(/(^|[}{;])\s*(:root|html|body)\s*\{([^}]*)\}/g)) {
+      // Sous @media : la redéfinition est CONDITIONNELLE, donc légitime.
+      if (medias.some(([a, b]) => m.index > a && m.index < b)) continue;
+      for (const d of m[3].matchAll(/(--[a-z0-9-]+)\s*:\s*([^;]+);/g)) {
+        if (!canoniques.has(d[1])) continue;
+        if (!VALEUR_COULEUR.test(d[2])) continue;
+        collisions.push(`${f.split(/[\\/]/).pop()} → ${d[1]} (${d[2].trim()})`);
+      }
+    }
+  }
+  dire(collisions.length === 0, 'aucun jeton de couleur redéclaré hors variables.css',
+    collisions.length ? collisions.slice(0, 6).join(' ; ') : `${canoniques.size} jeton(s) canonique(s) protégé(s)`);
+  if (collisions.length) {
+    console.log('        Un `:root` inconditionnel dans un fichier importé APRÈS');
+    console.log('        variables.css écrase la charte en silence. Retirer la');
+    console.log('        déclaration — ou la placer sous @media si elle est conditionnelle.');
+  }
+}
+
+// ─── VERROU 7 : l'ancienne DA claire n'a aucun survivant ────────────────────
+// Né du même incident : après le passage à D5, `critical.css`, le bloc <noscript>
+// de index.html, la barre de navigation et le mode contraste élevé servaient
+// encore du papier clair — et de l'encre sombre par-dessus.
+console.log('\n  ── Aucune valeur de l\'ancienne DA claire ──');
+const DA_CLAIRE = ['#F4F1EA', '#EBE7DD', '#D6D1C4', '#1A1A18', '#5F5E5A', '#A63F26',
+  '#7E2E1A', '#6E6352', '#10100E', '#33322F', '#6B665A', '#8F3019'];
+const publics = existsSync(join(RACINE, 'public'))
+  ? fichiers(join(RACINE, 'public'), ['.html', '.css', '.js'])
+  : [];
+const aScanner = [join(RACINE, 'index.html'), ...sources, ...publics].filter(existsSync);
+const residus = [];
+for (const f of aScanner) {
+  const code = sansCommentaires(readFileSync(f, 'utf8')).toUpperCase();
+  const trouves = DA_CLAIRE.filter((h) => code.includes(h));
+  if (trouves.length) residus.push(`${f.split(/[\\/]/).pop()} → ${trouves.join(', ')}`);
+}
+dire(residus.length === 0, 'aucune valeur de l\'ancienne DA claire dans le code actif',
+  residus.length ? residus.join(' ; ') : `${DA_CLAIRE.length} valeur(s) surveillée(s), ${aScanner.length} fichier(s)`);
+
 console.log('\n' + '='.repeat(72));
 if (echecs === 0) {
   console.log('  Tous les verrous sont tenus.');

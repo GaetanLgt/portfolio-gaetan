@@ -151,8 +151,11 @@ onUnmounted(() => {
   right: 0;
   z-index: 100;
   height: 80px;
-  /* DS clair (D1) : bandeau papier translucide — plus d'image sombre */
-  background: rgba(244, 241, 234, 0.88);
+  /* Bandeau papier translucide, dérivé du jeton de charte : il suit donc
+     automatiquement le fond. Une valeur rgba en dur ici redevenait claire
+     alors que le reste du site était passé en sombre. */
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--rule);
   transition: transform 0.3s ease, background 0.3s ease;
@@ -163,7 +166,8 @@ onUnmounted(() => {
 }
 
 .navigation--scrolled {
-  background: rgba(244, 241, 234, 0.97);
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 97%, transparent);
   box-shadow: var(--shadow-sm);
 }
 
@@ -576,7 +580,8 @@ onUnmounted(() => {
   top: 100%;
   left: 0;
   right: 0;
-  background: rgba(244, 241, 234, 0.98);
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 98%, transparent);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--rule);
   box-shadow: var(--shadow-md);

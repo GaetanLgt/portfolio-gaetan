@@ -91,19 +91,23 @@ a:focus:not(:focus-visible) {
   outline-offset: 2px;
 }
 
-/* HIGH CONTRAST MODE (sur fond clair : versions maximales du DS) */
+/* HIGH CONTRAST MODE — versions maximales du DS sombre (D5).
+   Ce bloc servait les valeurs de la DA claire (texte #10100E, accent #8F3019).
+   Sur le fond noir de D5, il rendait du texte NOIR sur NOIR : le mode contraste
+   élevé, censé aider, rendait la page illisible. */
 @media (prefers-contrast: high) {
   :root {
-    --text-main: #10100E;
-    --text-muted: #33322F;
-    --border: #6B665A;
-    --rule: #6B665A;
-    --primary: #8F3019; /* accent renforcé pour le mode contraste élevé */
+    --ink: #FFFFFF;        /* texte principal au maximum */
+    --ink-soft: #E8F7EE;
+    --ink-faint: #CFE3D8;
+    --rule: #7FBFA8;       /* bordures nettement visibles sur le noir */
+    --rule-strong: #A8DCC7;
+    --accent: #66FF8C;     /* vert plus lumineux */
   }
 
   .glass {
-    background: #FFFFFF;
-    border: 2px solid var(--border);
+    background: #0E1A17;
+    border: 2px solid var(--rule);
   }
 }
 

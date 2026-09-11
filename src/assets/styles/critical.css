@@ -1,7 +1,20 @@
 /* CRITICAL CSS - Above the fold uniquement
-   DS clair (D1) : les valeurs ci-dessous DOIVENT rester alignées sur
-   variables.css (chargé juste avant dans main.js — ce bloc est lu en
-   second et écraserait les tokens si on les désalignait). */
+   ═══════════════════════════════════════════════════════════════════════════
+   RÈGLE DURE (corrigée le 11/09/2026) : AUCUN token de COULEUR dans ce fichier.
+
+   Pourquoi : main.js importe variables.css PUIS critical.css. À spécificité
+   égale, le dernier :root gagne. Tant que ce bloc redéclarait --bg, --text-main,
+   --primary…, il écrasait la charte D5 et servait un fond papier clair
+   (#F4F1EA) avec de l'encre sombre — alors que variables.css déclarait du noir
+   (#03060A) et du blanc-vert. Le commentaire précédent disait « DOIVENT rester
+   alignées » : c'est exactement ce qui n'a pas été fait au passage à D5, et rien
+   ne le mesurait. Un commentaire ne protège pas d'un désalignement ; un verrou
+   si (scripts/verifier-verrous.mjs, contrôle « jetons-de-couleur-dupliques »).
+
+   Ce fichier ne garde donc que ce qui lui appartient : la mise en page
+   au-dessus de la ligne de flottaison. L'échelle d'espacement et la transition
+   restent locales parce que le reste du site est construit sur ces valeurs.
+   ═══════════════════════════════════════════════════════════════════════════ */
 * {
   margin: 0;
   padding: 0;
@@ -9,14 +22,6 @@
 }
 
 :root {
-  --bg: #F4F1EA;
-  --surface: #EBE7DD;
-  --border: #D6D1C4;
-  --text-main: #1A1A18;
-  --text-muted: #5F5E5A;
-  --primary: #A63F26;
-  --primary-dark: #7E2E1A;
-  --primary-soft: rgba(166, 63, 38, 0.10);
   --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
@@ -46,7 +51,8 @@ body {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(244, 241, 234, 0.85);
+  background: var(--paper);
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   transition: var(--transition-base);
@@ -72,7 +78,7 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #1A1A18 0%, #6E6352 100%);
+  background: linear-gradient(135deg, var(--ink) 0%, var(--ink-faint) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -94,12 +100,11 @@ body {
 }
 
 /* Glass effect critique.
-   CORRIGÉ (13/09/2026) : ce bloc était le dernier vestige de la DA claire côté
-   « critique » alors que global.css imposait un fond sombre — et inversement
-   maintenant que la charte D1 claire est en place. Les deux définitions
-   doivent donner la MÊME surface, sinon la couleur dépend de l'ordre de
-   chargement des feuilles. Le flou est retiré : sur un fond opaque il ne se
-   voit pas et coûte un calque de composition au navigateur. */
+   Ce bloc doit donner la MÊME surface que global.css : sinon la couleur dépend
+   de l'ordre de chargement des feuilles. Les deux sont désormais exprimées en
+   jetons de charte, donc plus rien à réaligner à la main.
+   Le flou est retiré : sur un fond opaque il ne se voit pas et coûte un calque
+   de composition au navigateur. */
 .glass {
   background: var(--paper-alt);
   border: 1px solid var(--rule);
