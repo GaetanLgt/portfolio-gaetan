@@ -110,6 +110,20 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Total dist size:** $(du -sh dist | cut -f1)" >> $GITHUB_STEP_SUMMARY
 
+      - name: 🧮 Requêtes du premier chargement
+        # Le verrou qui manquait. `verifier-verrous.mjs` couvre AA, reduced-motion,
+        # curseur, jetons de couleur, typographie — et renvoie le POIDS à l'étape
+        # « Check file sizes ». Mais la contrainte d'o2switch n'est pas la taille,
+        # c'est la RAFALE : ~20 requêtes rapprochées par IP renvoient un 429, et
+        # l'application ne se monte pas (ni navigation, ni pied de page, ni
+        # bandeau). Mesuré le 11/09/2026 : 12 requêtes, seuil 14.
+        #
+        # Cette étape tourne APRÈS le build, et c'est délibéré : compter depuis
+        # src/ sous-estime (Vite n'a encore ni haché les noms, ni produit le
+        # vendor, ni posé le modulepreload). Un verrou qui reçoit l'information
+        # et la jette est un rituel.
+        run: node scripts/verifier-requetes.mjs --detail
+
       - name: 📤 Upload build artifact
         uses: actions/upload-artifact@v4
         with:
