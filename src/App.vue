@@ -4,7 +4,13 @@
     <a href="#main-content" class="skip-link">
       Passer au contenu principal
     </a>
-    
+
+    <!-- Bandeau de soutien — hommage du 11 septembre.
+         Il porte son propre `v-if` sur la date : quand ce n'est pas le 11
+         septembre, il ne rend RIEN (pas même un conteneur vide), et la règle
+         `:has()` du composant ne décale donc pas la navigation. -->
+    <BandeauSoutien v-if="isLoaded && !isFullscreenGame" />
+
     <!-- Scroll Progress Bar -->
     <ScrollProgressBar v-if="isLoaded && !isFullscreenGame" />
     
