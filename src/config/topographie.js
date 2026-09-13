@@ -170,6 +170,29 @@ export const TOPOGRAPHIE = [
   { chemin: '/confidentialite', declaration: { lastmod: '2026-09-10', changefreq: 'yearly', priority: '0.3' } },
   { chemin: '/cgv', declaration: { lastmod: '2026-09-10', changefreq: 'yearly', priority: '0.3' } },
 
+  // ═══ LA PAGE NON RÉPERTORIÉE — ni sur la carte, ni déclarée ══════════════════════
+  {
+    // Emplacement dicté par Gaëtan : « gldigitallab.fr/TARDIS/JoF ».
+    // ⚠️ LA CASSE EST EXACTE ET ELLE COMPTE : le serveur est sous Linux, `/TARDIS/JoF` et
+    // `/tardis/jof` sont deux adresses différentes. Cette ligne et le dossier
+    // `public/TARDIS/JoF/` doivent porter les mêmes majuscules, sinon l'adresse est morte.
+    chemin: '/TARDIS/JoF',
+    // ⚠️ `declaration: null` EST UNE DÉCISION DE GAËTAN (13/09/2026), PAS UN OUBLI.
+    // « À mettre en place, non répertorié, à www.gldigitallab.fr/ » — les dossiers
+    // pédagogiques sont en ligne, mais ils ne doivent pas être trouvés par un moteur :
+    // c'est une pièce qu'on envoie à une école, pas une porte d'entrée commerciale.
+    //
+    // Trois choses le garantissent, et il faudra défaire LES TROIS pour la rendre publique :
+    //   1. `noindex, nofollow` dans chaque page générée (scripts/publier-ecole.mjs) ;
+    //   2. aucune entrée au sitemap — c'est cette ligne ;
+    //   3. aucun lien depuis la navigation, le pied de page ou le plan du site.
+    //
+    // Et on n'ajoute PAS de `Disallow` dans robots.txt : une exclusion de chemin
+    // empêcherait le robot de lire le `noindex`, ce qui serait une contradiction — le
+    // `robots.txt` du site porte déjà cette leçon (correction du 10/09).
+    declaration: null,
+  },
+
   // ═══ LES DÉMONSTRATIONS — ni sur la carte, ni déclarées ═══════════════════════════
   // Deux pages autonomes, sans dépendance externe, servies telles quelles. Elles ne sont
   // pas déclarées aux moteurs : ce sont des pièces de démonstration, pas des portes
