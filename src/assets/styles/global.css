@@ -399,10 +399,29 @@ button .pavillon__etoffe {
 }
 
 /* REPLI NO-JS (anti-page-blanche) : si JavaScript ne s'exécute pas,
-   tous les blocs .scroll-reveal (opacity:0 par défaut) redeviennent
+   tous les blocs révélés au défilement (opacity: 0 par défaut) redeviennent
    visibles. Le <html> porte class="no-js", retirée par un script inline
-   dès que JS tourne. Garantit 100 % de contenu visible sans JS. */
-html.no-js .scroll-reveal {
+   dès que JS tourne. Garantit 100 % de contenu visible sans JS.
+
+   ⚠ COMPLÉTÉ LE 13/09/2026 — CETTE RÈGLE NE COUVRAIT QUE LA MOITIÉ DU SITE.
+   Le site a DEUX implémentations du même geste :
+     · `ScrollReveal.vue` → classe `.scroll-reveal`   (accueil, 8 blocs)
+     · composable `useScrollReveal` → classe `.reveal` (Arkadia, VoyageoPro, Tutoriels)
+   La règle ne nommait que la première. Mesuré JavaScript désactivé, APRÈS avoir
+   réparé le prérendu qui effaçait `no-js` :
+       accueil          11 blocs invisibles -> 0        (couvert par la règle)
+       /arkadia         12 blocs invisibles -> 12       (NON couvert)
+       /voyageo-pro     39 blocs invisibles -> 39       (NON couvert)
+       /ressources/tutoriels 9 -> 9                     (NON couvert)
+   13 102 caractères et 63 titres de structure restaient invisibles sans JS.
+   *Un repli qui nomme une seule des deux formes d'un même geste protège la
+   moitié du site — et donne l'impression d'être complet.* */
+html.no-js .scroll-reveal,
+html.no-js .reveal,
+html.no-js .reveal-left,
+html.no-js .reveal-right,
+html.no-js .reveal-scale,
+html.no-js .reveal-stagger > * {
   opacity: 1 !important;
   transform: none !important;
   filter: none !important;

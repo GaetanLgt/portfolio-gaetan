@@ -41,6 +41,22 @@ const PORT = Number(option('port', 4178))
 const DEBUG_PORT = PORT + 1
 const ECRIRE = !args.includes('--titre-seulement')
 
+/* ── La balise d'ouverture de la COQUILLE SOURCE ──────────────────────────────
+   On la lit une fois, dans `index.html` à la racine du projet — PAS dans la
+   capture. Voir le commentaire long à l'endroit où elle est réappliquée : le JS
+   retire `no-js` de <html> dès qu'il tourne, et une capture faite après exécution
+   fige donc un document qui n'est plus celui que la feuille de style attend. */
+let HTML_COQUILLE_TAG = null
+try {
+  const src = fs.readFileSync(path.join(RACINE, 'index.html'), 'utf8')
+  HTML_COQUILLE_TAG = (src.match(/<html[^>]*>/i) || [])[0] || null
+} catch {}
+if (!HTML_COQUILLE_TAG) {
+  // Échec bruyant : sans elle, le repli anti-page-blanche resterait neutralisé,
+  // et on le saurait seulement par une mesure en navigateur sans JavaScript.
+  console.warn('  ⚠ balise <html> de la coquille introuvable — le repli no-js ne sera pas restauré.')
+}
+
 if (typeof WebSocket !== 'function') {
   console.error('Node >= 22 requis (WebSocket global). Sur Node 20 : --experimental-websocket, ou monter la CI en Node 22.')
   process.exit(1)
@@ -292,6 +308,32 @@ async function principal() {
     // Il sera réinjecté normalement par l'application, côté navigateur.
     const html = (await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML'))
       .replace(/<script[^>]+src="[^"]*matomo\.js"[^>]*>\s*<\/script>/gi, '')
+
+    /* ⚠ LA BALISE <html> LIVRÉE EST CELLE DE LA COQUILLE, PAS CELLE DE LA CAPTURE.
+       MESURÉ LE 13/09/2026 — DÉFAUT RÉEL, ET IL ANNULAIT UNE PROTECTION ÉCRITE
+       EXPRÈS DANS CE DÉPÔT.
+
+       La coquille porte `<html lang="fr" class="no-js scroll-smooth">`, et un script
+       inline du <head> retire `no-js` dès que JavaScript tourne. `global.css` porte
+       la règle qui va avec, avec ce commentaire :
+           « REPLI NO-JS (anti-page-blanche) … Garantit 100 % de contenu visible sans JS »
+           html.no-js .scroll-reveal { opacity: 1 !important; transform: none !important; }
+
+       Or cette passe capture `documentElement.outerHTML` APRÈS exécution du JS : la
+       classe avait donc déjà été retirée, et le HTML livré portait
+       `<html lang="fr" class="scroll-smooth">`. **La protection existait dans la
+       coquille et dans la feuille de style, et disparaissait à la livraison.**
+
+       Conséquence mesurée, JavaScript désactivé, sans cette correction :
+           18 375 caractères retenus par les animations de révélation, dont 75 titres
+           de structure — 11 blocs sur 11 invisibles sur l'accueil.
+       Autrement dit : le repli anti-page-blanche était neutralisé par le prérendu,
+       c'est-à-dire par la passe dont le métier est de rendre le contenu présent.
+
+       Le même piège vaut pour `style="scroll-behavior: smooth;"`, que le JS ajoute
+       aussi à <html> : une capture après exécution fige des attributs que la page
+       n'a pas au départ. On reprend donc l'ouverture de balise de la COQUILLE. */
+    const htmlCorrige = HTML_COQUILLE_TAG ? html.replace(/<html[^>]*>/i, HTML_COQUILLE_TAG) : html
     const titre = etat.titre || ''
     const ok = typeof html === 'string' && html.length > 2000 && titre
     if (!ok) { rapport.push({ route, ok: false, motif: 'capture vide ou sans titre', titre }); echecs++; continue }
@@ -328,8 +370,8 @@ async function principal() {
       const coquille = fs.readFileSync(cible, 'utf8')
       const teteCoquille = (coquille.match(/<head[\s\S]*?<\/head>/i) || [])[0]
       const fusion = teteCoquille
-        ? html.replace(/<head[\s\S]*?<\/head>/i, teteCoquille)
-        : html
+        ? htmlCorrige.replace(/<head[\s\S]*?<\/head>/i, teteCoquille)
+        : htmlCorrige
       fs.writeFileSync(cible, fusion, 'utf8')
       ecrits++
       rapport.push({ route, ok: true, titre, octets: fusion.length, ecrit: true, tourCharge, coquille: etat.coquille, loader: etat.loader, motif: `accueil prérendu, en-tête préservé (${teteCoquille ? teteCoquille.length : 0} o)` })
@@ -337,10 +379,10 @@ async function principal() {
     }
     if (ECRIRE) {
       fs.mkdirSync(path.dirname(cible), { recursive: true })
-      fs.writeFileSync(cible, html, 'utf8')
+      fs.writeFileSync(cible, htmlCorrige, 'utf8')
       ecrits++
     }
-    rapport.push({ route, ok: true, titre, octets: html.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/', tourCharge, coquille: etat.coquille, loader: etat.loader })
+    rapport.push({ route, ok: true, titre, octets: htmlCorrige.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/', tourCharge, coquille: etat.coquille, loader: etat.loader })
   }
 
   /* ---------- page 404 ----------
@@ -378,7 +420,9 @@ async function principal() {
   if (typeof html404brut === 'string' && etat404 && /404|non trouv/i.test(etat404.titre)) {
     // Le routeur a posé un canonical sur le chemin de test : sur une page servie
     // à TOUTES les adresses inconnues, il ne désigne rien. On le retire.
-    const html404 = html404brut.replace(/\s*<link rel="canonical"[^>]*>/i, '')
+    const html404 = HTML_COQUILLE_TAG
+      ? html404brut.replace(/<html[^>]*>/i, HTML_COQUILLE_TAG).replace(/\s*<link rel="canonical"[^>]*>/i, '')
+      : html404brut.replace(/\s*<link rel="canonical"[^>]*>/i, '')
     fs.writeFileSync(path.join(DIST, '404.html'), html404, 'utf8')
     ecrits++
     rapport.push({ route: '404.html', ok: true, titre: etat404.titre, octets: html404.length, ecrit: true })
