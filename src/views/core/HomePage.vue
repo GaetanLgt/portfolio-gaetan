@@ -941,13 +941,6 @@ const methodGuarantees = [
   max-width: 550px;
 }
 
-.hero__highlight {
-  display: block;
-  color: var(--text-main);
-  font-weight: 500;
-  margin-top: 0.5rem;
-}
-
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -1024,75 +1017,6 @@ const methodGuarantees = [
   line-height: 1.7;
 }
 
-.solution-card--featured {
-  border-color: var(--rule-strong);
-}
-
-.solution-card__badge {
-  position: absolute;
-  top: -10px;
-  right: var(--space-sm);
-  padding: 0.25rem 0.75rem;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.5rem;
-  font-weight: 700;
-  border-radius: 2rem;
-  letter-spacing: 0.05em;
-}
-
-.solution-card__icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-sm);
-}
-
-.solution-card__content {
-  flex-grow: 1;
-}
-
-.solution-card__price {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--ink-soft);
-  padding: 0.25rem 0.5rem;
-  background: var(--paper-alt);
-  border: 1px solid var(--rule);
-  border-radius: 4px;
-  margin-bottom: var(--space-sm);
-}
-
-.solution-card__outputs {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-sm) 0;
-}
-
-.solution-card__outputs li {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--text-dark);
-  padding: 0.25rem 0;
-  padding-left: 1rem;
-  position: relative;
-}
-
-.solution-card__outputs li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--ink-soft);
-}
-
-.solution-card__cta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--ink);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
 /* PROOF */
 
 
@@ -1117,32 +1041,6 @@ const methodGuarantees = [
   border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
 }
 
-.proof__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-xl);
-  align-items: center;
-}
-
-.proof__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: var(--accent-inv);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.proof__badge-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent-inv);
-  border-radius: 50%;
-  animation: pulse-slow 2s infinite;
-}
-
 /* Projet cloture : ni point pulsant ni couleur d'accent — le badge ne doit
    pas suggerer un service encore en ligne. */
 .proof__badge--closed {
@@ -1152,82 +1050,9 @@ const methodGuarantees = [
   padding: 0.25rem 0.6rem;
 }
 
-.proof__title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: var(--space-sm) 0 var(--space-md);
-  color: var(--ink);
-}
-
-.proof__desc {
-  font-size: 0.95rem;
-  color: color-mix(in srgb, var(--ink) 85%, transparent);
-  line-height: 1.8;
-  margin-bottom: var(--space-sm);
-}
-
-.proof__desc strong {
-  color: var(--ink);
-}
-
-.proof__metrics {
-  display: flex;
-  gap: var(--space-md);
-  margin: var(--space-md) 0;
-}
-
-.proof-metric {
-  padding: var(--space-sm) var(--space-md);
-  background: rgba(255, 255, 255, 0.06);
-  border-left: 2px solid var(--accent-inv);
-}
-
-.proof-metric__value {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.proof-metric__unit {
-  font-size: 1rem;
-  color: var(--ink);
-}
-
-.proof-metric__label {
-  display: block;
-  font-size: 0.6rem;
-  color: color-mix(in srgb, var(--ink) 68%, transparent);
-  text-transform: uppercase;
-  margin-top: 0.25rem;
-}
-
-.proof__gauges {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-lg);
-  padding: var(--space-lg);
-  border-radius: 1rem;
-  border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
-}
-
 /* Jauges (GaugeCircle) en section inversée — couleurs forcées */
 .proof :deep(.gauge__track) {
   stroke: color-mix(in srgb, var(--ink) 16%, transparent) !important;
-}
-
-.proof :deep(.gauge__progress) {
-  stroke: var(--accent-inv) !important;
-  filter: none !important;
-}
-
-.proof :deep(.gauge__value) {
-  color: var(--ink) !important;
-}
-
-.proof :deep(.gauge__label) {
-  color: color-mix(in srgb, var(--ink) 92%, transparent) !important;
 }
 
 /* Bouton outline inversé : papier sur encre */
@@ -1235,12 +1060,6 @@ const methodGuarantees = [
   color: var(--ink) !important;
   border-color: var(--ink) !important;
   background: transparent !important;
-}
-
-.proof .btn-outline:hover {
-  background: var(--ink) !important;
-  color: var(--paper) !important;
-  border-color: var(--ink) !important;
 }
 
 /* Gradient du titre ARKADIA : version inversée (clair → vert d'accent) */
@@ -1262,67 +1081,6 @@ const methodGuarantees = [
 .stack {
   padding: var(--space-xl) 0;
   overflow: hidden; /* Contenir les effets de lumière */
-}
-
-.stack-card__header {
-  text-align: center;
-  margin-bottom: var(--space-md);
-}
-
-.stack-card__header h3 {
-  font-size: 1.25rem;
-  margin-top: 0.5rem;
-}
-
-.stack-card__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-}
-
-.stack-item {
-  text-align: center;
-}
-
-.stack-item__category {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.55rem;
-  color: var(--text-dark);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.5rem;
-}
-
-.stack-item__techs {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.stack-item__techs span {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--text-muted);
-}
-
-.stack-item__tech--highlight {
-  color: var(--ink) !important;
-  font-weight: 700;
-}
-
-.stack-card__link {
-  display: block;
-  text-align: center;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--ink);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.stack-card__link:hover {
-  color: var(--accent);
 }
 
 /* MULTIVERS TEASER */
@@ -1426,10 +1184,6 @@ const methodGuarantees = [
   color: inherit;
 }
 
-.solution-card__link-wrapper:focus-visible {
-  outline: none;
-}
-
 /* Hero Title Sub */
 .hero__title-sub {
   color: var(--text-muted);
@@ -1498,49 +1252,6 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
   align-items: start;
 }
 
-.chantier__titre {
-  font-size: clamp(1.25rem, 2.6vw, 1.7rem);
-  margin-bottom: 0.85rem;
-}
-
-.chantier__texte p {
-  color: var(--ink-soft);
-  line-height: 1.75;
-  max-width: 62ch;
-}
-
-.chantier__points {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.chantier__points li {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.chantier__points li:last-child {
-  border-bottom: 0;
-}
-
-.chantier__points strong {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-
-.chantier__points span {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-}
-
 @media (max-width: 860px) {
 }
 
@@ -1575,11 +1286,6 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 /* Proof metric border animation */
 .proof-metric {
   transition: border-color 0.3s ease, background 0.3s ease;
-}
-
-.proof-metric:hover {
-  border-color: var(--accent-inv);
-  background: rgba(255, 255, 255, 0.05);
 }
 
 /* Stack tech highlight pulse (sans halo) */
@@ -1703,34 +1409,12 @@ html {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
-  .proof__grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-  
-  .stack-card__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 768px) {
   
-  .proof__metrics {
-    flex-direction: column;
-  }
-  
-  .proof__gauges {
-    flex-direction: column;
-    align-items: center;
-  }
-  
   .hero__actions {
     flex-direction: column;
-  }
-  
-  .multivers-preview {
-    gap: var(--space-sm);
   }
   
   .cta-final__trust {
@@ -1825,17 +1509,13 @@ html {
   transform: translate(-50%, -50%);
 }
 
-.hero__orbit-ring--1 { width: 34%; height: 34%; animation: orbit-spin 42s linear infinite; }
-.hero__orbit-ring--2 { width: 58%; height: 58%; animation: orbit-spin 60s linear infinite reverse; border-color: var(--primary-soft); }
-.hero__orbit-ring--3 { width: 82%; height: 82%; animation: orbit-spin 80s linear infinite; border-style: solid; border-color: var(--primary-soft); }
-
 @keyframes orbit-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* A11Y : mouvement coupé, motif figé mais présent */
-@media (prefers-reduced-motion: reduce) {.hero__orbit-ring{ animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1938,36 +1618,6 @@ html {
 .preuve-arkadia__actions .btn-primary,
 .preuve-arkadia__actions .btn-outline {
   text-decoration: none;
-}
-
-.preuve-arkadia__reperes {
-  display: grid;
-  gap: var(--space-sm);
-}
-
-.preuve-arkadia__repere {
-  padding: var(--space-sm) var(--space-md);
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-left: 3px solid var(--accent);
-  border-radius: 0.5rem;
-}
-
-.preuve-arkadia__valeur {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.preuve-arkadia__label {
-  display: block;
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 0.2rem;
 }
 
 @media (max-width: 900px) {
