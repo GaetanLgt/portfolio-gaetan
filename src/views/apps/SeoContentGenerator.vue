@@ -27,7 +27,7 @@
 
         <!-- CONTENT TYPE -->
         <div class="type-section">
-          <h3>📝 Type de contenu</h3>
+          <h2>📝 Type de contenu</h2>
           <div class="type-grid">
             <button v-for="type in contentTypes" :key="type.id" :class="['type-btn', { active: contentType === type.id }]" @click="contentType = type.id">
               <span class="type-icon">{{ type.icon }}</span>
@@ -622,7 +622,7 @@ function downloadHtml() {
     body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #333; }
     h1 { color: #1a1a1a; }
     h2 { color: #2563eb; margin-top: 2rem; }
-    h3 { color: #4b5563; }
+h3, h2{ color: #4b5563; }
     ul { padding-left: 1.5rem; }
     li { margin-bottom: 0.5rem; }
     strong { color: #1a1a1a; }
@@ -771,7 +771,7 @@ function loadTemplate(type) {
 }
 .app-icon { font-size: 2rem; }
 
-h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-main); }
+h3, h2{ font-size: 1rem; margin-bottom: 1rem; color: var(--text-main); }
 
 .type-section, .input-section, .output-section, .templates-section { margin-bottom: 2rem; }
 
@@ -829,7 +829,7 @@ h3 { font-size: 1rem; margin-bottom: 1rem; color: var(--text-main); }
 .body-editor:focus { outline: none; border-color: #06B6D4; }
 .body-editor h2 { font-size: 1.3rem; margin: 1.75rem 0 0.75rem; color: var(--text-main); font-weight: 600; }
 .body-editor h2:first-child { margin-top: 0; }
-.body-editor h3 { font-size: 1.1rem; margin: 1.25rem 0 0.5rem; color: var(--text-main); font-weight: 600; }
+.body-editor h3, .body-editor h2{ font-size: 1.1rem; margin: 1.25rem 0 0.5rem; color: var(--text-main); font-weight: 600; }
 .body-editor p { margin-bottom: 0.85rem; }
 .body-editor ul { margin: 0.75rem 0; padding-left: 1.5rem; }
 .body-editor li { margin-bottom: 0.4rem; }

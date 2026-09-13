@@ -15,7 +15,13 @@
 
         <!-- REQUEST INPUT -->
         <div class="request-section">
-          <h3>📝 Requête à router</h3>
+          <!-- ⚠️ `h3` → `h2` LE 13/09/2026. Après le `<h1>` de la page venait un `<h3>` :
+               la hiérarchie sautait un niveau, et axe le signalait (`heading-order`,
+               règle Opquast 227). Le premier titre de section après un h1 doit être un h2.
+               La MISE EN FORME NE CHANGE PAS : ce titre est stylé par le sélecteur
+               `.request-section h3` en bas de ce fichier, auquel `.request-section h2`
+               a été ajouté. Un changement de rang n'est pas un changement d'aspect. -->
+          <h2>📝 Requête à router</h2>
           <textarea aria-label="Décrivez votre tâche complexe... Ex:" v-model="request" placeholder="Décrivez votre tâche complexe... Ex: 'Créer une landing page sécurisée avec analytics'" class="request-input"></textarea>
           <button @click="analyzeRequest" class="analyze-btn" :disabled="analyzing">
             {{ analyzing ? '🔄 Analyse...' : '🎯 Analyser & Router' }}
@@ -251,7 +257,13 @@ function loadPreset(type) {
 .app-icon { font-size: 2rem; }
 
 .request-section, .analysis-section, .log-section, .presets-section { margin-bottom: 2rem; }
-.request-section h3, .analysis-section h3, .log-section h3, .presets-section h3 { font-size: 1rem; margin-bottom: 1rem; }
+/* ⚠️ `.request-section h2` AJOUTÉ LE 13/09/2026, PAS SUBSTITUÉ.
+   Le premier titre de la page est passé de `h3` à `h2` pour rétablir la hiérarchie
+   (règle Opquast 227, `heading-order`). On ajoute donc le sélecteur correspondant
+   À CÔTÉ de l'ancien : le titre garde exactement la même mise en forme, et les autres
+   `h3` du fichier — `.analysis-section`, `.log-section`, `.presets-section` — restent
+   inchangés. *Un changement de rang ne doit pas devenir un changement d'aspect.* */
+.request-section h2, .request-section h3, .analysis-section h3, .log-section h3, .presets-section h3 { font-size: 1rem; margin-bottom: 1rem; }
 
 .request-input { width: 100%; min-height: 120px; padding: 1rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 0.5rem; color: var(--text-main); font-size: 0.95rem; resize: vertical; margin-bottom: 1rem; }
 .analyze-btn { padding: 0.75rem 2rem; background: #FBBF24; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer; font-size: 1rem; }

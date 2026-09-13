@@ -15,7 +15,7 @@
 
         <!-- PLATFORM SELECT -->
         <div class="platform-section">
-          <h3>🔧 Plateforme CI/CD</h3>
+          <h2>🔧 Plateforme CI/CD</h2>
           <div class="platform-grid">
             <button v-for="p in platforms" :key="p.id" :class="['platform-btn', { active: platform === p.id }]" @click="platform = p.id">
               <span class="platform-icon">{{ p.icon }}</span>
@@ -425,7 +425,7 @@ function loadTemplate(tpl) {
 .app-intro h1 { display: flex; justify-content: center; gap: 0.5rem; font-size: 1.75rem; }
 .app-icon { font-size: 2rem; }
 
-h3 { font-size: 1rem; margin-bottom: 1rem; }
+h3, h2{ font-size: 1rem; margin-bottom: 1rem; }
 h4 { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-muted); }
 
 .platform-section, .config-section, .output-section, .templates-section { margin-bottom: 2rem; }

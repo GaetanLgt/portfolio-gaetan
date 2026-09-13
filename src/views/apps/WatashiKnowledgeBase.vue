@@ -15,7 +15,7 @@
 
         <!-- UPLOAD SECTION -->
         <div class="upload-section">
-          <h3>📤 Ajouter des documents</h3>
+          <h2>📤 Ajouter des documents</h2>
           <div class="upload-area" @dragover.prevent @drop.prevent="handleDrop" :class="{ dragover: isDragover }" @dragenter="isDragover = true" @dragleave="isDragover = false">
             <input type="file" multiple @change="handleFiles" accept=".txt,.md,.pdf,.json" ref="fileInput" hidden>
             <div class="upload-content" @click="$refs.fileInput.click()">
@@ -278,7 +278,7 @@ function generateEmbedCode() {
 .app-intro h1 { display: flex; justify-content: center; gap: 0.5rem; font-size: 1.75rem; }
 .app-icon { font-size: 2rem; }
 
-h3 { font-size: 1rem; margin-bottom: 1rem; }
+h3, h2{ font-size: 1rem; margin-bottom: 1rem; }
 h4 { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-muted); }
 
 .upload-section, .documents-section, .chat-section, .stats-section, .export-section { margin-bottom: 2rem; }

@@ -15,7 +15,7 @@
 
         <!-- SCAN OPTIONS -->
         <div class="scan-section">
-          <h3>🔍 Type de scan</h3>
+          <h2>🔍 Type de scan</h2>
           <div class="scan-options">
             <button v-for="opt in scanTypes" :key="opt.id" :class="['scan-option', { active: scanType === opt.id }]" @click="scanType = opt.id">
               <span class="opt-icon">{{ opt.icon }}</span>
@@ -278,7 +278,7 @@ ${results.value.recommendations.map(r => `- ${r.text}`).join('\n')}
 .app-icon { font-size: 2rem; }
 
 .scan-section, .input-section, .results-section, .info-section { margin-bottom: 2rem; }
-h3 { font-size: 1rem; margin-bottom: 1rem; }
+h3, h2{ font-size: 1rem; margin-bottom: 1rem; }
 
 .scan-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; }
 .scan-option { display: flex; flex-direction: column; align-items: flex-start; padding: 1rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 0.5rem; cursor: pointer; text-align: left; }

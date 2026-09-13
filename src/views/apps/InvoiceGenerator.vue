@@ -25,7 +25,7 @@
           <div class="form-panel">
             <!-- Company Info -->
             <div class="form-section">
-              <h3>🏢 Émetteur</h3>
+              <h2>🏢 Émetteur</h2>
               <div class="form-grid">
                 <input aria-label="Nom de l" type="text" v-model="company.name" placeholder="Nom de l'entreprise">
                 <input aria-label="Adresse" type="text" v-model="company.address" placeholder="Adresse">
@@ -292,7 +292,7 @@ function sendEmail() {
 .form-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
 
 .form-panel { display: flex; flex-direction: column; gap: 1.5rem; }
-.form-section h3 { font-size: 0.95rem; margin-bottom: 0.75rem; }
+.form-section h3, .form-section h2{ font-size: 0.95rem; margin-bottom: 0.75rem; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 .form-grid input { padding: 0.6rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 0.35rem; color: var(--text-main); font-size: 0.85rem; }
 .form-row { display: flex; gap: 1rem; }
@@ -320,7 +320,7 @@ function sendEmail() {
 
 .preview-panel { position: sticky; top: 1rem; }
 .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-.preview-header h3 { font-size: 0.95rem; margin: 0; }
+.preview-header h3, .preview-header h2{ font-size: 0.95rem; margin: 0; }
 .preview-actions { display: flex; gap: 0.5rem; }
 .preview-actions button { padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 0.35rem; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; }
 .preview-actions button:hover { border-color: var(--primary); color: var(--primary); }

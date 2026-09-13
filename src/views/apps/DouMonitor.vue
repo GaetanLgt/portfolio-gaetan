@@ -39,7 +39,7 @@
 
         <!-- SERVICES -->
         <div class="services-section">
-          <h3>🖥️ Services ({{ services.filter(s => s.status === 'up').length }}/{{ services.length }} en ligne)</h3>
+          <h2>🖥️ Services ({{ services.filter(s => s.status === 'up').length }}/{{ services.length }} en ligne)</h2>
           <div class="services-grid">
             <div v-for="service in services" :key="service.id" class="service-card" :class="'status-' + service.status">
               <div class="service-status">
@@ -377,7 +377,7 @@ function exportMetrics() {
 .app-intro h1 { display: flex; justify-content: center; gap: 0.5rem; font-size: 1.75rem; }
 .app-icon { font-size: 2rem; }
 
-h3 { font-size: 1rem; margin-bottom: 1rem; }
+h3, h2{ font-size: 1rem; margin-bottom: 1rem; }
 
 .status-overview { margin-bottom: 2rem; }
 .status-card { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem; border-radius: 0.75rem; }
