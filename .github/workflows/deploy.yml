@@ -46,9 +46,30 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🔍 Lint check
-        run: npm run lint --if-present
-        continue-on-error: true
+      - name: 🔍 Lint check  (NE FAIT RIEN — voir le commentaire)
+        # ⚠️ CETTE ÉTAPE NE VÉRIFIE RIEN, ET ELLE DOIT LE DIRE.
+        # Constaté le 13/09/2026 : `package.json` ne déclare **aucun script `lint`**,
+        # il n'existe **aucune configuration ESLint** dans le dépôt, et **aucune
+        # dépendance ESLint** n'est installée. `npm run lint --if-present` sort donc
+        # en 0 sans rien exécuter, et `continue-on-error` couvre le reste.
+        #
+        # Deux lectures, et la seconde est la bonne :
+        #   · c'est un échafaudage honnête — `--if-present` est la façon standard
+        #     d'écrire une CI qui tolère un script absent ;
+        #   · MAIS LE NOM MENT. Un job « Lint & Quality » avec une étape « Lint check »
+        #     laisse croire que le code est vérifié. **Un verrou qui ne peut pas
+        #     échouer n'est pas un verrou, c'est un tampon** — la formule est du
+        #     studio, et elle s'applique ici.
+        #
+        # On garde l'échafaudage (il servira le jour où un linter arrive) et on
+        # supprime la fausse impression : même traitement que « Check file sizes ».
+        run: |
+          echo "⚠️  AUCUN LINTER N'EST CONFIGURÉ DANS CE DÉPÔT."
+          echo "    'npm run lint --if-present' ne vérifie RIEN : le script est absent,"
+          echo "    il n'y a ni configuration ESLint ni dépendance ESLint installée."
+          echo "    Cette étape ne peut pas échouer. Elle est conservée pour le jour où"
+          echo "    un linter sera ajouté — d'ici là, elle ne doit pas être prise pour un verrou."
+          npm run lint --if-present || true
 
       - name: 📏 Check file sizes  (INFORMATIF — ce n'est pas un verrou)
         # ⚠ CETTE ÉTAPE N'EST PAS UN VERROU, ET ELLE NE DOIT PAS ÊTRE PRISE POUR UN.
@@ -102,9 +123,17 @@ jobs:
       - name: 📦 Install dependencies
         run: npm ci
 
-      - name: 🧪 Run tests
-        run: npm test --if-present
-        continue-on-error: true
+      - name: 🧪 Run tests  (NE FAIT RIEN — voir le commentaire)
+        # ⚠️ Même constat que pour le lint, mesuré le 13/09/2026 : `package.json` ne
+        # déclare **aucun script `test`**, et **aucun cadre de test** (vitest, jest…)
+        # n'est installé. L'étape sort en 0 sans rien exécuter.
+        #
+        # Le dire ici plutôt que de laisser croire que le projet est testé.
+        run: |
+          echo "⚠️  AUCUN TEST N'EST CONFIGURÉ DANS CE DÉPÔT."
+          echo "    'npm test --if-present' n'exécute RIEN : le script est absent et"
+          echo "    aucun cadre de test n'est installé."
+          npm test --if-present || true
 
       - name: 🔨 Build production
         run: npm run build
