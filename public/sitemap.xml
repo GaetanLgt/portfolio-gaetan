@@ -81,6 +81,21 @@
     <priority>0.6</priority>
   </url>
 
+  <!-- ── La soute (ajoutée le 13/09/2026) ──
+       Zone optionnelle du cadrage « site comme un metroidvania ». Elle est atteignable
+       par un lien ordinaire du pied de page, comme n'importe quelle page — le
+       « compartiment scellé » du hero n'est qu'une façon AMUSANTE d'y arriver.
+       Elle est donc déclarée ici, à égalité : une page qui rend un contenu réel et qui
+       est liée normalement n'a aucune raison de se cacher d'un moteur de recherche.
+       Priorité basse assumée : c'est un bonus pour qui explore, pas une porte d'entrée
+       commerciale. La déclarer ne lui donne pas de poids indu, l'omettre serait l'oublier. -->
+  <url>
+    <loc>https://gldigitallab.fr/soute</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
   <!-- ── Index des applications (ajouté le 10/09/2026) ──
        Les 7 pages d'applications portaient un lien « ← Retour aux Apps » vers /apps,
        qui n'existait pas : en ligne, /apps répondait 403. La page a été créée pour
