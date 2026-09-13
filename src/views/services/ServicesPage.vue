@@ -547,23 +547,6 @@ const steps = [
   transform: translateY(-8px);
 }
 
-.offer-card--featured {
-  border-color: var(--rule-strong);
-}
-
-.offer-card__ribbon {
-  position: absolute;
-  top: 1.5rem;
-  right: -2.5rem;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  font-weight: 700;
-  padding: 0.375rem 3rem;
-  transform: rotate(45deg);
-}
-
 .offer-card__bg-icon {
   position: absolute;
   top: 0;

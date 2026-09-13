@@ -126,12 +126,6 @@ const onMouseLeave = () => {
   animation-duration: 0.5s;
 }
 
-.glitch-text--heavy.glitch-text--active .glitch-text__clone--1,
-.glitch-text--heavy.glitch-text--active .glitch-text__clone--2 {
-  opacity: 1;
-  animation-duration: 0.15s;
-}
-
 /* A11Y */
 @media (prefers-reduced-motion: reduce) {
   .glitch-text__clone {

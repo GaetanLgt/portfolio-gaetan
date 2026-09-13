@@ -193,11 +193,6 @@ defineExpose({ showBanner, consent });
   margin-bottom: 1.25rem;
 }
 
-.cookie-icon {
-  font-size: 2rem;
-  flex-shrink: 0;
-}
-
 .cookie-text h3 {
   font-size: 1rem;
   font-weight: 700;
@@ -404,10 +399,6 @@ defineExpose({ showBanner, consent });
   .cookie-content {
     flex-direction: column;
     gap: 0.75rem;
-  }
-  
-  .cookie-icon {
-    font-size: 1.5rem;
   }
   
   .cookie-actions {
