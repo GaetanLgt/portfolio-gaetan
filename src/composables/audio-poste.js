@@ -18,6 +18,26 @@
  * sonore continu est insupportable au bout d'une minute.
  */
 import { ref, watch } from 'vue';
+/* ⚠ LE MODE SOBRE SE LIT DANS LA SOURCE, PAS DANS LE DOM.
+   Corrigé le 13/09/2026. La ligne était :
+
+       document.getElementById('app')?.classList.contains('app--sobre')
+
+   Elle ne pouvait PAS fonctionner, et elle ne l'a jamais pu. `#app` désigne le
+   conteneur de MONTAGE posé par `index.html` ; la classe `app--sobre` est portée
+   par la RACINE DU COMPOSANT, un élément DIFFÉRENT — et `getElementById` rend le
+   premier dans l'ordre du document, donc toujours le mauvais.
+   Conséquence : le son continuait de jouer en mode sobre, alors que la charte est
+   explicite — « le mode sobre coupe le son comme le reste : il n'y a pas
+   d'exception ».
+   *Et aucun contrôle ne pouvait le voir* : `verifier-verrous.mjs` lit des
+   feuilles de style, il ne fait pas tourner de JavaScript, et un son qui joue
+   quand il ne devrait pas ne laisse aucune trace dans le HTML.
+
+   On lit donc `modeSobre` — LA MÊME source réactive que celle qui pose la classe
+   sur l'élément. Il n'y a plus deux vérités à tenir synchronisées, donc plus rien
+   à désynchroniser. */
+import { modeSobre } from './mode-sobre.js';
 
 const CLE = 'gldl-audio-poste';
 
@@ -64,8 +84,9 @@ export function jouerSignal(type = 'console') {
   if (!audioActif.value) return;
 
   // Le mode sobre coupe le son comme le reste : il n'y a pas d'exception.
-  if (typeof document !== 'undefined'
-      && document.getElementById('app')?.classList.contains('app--sobre')) return;
+  // Lu depuis la MÊME source réactive que celle qui pose la classe — plus de
+  // recherche dans le DOM, donc plus rien à désynchroniser.
+  if (modeSobre.value) return;
 
   const ctx = obtenirContexte();
   if (!ctx) return;
