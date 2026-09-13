@@ -12,14 +12,14 @@
           <h2>Article 1 - Objet</h2>
           <p>
             Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles 
-            entre GL Digital Lab et ses clients dans le cadre de prestations de développement web, 
+            entre Génie IT Tek FR et ses clients dans le cadre de prestations de développement web, 
             conseil et automatisation IA.
           </p>
         </section>
         
         <section class="legal-section">
           <h2>Article 2 - Services proposés</h2>
-          <p>GL Digital Lab propose les protocoles suivants :</p>
+          <p>Génie IT Tek FR propose les protocoles suivants :</p>
           <ul>
             <li><strong>PERFORMANCE :</strong> Audit, refonte et optimisation web</li>
             <li><strong>DIGITAL FACTORY :</strong> Application métier sur-mesure</li>
@@ -66,7 +66,7 @@
         <section class="legal-section">
           <h2>Article 5 - Délais de livraison</h2>
           <p>
-            Les délais indicatifs sont précisés dans le devis. GL Digital Lab s'engage à 
+            Les délais indicatifs sont précisés dans le devis. Génie IT Tek FR s'engage à 
             respecter les délais convenus, sauf circonstances exceptionnelles ou modifications 
             demandées par le client en cours de projet.
           </p>
@@ -94,7 +94,7 @@
             au paiement intégral de la prestation.
           </p>
           <p>
-            GL Digital Lab se réserve le droit de mentionner la réalisation dans son portfolio 
+            Génie IT Tek FR se réserve le droit de mentionner la réalisation dans son portfolio 
             et ses références commerciales, sauf opposition écrite du client.
           </p>
         </section>
@@ -102,7 +102,7 @@
         <section class="legal-section">
           <h2>Article 8 - Garantie et maintenance</h2>
           <p>
-            GL Digital Lab garantit la conformité des livrables au cahier des charges validé.
+            Génie IT Tek FR garantit la conformité des livrables au cahier des charges validé.
           </p>
           <p>
             Une période de garantie (1 à 6 mois selon l'offre) est incluse pour la correction 
@@ -118,7 +118,7 @@
             et les travaux réalisés sont facturés au prorata.
           </p>
           <p>
-            GL Digital Lab se réserve le droit de résilier le contrat en cas de non-paiement 
+            Génie IT Tek FR se réserve le droit de résilier le contrat en cas de non-paiement 
             ou de manquement grave du client à ses obligations.
           </p>
         </section>
@@ -126,8 +126,8 @@
         <section class="legal-section">
           <h2>Article 10 - Limitation de responsabilité</h2>
           <p>
-            La responsabilité de GL Digital Lab est limitée au montant total de la prestation. 
-            GL Digital Lab ne saurait être tenu responsable des dommages indirects, perte de 
+            La responsabilité de Génie IT Tek FR est limitée au montant total de la prestation. 
+            Génie IT Tek FR ne saurait être tenu responsable des dommages indirects, perte de 
             données, manque à gagner ou préjudice commercial.
           </p>
         </section>

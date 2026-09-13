@@ -11,7 +11,7 @@
         <section class="legal-section">
           <h2>Responsable du traitement</h2>
           <p>
-            <strong>GL Digital Lab</strong><br>
+            <strong>Génie IT Tek FR</strong><br>
             Gaëtan LANGLET<br>
             Harponville, Somme, Hauts-de-France, France<br>
             Email : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>

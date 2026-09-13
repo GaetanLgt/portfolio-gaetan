@@ -11,7 +11,7 @@
         <section class="legal-section">
           <h2>1. Éditeur du site</h2>
           <p>
-            <strong>GL Digital Lab</strong><br>
+            <strong>Génie IT Tek FR</strong><br>
             Gaëtan LANGLET<br>
             80560 Harponville, Somme, Hauts-de-France, France<br>
             Email : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a><br>
@@ -30,7 +30,7 @@
         <section class="legal-section">
           <h2>2. Directeur de publication</h2>
           <p>
-            Le directeur de la publication est <strong>Gaëtan LANGLET</strong>, en sa qualité de fondateur de GL Digital Lab.<br>
+            Le directeur de la publication est <strong>Gaëtan LANGLET</strong>, en sa qualité de fondateur de Génie IT Tek FR.<br>
             Contact : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
           </p>
         </section>
@@ -49,15 +49,15 @@
           <h2>4. Propriété intellectuelle</h2>
           <p>
             L'ensemble du contenu de ce site (textes, images, vidéos, logos, icônes, code source, etc.) 
-            est la propriété exclusive de GL Digital Lab, sauf mention contraire.
+            est la propriété exclusive de Génie IT Tek FR, sauf mention contraire.
           </p>
           <p>
             Toute reproduction, représentation, modification, publication, adaptation de tout 
             ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, 
-            est interdite sans autorisation écrite préalable de GL Digital Lab.
+            est interdite sans autorisation écrite préalable de Génie IT Tek FR.
           </p>
           <p>
-            Les marques et logos présents sur le site sont déposés par GL Digital Lab ou ses partenaires. 
+            Les marques et logos présents sur le site appartiennent à Génie IT Tek FR ou à ses partenaires. 
             Toute reproduction totale ou partielle de ces marques et logos sans autorisation est prohibée.
           </p>
         </section>
@@ -82,12 +82,12 @@
         <section class="legal-section">
           <h2>6. Responsabilité</h2>
           <p>
-            GL Digital Lab s'efforce d'assurer l'exactitude et la mise à jour des informations 
-            diffusées sur ce site. Toutefois, GL Digital Lab ne peut garantir l'exactitude, 
+            Génie IT Tek FR s'efforce d'assurer l'exactitude et la mise à jour des informations 
+            diffusées sur ce site. Toutefois, Génie IT Tek FR ne peut garantir l'exactitude, 
             la précision ou l'exhaustivité des informations mises à disposition.
           </p>
           <p>
-            GL Digital Lab décline toute responsabilité pour toute imprécision, inexactitude ou 
+            Génie IT Tek FR décline toute responsabilité pour toute imprécision, inexactitude ou 
             omission portant sur des informations disponibles sur ce site.
           </p>
         </section>
@@ -95,7 +95,7 @@
         <section class="legal-section">
           <h2>7. Liens hypertextes</h2>
           <p>
-            Ce site peut contenir des liens vers d'autres sites web. GL Digital Lab n'exerce 
+            Ce site peut contenir des liens vers d'autres sites web. Génie IT Tek FR n'exerce 
             aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu 
             ou aux pratiques de ces sites en matière de protection des données personnelles.
           </p>
@@ -116,7 +116,7 @@
         <section class="legal-section">
           <h2>9. Crédits</h2>
           <p>
-            <strong>Conception et développement :</strong> GL Digital Lab (Gaëtan LANGLET)<br>
+            <strong>Conception et développement :</strong> Génie IT Tek FR (Gaëtan LANGLET)<br>
             <strong>Technologies :</strong> Vue.js 3, Three.js, GSAP, Vite<br>
             <strong>Typographies :</strong> JetBrains Mono, Inter (Google Fonts)<br>
             <strong>Icônes :</strong> Lucide Icons (MIT License)
