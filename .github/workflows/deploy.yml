@@ -50,7 +50,18 @@ jobs:
         run: npm run lint --if-present
         continue-on-error: true
 
-      - name: 📏 Check file sizes
+      - name: 📏 Check file sizes  (INFORMATIF — ce n'est pas un verrou)
+        # ⚠ CETTE ÉTAPE N'EST PAS UN VERROU, ET ELLE NE DOIT PAS ÊTRE PRISE POUR UN.
+        # `find … -exec ls -lh` AFFICHE, et ne sort jamais en erreur : quoi qu'il
+        # trouve, le job continue. Elle regarde de plus `src/`, dont la taille ne
+        # dit rien de ce que le visiteur télécharge — Vite hache, découpe et
+        # compresse ensuite.
+        #
+        # Le seul verrou chiffré de la charte qui porte sur le poids, « < 1 MB par
+        # page », n'avait donc aucun juge : `verifier-verrous.mjs` renvoyait la
+        # question ici, et ici personne ne jugeait. Constaté le 13/09/2026.
+        # Il est désormais tenu par `scripts/verifier-poids.mjs`, dans le job
+        # `build`, sur `dist/` — là où le chiffre existe vraiment.
         run: |
           echo "📊 Checking large files..."
           find src -name "*.vue" -size +100k -exec ls -lh {} \;
@@ -124,6 +135,22 @@ jobs:
         # et la jette est un rituel.
         run: node scripts/verifier-requetes.mjs --detail
 
+      - name: ⚖️ Poids du premier chargement, par page
+        # Le verrou chiffré de la charte : « < 1 MB par page ». Il n'était vérifié
+        # nulle part — `verifier-verrous.mjs` renvoyait à « Check file sizes », qui
+        # affiche sans jamais échouer.
+        #
+        # Mesure, page par page, les ressources que chaque page HTML demande au
+        # premier chargement, depuis `dist/`. Textes compressés en gzip niveau 6
+        # (ce que le serveur sert réellement), binaires pris sur disque (woff2,
+        # jpg… sont déjà compressés). **Aucune dépendance à la machine** : c'est un
+        # compte d'octets, pas un score — il ne peut donc pas varier comme le score
+        # Lighthouse en environnement sans carte graphique.
+        #
+        # Mesuré le 13/09/2026, build du 11/09 : page la plus lourde = accueil,
+        # 12 requêtes, 333,4 Ko servis sur un seuil de 1 024 Ko (marge 690,6 Ko).
+        run: node scripts/verifier-poids.mjs --detail
+
       - name: 📤 Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -138,14 +165,42 @@ jobs:
           include-hidden-files: true
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # JOB 3: Lighthouse Audit (on PR only)
+  # JOB 3: Lighthouse Audit (partout — la condition « PR only » est retirée)
   # ═══════════════════════════════════════════════════════════════════════════
   lighthouse:
     name: 🔦 Lighthouse Audit
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'pull_request'
-    
+
+    # ═══════════════════════════════════════════════════════════════════════════
+    # CORRIGÉ LE 13/09/2026 — CE JOB NE VERROUILLAIT RIEN. TROIS DÉFAUTS.
+    #
+    # ① IL NE TOURNAIT QUE SUR LES PULL REQUESTS (`if: github.event_name ==
+    #    'pull_request'`). Or ce dépôt déploie **au push sur `main`** : l'audit ne
+    #    tournait donc JAMAIS sur le chemin qui met le site en ligne, seulement sur
+    #    des PR qui n'arrivent pas quand on pousse directement sur main.
+    #    → la condition est retirée : l'audit tourne partout.
+    #
+    # ② `temporaryPublicStorage: true` TÉLÉVERSAIT LE RAPPORT SUR UN STOCKAGE
+    #    PUBLIC TIERS. Deux problèmes : la doctrine du studio est « aucun envoi vers
+    #    un service externe », et un rapport Lighthouse contient des extraits de la
+    #    page. **Ce paramètre annulait aussi le correctif de `.lighthouserc.json`**,
+    #    qui déclare `upload: filesystem` — ici, c'est le workflow qui gagne.
+    #    → passé à `false`. `uploadArtifacts` reste : l'artefact est privé au dépôt.
+    #
+    # ③ `continue-on-error: true` — **LE DÉFAUT QUI ANNULE TOUT LE RESTE.** Même
+    #    quand l'audit échoue, le job réussit. Un verrou dont l'échec est ignoré
+    #    n'est pas un verrou : c'est un tampon — la formule est du studio, et elle
+    #    s'applique à lui-même.
+    #    → retiré. L'audit peut désormais ÉCHOUER, et ça se verra.
+    #
+    # ⚠️ CE JOB NE BLOQUE PAS LE DÉPLOIEMENT, ET C'EST VOULU. `deploy` a
+    #    `needs: build`, pas `needs: lighthouse` — les deux tournent en parallèle.
+    #    Sur ce dépôt, *pousser EST mettre en ligne*, et cette décision appartient à
+    #    Gaëtan, pas à un audit automatique. Le rôle de ce job est de **dire la
+    #    vérité en rouge**, pas de retenir la publication.
+    # ═══════════════════════════════════════════════════════════════════════════
+
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
@@ -157,12 +212,35 @@ jobs:
           path: dist/
 
       - name: 🔦 Run Lighthouse
+        # ⚠ TROIS RÉSERVES MESURÉES LE 13/09/2026, À NE PAS OUBLIER.
+        #
+        # ① L'INSTRUMENT N'EST PAS ÉPINGLÉ, ET CE N'EST PAS CELUI DES MESURES DE
+        #    RÉFÉRENCE. `treosh/lighthouse-ci-action@v11` embarque son propre
+        #    Lighthouse : exécuté sur ce poste, `@lhci/cli@0.14.0` a mesuré avec
+        #    **Lighthouse 12.1.0**, alors que les mesures consignées dans
+        #    `docs/mesurer-la-performance.md` et `modeles/mesure-lighthouse-production-
+        #    2026-09-10.md` sont faites avec **13.4.1**. Une version majeure d'écart,
+        #    ce n'est pas le même barème : comparer un score de 13.x à un seuil jugé
+        #    par 12.x, c'est comparer deux instruments. **À trancher par Gaëtan.**
+        #
+        # ② `numberOfRuns: 3` (dans .lighthouserc.json) — la doctrine du studio est
+        #    « trois tirs, médiane, jamais le meilleur ni le pire ». Le fichier disait
+        #    `1` : un seul tir, donc un verdict qui peut basculer sur un aléa de
+        #    machine. Corrigé.
+        #
+        # ③ SUR CE POSTE, LE TIR AVORTE — ET PAS POUR UNE RAISON DE SITE. Le
+        #    collecteur `RootCauses` lève « Cannot read properties of undefined
+        #    (reading 'frame_sequence') », ce qui fait tomber six audits
+        #    (dont `render-blocking-resources`), puis la sortie est en erreur sur un
+        #    `EPERM` de nettoyage de profil temporaire Windows. **Le code de sortie 1
+        #    ne dit donc rien du site.** C'est un artefact de mesure, de la famille
+        #    exacte du `--disable-gpu` déjà payé — et c'est pourquoi ce verrou ne
+        #    peut pas être jugé depuis ce poste.
         uses: treosh/lighthouse-ci-action@v11
         with:
           configPath: './.lighthouserc.json'
           uploadArtifacts: true
-          temporaryPublicStorage: true
-        continue-on-error: true
+          temporaryPublicStorage: false
 
   # ═══════════════════════════════════════════════════════════════════════════
   # JOB 4: Deploy to Production

@@ -18,6 +18,8 @@
     "audit:a11y": "axe http://localhost:4173 --exit",
     "//audit:requetes": "Le nombre de requetes du premier chargement. La contrainte de l'hebergeur est la RAFALE (~20 par IP), pas la taille : aucun autre verrou ne la surveillait. Mesure dist/, donc APRES build.",
     "audit:requetes": "node scripts/verifier-requetes.mjs --detail",
+    "//audit:poids": "Le verrou chiffre de la charte : « < 1 MB par page ». Il n'etait verifie nulle part (verifier-verrous.mjs renvoyait a l'etape « Check file sizes » de deploy.yml, qui affiche sans jamais echouer). Mesure dist/, page par page, sans dependance a la machine : un compte d'octets, pas un score.",
+    "audit:poids": "node scripts/verifier-poids.mjs --detail",
     "optimize": "npm run generate:assets && npm run optimize:images && npm run build",
     "deploy:ready": "node scripts/optimize-and-build.js"
   },
@@ -29,6 +31,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@axe-core/cli": "^4.13.0",
     "@vicons/ionicons5": "^0.13.0",
     "@vitejs/plugin-vue": "^6.0.8",
     "naive-ui": "^2.43.2",

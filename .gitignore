@@ -34,3 +34,8 @@ dist-ssr
 .env
 .env.local
 .env.production.local
+
+# Sorties de Lighthouse CI — rapports de mesure, jamais des sources.
+# `upload.target: filesystem` (voir .lighthouserc.json) les écrit ici.
+.lighthouseci/
+lighthouse-rapports/

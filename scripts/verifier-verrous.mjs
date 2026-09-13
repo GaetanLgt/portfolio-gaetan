@@ -208,20 +208,33 @@ for (const f of sources) {
 dire(fuites.length === 0, 'aucun nom protégé dans le contenu visible des pages',
   fuites.length ? fuites.join(' ; ') : 'les mentions restent dans les commentaires internes');
 
-// ─── VERROU 5 : poids — DÉLIBÉRÉMENT ABSENT ─────────────────────────────────
+// ─── VERROU 5 : poids — PORTÉ AILLEURS, SUR LE BUILD ────────────────────────
 // Ma première version additionnait la taille des fichiers source et échouait si le
-// total dépassait 1 Mo. C'est FAUX : le verrou porte sur « moins de 1 Mo PAR PAGE
+// total dépassait 1 Mo. C'est FAUX : le verrou porte sur « moins de 1 MB PAR PAGE
 // SERVIE », et 1110 Ko de sources TypeScript ne disent rien du poids d'une page une
 // fois compilée, découpée et compressée. Le contrôle échouait donc à tort — et un
 // contrôle qui échoue à tort finit par être ignoré, ce qui est pire que pas de
 // contrôle.
 //
-// Le poids réel est DÉJÀ vérifié, au bon endroit : `deploy.yml` a une étape
-// « 📏 Check file sizes » qui mesure les fichiers construits. On ne duplique pas
-// ici une mesure qu'on ferait mal.
+// ⚠ CORRIGÉ LE 13/09/2026 — CE COMMENTAIRE A MENTI PENDANT DEUX JOURS.
+// Il affirmait : « Le poids réel est DÉJÀ vérifié, au bon endroit : deploy.yml a
+// une étape "Check file sizes" qui mesure les fichiers construits. » **C'était
+// faux sur les deux points** : cette étape fait `find src … -exec ls -lh`, donc
+// elle (a) regarde `src/` et non les fichiers construits, et (b) n'échoue
+// JAMAIS — un `find` sans `exit 1` affiche, il ne juge pas.
+//
+// Conséquence : le seul verrou CHIFFRÉ de la charte qui porte sur le poids
+// n'avait aucun juge, et il a suffi d'une phrase rassurante écrite ici pour que
+// personne ne s'en aperçoive. *Un renvoi vers un contrôle qui ne contrôle rien
+// est plus dangereux qu'une absence de contrôle : l'absence se voit.*
+//
+// Il est tenu depuis par `scripts/verifier-poids.mjs` : il mesure `dist/`, page
+// par page, en octets servis, et sort en erreur au-dessus du seuil.
 console.log('\n  ── Poids ──');
-console.log('  [--]  non mesuré ici : voir l\'étape « Check file sizes » de deploy.yml,');
-console.log('        qui mesure les fichiers CONSTRUITS. Un total de sources ne dirait rien.');
+console.log('  [--]  mesuré AILLEURS, et sur le BUILD : `npm run audit:poids`');
+console.log('        scripts/verifier-poids.mjs — octets servis, page par page, seuil 1 Mo.');
+console.log('        Un total de sources ne dirait rien : on ne duplique pas ici une mesure');
+console.log('        qu\'on ferait mal.');
 
 // ─── VERROU 6 : les jetons de COULEUR n'ont qu'un seul foyer ────────────────
 // 11/09/2026 : gldigitallab.fr s'affichait en CLAIR alors que la charte D5 est
