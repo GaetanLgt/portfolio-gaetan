@@ -4,8 +4,19 @@
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     
     <!-- HERO : Control Room Entry -->
+    <!-- ⚠ `id="main-content"` RETIRÉ DE CE `<section>` LE 13/09/2026.
+         `App.vue` pose déjà `<main id="main-content">` autour de tout le contenu.
+         Cette section portait LE MÊME identifiant : la page d'accueil avait donc
+         deux `#main-content` (règle Opquast 229 — « chaque identifiant HTML n'est
+         utilisé qu'une seule fois par page »).
+         L'enjeu n'est pas théorique : le lien d'évitement pointe sur `#main-content`,
+         et avec deux éléments portant cet identifiant, **c'est l'ordre du document
+         qui décide** où l'utilisateur atterrit — il visait le `<main>` d'App.vue,
+         il aurait pu viser cette section. Un identifiant dupliqué rend le ciblage
+         dépendant du hasard de l'ordre.
+         Rien ne bouge visuellement : un identifiant ne peint pas. -->
     <SpotlightContainer :size="600" color="var(--primary)" :opacity="0.15">
-      <section class="hero" id="main-content" aria-labelledby="hero-title">
+      <section class="hero" aria-labelledby="hero-title">
         <!-- DS clair (D1) : fond papier nu — l'ambiance anime sombre MND
              (hero-bg) est retirée, elle cassait le fond clair et pesait
              plusieurs centaines de Ko. L'orbite reste la seule signature. -->
@@ -161,8 +172,39 @@
 
         <ScrollReveal animation="fade-up">
           <figure class="vaisseau__figure">
+            <!-- ⚠ `srcset`/`sizes` AJOUTÉS LE 13/09/2026 — DÉFAUT MESURÉ, PAS SUPPOSÉ.
+                 Un seul fichier de 1400 px était servi à tout le monde. Largeurs
+                 RÉELLEMENT PEINTES, mesurées écran par écran :
+
+                     écran 320 px  ->  image peinte à 270 px   ->  27,0x trop de pixels
+                     écran 390 px  ->  image peinte à 340 px   ->  16,9x
+                     écran 768 px  ->  image peinte à 718 px   ->   3,8x
+                     écran 1024 px ->  image peinte à 974 px   ->   2,1x
+                     écran 1280 px ->  image peinte à 1230 px  ->   1,3x  (plafond du conteneur)
+
+                 Un téléphone téléchargeait donc 27 fois les pixels nécessaires. C'est
+                 le poste « image delivery ≈ 65 KiB » que Lighthouse relevait depuis
+                 le début, et ce n'était PAS une histoire de format : la mesure a
+                 écarté le WebP (à toutes les qualités jusqu'à 82, il est PLUS LOURD
+                 que ce JPEG, qui est déjà bien encodé — et sharp 0.35.4 du dépôt ne
+                 fait pas d'AVIF).
+
+                 Variantes générées à partir du MÊME original, filtre lanczos3 :
+                     540 px -> 18,4 Ko (-73,5 %)   ·   800 px -> 37,1 Ko (-46,7 %)
+                    1000 px -> 54,8 Ko (-21,4 %)   ·  1400 px -> 69,6 Ko (inchangé)
+
+                 `sizes` décrit la largeur de MISE EN PAGE, mesurée ci-dessus — pas la
+                 largeur souhaitée : `84vw` aux petits écrans est le chiffre relevé
+                 (270/320 = 84 %), pas un arrondi confortable.
+                 `width`/`height` restent ceux de l'original : ils portent le rapport
+                 d'aspect et protègent le CLS, quelle que soit la variante servie. -->
             <img
               src="/models/vaisseau-arkadia-1400.jpg"
+              srcset="/models/vaisseau-arkadia-540.jpg 540w,
+                      /models/vaisseau-arkadia-800.jpg 800w,
+                      /models/vaisseau-arkadia-1000.jpg 1000w,
+                      /models/vaisseau-arkadia-1400.jpg 1400w"
+              sizes="(min-width: 1280px) 1230px, (min-width: 768px) 94vw, 84vw"
               width="1400" height="583"
               loading="lazy" decoding="async"
               alt="Le vaisseau ARKADIA : un galion volant qui traverse un espace

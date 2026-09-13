@@ -87,7 +87,12 @@ const estPiloteeParUnRobot = typeof navigator !== 'undefined' && navigator.webdr
    recouvrirait sur ses 36 premiers pixels. Le `!important` est nécessaire :
    `.navigation[data-v-…]` et cette règle ont la même spécificité, et l'ordre
    d'injection des feuilles n'est pas garanti. */
-#app:has(.bandeau-soutien) .navigation {
+/* ⚠ `#app` DEVENU `.app-shell` LE 13/09/2026. La racine de `App.vue` portait le
+   même identifiant que le point de montage (règle Opquast 229, 24 pages) ; elle
+   porte désormais la classe `app-shell`. Ce sélecteur devait suivre — sinon la
+   navigation repasserait SOUS le bandeau au lieu de descendre avec lui. *Un
+   identifiant dupliqué se corrige en un endroit et casse en trois.* */
+.app-shell:has(.bandeau-soutien) .navigation {
   top: 2.25rem !important;
 }
 

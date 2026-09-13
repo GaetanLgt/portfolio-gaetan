@@ -316,26 +316,36 @@ button .pavillon__etoffe {
    contenu, lui, ne change pas d'un pixel : c'est le principe — le décor part,
    le propos reste.
 
-   Les sélecteurs visent la classe portée par #app, pas les composants : un
+   ⚠ CES SÉLECTEURS VISAIENT `#app` JUSQU'AU 13/09/2026, ET ILS ONT CHANGÉ EN MÊME
+   TEMPS QUE LA RACINE DU COMPOSANT. `App.vue` portait `id="app"`, le même que le
+   point de montage de `index.html` : deux identifiants identiques par page, sur
+   24 pages (règle Opquast 229). La racine du composant porte désormais la classe
+   `app-shell` et plus l'identifiant — donc ces sélecteurs devaient suivre, sinon
+   **le mode sobre aurait cessé de fonctionner en silence** : plus rien n'aurait
+   porté `.app--sobre` sur un élément nommé `#app`.
+   *Voilà ce que coûte un identifiant dupliqué : le jour où on le corrige, tous
+   ceux qui s'y accrochaient changent de sens sans rien dire.*
+
+   Les sélecteurs visent la classe portée par la racine, pas les composants : un
    nouvel effet ajouté plus tard sera neutralisé même si son auteur ignore
    l'existence de ce mode. C'est volontaire.
    ═══════════════════════════════════════════════════════════════════════════ */
-#app.app--sobre .matrix-bg,
-#app.app--sobre .lois-canvas,
-#app.app--sobre .grid-canvas,
-#app.app--sobre .particles-canvas,
-#app.app--sobre .tron,
-#app.app--sobre .console,
-#app.app--sobre .balayage,
-#app.app--sobre .noise-overlay,
-#app.app--sobre .spotlight,
-#app.app--sobre .floating-element {
+.app-shell.app--sobre .matrix-bg,
+.app-shell.app--sobre .lois-canvas,
+.app-shell.app--sobre .grid-canvas,
+.app-shell.app--sobre .particles-canvas,
+.app-shell.app--sobre .tron,
+.app-shell.app--sobre .console,
+.app-shell.app--sobre .balayage,
+.app-shell.app--sobre .noise-overlay,
+.app-shell.app--sobre .spotlight,
+.app-shell.app--sobre .floating-element {
   display: none !important;
 }
 
-#app.app--sobre *,
-#app.app--sobre *::before,
-#app.app--sobre *::after {
+.app-shell.app--sobre *,
+.app-shell.app--sobre *::before,
+.app-shell.app--sobre *::after {
   animation: none !important;
   transition: none !important;
   scroll-behavior: auto !important;
@@ -343,7 +353,7 @@ button .pavillon__etoffe {
 
 /* Le curseur reste natif (c'est déjà le cas partout), et le focus clavier
    reste visible : le mode sobre ne retire jamais un repère d'accessibilité. */
-#app.app--sobre :focus-visible {
+.app-shell.app--sobre :focus-visible {
   outline: 2px solid var(--neon-cyan) !important;
   outline-offset: 2px !important;
 }

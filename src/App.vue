@@ -1,5 +1,20 @@
 <template>
-  <div id="app" :class="{ 'app--loaded': isLoaded, 'app--sobre': modeSobre }">
+  <!-- ⚠ `id="app"` RETIRÉ DE CETTE RACINE LE 13/09/2026 — DÉFAUT MESURÉ.
+       `index.html` monte l'application dans `<div id="app">`. Ce composant
+       réutilisait LE MÊME identifiant pour sa propre racine : le HTML livré
+       contenait donc `<div id="app"><div id="app" class="app--loaded">`,
+       **sur 24 pages** (règle Opquast 229 : « chaque identifiant HTML n'est
+       utilisé qu'une seule fois par page »).
+       Conséquence concrète : `getElementById('app')` rend le PREMIER — celui qui
+       ne porte PAS `app--loaded`.
+       ⚠ CE N'EST PAS LE POINT DE MONTAGE QU'ON RENOMME, ET C'EST DÉLIBÉRÉ :
+       `scripts/prerendre.js` teste `querySelector('#app')` et `audio-poste.js`
+       fait `getElementById('app')`. Renommer le montage les aurait touchés tous
+       les deux. Ici, le montage garde `#app` (donc `#app { … }` continue de
+       s'appliquer à lui, comme avant), et cette racine prend la classe
+       `app-shell` avec **exactement les mêmes déclarations** — la géométrie
+       rendue a été capturée avant et après pour le prouver. -->
+  <div class="app-shell" :class="{ 'app--loaded': isLoaded, 'app--sobre': modeSobre }">
     <!-- Skip Link (Opquast A11Y) -->
     <a href="#main-content" class="skip-link">
       Passer au contenu principal
@@ -223,14 +238,18 @@ const onLoaded = () => {
 @import './assets/styles/global.css';
 @import './assets/styles/a11y.css';
 
-#app {
+/* Le point de MONTAGE (`index.html`) porte `#app` ; la RACINE DU COMPOSANT porte
+   `.app-shell`. Les deux reçoivent les mêmes déclarations : la géométrie rendue
+   est donc identique à avant, alors que l'identifiant n'est plus dupliqué. */
+#app,
+.app-shell {
   position: relative;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-#app.app--loaded .main-content {
+.app-shell.app--loaded .main-content {
   opacity: 1;
 }
 
