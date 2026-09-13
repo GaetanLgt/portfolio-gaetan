@@ -126,6 +126,25 @@ const routes = [
       description: 'Explorez l\'ensemble des pages et applications du portfolio Génie IT Tek FR. Arborescence complète du site.'
     }
   },
+  {
+    // LA SOUTE — la zone optionnelle du cadrage « site comme un métroidvania »
+    // (13/09/2026, décision Gaëtan). Rôle : donner la CARTE COMPLÈTE des compartiments
+    // du site à qui est venu voir, y compris ceux qui ne sont annoncés nulle part.
+    //
+    // ⚠️ C'EST UNE PAGE ORDINAIRE, ET C'EST DÉLIBÉRÉ. Elle est liée depuis le plan du
+    // site et depuis le pied de page : un moteur de recherche et un lecteur d'écran
+    // l'atteignent normalement. Le « tuyau vert » du hero n'est qu'une façon AMUSANTE
+    // d'y arriver — jamais la seule. Un contenu atteignable uniquement par l'exploration
+    // n'existe ni pour une machine ni pour un lecteur d'écran, et le studio verrouille
+    // le SEO (100) et l'accessibilité (axe 0).
+    path: '/soute',
+    name: 'Soute',
+    component: () => import('@/views/core/SoutePage.vue'),
+    meta: {
+      title: 'La soute | La carte complète du navire | Génie IT Tek FR',
+      description: 'Tous les compartiments du site au même endroit : ce que la navigation montre, et ce qu\'elle ne montrait pas. Rien n\'est verrouillé, la progression ne quitte pas votre navigateur.'
+    }
+  },
 
   // -------------------------------------------------------------------------
   // SERVICES

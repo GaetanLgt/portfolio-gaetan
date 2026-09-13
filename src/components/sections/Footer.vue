@@ -90,6 +90,14 @@
           <h2 class="footer__title">Légal & Site</h2>
           <nav class="footer__nav" aria-label="Navigation légale">
             <router-link to="/sitemap">Plan du site</router-link>
+            <!-- LA SOUTE — ajoutée le 13/09/2026 avec la couche d'exploration (cadrage B).
+                 ⚠️ CE LIEN EST LA CONDITION DU CADRAGE, pas un détail. Règle posée :
+                 une zone doit être atteignable par un lien ORDINAIRE, sinon elle n'existe
+                 ni pour un moteur de recherche ni pour un lecteur d'écran. Le « tuyau
+                 vert » du hero est une façon amusante d'y arriver — jamais la seule.
+                 Le pied de page étant sur toutes les pages, la soute est donc liée
+                 partout, discrètement mais réellement. -->
+            <router-link to="/soute">La soute (carte complète)</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>

@@ -49,6 +49,11 @@
          `src/components/ui/DecorTunnel.vue`. -->
     <DecorTunnel />
 
+    <!-- LA CARTE DU NAVIRE — la couche d'exploration du cadrage « site comme un
+         metroidvania » (13/09/2026). Elle n'apparaît qu'après le premier geste du
+         visiteur : voir la justification mesurée dans le script, plus bas. -->
+    <CarteDuNavire v-if="cartePrete" />
+
     <!-- Skip Link (Opquast) -->
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     
@@ -129,6 +134,22 @@
                   restent dans la cale. En 48 h, nous rendons visible ce qui freine
                   votre système.
                 </p>
+
+                <!-- LE TUYAU VERT (13/09/2026) — le compartiment scellé du cadrage
+                     « site comme un metroidvania ». Il ne fait RIEN pendant longtemps :
+                     c'est le principe. Il s'ouvre quand le visiteur a trouvé quatre
+                     compartiments, et ce n'est jamais une porte — `/soute` est liée en
+                     permanence depuis le pied de page.
+
+                     ⚠️ PLACÉ ICI, APRÈS LE SOUS-TITRE, ET PAS PLUS BAS, APRÈS MESURE.
+                     Première version : sous les liens rapides. Capture faite, et le
+                     constat était net — l'élément tombait SOUS la ligne de flottaison de
+                     l'écran, donc jamais vu au premier regard. Or tout le principe de la
+                     vidéo est que l'objet bizarre se remarque TÔT. Un « tuyau vert »
+                     qu'on ne voit qu'en défilant n'est plus un tuyau vert, c'est une
+                     rubrique. *Un cadrage qui dit « dès le premier écran » se vérifie sur
+                     une capture, pas dans le code.* -->
+                <TuyauVert />
                 
                 <!-- CTA : le premier engagement commercial = l'audit -->
                 <div class="hero__actions">
@@ -505,6 +526,10 @@ import GaugeCircle from '@/components/common/GaugeCircle.vue';
 // Le décor de fond de la page d'accueil : une image générée localement, étalonnée à
 // la charte — 59,8 Ko, aucun contexte GPU dans le navigateur du visiteur.
 import DecorTunnel from '@/components/ui/DecorTunnel.vue';
+// Le compartiment scellé du cadrage « site comme un metroidvania ». Import STATIQUE :
+// il tient dans le HTML (aucune requête), il est visible dès le premier écran, et il
+// n'est qu'un `<span>` décoratif tant qu'il est fermé.
+import TuyauVert from '@/components/ui/TuyauVert.vue';
 // ── LE FOND 3D DE LA PAGE D'ACCUEIL — DÉMONTÉ le 13/09/2026 ────────────────
 // Décision de Gaëtan (13/09) : option B, la scène 3D pilotée par le défilement —
 // elle ROUVRE explicitement le verdict du 10/09 (« enlève le WebGL qui ressemble
@@ -530,9 +555,10 @@ import DecorTunnel from '@/components/ui/DecorTunnel.vue';
 // Modèles RÉELLEMENT GÉNÉRÉS : image SDXL (ComfyUI local) → objet 3D TRELLIS.2 →
 // allègement web. 407 Ko pour les six, contre 938 Ko pour les anciens avatars
 // fabriqués en primitives Blender.
-// `defineAsyncComponent` a été retiré avec la scène : le laisser importer sans usage
-// ferait échouer ESLint sur une variable non utilisée.
-import { ref, onMounted } from 'vue';
+// `defineAsyncComponent` était inutilisé depuis le démontage de la scène 3D ; il sert
+// de nouveau, à la carte du navire (voir plus bas). `onUnmounted` arrive avec lui, pour
+// retirer proprement les écouteurs de geste.
+import { ref, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
 
 /**
  * DÉCALAGE DE LA 3D HORS DU CHEMIN CRITIQUE (10/09/2026, audit Lighthouse).
@@ -560,6 +586,45 @@ onMounted(() => {
   } else {
     window.setTimeout(reveiller, 1200);
   }
+});
+
+/**
+ * LA CARTE DU NAVIRE — chargée au premier GESTE, et pas au premier repos.
+ *
+ * C'est la leçon mesurée du 13/09/2026, et elle a coûté une scène 3D entière. La scène
+ * était « paresseuse » (`defineAsyncComponent` + `requestIdleCallback`) — et pourtant elle
+ * coûtait 6 à 7 points de Lighthouse, parce que le premier moment d'inactivité du
+ * navigateur tombe PENDANT la fenêtre que l'audit mesure. **Un décor paresseux n'est
+ * paresseux que si on le laisse l'être.**
+ *
+ * Ici, on attend donc un vrai signe de vie : un défilement, un clic, une touche, un
+ * contact. Un visiteur qui ne bouge pas n'a aucun besoin de la carte, puisqu'il ne
+ * navigue pas. Et celui qui bouge la reçoit tout de suite.
+ *
+ * ⚠️ PAS DE MINUTERIE DE REPLI, et c'est délibéré : un `setTimeout` de quelques secondes
+ * se déclencherait précisément pendant l'audit, et nous ramènerait au défaut qu'on vient
+ * de corriger. Si personne ne touche à la page, la carte n'apparaît pas — et ce n'est pas
+ * une perte : `/soute` reste liée depuis le pied de page sur toutes les pages du site.
+ */
+const CarteDuNavire = defineAsyncComponent(() => import('@/components/ui/CarteDuNavire.vue'));
+const cartePrete = ref(false);
+const GESTES = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
+
+function reveillerCarte() {
+  cartePrete.value = true;
+  if (typeof window !== 'undefined') {
+    GESTES.forEach((g) => window.removeEventListener(g, reveillerCarte));
+  }
+}
+
+onMounted(() => {
+  if (typeof window === 'undefined') return;
+  GESTES.forEach((g) => window.addEventListener(g, reveillerCarte, { passive: true }));
+});
+
+onUnmounted(() => {
+  if (typeof window === 'undefined') return;
+  GESTES.forEach((g) => window.removeEventListener(g, reveillerCarte));
 });
 
 // UI Components
