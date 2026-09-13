@@ -80,7 +80,19 @@ td:first-child{color:var(--ink);font-weight:600}
 .argument{margin-top:1.2rem;padding:1.1rem 1.3rem;background:var(--carte);border-left:3px solid var(--action);border-radius:.25rem}
 .argument strong{color:var(--action)}
 .local{margin-top:1.2rem;padding:1.1rem 1.3rem;background:var(--carte);border:1px solid var(--accent);border-radius:.25rem}
-.local h4{color:var(--accent);font-size:.95rem;margin-bottom:.4rem}
+/* ⚠️ `.local__titre` AJOUTÉ LE 13/09/2026, ET LES TROIS ANNULATIONS SONT LE POINT.
+   Le titre « Vos dossiers ne quittent pas votre machine. » est passé de `h4` à `h3`
+   pour rétablir la hiérarchie (il venait après un `h2` en fin de page — règle Opquast
+   227, axe `heading-order`).
+   MAIS un `h3` tombe sous la règle `h3{ font-size:.8rem; text-transform:uppercase;
+   letter-spacing:.08em; color:var(--ink-faint); margin:1.5rem 0 .6rem }` du haut de
+   cette page. Sans les trois annulations ci-dessous, le titre deviendrait EN MAJUSCULES,
+   espacé, et décalé de 1,5 rem au lieu de sa marge d'origine.
+   `color`, `font-size` et `margin-bottom` n'ont pas besoin d'annulation : la classe les
+   redéclare et l'emporte sur le sélecteur d'élément.
+   *Un titre qu'on déplace doit emporter TOUT son aspect — y compris ce que sa nouvelle
+   place lui impose sans qu'on l'ait demandé.* */
+.local h4, .local .local__titre{color:var(--accent);font-size:.95rem;margin-bottom:.4rem;text-transform:none;letter-spacing:normal;margin-top:0}
 ul{margin:.5rem 0 0 1.1rem;color:var(--ink-soft)} li{margin-bottom:.3rem}
 
 footer{padding:2rem 0;color:var(--ink-faint);font-size:.85rem;border-top:1px solid var(--filet)}
@@ -174,7 +186,12 @@ footer a{color:var(--accent)}
 <section>
   <h2>Et le point qui nous distingue</h2>
   <div class="local">
-    <h4>Vos dossiers ne quittent pas votre machine.</h4>
+    <!-- ⚠️ `h4` → `h3` LE 13/09/2026. Ce titre venait après un `<h2>` : la hiérarchie
+         sautait un niveau (axe `heading-order`, règle Opquast 227). C'était le DERNIER
+         saut de tout le site. Sa mise en forme est reprise par `.local__titre`, qui
+         annule les trois propriétés que `h3{}` lui imposait — voir le commentaire en
+         haut de la feuille de style. -->
+    <h3 class="local__titre">Vos dossiers ne quittent pas votre machine.</h3>
     <p class="sous">Le système tourne <strong>en local</strong>. Les pièces d'identité, les
        attestations, les données du personnel — <strong>tout reste chez vous</strong>. Aucun
        envoi à un service tiers, aucun sous-traitant, aucun serveur à l'étranger.</p>
