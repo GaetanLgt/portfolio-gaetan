@@ -214,7 +214,23 @@ async function principal() {
       const etat = await cdp.evaluer(`JSON.stringify({ loader: !!document.querySelector('.loader'), charge: !!document.querySelector('.app--loaded') })`);
       try { const v = JSON.parse(etat); if (v.charge && !v.loader) { pret = true; break } } catch {}
     }
-    const brut = await cdp.evaluer(`axe.run(document, { resultTypes: ['violations'] }).then(r => JSON.stringify({ pret: ${pret}, violations: r.violations.map(v => ({ id: v.id, impact: v.impact, aide: v.help, nb: v.nodes.length, cibles: v.nodes.slice(0,4).map(n => n.target.join(' ')) })), inapplicable: r.inapplicable.length, passes: r.passes.length }))`, true);
+    /* ⚠️ ON DEMANDE AUSSI `incomplete`, ET CE N'EST PAS DU ZÈLE.
+       Ce verrou demandait `resultTypes: ['violations']` — il excluait donc
+       explicitement la seconde liste qu'axe rend. Or axe range sous « incomplete »
+       les cas qu'il ne sait pas trancher, et il faut les VOIR : un champ dont le
+       seul texte est un `placeholder` n'est pas une violation pour lui, c'est un
+       cas à juger.
+       Mesuré le 13/09/2026 : sur `/apps/invoice-generator`, axe signalait **3
+       violations** là où **19 champs** n'avaient aucun nom accessible — et ce
+       verrou affichait « aucune violation » sur les pages concernées. *Il rapportait
+       la moitié de la réponse comme si c'était la totalité.*
+       `incomplete` NE FAIT PAS ÉCHOUER le verrou — c'est du « à examiner », pas du
+       « cassé ». Mais il doit être VISIBLE, sinon on croit la page propre. */
+    const brut = await cdp.evaluer(`axe.run(document, { resultTypes: ['violations', 'incomplete'] }).then(r => JSON.stringify({
+      pret: ${pret},
+      violations: r.violations.map(v => ({ id: v.id, impact: v.impact, aide: v.help, nb: v.nodes.length, cibles: v.nodes.slice(0,4).map(n => n.target.join(' ')) })),
+      incomplets: (r.incomplete || []).map(v => ({ id: v.id, impact: v.impact, aide: v.help, nb: v.nodes.length, cibles: v.nodes.slice(0,4).map(n => n.target.join(' ')) })),
+      inapplicable: r.inapplicable.length, passes: r.passes.length }))`, true);
     let res;
     try { res = JSON.parse(brut) } catch { res = { erreur: String(brut).slice(0, 160) } }
     bilan.push({ route, ...res });
@@ -225,6 +241,7 @@ async function principal() {
   cdp.fermer(); proc.kill(); serveur.close();
 
   const total = bilan.reduce((s, r) => s + (r.violations ? r.violations.length : 1), 0);
+  const totalIncomplets = bilan.reduce((s, r) => s + (r.incomplets ? r.incomplets.length : 0), 0);
   console.log('');
   console.log('='.repeat(74));
   console.log('  Accessibilité RENDUE — axe-core, mesuré APRÈS la fin du démarrage');
@@ -237,8 +254,24 @@ async function principal() {
       for (const c of v.cibles) console.log(`        · ${c}`);
     }
   }
+  /* Les cas qu'axe n'a pas su trancher — affichés À PART, et qui ne font pas échouer. */
+  const avecIncomplets = bilan.filter((r) => r.incomplets && r.incomplets.length);
+  if (avecIncomplets.length) {
+    console.log('');
+    console.log('  ── À EXAMINER (axe n\'a pas tranché — ne fait pas échouer ce verrou) ──');
+    for (const r of avecIncomplets) {
+      console.log(`\n  ${r.route}`);
+      for (const v of r.incomplets) {
+        console.log(`    [${v.id}] ${v.nb} occurrence(s) : ${v.aide}`);
+        for (const c of v.cibles) console.log(`        · ${c}`);
+      }
+    }
+    console.log('');
+    console.log('  ⚠ Ces cas ne sont PAS des violations — mais ils ne sont pas propres non plus.');
+    console.log('    Les ignorer, c\'est lire la moitié de la réponse d\'axe et l\'appeler un tout.');
+  }
   console.log('');
-  console.log(`  routes mesurées : ${bilan.length} · violations : ${total}`);
+  console.log(`  routes mesurées : ${bilan.length} · violations : ${total} · à examiner : ${totalIncomplets}`);
   console.log('  ⚠ axe-core ne détecte que 20 à 50 % des problèmes d\'accessibilité.');
   console.log('    Ce verrou ne remplace pas une revue manuelle — il l\'allège.');
   if (total) { console.log('='.repeat(74)); process.exit(1) }
