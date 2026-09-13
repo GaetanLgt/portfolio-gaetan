@@ -27,7 +27,17 @@
           
           <!-- Quick Add -->
           <div class="quick-add">
-            <h4>Ou ajoutez du texte directement</h4>
+            <!-- ⚠️ `h4` → `h3` LE 13/09/2026, avec UNE CLASSE — et la classe est le point délicat.
+                 Après le `<h2>` de la page venait un `<h4>` : la hiérarchie sautait un niveau
+                 (axe `heading-order`, règle Opquast 227).
+                 Ce titre était mis en forme par le sélecteur d'ÉLÉMENT `h4 { … }` en bas de ce
+                 fichier — qui style TOUS les h4. Le passer en `h3` le ferait tomber sous
+                 `h3 { … }`, partagé par les trois autres titres du composant : son aspect
+                 changerait, et eux avec.
+                 On lui donne donc sa propre classe, et on l'ajoute AU sélecteur `h4` :
+                     h4, .quick-add__titre { … }
+                 *Un titre qu'on déplace doit emporter sa mise en forme, sans l'imposer aux autres.* -->
+            <h3 class="quick-add__titre">Ou ajoutez du texte directement</h3>
             <textarea aria-label="Collez votre contenu ici..." v-model="quickText" placeholder="Collez votre contenu ici..." class="quick-input"></textarea>
             <div class="quick-meta">
               <input aria-label="Titre du document" type="text" v-model="quickTitle" placeholder="Titre du document" class="meta-input">
@@ -279,7 +289,13 @@ function generateEmbedCode() {
 .app-icon { font-size: 2rem; }
 
 h3, h2{ font-size: 1rem; margin-bottom: 1rem; }
-h4 { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-muted); }
+/* ⚠️ `.quick-add__titre` AJOUTÉ LE 13/09/2026, PAS SUBSTITUÉ.
+   Le titre « Ou ajoutez du texte directement » est passé de `h4` à `h3` pour rétablir la
+   hiérarchie (règle Opquast 227). Il tombait donc sous `h3 { font-size: 1rem; … }` et
+   aurait CHANGÉ D'ASPECT — comme les trois autres `h3` du composant si on avait touché
+   à `h3`. On lui rend exactement les déclarations du `h4`, par sa propre classe.
+   *Déplacer un titre ne doit pas le déguiser, ni déguiser ses voisins.* */
+h4, .quick-add__titre { font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-muted); }
 
 .upload-section, .documents-section, .chat-section, .stats-section, .export-section { margin-bottom: 2rem; }
 
