@@ -18,7 +18,7 @@
       </div>
     </header>
 
-    <main class="container">
+    <section class="container">
       <h2 class="section-titre">Nos pages</h2>
       <ul class="liens">
         <li v-for="lien in liens" :key="lien.href">
@@ -70,7 +70,7 @@
         propre machine : aucune donnée client ne sort.
         <RouterLink to="/dossier">Voir le dossier professionnel</RouterLink>.
       </p>
-    </main>
+    </section>
   </div>
 </template>
 

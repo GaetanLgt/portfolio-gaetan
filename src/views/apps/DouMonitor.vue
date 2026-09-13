@@ -6,7 +6,7 @@
         <span class="agent-badge" style="--agent-color: #F59E0B">📊 DOU</span>
       </div>
     </header>
-    <main class="app-main">
+    <section class="app-main">
       <div class="container">
         <div class="app-intro">
           <h1><span class="app-icon">📊</span> System Monitor</h1>
@@ -166,7 +166,7 @@
           </p>
         </div>
       </div>
-    </main>
+    </section>
   </div>
 </template>
 

@@ -6,7 +6,7 @@
         <span class="agent-badge" style="--agent-color: #FBBF24">🎯 WA</span>
       </div>
     </header>
-    <main class="app-main">
+    <section class="app-main">
       <div class="container">
         <div class="app-intro">
           <h1><span class="app-icon">🎯</span> Multi-Agent Router</h1>
@@ -100,7 +100,7 @@
           </div>
         </div>
       </div>
-    </main>
+    </section>
   </div>
 </template>
 

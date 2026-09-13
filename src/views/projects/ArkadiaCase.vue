@@ -141,7 +141,7 @@
     <!-- Creatures Showcase -->
     <section class="creatures">
       <div class="container">
-        <h2 class="section-title">
+        <h2 class="section-title" id="creatures-titre">
           <span class="section-title__icon">🦕</span>
           CRÉATURES EMBLÉMATIQUES
         </h2>
@@ -149,7 +149,25 @@
           Des dinosaures aux créatures mythiques, apprivoisez-les tous
         </p>
         
-        <div class="creatures__carousel reveal">
+        <!-- ⚠ `tabindex="0"` N'EST PAS DÉCORATIF — DÉFAUT MESURÉ LE 13/09/2026.
+             Ce carrousel est en `overflow-x: auto` avec `scroll-snap-type: x
+             mandatory`, et AUCUN de ses enfants n'est focalisable (ce sont des
+             `div`). Sans point d'entrée au clavier, les créatures situées au-delà
+             du premier écran étaient **inatteignables autrement qu'à la souris ou
+             au doigt** — un utilisateur au clavier ne pouvait pas les lire.
+             Trouvé par `axe-core` (`scrollable-region-focusable`), pas par les
+             verrous statiques : le code avait l'air correct, et il l'était — il
+             manquait seulement la seule chose qui ne se lit pas dans une feuille
+             de style.
+             `role="group"` + `aria-labelledby` nomment la zone à partir du titre
+             DÉJÀ PRÉSENT juste au-dessus : aucune formulation nouvelle n'a été
+             inventée pour l'occasion. -->
+        <div
+          class="creatures__carousel reveal"
+          tabindex="0"
+          role="group"
+          aria-labelledby="creatures-titre"
+        >
           <div 
             v-for="creature in creatures" 
             :key="creature.id"

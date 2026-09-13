@@ -60,7 +60,7 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="main-content">
+    <section class="main-content">
       <div class="container">
         
         <!-- TREE VIEW -->
@@ -150,7 +150,7 @@
         </div>
 
       </div>
-    </main>
+    </section>
 
     <!-- QUICK ACCESS -->
     <section class="quick-access">

@@ -5,7 +5,7 @@
         <router-link to="/apps" class="back-link">← Retour aux Apps</router-link>
       </div>
     </header>
-    <main class="app-main">
+    <section class="app-main">
       <div class="container">
         <div class="app-intro">
           <h1><span class="app-icon">📢</span> Content Generator</h1>
@@ -170,7 +170,7 @@
           </div>
         </div>
       </div>
-    </main>
+    </section>
   </div>
 </template>
 

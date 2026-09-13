@@ -17,7 +17,7 @@
       </div>
     </header>
 
-    <main class="container">
+    <section class="container">
       <!--
         PAGE CRÉÉE LE 10/09/2026 POUR CORRIGER UN DÉFAUT MESURÉ.
         Constat : les 7 pages d'applications portaient toutes un lien « ← Retour aux Apps »
@@ -47,7 +47,7 @@
         Ces outils tournent <strong>chez nous</strong>. Aucun n'est un service en ligne
         auquel vous vous abonnez : ils servent à produire les livraisons du studio.
       </p>
-    </main>
+    </section>
   </div>
 </template>
 
