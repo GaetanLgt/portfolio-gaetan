@@ -175,6 +175,61 @@ if (!fichierVariables) {
       console.log(`  ${ok ? '[ok]' : '[!!]'}  --rule sur le fond : ${r.toFixed(2)}:1` +
         (ok ? '' : '  — sous 3:1 : DÉCORATIF UNIQUEMENT, jamais bordure de contrôle'));
     }
+
+    // ─── LE TROU QUE CE VERROU AVAIT, ET QU'IL COMBLE ICI ───────────────────
+    // Il ne lisait QUE `variables.css`. Or des feuilles et des composants
+    // REDÉCLARENT les mêmes jetons : `a11y.css` redéclare `--ink`, `--ink-soft`,
+    // `--ink-faint`, et deux vues redéclarent `--text-main` / `--text-muted`.
+    //
+    // MESURÉ LE 13/09/2026, par mutation : `a11y.css` passé à
+    // `--ink-soft: #3B3B3B` (gris sombre, illisible sur le fond sombre de la DA)
+    // — et ce verrou a répondu « --ink-soft : 10.87:1 » puis « Tous les verrous
+    // sont tenus ». Il lisait la valeur de `variables.css` et ne voyait RIEN de
+    // la redéclaration. **Une régression dans la feuille d'accessibilité
+    // elle-même passait donc inaperçue.**
+    //
+    // On juge maintenant chaque redéclaration contre les fonds de la DA. La
+    // nuance qui évite les fausses alertes : une redéclaration peut être SCOPÉE
+    // (une classe, un mode contraste) et s'appliquer à un autre fond. On ne
+    // signale donc comme échec que ce qui tombe sous le seuil **sur les deux
+    // fonds de référence** — au-dessous, il n'existe aucun contexte où la valeur
+    // serait acceptable.
+    const ailleurs = [];
+    for (const f of sources) {
+      if (f.endsWith('variables.css')) continue;
+      let txt;
+      try { txt = readFileSync(f, 'utf8') } catch { continue }
+      for (const [nom, seuil, quoi] of couples) {
+        // ⚠ UN SEUL GROUPE DE CAPTURE : c'est `m[1]`, pas `m[2]`.
+        // Écrit `m[2]` la première fois — `val` valait `undefined`, et le verrou
+        // PLANTAIT (`TypeError` dans `luminance`) au lieu de juger. **Un plantage
+        // sort en 1, exactement comme un échec** : sur le seul code de sortie,
+        // j'ai failli annoncer que le verrou « voyait maintenant ».
+        // *Un code de sortie ne dit pas ce qui s'est passé — il faut lire la sortie.*
+        const re = new RegExp(nom + '\\s*:\\s*(#[0-9A-Fa-f]{3,8})\\s*;', 'g');
+        for (const m of txt.matchAll(re)) {
+          const val = m[1];
+          const rf = contraste(val, fond);
+          const rc = contraste(val, fondAlt);
+          const pire = Math.min(rf, rc);
+          ailleurs.push({ fichier: f.split(/[\\/]/).pop(), nom, val, rf, rc, pire, seuil, quoi });
+        }
+      }
+    }
+    if (!ailleurs.length) {
+      console.log('  [ok]  aucun jeton de contraste redéclaré hors de variables.css');
+    } else {
+      console.log(`  ${ailleurs.length} jeton(s) REDÉCLARÉ(S) hors de variables.css :`);
+      for (const a of ailleurs) {
+        const pire = a.pire < a.seuil;
+        console.log(`     ${pire ? '[KO]' : '[ok]'}  ${a.fichier}  ${a.nom}: ${a.val}  → ${a.rf.toFixed(2)}:1 sur le fond, ${a.rc.toFixed(2)}:1 sur les cartes  (seuil ${a.seuil})`);
+        if (pire) {
+          dire(false, `${a.fichier} redéclare ${a.nom} avec ${a.val}`,
+            `${a.pire.toFixed(2)}:1 sur les deux fonds — sous le seuil ${a.seuil} (${a.quoi}). ` +
+            'Le verrou ne jugeait que variables.css : une régression dans une autre feuille passait inaperçue.');
+        }
+      }
+    }
   }
 }
 
