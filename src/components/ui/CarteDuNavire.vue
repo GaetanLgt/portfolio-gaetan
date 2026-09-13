@@ -125,6 +125,28 @@ watch(ouverte, async (v) => {
 </script>
 
 <style scoped>
+/*
+ * ⚠️ POLICE DE CORPS — « Inter » N'EST DÉCLARÉE NULLE PART SUR CE SITE.
+ *
+ * Ce composant a cité `'Inter'` à trois endroits. Le verrou typographique du dépôt
+ * (`scripts/verifier-verrous.mjs`, exécuté en CI sous « Verrous de la signature qualité »)
+ * l'a refusé, et **le déploiement a été sauté** : la CI échoue avant `Deploy Production`.
+ *
+ * CE N'EST PAS UNE ERREUR NOUVELLE — ELLE EST DÉJÀ DOCUMENTÉE DEUX FOIS :
+ *   · `ContactPage.vue` : « Cette ligne demandait 'Inter', une famille sans @font-face sur ce… »
+ *   · `VoyageoProCase.vue` : « 'Inter' n'est déclarée nulle part sur ce site : la déclaration
+ *     retombait sur le repli suivant. On hérite de la DA, sans famille orpheline. »
+ *
+ * Seules **Fraunces** et **JetBrains Mono** sont déclarées (`fonts.css`). Le corps du site
+ * n'utilise aucune police téléchargée : il utilise une **pile système**, celle de `global.css`.
+ * On recopie donc CETTE pile, à l'identique — c'est la police que le visiteur voit déjà
+ * partout ailleurs sur le site.
+ *
+ * ⚠️ ET ON NE MET PAS `inherit` ICI : le conteneur `.carte` est en monospace, donc `inherit`
+ * aurait donné du monospace au texte de lecture du panneau. `VoyageoProCase` pouvait se le
+ * permettre, pas nous — la bonne réponse dépend du parent, elle ne se recopie pas.
+ */
+
 .carte {
   position: fixed;
   right: 1rem;
@@ -197,7 +219,7 @@ watch(ouverte, async (v) => {
 
 .carte__legende {
   margin: 0;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.78rem;
   line-height: 1.55;
   color: #8fa39c;
@@ -229,7 +251,7 @@ watch(ouverte, async (v) => {
   color: #b9c9c2;
   text-decoration: none;
   border-radius: 2px;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.82rem;
 }
 .carte__zone:hover {
@@ -273,7 +295,7 @@ watch(ouverte, async (v) => {
   margin: 0.75rem 0 0;
   padding-top: 0.7rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.74rem;
   color: #8fa39c;
 }
