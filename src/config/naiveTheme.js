@@ -1,6 +1,6 @@
 /**
  * Naive UI Theme Configuration
- * Thème dark personnalisé pour GL Digital Lab
+ * Thème dark personnalisé pour Génie IT Tek FR
  */
 import { darkTheme } from 'naive-ui'
 

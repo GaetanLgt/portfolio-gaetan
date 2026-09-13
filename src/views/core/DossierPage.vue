@@ -20,7 +20,7 @@
       <header class="dossier__entete">
         <div class="dossier__marque">
           <span class="dossier__sceau" aria-hidden="true"></span>
-          <span class="dossier__nom">GL Digital Lab</span>
+          <span class="dossier__nom">Génie IT Tek FR</span>
         </div>
         <h1 class="dossier__titre">Dossier professionnel</h1>
         <p class="dossier__sous-titre">
@@ -33,7 +33,7 @@
       <!-- ── 1. L'ENTREPRISE ───────────────────────────────────────────── -->
       <!--
         TEXTES JURIDIQUES CORRIGÉS le 10/09/2026 (validation de Gaëtan).
-        Avant : « GL Digital Lab — SASU de droit français » (statut déclaré au présent alors que
+        Avant : « Génie IT Tek FR — SASU de droit français » (statut déclaré au présent alors que
         la société n'est pas immatriculée : aucun SIREN, aucun SIRET), et « Références légales
         SIREN, SIRET, code APE et numéro de TVA : SUR DEMANDE » — une promesse impossible à tenir,
         puisque ces références n'existent pas encore.
@@ -45,7 +45,7 @@
       <section class="dossier__section" aria-labelledby="entreprise">
         <h2 id="entreprise">1. L'entreprise</h2>
         <dl class="dossier__fiche">
-          <div><dt>Dénomination</dt><dd>GL Digital Lab — studio indépendant français, en cours d'immatriculation</dd></div>
+          <div><dt>Dénomination</dt><dd>Génie IT Tek FR — studio indépendant français, en cours d'immatriculation</dd></div>
           <div><dt>Dirigeant</dt><dd>Gaëtan Langlet</dd></div>
           <div><dt>Adresse</dt><dd>Harponville, Somme (80), Hauts-de-France</dd></div>
           <div><dt>Activité</dt><dd>Développement web, applications métier, intégration d'intelligences artificielles exécutées localement ou en France</dd></div>

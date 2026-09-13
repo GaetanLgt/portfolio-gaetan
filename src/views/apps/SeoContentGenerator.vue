@@ -46,7 +46,7 @@
           <div class="input-row">
             <div class="input-group">
               <label>🏢 Nom de l'entreprise <span class="required">*</span></label>
-              <input aria-label="GL Digital Lab" type="text" v-model="companyName" placeholder="GL Digital Lab" class="text-input">
+              <input aria-label="Génie IT Tek FR" type="text" v-model="companyName" placeholder="Génie IT Tek FR" class="text-input">
             </div>
             <div class="input-group">
               <label>📍 Localisation</label>
@@ -161,7 +161,7 @@
         <div class="templates-section">
           <h3>📦 Templates prêts à l'emploi</h3>
           <div class="templates-grid">
-            <button @click="loadTemplate('gldigital')">🏢 GL Digital Lab</button>
+            <button @click="loadTemplate('gldigital')">🏢 Génie IT Tek FR</button>
             <button @click="loadTemplate('agency')">💼 Agence Web</button>
             <button @click="loadTemplate('saas')">☁️ SaaS B2B</button>
             <button @click="loadTemplate('ecommerce')">🛒 E-commerce</button>
@@ -659,8 +659,8 @@ function loadTemplate(type) {
       // inventée y est une faute professionnelle, pas une maladresse.
       // On laisse le champ VIDE : à remplir avec des faits vérifiables, jamais avec
       // un chiffre de vitrine.
-      brief: 'GL Digital Lab est une agence web spécialisée dans le développement d\'applications sur-mesure avec Symfony et Vue.js. Nous accompagnons les PME des Hauts-de-France dans leur transformation digitale avec une approche pragmatique et orientée résultats.',
-      company: 'GL Digital Lab',
+      brief: 'Génie IT Tek FR est une agence web spécialisée dans le développement d\'applications sur-mesure avec Symfony et Vue.js. Nous accompagnons les PME des Hauts-de-France dans leur transformation digitale avec une approche pragmatique et orientée résultats.',
+      company: 'Génie IT Tek FR',
       location: 'Amiens, Hauts-de-France',
       keywords: 'développement web, Symfony, Vue.js, agence web Amiens',
       audience: 'PME et ETI',

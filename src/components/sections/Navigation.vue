@@ -21,7 +21,7 @@
       <router-link to="/" class="nav-logo">
         <div class="nav-logo__icon">GL</div>
         <div class="nav-logo__text">
-          <span class="nav-logo__name">DIGITAL LAB</span>
+          <span class="nav-logo__name">GÉNIE IT TEK FR</span>
           <span class="nav-logo__tagline">Studio de systèmes multi-agents locaux</span>
         </div>
       </router-link>

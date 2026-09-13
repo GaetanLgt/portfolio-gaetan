@@ -88,7 +88,7 @@ const routes = [
     component: () => import('@/views/core/DossierPage.vue'),
     meta: {
       title: 'Dossier professionnel | Prestations, prix, méthode et limites',
-      description: 'Prestations, prix publics hors taxes, délais, méthode et limites assumées de GL Digital Lab, studio indépendant dans la Somme. Document imprimable, sans animation.'
+      description: 'Prestations, prix publics hors taxes, délais, méthode et limites assumées de Génie IT Tek FR, studio indépendant dans la Somme. Document imprimable, sans animation.'
     }
   },
   {
@@ -113,7 +113,7 @@ const routes = [
     // pages QUI EXISTENT DÉJÀ : aucun lien mort, c'est la raison de ce choix.
     component: () => import('@/views/core/LiensPage.vue'),
     meta: {
-      title: 'Liens | Audit WordPress 48 h, projets, prestations | GL Digital Lab',
+      title: 'Liens | Audit WordPress 48 h, projets, prestations | Génie IT Tek FR',
       description: 'Tous les liens du studio en un seul endroit : audit WordPress 48 h, projets et études de cas, prestations et prix publiés, contact. Page hébergée chez nous, sans traqueur ni service tiers.'
     }
   },
@@ -123,7 +123,7 @@ const routes = [
     component: SitemapPage,
     meta: { 
       title: 'Plan du Site | Carte Applicative',
-      description: 'Explorez l\'ensemble des pages et applications du portfolio GL Digital Lab. Arborescence complète du site.'
+      description: 'Explorez l\'ensemble des pages et applications du portfolio Génie IT Tek FR. Arborescence complète du site.'
     }
   },
 
@@ -158,7 +158,7 @@ const routes = [
     component: HolisticMapPage,
     meta: { 
       title: 'Carte Holistique | Neo',
-      description: 'Visualisation interactive de l\'écosystème GL Digital Lab : rôles, compétences, projets, services et vision. Carte conceptuelle du portfolio.'
+      description: 'Visualisation interactive de l\'écosystème Génie IT Tek FR : rôles, compétences, projets, services et vision. Carte conceptuelle du portfolio.'
     }
   },
 
@@ -193,7 +193,7 @@ const routes = [
     component: MentionsLegales,
     meta: { 
       title: 'Mentions Légales',
-      description: 'Mentions légales de GL Digital Lab : éditeur, hébergement, propriété intellectuelle.'
+      description: 'Mentions légales de Génie IT Tek FR : éditeur, hébergement, propriété intellectuelle.'
     }
   },
   {
@@ -202,7 +202,7 @@ const routes = [
     component: Confidentialite,
     meta: { 
       title: 'Politique de Confidentialité',
-      description: 'Politique de confidentialité de GL Digital Lab : traitement des données personnelles, droits RGPD, cookies.'
+      description: 'Politique de confidentialité de Génie IT Tek FR : traitement des données personnelles, droits RGPD, cookies.'
     }
   },
   {
@@ -211,7 +211,7 @@ const routes = [
     component: CGV,
     meta: { 
       title: 'Conditions Générales de Vente',
-      description: 'CGV de GL Digital Lab : tarifs, modalités de paiement, garanties, propriété intellectuelle.'
+      description: 'CGV de Génie IT Tek FR : tarifs, modalités de paiement, garanties, propriété intellectuelle.'
     }
   },
 
@@ -224,7 +224,7 @@ const routes = [
     component: TutorielsPage,
     meta: { 
       title: 'Tutoriels & Guides Techniques',
-      description: 'Guides pas à pas pour Symfony 7, Vue 3, Vite, Docker et IA locale. Documentation technique par GL Digital Lab.'
+      description: 'Guides pas à pas pour Symfony 7, Vue 3, Vite, Docker et IA locale. Documentation technique par Génie IT Tek FR.'
     }
   },
 
@@ -369,7 +369,7 @@ const router = createRouter({
 // Opquast N°98 : Title et meta description uniques par page
 router.beforeEach((to, from, next) => {
   // Update title
-  document.title = `${to.meta.title} | GL Digital Lab`;
+  document.title = `${to.meta.title} | Génie IT Tek FR`;
   
   // Update meta description
   const metaDescription = document.querySelector('meta[name="description"]');

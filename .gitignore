@@ -39,3 +39,5 @@ dist-ssr
 # `upload.target: filesystem` (voir .lighthouserc.json) les écrit ici.
 .lighthouseci/
 lighthouse-rapports/
+
+lighthouse-report.json

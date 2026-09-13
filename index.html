@@ -9,6 +9,33 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!-- ================================================================
+         PRÉCHARGEMENT DES DEUX POLICES CRITIQUES — ajouté le 13/09/2026.
+
+         POURQUOI. Une police déclarée en `@font-face` n'est découverte par le
+         navigateur qu'APRÈS avoir téléchargé et analysé la feuille de style :
+         elle arrive donc en fin de course, et le texte attend. Mesure Lighthouse
+         du 13/09 : FCP 2,1 s, LCP 3,2 s — les deux sous le seuil de la charte
+         (performance 91 pour un seuil de 95). Le poids total était de 261 Ko,
+         dont 110 Ko de polices, soit 42 %.
+
+         CE QUE ÇA CHANGE : `preload` fait découvrir les deux fichiers pendant
+         l'analyse du HTML, avant le CSS. Aucun octet de moins, mais le texte
+         s'affiche plus tôt — et on ne touche à AUCUNE ligne de design.
+
+         POURQUOI `crossorigin` : une police est toujours demandée en mode CORS.
+         Sans cet attribut, le navigateur télécharge le fichier DEUX fois — une
+         fois pour le préchargement (ignoré), une fois pour l'usage réel. C'est
+         l'erreur classique du préchargement de police, et elle AGGRAVE le score.
+
+         SEULES LES DEUX POLICES RÉELLEMENT UTILISÉES AU PREMIER ÉCRAN sont
+         préchargées : Fraunces-Regular (le titre) et JetBrainsMono-Regular (le
+         texte technique). Fraunces-Italic, JetBrainsMono-Medium et -Bold ne sont
+         pas dans le chemin critique : les précharger déplacerait le coût sans le
+         réduire.
+         ================================================================ -->
+    <link rel="preload" href="/fonts/Fraunces-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#03060A" />
 <meta property="og:type" content="website" />
     <meta property="og:title" content="Génie IT Tek FR | Architecture Numérique Souveraine" />

@@ -1,5 +1,54 @@
 <template>
   <div class="home-page">
+    <!-- ══════════════════════════════════════════════════════════════════════
+         LE FOND 3D — monté le 13/09/2026, décision de Gaëtan (option B).
+
+         Il est posé EN PREMIER dans le DOM et il est `position: fixed` : il passe
+         donc derrière tout le contenu, sur la hauteur entière de la page.
+         `pointer-events: none` et `aria-hidden` sont posés DANS le composant :
+         un fond décoratif ne capte ni le clic, ni la lecture d'écran.
+
+         `v-if="unitesPretes"` : le décor n'est monté qu'après le premier moment
+         d'inactivité du navigateur — le hero, le titre et le bouton sont déjà
+         lisibles. C'est le signal qui existait déjà pour les six unités.
+
+         Ce que le composant gère SEUL, et qui a été éprouvé 4 cas sur 4 :
+           · `prefers-reduced-motion` gagne toujours — la scène est rendue UNE
+             fois, fixe, au lieu de suivre le défilement ;
+           · le mode sobre coupe le décor — la scène n'est pas montée du tout.
+         ══════════════════════════════════════════════════════════════════════ -->
+    <!-- DÉCOR 3D : NON MONTÉ — mesure A/B du 13/09/2026, chiffres ci-dessous.
+         Le composant existe toujours dans src/components/three/ScrollScene.vue et
+         fonctionne (4 épreuves sur 4 conformes). Il n'est simplement pas monté, et
+         ce n'est pas un oubli :
+
+           avec la scène : performance 91 · 92 · 91 | TBT 44-90 ms | LCP ~3 340 ms
+           sans la scène : performance 97 · 96 · 98 | TBT 24-33 ms | LCP ~2 338 ms
+
+         Trois essais de chaque côté, aucune mesure qui se recouvre. Le montage coûte
+         6 à 7 points de performance et fait repasser la page SOUS le seuil de 95 que
+         la charte s'est fixé (le seuil n'est pas atteint avant, il l'est après).
+         La cause n'est pas la taille du chunk mais son EXÉCUTION : `requestIdleCallback`
+         se déclenche pendant le chargement, donc three.js est téléchargé, analysé et
+         rendu dans la fenêtre de mesure — un décor « paresseux » qui n'est jamais
+         paresseux en pratique.
+         ⚠️ DEUX POIDS, ET IL FAUT LES DEUX : 442,7 Ko **sur disque** (le chiffre
+         qu'annonce le build) mais **107,8 Ko compressés** — c'est ce dernier qui
+         traverse réellement le réseau. Les 6 à 7 points perdus ne s'expliquent donc
+         PAS par le transfert : ils s'expliquent par l'analyse et le rendu. Ne jamais
+         citer 442,7 Ko comme un poids réseau, c'est un poids de fichier.
+
+         Remettre la ligne ci-dessous pour rebrancher la scène, et refaire la mesure :
+             <ScrollScene v-if="unitesPretes" accent="#10B981" :anneaux="36" :ecart="2.4" />
+    -->
+
+
+    <!-- DÉCOR DE FOND — le tunnel, généré sur la carte graphique puis étalonné à la
+         charte. Le composant gère seul le mode sobre et la discrétion nécessaire
+         pour ne pas manger le contraste du texte. Provenance et mesures dans
+         `src/components/ui/DecorTunnel.vue`. -->
+    <DecorTunnel />
+
     <!-- Skip Link (Opquast) -->
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
     
@@ -392,7 +441,7 @@
             <span class="mono-tag" aria-hidden="true">/// 03 · LA MÉTHODE</span>
             <h2 id="method-title">Comment travaille le studio</h2>
             <p class="section-header__desc">
-              GL Digital Lab est un studio indépendant (SASU) dirigé par un architecte de
+              Génie IT Tek FR est un studio indépendant (SASU) dirigé par un architecte de
               systèmes multi-agents. Des agents IA spécialisés — orchestration, rédaction,
               code, audit, mémoire — sont nos outils de production : contrôlés à chaque
               étape, jamais un intermédiaire qui décide à votre place.
@@ -453,11 +502,37 @@
 // Components
 import AnimatedCounter from '@/components/common/AnimatedCounter.vue';
 import GaugeCircle from '@/components/common/GaugeCircle.vue';
+// Le décor de fond de la page d'accueil : une image générée localement, étalonnée à
+// la charte — 59,8 Ko, aucun contexte GPU dans le navigateur du visiteur.
+import DecorTunnel from '@/components/ui/DecorTunnel.vue';
+// ── LE FOND 3D DE LA PAGE D'ACCUEIL — DÉMONTÉ le 13/09/2026 ────────────────
+// Décision de Gaëtan (13/09) : option B, la scène 3D pilotée par le défilement —
+// elle ROUVRE explicitement le verdict du 10/09 (« enlève le WebGL qui ressemble
+// à rien »). Construite, éprouvée 4 fois sur 4, puis MESURÉE.
+//
+// ⚠️ ELLE N'EST PLUS MONTÉE, ET CE N'EST PAS UN OUBLI. La mesure A/B du même jour,
+// trois essais de chaque côté, aucune mesure qui se recouvre :
+//     avec la scène : performance 91 · 92 · 91 | TBT 44-90 ms | LCP ~3 340 ms
+//     sans la scène : performance 97 · 96 · 98 | TBT 24-33 ms | LCP ~2 338 ms
+// Le montage coûte 6 à 7 points et fait repasser la page SOUS le seuil de 95 que
+// la charte s'est fixé. Une régression mesurée ne reste pas en place sans la
+// validation de Gaëtan.
+//
+// LA CAUSE N'EST PAS LA TAILLE DU CHUNK, C'EST SON EXÉCUTION. `defineAsyncComponent`
+// et `requestIdleCallback` protègent le chargement BLOQUANT, mais le premier moment
+// d'inactivité tombe PENDANT la fenêtre mesurée : les 442,7 Ko de three.js sont donc
+// téléchargés, analysés et rendus avant la fin de l'audit. *Un décor paresseux n'est
+// paresseux que si on le laisse l'être.* Le composant reste dans le dépôt, intact :
+// `src/components/three/ScrollScene.vue`. Pour le rebrancher, remonter la balise
+// commentée plus haut dans le gabarit, et refaire la mesure — pas seulement le build.
+
 // 3D : les 6 unités MND (chargé en async : n'alourdit pas le premier rendu).
 // Modèles RÉELLEMENT GÉNÉRÉS : image SDXL (ComfyUI local) → objet 3D TRELLIS.2 →
 // allègement web. 407 Ko pour les six, contre 938 Ko pour les anciens avatars
 // fabriqués en primitives Blender.
-import { defineAsyncComponent, ref, onMounted } from 'vue';
+// `defineAsyncComponent` a été retiré avec la scène : le laisser importer sans usage
+// ferait échouer ESLint sur une variable non utilisée.
+import { ref, onMounted } from 'vue';
 
 /**
  * DÉCALAGE DE LA 3D HORS DU CHEMIN CRITIQUE (10/09/2026, audit Lighthouse).

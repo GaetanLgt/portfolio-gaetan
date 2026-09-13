@@ -15,7 +15,7 @@
       </h1>
       
       <p class="map-subtitle">
-        Écosystème GL Digital Lab : 6 Lois IA (l'équipage du cercle) • Infrastructure • Services • Ambition 2026
+        Écosystème Génie IT Tek FR : 6 Lois IA (l'équipage du cercle) • Infrastructure • Services • Ambition 2026
       </p>
     </header>
     
@@ -385,7 +385,7 @@ const nodes = ref([
     id: 'neo', 
     label: 'NEO', 
     fullLabel: 'Gaëtan "Neo" LANGLET', 
-    description: 'Développeur Full-Stack & Architecte IA. Fondateur GL Digital Lab.',
+    description: 'Développeur Full-Stack & Architecte IA. Fondateur Génie IT Tek FR.',
     type: 'identity', 
     level: 1, 
     x: 500, y: 200 
@@ -487,8 +487,8 @@ const nodes = ref([
   // ========================================
   { 
     id: 'gllab', 
-    label: 'GL DIGITAL LAB', 
-    fullLabel: 'GL Digital Lab - Agence',
+    label: 'GÉNIE IT TEK FR', 
+    fullLabel: 'Génie IT Tek FR - Agence',
     description: 'Agence dev web & IA pour PME. Lancement 29/01/2026.',
     type: 'business', 
     level: 2, 
@@ -542,7 +542,7 @@ const nodes = ref([
   },
   
   // ========================================
-  // NIVEAU 2 - Services GL Digital Lab
+  // NIVEAU 2 - Services Génie IT Tek FR
   // ========================================
   { 
     id: 'offer_perf', 
@@ -634,7 +634,7 @@ const nodes = ref([
   { 
     id: 'proj_portfolio', 
     label: 'PORTFOLIO', 
-    fullLabel: 'Portfolio GL Digital Lab',
+    fullLabel: 'Portfolio Génie IT Tek FR',
     type: 'project', 
     level: 3, 
     x: 350, y: 620 
@@ -671,7 +671,7 @@ const nodes = ref([
   { 
     id: 'lancement', 
     label: '29/01/2026', 
-    fullLabel: 'Lancement GL Digital Lab',
+    fullLabel: 'Lancement Génie IT Tek FR',
     description: '40 ans. Indépendance. Nouveau chapitre.',
     type: 'milestone', 
     level: 3, 

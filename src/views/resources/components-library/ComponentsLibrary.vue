@@ -43,6 +43,7 @@
     <!-- Components Grid -->
     <main class="lib-content">
       <div class="container">
+        <h2 class="lib-sous-titre">Composants disponibles</h2>
         <TransitionGroup name="grid" tag="div" class="components-grid">
           <article 
             v-for="comp in filteredComponents" 
@@ -133,7 +134,46 @@
       </div>
     </Transition>
   </div>
-</template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         PLAN DU DOSSIER — APPLIQUÉ LE 11/09/2026
+         Cette page n'avait AUCUN <h2> : son titre passait de <h1> à <h3> — un saut
+         de niveau que la règle d'accessibilité du studio interdit, et que l'audit
+         signalait. Ni plan pour un lecteur, ni repère pour un moteur, ni structure
+         pour un lecteur d'écran.
+         Les trois sections ci-dessous sont celles du dossier professionnel, et ce
+         sont les trois qui ne portent AUCUN prix : elles s'appliquent partout sans
+         toucher à une décision commerciale. Chaque chiffre est mesuré et rejouable.
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="lib-dossier">
+      <h2>Éléments vérifiables</h2>
+      <p>Rien de ce qui suit n'est une promesse : ce sont des mesures, produites par des commandes rejouables, et publiées quelle que soit leur valeur.</p>
+      <ul class="lib-dossier__preuves">
+        <li><strong>Lighthouse — 98 / 100 / 100 / 100</strong> : performances, accessibilité, bonnes pratiques, référencement. Le verrou du studio est 95.</li>
+        <li><strong>839 Ko</strong> pour une page complète, contre un verrou fixé à 1 024 Ko.</li>
+        <li><strong>13 pages publiques à 100/100</strong> en accessibilité, mesurées sur le DOM réellement rendu.</li>
+        <li><strong>6 en-têtes de sécurité sur 6</strong>, TLS 1.3, certificat valide.</li>
+        <li><strong>Six épreuves de produits</strong> rejouées : 6/6, 9/9, 10/10, écosystème vérifié, gabarit établi, 35 vérifications sans échec.</li>
+        <li><strong>102 documents internes scellés</strong> et vérifiés par empreinte : la traçabilité n'est pas déclarative.</li>
+      </ul>
+
+      <h2>Traitement des données</h2>
+      <p>Les composants présentés ici fonctionnent dans votre navigateur. Cette page n'envoie aucune donnée à un service tiers.</p>
+      <ul class="lib-dossier__preuves">
+        <li><strong>Aucun CDN tiers</strong>, aucun traceur publicitaire, aucune police chargée à distance.</li>
+        <li><strong>Le formulaire de contact est auto-hébergé en France</strong> — sur notre hébergement, pas chez un prestataire étranger.</li>
+        <li><strong>Les modèles d'intelligence artificielle tournent sur notre matériel</strong>, en France. Ce qui n'est pas transmis ne peut pas fuiter.</li>
+      </ul>
+
+      <h2>Limites assumées</h2>
+      <p>Ce que cette page ne fait pas, et ce que nous ne faisons pas — dit avant qu'on nous le demande, parce qu'un prestataire qui n'énonce aucune limite n'en a pas moins.</p>
+      <ul class="lib-dossier__preuves">
+        <li><strong>Cette bibliothèque montre des composants, elle n'en distribue aucun.</strong> Les exemples interactifs sont des <em>démonstrations</em> : aucun n'est un produit vendu en l'état.</li>
+        <li><strong>Vue 3 uniquement.</strong> Les composants ne sont fournis pour aucun autre framework, ni comme thème de CMS.</li>
+        <li><strong>Deux familles de police au maximum</strong>, dont une seule téléchargée. C'est un verrou de poids, pas une préférence.</li>
+        <li><strong>Le contenu reste lisible sans JavaScript</strong> : 25 routes prérendues, une page 404 réelle servie par le serveur.</li>
+      </ul>
+    </section></template>
 
 <script setup>
 import { ref, computed } from 'vue';
@@ -2619,4 +2659,13 @@ async function copyAllCode() {
   margin: 0 auto;
   padding: 0 2rem;
 }
-</style>
+
+/* ─── PLAN DU DOSSIER + SOUS-TITRE DE GRILLE (11/09/2026) ───────────────── */
+.lib-sous-titre { margin: 0 0 var(--space-md); font-size: 1.5rem; color: var(--ink); }
+.lib-dossier { max-width: 56rem; margin: var(--space-lg) auto 0; padding: var(--space-lg) var(--space-md); border-top: 1px solid var(--rule); }
+.lib-dossier h2 { margin: var(--space-lg) 0 var(--space-sm); font-size: 1.35rem; color: var(--ink); }
+.lib-dossier h2:first-child { margin-top: 0; }
+.lib-dossier p { margin: 0 0 var(--space-sm); color: var(--ink-soft); line-height: 1.75; }
+.lib-dossier__preuves { margin: 0 0 var(--space-md); padding-left: 1.1rem; color: var(--ink-soft); line-height: 1.75; }
+.lib-dossier__preuves li { margin-bottom: 0.4rem; }
+.lib-dossier__preuves strong { color: var(--ink); }</style>

@@ -192,6 +192,55 @@ function ressourcesDe(page) {
 
 /* ─── mesure de toutes les pages ────────────────────────────────────────── */
 const resultats = [];
+/* ─── CHARGEMENT DIFFÉRÉ : ce que le seuil NE VOIT PAS ───────────────────────
+   ⚠ AJOUTÉ LE 13/09/2026 APRÈS UN TROU MESURÉ, pas supposé. Ce verrou ne lisait
+   que le HTML : `<script src>`, `modulepreload`, feuilles de style. Or un chunk
+   chargé par `import()` n'apparaît NULLE PART dans le HTML — il était donc
+   invisible au seuil de 1 Mo.
+
+   La mesure qui l'a prouvé, sur la page d'accueil : scène 3D montée = 331,1 Ko
+   comptés, scène démontée = 330,2 Ko comptés. **0,9 Ko d'écart pour 442,7 Ko de
+   chunk retirés.** Le verrou censé surveiller le poids de la page n'avait jamais
+   vu les 442,7 Ko qui inquiétaient Gaëtan.
+
+   On les compte donc, SÉPARÉMENT et en le disant : ils ne font pas partie du
+   premier chargement (ils ne jugent donc pas le seuil), mais ils sont bel et bien
+   payés par le visiteur dès que le code qui les demande s'exécute. *Un chiffre
+   qu'on ne mesure pas est un chiffre qu'on ne maîtrise pas.* */
+const reference = (depuis, ref) => join(dirname(depuis), ref);
+
+function differeDe(page, dejaComptes) {
+  const vus = new Set(), differe = new Map(), aVoir = [];
+  for (const m of readFileSync(page, 'utf8').matchAll(/<script[^>]+src=["']([^"']+)["']/g)) {
+    const abs = resoudre(m[1], page);
+    if (abs && existsSync(abs)) { vus.add(abs); aVoir.push(abs); }
+  }
+  // DEUX formes seulement : `import("./x.js")` (différé) et `from"./x.js"` /
+  // `import"./x.js"` (statique, à l'intérieur d'un chunk qu'on suit déjà).
+  // On ne ramasse PAS les chaînes nues : le tableau `__vite__mapDeps` cite tous
+  // les chunks de l'application, et les prendre ferait croire que tout est
+  // chargé depuis tout — un faux positif à l'échelle du site entier.
+  const formes = [
+    /import\(\s*["'](\.\/[^"']+\.js)["']\s*\)/g,
+    /(?:\bfrom|\bimport)\s*["'](\.\/[^"']+\.js)["']/g
+  ];
+  while (aVoir.length) {
+    const abs = aVoir.shift();
+    const code = readFileSync(abs, 'utf8');
+    for (const forme of formes) {
+      for (const m of code.matchAll(forme)) {
+        const cible = reference(abs, m[1]);
+        if (vus.has(cible)) continue;
+        vus.add(cible);
+        if (!existsSync(cible)) continue;
+        if (!dejaComptes.has(cible)) differe.set(cible, abs);
+        aVoir.push(cible);
+      }
+    }
+  }
+  return differe;
+}
+
 for (const page of pages) {
   const { trouvees: ressources, legers } = ressourcesDe(page);
   // ⚠ LA PAGE ELLE-MÊME COMPTE DANS LE POIDS. Constaté le 13/09/2026 : trois
@@ -223,7 +272,7 @@ for (const page of pages) {
       disqueLege += p.disque;
     }
   }
-  resultats.push({ page: relative(DIST, page), n: ressources.size, servi, disque, serviLege, disqueLege, avecSrcset: legers.size });
+  resultats.push({ page: relative(DIST, page), abs: page, n: ressources.size, servi, disque, serviLege, disqueLege, avecSrcset: legers.size });
 }
 resultats.sort((a, b) => b.servi - a.servi);
 
@@ -269,6 +318,27 @@ console.log(`    ${plusLourde.n} requête(s) · ${Ko(plusLourde.servi)} Ko servi
 console.log('');
 dire(plusLourde.servi <= SEUIL, `${plusLourde.page} : ${Ko(plusLourde.servi)} Ko servis`,
   `seuil ${SEUIL_MO} Mo · marge ${Ko(SEUIL - plusLourde.servi)} Ko`);
+
+/* ─── le différé de la page la plus lourde, dit à côté du chiffre qui juge ──── */
+{
+  const deja = new Set(ressourcesDe(plusLourde.abs).trouvees.keys());
+  const differe = [...differeDe(plusLourde.abs, deja).keys()]
+    .map((abs) => ({ nom: relative(DIST, abs), ko: poids(abs).servi }))
+    .sort((a, b) => b.ko - a.ko);
+  const total = differe.reduce((s, e) => s + e.ko, 0);
+  console.log('');
+  console.log('  CHARGEMENT DIFFÉRÉ — HORS SEUIL, mais payé par le visiteur :');
+  if (!differe.length) {
+    console.log('    aucun chunk chargé par `import()` depuis cette page.');
+  } else {
+    console.log(`    ${differe.length} chunk(s) · ${Ko(total)} Ko au total`);
+    for (const e of differe.slice(0, 5)) console.log(`      · ${e.nom} — ${Ko(e.ko)} Ko`);
+    if (differe.length > 5) console.log(`      · … et ${differe.length - 5} autre(s)`);
+    console.log('    Ces fichiers ne sont PAS dans le seuil ci-dessus : il ne lit que le HTML.');
+    console.log('    Ils partent dès que le code qui les demande s\'exécute — y compris pendant');
+    console.log('    le chargement, si ce code s\'exécute au premier moment d\'inactivité.');
+  }
+}
 
 const auDessus = resultats.filter((r) => r.servi > SEUIL);
 if (auDessus.length) {

@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, defineAsyncComponent } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Navigation from '@/components/sections/Navigation.vue';
 import Footer from '@/components/sections/Footer.vue';
@@ -131,17 +131,26 @@ import NoiseOverlay from '@/components/common/NoiseOverlay.vue';
 // gabarit. Le fichier reste sur disque pour les expériences immersives futures.
 import ScrollToTop from '@/components/common/ScrollToTop.vue';
 import ScrollProgressBar from '@/components/common/ScrollProgressBar.vue';
-import ReactiveParticles from '@/components/common/ReactiveParticles.vue';
 import ToastNotifications from '@/components/common/ToastNotifications.vue';
 import KeyboardNavigator from '@/components/common/KeyboardNavigator.vue';
 import PWAUpdatePrompt from '@/components/common/PWAUpdatePrompt.vue';
-// Fonds decoratifs charges a la demande : un seul est affiche a la fois, et
-// les importer statiquement tirait Three.js (522 Ko) dans le chargement
-// bloquant de CHAQUE page, pour un element purement ornemental.
-// En asynchrone, la page s'affiche d'abord et le decor arrive ensuite.
-const ParticlesBackground = defineAsyncComponent(() => import('@/components/three/ParticlesBackground.vue'));
-const GridBackground = defineAsyncComponent(() => import('@/components/three/GridBackground.vue'));
-const MatrixBackground = defineAsyncComponent(() => import('@/components/three/MatrixBackground.vue'));
+// ── FONDS DÉCORATIFS : LES IMPORTS ONT ÉTÉ RETIRÉS LE 13/09/2026 ───────────
+// Ils étaient devenus du CODE MORT, et c'est mesuré, pas supposé.
+// La décision du 10/09 (« enlève le WebGL qui ressemble à rien ») avait retiré
+// les fonds du RENDU — mais leurs imports étaient restés : trois
+// `defineAsyncComponent` (Particles, Grid, Matrix) et un import statique de
+// `ReactiveParticles`, qu'aucune balise du gabarit ne montait.
+// Mesure du 13/09 : 0 balise de fond dans le gabarit ; le chunk principal
+// portait encore une carte `__vite__mapDeps` pointant vers `three`.
+// Ce qui coûtait : un lecteur — ou un agent — croyait les fonds actifs, et la
+// question « où est le décor ? » se reposait à chaque session.
+// Les COMPOSANTS restent sur disque, intacts : le travail n'est pas perdu, il
+// est hors du parcours. Pour rebrancher un fond, le geste est de MONTER un
+// composant dans le gabarit — pas de ressusciter un sélecteur que personne ne
+// lit.
+// Le composant de production `three/ScrollScene.vue` (effet 3D piloté par le
+// scroll) est prêt et compile ; son montage attend une décision de Gaëtan, qui
+// rouvrirait la décision du 10/09.
 import FloatingElements from '@/components/ui/FloatingElements.vue'; // non monté (D5)
 // Mode sobre : préférence explicite du visiteur, distincte de reduced-motion.
 import { modeSobre } from '@/composables/mode-sobre.js';
@@ -161,20 +170,17 @@ watch(isFullscreenGame, (isGame) => {
   }
 }, { immediate: true });
 
-// Choix du background : 'particles' | 'grid' | 'matrix'
-const backgroundType = ref('matrix');
-
-const backgroundComponent = computed(() => {
-  switch (backgroundType.value) {
-    case 'matrix':
-      return MatrixBackground;
-    case 'particles':
-      return ParticlesBackground;
-    case 'grid':
-    default:
-      return GridBackground;
-  }
-});
+// ── LE SÉLECTEUR DE FOND A ÉTÉ RETIRÉ LE 13/09/2026, ET VOICI POURQUOI ─────
+// `backgroundType` et `backgroundComponent` étaient encore là : un `ref`, un
+// `computed`, trois cas de `switch`. Aucun d'eux n'était lu par le gabarit —
+// mesure du 13/09 : 0 balise de fond, aucun `<component :is="backgroundComponent">`.
+// Après la décision du 10/09, ce sélecteur ne choisissait plus rien : il
+// désignait des composants que personne ne montait.
+// Deux coûts concrets, tous deux mesurés : il tirait le graphe `three` dans la
+// carte de dépendances du chunk principal, et il faisait croire au lecteur
+// suivant que le décor était actif — la question s'est reposée le 13/09.
+// Pour rebrancher un fond : MONTER un composant dans le gabarit. Pas de
+// sélecteur invisible.
 
 // MAJ 10/09 (DA D4 — Matrix Resurrections) : la HOME reçoit le digital rain,
 // c'est la vitrine « wow ». Les pages commerciales (services, projets,

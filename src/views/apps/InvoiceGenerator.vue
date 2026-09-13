@@ -224,7 +224,7 @@ const tvaRate = ref(20);
 const notes = ref('Paiement à réception de facture. Pénalités de retard : 3 fois le taux légal.');
 
 const company = ref({
-  name: 'GL Digital Lab',
+  name: 'Génie IT Tek FR',
   address: 'Somme, France',
   siret: '123 456 789 00012',
   email: 'contact@gldigitallab.fr'

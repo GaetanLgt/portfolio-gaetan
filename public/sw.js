@@ -1,5 +1,5 @@
 // ============================================================
-// GL Digital Lab — Service Worker KILL-SWITCH (2026-10)
+// Génie IT Tek FR — Service Worker KILL-SWITCH (2026-10)
 // ============================================================
 // Le Service Worker a causé des pages blanches répétées : il servait
 // un ancien index.html en cache dont les assets hashés (index-*.js/css)

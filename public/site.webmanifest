@@ -1,5 +1,5 @@
 {
-  "name": "GL Digital Lab",
+  "name": "Génie IT Tek FR",
   "short_name": "GL Lab",
   "description": "Architecture numérique souveraine - Symfony 8, Vue 3, IA locale",
   "start_url": "/",
@@ -42,14 +42,14 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "GL Digital Lab - Homepage"
+      "label": "Génie IT Tek FR - Homepage"
     },
     {
       "src": "/screenshots/mobile.png",
       "sizes": "750x1334",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "GL Digital Lab - Mobile"
+      "label": "Génie IT Tek FR - Mobile"
     }
   ],
   "shortcuts": [

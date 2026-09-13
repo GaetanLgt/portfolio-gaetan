@@ -2,7 +2,7 @@
  * useMatomo - Composable Vue 3 pour Matomo Analytics
  * RGPD-compliant avec gestion du consentement
  * 
- * @author GL Digital Lab
+ * @author Génie IT Tek FR
  * @version 1.1.0
  */
 
@@ -195,7 +195,18 @@ export function useMatomo() {
     }
 
     suivreLiensDeContact();
-    loadMatomoScript();
+
+    // ⚠️ NE PAS CHARGER LE SCRIPT AVANT LE CONSENTEMENT — corrigé le 13/09/2026.
+    // Mesure Lighthouse : `analytics.gldigitallab.fr/matomo.js` (26 Ko) arrivait à
+    // 436 ms, dans le chemin critique, sur un navigateur NEUF — donc avant que le
+    // visiteur ait vu le bandeau. Le script était téléchargé pour ne rien faire :
+    // `requireConsent` et `disableCookies` l'empêchaient de tracer quoi que ce soit.
+    // Deux coûts pour rien : 26 Ko + une résolution DNS + un TLS vers un domaine
+    // externe au démarrage, et le dépôt d'un traceur avant le choix — ce que la
+    // CNIL demande précisément d'éviter.
+    // Le script se charge désormais sur le consentement (`giveConsent`), ou ici
+    // seulement si le choix a DÉJÀ été fait lors d'une visite précédente.
+    if (consentGiven.value) loadMatomoScript();
   }
   
   /**
@@ -226,11 +237,18 @@ export function useMatomo() {
       console.warn('[Matomo] Could not save consent');
     }
     
+    // Le script Matomo n'est PAS chargé avant le consentement : c'est ici qu'il arrive.
+    // S'il était déjà chargé (choix fait lors d'une visite précédente, donc chargé par
+    // `init`), on pousse le tracking nous-mêmes ; sinon `onload` s'en charge — sans
+    // quoi la page vue serait comptée DEUX fois.
+    const dejaCharge = isLoaded.value;
+    loadMatomoScript();
+
     if (window._paq) {
       marquerNatureVisiteur();
       window._paq.push(['rememberConsentGiven']);
       window._paq.push(['setConsentGiven']);
-      window._paq.push(['trackPageView']);
+      if (dejaCharge) window._paq.push(['trackPageView']);
     }
   }
   

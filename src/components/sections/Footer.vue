@@ -15,7 +15,7 @@
           <div class="footer__brand">
             <div class="footer__logo">
               <div class="logo-icon">GL</div>
-              <span class="logo-name">GL DIGITAL LAB</span>
+              <span class="logo-name">GÉNIE IT TEK FR</span>
             </div>
             <!--
               FORMULATION CORRIGÉE (13/09/2026, décision Gaëtan — option A).
@@ -146,7 +146,7 @@
       <!-- Bottom -->
       <div class="footer__bottom">
         <p class="footer__copyright">
-          © {{ currentYear }} GL Digital Lab · Tous droits réservés
+          © {{ currentYear }} Génie IT Tek FR · Tous droits réservés
         </p>
         <!-- Rien n'est affiche tant qu'il n'y a pas de SIRET reel :
              « EN COURS » signale a un prospect qu'aucune facture n'est possible. -->

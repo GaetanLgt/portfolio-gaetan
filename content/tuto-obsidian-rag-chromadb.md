@@ -1270,6 +1270,6 @@ open http://localhost:8000
 
 ---
 
-**Auteur** : GL Digital Lab  
+**Auteur** : Génie IT Tek FR  
 **Licence** : MIT  
 **Dernière mise à jour** : Janvier 2026

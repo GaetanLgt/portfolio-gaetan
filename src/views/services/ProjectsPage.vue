@@ -410,7 +410,7 @@ const projects = ref([
   },
   {
     id: 'gldigitallab',
-    name: 'GL Digital Lab',
+    name: 'Génie IT Tek FR',
     icon: '💎',
     category: 'vue',
     year: '2026',

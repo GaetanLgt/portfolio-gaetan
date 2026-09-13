@@ -939,6 +939,6 @@ symfony serve --env=prod
 
 ---
 
-**Auteur** : GL Digital Lab  
+**Auteur** : Génie IT Tek FR  
 **Licence** : MIT  
 **Dernière mise à jour** : Janvier 2026

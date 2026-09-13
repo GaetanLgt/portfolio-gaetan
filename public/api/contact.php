@@ -1,6 +1,6 @@
 <?php
 /**
- * Formulaire de contact — endpoint auto-hébergé (GL Digital Lab)
+ * Formulaire de contact — endpoint auto-hébergé (Génie IT Tek FR)
  *
  * REMPLACE FORMSPREE (10/09/2026). Le formulaire envoyait jusqu'ici le nom,
  * l'e-mail et le message du visiteur à Formspree, société américaine : un
@@ -125,7 +125,7 @@ $limites[] = $maintenant_s;
 @file_put_contents($FICHIER_LIMITE, json_encode(array_slice($limites, -500)), LOCK_EX);
 
 // ── 6. Composition et envoi de l'e-mail ─────────────────────────────────────
-$sujet = sprintf('[GL Digital Lab] %s — %s', $nom, $projet !== '' ? $projet : 'demande de contact');
+$sujet = sprintf('[Génie IT Tek FR] %s — %s', $nom, $projet !== '' ? $projet : 'demande de contact');
 
 $corps = implode("\n", array_filter([
     'Nouvelle demande depuis gldigitallab.fr',
@@ -143,7 +143,7 @@ $corps = implode("\n", array_filter([
 ]));
 
 $entetes = implode("\r\n", [
-    'From: GL Digital Lab <' . EXPEDITEUR . '>',
+    'From: Génie IT Tek FR <' . EXPEDITEUR . '>',
     'Reply-To: ' . sprintf('%s <%s>', preg_replace('/[<>"]/', '', $nom), $email),
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: 8bit',

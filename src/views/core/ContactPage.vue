@@ -101,7 +101,7 @@
               @submit.prevent="handleSubmit"
               v-if="formStatus === 'idle'"
               toolname="demander_un_audit"
-              tooldescription="Demander un audit ou un devis à GL Digital Lab. Transmet au studio le besoin d'un client — nom ou entreprise, courriel professionnel, type de projet, budget, délai et description — et le studio répond sous 24 heures. À utiliser quand un client veut un chiffre ou une date avant de s'engager."
+              tooldescription="Demander un audit ou un devis à Génie IT Tek FR. Transmet au studio le besoin d'un client — nom ou entreprise, courriel professionnel, type de projet, budget, délai et description — et le studio répond sous 24 heures. À utiliser quand un client veut un chiffre ou une date avant de s'engager."
             >
               <div class="form-group">
                 <label for="name" class="form-label">NOM / ENTREPRISE</label>
