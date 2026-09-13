@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "//build": "NE REGENERE PAS les images (corrige le 10/09/2026) : voir le commentaire dans scripts/generate-favicons.js. Les PNG sont versionnés et le build les reprend tels quels, pour que ce qui est TESTE soit ce qui est DEPLOYE.",
-    "build": "vite build && npm run prerendre",
+    "build": "npm run sitemap && vite build && npm run prerendre",
     "build:images": "npm run generate:assets && vite build && npm run prerendre",
     "prerendre": "node scripts/prerendre.js",
     "preview": "vite preview",
@@ -23,7 +23,8 @@
     "audit:poids": "node scripts/verifier-poids.mjs --detail",
     "optimize": "npm run generate:assets && npm run optimize:images && npm run build",
     "deploy:ready": "node scripts/optimize-and-build.js",
-    "audit:topographie": "node scripts/verifier-topographie.mjs"
+    "audit:topographie": "node scripts/verifier-topographie.mjs",
+    "sitemap": "node scripts/generer-sitemap.mjs"
   },
   "dependencies": {
     "chart.js": "^4.4.1",

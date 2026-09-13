@@ -81,12 +81,39 @@ function sitemapDeclare() {
     .sort();
 }
 
-/* ── 3. La carte du navire (liste déclarative) ───────────────────────────────── */
+/* ── 3. La carte du navire ───────────────────────────────────────────────────── */
+/*
+ * ⚠️ CORRIGÉ LE 13/09/2026 — CE CONTRÔLE S'EST AVEUGLÉ TOUT SEUL.
+ *
+ * Il lisait les compartiments dans `src/composables/useDecouvertes.js`, où ils étaient
+ * écrits à la main. Après le passage au manifeste, cette liste a été SUPPRIMÉE du fichier :
+ * le contrôle a donc lu **0 compartiment** — et il a annoncé « aucune incohérence
+ * bloquante », parce qu'une liste vide ne produit aucun écart.
+ *
+ * **C'est le pire état possible pour un contrôle : il ne voyait plus rien et il disait que
+ * tout allait bien.** Un compteur à zéro prouve que le motif n'a rien trouvé, jamais que la
+ * chose est absente. D'où le garde-fou `exigerNonVide` plus bas, qui transforme une lecture
+ * vide en ÉCHEC au lieu d'un silence.
+ *
+ * La source est désormais `src/config/topographie.js` — l'unique dépositaire de la
+ * topographie.
+ */
 function zonesDeLaCarte() {
-  const p = join(RACINE, 'src/composables/useDecouvertes.js');
+  const p = join(RACINE, 'src/config/topographie.js');
   if (!existsSync(p)) return [];
   const src = readFileSync(p, 'utf8');
-  return [...src.matchAll(/chemin:\s*'([^']+)'/g)].map((m) => m[1])
+  // Un compartiment est déclaré par un bloc `compartiment: { id: '…', nom: '…', pont: '…' }`
+  // suivi, dans la même entrée, de son `chemin`. On lit les deux et on apparie par ordre
+  // d'apparition : plus robuste qu'une expression régulière qui traverserait tout le fichier.
+  const ids = [...src.matchAll(/compartiment:\s*\{[^}]*?id:\s*'([^']+)'[^}]*?pont:\s*'([^']+)'/g)];
+  const chemins = [...src.matchAll(/chemin:\s*'(\/[^']*)'/g)].map((m) => m[1]);
+  return ids
+    .map((m, i) => {
+      // Le `chemin` d'une entrée suit son `compartiment` dans le manifeste. On ne devine
+      // pas : si l'appariement échoue, le compte sera faux et le garde-fou le dira.
+      return chemins[i];
+    })
+    .filter(Boolean)
     .map((r) => (r.endsWith('/') || r === '' ? r : r + '/'))
     .sort();
 }
@@ -126,6 +153,25 @@ const plan = liensDuPlan();
 const norm = (r) => (r === '/' ? '/' : r.replace(/\/$/, ''));
 const enSet = (l) => new Set(l.map(norm));
 
+/*
+ * ⚠️ LE GARDE-FOU LE PLUS IMPORTANT DE CE FICHIER : UNE LISTE VIDE EST UN ÉCHEC.
+ *
+ * Le 13/09/2026, ce contrôle a lu « 0 compartiment » après un refactor, et il a conclu
+ * « aucune incohérence bloquante » — parce qu'une liste vide ne produit aucun écart.
+ * **Un contrôle qui ne voit plus rien et qui dit que tout va bien est plus dangereux
+ * qu'aucun contrôle.**
+ *
+ * Chaque liste doit donc rendre au moins une entrée. Si ce n'est pas le cas, la source a
+ * bougé, ou le motif ne correspond plus : on ÉCHOUE, au lieu de se taire.
+ */
+const listes = [
+  { nom: 'routes servies (dist/)', valeurs: routes, min: 5 },
+  { nom: 'adresses déclarées (sitemap)', valeurs: sitemap, min: 5 },
+  { nom: 'compartiments (carte)', valeurs: carte, min: 3 },
+  { nom: 'liens du plan du site', valeurs: plan, min: 3 },
+];
+const lecturesVides = listes.filter((l) => l.valeurs.length < l.min);
+
 const R = enSet(routes), S = enSet(sitemap), C = enSet(carte), P = enSet(plan);
 
 const diff = (a, b) => [...a].filter((x) => !b.has(x)).sort();
@@ -148,6 +194,20 @@ const dire = (liste, quoi, gravite) => {
   console.log('');
   if (gravite === '[KO]') alertes += liste.length;
 };
+
+// ⚠️ LE GARDE-FOU PASSE EN PREMIER. Une lecture vide est un ÉCHEC, jamais un silence :
+// c'est exactement ainsi que ce contrôle s'est aveuglé le 13/09/2026, en annonçant
+// « aucune incohérence » avec zéro compartiment lu.
+if (lecturesVides.length) {
+  console.log('  [KO]  LECTURES VIDES — une source a bougé, ou le motif ne correspond plus :');
+  for (const l of lecturesVides) {
+    console.log(`        ${l.nom} : ${l.valeurs.length} entrée(s) lue(s), minimum attendu ${l.min}`);
+  }
+  console.log('');
+  console.log('        Ce n\'est PAS « il n\'y a rien » : c\'est « je ne sais plus lire ».');
+  console.log('');
+  alertes += lecturesVides.length;
+}
 
 // ⚠️ LE DÉFAUT LE PLUS GRAVE, ET C'EST CELUI QUE LE SITEMAP DOCUMENTE DÉJÀ :
 // une adresse déclarée qui ne rend AUCUNE page. Le fichier raconte quatorze URLs

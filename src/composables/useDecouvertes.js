@@ -31,41 +31,26 @@
  *     des effets, jamais du contenu ni de la navigation — règle écrite dans `mode-sobre.js`.
  */
 import { ref, computed, watch } from 'vue';
+// La topographie vient du MANIFESTE, pas d'une liste recopiée ici. C'était l'un des
+// quatre endroits où elle vivait, et c'est celui qui a divergé en premier (le sitemap
+// avait oublié `/soute` que cette liste connaissait). Une source, désormais.
+import { COMPARTIMENTS } from '../config/topographie.js';
 
 const CLE = 'gldl-zones-decouvertes';
 
 /**
- * LA TOPOGRAPHIE RÉELLE DU SITE — relevée dans `src/router/index.js`, pas inventée.
+ * LA TOPOGRAPHIE DE LA CARTE — dérivée du manifeste `src/config/topographie.js`.
  *
- * Le site a DÉJÀ une structure de métroidvania : la navigation n'expose que 5 zones, alors
- * que 13 autres existent avec de vraies adresses. Personne ne l'avait jamais rendue lisible.
- * C'est tout ce que ce module fait : rendre visible une carte qui existait sans être montrée.
+ * Elle vivait ici, recopiée à la main, et c'était l'un des quatre endroits où la
+ * topographie du site existait. On n'en garde qu'un : le manifeste. **Ajouter un
+ * compartiment au site et l'oublier ici n'est plus possible.**
+ *
+ * ⚠️ L'IDENTIFIANT EST STABLE, ET IL EST ÉCRIT CHEZ LE VISITEUR. `id` sert de clé dans le
+ * `localStorage` : le renommer effacerait la progression de ceux qui ont déjà exploré.
+ * Il vit donc dans le manifeste, à côté du nom affiché — qui, lui, peut changer sans
+ * conséquence.
  */
-export const ZONES = [
-  // ── Le pont supérieur : les zones que la navigation montre déjà ──────────────
-  { id: 'accueil',  nom: 'La passerelle',   chemin: '/',                     pont: 'superieur' },
-  { id: 'services', nom: 'La salle des machines', chemin: '/services',       pont: 'superieur' },
-  { id: 'projets',  nom: 'Le pont des cartes', chemin: '/projets',           pont: 'superieur' },
-  { id: 'arkadia',  nom: 'Le navire ARKADIA', chemin: '/arkadia',            pont: 'superieur' },
-  { id: 'contact',  nom: 'La capitainerie', chemin: '/contact',              pont: 'superieur' },
-
-  // ── Le pont inférieur : ce qui existe sans être au menu ─────────────────────
-  { id: 'dossier',  nom: 'Le dossier de bord', chemin: '/dossier',           pont: 'inferieur' },
-  { id: 'apps',     nom: 'L\'atelier des agents', chemin: '/apps',           pont: 'inferieur' },
-  { id: 'ateliers', nom: 'La bibliothèque de pièces', chemin: '/components', pont: 'inferieur' },
-  { id: 'tutoriels', nom: 'Les carnets', chemin: '/ressources/tutoriels',    pont: 'inferieur' },
-  { id: 'carte',    nom: 'La carte holistique', chemin: '/carte-holistique', pont: 'inferieur' },
-  { id: 'voyageo',  nom: 'L\'escale Voyageo', chemin: '/voyageo-pro',        pont: 'inferieur' },
-  { id: 'liens',    nom: 'Les amarres', chemin: '/liens',                    pont: 'inferieur' },
-  { id: 'plan',     nom: 'Le plan complet', chemin: '/sitemap',              pont: 'inferieur' },
-
-  // ── La soute : atteignable par le tuyau vert, ET par un lien ordinaire ──────
-  // ⚠️ La soute N'EST PAS un contenu caché. Elle est liée depuis `Le plan complet`
-  //    et depuis le pied de page : un moteur de recherche et un lecteur d'écran la
-  //    trouvent comme n'importe quelle page. Le tuyau vert est une façon AMUSANTE d'y
-  //    arriver, pas la seule. C'est exactement la distinction du cadrage.
-  { id: 'soute',    nom: 'La soute',        chemin: '/soute',                 pont: 'soute' }
-];
+export const ZONES = COMPARTIMENTS;
 
 /** Nombre de zones à avoir trouvées pour que le tuyau vert s'ouvre. */
 export const SEUIL_SOUTE = 4;

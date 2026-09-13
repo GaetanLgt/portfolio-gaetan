@@ -15,24 +15,14 @@
      ============================================================================ -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- ── Pages principales ─────────────────────────────────────────────────── -->
-  <url>
+      <url>
     <loc>https://gldigitallab.fr/</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <!-- Dossier professionnel : ajouté le 10/09/2026. La page existait mais
-         n'était déclarée nulle part — invisible pour les moteurs et pour les
-         moteurs de réponse IA, alors que son objet même est d'être trouvée par
-         des acheteurs publics et des appels d'offres. -->
-    <loc>https://gldigitallab.fr/dossier</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
+    <!-- Audit web 48h, sites sur-mesure, applications métier et IA locale pour PME. -->
     <loc>https://gldigitallab.fr/services</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -45,17 +35,27 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <!-- REMPLACE /parcours (10/09/2026) : la page a été renommée, l'ancienne
-         adresse rendait un 404 alors qu'elle était déclarée. -->
-    <loc>https://gldigitallab.fr/carte-holistique</loc>
+    <loc>https://gldigitallab.fr/arkadia</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- ── Études de cas ────────────────────────────────────────────────────── -->
   <url>
-    <loc>https://gldigitallab.fr/arkadia</loc>
+    <loc>https://gldigitallab.fr/contact</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <!-- Dossier professionnel : ajouté le 10/09/2026. La page existait mais n'était déclarée nulle part — invisible pour les moteurs et pour les moteurs de réponse IA, alors que son objet même est d'être trouvée par des acheteurs publics et des appels d'offres. Priorité 0.9 assumée : c'est la porte commerciale du site, mise en avant dès le premier écran. -->
+    <loc>https://gldigitallab.fr/dossier</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <!-- REMPLACE /parcours (10/09/2026) : la page a été renommée, l'ancienne adresse rendait un 404 alors qu'elle était déclarée. -->
+    <loc>https://gldigitallab.fr/carte-holistique</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -66,8 +66,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- ── Ressources ───────────────────────────────────────────────────────── -->
   <url>
     <loc>https://gldigitallab.fr/ressources/tutoriels</loc>
     <lastmod>2026-09-10</lastmod>
@@ -80,37 +78,29 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- ── La soute (ajoutée le 13/09/2026) ──
-       Zone optionnelle du cadrage « site comme un metroidvania ». Elle est atteignable
-       par un lien ordinaire du pied de page, comme n'importe quelle page — le
-       « compartiment scellé » du hero n'est qu'une façon AMUSANTE d'y arriver.
-       Elle est donc déclarée ici, à égalité : une page qui rend un contenu réel et qui
-       est liée normalement n'a aucune raison de se cacher d'un moteur de recherche.
-       Priorité basse assumée : c'est un bonus pour qui explore, pas une porte d'entrée
-       commerciale. La déclarer ne lui donne pas de poids indu, l'omettre serait l'oublier. -->
   <url>
-    <loc>https://gldigitallab.fr/soute</loc>
-    <lastmod>2026-09-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- ── Index des applications (ajouté le 10/09/2026) ──
-       Les 7 pages d'applications portaient un lien « ← Retour aux Apps » vers /apps,
-       qui n'existait pas : en ligne, /apps répondait 403. La page a été créée pour
-       que le libellé soit vrai. Même défaut que /agents avant elle (« retiré : il
-       n'existait pas ») : une adresse citée sans page derrière. ── -->
-  <url>
+    <!-- Index des applications (ajouté le 10/09/2026) : les 7 pages d'applications portaient un lien « ← Retour aux Apps » vers /apps, qui n'existait pas — en ligne, /apps répondait 403. La page a été créée pour que le libellé soit vrai. Même défaut que /agents avant elle : une adresse citée sans page derrière. -->
     <loc>https://gldigitallab.fr/apps</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- ── Outils et démonstrations (remplacent /agents, retiré : il n'existait
-       pas ; les vraies pages sont celles-ci, chacune avec son titre propre) ── -->
   <url>
+    <!-- Page de liens (10/09/2026) : elle remplace le « Linktree » que les fiches de communication prescrivaient — un service tiers qui hébergerait nos liens, contre la doctrine local-first du studio. Déclarée ici parce qu'elle REND une page réelle : c'est la règle de ce fichier. -->
+    <loc>https://gldigitallab.fr/liens</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <!-- La soute (ajoutée le 13/09/2026) — zone optionnelle du cadrage « site comme un metroidvania ». Elle est atteignable par un lien ordinaire du pied de page, comme n'importe quelle page : le « compartiment scellé » du hero n'est qu'une façon AMUSANTE d'y arriver. Priorité basse assumée : c'est un bonus pour qui explore, pas une porte d'entrée commerciale. La déclarer ne lui donne pas de poids indu, l'omettre serait l'oublier. -->
+    <loc>https://gldigitallab.fr/soute</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <!-- Outils et démonstrations (remplacent /agents, retiré : il n'existait pas). Les vraies pages sont celles-ci, chacune avec son titre propre. -->
     <loc>https://gldigitallab.fr/apps/agent/wa</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -152,27 +142,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- ── Contact ──────────────────────────────────────────────────────────── -->
-  <url>
-    <loc>https://gldigitallab.fr/contact</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <!-- Page de liens (10/09/2026) : elle remplace le « Linktree » que les fiches
-         de communication prescrivaient — un service tiers qui hébergerait nos liens,
-         contre la doctrine local-first du studio. Déclarée ici parce qu'elle REND
-         une page réelle : c'est la règle de ce fichier. Ses quatre cibles pointent
-         vers des pages qui existent, donc aucun lien mort. -->
-    <loc>https://gldigitallab.fr/liens</loc>
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- ── Pages légales ────────────────────────────────────────────────────── -->
   <url>
     <loc>https://gldigitallab.fr/mentions-legales</loc>
     <lastmod>2026-09-10</lastmod>
