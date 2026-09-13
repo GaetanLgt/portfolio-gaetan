@@ -977,28 +977,6 @@ const methodGuarantees = [
   color: var(--primary);
 }
 
-.btn-outline {
-  padding: 1rem 2rem;
-  background: transparent;
-  border: 1px solid var(--primary);
-  color: var(--primary);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.btn-outline:hover {
-  background: var(--primary);
-  color: var(--bg);
-}
-
 .btn-large {
   padding: 1.25rem 2.5rem;
   font-size: 0.8rem;
@@ -1046,28 +1024,6 @@ const methodGuarantees = [
   line-height: 1.7;
 }
 
-.solutions-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
-
-.solution-card {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-lg);
-  text-decoration: none;
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  position: relative;
-  transition: border-color 0.3s ease;
-  height: 100%;
-}
-
-.solution-card:hover {
-  border-color: var(--rule-strong);
-}
-
 .solution-card--featured {
   border-color: var(--rule-strong);
 }
@@ -1095,12 +1051,6 @@ const methodGuarantees = [
   flex-grow: 1;
 }
 
-.solution-card h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0.25rem;
-  color: var(--text-main);
-}
-
 .solution-card__price {
   display: inline-block;
   font-family: 'JetBrains Mono', monospace;
@@ -1110,13 +1060,6 @@ const methodGuarantees = [
   background: var(--paper-alt);
   border: 1px solid var(--rule);
   border-radius: 4px;
-  margin-bottom: var(--space-sm);
-}
-
-.solution-card p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.6;
   margin-bottom: var(--space-sm);
 }
 
@@ -1148,10 +1091,6 @@ const methodGuarantees = [
   color: var(--ink);
   opacity: 0;
   transition: opacity 0.3s ease;
-}
-
-.solution-card:hover .solution-card__cta {
-  opacity: 1;
 }
 
 /* PROOF */
@@ -1325,17 +1264,6 @@ const methodGuarantees = [
   overflow: hidden; /* Contenir les effets de lumière */
 }
 
-.stack-card {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--space-lg);
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden; /* Empêcher le débordement du glare */
-  isolation: isolate; /* Créer un nouveau contexte d'empilement */
-}
-
 .stack-card__header {
   text-align: center;
   margin-bottom: var(--space-md);
@@ -1502,11 +1430,6 @@ const methodGuarantees = [
   outline: none;
 }
 
-.solution-card:has(.solution-card__link-wrapper:focus-visible) {
-  outline: 2px solid var(--primary);
-  outline-offset: 4px;
-}
-
 /* Hero Title Sub */
 .hero__title-sub {
   color: var(--text-muted);
@@ -1537,11 +1460,6 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
               box-shadow 0.4s ease;
 }
 
-.solution-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-}
-
 /* Numérotation technique des cartes (D5) : un index monospace remplace les
    emojis d'icône. L'ADN technique vient de la mise en forme, pas d'un pictogramme
    dont le rendu dépend du système d'exploitation du visiteur. */
@@ -1553,11 +1471,6 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
   color: var(--neon-cyan);
   opacity: 0.85;
   transition: color var(--transition-base);
-}
-
-.solution-card:hover .solution-card__icon {
-  color: var(--accent);
-  opacity: 1;
 }
 
 /* ── Rôle au chantier naval (D5) : le vocabulaire du navire posé sur l'offre,
@@ -1629,11 +1542,6 @@ a:not(.btn-primary):not(.btn-outline):not(.solution-card__link-wrapper):not(.uni
 }
 
 @media (max-width: 860px) {
-  .chantier {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.5rem;
-  }
 }
 
 /* Price tag : halo retiré (D1) */
@@ -1801,10 +1709,6 @@ html {
     gap: var(--space-lg);
   }
   
-  .solutions-grid {
-    grid-template-columns: 1fr;
-  }
-  
   .stack-card__grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1827,10 +1731,6 @@ html {
   
   .multivers-preview {
     gap: var(--space-sm);
-  }
-  
-  .universe-card {
-    padding: 1rem 1.5rem;
   }
   
   .cta-final__trust {
@@ -1890,7 +1790,6 @@ html {
   pointer-events: none;
 }
 @media (max-width: 1024px) {
-  .hero__lois { opacity: 0.6; }
 }
 @media (max-width: 768px) {
   /* mobile : la scène 3D passe en fond discret, le texte reste prioritaire */
@@ -1936,10 +1835,7 @@ html {
 }
 
 /* A11Y : mouvement coupé, motif figé mais présent */
-@media (prefers-reduced-motion: reduce) {
-  .hero__orbit-core,
-  .hero__orbit-ring { animation: none !important; }
-  .hero__orbit { opacity: 0.5; }
+@media (prefers-reduced-motion: reduce) {.hero__orbit-ring{ animation: none !important; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -2013,17 +1909,6 @@ html {
   padding: var(--space-xl) 0;
 }
 
-.preuve-arkadia__box {
-  background: var(--surface-light);
-  border: 1px solid var(--rule);
-  border-radius: 1.1rem;
-  padding: clamp(1.5rem, 4vw, 3rem);
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: var(--space-lg);
-  align-items: center;
-}
-
 .preuve-arkadia__titre {
   font-size: clamp(1.5rem, 3vw, 2.2rem);
   font-weight: 700;
@@ -2086,9 +1971,6 @@ html {
 }
 
 @media (max-width: 900px) {
-  .preuve-arkadia__box {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
