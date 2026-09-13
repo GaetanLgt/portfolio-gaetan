@@ -27,10 +27,10 @@
             <div class="form-section">
               <h3>🏢 Émetteur</h3>
               <div class="form-grid">
-                <input type="text" v-model="company.name" placeholder="Nom de l'entreprise">
-                <input type="text" v-model="company.address" placeholder="Adresse">
-                <input type="text" v-model="company.siret" placeholder="SIRET">
-                <input type="email" v-model="company.email" placeholder="Email">
+                <input aria-label="Nom de l" type="text" v-model="company.name" placeholder="Nom de l'entreprise">
+                <input aria-label="Adresse" type="text" v-model="company.address" placeholder="Adresse">
+                <input aria-label="SIRET" type="text" v-model="company.siret" placeholder="SIRET">
+                <input aria-label="Email" type="email" v-model="company.email" placeholder="Email">
               </div>
             </div>
 
@@ -38,10 +38,10 @@
             <div class="form-section">
               <h3>👤 Client</h3>
               <div class="form-grid">
-                <input type="text" v-model="client.name" placeholder="Nom du client">
-                <input type="text" v-model="client.company" placeholder="Société (optionnel)">
-                <input type="text" v-model="client.address" placeholder="Adresse">
-                <input type="email" v-model="client.email" placeholder="Email">
+                <input aria-label="Nom du client" type="text" v-model="client.name" placeholder="Nom du client">
+                <input aria-label="Société (optionnel)" type="text" v-model="client.company" placeholder="Société (optionnel)">
+                <input aria-label="Adresse" type="text" v-model="client.address" placeholder="Adresse">
+                <input aria-label="Email" type="email" v-model="client.email" placeholder="Email">
               </div>
             </div>
 
@@ -51,7 +51,7 @@
               <div class="form-row">
                 <div class="form-field">
                   <label>Numéro</label>
-                  <input type="text" v-model="docNumber" :placeholder="docType === 'quote' ? 'DEV-2024-001' : 'FAC-2024-001'">
+                  <input aria-label="docType ===" type="text" v-model="docNumber" :placeholder="docType === 'quote' ? 'DEV-2024-001' : 'FAC-2024-001'">
                 </div>
                 <div class="form-field">
                   <label>Date</label>
@@ -73,9 +73,9 @@
               <h3>📦 Prestations</h3>
               <div class="items-list">
                 <div v-for="(item, i) in items" :key="i" class="item-row">
-                  <input type="text" v-model="item.description" placeholder="Description" class="item-desc">
-                  <input type="number" v-model.number="item.quantity" placeholder="Qté" class="item-qty" min="1">
-                  <input type="number" v-model.number="item.price" placeholder="Prix HT" class="item-price" step="0.01">
+                  <input aria-label="Description" type="text" v-model="item.description" placeholder="Description" class="item-desc">
+                  <input aria-label="Qté" type="number" v-model.number="item.quantity" placeholder="Qté" class="item-qty" min="1">
+                  <input aria-label="Prix HT" type="number" v-model.number="item.price" placeholder="Prix HT" class="item-price" step="0.01">
                   <span class="item-total">{{ (item.quantity * item.price).toFixed(2) }} €</span>
                   <button @click="removeItem(i)" class="item-remove">✕</button>
                 </div>
@@ -103,7 +103,7 @@
             <!-- Notes -->
             <div class="form-section">
               <h3>💬 Notes</h3>
-              <textarea v-model="notes" placeholder="Conditions de paiement, mentions légales..." class="notes-input"></textarea>
+              <textarea aria-label="Conditions de paiement, mentions légales..." v-model="notes" placeholder="Conditions de paiement, mentions légales..." class="notes-input"></textarea>
             </div>
           </div>
 

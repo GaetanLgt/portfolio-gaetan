@@ -30,7 +30,7 @@
           <div class="config-grid">
             <div class="config-group">
               <label>Type de projet</label>
-              <select v-model="projectType">
+              <select aria-label="Node.js / Vue / React" v-model="projectType">
                 <option value="node">Node.js / Vue / React</option>
                 <option value="php">PHP / Symfony / Laravel</option>
                 <option value="python">Python / Django / FastAPI</option>
@@ -39,7 +39,7 @@
             </div>
             <div class="config-group">
               <label>Environnement cible</label>
-              <select v-model="targetEnv">
+              <select aria-label="VPS (SSH)" v-model="targetEnv">
                 <option value="vps">VPS (SSH)</option>
                 <option value="docker">Docker Registry</option>
                 <option value="vercel">Vercel</option>

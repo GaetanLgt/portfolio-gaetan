@@ -40,35 +40,35 @@
         <div class="input-section">
           <div class="input-group">
             <label>🎯 Sujet / Brief <span class="required">*</span></label>
-            <textarea v-model="brief" placeholder="Décrivez votre entreprise, service ou produit en détail..." class="brief-input"></textarea>
+            <textarea aria-label="Décrivez votre entreprise, service ou produit en détail..." v-model="brief" placeholder="Décrivez votre entreprise, service ou produit en détail..." class="brief-input"></textarea>
           </div>
           
           <div class="input-row">
             <div class="input-group">
               <label>🏢 Nom de l'entreprise <span class="required">*</span></label>
-              <input type="text" v-model="companyName" placeholder="GL Digital Lab" class="text-input">
+              <input aria-label="GL Digital Lab" type="text" v-model="companyName" placeholder="GL Digital Lab" class="text-input">
             </div>
             <div class="input-group">
               <label>📍 Localisation</label>
-              <input type="text" v-model="location" placeholder="Amiens, Hauts-de-France" class="text-input">
+              <input aria-label="Amiens, Hauts-de-France" type="text" v-model="location" placeholder="Amiens, Hauts-de-France" class="text-input">
             </div>
           </div>
 
           <div class="input-row">
             <div class="input-group">
               <label>🏷️ Mots-clés SEO <span class="required">*</span></label>
-              <input type="text" v-model="keywords" placeholder="développement web, Symfony, Vue.js" class="text-input">
+              <input aria-label="développement web, Symfony, Vue.js" type="text" v-model="keywords" placeholder="développement web, Symfony, Vue.js" class="text-input">
             </div>
             <div class="input-group">
               <label>🎯 Audience cible</label>
-              <input type="text" v-model="targetAudience" placeholder="PME, startups, décideurs" class="text-input">
+              <input aria-label="PME, startups, décideurs" type="text" v-model="targetAudience" placeholder="PME, startups, décideurs" class="text-input">
             </div>
           </div>
 
           <div class="input-row">
             <div class="input-group">
               <label>🎭 Ton</label>
-              <select v-model="tone" class="select-input">
+              <select aria-label="Professionnel" v-model="tone" class="select-input">
                 <option value="professional">Professionnel</option>
                 <option value="casual">Décontracté</option>
                 <option value="enthusiastic">Enthousiaste</option>
@@ -82,18 +82,18 @@
                    100% satisfaction ») était indexable par les moteurs sur cette page
                    et ressemblait à NOS chiffres. Un exemple ne doit pas pouvoir être
                    pris pour une preuve. -->
-              <input type="text" v-model="highlights" placeholder="vos faits réels : nombre de sites livrés, années d'activité…" class="text-input">
+              <input aria-label="vos faits réels : nombre de sites livrés, années d" type="text" v-model="highlights" placeholder="vos faits réels : nombre de sites livrés, années d'activité…" class="text-input">
             </div>
           </div>
 
           <div class="input-row">
             <div class="input-group">
               <label>🛠️ Technologies / Services clés</label>
-              <input type="text" v-model="technologies" placeholder="Symfony, Vue.js, Docker, PostgreSQL" class="text-input">
+              <input aria-label="Symfony, Vue.js, Docker, PostgreSQL" type="text" v-model="technologies" placeholder="Symfony, Vue.js, Docker, PostgreSQL" class="text-input">
             </div>
             <div class="input-group">
               <label>📞 Call-to-Action</label>
-              <input type="text" v-model="ctaText" placeholder="Demander un devis gratuit" class="text-input">
+              <input aria-label="Demander un devis gratuit" type="text" v-model="ctaText" placeholder="Demander un devis gratuit" class="text-input">
             </div>
           </div>
 

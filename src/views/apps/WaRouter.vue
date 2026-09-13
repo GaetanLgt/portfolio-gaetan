@@ -16,7 +16,7 @@
         <!-- REQUEST INPUT -->
         <div class="request-section">
           <h3>📝 Requête à router</h3>
-          <textarea v-model="request" placeholder="Décrivez votre tâche complexe... Ex: 'Créer une landing page sécurisée avec analytics'" class="request-input"></textarea>
+          <textarea aria-label="Décrivez votre tâche complexe... Ex:" v-model="request" placeholder="Décrivez votre tâche complexe... Ex: 'Créer une landing page sécurisée avec analytics'" class="request-input"></textarea>
           <button @click="analyzeRequest" class="analyze-btn" :disabled="analyzing">
             {{ analyzing ? '🔄 Analyse...' : '🎯 Analyser & Router' }}
           </button>

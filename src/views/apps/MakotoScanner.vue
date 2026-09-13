@@ -29,19 +29,19 @@
         <div class="input-section">
           <div v-if="scanType === 'npm'" class="input-group">
             <label>📦 Collez votre package.json</label>
-            <textarea v-model="packageJson" placeholder='{"dependencies": {"express": "^4.18.0"}}' class="code-input"></textarea>
+            <textarea aria-label="{" v-model="packageJson" placeholder='{"dependencies": {"express": "^4.18.0"}}' class="code-input"></textarea>
           </div>
           <div v-if="scanType === 'composer'" class="input-group">
             <label>🎼 Collez votre composer.json</label>
-            <textarea v-model="composerJson" placeholder='{"require": {"symfony/framework": "^6.0"}}' class="code-input"></textarea>
+            <textarea aria-label="{" v-model="composerJson" placeholder='{"require": {"symfony/framework": "^6.0"}}' class="code-input"></textarea>
           </div>
           <div v-if="scanType === 'docker'" class="input-group">
             <label>🐳 Nom de l'image Docker</label>
-            <input type="text" v-model="dockerImage" placeholder="nginx:latest" class="text-input">
+            <input aria-label="nginx:latest" type="text" v-model="dockerImage" placeholder="nginx:latest" class="text-input">
           </div>
           <div v-if="scanType === 'url'" class="input-group">
             <label>🌐 URL à scanner</label>
-            <input type="url" v-model="targetUrl" placeholder="https://example.com" class="text-input">
+            <input aria-label="https://example.com" type="url" v-model="targetUrl" placeholder="https://example.com" class="text-input">
           </div>
           
           <button @click="runScan" class="scan-btn" :disabled="scanning">

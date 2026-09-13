@@ -28,10 +28,10 @@
           <!-- Quick Add -->
           <div class="quick-add">
             <h4>Ou ajoutez du texte directement</h4>
-            <textarea v-model="quickText" placeholder="Collez votre contenu ici..." class="quick-input"></textarea>
+            <textarea aria-label="Collez votre contenu ici..." v-model="quickText" placeholder="Collez votre contenu ici..." class="quick-input"></textarea>
             <div class="quick-meta">
-              <input type="text" v-model="quickTitle" placeholder="Titre du document" class="meta-input">
-              <select v-model="quickCategory" class="meta-select">
+              <input aria-label="Titre du document" type="text" v-model="quickTitle" placeholder="Titre du document" class="meta-input">
+              <select aria-label="Catégorie..." v-model="quickCategory" class="meta-select">
                 <option value="">Catégorie...</option>
                 <option value="faq">FAQ</option>
                 <option value="docs">Documentation</option>
@@ -90,7 +90,7 @@
               </div>
             </div>
             <div class="chat-input">
-              <input type="text" v-model="userInput" @keyup.enter="sendMessage" placeholder="Posez une question..." class="input-field">
+              <input aria-label="Posez une question..." type="text" v-model="userInput" @keyup.enter="sendMessage" placeholder="Posez une question..." class="input-field">
               <button @click="sendMessage" class="send-btn" :disabled="!userInput.trim() || isTyping">📤</button>
             </div>
           </div>
