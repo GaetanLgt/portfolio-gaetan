@@ -223,6 +223,20 @@ for (const f of css) examiner(f, lire(f), balisageGlobal());
 
 orphelines.sort((a, b) => b.mortes.length - a.mortes.length);
 const total = orphelines.reduce((s, o) => s + o.mortes.length, 0);
+
+/* `--json <chemin>` : exporter la liste pour la recouper avec le rendu. Un verrou
+   qui ne peut pas rendre sa liste ne peut pas être confronté à une autre mesure —
+   et c'est exactement ce qu'il faut faire avant de supprimer quoi que ce soit. */
+const iJson = process.argv.indexOf('--json');
+if (iJson !== -1 && process.argv[iJson + 1]) {
+  fs.writeFileSync(process.argv[iJson + 1], JSON.stringify({
+    date: new Date().toISOString(),
+    total,
+    fichiers: orphelines.map((o) => ({ chemin: o.chemin, morceaux: o.mortes })),
+  }, null, 2), 'utf8');
+  console.log(`  (liste exportée vers ${process.argv[iJson + 1]})`);
+}
+
 for (const o of orphelines) {
   console.log(`  ${String(o.mortes.length).padStart(3)} classe(s)   ${o.chemin}`);
   if (VERBEUX) console.log('        ' + o.mortes.slice(0, 16).join(', ') + (o.mortes.length > 16 ? `, … +${o.mortes.length - 16}` : ''));
