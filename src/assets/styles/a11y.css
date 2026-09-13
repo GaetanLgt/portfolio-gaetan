@@ -58,17 +58,6 @@ a:focus:not(:focus-visible) {
   border: 0;
 }
 
-.sr-only-focusable:focus {
-  position: static;
-  width: auto;
-  height: auto;
-  padding: inherit;
-  margin: inherit;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-}
-
 /* SKIP LINKS */
 .skip-link {
   position: absolute;
@@ -154,14 +143,6 @@ a:focus:not(:focus-visible) {
   background: transparent;
 }
 
-.text-contrast-aa {
-  color: var(--text-muted); /* Ratio 11.9:1 */
-}
-
-.text-contrast-minimum {
-  color: var(--text-dark); /* Ratio 4.6:1 */
-}
-
 /* INTERACTIVE STATES */
 .interactive:hover {
   cursor: pointer;
@@ -180,14 +161,6 @@ a:focus:not(:focus-visible) {
 
 /* ARIA LIVE REGIONS */
 .live-region[aria-live="polite"] {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.live-region[aria-live="assertive"] {
   position: absolute;
   left: -9999px;
   width: 1px;
@@ -240,9 +213,6 @@ nav[aria-label] {
 
 /* TYPOGRAPHY SCALE - ACCESSIBLE */
 .text-4xl { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; }
-.text-3xl { font-size: clamp(1.5rem, 4vw, 2.5rem); line-height: 1.2; }
-.text-2xl { font-size: clamp(1.25rem, 3vw, 2rem); line-height: 1.25; }
-.text-xl { font-size: clamp(1.125rem, 2.5vw, 1.5rem); line-height: 1.35; }
 .text-lg { font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.5; }
 .text-base { font-size: clamp(0.875rem, 1.5vw, 1rem); line-height: 1.6; }
 .text-sm { font-size: clamp(0.75rem, 1.25vw, 0.875rem); line-height: 1.6; }
@@ -258,17 +228,8 @@ nav[aria-label] {
 
 /* COLOR SAFE UTILITIES */
 .bg-safe { background: var(--surface); }
-.border-safe { border: 1px solid var(--border); }
 
 /* DEBUG A11Y (développement uniquement) */
 .debug-a11y [role]:not([role=""]) {
   outline: 2px dashed orange !important;
-}
-
-.debug-a11y [aria-label]:not([aria-label=""]) {
-  outline: 2px dashed blue !important;
-}
-
-.debug-a11y [aria-describedby]:not([aria-describedby=""]) {
-  outline: 2px dashed green !important;
 }
