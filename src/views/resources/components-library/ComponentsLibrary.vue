@@ -22,7 +22,10 @@
     </header>
 
     <!-- Filters -->
-    <nav class="lib-filters">
+    <!-- Ce `<nav>` était le SEUL de l'application sans nom. Deux repères de navigation sans
+         nom distinct sont interchangeables pour un lecteur d'écran : il ne peut pas dire
+         lequel est « la navigation principale » et lequel est « les filtres ». -->
+    <nav class="lib-filters" aria-label="Filtres de la bibliothèque de composants">
       <div class="container">
         <div class="filters-row">
           <button 
@@ -41,7 +44,9 @@
     </nav>
 
     <!-- Components Grid -->
-    <main class="lib-content">
+    <!-- Même défaut que `/soute` : `App.vue` fournit déjà le repère `main`, cette page en
+         ajoutait un second à l'intérieur. La classe porte la mise en page, pas la sémantique. -->
+    <div class="lib-content">
       <div class="container">
         <h2 class="lib-sous-titre">Composants disponibles</h2>
         <TransitionGroup name="grid" tag="div" class="components-grid">
@@ -93,7 +98,7 @@
           </article>
         </TransitionGroup>
       </div>
-    </main>
+    </div>
 
     <!-- Code Modal -->
     <Teleport to="body">
@@ -1209,8 +1214,8 @@ if (props.id && sessionStorage.getItem(\`content_revealed_\${props.id}\`) === 't
       
       <!-- Content Warning Input -->
       <div v-if="showCWInput" class="cw-input">
-        <label>Avertissement de contenu :</label>
-        <input v-model="contentWarning" placeholder="Ex: NSFW, Spoilers, Violence..." />
+        <label for="cw-saisie">Avertissement de contenu :</label>
+        <input id="cw-saisie" v-model="contentWarning" placeholder="Ex: NSFW, Spoilers, Violence..." />
       </div>
       
       <!-- Actions -->
