@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — même décision que le kit et les démonstrations du site :
+     hors sitemap, hors navigation, hors pied de page, et « noindex » ici. Rien n'est
+     interdit dans robots.txt : une exclusion empêcherait le robot de lire ce noindex.
+     ⛔ 0 script, 0 ressource chargée — c'est le résultat de la mesure (voir index.html). -->
+<meta name="robots" content="noindex, nofollow">
+<title>Arche — les scènes du vault Metroid · Arche · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#03060a; color:#e8f0ec;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    line-height:1.7; padding:3rem 1.25rem 6rem; }
+  main { max-width:56rem; margin:0 auto; }
+  .bandeau { font-family: ui-monospace, Consolas, monospace; font-size:.7rem;
+    letter-spacing:.16em; text-transform:uppercase; color:#10b981;
+    border:1px dashed rgba(16,185,129,.4); border-radius:3px;
+    padding:.5rem .75rem; margin-bottom:2.5rem; }
+  .bandeau strong { color:#e8f0ec; }
+  h1 { font-size:clamp(1.8rem,4.5vw,2.6rem); line-height:1.12; margin:0 0 1rem; font-weight:500; }
+  h2 { font-size:1.1rem; font-weight:500; margin:3rem 0 1rem; padding-bottom:.6rem;
+    border-bottom:1px solid rgba(16,185,129,.22); }
+  h3 { font-size:.98rem; font-weight:600; margin:2rem 0 .6rem; color:#10b981; }
+  p, li { color:#b9c9c2; }
+  strong { color:#e8f0ec; }
+  em { color:#cfe0d9; }
+  a { color:#10b981; }
+  a:focus-visible { outline:2px solid #10b981; outline-offset:2px; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size:.86em;
+    background:rgba(255,255,255,.06); padding:.1rem .3rem; border-radius:2px; color:#e8f0ec; }
+  .lede { font-size:1.05rem; color:#cfe0d9; }
+  table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.87rem; }
+  th, td { text-align:left; padding:.55rem .65rem; border-bottom:1px solid rgba(255,255,255,.08); color:#b9c9c2; vertical-align:top; }
+  th { color:#e8f0ec; font-weight:600; }
+  td.num, th.num { text-align:right; font-family: ui-monospace, Consolas, monospace; }
+  hr { border:none; border-top:1px solid rgba(255,255,255,.08); margin:3rem 0; }
+  .sommaire { list-style:none; padding:0; margin:2rem 0 0; }
+  .sommaire li { border-bottom:1px solid rgba(255,255,255,.06); }
+  .sommaire a { display:block; padding:.7rem .2rem; text-decoration:none; }
+  .sommaire small { display:block; color:#7f9189; font-size:.8rem; }
+  .retour { display:inline-block; margin-top:3rem; font-family: ui-monospace, Consolas, monospace; font-size:.78rem; }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.25rem 0; }
+  .branche { border-left:2px solid rgba(16,185,129,.45); padding:.4rem 0 .4rem 1rem; }
+  .branche p { margin:.2rem 0; }
+  .verdict { border-left:2px solid #10b981; padding:.4rem 0 .4rem 1rem; margin:.6rem 0 0; }
+  .verdict p { color:#cfe0d9; }
+  .frise { list-style:none; padding:0; margin:2rem 0; }
+  .frise li { display:grid; grid-template-columns:5.5rem 1fr; gap:1rem; padding:.45rem 0;
+    border-bottom:1px solid rgba(255,255,255,.06); }
+  .frise .an { font-family: ui-monospace, Consolas, monospace; color:#10b981; }
+  .avenir { color:#7f9189; font-style:italic; }
+  .mesure { border:1px solid rgba(16,185,129,.3); border-radius:4px; padding:1rem 1.25rem; margin:1.5rem 0; }
+  .mesure p { margin:.35rem 0; }
+  figure { margin:2rem 0; }
+  figcaption { color:#7f9189; font-size:.8rem; margin-top:.6rem; }
+  svg { max-width:100%; height:auto; }
+  @media (max-width:640px) { .duo { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Arche — <strong>non répertorié</strong> · 0 script · 0 ressource chargée</div>
+<h1>Arche — les scènes du vault Metroid</h1>
+<p class="lede">Quatre vues que les notes ne donnent pas à voir : un graphe, deux
+chronologies, une frise, et des contradictions à deux branches. Tout est en HTML et en
+SVG en ligne.</p>
+
+<div class="mesure">
+  <p><strong>Pourquoi il n'y a pas de scène 3D ici — et c'est une mesure, pas un goût.</strong></p>
+  <p>La pile Three.js a été pesée sur le paquet installé : <code>three.module.min.js</code> =
+  <strong>678 491 o</strong>, <code>+ OrbitControls.js</code> = <strong>710 741 o</strong>.
+  <em>Le poids passe</em> : 710 741 o tient sous le verrou de 1 Mo (1 048 576 o), avec
+  337 835 o de marge.</p>
+  <p><strong>Ce qui ne passe pas, c'est la dépendance.</strong> Le critère du gabarit dit
+  « 0 script (ou sans dépendance) » — or <code>three</code> est déclarée dans
+  <code>package.json</code> (<code>^0.162.0</code>). Le critère est donc faux dès la
+  première ligne, quel que soit le poids. Et la page la plus lourde du kit pèse
+  <strong>37 136 o</strong> : la pile la multiplierait par <strong>19</strong>.</p>
+  <p>⛔ Un modèle importé était exclu d'avance : <code>galion.glb</code> =
+  <strong>10 290 432 o</strong>, soit <strong>×9,81</strong> le verrou d'une page.</p>
+  <p><strong>Décision : la version HTML sans script</strong>, qui coûte <strong>0 o de
+  script</strong> et <strong>0 dépendance</strong>. <em>Ce n'est pas un renoncement : une
+  frise, un diagramme et un tableau disent la même relation, sans rien télécharger.</em></p>
+</div>
+
+<h2>Les quatre scènes</h2>
+<ul class="sommaire">
+  <li><a href="carte.html">La carte des renvois<small>Qui cite qui — et ce que la densité révèle</small></a></li>
+  <li><a href="chronologie.html">Deux chronologies<small>L'ordre de sortie contre l'ordre du récit</small></a></li>
+  <li><a href="licence.html">La frise de la licence<small>1986 → 2027 : ce qui est sorti, et ce qui est annoncé</small></a></li>
+  <li><a href="contradictions.html">Les contradictions à deux branches<small>Deux sources qui se contredisent ne sont pas deux erreurs</small></a></li>
+</ul>
+
+<h2>Le vault en chiffres — mesuré le 14/09/2026</h2>
+<table>
+<thead><tr><th>Mesure</th><th class="num">Valeur</th></tr></thead>
+<tbody>
+<tr><td>Notes du vault</td><td class="num">22</td></tr>
+<tr><td>Renvois <code>[[…]]</code> entre notes</td><td class="num">398</td></tr>
+<tr><td>Renvois résolus vers une note existante</td><td class="num">398</td></tr>
+<tr><td>Note la plus citée</td><td class="num">La licence — les jeux, dans l'ordre de sortie — 45 renvois entrants</td></tr>
+<tr><td>Note la plus citante</td><td class="num">Glossaire — les termes que les notes emploient</td></tr>
+</tbody>
+</table>
+
+<h2>Ce qu'Arche n'est pas</h2>
+<ul>
+<li><strong>Ce n'est pas un cinquième kit.</strong> Le kit reste <code>/TARDIS/JoF/metroid/</code> :
+c'est lui qui porte le savoir, les contrôles et le barème. Arche ne fait que <em>montrer</em>
+quatre relations que le texte ne montre pas.</li>
+<li><strong>Ce n'est pas une scène par fiche.</strong> Le tri a été fait et il est écrit :
+<strong>4 scènes justifiées au maximum</strong>, et aucune avec modèle importé. Les autres notes
+n'ont <em>aucune relation</em> à montrer — leur donner une scène serait du décor.</li>
+<li><strong>Ce n'est pas en ligne.</strong> Le studio construit et mesure ; <em>publier est une
+décision de Gaëtan</em>, et ce dépôt ne pousse pas.</li>
+</ul>
+
+
+</main>
+</body>
+</html>

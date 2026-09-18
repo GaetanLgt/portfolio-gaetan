@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>🎯 Objectifs — Vault Metroid · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #03060a; color: #e8f0ec;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #10b981;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #e8f0ec; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #10b981; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #b9c9c2; margin: 0 0 1rem; }
+  strong { color: #e8f0ec; }
+  em { color: #cfe0d9; }
+  a { color: #10b981; }
+  a:focus-visible { outline: 2px solid #10b981; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #e8f0ec; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #10b981; }
+  blockquote p { color: #cfe0d9; margin-bottom: 0.5rem; }
+  ul, ol { color: #b9c9c2; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #b9c9c2; }
+  th { color: #e8f0ec; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #34d399; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>🎯 Objectifs — Vault Metroid</h1>
+<blockquote><p><strong>État : COMPLET.</strong> Trois objectifs, chacun avec <strong>son critère de réussite</strong>, <strong>son échéance</strong> et <strong>qui l'anime</strong> — plus le schéma de la boucle, qui se dessine tout seul dans Obsidian.</p>
+<p>⚠️ <strong>Ils sont PROPOSÉS, et ils sont dérivés</strong> : de la matière reçue, des huit notes de référence, et du cadrage pédagogique arrêté aujourd'hui (kit de la collection, public scolaire). <em>Un objectif qu'un agent invente est une hypothèse ; un objectif <strong>dérivé et corrigeable</strong> est un point de départ. <strong>Corrige-les d'un trait</strong> — c'est la dernière chose que ce vault ne peut pas décider à ta place.</em></p></blockquote>
+<hr>
+<h2>1. Les trois objectifs</h2>
+<h3>🎓 O1 — Faire de ce vault un <strong>kit pédagogique publié</strong></h3>
+<table><thead><tr><th></th><th></th></tr></thead>
+<tbody><tr><td><strong>Quoi</strong></td><td>Le vault devient un <strong>kit</strong> de la collection <code>ecole/dossiers-pedagogiques/</code>, puis <strong>une page de l'espace démo</strong></td></tr><tr><td><strong>Critère de réussite</strong></td><td><strong>mesurable, et déjà outillé</strong> : <code>node forge-ia/verifier-kits.mjs</code> rend <strong>« les critères comptables passent »</strong>, <strong>et</strong> le kit est <strong>atteignable depuis le plan du site</strong> — <em>pas seulement par son adresse</em></td></tr><tr><td><strong>Échéance</strong></td><td><strong>à caler par toi.</strong> ⚠️ Un ancrage existe : le pôle Japan/otaku/gaming porte <strong>JOF Metz les 26-27 septembre 2026</strong> — <em>si le kit doit servir là, la date est celle-là ; sinon, elle est libre</em></td></tr><tr><td><strong>Qui l'anime</strong></td><td><strong>l'agent produit et mesure</strong> · <strong>toi tu valides et tu publies</strong></td></tr></tbody></table>
+<blockquote><p><strong>Ce qui est déjà fait</strong> : 8 notes sourcées, le <a href="dossier-metroid-360.html">dossier 360</a> par niveau scolaire, le <a href="glossaire.html">glossaire</a>, les <a href="exercices-et-controles.html">exercices</a>, <strong>et le verdict qui passe</strong>. <strong>Ce qui manque</strong> : le gabarit de kit (passe 1) et la page.</p></blockquote>
+<h3>🎮 O2 — Le <strong>carnet de jeu</strong> alimente le kit</h3>
+<table><thead><tr><th></th><th></th></tr></thead>
+<tbody><tr><td><strong>Quoi</strong></td><td>Le <a href="carnet-de-jeu.html">carnet</a> n'est pas une annexe : c'est <strong>la seule mesure que ce vault produise lui-même</strong></td></tr><tr><td><strong>Critère de réussite</strong></td><td><strong>chaque entrée relie un fait vécu à une note du kit</strong> — <em>« j'ai fini le jeu en sautant tel boss → voilà ce que la note 06 dit du sequence breaking »</em></td></tr><tr><td><strong>Échéance</strong></td><td>à chaque session de jeu, sans cérémonie</td></tr><tr><td><strong>Qui l'anime</strong></td><td><strong>toi</strong> (tu joues et tu notes) · <strong>l'agent</strong> met en forme et relie</td></tr></tbody></table>
+<p>⚠️ <strong>L'entrée en cours attend encore trois informations</strong> : la <strong>catégorie</strong>, le <strong>temps</strong>, la <strong>date</strong>. <em>Un carnet qui note « j'ai joué » n'est pas un carnet.</em></p>
+<h3>🔁 O3 — La méthode devient <strong>reproductible</strong></h3>
+<table><thead><tr><th></th><th></th></tr></thead>
+<tbody><tr><td><strong>Quoi</strong></td><td>Ce qui marche ici doit marcher <strong>pour un autre sujet</strong> : <em>le studio a ~800 documents ; le kit est le format qui les rend transmissibles</em></td></tr><tr><td><strong>Critère de réussite</strong></td><td><strong>un deuxième kit produit avec le même gabarit</strong>, et <strong>le vérificateur rend un verdict aux deux</strong> — <em>un kit qu'on ne mesure pas n'est pas un kit, c'est un document</em></td></tr><tr><td><strong>Échéance</strong></td><td>après la passe 1 (le gabarit)</td></tr><tr><td><strong>Qui l'anime</strong></td><td><strong>l'agent</strong> — c'est le seul des trois qui ne te demande rien</td></tr></tbody></table>
+<hr>
+<h2>2. Le schéma — la boucle, d'un coup d'œil</h2>
+<pre><code>flowchart LR
+  S["Savoir du studio&lt;br/&gt;~800 documents"] --&gt; P["P · Cadrer un kit"]
+  J["Carnet de jeu&lt;br/&gt;toi"] --&gt; D
+  P --&gt; D["D · Produire les 6 éléments"]
+  D --&gt; C{"C · Vérifier&lt;br/&gt;verifier-kits.mjs"}
+  C --&gt;|"critère échoue"| R["5 Pourquoi&lt;br/&gt;→ ancrer une règle"]
+  R --&gt; D
+  C --&gt;|"tout passe"| H{"Portes humaines"}
+  H --&gt;|"pédagogique + visuelle"| PUB["Publication&lt;br/&gt;Gaëtan"]
+  PUB --&gt; K["Kit publié&lt;br/&gt;ET lié au plan du site"]
+  K --&gt; M["KPI : sourcés · poids · publiés"]
+  M --&gt; P</code></pre>
+<p><strong>Ce que le schéma dit et qu'un tableau ne dit pas</strong> : <em>la boucle <strong>revient</strong> au cadrage.</em> Un kit publié <strong>nourrit</strong> le suivant — c'est ce qui rend le cycle <strong>continu</strong> au lieu d'être une file.</p>
+<hr>
+<h2>3. Qui anime quoi — les rôles</h2>
+<table><thead><tr><th>Rôle</th><th>Qui</th><th>Ce qu'il anime</th></tr></thead>
+<tbody><tr><td><strong>L'animation du cycle</strong></td><td><strong>l'agent</strong></td><td>cadrer, produire, <strong>mesurer</strong>, corriger, écrire les rétros</td></tr><tr><td><strong>L'animation du jeu</strong></td><td><strong>toi</strong></td><td>jouer, noter (catégorie · temps · date), décider</td></tr><tr><td><strong>Les trois portes</strong></td><td><strong>toi</strong></td><td>validation <strong>pédagogique</strong> · validation <strong>visuelle</strong> · <strong>publication</strong></td></tr><tr><td><strong>La pause et la reprise</strong></td><td><strong>l'agent</strong></td><td>écrire la reprise de 5 lignes avant chaque arrêt · <strong>relire et vérifier sur le disque</strong> avant de reprendre</td></tr></tbody></table>
+<p><strong>Et la règle qui protège tout ça</strong> : <em>« l'amélioration continue ne doit jamais cannibaliser la traction »</em> — <strong>R&amp;D bornée à moins de 20 %</strong>.</p>
+<hr>
+<h2>4. Où en est chaque objectif, aujourd'hui</h2>
+<table><thead><tr><th>Objectif</th><th>Avancement mesuré</th></tr></thead>
+<tbody><tr><td><strong>O1</strong> — kit publié</td><td>🟡 <strong>80 %</strong> : le contenu et le vérificateur sont là (<strong>verdict ✅</strong>), il manque le <strong>gabarit</strong> et la <strong>page</strong></td></tr><tr><td><strong>O2</strong> — carnet</td><td>🟡 <strong>1 entrée ouverte</strong>, <strong>3 informations manquantes</strong></td></tr><tr><td><strong>O3</strong> — reproductible</td><td>⬜ <strong>pas commencé</strong> : il attend la passe 1</td></tr></tbody></table>
+<hr>
+<h2>5. Ce que ces objectifs ne sont pas</h2>
+<ul><li><strong>Ils ne sont pas définitifs</strong> : ils sont <strong>proposés</strong>, dérivés de la matière — <em>tu les corriges.</em></li><li><strong>Ils n'engagent pas la diffusion.</strong> Proposer un kit à une école <strong>engage le studio</strong> —</li></ul>
+<p>disponibilité, assurance, et le jour où un établissement dit oui. <strong>Décision D12</strong>, et l'accord JOF reste ouvert.</p>
+<ul><li><strong>Ils ne fixent pas le nombre de kits.</strong> <em>Moins de kits, mieux faits</em> est une réponse acceptable.</li><li><strong>Ils ne promettent aucune validation pédagogique</strong> : le cadre de la collection le dit —</li></ul>
+<p><strong>aucune séance n'a été testée devant un élève</strong>, et <strong>un agent ne peut pas trancher si une question est trop dure pour un CE2</strong>.</p>
+<ul><li><strong>Ils ne comptent pas en heures.</strong> <em>Aucune estimation de temps n'est donnée : elle serait inventée.</em></li></ul>
+<hr>
+<p><em>GL Digital Lab — 14/09/2026. Objectifs dérivés du vault (8 notes sourcées), du cadrage pédagogique (<code>ecole/kits-pedagogiques-PASSE-0-inventaire-2026-09-14.md</code>) et du cycle (<code>ecole/kits-pedagogiques-CYCLE-2026-09-14.md</code>). Critère outillé : <code>forge-ia/verifier-kits.mjs</code>.</em></p>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="00-carte-du-vault.html">🗺️ Carte du vault — Metroid, vue 360°</a></li><li><a href="index.html">📇 INDEX — Vault Metroid</a></li></ul>
+<a class="retour" href="index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

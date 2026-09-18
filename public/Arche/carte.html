@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — même décision que le kit et les démonstrations du site :
+     hors sitemap, hors navigation, hors pied de page, et « noindex » ici. Rien n'est
+     interdit dans robots.txt : une exclusion empêcherait le robot de lire ce noindex.
+     ⛔ 0 script, 0 ressource chargée — c'est le résultat de la mesure (voir index.html). -->
+<meta name="robots" content="noindex, nofollow">
+<title>La carte des renvois · Arche · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:#03060a; color:#e8f0ec;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    line-height:1.7; padding:3rem 1.25rem 6rem; }
+  main { max-width:56rem; margin:0 auto; }
+  .bandeau { font-family: ui-monospace, Consolas, monospace; font-size:.7rem;
+    letter-spacing:.16em; text-transform:uppercase; color:#10b981;
+    border:1px dashed rgba(16,185,129,.4); border-radius:3px;
+    padding:.5rem .75rem; margin-bottom:2.5rem; }
+  .bandeau strong { color:#e8f0ec; }
+  h1 { font-size:clamp(1.8rem,4.5vw,2.6rem); line-height:1.12; margin:0 0 1rem; font-weight:500; }
+  h2 { font-size:1.1rem; font-weight:500; margin:3rem 0 1rem; padding-bottom:.6rem;
+    border-bottom:1px solid rgba(16,185,129,.22); }
+  h3 { font-size:.98rem; font-weight:600; margin:2rem 0 .6rem; color:#10b981; }
+  p, li { color:#b9c9c2; }
+  strong { color:#e8f0ec; }
+  em { color:#cfe0d9; }
+  a { color:#10b981; }
+  a:focus-visible { outline:2px solid #10b981; outline-offset:2px; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size:.86em;
+    background:rgba(255,255,255,.06); padding:.1rem .3rem; border-radius:2px; color:#e8f0ec; }
+  .lede { font-size:1.05rem; color:#cfe0d9; }
+  table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.87rem; }
+  th, td { text-align:left; padding:.55rem .65rem; border-bottom:1px solid rgba(255,255,255,.08); color:#b9c9c2; vertical-align:top; }
+  th { color:#e8f0ec; font-weight:600; }
+  td.num, th.num { text-align:right; font-family: ui-monospace, Consolas, monospace; }
+  hr { border:none; border-top:1px solid rgba(255,255,255,.08); margin:3rem 0; }
+  .sommaire { list-style:none; padding:0; margin:2rem 0 0; }
+  .sommaire li { border-bottom:1px solid rgba(255,255,255,.06); }
+  .sommaire a { display:block; padding:.7rem .2rem; text-decoration:none; }
+  .sommaire small { display:block; color:#7f9189; font-size:.8rem; }
+  .retour { display:inline-block; margin-top:3rem; font-family: ui-monospace, Consolas, monospace; font-size:.78rem; }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.25rem 0; }
+  .branche { border-left:2px solid rgba(16,185,129,.45); padding:.4rem 0 .4rem 1rem; }
+  .branche p { margin:.2rem 0; }
+  .verdict { border-left:2px solid #10b981; padding:.4rem 0 .4rem 1rem; margin:.6rem 0 0; }
+  .verdict p { color:#cfe0d9; }
+  .frise { list-style:none; padding:0; margin:2rem 0; }
+  .frise li { display:grid; grid-template-columns:5.5rem 1fr; gap:1rem; padding:.45rem 0;
+    border-bottom:1px solid rgba(255,255,255,.06); }
+  .frise .an { font-family: ui-monospace, Consolas, monospace; color:#10b981; }
+  .avenir { color:#7f9189; font-style:italic; }
+  .mesure { border:1px solid rgba(16,185,129,.3); border-radius:4px; padding:1rem 1.25rem; margin:1.5rem 0; }
+  .mesure p { margin:.35rem 0; }
+  figure { margin:2rem 0; }
+  figcaption { color:#7f9189; font-size:.8rem; margin-top:.6rem; }
+  svg { max-width:100%; height:auto; }
+  @media (max-width:640px) { .duo { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Arche — <strong>non répertorié</strong> · 0 script · 0 ressource chargée</div>
+<h1>La carte des renvois</h1>
+<p class="lede">398 renvois relient 22 notes. <strong>Le point est gros quand la note
+est citée</strong>, petit quand elle ne l'est pas — <em>et une note que personne ne cite est une
+note qu'on ne relit pas.</em></p>
+<figure><svg viewBox="0 0 940 940" role="img" aria-label="Graphe des renvois entre les 22 notes du vault : chaque trait est un renvoi, la taille du point est le nombre de renvois entrants.">
+<line x1="470" y1="40" x2="145" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="702" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="591" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="470" y2="900" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="44" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="79" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="349" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="44" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="79" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="40" x2="349" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="57" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="108" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="188" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="291" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="409" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="349" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="896" y1="531" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="861" y1="649" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="752" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="752" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="752" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="752" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="752" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="752" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="795" y1="752" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="832" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="832" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="832" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="832" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="702" y1="832" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="883" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="883" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="883" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="883" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="883" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="883" x2="470" y2="900" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="591" y1="883" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="44" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="591" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="79" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="470" y1="900" x2="702" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="883" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="349" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="79" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="832" x2="44" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="79" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="349" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="752" x2="470" y2="900" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="349" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="79" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="44" y1="409" x2="44" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="470" y2="40" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="896" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="896" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="795" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="349" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="145" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="702" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="591" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="470" y2="900" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="44" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="79" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="44" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="79" y1="291" x2="349" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="188" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="188" x2="44" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="188" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="145" y1="188" x2="349" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="591" y2="57" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="861" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="861" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="702" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="795" y2="188" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="44" y2="531" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="79" y2="649" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="238" y1="108" x2="470" y2="900" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="470" y2="40" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="79" y2="291" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="238" y2="832" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="470" y2="900" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="145" y2="752" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="44" y2="409" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="238" y2="108" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<line x1="349" y1="57" x2="591" y2="883" stroke="#10b981" stroke-width="1" opacity="0.12"/>
+<circle cx="470" cy="40" r="5.7" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="484" y="44" text-anchor="start" font-size="15" fill="#cfe0d9">🗺️ Carte du vault — Metroid, vue… <tspan fill="#7f9189">3</tspan></text>
+<circle cx="591" cy="57" r="16.0" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="615" y="61" text-anchor="start" font-size="15" fill="#cfe0d9">La licence — les jeux, dans l'ord… <tspan fill="#7f9189">45</tspan></text>
+<circle cx="702" cy="108" r="10.9" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="721" y="112" text-anchor="start" font-size="15" fill="#cfe0d9">La chronologie — l'ordre du récit… <tspan fill="#7f9189">24</tspan></text>
+<circle cx="795" cy="188" r="12.8" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="816" y="192" text-anchor="start" font-size="15" fill="#cfe0d9">03 — Les créateurs et les studios <tspan fill="#7f9189">32</tspan></text>
+<circle cx="861" cy="291" r="10.6" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="880" y="295" text-anchor="start" font-size="15" fill="#cfe0d9">Samus et les personnages <tspan fill="#7f9189">23</tspan></text>
+<circle cx="896" cy="409" r="12.3" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="916" y="413" text-anchor="start" font-size="15" fill="#cfe0d9">Le lore — les peuples, les créatu… <tspan fill="#7f9189">30</tspan></text>
+<circle cx="896" cy="531" r="14.5" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="918" y="535" text-anchor="start" font-size="15" fill="#cfe0d9">Les mécaniques et le genre — d'où… <tspan fill="#7f9189">39</tspan></text>
+<circle cx="861" cy="649" r="14.0" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="883" y="653" text-anchor="start" font-size="15" fill="#cfe0d9">Audience et réception — pourquoi … <tspan fill="#7f9189">37</tspan></text>
+<circle cx="795" cy="752" r="12.8" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="816" y="756" text-anchor="start" font-size="15" fill="#cfe0d9">L'état actuel — où en est la lice… <tspan fill="#7f9189">32</tspan></text>
+<circle cx="702" cy="832" r="6.2" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="717" y="836" text-anchor="start" font-size="15" fill="#cfe0d9">Annexes — repères, titres et vers… <tspan fill="#7f9189">5</tspan></text>
+<circle cx="591" cy="883" r="7.0" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="606" y="887" text-anchor="start" font-size="15" fill="#cfe0d9">L'histoire de la licence comme ob… <tspan fill="#7f9189">8</tspan></text>
+<circle cx="470" cy="900" r="8.2" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="486" y="904" text-anchor="start" font-size="15" fill="#cfe0d9">Sources, méthode et transversales… <tspan fill="#7f9189">13</tspan></text>
+<circle cx="349" cy="883" r="8.4" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="332" y="887" text-anchor="end" font-size="15" fill="#cfe0d9">🎮 Carnet de jeu — Super Metroid <tspan fill="#7f9189">14</tspan></text>
+<circle cx="238" cy="832" r="8.7" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="221" y="836" text-anchor="end" font-size="15" fill="#cfe0d9">Metroid — dossier transversal <tspan fill="#7f9189">15</tspan></text>
+<circle cx="145" cy="752" r="9.6" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="127" y="756" text-anchor="end" font-size="15" fill="#cfe0d9">Exercices et contrôles — Metroid,… <tspan fill="#7f9189">19</tspan></text>
+<circle cx="79" cy="649" r="7.4" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="63" y="653" text-anchor="end" font-size="15" fill="#cfe0d9">Fiche — « Lettre d'amour à Metroi… <tspan fill="#7f9189">10</tspan></text>
+<circle cx="44" cy="531" r="7.0" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="29" y="535" text-anchor="end" font-size="15" fill="#cfe0d9">Fiche de veille — Metroid : pourq… <tspan fill="#7f9189">8</tspan></text>
+<circle cx="44" cy="409" r="6.2" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="30" y="413" text-anchor="end" font-size="15" fill="#cfe0d9">Glossaire — les termes que les no… <tspan fill="#7f9189">5</tspan></text>
+<circle cx="79" cy="291" r="5.5" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="65" y="295" text-anchor="end" font-size="15" fill="#cfe0d9">📇 INDEX — Vault Metroid <tspan fill="#7f9189">2</tspan></text>
+<circle cx="145" cy="188" r="6.2" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="131" y="192" text-anchor="end" font-size="15" fill="#cfe0d9">🎯 Objectifs — Vault Metroid <tspan fill="#7f9189">5</tspan></text>
+<circle cx="238" cy="108" r="11.4" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="218" y="112" text-anchor="end" font-size="15" fill="#cfe0d9">❓ Questions ouvertes — Vault Metr… <tspan fill="#7f9189">26</tspan></text>
+<circle cx="349" cy="57" r="5.5" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/><text x="335" y="61" text-anchor="end" font-size="15" fill="#cfe0d9">🎮 Vault Metroid — porte d'entrée <tspan fill="#7f9189">2</tspan></text>
+</svg><figcaption>Chaque trait est un renvoi <code>[[…]]</code> ; le chiffre à côté du nom
+est le nombre de renvois <strong>entrants</strong>. Disposition circulaire, sans physique : les
+positions ne veulent rien dire, la densité si.</figcaption></figure>
+<h2>Le classement, mesuré</h2>
+<table>
+<thead><tr><th>Note</th><th class="num">Citée par</th><th class="num">Cite</th><th>Qui la cite</th></tr></thead>
+<tbody>
+<tr><td>La licence — les jeux, dans l'ordre de sortie</td><td class="num">45</td><td class="num">9</td><td>🗺️ Carte du vault — Metroid, vue 360° · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Samus et les personnages · Le lore — les peuples, les créatures, les menaces · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · Audience et réception — pourquoi la licence est peu connue du grand public · L'état actuel — où en est la licence en septembre 2026 · Annexes — repères, titres et versions, lexique des studios, abandons · L'histoire de la licence comme objet — industrie, marchés, échecs · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid</td></tr>
+<tr><td>Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne</td><td class="num">39</td><td class="num">11</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Le lore — les peuples, les créatures, les menaces · Audience et réception — pourquoi la licence est peu connue du grand public · L'état actuel — où en est la licence en septembre 2026 · L'histoire de la licence comme objet — industrie, marchés, échecs · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · 🎮 Carnet de jeu — Super Metroid · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid</td></tr>
+<tr><td>Audience et réception — pourquoi la licence est peu connue du grand public</td><td class="num">37</td><td class="num">9</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Samus et les personnages · Le lore — les peuples, les créatures, les menaces · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · L'état actuel — où en est la licence en septembre 2026 · L'histoire de la licence comme objet — industrie, marchés, échecs · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid</td></tr>
+<tr><td>03 — Les créateurs et les studios</td><td class="num">32</td><td class="num">13</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · Samus et les personnages · Le lore — les peuples, les créatures, les menaces · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · Audience et réception — pourquoi la licence est peu connue du grand public · L'état actuel — où en est la licence en septembre 2026 · Annexes — repères, titres et versions, lexique des studios, abandons · L'histoire de la licence comme objet — industrie, marchés, échecs · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid</td></tr>
+<tr><td>L'état actuel — où en est la licence en septembre 2026</td><td class="num">32</td><td class="num">7</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Samus et les personnages · Le lore — les peuples, les créatures, les menaces · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · Audience et réception — pourquoi la licence est peu connue du grand public · Annexes — repères, titres et versions, lexique des studios, abandons · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid</td></tr>
+<tr><td>Le lore — les peuples, les créatures, les menaces</td><td class="num">30</td><td class="num">9</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Samus et les personnages · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid</td></tr>
+<tr><td>❓ Questions ouvertes — Vault Metroid</td><td class="num">26</td><td class="num">15</td><td>🗺️ Carte du vault — Metroid, vue 360° · La chronologie — l'ordre du récit contre l'ordre de sortie · Samus et les personnages · Audience et réception — pourquoi la licence est peu connue du grand public · L'histoire de la licence comme objet — industrie, marchés, échecs · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>La chronologie — l'ordre du récit contre l'ordre de sortie</td><td class="num">24</td><td class="num">15</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · 03 — Les créateurs et les studios · Samus et les personnages · Le lore — les peuples, les créatures, les menaces · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · Audience et réception — pourquoi la licence est peu connue du grand public · L'état actuel — où en est la licence en septembre 2026 · Annexes — repères, titres et versions, lexique des studios, abandons · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid</td></tr>
+<tr><td>Samus et les personnages</td><td class="num">23</td><td class="num">11</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Le lore — les peuples, les créatures, les menaces · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · Audience et réception — pourquoi la licence est peu connue du grand public · L'état actuel — où en est la licence en septembre 2026 · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid</td></tr>
+<tr><td>Exercices et contrôles — Metroid, du CP à la 3e</td><td class="num">19</td><td class="num">42</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Samus et les personnages · Le lore — les peuples, les créatures, les menaces · Audience et réception — pourquoi la licence est peu connue du grand public · Annexes — repères, titres et versions, lexique des studios, abandons · L'histoire de la licence comme objet — industrie, marchés, échecs · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · 🎯 Objectifs — Vault Metroid · ❓ Questions ouvertes — Vault Metroid · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>Metroid — dossier transversal</td><td class="num">15</td><td class="num">26</td><td>🗺️ Carte du vault — Metroid, vue 360° · La licence — les jeux, dans l'ordre de sortie · La chronologie — l'ordre du récit contre l'ordre de sortie · 03 — Les créateurs et les studios · Le lore — les peuples, les créatures, les menaces · Audience et réception — pourquoi la licence est peu connue du grand public · L'état actuel — où en est la licence en septembre 2026 · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 🎯 Objectifs — Vault Metroid · ❓ Questions ouvertes — Vault Metroid · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>🎮 Carnet de jeu — Super Metroid</td><td class="num">14</td><td class="num">1</td><td>🗺️ Carte du vault — Metroid, vue 360° · Les mécaniques et le genre — d'où vient le mot « metroidvania » et comment le jeu fonctionne · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · 🎯 Objectifs — Vault Metroid</td></tr>
+<tr><td>Sources, méthode et transversales — ce qui relie ce kit au reste du studio</td><td class="num">13</td><td class="num">25</td><td>🗺️ Carte du vault — Metroid, vue 360° · L'histoire de la licence comme objet — industrie, marchés, échecs · Exercices et contrôles — Metroid, du CP à la 3e · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>Fiche — « Lettre d'amour à Metroid — le meilleur jeu vidéo ? (de loin) »</td><td class="num">10</td><td class="num">0</td><td>🗺️ Carte du vault — Metroid, vue 360° · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Metroid — dossier transversal · Exercices et contrôles — Metroid, du CP à la 3e · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid</td></tr>
+<tr><td>L'histoire de la licence comme objet — industrie, marchés, échecs</td><td class="num">8</td><td class="num">13</td><td>🗺️ Carte du vault — Metroid, vue 360° · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · 📇 INDEX — Vault Metroid · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>Fiche de veille — Metroid : pourquoi une licence reconnue des joueurs reste inconnue du grand public</td><td class="num">8</td><td class="num">0</td><td>🗺️ Carte du vault — Metroid, vue 360° · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · Glossaire — les termes que les notes emploient · 📇 INDEX — Vault Metroid · ❓ Questions ouvertes — Vault Metroid</td></tr>
+<tr><td>Annexes — repères, titres et versions, lexique des studios, abandons</td><td class="num">5</td><td class="num">41</td><td>🗺️ Carte du vault — Metroid, vue 360° · Sources, méthode et transversales — ce qui relie ce kit au reste du studio · 📇 INDEX — Vault Metroid</td></tr>
+<tr><td>Glossaire — les termes que les notes emploient</td><td class="num">5</td><td class="num">60</td><td>🗺️ Carte du vault — Metroid, vue 360° · Metroid — dossier transversal · 📇 INDEX — Vault Metroid · 🎯 Objectifs — Vault Metroid · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>🎯 Objectifs — Vault Metroid</td><td class="num">5</td><td class="num">4</td><td>🗺️ Carte du vault — Metroid, vue 360° · 📇 INDEX — Vault Metroid</td></tr>
+<tr><td>🗺️ Carte du vault — Metroid, vue 360°</td><td class="num">3</td><td class="num">40</td><td>📇 INDEX — Vault Metroid · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>📇 INDEX — Vault Metroid</td><td class="num">2</td><td class="num">37</td><td>🗺️ Carte du vault — Metroid, vue 360° · 🎮 Vault Metroid — porte d'entrée</td></tr>
+<tr><td>🎮 Vault Metroid — porte d'entrée</td><td class="num">2</td><td class="num">10</td><td>🗺️ Carte du vault — Metroid, vue 360° · 📇 INDEX — Vault Metroid</td></tr>
+</tbody>
+</table>
+<p><em>Ce que la carte dit et qu'aucune note ne dit : le vault a des notes très citées et des
+notes terminales. Repérer les secondes est le seul moyen de savoir quoi relier ensuite.</em></p>
+<a class="retour" href="./index.html">← Sommaire d'Arche</a>
+</main>
+</body>
+</html>
