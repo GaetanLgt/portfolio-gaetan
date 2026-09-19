@@ -140,6 +140,16 @@ export const TOPOGRAPHIE = [
     declaration: null,
   },
 
+  // ═══ L'INTELLIGENCE QUI VIT À BORD — la pièce qui parle ═══════════════════════════
+  {
+    chemin: '/ia-de-bord',
+    compartiment: { id: 'ia-bord', nom: "L'IA de bord", pont: 'inferieur' },
+    declaration: {
+      lastmod: '2026-09-19', changefreq: 'monthly', priority: '0.7',
+      note: "L'IA de bord (ajoutée le 19/09/2026) : la pièce qui manquait au récit du navire — l'intelligence qui vit à bord et à qui le capitaine parle. Elle décrit la voix de bord, les sept postes de l'équipage AVEC les frontières entre eux (« chaque poste sait ce qu'il ne fait pas »), la mémoire du navire (consignes réécrites après chaque synthèse, références lues à la demande), les quatre verrous que le dépôt mesure vraiment (typographie, poids, contraste, juridique) et TROIS LIMITES assumées, dont l'absence de squelette d'animation et le fait que l'assistante n'a pas d'yeux. Priorité 0.7 : c'est une pièce de récit qui explique la méthode du studio, pas une porte commerciale. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'une page non déclarée est invisible pour les moteurs alors que son objet est justement de dire ce que la machine fait et ne fait pas. Aucun nom de franchise, aucun numéro de port, aucun nom de fichier : le verrou juridique lit le composant entier, commentaires retirés.",
+    },
+  },
+
   // ═══ SOUS LA LIGNE DE FLOTTAISON — la zone qui se mérite ══════════════════════════
   {
     chemin: '/soute',

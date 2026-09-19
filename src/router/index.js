@@ -146,6 +146,33 @@ const routes = [
     }
   },
 
+  {
+    // L'IA DE BORD (19/09/2026) — le poste de l'assistante du navire.
+    //
+    // POURQUOI CETTE PAGE EXISTE. Le site racontait déjà une fiction navale complète :
+    // la passerelle, la salle des machines, la soute, la capitainerie, le dossier de
+    // bord. Il manquait la pièce qui relie le récit à la méthode — l'intelligence qui
+    // vit à bord, à qui le capitaine parle, et dont on peut dire honnêtement ce qu'elle
+    // fait ET ce qu'elle ne fait pas.
+    //
+    // ⚠️ PAGE ORDINAIRE, LIÉE DEPUIS LE PLAN DU SITE ET LE PIED DE PAGE. Même règle
+    // qu'à `/soute` : un contenu atteignable seulement par un chemin non balisé
+    // n'existe ni pour un lecteur d'écran ni pour un moteur de recherche, et le studio
+    // verrouille l'accessibilité (axe 0) et le SEO (100).
+    //
+    // ⚠️ RIEN D'INTERNE DANS LE CONTENU RENDU : ni numéro de port, ni nom de fichier,
+    // ni nom de modèle, ni version logicielle, ni nom de franchise. Le verrou
+    // juridique de `scripts/verifier-verrous.mjs` lit le composant entier, commentaires
+    // retirés — les mentions internes gardent le droit d'exister, pas de s'afficher.
+    path: '/ia-de-bord',
+    name: 'IaDeBord',
+    component: () => import('@/views/core/IaDeBordPage.vue'),
+    meta: {
+      title: 'L\'IA de bord | La pièce qui parle, ses sept postes et ses limites',
+      description: 'L\'intelligence qui vit à bord : la voix locale du capitaine, sept postes aux périmètres séparés, la mémoire du navire, quatre verrous mesurés — et trois limites dites franchement.'
+    }
+  },
+
   // -------------------------------------------------------------------------
   // SERVICES
   // -------------------------------------------------------------------------

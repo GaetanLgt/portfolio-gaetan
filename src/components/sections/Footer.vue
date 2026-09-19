@@ -98,6 +98,12 @@
                  Le pied de page étant sur toutes les pages, la soute est donc liée
                  partout, discrètement mais réellement. -->
             <router-link to="/soute">La soute (carte complète)</router-link>
+            <!-- L'IA DE BORD — ajoutée le 19/09/2026, dans le même esprit que le lien
+                 de la soute ci-dessous : une page ne doit jamais dépendre d'un chemin
+                 non balisé pour être atteinte. Le pied de page étant sur toutes les
+                 pages du site, la pièce qui parle est donc réellement liée partout —
+                 condition du référentiel d'accessibilité (axe 0) et du verrou SEO. -->
+            <router-link to="/ia-de-bord">L'IA de bord (la pièce qui parle)</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>
