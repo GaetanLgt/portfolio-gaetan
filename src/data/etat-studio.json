@@ -3,15 +3,15 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "495912c",
-    "sujet": "Le CNRS en source — un lien, et ce qu'il dit exactement",
-    "date": "2026-09-19T10:47:52+02:00",
+    "court": "bddc25f",
+    "sujet": "Ce que nous nous imposons — et deux verrous qui ne tournaient pas au déploiement",
+    "date": "2026-09-19T11:00:10+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-19 10:59:50",
-    "horodatage_minute": "2026-09-19 10:59",
-    "horodatage_iso": "2026-09-19T08:59:50.292Z",
+    "horodatage_local": "2026-09-19 11:06:33",
+    "horodatage_minute": "2026-09-19 11:06",
+    "horodatage_iso": "2026-09-19T09:06:33.838Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 63,

@@ -41,6 +41,35 @@
             données.</strong> Parce qu'un fichier central est ce qu'on vole : un endroit qui
             rassemble tout est un endroit qui, s'il tombe, livre tout d'un coup. Ce qui n'a
             pas été copié ne peut pas fuir.
+            <!--
+              ⚠️ L'ARGUMENT DE FOND, AJOUTÉ LE 19/09/2026 — ET C'EST LE MEILLEUR.
+
+              La phrase ci-dessus dit pourquoi un fichier central est dangereux EN LUI-MÊME.
+              Elle ne dit pas la raison de fond, qui est plus forte et qui vient d'ailleurs :
+
+                « Le véritable danger n'est pas uniquement la fuite elle-même. C'est la
+                  capacité des attaquants à recouper plusieurs bases de données pour
+                  reconstituer une identité numérique extrêmement précise. »
+                — Hervé Cathelineau, « Les fuites de données se multiplient : pourquoi chacun
+                  est concerné et comment se protéger », LinkedIn, 18/09/2026.
+
+              ⚠️ SOURCE ATTRIBUÉE, PAS PRÉSENTÉE COMME UNE ÉTUDE. C'est un article d'opinion
+              d'un praticien, lu le 19/09/2026 — pas une mesure, pas un rapport, et il n'est
+              pas évalué. On le cite pour ce qu'il est : une observation de métier, qui dit
+              exactement ce que la formule courte ne dit pas.
+
+              ET C'EST LA CONSÉQUENCE QUI COMPTE POUR NOUS : si le danger naît du RECOUPEMENT,
+              alors ne pas détenir la ligne qui rend le recoupement possible protège aussi
+              contre les fuites qu'on n'a pas causées. C'est une position plus forte que
+              « nous ne perdrons pas vos données » — c'est « nous ne détenons pas la pièce
+              qui rend dangereuse la fuite de quelqu'un d'autre ».
+            -->
+            <span class="impose__precision">Et la raison de fond est plus forte que ça : le
+            danger d'une fuite ne vient pas seulement de la fuite. Il vient de ce qu'on peut
+            faire en <strong>recoupant plusieurs bases</strong> — un nom ici, une adresse
+            là, un identifiant ailleurs, et une identité se reconstitue. Ne pas détenir la
+            pièce qui rend ce recoupement possible protège donc aussi contre des fuites que
+            nous n'avons pas causées.</span>
           </li>
           <li>
             <strong>Nous ne publions aucun chiffre sans sa source et sa date.</strong> Parce
@@ -460,6 +489,23 @@ import { LIEN_COURRIEL } from '@/config/contact.js';
   position: absolute;
   left: 0;
   color: var(--accent);
+}
+
+/* La précision ajoutée sous le premier refus (19/09/2026) : l'argument de fond,
+   qui vient d'une source citée. Elle est DÉTACHÉE du reste du point — un filet
+   à gauche, et un retrait — pour qu'on voie qu'elle vient d'ailleurs.
+   Jetons : `--rule-strong` est la seule bordure fonctionnelle autorisée du bloc
+   (4,01:1 sur le fond, seuil 3) ; `--ink-soft` porte le texte (10,87:1, seuil 4,5).
+   Aucune couleur en dur : la charte est dans variables.css, et un verrou le teste. */
+.impose__precision {
+  display: block;
+  margin-top: 0.7rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--rule-strong);
+  font-size: 0.94rem;
+}
+.impose__precision strong {
+  color: var(--ink);
 }
 
 .impose__liste--serree {
