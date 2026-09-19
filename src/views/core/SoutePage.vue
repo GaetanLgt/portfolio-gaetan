@@ -1,5 +1,16 @@
 <template>
-  <main class="soute">
+  <!--
+    ⚠️ `<main>` REMPLACÉ PAR `<div>` LE 13/09/2026.
+
+    `App.vue` pose déjà `<main id="main-content" role="main">` autour de TOUT le contenu rendu.
+    Cette page en ajoutait un second, à l'intérieur du premier : deux repères `main`, dont un
+    **imbriqué**. D'où deux constats d'accessibilité sur cette seule page —
+    `landmark-main-is-top-level` et `landmark-no-duplicate-main`.
+
+    Un document n'a qu'un seul contenu principal. La classe est conservée : elle porte la mise
+    en page, pas la sémantique.
+  -->
+  <div class="soute">
     <div class="soute__enveloppe">
 
       <!-- ── Le retour, en haut ET en bas ──────────────────────────────────────
@@ -109,7 +120,7 @@
 
       <RouterLink to="/" class="soute__retour">← Revenir sur le pont</RouterLink>
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup>

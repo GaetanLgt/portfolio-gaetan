@@ -37,38 +37,52 @@
         </div>
 
         <!-- INPUT -->
+        <!--
+          ⚠️ CORRIGÉ LE 13/09/2026 — LE NOM ANNONCÉ ÉTAIT L'EXEMPLE, PAS L'ÉTIQUETTE.
+
+          Le motif était partout le même : un `<label>` visible pour l'œil, et un `aria-label`
+          qui recopiait **le placeholder**. Un lecteur d'écran annonçait donc « Génie IT Tek FR »
+          au lieu de « Nom de l'entreprise », et « Professionnel » au lieu de « Ton ».
+
+          *Ce défaut ne se voit dans AUCUN rapport automatique* : un contrôle d'accessibilité
+          vérifie qu'un nom **existe**, pas qu'il est **juste**. Le champ avait un nom — le
+          mauvais. Même piège que le « 0 violation » mesuré sur une page sur vingt-trois.
+
+          Correction : chaque étiquette est associée à son champ par `for`/`id`, et l'`aria-label`
+          trompeur est retiré — l'étiquette visible devient la seule source du nom accessible.
+        -->
         <div class="input-section">
           <div class="input-group">
-            <label>🎯 Sujet / Brief <span class="required">*</span></label>
-            <textarea aria-label="Décrivez votre entreprise, service ou produit en détail..." v-model="brief" placeholder="Décrivez votre entreprise, service ou produit en détail..." class="brief-input"></textarea>
+            <label for="seo-brief">🎯 Sujet / Brief <span class="required">*</span></label>
+            <textarea id="seo-brief" v-model="brief" placeholder="Décrivez votre entreprise, service ou produit en détail..." class="brief-input"></textarea>
           </div>
           
           <div class="input-row">
             <div class="input-group">
-              <label>🏢 Nom de l'entreprise <span class="required">*</span></label>
-              <input aria-label="Génie IT Tek FR" type="text" v-model="companyName" placeholder="Génie IT Tek FR" class="text-input">
+              <label for="seo-entreprise">🏢 Nom de l'entreprise <span class="required">*</span></label>
+              <input id="seo-entreprise" type="text" v-model="companyName" placeholder="Génie IT Tek FR" class="text-input">
             </div>
             <div class="input-group">
-              <label>📍 Localisation</label>
-              <input aria-label="Amiens, Hauts-de-France" type="text" v-model="location" placeholder="Amiens, Hauts-de-France" class="text-input">
-            </div>
-          </div>
-
-          <div class="input-row">
-            <div class="input-group">
-              <label>🏷️ Mots-clés SEO <span class="required">*</span></label>
-              <input aria-label="développement web, Symfony, Vue.js" type="text" v-model="keywords" placeholder="développement web, Symfony, Vue.js" class="text-input">
-            </div>
-            <div class="input-group">
-              <label>🎯 Audience cible</label>
-              <input aria-label="PME, startups, décideurs" type="text" v-model="targetAudience" placeholder="PME, startups, décideurs" class="text-input">
+              <label for="seo-localisation">📍 Localisation</label>
+              <input id="seo-localisation" type="text" v-model="location" placeholder="Amiens, Hauts-de-France" class="text-input">
             </div>
           </div>
 
           <div class="input-row">
             <div class="input-group">
-              <label>🎭 Ton</label>
-              <select aria-label="Professionnel" v-model="tone" class="select-input">
+              <label for="seo-motscles">🏷️ Mots-clés SEO <span class="required">*</span></label>
+              <input id="seo-motscles" type="text" v-model="keywords" placeholder="développement web, Symfony, Vue.js" class="text-input">
+            </div>
+            <div class="input-group">
+              <label for="seo-audience">🎯 Audience cible</label>
+              <input id="seo-audience" type="text" v-model="targetAudience" placeholder="PME, startups, décideurs" class="text-input">
+            </div>
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="seo-ton">🎭 Ton</label>
+              <select id="seo-ton" v-model="tone" class="select-input">
                 <option value="professional">Professionnel</option>
                 <option value="casual">Décontracté</option>
                 <option value="enthusiastic">Enthousiaste</option>
@@ -77,23 +91,23 @@
               </select>
             </div>
             <div class="input-group">
-              <label>⭐ Points forts (optionnel)</label>
+              <label for="seo-pointsforts">⭐ Points forts (optionnel)</label>
               <!-- Exemple neutre : l'ancien texte (« 10 ans d'expérience, 50+ projets,
                    100% satisfaction ») était indexable par les moteurs sur cette page
                    et ressemblait à NOS chiffres. Un exemple ne doit pas pouvoir être
                    pris pour une preuve. -->
-              <input aria-label="vos faits réels : nombre de sites livrés, années d" type="text" v-model="highlights" placeholder="vos faits réels : nombre de sites livrés, années d'activité…" class="text-input">
+              <input id="seo-pointsforts" type="text" v-model="highlights" placeholder="vos faits réels : nombre de sites livrés, années d'activité…" class="text-input">
             </div>
           </div>
 
           <div class="input-row">
             <div class="input-group">
-              <label>🛠️ Technologies / Services clés</label>
-              <input aria-label="Symfony, Vue.js, Docker, PostgreSQL" type="text" v-model="technologies" placeholder="Symfony, Vue.js, Docker, PostgreSQL" class="text-input">
+              <label for="seo-technologies">🛠️ Technologies / Services clés</label>
+              <input id="seo-technologies" type="text" v-model="technologies" placeholder="Symfony, Vue.js, Docker, PostgreSQL" class="text-input">
             </div>
             <div class="input-group">
-              <label>📞 Call-to-Action</label>
-              <input aria-label="Demander un devis gratuit" type="text" v-model="ctaText" placeholder="Demander un devis gratuit" class="text-input">
+              <label for="seo-cta">📞 Call-to-Action</label>
+              <input id="seo-cta" type="text" v-model="ctaText" placeholder="Demander un devis gratuit" class="text-input">
             </div>
           </div>
 
@@ -131,20 +145,31 @@
           <!-- Content Editor -->
           <div class="content-output">
             <div class="content-field">
-              <label>🏷️ Titre SEO</label>
-              <input type="text" v-model="generatedContent.title" class="title-input">
+              <label for="seo-titre">🏷️ Titre SEO</label>
+              <input id="seo-titre" type="text" v-model="generatedContent.title" class="title-input">
               <span class="char-count" :class="{ warn: generatedContent.title.length > 70, good: generatedContent.title.length >= 50 && generatedContent.title.length <= 70 }">{{ generatedContent.title.length }}/70</span>
             </div>
             
             <div class="content-field">
-              <label>📝 Meta Description</label>
-              <textarea v-model="generatedContent.metaDescription" class="meta-input"></textarea>
+              <label for="seo-meta">📝 Meta Description</label>
+              <textarea id="seo-meta" v-model="generatedContent.metaDescription" class="meta-input"></textarea>
               <span class="char-count" :class="{ warn: generatedContent.metaDescription.length > 160, good: generatedContent.metaDescription.length >= 120 && generatedContent.metaDescription.length <= 160 }">{{ generatedContent.metaDescription.length }}/160</span>
             </div>
             
             <div class="content-field">
-              <label>📄 Contenu principal</label>
-              <div class="body-editor" contenteditable="true" @input="onBodyEdit" v-html="generatedContent.body"></div>
+              <!-- Une zone `contenteditable` n'est PAS un champ de formulaire : sans `role`,
+                   elle n'est annoncée ni comme éditable ni comme étiquetée. On lui donne donc
+                   son rôle, son mode multiligne, et son étiquette. -->
+              <label id="seo-corps-libelle">📄 Contenu principal</label>
+              <div
+                class="body-editor"
+                contenteditable="true"
+                role="textbox"
+                aria-multiline="true"
+                aria-labelledby="seo-corps-libelle"
+                @input="onBodyEdit"
+                v-html="generatedContent.body"
+              ></div>
             </div>
           </div>
 

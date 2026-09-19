@@ -1768,7 +1768,16 @@ const uptimeAccessibleData = ref([
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--primary);
-  opacity: 0.3;
+  /* ⚠️ 0.3 → 0.6 LE 13/09/2026. Ce numéro d'étape est du TEXTE (1,5 rem, gras) : il doit
+     atteindre 3:1 sur le fond de page. À 0,3 le vert #00FF41 ne donnait que 2,2:1 — échec
+     relevé par l'analyse automatique sur trois occurrences.
+     Calcul (formule WCAG, composition alpha sur les cinq fonds plausibles du thème) :
+       0,30 → 2,19-2,25  ✗      0,50 → 4,12-4,15  ✓
+       0,40 → 3,03-3,06  ✓ mais marge de 3 %      0,60 → 5,42-5,53  ✓
+     **0,6 est retenu, pas 0,4** : une marge de 3 % sur un seuil est exactement le genre de
+     fragilité qui a déjà coûté cher ici (la « marge de 1 requête »). Le numéro reste discret —
+     5,5:1 quand le vert plein en fait 14. *On remonte la couleur, on ne baisse jamais le seuil.* */
+  opacity: 0.6;
 }
 
 .mod-step__label {

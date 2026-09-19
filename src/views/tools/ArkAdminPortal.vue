@@ -57,8 +57,12 @@
         </div>
 
         <div class="search-bar">
-          <span class="search-icon">🔍</span>
-          <input type="text" v-model="searchQuery" placeholder="Rechercher..." class="search-input">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <!-- Ce champ n'a AUCUNE étiquette visible : la loupe est décorative et le
+               placeholder disparaît à la saisie. `aria-label` est donc ici le bon outil,
+               pas un pis-aller — sans lui, le champ s'annonce « zone de texte » et rien
+               ne dit qu'il sert à filtrer le portail. -->
+          <input type="text" v-model="searchQuery" placeholder="Rechercher..." class="search-input" aria-label="Rechercher dans le portail">
         </div>
       </div>
     </section>

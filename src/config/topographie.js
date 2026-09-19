@@ -199,6 +199,18 @@ export const TOPOGRAPHIE = [
   // d'entrée. Écrit ici pour que ce ne soit pas pris pour un oubli.
   { chemin: '/demo-conformite', declaration: null },
   { chemin: '/demo-festival-metz', declaration: null },
+
+  // ═══ ARCHE — les scènes du vault Metroid ═════════════════════════════════════════
+  // Cinq pages (une entrée + quatre scènes) générées par `scripts/generer-arche.mjs`,
+  // en HTML et SVG EN LIGNE : 0 script, 0 ressource chargée, 0 dépendance.
+  // ⛔ Pourquoi pas de 3D : `three` est une dépendance déclarée du dépôt, donc le critère
+  //    du gabarit (« 0 script ou sans dépendance ») est faux — le poids, lui, passait
+  //    (710 741 o avec OrbitControls, sous le verrou de 1 Mo). Mesure dans l'en-tête du
+  //    générateur et sur la page d'entrée.
+  // Même régime que le kit et les démonstrations : hors sitemap, hors navigation, hors
+  // pied de page, `noindex`. Écrit ici pour que ce ne soit pas pris pour un oubli.
+  // Adresse visée : gldigitallab.fr/Arche/
+  { chemin: '/Arche', declaration: null },
 ];
 
 /** Les compartiments de la carte du navire, dérivés du manifeste. */

@@ -1,13 +1,13 @@
 {
   "name": "Génie IT Tek FR",
   "short_name": "GL Lab",
-  "description": "Architecture numérique souveraine - Symfony 8, Vue 3, IA locale",
+  "description": "Architecture numérique souveraine - Vue 3, Vite, IA locale hébergée en France",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#050505",
-  "theme_color": "#10B981",
+  "background_color": "#03060A",
+  "theme_color": "#03060A",
   "lang": "fr-FR",
   "categories": ["business", "productivity", "developer tools"],
   "icons": [
@@ -65,13 +65,6 @@
       "short_name": "Contact",
       "description": "Réserver un audit",
       "url": "/contact",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
-    },
-    {
-      "name": "Multivers",
-      "short_name": "Multivers",
-      "description": "Explorer les 20 univers",
-      "url": "/multivers",
       "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
     },
     {

@@ -49,21 +49,36 @@
             <div class="form-section">
               <h3>📝 Informations</h3>
               <div class="form-row">
+                <!--
+                  ⚠️ CORRIGÉ LE 13/09/2026 — QUATRE DÉFAUTS ICI, DONT UN CRITIQUE.
+
+                  ① `aria-label="docType ==="` : l'attribut contenait **le texte source d'une
+                     expression Vue cassée**. Le champ avait donc un nom accessible… qui était
+                     « docType === ». Pire qu'un champ sans nom : il portait un nom faux.
+
+                  ②③④ Les trois `<input type="date">` étaient **posés à côté** de leur `<label>`,
+                     sans `for` ni `id`. Visuellement étiquetés, et **muets pour un lecteur d'écran** —
+                     c'est le défaut classé **critique** par l'analyse automatique, et il portait
+                     sur un outil livré.
+
+                  La correction associe chaque étiquette à son champ par `for`/`id` : le nom
+                  accessible devient l'étiquette visible, ce qui est la seule formulation juste.
+                -->
                 <div class="form-field">
-                  <label>Numéro</label>
-                  <input aria-label="docType ===" type="text" v-model="docNumber" :placeholder="docType === 'quote' ? 'DEV-2024-001' : 'FAC-2024-001'">
+                  <label for="fact-numero">Numéro</label>
+                  <input id="fact-numero" type="text" v-model="docNumber" :placeholder="docType === 'quote' ? 'DEV-2024-001' : 'FAC-2024-001'">
                 </div>
                 <div class="form-field">
-                  <label>Date</label>
-                  <input type="date" v-model="docDate">
+                  <label for="fact-date">Date</label>
+                  <input id="fact-date" type="date" v-model="docDate">
                 </div>
                 <div class="form-field" v-if="docType === 'quote'">
-                  <label>Validité</label>
-                  <input type="date" v-model="validUntil">
+                  <label for="fact-validite">Validité</label>
+                  <input id="fact-validite" type="date" v-model="validUntil">
                 </div>
                 <div class="form-field" v-if="docType === 'invoice'">
-                  <label>Échéance</label>
-                  <input type="date" v-model="dueDate">
+                  <label for="fact-echeance">Échéance</label>
+                  <input id="fact-echeance" type="date" v-model="dueDate">
                 </div>
               </div>
             </div>
@@ -90,8 +105,10 @@
                 <span>{{ totalHT.toFixed(2) }} €</span>
               </div>
               <div class="total-row">
-                <span>TVA ({{ tvaRate }}%)</span>
-                <input type="number" v-model.number="tvaRate" class="tva-input" min="0" max="30">
+                <!-- Le taux de TVA : le `<span>` visible EST l'étiquette. `aria-labelledby` la
+                     lui associe — l'annonce devient « TVA (20%) », et elle suit la valeur. -->
+                <span id="fact-tva-libelle">TVA ({{ tvaRate }}%)</span>
+                <input aria-labelledby="fact-tva-libelle" type="number" v-model.number="tvaRate" class="tva-input" min="0" max="30">
                 <span>{{ totalTVA.toFixed(2) }} €</span>
               </div>
               <div class="total-row total-ttc">

@@ -29,8 +29,8 @@
           <h3>⚙️ Configuration projet</h3>
           <div class="config-grid">
             <div class="config-group">
-              <label>Type de projet</label>
-              <select aria-label="Node.js / Vue / React" v-model="projectType">
+              <label for="jitsu-type">Type de projet</label>
+              <select id="jitsu-type" v-model="projectType">
                 <option value="node">Node.js / Vue / React</option>
                 <option value="php">PHP / Symfony / Laravel</option>
                 <option value="python">Python / Django / FastAPI</option>
@@ -38,8 +38,8 @@
               </select>
             </div>
             <div class="config-group">
-              <label>Environnement cible</label>
-              <select aria-label="VPS (SSH)" v-model="targetEnv">
+              <label for="jitsu-env">Environnement cible</label>
+              <select id="jitsu-env" v-model="targetEnv">
                 <option value="vps">VPS (SSH)</option>
                 <option value="docker">Docker Registry</option>
                 <option value="vercel">Vercel</option>

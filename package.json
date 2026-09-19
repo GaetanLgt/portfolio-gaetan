@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "//build": "NE REGENERE PAS les images (corrige le 10/09/2026) : voir le commentaire dans scripts/generate-favicons.js. Les PNG sont versionnés et le build les reprend tels quels, pour que ce qui est TESTE soit ce qui est DEPLOYE.",
-    "build": "npm run sitemap && npm run ecole && vite build && npm run prerendre",
+    "build": "npm run sitemap && npm run ecole && npm run arche && vite build && npm run prerendre",
     "build:images": "npm run generate:assets && vite build && npm run prerendre",
     "prerendre": "node scripts/prerendre.js",
     "preview": "vite preview",
@@ -25,6 +25,8 @@
     "deploy:ready": "node scripts/optimize-and-build.js",
     "audit:topographie": "node scripts/verifier-topographie.mjs",
     "sitemap": "node scripts/generer-sitemap.mjs",
+    "//arche": "Les scenes du vault Metroid en HTML/SVG sans script, vers /Arche/ (non repertorie). Le generateur LIT le vault OneDrive et se saute proprement s'il est absent.",
+    "arche": "node scripts/generer-arche.mjs",
     "ecole": "node scripts/publier-ecole.mjs"
   },
   "dependencies": {
