@@ -41,3 +41,11 @@ dist-ssr
 lighthouse-rapports/
 
 lighthouse-report.json
+
+# ⛔ AJOUTÉ LE 19/09/2026 APRÈS UNE ERREUR RÉELLE.
+# 21 images (10,7 Mo) référencées par AUCUNE page, jamais versionnées jusqu'ici —
+# par discipline manuelle. Un git add public/ trop large les a emportées dans le
+# commit d167a30 et poussées. La discipline ne suffisait pas : la règle est ici.
+# ⚠️ Les fichiers restent sur le disque, ils ne partent simplement jamais.
+/public/world/
+/audit-auto/
