@@ -111,6 +111,13 @@
                  montrer ce qui est vérifiable, et une page de preuve qu'on ne peut pas
                  trouver ne prouve rien à personne. -->
             <router-link to="/etat-du-studio">L'état du studio (le relevé du présent)</router-link>
+            <!-- CE QUE NOUS NOUS IMPOSONS — ajoutée le 19/09/2026, même règle que les trois
+                 précédentes : une page doit être atteignable par un lien ordinaire, sinon
+                 elle n'existe ni pour un moteur de recherche ni pour un lecteur d'écran.
+                 Cette page-là en dépend plus encore : son objet est de publier des règles
+                 qu'on puisse opposer au studio. **Un engagement qu'on ne peut pas trouver
+                 n'oppose rien à personne.** -->
+            <router-link to="/ce-que-nous-nous-imposons">Ce que nous nous imposons (nos règles)</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>

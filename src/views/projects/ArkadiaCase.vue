@@ -291,7 +291,14 @@
           <span class="section-title__icon">📈</span>
           ANALYSE DE CHARGE
         </h2>
-        <p class="charts__subtitle">LOG_SOURCE: Cluster_Arkadia_Production_Metrics_2025</p>
+        <!-- ⚠️ « ARKADIA » EN CAPITALES, ET C'EST DÉLIBÉRÉ (corrigé le 19/09/2026).
+             Cette étiquette désigne la SOURCE DU RELEVÉ : le cluster de jeu.
+             `docs/nomenclature-projet.md` dit que « ARKADIA » est le nom du cluster
+             (« ARKADIA France PvE »), que « ArkAdiA » est celui du réseau social, et
+             que « arkadia » en minuscules est réservé aux routes et aux domaines.
+             L'ancienne écriture — « Arkadia » — n'était ni l'un ni l'autre : c'était
+             la seule des quatre formes qui n'avait aucun référent. -->
+        <p class="charts__subtitle">LOG_SOURCE: Cluster_ARKADIA_Production_Metrics_2025</p>
         
         <div class="charts__grid reveal">
           <ChartPanel

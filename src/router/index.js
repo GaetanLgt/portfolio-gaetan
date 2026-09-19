@@ -15,6 +15,8 @@ const NotFound = () => import('@/views/core/NotFound.vue');
 const AppsPage = () => import('@/views/core/AppsPage.vue');
 // L'ÉTAT DU STUDIO (19/09/2026) — le relevé du présent.
 const EtatStudioPage = () => import('@/views/core/EtatStudioPage.vue');
+// CE QUE NOUS NOUS IMPOSONS (19/09/2026) — les règles que le studio se donne.
+const CeQueNousNousImposonsPage = () => import('@/views/core/CeQueNousNousImposonsPage.vue');
 
 // SERVICES - Offres et solutions
 const ServicesPage = () => import('@/views/services/ServicesPage.vue');
@@ -205,6 +207,43 @@ const routes = [
     meta: {
       title: 'L\'état du studio | Le relevé du présent, mesuré et daté',
       description: 'Le studio en ce moment : commit livré, horodatage du build, pages prérendues, poids, requêtes, verdict des cinq contrôles du dépôt — et les moteurs d\'IA qui sont venus nous lire. Chaque chiffre porte son heure, et ce qui n\'est pas mesuré le dit.'
+    }
+  },
+
+  {
+    // CE QUE NOUS NOUS IMPOSONS (19/09/2026) — les règles que le studio se donne.
+    //
+    // POURQUOI CETTE PAGE EXISTE. Trois pièces d'actualité sont arrivées le même jour : une
+    // étude économique sur des projets d'intelligence artificielle qui ne passent pas
+    // l'échelle, un argumentaire promettant une plateforme qui centralise tout, et le récit
+    // public d'une fuite de données massive. La consigne du dirigeant : « on peut faire
+    // quelque chose par rapport à ça », et « nous on se confine par rapport à eux ».
+    //
+    // ⚠️ CE N'EST PAS UN COMMENTAIRE D'ACTUALITÉ. Un article réagirait à chaud et
+    // vieillirait en une semaine. Ce qui est publié ici est une RÈGLE DE TRAVAIL DATÉE :
+    // ce que le studio refuse, ce qu'il s'impose, ce qu'il a raté, et ce que rien de tout
+    // cela ne garantit — dont un point qu'il reconnaît NE PAS appliquer encore.
+    //
+    // ⛔ CE QUE CETTE PAGE NE CONTIENT PAS, ET NE CONTIENDRA PAS : le nom de la société
+    // victime de la fuite, aucun chiffre de cette fuite, ni le nom ni l'adresse du lieu où
+    // les données se vendent, et AUCUN LIEN entre l'argumentaire commercial et la fuite —
+    // suggérer un rapport serait une allégation. Le pré-print cité (Solé et Ruffini) est
+    // donné avec son identifiant ET son statut non évalué par les pairs, avant l'usage
+    // qu'on en fait.
+    //
+    // ⚠️ PAGE ORDINAIRE, LIÉE DEPUIS LE PIED DE PAGE. Même règle qu'à `/soute`,
+    // `/ia-de-bord` et `/etat-du-studio` : un contenu atteignable seulement par un chemin
+    // non balisé n'existe ni pour un lecteur d'écran ni pour un moteur de recherche.
+    //
+    // ⚠️ RIEN D'INTERNE DANS LE CONTENU RENDU : ni numéro de port, ni nom de fichier, ni
+    // nom de modèle, ni version logicielle, ni nom de franchise. Les contrôles automatiques
+    // y sont décrits par ce qu'ils vérifient, jamais par le fichier qui les porte.
+    path: '/ce-que-nous-nous-imposons',
+    name: 'CeQueNousNousImposons',
+    component: CeQueNousNousImposonsPage,
+    meta: {
+      title: 'Ce que nous nous imposons | Nos règles, nos limites',
+      description: 'Ce que ce studio s\'interdit et pourquoi : pas de plateforme qui centralise vos données, aucun chiffre sans source ni date, aucune décision déléguée. Avec les règles qu\'il tient, celles qu\'il ne tient pas encore, et ce que rien de tout cela ne garantit.'
     }
   },
 

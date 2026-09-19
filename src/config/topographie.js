@@ -236,6 +236,21 @@ export const TOPOGRAPHIE = [
       note: "L'état du studio (ajoutée le 19/09/2026) : le présent réel du studio, mesuré et daté — commit livré, horodatage du build, pages prérendues, poids et requêtes du premier chargement, verdict des cinq contrôles du dépôt, et les passages des moteurs d'IA en compteurs agrégés. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'une page qui dit la vérité sur un studio doit pouvoir être trouvée par ceux qui la vérifient. `changefreq: daily` : c'est la seule page du site dont le contenu change à chaque construction, et la seule dont une partie est lue en direct. Priorité 0.7 : c'est une pièce de confiance, pas une porte commerciale. Aucun numéro de port, aucun nom de fichier, aucun nom de modèle : les services y sont décrits par leur rôle, jamais par leur architecture réseau.",
     },
   },
+
+  // ═══ CE QUE NOUS NOUS IMPOSONS — nos règles, et ce qu'elles ne garantissent pas ══
+  // ⚠️ AJOUTÉE EN DERNIER, ET CE N'EST PAS DE LA NÉGLIGENCE : c'est la règle de ce
+  // fichier appliquée à lui-même. Les compartiments et les `chemin` sont appariés PAR
+  // ORDRE D'APPARITION ; insérer cette entrée plus haut décalerait tous les appariements
+  // suivants, et `verifier-topographie.mjs` lirait une carte fausse. Une entrée nouvelle
+  // se pose donc à la fin, jamais au milieu.
+  {
+    chemin: '/ce-que-nous-nous-imposons',
+    compartiment: { id: 'impose', nom: 'Nos règles de bord', pont: 'inferieur' },
+    declaration: {
+      lastmod: '2026-09-19', changefreq: 'monthly', priority: '0.6',
+      note: "Ce que nous nous imposons (ajoutée le 19/09/2026) : les règles que le studio se donne, publiées pour qu'elles puissent être opposées au studio — refus argumentés (aucune plateforme qui centralise les données d'un client, aucun chiffre sans source ni date, aucune décision déléguée), la discipline de vérification, la mémoire datée des erreurs du studio et de ses propres outils, et une rubrique « ce que cette page ne garantit pas ». Trois pièces d'actualité ont motivé la page ; aucune n'y est exploitée : la société victime d'une fuite n'est pas nommée, aucun chiffre de cette fuite n'est repris, le lieu de vente des données n'est ni nommé ni désigné, et AUCUN LIEN n'est établi entre l'argumentaire commercial et la fuite — suggérer un rapport serait une allégation. Le pré-print cité (Solé et Ruffini, identifiant arXiv 2509.03344) est présenté comme non évalué par les pairs AVANT l'usage qu'on en fait. UN POINT DE LA PAGE EST DÉCLARÉ NON APPLIQUÉ : le studio n'a pas encore de périodes déconnectées, et il l'écrit plutôt que de se l'attribuer. Priorité 0.6 : c'est une pièce de méthode et de confiance, pas une porte commerciale. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'un engagement qu'on ne peut pas trouver n'oppose rien à personne. Aucun numéro de port, aucun nom de fichier, aucun nom de modèle, aucun nom de franchise : les contrôles automatiques y sont décrits par ce qu'ils vérifient, jamais par le fichier qui les porte.",
+    },
+  },
 ];
 
 /** Les compartiments de la carte du navire, dérivés du manifeste. */

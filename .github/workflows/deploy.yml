@@ -180,6 +180,43 @@ jobs:
         # 12 requêtes, 333,4 Ko servis sur un seuil de 1 024 Ko (marge 690,6 Ko).
         run: node scripts/verifier-poids.mjs --detail
 
+      # ⛔ AJOUTÉS LE 19/09/2026 — DEUX VERROUS EXISTAIENT ET NE TOURNAIENT PAS ICI.
+      #
+      # Constat mesuré ce jour, en comptant : `scripts/` contient SEPT fichiers
+      # `verifier-*.mjs`, `generer-etat.mjs` en enregistre CINQ (ceux que la page
+      # /etat-du-studio affiche), et CE WORKFLOW n'en appelait que TROIS — verrous,
+      # requêtes, poids.
+      #
+      # Autrement dit : **les deux verrous écrits le 19/09 ne protégeaient rien au
+      # déploiement.** Le plan du site et la topographie pouvaient devenir
+      # incohérents, et un `mailto:` pouvait se casser entre la source et le HTML
+      # livré — la CI aurait laissé passer les deux et déployé.
+      #
+      # C'est le défaut que ce studio combat depuis le début : **un contrôle qui
+      # n'est pas branché n'est pas un contrôle.** Il rassure sur le papier et ne
+      # mesure rien. Les deux étapes ci-dessous tournent APRÈS le build, parce
+      # qu'elles lisent `dist/` — même raison que les requêtes et le poids.
+      #
+      # ⚠️ ET IL EN RESTE DEUX, VOLONTAIREMENT DEHORS :
+      #   · `verifier-a11y-rendu.mjs` pilote un Chrome sans interface : il ne peut
+      #     pas tourner sur ce poste (voir le commentaire du job Lighthouse, l.260),
+      #     et son verdict y est un artefact de mesure, pas un verdict sur le site ;
+      #   · `verifier-css-sans-balisage.mjs` désigne des classes mortes SANS les
+      #     supprimer — il informe, il ne verrouille pas. Le brancher en échec
+      #     bloquerait un déploiement pour un constat qui demande un arbitrage.
+      # Ces deux-là sont NOMMÉS ici pour qu'on ne les croie pas branchés.
+
+      - name: 🗺️ Topographie du site
+        # Compare les quatre listes — manifeste, plan du site, plan montré au
+        # visiteur, pages réellement livrées — et échoue si l'une dérive.
+        run: node scripts/verifier-topographie.mjs
+
+      - name: 📇 Contact livré au visiteur
+        # Les liens `mailto:` et `tel:` RÉELLEMENT présents dans le HTML livré :
+        # une seule forme distincte pour chacun, un objet pré-rempli qui se décode,
+        # un `tel:` conforme, et aucune coordonnée en dur hors de la source unique.
+        run: node scripts/verifier-contact.mjs
+
       - name: 📤 Upload build artifact
         uses: actions/upload-artifact@v4
         with:

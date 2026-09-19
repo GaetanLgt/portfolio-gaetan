@@ -174,4 +174,11 @@
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <!-- Ce que nous nous imposons (ajoutée le 19/09/2026) : les règles que le studio se donne, publiées pour qu'elles puissent être opposées au studio — refus argumentés (aucune plateforme qui centralise les données d'un client, aucun chiffre sans source ni date, aucune décision déléguée), la discipline de vérification, la mémoire datée des erreurs du studio et de ses propres outils, et une rubrique « ce que cette page ne garantit pas ». Trois pièces d'actualité ont motivé la page ; aucune n'y est exploitée : la société victime d'une fuite n'est pas nommée, aucun chiffre de cette fuite n'est repris, le lieu de vente des données n'est ni nommé ni désigné, et AUCUN LIEN n'est établi entre l'argumentaire commercial et la fuite — suggérer un rapport serait une allégation. Le pré-print cité (Solé et Ruffini, identifiant arXiv 2509.03344) est présenté comme non évalué par les pairs AVANT l'usage qu'on en fait. UN POINT DE LA PAGE EST DÉCLARÉ NON APPLIQUÉ : le studio n'a pas encore de périodes déconnectées, et il l'écrit plutôt que de se l'attribuer. Priorité 0.6 : c'est une pièce de méthode et de confiance, pas une porte commerciale. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'un engagement qu'on ne peut pas trouver n'oppose rien à personne. Aucun numéro de port, aucun nom de fichier, aucun nom de modèle, aucun nom de franchise : les contrôles automatiques y sont décrits par ce qu'ils vérifient, jamais par le fichier qui les porte. -->
+    <loc>https://gldigitallab.fr/ce-que-nous-nous-imposons</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
