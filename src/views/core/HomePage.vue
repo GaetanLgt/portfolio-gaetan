@@ -462,10 +462,20 @@
             <span class="mono-tag" aria-hidden="true">/// 03 · LA MÉTHODE</span>
             <h2 id="method-title">Comment travaille le studio</h2>
             <p class="section-header__desc">
-              Génie IT Tek FR est un studio indépendant (SASU) dirigé par un architecte de
-              systèmes multi-agents. Des agents IA spécialisés — orchestration, rédaction,
-              code, audit, mémoire — sont nos outils de production : contrôlés à chaque
-              étape, jamais un intermédiaire qui décide à votre place.
+              <!-- ⚠️ « (SASU) » RETIRÉ LE 19/09/2026 — LA SOCIÉTÉ N'EST PAS IMMATRICULÉE.
+                   La même correction avait été faite sur `/dossier`, qui porte même une note
+                   la documentant (l. 36 : « statut déclaré au présent alors que… »). **La page
+                   d'accueil avait été oubliée**, et c'est la plus lue du site.
+                   Le reste du site dit déjà la vérité : `/dossier` — « en cours
+                   d'immatriculation » et « Aucune facture n'est émise avant » · `/mentions-legales`
+                   — « Entreprise en cours d'immatriculation » · `/cgv` — « dès l'immatriculation ».
+                   ⚠️ Un statut social ne se déclare pas au présent avant d'exister : ce n'est pas
+                   une question de forme, c'est ce qu'un client lit avant de signer. -->
+              Génie IT Tek FR est un studio indépendant français, <strong>en cours
+              d'immatriculation</strong>, dirigé par un architecte de systèmes multi-agents. Des
+              agents IA spécialisés — orchestration, rédaction, code, audit, mémoire — sont nos
+              outils de production : contrôlés à chaque étape, jamais un intermédiaire qui décide
+              à votre place.
             </p>
           </div>
         </ScrollReveal>
