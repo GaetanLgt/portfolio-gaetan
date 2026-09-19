@@ -264,9 +264,9 @@ dire(fuites.length === 0, 'aucun nom protégé dans les composants .vue',
   fuites.length
     ? fuites.join(' ; ')
     : `portée : ${sources.filter((f) => f.endsWith('.vue')).length} composant(s) .vue de src/ — ni dist/, ni public/`
-      + ' ⚠️ CE VERROU NE COUVRE PAS LE SITE LIVRÉ : 1 497 occurrences de « Metroid » dans le texte'
-      + ' visible de dist/ (kit pédagogique public/TARDIS/JoF/metroid/), 387 « Nintendo », 271 « Samus ».'
-      + ' Sa publication est une décision de Gaëtan (D12), pas la mienne — voir le commentaire ci-dessus.');
+      + ' · hors périmètre PAR DÉCISION : le kit pédagogique public/TARDIS/JoF/metroid/ (22 pages)'
+      + ' nomme la franchise parce qu\'il L\'ÉTUDIE — publication tranchée par Gaëtan le 19/09/2026, D12.'
+      + ' Voir le commentaire ci-dessous avant de conclure quoi que ce soit.');
 
 // ⛔ DEUX DÉFAUTS TROUVÉS LE 19/09/2026, EN COMPTANT LES OCCURRENCES SUR LE SITE LIVRÉ.
 //
@@ -274,30 +274,42 @@ dire(fuites.length === 0, 'aucun nom protégé dans les composants .vue',
 // `Nintendo` 387, `Samus` 271. Le présent verrou affichait pourtant « aucun nom protégé
 // dans le contenu visible des pages ».
 //
-// ① LE PÉRIMÈTRE. La boucle ci-dessus ne lit que les `.vue` de `src/` (`if (!f.endsWith('.vue')) continue`).
-//    Elle ne regarde NI `dist/`, NI `public/` — et c'est là que vivent les occurrences,
-//    dans le kit pédagogique `public/TARDIS/JoF/metroid/` et les scènes `public/Arche/`.
+// ① LE PÉRIMÈTRE. La boucle ci-dessus ne lit que les `.vue` de `src/`. Elle ne regarde
+//    NI `dist/`, NI `public/` — et c'est là que vivent les occurrences, dans le kit
+//    pédagogique `public/TARDIS/JoF/metroid/` (22 pages) et les scènes `public/Arche/`.
 //
-// ② LE MESSAGE, ET C'EST LE PLUS GRAVE. Il concluait « les mentions restent dans les
+// ② LE MESSAGE, ET C'ÉTAIT LE PLUS GRAVE. Il concluait « les mentions restent dans les
 //    commentaires internes » — une AFFIRMATION SUR TOUT LE SITE, tirée d'un contrôle qui
-//    n'avait lu qu'une partie des sources. **C'est faux, et je l'ai mesuré** : les
-//    commentaires des pages livrées n'en contiennent AUCUNE, et le texte visible en
-//    contient 1 497. *Un contrôle ne peut pas conclure au-delà de ce qu'il a lu.* C'est
-//    le défaut que ce dépôt combat depuis le début, et il était ici, dans le contrôle.
+//    n'avait lu qu'une partie des sources. **C'est faux, et mesuré** : les commentaires
+//    des pages livrées n'en contiennent AUCUNE, le texte visible en contient 1 497.
+//    *Un contrôle ne peut pas conclure au-delà de ce qu'il a lu.*
 //
-// ③ ET UN NOM MANQUAIT : `Samus` n'était pas dans la liste `PROTEGES` ci-dessus, alors
-//    qu'il apparaît 271 fois dans le site livré. Ce n'est pas ajouté ici non plus — le
-//    kit l'étudie délibérément, et l'ajouter ferait échouer le build sur un choix
-//    éditorial. **Nommé, pas corrigé : c'est à Gaëtan de trancher.**
+// ③ ET UN NOM MANQUAIT : `Samus` n'était pas dans la liste `PROTEGES`, alors qu'il
+//    apparaît 271 fois dans le site livré.
 //
-// ⚠️ CE QUI N'A PAS ÉTÉ FAIT, ET POURQUOI : je n'ai PAS étendu le périmètre à `dist/`.
-// Le faire ferait ÉCHOUER le build sur le kit Metroid — des pages qui nomment la
-// franchise parce qu'elles L'ÉTUDIENT (licence, chronologie, créateurs, sources et
-// vérification). C'est de l'usage nominatif dans un travail critique, et **la décision
-// de publier ce kit appartient à Gaëtan (D12)**, pas à un verrou. Étendre le périmètre
-// trancherait sa décision à sa place — exactement ce qu'on ne fait pas.
+// ─── ⭐ LA DÉCISION, PRISE LE 19/09/2026, ET ELLE EST ICI POUR ÊTRE LUE ───────────
 //
-// Ce qui est corrigé : le verrou DIT ce qu'il a lu, et n'affirme plus rien de plus.
+// **Gaëtan a tranché : le kit reste publié.** Ce n'est pas une tolérance, c'est un choix
+// assumé, et il a une raison : *un travail critique a le droit de nommer son objet.*
+// Le kit n'utilise AUCUN asset de la franchise — ni image, ni modèle, ni musique, ni
+// capture. Il en parle : licence, chronologie, créateurs, mécaniques, réception,
+// sources. **C'est de l'usage nominatif, et le studio l'assume.**
+//
+// ⛔ CE QUE CETTE DÉCISION N'AUTORISE PAS, et le verrou doit le dire aussi :
+//   · **aucun asset de la franchise** dans un livrable — image, modèle 3D, son, logo ;
+//   · **aucun autre nom protégé** que ceux du kit, et jamais dans un composant `.vue`
+//     (c'est ce que la boucle ci-dessus continue de faire respecter) ;
+//   · **le fan art `samus-gavit_fusion.jpg`** — signé « © Korntr13 » — **n'entre nulle
+//     part** : *il porte DEUX droits, la franchise et son auteur.*
+//
+// ⚠️ Le périmètre n'a donc TOUJOURS PAS été étendu à `dist/`, mais pour une raison qui a
+// changé : avant, c'était « je ne veux pas trancher la décision de Gaëtan » ; maintenant,
+// c'est « la décision est prise, et un verrou qui la signalerait à chaque build serait du
+// bruit ». **Un contrôle qu'on ignore est pire qu'un contrôle absent** — il apprend à ne
+// plus lire les sorties. L'exception est donc écrite ici, nommée, datée, et justifiée.
+//
+// Si la position change un jour, c'est CE commentaire qu'il faut corriger — et le
+// périmètre avec.
 
 // ─── VERROU 5 : poids — PORTÉ AILLEURS, SUR LE BUILD ────────────────────────
 // Ma première version additionnait la taille des fichiers source et échouait si le
