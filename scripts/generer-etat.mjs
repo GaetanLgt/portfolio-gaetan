@@ -109,15 +109,47 @@ const VERROUS = [
 
 /* ─── Outils ──────────────────────────────────────────────────────────────── */
 
-/** L'horodatage local, à la seconde, au format ISO — et son décalage horaire. */
+/* L'heure du STUDIO, et pas celle de la machine qui construit.
+ *
+ * ⛔ CORRIGÉ LE 19/09/2026 — LE RELEVÉ EN LIGNE AFFICHAIT UNE HEURE FAUSSE.
+ *
+ * La version précédente faisait :
+ *     fuseau: Intl.DateTimeFormat().resolvedOptions().timeZone
+ * et calculait `local` avec le décalage de la machine. Sur le poste du studio,
+ * c'est `Europe/Paris` — donc juste. Mais le site est construit par un runner
+ * GitHub Actions, dont l'horloge est en UTC.
+ *
+ * Mesure du défaut, sur la page déployée :
+ *     relevé affiché : 2026-09-19 08:11
+ *     heure locale   : 2026-09-19 10:13   (Paris)
+ * Deux heures d'écart, et le champ s'appelait `horodatage_local`.
+ *
+ * C'est le défaut que ce dépôt combat depuis le début : un libellé qui dit
+ * quelque chose que la valeur ne soutient pas. Le studio est en Somme ; son
+ * heure est `Europe/Paris`, où que la construction ait lieu. On l'écrit donc
+ * explicitement au lieu de la déduire de l'environnement.
+ *
+ * ⚠️ `hourCycle: 'h23'` et non `hour12: false` : sur certaines versions de Node,
+ * `hour12: false` rend « 24 » à minuit en locale fr. `h23` rend « 00 ».
+ */
+const FUSEAU_STUDIO = 'Europe/Paris';
+
+/** L'horodatage du studio, à la seconde — dans SON fuseau, pas celui du bâtisseur. */
 function maintenant() {
   const t = new Date();
-  const decale = new Date(t.getTime() - t.getTimezoneOffset() * 60000);
+  const fmt = new Intl.DateTimeFormat('fr-CA', {
+    timeZone: FUSEAU_STUDIO,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hourCycle: 'h23',
+  });
+  const p = Object.fromEntries(fmt.formatToParts(t).map((x) => [x.type, x.value]));
+  const local = `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:${p.second}`;
   return {
     iso: t.toISOString(),
-    local: decale.toISOString().slice(0, 19).replace('T', ' '),   // « 2026-09-19 14:32:07 »
-    minute: decale.toISOString().slice(0, 16).replace('T', ' '),  // « 2026-09-19 14:32 »
-    fuseau: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
+    local,                          // « 2026-09-19 14:32:07 », heure du studio
+    minute: local.slice(0, 16),     // « 2026-09-19 14:32 »
+    fuseau: FUSEAU_STUDIO,
   };
 }
 
