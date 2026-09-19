@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>L'échelle et les unités · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>L'échelle et les unités</h1>
+<p><em>Un objet juste et invisible est un objet raté : un pipeline qui ne normalise pas la taille livre des modèles deux fois trop petits, et un export sans unités livre des collisions fausses.</em></p>
+<p>Le générateur ne normalise <strong>pas</strong> la taille des objets. Mesuré : les unités sortaient entre <strong>0,83 et 1,00</strong> de haut au lieu de 1,66 attendu — elles paraissaient donc deux fois trop petites à l'écran. Une fois la normalisation d'échelle ajoutée dans le composant, la matière visible est passée de <strong>5,1 % à 15,1 %</strong> de la zone affichée. La leçon du document est formulée ainsi : « un pipeline sans étape de normalisation livre des objets justes et invisibles ».</p>
+<p>Côté moteur, la question devient une convention à tenir de bout en bout. La liste de contrôle du studio impose :</p>
+<table><thead><tr><th>Point</th><th>Règle</th></tr></thead>
+<tbody><tr><td>Unités Blender</td><td>Metric, <code>scale_length = 1.0</code>, 1 unité = 1 mètre</td></tr><tr><td>Transformations</td><td>appliquées (Location, Rotation, Scale) — une échelle non appliquée fausse les collisions</td></tr><tr><td>Origine</td><td>au sol (Z = 0), pivot centré en XY</td></tr><tr><td>Export glTF</td><td>+Y up ; <strong>ne pas</strong> pré-tourner de -90° sur X</td></tr><tr><td>Import moteur</td><td><code>Import Uniform Scale = 1.0</code> — corriger dans Blender, pas à l'import</td></tr><tr><td>Vérification</td><td>un repère de joueur à 1,80 m et un cube de 1 m</td></tr></tbody></table>
+<h2>Ce qui est établi</h2>
+<ul><li>Les mesures 0,83–1,00 au lieu de 1,66 et le passage de 5,1 % à 15,1 % (méthode jeu vidéo, 10/09/2026).</li><li>La règle « pas de normalisation = objets justes et invisibles » (même source).</li><li>Toutes les lignes du tableau de conventions (liste de contrôle Blender → moteur du studio, 08/09/2026).</li><li>L'absence d'étape d'échelle dans les travaux restants : « non fait : LOD, collision, échelle (extents ~0,29 × 0,60 × 0,83) » (document du studio, 11/09/2026).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>L'échelle cible d'un asset destiné à un moteur : aucune valeur n'est arrêtée dans les documents lus, seulement la convention 1 unité = 1 mètre.</li><li>La vérification en moteur : au 08/09/2026, l'import n'avait pas été fait, et aucune performance n'était mesurée.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/methode-creation-jeu-video.md</code> — mesures d'échelle et correction.</li><li><code>jeux/zombunny-lab-3d/ue5-import-checklist.md</code> — conventions d'unités, d'export et d'import.</li><li><code>modeles/pipeline-3d-trellis2-2026-09-11.md</code> — échelle non traitée, extents relevés.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="ce-qui-separe-un-rendu-d-un-asset-de-jeu.html">ce-qui-separe-un-rendu-d-un-asset-de-jeu</a> — l'échelle est l'une des conditions d'un asset de jeu.</li><li><a href="le-poids-d-un-modele-dans-une-page.html">le-poids-d-un-modele-dans-une-page</a> — une autre contrainte mesurée de mise en ligne.</li><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> — la lecture de l'espace change quand la caméra change.</li></ul>
+<h2>Cité par</h2>
+<p>3 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="ce-qui-separe-un-rendu-d-un-asset-de-jeu.html">Ce qui sépare un rendu d'un asset de jeu</a></li><li><a href="la-vram-est-la-vraie-limite.html">La VRAM est la vraie limite</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Un émetteur, un journal, un filtre · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Un émetteur, un journal, un filtre</h1>
+<p><em>L'indexeur publie un événement à chaque fichier modifié : ce qu'il écrit, où cela va, et qui peut refuser un document avant qu'il entre en mémoire.</em></p>
+<h2>L'idée</h2>
+<p><code>indexer-agence.js</code> n'est pas un script qu'on lance : c'est un <strong>système à événements</strong>. En mode <code>--watch</code>, il relit la liste des fichiers toutes les <strong>8 secondes</strong>, calcule un hash par fichier et déclenche un traitement <strong>dès que le hash change</strong> — pour un ajout <strong>comme</strong> pour une modification (<code>indexer-agence.js</code>, lignes 271 à 284).</p>
+<p>Ce qu'il publie : une ligne JSON dans <code>events.log</code> — « Document indexé au RAG agence : <code>&lt;chemin&gt;</code> » ou « Indexation RAG ÉCHOUÉE (<code>&lt;chemin&gt;</code>) — <code>&lt;erreur&gt;</code> » — écrite par <code>notifier</code>, avec un message <strong>tronqué à 280 caractères</strong> et <code>agent: 'watashi'</code> (lignes 186 à 192, 220, 228, 235, 245) ; et un <code>console.log</code> par fichier traité, pour l'humain devant le terminal.</p>
+<p>Deux détails du code comptent plus que la liste. <strong>La mémoire d'état est écrite AVANT l'indexation</strong> (<code>etatConnu[k] = h</code>, ligne 278) : l'émetteur se souvient d'un événement qu'il n'a pas encore traité, donc un échec est consommé et ne sera pas republié tant que le fichier ne change pas (<a href="l-index-ne-rattrape-pas-son-retard.html">l-index-ne-rattrape-pas-son-retard</a>). Et <strong>un tiers peut refuser le document</strong> : <code>uploader()</code> appelle un <strong>filtre d'injection</strong> et lit son code de sortie — <code>0</code> propre, <code>1</code> « à revoir, indexé quand même », <code>2</code> <strong>indexation refusée</strong> pour un signal de forme (lignes 120 à 140).</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Balayage toutes les <strong>8 secondes</strong> ; un hash différent déclenche l'indexation, ajout ou modification (lignes 273 à 284).</li><li><code>notifier()</code> écrit une ligne JSON dans <code>events.log</code> — <code>{ ts, type:'evenement', agent:'watashi', message }</code> — avec un message <strong>limité à 280 caractères</strong> (lignes 186 à 192).</li><li>Le filtre d'injection est appelé par <code>execFileSync</code> et son code de sortie est interprété : <code>0</code> propre, <code>1</code> avertissement avec indexation, <code>2</code> refus avec erreur levée (lignes 130 à 140).</li><li><code>etatConnu[k] = h</code> est écrit <strong>avant</strong> <code>indexer(f)</code> (ligne 278) ; <code>dejaIndexe[k]</code> seulement après un embedding <code>completed</code> (ligne 242). La boucle <strong>ne traite pas les suppressions</strong> (ligne 283).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Je <strong>ne sais pas</strong> avec quel délai les lignes de <code>events.log</code> sont relayées, ni qui les lit en continu : je n'ai lu que le code qui les écrit.</li><li><strong>Aucune latence mesurée</strong> : ni entre la modification d'un fichier et la ligne de journal, ni pour l'embedding lui-même.</li><li>Le contenu de <code>events.log</code> n'est <strong>pas analysé</strong> : les <strong>298 échecs</strong> sont cités par un document du studio, je ne les ai pas recomptés. Je <strong>n'ai rien exécuté</strong> : ni l'indexeur, ni le filtre.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>indexer-agence.js</code> (285 lignes, lu en entier, <strong>non exécuté</strong>) — lignes 120 à 140 (filtre), 186 à 192 (<code>notifier</code>), 220 à 245 (événements), 271 à 284 (boucle de surveillance).</li><li><code>vault-agence/extension-rag-et-indexation-2026-09-14.md</code> § 5 — les <strong>298 échecs</strong>, le PID du veilleur et sa date de démarrage.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="l-index-ne-rattrape-pas-son-retard.html">l-index-ne-rattrape-pas-son-retard</a> — le même code, vu par son retard.</li><li><a href="ce-qui-est-verifie-ne-se-recopie-pas.html">ce-qui-est-verifie-ne-se-recopie-pas</a> — un autre contrôle qui vit hors du corpus.</li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a> — la note de méthode qui relie le kit au reste du studio.</li></ul>
+<h2>Cité par</h2>
+<p>3 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-physique-et-flux.html">Physique et flux d'information — carte du dossier</a></li><li><a href="ce-qu-un-decoupage-ne-recolle-pas.html">Ce qu'un découpage ne recolle pas</a></li><li><a href="l-index-ne-rattrape-pas-son-retard.html">L'index ne rattrape pas son retard</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

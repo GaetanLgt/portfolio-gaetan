@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Le registre des licences refusées · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Le registre des licences refusées</h1>
+<p><em>La licence qui compte est celle des poids, pas celle affichée par le dépôt qui les héberge — et le registre du studio se lit avant d'utiliser un modèle 3D, pas après.</em></p>
+<p>Le studio tient un registre de décision, pas une fiche de veille. Sa règle centrale vient d'un cas mesuré : <strong>le dépôt HuggingFace de Pixal3D affiche « License: mit »</strong>, alors que la licence qui régit les poids est celle de Tencent — « Academic / non-commercial use only » et « Pixal3D IS NOT INTENDED FOR USE WITHIN THE EUROPEAN UNION ». Un outil qui marche mal coûte du temps ; un outil mal licencié coûte un client.</p>
+<table><thead><tr><th>Élément</th><th>Verdict</th><th>Clause qui bloque</th></tr></thead>
+<tbody><tr><td>Pixal3D (image → 3D)</td><td>⛔ refusé</td><td>licence Tencent : non commercial et exclusion de l'Union européenne ; le poids est livré dans le gabarit natif « Trellis.2 + Pixal3D »</td></tr><tr><td>Meshy, Tripo (services en ligne)</td><td>⛔ refusés</td><td>services en ligne ; ce sont les <strong>seuls</strong> nœuds de rig installés</td></tr><tr><td>Hy3D 3.1, Hunyuan 3D Studio, Rodin WorldGen</td><td>⛔ refusés</td><td>pas de poids ouverts, API ou service cloud, images hors machine</td></tr><tr><td>Modddif (texturage 3D, freemium)</td><td>⛔ refusé</td><td>palier gratuit : créations publiées en Creative Commons et utilisées pour l'entraînement ; 30 $/mois sinon — remplacé par le texturage PBR natif de TRELLIS.2</td></tr><tr><td>TRELLIS.2 (Microsoft)</td><td>✅ autorisé</td><td>MIT, usage commercial explicitement autorisé après retrait des dépendances NVIDIA non commerciales</td></tr><tr><td>ComfyUI-SplatKit, Modly</td><td>✅ autorisés</td><td>MIT</td></tr><tr><td>AnimoFlow</td><td>⚠️ obligations</td><td>AGPL-3.0 : copyleft fort si un service dérivé est distribué</td></tr><tr><td>ARDY (NVIDIA)</td><td>⚠️ obligations</td><td>code Apache-2.0, poids sous NVIDIA Open Model Agreement ; encodeur d'environ 14 Go de VRAM, hors budget</td></tr></tbody></table>
+<p>Une interdiction écrite n'interdit rien, donc le studio l'instrumente : un script (<code>forge-ia/verifier-licences-workflows.py</code>) balaie les graphes et sort en code 1 s'il trouve un outil interdit. État relevé : <strong>87 workflows examinés, 1 contaminé</strong> (un nœud Pixal3D laissé en mode 4, donc contourné mais réactivable d'un clic). Les gabarits natifs de ComfyUI qui mettent la chaîne en scène — deux fichiers <code>.json</code> et leurs aperçus <code>.webp</code> — ont été neutralisés par un suffixe <code>.interdit</code> — neutralisation juridique, réversible, et à revérifier après chaque mise à jour de ComfyUI.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>La règle « on lit la licence du poids, pas celle du dépôt » et le cas Pixal3D (registre des licences, 10/09/2026).</li><li>Toutes les lignes du tableau (registre, 10, 11 et 14/09/2026 ; plan de travail pour Meshy et Tripo).</li><li>Le garde-fou, ses 87 workflows examinés et son unique contamination (registre, 10/09/2026).</li><li>La neutralisation par <code>.interdit</code> des quatre gabarits, et le risque de retour à une mise à jour (même source).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>La liste des quatre gabarits neutralisés : le registre en nomme deux (<code>3d_pixal3d_multi_views.json</code>, <code>3d_pixal3d_trellis2_image_to_model.json</code>) et parle de quatre fichiers avec leurs aperçus.</li><li>La question ouverte sur les dépendances NVIDIA de TRELLIS.2 : une issue publique existe sur le dépôt, son contenu n'a <strong>pas pu être lu</strong>. À instruire avant toute livraison client.</li><li>Le sort du workflow contaminé : le nettoyer ou l'assumer est une décision de Gaëtan, non tranchée.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>vault-agence/licences-refusees.md</code> — le registre complet et ses règles.</li><li><code>modeles/plan-de-travail-2026-09-10.md</code> — Meshy et Tripo, seuls nœuds de rig installés et interdits.</li><li><code>modeles/pipeline-3d-trellis2-2026-09-11.md</code> — rappel de l'interdiction Pixal3D dans la chaîne.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="un-modele-3d-n-est-pas-une-ressource-libre.html">un-modele-3d-n-est-pas-une-ressource-libre</a> — le même registre appliqué aux œuvres protégées.</li><li><a href="le-squelette-et-l-animation.html">le-squelette-et-l-animation</a> — pourquoi les seuls nœuds de rig installés ne peuvent pas servir.</li><li><a href="../01-la-licence.html">01-la-licence</a> — la licence comme objet juridique, côté vault.</li></ul>
+<h2>Cité par</h2>
+<p>4 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="le-squelette-et-l-animation.html">Le squelette et l'animation</a></li><li><a href="un-modele-3d-n-est-pas-une-ressource-libre.html">Un modèle 3D n'est pas une ressource libre</a></li><li><a href="../ponts/cathedrale-amiens-et-eternal-darkness.html">La cathédrale d'Amiens × Eternal Darkness — le pont, et ce qu'il ne prouve pas</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

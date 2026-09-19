@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>La VRAM est la vraie limite · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>La VRAM est la vraie limite</h1>
+<p><em>Sur la machine du studio, le facteur limitant n'est ni le temps de calcul ni la puissance du processeur : c'est la mémoire de la carte graphique, et tout le reste en découle.</em></p>
+<p>La configuration mesurée est stable et datée : <strong>NVIDIA RTX 3080, 10 240 Mio de VRAM (10 Go)</strong>, pour <strong>63,7 Go de mémoire vive</strong> dont 51,6 Go libres en charge de travail. Le plafond réellement exploitable est plus bas que le chiffre de la carte : la référence du studio est de <strong>8,7 Gio de VRAM utile</strong>, et les autres documents parlent d'environ <strong>8,4 Gio</strong> exploitables pour l'inférence.</p>
+<p>Ce qui rend cette limite structurante, ce sont les mesures de cohabitation. Quand un modèle de langage de travail est chargé, il ne reste presque rien :</p>
+<table><thead><tr><th>Situation</th><th>Mémoire libre</th></tr></thead>
+<tbody><tr><td><code>qwen3.5:9b</code> chargé</td><td>1 668 Mo libres</td></tr><tr><td><code>qwen3-coder-16k</code> + ComfyUI</td><td>437 Mo (le plancher atteint)</td></tr></tbody></table>
+<p>Un modèle de travail et une génération 3D <strong>ne cohabitent pas</strong> sur cette machine. Il faut donc sérialiser : générer, libérer, puis écrire du code. Le dépassement n'est pas une lenteur, c'est une panne : le 10/09/2026, une génération en 1280×720 a provoqué un reset du pilote (<code>nvlddmkm</code>, événement 153), Windows a coupé le contexte CUDA et tous les processus de calcul sont morts.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>La configuration : RTX 3080, 10 240 Mio, 63,7 Go de RAM (perc) (capacités machine, 11/09/2026).</li><li>Les deux mesures de cohabitation, 1 668 Mo et 437 Mo (méthode jeu vidéo, 10/09/2026).</li><li>Le seuil de 8,7 Gio comme référence du studio, et celui de 8,4 Gio employé ailleurs (documents du studio).</li><li>Le plantage par TDR (<code>nvlddmkm</code> événement 153) et sa conséquence sur le contexte CUDA (2 documents concordants).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>La valeur exacte de la VRAM utilisable aujourd'hui : un audit du 14/09/2026 juge les 8,7 Gio « optimistes d'environ 1 Gio », sans nouvelle mesure de référence.</li><li>Le délai de garde TDR : le levier (passer de 2 s à 60 s) <strong>n'a pas été appliqué</strong> — il touche au registre de Windows, et c'est une décision humaine.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>notebooklm-pack-ecosysteme-2026-09-11/04-MACHINE-CAPACITES.md</code> — matériel, limite dure, règle d'un seul travail.</li><li><code>modeles/methode-creation-jeu-video.md</code> — cohabitation mesurée, sérialisation.</li><li><code>modeles/pipeline-3d-trellis2-2026-09-11.md</code> — TDR, journaux Windows, levier non appliqué.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="le-budget-mesure-d-un-run-trellis.html">le-budget-mesure-d-un-run-trellis</a> — combien une génération 3D consomme réellement de cette mémoire.</li><li><a href="l-echelle-et-les-unites.html">l-echelle-et-les-unites</a> — une autre contrainte de production, mesurée elle aussi.</li><li><a href="../08-etat-actuel-2026.html">08-etat-actuel-2026</a> — l'état d'une licence se lit aussi à ses moyens de production.</li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="le-budget-mesure-d-un-run-trellis.html">Le budget mesuré d'un run TRELLIS</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

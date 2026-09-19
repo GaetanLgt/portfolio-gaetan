@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Ce qui est vérifié ne se recopie pas · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Ce qui est vérifié ne se recopie pas</h1>
+<p><em>La vérification du kit n'est pas dans le corpus — elle vit dans l'outillage du studio, et une note qui ne dit pas qui l'a vérifiée reste en dette.</em></p>
+<h2>L'idée</h2>
+<p>Un vault ne se vérifie pas tout seul : le contrôle réel se fait <strong>à l'extérieur</strong>. L'outil <code>forge-ia/verifier-kits.mjs</code> mesure, ne juge pas, et rend un code de sortie ; il déduit le <strong>type</strong> de la note <strong>de son nom de fichier</strong> — <code>navigation</code> pour <code>00-…</code>/<code>README</code>/<code>INDEX</code>, <code>contenu</code> pour <code>^\d\d-</code> ou <code>^dossier-</code>, <code>outil</code> pour <code>glossaire</code>/<code>exercices-et-controles</code>, <code>copie</code> pour <code>fiches/</code>, <code>travail</code> pour tout le reste (<a href="../11-sources-et-verification.html">11-sources-et-verification</a> § 1 bis).</p>
+<p>Et c'est là le point dur, écrit comme un <strong>contrat</strong> : <em>une note qui n'est ni <code>NN-</code>, ni <code>dossier-</code>, ni <code>glossaire</code>, ni <code>exercices-et-controles</code> n'est plus jamais mesurée</em> — et <strong>c'est une sortie silencieuse : le verdict reste vert</strong> (même source). Un atome comme celui-ci est donc de type <code>travail</code> : aucun critère ne s'applique à lui, et sa section <code>## Sources</code> est une <strong>dette déclarée</strong>. L'outil mesure <strong>6 critères sur 8</strong> — poids (&lt; 1 Mo) et accessibilité sont renvoyés à une « passe finale » — et il <strong>ne lit que le champ <code>verifie:</code></strong> : les autres statuts servent Obsidian et le studio, le publieur retirant le frontmatter avant lecture.</p>
+<h2>Ce qui est établi</h2>
+<ul><li><code>forge-ia/verifier-kits.mjs</code> applique ses critères selon un type <strong>déduit du nom du fichier</strong> : une note renommée hors des préfixes connus <strong>sort du contrôle</strong>, silencieusement, sans que le verdict change (<a href="../11-sources-et-verification.html">11-sources-et-verification</a> § 1 bis).</li><li><strong>6 critères sur 8</strong> sont mesurés par machine : poids (&lt; 1 Mo) et accessibilité sont annoncés « passe finale » (même source).</li><li>L'outil ne lit que <code>verifie:</code> ; le publieur retire le frontmatter, donc le lecteur ne voit ni <code>statut:</code>, ni <code>tags:</code> (même source).</li><li>Divergence mesurée et <strong>non corrigée</strong> : le cycle annonce <strong>30 jours</strong> de fenêtre pour les notes d'actualité, l'outil applique <strong>90 jours</strong> (<code>FENETRES</code>) (même source).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Je <strong>n'ai pas exécuté</strong> <code>verifier-kits.mjs</code> : je ne sais pas ce qu'il répondrait sur ce dossier-ci.</li><li>Aucun <strong>contrôle qualité pédagogique</strong> n'existe : l'outil ne peut pas savoir si une question est trop dure, et <strong>aucune séance n'a été testée devant un élève</strong> (même source).</li><li>Aucune <strong>durée de vérification</strong> n'est mesurée : ni par note, ni par passe.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>11-sources-et-verification.md</code> § 1, § 1 bis et § 5 — <a href="../11-sources-et-verification.html">11-sources-et-verification</a> (note de méthode, 14/09/2026).</li><li><code>forge-ia/verifier-kits.mjs</code> — outil du studio, cité par la note 11, <strong>non exécuté ici</strong>.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="de-la-transcription-a-la-fiche.html">de-la-transcription-a-la-fiche</a> — le maillon que ce contrôle devrait couvrir.</li><li><a href="l-index-ne-rattrape-pas-son-retard.html">l-index-ne-rattrape-pas-son-retard</a> — un autre contrôle qui existe sans être appliqué.</li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a> — la note de référence de toute cette veine.</li></ul>
+<h2>Cité par</h2>
+<p>5 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-physique-et-flux.html">Physique et flux d'information — carte du dossier</a></li><li><a href="de-la-transcription-a-la-fiche.html">De la transcription à la fiche</a></li><li><a href="l-index-ne-rattrape-pas-son-retard.html">L'index ne rattrape pas son retard</a></li><li><a href="le-nom-mal-entendu.html">Le nom mal entendu</a></li><li><a href="un-emetteur-un-journal-un-filtre.html">Un émetteur, un journal, un filtre</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

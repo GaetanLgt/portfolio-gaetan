@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>La boucle explorer, trouver, ouvrir · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>La boucle explorer, trouver, ouvrir</h1>
+<p><em>Un monde fermé, un objet qui l'ouvre, un retour : la progression se lit dans le monde, pas dans un menu.</em></p>
+<h2>L'idée</h2>
+<p>La progression de la série tient dans un cycle court : on parcourt une carte interconnectée, on trouve un objet, on revient là où le passage était fermé. Le monde s'ouvre. Trois conséquences de conception en découlent.</p>
+<p>D'abord, les objets <strong>ne sont pas décoratifs</strong> : missiles et rayon de glace sont nécessaires pour finir <em>Metroid</em> (1986). Ensuite, la carte est <strong>non linéaire</strong> et impose de traverser plusieurs fois les mêmes lieux — le retour n'est pas un défaut, c'est la mécanique. Enfin, un jeu bâti sur le retour doit retirer l'ennui du retour : les gros épisodes ajoutent points de sauvegarde et téléportation rapide pour supprimer les déplacements fastidieux en fin de partie.</p>
+<p>Le cycle admet une sortie par le haut : le <em>sequence breaking</em>, qui consiste à finir hors de l'ordre prévu, parfois en sautant une étape obligatoire. Il est documenté dès <em>Metroid Prime</em>, en janvier 2003.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Une seule grande carte interconnectée, découpée en salles ; toutes les zones ne sont pas accessibles au départ ; un objet, une arme, une clé ou une capacité lève l'obstacle (<code>06-les-mecaniques-et-le-genre</code> § 2).</li><li>Missiles et rayon de glace sont nécessaires pour finir <em>Metroid</em> : les objets ne sont pas décoratifs (même note, § 4).</li><li>Les cartes sont non linéaires et imposent de parcourir plusieurs fois le monde ; les ennemis faibles réapparaissent (<code>06</code> § 2).</li><li>Les gros jeux ajoutent des points de sauvegarde et une téléportation rapide pour supprimer les déplacements fastidieux en fin de partie (même note).</li><li>Le <em>sequence breaking</em> naît sur <em>Metroid Prime</em> : exploit de Steven Banks, 18 janvier 2003, forum GameFAQs (même note, § 5).</li><li>Formulation pour la classe : « la première carte, c'est un obstacle qui a une clé » (<code>dossier-metroid-360.md</code>, séance CP · CE1).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le mot « boucle » n'est employé par aucune source lue pour décrire ce cycle : c'est une mise en forme de ce dossier, pas une formule sourcée.</li><li>Aucune source lue ne compte les allers-retours d'un épisode : la charge de retour n'est mesurée nulle part.</li><li>La durée « acceptable » d'un trajet de retour n'est donnée par personne : la téléportation rapide est constatée, pas évaluée.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>06-les-mecaniques-et-le-genre.md</code> § 2, 4 et 5 — vault Metroid, 14/09/2026.</li><li><code>dossier-metroid-360.md</code> § 2.5 et séance CP · CE1 — même date.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="un-niveau-se-concoit-comme-un-parcours.html">un-niveau-se-concoit-comme-un-parcours</a></li><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a></li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-conception-et-architecture.html">Conception et architecture — carte du dossier</a></li><li><a href="un-niveau-se-concoit-comme-un-parcours.html">Un niveau se conçoit comme un parcours</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

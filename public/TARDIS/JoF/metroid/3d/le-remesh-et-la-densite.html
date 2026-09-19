@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Le remesh et la densité · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Le remesh et la densité</h1>
+<p><em>« Remesh » n'est pas un embellissement : c'est le réglage qui décide combien de faces porte l'objet, et le studio s'en sert pour viser deux cibles opposées avec le même nœud.</em></p>
+<p>L'allègement passe par le nœud <code>Trellis2ProcessMesh</code>. Son schéma a été relevé dans la source du nœud, jamais deviné :</p>
+<table><thead><tr><th>Paramètre</th><th>Valeur par défaut</th><th>Rôle</th></tr></thead>
+<tbody><tr><td><code>remesh</code></td><td>combo dynamique</td><td><code>"off"</code> expose <code>fill_holes</code>, <code>fill_holes_perimeter</code> ; <code>"on"</code> expose <code>remesh_band</code>, <code>remove_inner_faces</code></td></tr><tr><td><code>target_face_count</code></td><td>500 000 (min 1 000, max 5 000 000)</td><td>la densité visée</td></tr><tr><td><code>weld_vertices</code></td><td>vrai</td><td>soude les sommets</td></tr><tr><td><code>floater_threshold</code></td><td>0,001</td><td>supprime les éclats détachés</td></tr><tr><td><code>weld_digits</code></td><td>4</td><td>précision de la soudure</td></tr><tr><td><code>chart_cone_angle</code> / <code>chart_refine_iterations</code> / <code>chart_global_iterations</code> / <code>chart_smooth_strength</code></td><td>90,0 / 0 / 1 / 1</td><td>réglages de découpage des UV</td></tr></tbody></table>
+<p>Deux enseignements de mesure. D'abord, la cible de faces est le seul levier qui change entre les usages : viser 30 000 faces a donné 29 536 triangles pour un modèle destiné à un moteur ; viser 2 500 faces a donné les unités destinées au site. <strong>Le même nœud couvre les deux besoins.</strong> Ensuite, <code>weld_vertices</code> et <code>floater_threshold</code> sont précisément les deux leviers absents du chemin qui a détruit un maillage à l'étape UV — la piste documentée, non testée au moment de la mesure.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Les paramètres et leurs bornes, relevés dans la source du nœud (document du studio, <code>pipeline-3d-trellis2-2026-09-11.md</code>).</li><li>30 000 faces visées → 29 536 triangles mesurés, GLB de 1 260 Ko (méthode jeu vidéo, 10/09/2026).</li><li>2 500 faces visées pour le web, 408 Ko au total pour six unités (méthode jeu vidéo, 10/09/2026).</li><li><code>weld_vertices</code> et <code>floater_threshold</code> existent dans <code>ProcessMesh</code> et manquaient au chemin de test (document du studio, 11/09/2026).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>L'effet réel de <code>weld_vertices</code> + <code>floater_threshold</code> sur la fragmentation : la piste est écrite, <strong>non testée</strong>. Un seul run reste à faire pour trancher.</li><li>Les réglages de découpage des UV : <code>chart_refine_iterations=5</code> n'a <strong>aucun effet mesuré</strong> (29 176 → 29 237 grappes) ; les autres n'ont pas été testés un par un.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/pipeline-3d-trellis2-2026-09-11.md</code> — schéma du nœud, piste non testée, mesures de fragmentation.</li><li><code>modeles/methode-creation-jeu-video.md</code> — cibles de faces et poids obtenus.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="un-maillage-genere-n-est-pas-utilisable.html">un-maillage-genere-n-est-pas-utilisable</a> — la matière sur laquelle ce nœud opère.</li><li><a href="alleger-avant-de-texturer.html">alleger-avant-de-texturer</a> — la place de ce réglage dans l'ordre des opérations.</li><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> — le niveau de détail comme contrainte de rendu, déjà présent dans le jeu 2D.</li></ul>
+<h2>Cité par</h2>
+<p>4 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="alleger-avant-de-texturer.html">Alléger avant de texturer</a></li><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="l-uv-et-la-texture.html">L'UV et la texture</a></li><li><a href="un-maillage-genere-n-est-pas-utilisable.html">Un maillage généré n'est pas utilisable tel quel</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

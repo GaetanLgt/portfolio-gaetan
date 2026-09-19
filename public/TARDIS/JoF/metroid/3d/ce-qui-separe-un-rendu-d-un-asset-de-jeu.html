@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Ce qui sépare un rendu d'un asset de jeu · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Ce qui sépare un rendu d'un asset de jeu</h1>
+<p><em>Un modèle qui s'affiche et un modèle qui tourne dans un jeu ne répondent pas aux mêmes exigences : polygones, niveaux de détail, UV, matériaux, collisions, squelette et échelle.</em></p>
+<p>Un maillage peut être beau à l'écran et inutilisable en jeu. Le studio tient une liste de contrôle qui nomme les conditions, établie pour un import dans Unreal Engine 5 sur la carte de 10 Go.</p>
+<table><thead><tr><th>Exigence</th><th>Règle mesurée</th></tr></thead>
+<tbody><tr><td>Polygones</td><td>2 500 faces pour le web, 30 000 pour un usage moteur, à partir d'une sortie brute de 115 866 faces</td></tr><tr><td>Niveaux de détail (LOD)</td><td>LOD automatiques sur les props de plus de 300 triangles — les props du studio sont sous 250, donc inutiles pour l'instant</td></tr><tr><td>UV</td><td>un second canal UV non superposé quand l'éclairage est précalculé</td></tr><tr><td>Matériaux</td><td>un seul matériau maître, des instances pour les variantes : un shader compilé, pas de recompilation</td></tr><tr><td>Collisions</td><td>pas de collision par polygone ; boîte ou capsule simplifiée, <strong>au plus 3 primitives</strong> par objet</td></tr><tr><td>Échelle et unités</td><td>1 unité = 1 mètre, transformations appliquées, origine au sol</td></tr><tr><td>Performance</td><td>cible de 60 images par seconde en 1080p, <code>stat unit</code> sous 16,6 ms, moins de 1 000 appels de dessin</td></tr><tr><td>Budget mémoire</td><td>textures sous 2,5 Go, car la VRAM est partagée avec le modèle des personnages</td></tr></tbody></table>
+<p>Le point commun de ces lignes est qu'aucune ne se voit sur une image de rendu. Elles décident pourtant si le modèle est un décor ou un objet de jeu.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Toutes les lignes du tableau (liste de contrôle Blender → moteur du studio, 08/09/2026).</li><li>La comparaison des densités 2 500 / 30 000 / 115 866 faces (méthode jeu vidéo, 10/09/2026).</li><li>Le budget de textures et la VRAM partagée avec un modèle de langage de 5,5 Go (liste de contrôle, 08/09/2026).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Les 60 images par seconde : c'était une <strong>cible</strong>, et la liste de contrôle écrit elle-même qu'aucune performance ne sera annoncée avant un build réel. L'import n'était pas fait au 08/09/2026.</li><li>Le nombre de niveaux de détail réellement nécessaires : la règle de seuil (300 triangles) n'a pas été éprouvée sur les props du studio.</li><li>La liste n'est pas exhaustive : elle couvre un projet de démonstration, pas tous les cas.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>jeux/zombunny-lab-3d/ue5-import-checklist.md</code> — conditions, budget, cibles de performance.</li><li><code>modeles/methode-creation-jeu-video.md</code> — densités de faces et poids obtenus.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="le-squelette-et-l-animation.html">le-squelette-et-l-animation</a> — le maillon absent de cette liste.</li><li><a href="l-echelle-et-les-unites.html">l-echelle-et-les-unites</a> — la condition la plus facile à rater.</li><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> — un jeu se définit par ses systèmes, pas seulement par son rendu.</li></ul>
+<h2>Cité par</h2>
+<p>5 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="l-echelle-et-les-unites.html">L'échelle et les unités</a></li><li><a href="le-passage-de-metroid-a-la-3d.html">Le passage de Metroid à la 3D</a></li><li><a href="le-poids-d-un-modele-dans-une-page.html">Le poids d'un modèle dans une page</a></li><li><a href="le-squelette-et-l-animation.html">Le squelette et l'animation</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

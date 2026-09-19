@@ -2,6 +2,7 @@
 tags: [metroid, questions]
 date: 2026-09-14
 statut: note de travail
+verifie: 2026-09-14
 ---
 
 # ❓ Questions ouvertes — Vault Metroid

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>L'index ne rattrape pas son retard · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>L'index ne rattrape pas son retard</h1>
+<p><em>Un document dont l'indexation échoue une fois attend sa prochaine modification pour réessayer : l'indexeur ne rattrape pas son retard, il ne fait que ne pas l'aggraver.</em></p>
+<h2>L'idée</h2>
+<p>L'indexeur du studio <strong>tourne</strong> : PID <strong>21336</strong>, <code>node indexer-agence.js --watch</code>, démarré le 14/09/2026 à <strong>09 h 38 min 56 s</strong>, balayage toutes les <strong>8 secondes</strong> (document d'extension RAG § 5). Il fonctionne vite — ce document-là est passé de « jamais vu » à « indexé » en deux minutes, sans intervention. Et pourtant <strong>5 documents</strong> du périmètre restent en retard : <strong>4 versions périmées, 1 document absent</strong> du carnet.</p>
+<p>Le code explique le retard, et c'est mesurable dans <code>indexer-agence.js</code> : <code>etatConnu[k] = h</code> est écrit <strong>avant</strong> <code>indexer(f)</code> (ligne 278), donc <strong>l'échec n'est pas retenté</strong> ; <code>dejaIndexe[k]</code> n'est écrit qu'<strong>après</strong> un embedding <code>completed</code>, donc un échec ne laisse <strong>aucune trace</strong> en mémoire, seulement au journal ; et <strong>298 échecs d'indexation</strong> sont signalés dans <code>events.log</code>, où les cinq documents figurent nominativement (<code>fetch failed</code>, et <code>Duplicate content detected</code> pour deux d'entre eux).</p>
+<p>La conclusion est une <strong>règle de flux</strong>, pas une panne : la veille est <em>événementielle</em> — un changement déclenche l'indexation — donc un échec non retenté <strong>attend une nouvelle écriture humaine</strong>. Un système qui n'indexe qu'au changement ne peut pas rattraper ce qu'il a manqué.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Veilleur vivant pendant la mesure : PID <strong>21336</strong>, démarré le <strong>14/09/2026 à 09 h 38 min 56 s</strong>, balayage toutes les <strong>8 secondes</strong> (§ 5).</li><li><strong>5 documents</strong> en retard, avec leurs écarts carnet / disque : <code>ecole/cas-d-ecole-platisme-2026-09-14.md</code> (24 887 / 24 848), <code>modeles/analyse-poids-llm-2026-09-14.md</code> (28 665 / 28 731), <code>vault-agence/licences-cdpr-2026-09-14.md</code> (8 749 / 8 835), <code>vault-agence/pole-sous-comptage-cibles-2026-09-13.md</code> (9 484 / 9 655, <strong>absent de la mémoire du veilleur</strong>), <code>ecole/cadrage-sujet-rayons-gamma-2026-09-14.md</code> (<strong>aucune ligne au carnet</strong>).</li><li><strong>298 échecs</strong> dans <code>events.log</code>. Les écritures qui les rendent définitifs : <code>etatConnu[k] = h</code> avant <code>indexer(f)</code> (ligne 278), <code>dejaIndexe[k]</code> après embedding <code>completed</code> (ligne 242), et <strong>jamais de suppression d'entrée</strong> (ligne 283).</li><li>Population des <code>.md</code>/<code>.txt</code> nés le 14/09 : <strong>39</strong> dans le périmètre — <strong>35</strong> indexés et à jour, <strong>3</strong> version périmée, <strong>1</strong> jamais vu ; <strong>95</strong> hors périmètre. Angle mort de git : <strong>180</strong> fichiers non suivis, dont <strong>51</strong> dans le périmètre.</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Je <strong>ne sais pas</strong> combien de ces 5 documents sont encore en retard : la mesure est datée du 14/09/2026 et le veilleur tourne.</li><li>Aucune <strong>durée de retard</strong> n'est mesurée : ni le temps entre l'échec et la reprise, ni une distribution des 298 échecs.</li><li>Aucune <strong>purge</strong> n'a été faite et aucune n'est proposée : <strong>effacer des vecteurs est une décision</strong>, pas un nettoyage (§ 6). Je <strong>n'ai pas</strong> relu <code>events.log</code> moi-même.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>vault-agence/extension-rag-et-indexation-2026-09-14.md</code> § 1, § 5 et § 6 — document du studio, mesuré le 14/09/2026 entre 13 h 40 et 14 h 05.</li><li><code>indexer-agence.js</code> (285 lignes, lu, non exécuté) — lignes 242, 278 et 283 pour la mémoire du veilleur.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="ce-qui-est-verifie-ne-se-recopie-pas.html">ce-qui-est-verifie-ne-se-recopie-pas</a> — l'autre contrôle qui existe sans être appliqué.</li><li><a href="un-emetteur-un-journal-un-filtre.html">un-emetteur-un-journal-un-filtre</a> — le même code, vu par ce qu'il publie.</li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a> — la note de méthode : une mesure porte sa date.</li></ul>
+<h2>Cité par</h2>
+<p>4 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-physique-et-flux.html">Physique et flux d'information — carte du dossier</a></li><li><a href="ce-qui-est-verifie-ne-se-recopie-pas.html">Ce qui est vérifié ne se recopie pas</a></li><li><a href="un-emetteur-un-journal-un-filtre.html">Un émetteur, un journal, un filtre</a></li><li><a href="un-renvoi-mort-coupe-l-information.html">Un renvoi mort coupe l'information</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

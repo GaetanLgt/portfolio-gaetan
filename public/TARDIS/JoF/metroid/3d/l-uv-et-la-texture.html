@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>L'UV et la texture · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>L'UV et la texture</h1>
+<p><em>Sans coordonnées de texture, un maillage reste gris : l'UV est obligatoire pour texturer, et son dépliage est l'étape qui peut détruire la géométrie.</em></p>
+<p>Le dépliage des UV répond à une contrainte technique simple : il faut projeter la surface de l'objet sur une image plate. Tant que le maillage n'a pas d'UV, le nœud de texture refuse de s'exécuter, avec le message exact : <code>Input mesh has no UVs! Use UV Unwrap node first.</code> Le studio a mesuré ce que ce message cache.</p>
+<p>Sur le <strong>même</strong> asset, entre l'étape UV et la rasterisation PBR :</p>
+<table><thead><tr><th>Mesure</th><th>Avant l'étape UV</th><th>Après UV + PBR</th></tr></thead>
+<tbody><tr><td>Arêtes de bord (trous)</td><td>2</td><td>87 666</td></tr><tr><td>Arêtes uniques</td><td>3 484</td><td>87 729</td></tr><tr><td>Arêtes non-manifold</td><td>3 389</td><td>0</td></tr></tbody></table>
+<p>La lecture est cohérente avec le journal du worker : « Get 29 176 clusters after fast clustering » pour 29 264 faces — une île UV par triangle. La géométrie n'est pas perdue, elle est découpée.</p>
+<p>Une fois l'ordre respecté et la chaîne menée au bout, le résultat est net : le modèle pèse 5 265 Ko, compte 28 299 triangles et <strong>deux textures</strong> — une couleur 1024×1024 RGBA à 183 612 couleurs distinctes (2,3 Mo) et une metallicRoughness 1024×1024 (1,2 Mo). Le <code>baseColorFactor</code> repasse à 1,0 : la couleur vient bien de la texture, et non d'un gris de remplissage.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Le message d'erreur qui rend l'UV obligatoire, et le fait que la texture soit absente sans elle (documents du studio, 11/09/2026).</li><li>Les trois mesures avant/après UV + PBR, sur le même asset (même source).</li><li>Le résultat texturé complet : 5 265 Ko, 28 299 triangles, deux textures, 183 612 couleurs distinctes, 24,7 s (méthode jeu vidéo, 11/09/2026).</li><li>Le cas du modèle gris : texture de 80 octets, PNG 2×2 pixels (méthode jeu vidéo, 11/09/2026).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le paramètre qui provoque la fragmentation : <code>chart_refine_iterations=5</code> a été testé <strong>sans effet mesuré</strong> (29 176 → 29 237 grappes). Le coupable n'est pas identifié.</li><li>La qualité perçue de la texture : elle est décrite par un rendu, pas par une mesure automatique — la validation visuelle reste humaine.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/pipeline-3d-trellis2-2026-09-11.md</code> — mesures de fragmentation, paramètre testé sans effet.</li><li><code>modeles/methode-creation-jeu-video.md</code> — résultat texturé, cas du modèle gris.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="alleger-avant-de-texturer.html">alleger-avant-de-texturer</a> — l'ordre qui limite les dégâts.</li><li><a href="le-remesh-et-la-densite.html">le-remesh-et-la-densite</a> — les deux leviers absents du chemin qui a fragmenté le maillage.</li><li><a href="../09-annexes-reperes-et-lexique.html">09-annexes-reperes-et-lexique</a> — le vault sait aussi tenir un lexique quand un terme prête à confusion.</li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="alleger-avant-de-texturer.html">Alléger avant de texturer</a></li><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

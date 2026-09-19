@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Routing *Super Metroid* — la route, le mockball, les glitches, et un mot que personne n'emploie · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Routing <em>Super Metroid</em> — la route, le mockball, les glitches, et un mot que personne n'emploie</h1>
+<blockquote><p><strong>Ce que ce document est.</strong> Une route <strong>any%</strong> de référence pour <em>Super Metroid</em> (Super Nintendo, 1994), avec les techniques demandées : le <strong>mockball</strong>, les <strong>glitches majeurs</strong>, et ce qu'on appelle une « <strong>bombe de puissance cachée</strong> ». Tout est sourcé au wiki de speedrun du jeu.</p>
+<p>⚠️ <strong>Ce document ne contient aucun lien vers une ROM, un hack, un émulateur ou un site de téléchargement — et n'en contiendra jamais.</strong> <em>Une route est une <strong>technique</strong> ; l'œuvre, elle, ne se distribue pas.</em> Même règle que pour Marvel, Shiro Games et Nintendo : on décrit le geste, on ne reproduit pas le jeu. <strong>Aucun jeu, aucun émulateur n'a été lancé pour écrire cette note.</strong></p></blockquote>
+<h2>1. Ce qui a été demandé, et ce qui a été trouvé</h2>
+<table><thead><tr><th>Demandé</th><th>Résultat</th></tr></thead>
+<tbody><tr><td>Le <strong>mockball</strong></td><td>✅ <strong>documenté</strong> — entrées, propriété du jeu, salles, usage</td></tr><tr><td>Les <strong>glitches</strong></td><td>✅ <strong>documentés</strong> — nom, effet, salle, source pour chacun</td></tr><tr><td>La « <strong>bombe de puissance cachée</strong> »</td><td>⛔ <strong>le terme n'existe pas</strong> dans la communauté : la page n'est même pas créée sur le wiki. <strong>Cinq sens possibles sont documentés, et je n'en choisis aucun</strong> (§ 5)</td></tr><tr><td>Le <strong>gain de temps du mockball</strong></td><td>⛔ <strong>non établi</strong> — aucune source ne le chiffre</td></tr></tbody></table>
+<p><strong>Le troisième point est le plus intéressant du lot, et c'est celui qui a coûté le plus de travail.</strong> <em>Un mot qu'on croit technique et que personne n'emploie : la bonne réponse n'était pas d'en inventer un sens, c'était de dire « ce mot n'est attesté nulle part ».</em></p>
+<h2>2. La route any% de référence — l'ordre <strong>KPDR</strong></h2>
+<p><strong>L'ordre des boss est le seul vrai choix de la route any%.</strong> Quatre ordres circulent ; deux comptent :</p>
+<table><thead><tr><th>Ordre</th><th>Ce qu'il vaut</th></tr></thead>
+<tbody><tr><td><strong>KPDR</strong> — Kraid, Phantoon, Draygon, Ridley</td><td><strong>recommandé aux débutants</strong> — c'est l'ordre « propre »</td></tr><tr><td><strong>PRKD</strong> — Phantoon d'abord</td><td><strong>environ 85 secondes plus rapide</strong> en temps réel, <em>mais d'une difficulté comparable au 14 %</em></td></tr></tbody></table>
+<p><strong>Les grandes étapes de KPDR, dans l'ordre :</strong></p>
+<ol><li><strong>Cérès</strong> — le prologue.</li><li><strong>Crateria + Brinstar bleu</strong> : Morphing Ball · Missile · <strong>Bomb</strong> · Bomb Torizo · l'évasion</li></ol>
+<p>d'Alcatraz · un Energy Tank.</p>
+<ol><li><strong>Brinstar vert / rose / rouge + repaire de Kraid</strong> : ⭐ **mockball dans l'Early Supers Room →</li></ol>
+<p>Super Missile anticipé<strong> → Missile (Charge Beam) → </strong>Charge Beam<strong> → (Spazer) → </strong>Kraid** → Varia Suit → Energy Tank.</p>
+<ol><li><strong>Norfair + Brinstar rouge</strong> : Hi-Jump Boots · <strong>Speed Booster</strong> · Wave Beam · *(l'Ice Beam peut</li></ol>
+<p>être retardé — environ 10 secondes réelles, mais la route devient plus dure)* · <strong>Power Bomb (Alpha)</strong>.</p>
+<ol><li><strong>Crateria + Wrecked Ship</strong> : Shinespark · Missile · <strong>Phantoon</strong> · Super Missile · <strong>Gravity Suit</strong>.</li><li><strong>Brinstar rouge + Maridia</strong> : Power Bomb sur le <strong>tube de verre</strong> → Botwoon → <strong>Draygon</strong> →</li></ol>
+<p>Space Jump.</p>
+<ol><li><strong>Norfair + Bas-Norfair</strong> : Ice Beam · les Pilliers · <strong>Ridley</strong> · Energy Tank · Bubble Mountain.</li><li><strong>Retour en Crateria</strong> → les statues → <strong>Tourian</strong>.</li><li><strong>Tourian + l'évasion</strong> : les Metroids · le Super Metroid · <strong>le glitch des Zébétites</strong> · Mother</li></ol>
+<p>Brain · l'évasion · le vaisseau.</p>
+<p>⚠️ **La section « Bas-Norfair » de la route PRKD est marquée <em>« Under Construction »</em> sur le wiki<strong> : </strong>la seconde moitié de PRKD n'est pas établie.** <em>Une route plus rapide dont la moitié n'est pas écrite ne s'appelle pas « optimale » — elle s'appelle « incomplète ».</em></p>
+<h2>3. Le mockball — le geste qui ouvre la route</h2>
+<p><strong>Ce qu'il fait, en une phrase :</strong> il <strong>convertit la vitesse de course en vitesse de roulade</strong>. Samus se met en boule <strong>au sol, sans rebondir</strong>, en gardant son élan — donc elle franchit en boule des passages qu'elle ne pourrait pas franchir à pied.</p>
+<p><strong>Pourquoi ça marche, et c'est une propriété du jeu, pas une astuce</strong> :</p>
+<ul><li>tenir le saut en cassant un <em>spinjump</em> puis viser vers le bas <strong>conserve</strong> la vitesse — sinon, arrêt ;</li><li>le <strong>« soft morph »</strong> (se morphoser <strong>juste avant</strong> de toucher le sol) est <strong>obligatoire</strong> ; un</li></ul>
+<p>morphing trop tôt fait <strong>rebondir</strong> et <strong>remet l'élan à zéro</strong> ;</p>
+<ul><li>la vitesse en <em>spinjump</em> est <strong>légèrement supérieure</strong> — donc on vise le bas au plus près du morph.</li></ul>
+<p><strong>Ce que ça débloque, et c'est le cœur de la route</strong> : les <strong>Super Missiles « Early Supers » sans affronter Spore Spawn</strong>. Ce miniboss devient <strong>obsolète dans presque toutes les catégories</strong> — et c'est le mockball qui le rend obsolète.</p>
+<p><strong>Les salles</strong> (lues page à page) : <strong>Early Supers Room</strong> (l'usage principal) · <strong>Statues Hallway</strong> (pour apprendre) · Wasteland et Basement (le <strong>speedball</strong>, un mockball lancé — il détruit des blocs qui exigent normalement des Bombes) · <strong>Post Crocomire Jump Room</strong> (stratégie « Early Crocomire ») · <strong>Green Brinstar Main Shaft / Etecoon Room</strong> (le <strong>kago mockball</strong>, traverser un ennemi en boule).</p>
+<p>⛔ <strong>Le gain de temps chiffré du mockball n'est pas établi.</strong> <em>Aucune source consultée ne le donne, et je ne l'estime pas.</em></p>
+<h2>4. Les glitches majeurs</h2>
+<table><thead><tr><th>Le glitch</th><th>Son effet, en une ligne</th><th>Où</th></tr></thead>
+<tbody><tr><td><strong>Zebetite Glitch</strong> <em>(« zeb skip »)</em></td><td>traverser une Zébétite <strong>sans la détruire</strong> — les autres ne se génèrent pas. <strong>Plus d'une minute gagnée</strong></td><td>Mother Brain Room</td></tr><tr><td><strong>Gate Glitch</strong> <em>(« GGG »)</em></td><td>ouvrir une <strong>porte verrouillée du mauvais côté</strong>. <strong>Obligatoire</strong> en Any% GT Code et GT Classic</td><td>Golden Torizo's Room, entre autres</td></tr><tr><td><strong>X-Ray Climb</strong></td><td>monter le long des murs en étant coincé, <strong>+5 px par cycle</strong> — sert à <strong>sortir de la carte</strong></td><td>The Precious Room · hors-carte</td></tr><tr><td><strong>GT Code</strong></td><td>un <strong>code de débogage</strong> : 7 Energy Tanks, 3 Reserves, 100 Missiles, 20 Supers, 20 Power Bombs, tout sauf le Screw Attack. <em>Découvert par JAM, novembre 2010</em></td><td>Golden Torizo's Room</td></tr><tr><td><strong>Spacetime Beam</strong></td><td>tous les beams sauf le Wave → <strong>tout le jeu revient à son état initial</strong>, hors équipement</td><td>Crateria Kihunter Room</td></tr><tr><td><strong>Shinespark Suit</strong></td><td>un shinespark <strong>chargé indéfiniment</strong> — des dizaines de méthodes</td><td>Draygon, Mother Brain, Super Metroid…</td></tr><tr><td><strong>Underflow de munitions</strong></td><td>un Crystal Flash dans la prise de Draygon → <strong>les munitions passent sous zéro</strong></td><td>Draygon's room</td></tr><tr><td><strong>Moonfall</strong></td><td><strong>supprime le plafond de vitesse de chute</strong>. <em>Découvert par sniq, juin 2017</em></td><td>Climb, entre autres</td></tr><tr><td><strong>Doorskip</strong></td><td>sortir de la carte par pause + hitbox, dans une transition</td><td>Parlor → Climb</td></tr><tr><td><strong>Kraid Quick Kill</strong></td><td>tuer Kraid bien plus vite. <em>Juillet 2002, adopté en course en février 2004</em></td><td>Kraid's Lair</td></tr></tbody></table>
+<p><strong>Ce que cette table dit, et qui dépasse le jeu</strong> : <strong>trois de ces glitches portent une date et un nom</strong> — <em>JAM, novembre 2010</em> · <em>sniq, juin 2017</em> · <em>juillet 2002</em>. <em>Une communauté qui date ses découvertes est une communauté qui fait de l'histoire, pas seulement du score.</em></p>
+<h2>5. La « bombe de puissance cachée » — cinq sens, et je n'en choisis pas un</h2>
+<p><strong>Le terme exact n'est attesté nulle part</strong> : la page « Hidden power bomb » <strong>n'existe pas</strong> sur le wiki de speedrun (il propose de la créer), la catégorie « Rooms with Hidden Items » <strong>ne contient aucune salle de Power Bomb</strong>, et la liste officielle des dix packs <strong>n'étiquette aucun emplacement « hidden »</strong>. Voici les sens possibles — <strong>et il faut l'origine de l'expression pour trancher, ce que les seules sources ne permettent pas</strong> :</p>
+<table><thead><tr><th>#</th><th>Le sens possible</th><th>Où</th></tr></thead>
+<tbody><tr><td><strong>a</strong></td><td>une bombe <strong>sous un sol destructible</strong> — on pose une PB, on tombe par le trou, il faut rebondir sur le bloc gris</td><td><strong>Beta Power Bomb Room</strong> (Brinstar rouge)</td></tr><tr><td><strong>b</strong></td><td>une bombe <strong>derrière l'emplacement d'un autre objet</strong> — d'où « hidden behind the above item's location »</td><td><strong>Pink Brinstar Power Bomb Room</strong> <em>(« Mission Impossible Room »)</em></td></tr><tr><td><strong>c</strong></td><td>la première PB du jeu <strong>ouvre un passage caché</strong> — elle détruit le mur <em>derrière</em> la statue, qui cache un Missile Tank</td><td><strong>Alpha Power Bomb Room</strong></td></tr><tr><td><strong>d</strong></td><td>la <strong>« Power Bomb of Shame »</strong> — le pack du Wasteland, qu'on prend quand on est à sec. <em>Vrai nom communautaire… mais « honte », pas « caché »</em></td><td>Wasteland, Bas-Norfair</td></tr><tr><td><strong>e</strong></td><td>une piste <strong>glitch</strong> (interprétation) : la <em>Power Bomb Bubble</em> et les dégâts hors écran des Power Bombs. <strong>Aucune source ne les appelle « cachée »</strong></td><td>—</td></tr></tbody></table>
+<p><strong>Ce que je retiens, et c'est une leçon de méthode :</strong> deux des cinq sens portent bien le mot <em>« hidden »</em> dans la description officielle de l'objet (<strong>a</strong> et <strong>b</strong>) — mais <strong>aucun ne porte ce nom comme titre</strong>. <em>Le mot existe dans les phrases, pas dans les noms ; et chercher un mot dans des phrases quand on croit chercher un nom, c'est le faux positif que le studio a payé deux fois.</em></p>
+<h2>6. Les records, au 14/09/2026</h2>
+<table><thead><tr><th>Catégorie</th><th>Le record</th><th>Quand</th></tr></thead>
+<tbody><tr><td><strong>Any%</strong></td><td><strong>ShinyZeni</strong> — 40:22.010 <em>(27:00.933 en temps de jeu)</em></td><td>31/01/2025</td></tr><tr><td><strong>100%</strong></td><td><strong>ShinyZeni</strong> — 1:12:17.800 <em>(41:47 en temps de jeu)</em></td><td>02/03/2024</td></tr><tr><td><strong>Any% Glitched</strong></td><td><strong>Drewski</strong> — 8:37.240 <em>(5:49 en temps de jeu)</em></td><td>15/06/2026</td></tr><tr><td><strong>Low%</strong></td><td><strong>Overfiendvip</strong> — 46:42 — ⚠️ <em>entrée rattachée à une sous-catégorie d'itemset : <strong>le record de la branche 14 % Ice n'est pas établi ici</strong></em></td><td>course du 22/04/2018</td></tr></tbody></table>
+<p><strong>Deux temps pour une même course.</strong> Le RTA <em>(chronomètre réel)</em> et l'<strong>IGT</strong> <em>(temps de jeu)</em> — 40:22 contre 27:00 pour le même run. <em>Un « temps » n'est pas un chiffre : c'est un chiffre <strong>et</strong> une convention.</em> C'est <a href="science/ce-qui-est-rapporte-et-ce-qui-est-mesure.html">ce-qui-est-rapporte-et-ce-qui-est-mesure</a> appliqué à un chronomètre.</p>
+<h2>7. Une confusion à ne pas propager</h2>
+<p><strong>« No Major Glitches » n'est pas une catégorie</strong> sur le tableau principal du 14/09/2026. **NMG désigne un <em>règlement</em>** — celui des catégories principales : hors-carte, <em>wrong warps</em>, Spacetime Beam et GT Code interdits ; <strong>les objets ne se prennent que depuis leur source prévue</strong>. <em>Une règle n'est pas une catégorie — les confondre ferait chercher un record qui n'existe pas.</em></p>
+<h2>8. Ce qui n'est pas établi — et il y a neuf lignes</h2>
+<ol><li>Le <strong>sens exact de « Power Bomb cachée »</strong> — terme non attesté, cinq sens possibles (§ 5).</li><li>Le <strong>gain de temps chiffré du mockball</strong>.</li><li>Le <strong>record de la branche 14 % Ice</strong> (Low%).</li><li><strong>La seconde moitié de la route PRKD</strong> — marquée <em>« Under Construction »</em> par le wiki.</li><li><strong>Laquelle des deux routes 100 %</strong> <em>(early</em> ou <em>late Crocomire)</em> est la plus rapide — <em>le wiki dit lui-même que ce n'est pas clair</em>.</li><li>Le <strong>nom exact de la plateforme</strong> du record Any%.</li><li>Les <strong>salles du mockball</strong> vues seulement en extraits de recherche, non lues page à page.</li><li><strong>L'exhaustivité</strong> de la liste des catégories d'extension (réponse d'API tronquée).</li><li><strong>Toute donnée sur les traductions françaises</strong> des noms de salles — non recherché.</li></ol>
+<h2>Sources</h2>
+<ul><li><strong>Wiki de speedrun du jeu</strong> — <code>https://wiki.supermetroid.run/</code> : <em>Mockball</em> · <em>Early Supers Room</em> ·</li></ul>
+<p><em>Post Crocomire Jump Room</em> · <em>Etecoon Room</em> · <em>List of Power Bombs</em> · <em>Beta Power Bomb Room</em> · <em>Pink Brinstar Power Bomb Room</em> · <em>Any%</em> · <em>Any% Glitched</em> · <em>100%</em> · <em>14%</em> · <em>Categories</em> · <em>Zebetite Glitch</em> · <em>X-Ray Climb</em> · <em>GT Code</em> · <em>Spacetime Beam</em> · <em>Gate Glitch</em> · <em>Yellow Suit Glitch</em> · <em>Moonfall</em> · <em>Timeline of Discoveries</em>.</p>
+<ul><li><strong>Records et catégories</strong> — <code>https://www.speedrun.com/supermetroid</code> et son API, interrogés le <strong>14/09/2026</strong>.</li><li>⚠️ <strong>Wiki de fans signalé comme tel</strong> : <code>metroid.fandom.com</code> (<em>Alpha Power Bomb Room</em>, <em>Power Bomb</em>) — <strong>corroboré, jamais cru seul</strong>.</li></ul>
+<h2>Réserves</h2>
+<ul><li><strong>Aucun jeu n'a été lancé, aucun émulateur, aucune ROM.</strong> Tout vient de <strong>sources écrites</strong>, lues le 14/09/2026.</li><li><strong>Le sens du mot « cachée » n'a pas été tranché</strong> : il faudrait l'origine de l'expression (une vidéo, un guide, un joueur). <em>Sur les seules sources écrites, décider serait inventer.</em></li><li>Les <strong>temps de record changent</strong> : <em>une entrée de record est une photographie, pas un fait durable.</em></li></ul>
+<h2>Limites</h2>
+<ul><li><strong>Ce document ne dit rien de la difficulté réelle</strong> d'exécuter ces gestes : <em>une route écrite n'est pas une route jouée.</em></li><li><strong>Il ne remplace pas le wiki</strong> : pour apprendre le mockball, c'est la page <em>Mockball</em> qu'il faut lire, pas ce résumé.</li><li><strong>Il ne cite aucune vidéo, aucun forum technique</strong> — les pages sources en contiennent ; ils n'ont pas été reproduits ici.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="science/la-cassure-de-sequence.html">la-cassure-de-sequence</a> — le cadre : <em>ce que la communauté a nommé avant l'industrie</em>.</li><li><a href="science/categorie-de-speedrun-et-record-date.html">categorie-de-speedrun-et-record-date</a> — la mesure qui transforme une pratique en discipline.</li><li><a href="science/ce-qui-est-rapporte-et-ce-qui-est-mesure.html">ce-qui-est-rapporte-et-ce-qui-est-mesure</a> — <strong>40:22 et 27:00 : le même run</strong>.</li><li><a href="physique-et-flux/pourquoi-le-speed-booster-fut-ecarte.html">pourquoi-le-speed-booster-fut-ecarte</a> — l'autre face : ce que le studio a <strong>retiré</strong> du jeu.</li><li><a href="ponts/aniimo-publier-la-regle-ou-la-laisser-decouvrir.html">aniimo-publier-la-regle-ou-la-laisser-decouvrir</a> — l'exact contraire : <strong>ici, les règles ne sont écrites nulle part</strong>.</li></ul>
+<h2>Cité par</h2>
+<p>1 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="00-carte-du-vault.html">🗺️ Carte du vault — Metroid, vue 360°</a></li></ul>
+<a class="retour" href="index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

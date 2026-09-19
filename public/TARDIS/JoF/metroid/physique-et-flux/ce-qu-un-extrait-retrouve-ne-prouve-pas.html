@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Ce qu'un extrait retrouvé ne prouve pas · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Ce qu'un extrait retrouvé ne prouve pas</h1>
+<p><em>Un extrait retrouvé prouve que le texte existe dans le carnet — pas que l'affirmation est vraie, ni que le corpus est complet.</em></p>
+<h2>L'idée</h2>
+<p>Une recherche documentaire renvoie des <strong>extraits</strong>, et un extrait arrive avec une <strong>autorité</strong> qu'il n'a pas. Le précédent est écrit : sur le carnet <strong>Metroid</strong>, une question large a fait remonter des passages de <strong>transcriptions vidéo</strong> avant la note du vault, avec un score de <strong>0,80</strong> (<code>rag-metroid-eva01-2026-09-14.md</code> § 8). Le morceau le mieux noté n'était pas le plus fiable : il était le mieux placé.</p>
+<p>Trois choses qu'un extrait ne prouve donc pas : <strong>sa vérité</strong> — une transcription automatique d'une vidéo sponsorisée entre dans un carnet exactement comme une note vérifiée ; <strong>sa provenance, si le lien est rompu</strong> — <strong>13 <code>file_id</code></strong> portent des vecteurs <strong>sans ligne</strong> dans la liste du carnet, soit <strong>1 081 chunks</strong>, et <strong>73 <code>file_id</code></strong> sont <strong>inconnus de la mémoire du veilleur</strong>, soit <strong>3 634 chunks</strong> (§ 6) ; et <strong>l'exhaustivité</strong> — un carnet qui vaut <strong>29 %</strong> de son dépôt répond sur ce qu'il contient, et son silence ne se lit pas comme une absence de savoir.</p>
+<h2>Ce qui est établi</h2>
+<ul><li><strong>13 <code>file_id</code></strong> avec vecteurs et sans ligne : <strong>1 081 chunks</strong>, dont un à <strong>923 chunks</strong> ; <strong>7</strong> lignes sans aucun vecteur, dont <strong>3 × <code>registre-echecs-agents.md</code></strong> ; <strong>73 <code>file_id</code></strong> inconnus du veilleur : <strong>3 634 chunks</strong> (§ 6).</li><li>La mémoire du veilleur <code>.index-agence.json</code> porte <strong>578 entrées</strong>, dont <strong>51</strong> dont le fichier n'existe plus sur le disque ; <strong>1</strong> seulement a conservé ses vecteurs (<strong>9 chunks</strong>) (§ 6).</li><li>La mémoire du studio est à <strong>29 %</strong> de son dépôt : <strong>11 488 chunks</strong> contre <strong>39 313</strong> (§ 1). Les orphelins augmentent seuls : <strong>73 900 chunks</strong> dans <strong>2 774 collections</strong> détachées, <strong>+3 003 en une journée</strong> (§ 6).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li><strong>Aucune mesure de la qualité</strong> de ce qui remonte : seul le <strong>Recall@5</strong> existe, sur 12 questions — <strong>83,3 %</strong> (09-10/09) et <strong>75,0 %</strong> le 14/09 (§ 3) — et les deux chiffres ne sont pas du même auteur.</li><li>Je <strong>ne sais pas</strong> ce que contiennent les 1 081 chunks sans ligne : ils sont comptés, jamais ouverts.</li><li>Le coût des orphelins (disque, RAM, durée de sauvegarde, électricité) n'est <strong>pas mesuré</strong> : seul le volume l'est.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>vault-agence/extension-rag-et-indexation-2026-09-14.md</code> § 1, § 3, § 6 et § 7 — document du studio, mesuré le 14/09/2026.</li><li><code>11-sources-et-verification.md</code> § 5 et § 6 — <a href="../11-sources-et-verification.html">11-sources-et-verification</a> (comptage des sources, annexe R&amp;D).</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="ce-qu-un-decoupage-ne-recolle-pas.html">ce-qu-un-decoupage-ne-recolle-pas</a> — pourquoi un morceau arrive sans son document.</li><li><a href="un-renvoi-mort-coupe-l-information.html">un-renvoi-mort-coupe-l-information</a> — l'autre façon de servir une réponse sans sa provenance.</li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a> — la note qui impose de compter les sources non lues.</li></ul>
+<h2>Cité par</h2>
+<p>4 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-physique-et-flux.html">Physique et flux d'information — carte du dossier</a></li><li><a href="ce-qu-un-decoupage-ne-recolle-pas.html">Ce qu'un découpage ne recolle pas</a></li><li><a href="la-lumiere-comme-grandeur-non-mesuree.html">La lumière comme grandeur non mesurée</a></li><li><a href="un-renvoi-mort-coupe-l-information.html">Un renvoi mort coupe l'information</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

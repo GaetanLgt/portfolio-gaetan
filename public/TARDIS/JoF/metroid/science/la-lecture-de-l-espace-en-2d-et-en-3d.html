@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>La lecture de l'espace en 2D et en 3D · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>La lecture de l'espace en 2D et en 3D</h1>
+<p><em>La carte reste la même ; c'est la façon de la lire qui change quand la caméra entre dans le casque.</em></p>
+<h2>L'idée</h2>
+<p>Les épisodes 2D et les épisodes 3D à la première personne partagent la même structure d'exploration — une carte, des verrous, des objets — mais pas le même problème de lecture. En 2D, la caméra de profil donne <strong>tout l'espace d'un coup d'œil</strong> : le joueur voit sa salle, ses sorties et son obstacle dans une seule image. En 3D subjective, cette vue n'existe plus : le Morph Ball repasse même en troisième personne pour rester jouable.</p>
+<p>Le remplacement est un dispositif d'interface : le <strong>HUD</strong> simule l'intérieur du casque de Samus — radar, carte, munitions, jauge de danger, analyseur d'ennemis et de mécanismes. La visée, elle, est réglée par le <strong>verrouillage automatique de la cible</strong> (<em>lock-on</em>), qui permet de tourner autour d'elle en restant aligné, là où la 2D utilise le tir dans huit directions à partir de <em>Super Metroid</em>.</p>
+<p>Deux conséquences de conception sont documentées. La première est un basculement imposé : Retro Studios travaillait à l'origine sur une vue à la troisième personne, et l'intervention de <strong>Shigeru Miyamoto</strong> a fait jeter la quasi-totalité du travail déjà fait, au motif que le tir en troisième personne était peu intuitif et que l'exploration est plus facile en vue subjective. La seconde est un <strong>abandon</strong> : le Speed Booster, existant en 2D, a été écarté de la 3D, jugé inadapté à la vue subjective et à l'échelle des environnements.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Vue : caméra de profil en 2D ; caméra dans le casque en 3D, le Morph Ball repassant en troisième personne (Wikipédia EN, « Metroid Prime »).</li><li>HUD simulant l'intérieur du casque : radar, carte, munitions, jauge de danger, analyseur d'ennemis et de mécanismes ; système d'indices intégré donnant des pistes de progression (même source).</li><li>Verrouillage automatique de la cible en 3D ; tir dans huit directions en 2D à partir de <em>Super Metroid</em> (même source).</li><li>Miyamoto a imposé la première personne : la quasi-totalité du travail en troisième personne a été jetée ; le Speed Booster, envisagé en 3D, a été écarté comme inadapté à la vue subjective et à l'échelle des environnements (même source).</li><li>Les quatre faisceaux ne se cumulent pas en 3D : le joueur les fait défiler (même source).</li><li>Nintendo refuse l'étiquette FPS et parle de « first-person adventure » : l'exploration prime sur le combat ; <em>Metroid: Other M</em> (2010), lui, est un jeu de tir à la troisième personne (même source).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le <strong>détail de ce qui a été jeté</strong> chez Retro Studios : la source parle de « la quasi-totalité du travail », sans inventaire.</li><li>L'<strong>état d'avancement</strong> du projet au moment de l'intervention : non daté par les sources lues.</li><li>Une <strong>mesure</strong> du gain de lisibilité apporté par le HUD : aucun test ni comparaison n'est rapporté.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>06-les-mecaniques-et-le-genre.md</code> § 7 — <a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> (note du vault, 14/09/2026).</li><li>Wikipédia EN, « Metroid Prime » et « Metroid » — cités par la note du vault, non rouverts ici.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="ce-que-la-carte-montre-au-joueur.html">ce-que-la-carte-montre-au-joueur</a> — le dispositif d'orientation, en 2D puis dans le casque.</li><li><a href="le-mouvement-et-sa-physique.html">le-mouvement-et-sa-physique</a> — l'autre moitié du problème : se déplacer, et non seulement voir.</li><li><a href="../02-la-chronologie-interne.html">02-la-chronologie-interne</a> — la note de référence qui range ces deux familles d'épisodes.</li></ul>
+<h2>Cité par</h2>
+<p>6 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="../ponts/evoland-progression-et-histoire-du-media.html">Evoland — quand la progression <strong>est</strong> l'histoire du médium</a></li><li><a href="carte-science.html">Carte du dossier <code>science</code> — les atomes</a></li><li><a href="ce-que-la-carte-montre-au-joueur.html">Ce que la carte montre au joueur</a></li><li><a href="decrire-n-est-pas-republier.html">Décrire n'est pas republier</a></li><li><a href="la-chronologie-interne-comme-systeme.html">La chronologie interne comme système de cohérence</a></li><li><a href="le-mouvement-et-sa-physique.html">Le mouvement et sa physique</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

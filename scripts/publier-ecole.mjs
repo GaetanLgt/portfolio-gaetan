@@ -100,6 +100,39 @@ function listeMd(racine) {
   return trouves.sort((a, b) => a.localeCompare(b, 'fr'));
 }
 
+/* ── Lecture d'un document Markdown — LES FINS DE LIGNE SONT NORMALISÉES ────────
+ *
+ * ⛔ POURQUOI CETTE FONCTION EXISTE (19/09/2026) — ELLE CORRIGE UN BLOCAGE, PAS UN DÉTAIL.
+ *
+ * Le convertisseur ci-dessous découpe le document avec `md.split('\n')`. Sur un fichier
+ * écrit en CRLF (Windows), il reste donc un `\r` en fin de CHAQUE ligne — et deux motifs
+ * du convertisseur ne le supportent pas :
+ *   · `/^(#{1,4})\s+(.*)$/` — `.` ne matche pas `\r`, et `$` (sans drapeau `m`) exige la
+ *     fin de la chaîne : la branche TITRE ne s'arme JAMAIS ;
+ *   · `/^---+$/` — même raison pour la règle horizontale.
+ * Or le motif d'ARRÊT du paragraphe, lui, matche quand même (`#{1,4}\s` est ancré au
+ * début, le `\r` final ne le gêne pas). Le paragraphe reste donc vide ET `i` n'est jamais
+ * incrémenté : **la boucle `while (i < lignes.length)` ne se termine plus.**
+ *
+ * MESURÉ, ET C'EST CE QUI L'A FAIT VOIR : le vault Metroid contient 141 notes, dont
+ * **20 écrites en CRLF** — dix-sept dans `art/`, trois dans `conception-et-architecture/`.
+ * Le publieur s'arrêtait sur la PREMIÈRE d'entre elles, après avoir écrit 38 des 141 pages ;
+ * cinq processus `publier-ecole.mjs` tournaient encore une heure plus tard, à ~100 % d'un
+ * cœur, sans jamais finir. Un blocage, pas une lenteur : le compte de pages n'avançait pas
+ * d'une unité en vingt-cinq secondes.
+ *
+ * ⚠️ ON NORMALISE À LA LECTURE, ET SURTOUT PAS DANS LE VAULT NI DANS LA COPIE.
+ * La copie de `ecole-dossiers/metroid/` reste **octet pour octet** celle du vault : c'est
+ * ce que vérifie le contrôle de divergence ci-dessous (empreinte SHA-256 des octets bruts),
+ * et il continuerait de crier « contenu différent » sur 141 notes si on réécrivait la copie
+ * en LF. *Un correctif qui rend un contrôle bavard à tort est un correctif qu'on finira par
+ * ignorer.* Le vault, lui, est en LECTURE SEULE — décision du dirigeant, jamais défaite ici.
+ *
+ * CE QUE ÇA CHANGE À LA SORTIE : rien d'autre que le retrait d'un `\r` parasite. Les notes
+ * déjà en LF — 121 des 141 — passent par cette fonction sans être modifiées.
+ */
+const lireMd = (chemin) => readFileSync(chemin, 'utf8').replace(/\r\n/g, '\n');
+
 /* ── Contrôle de divergence studio ↔ site ────────────────────────────────────── */
 if (existsSync(STUDIO)) {
   const empreinte = (f) => createHash('sha256').update(readFileSync(f)).digest('hex').slice(0, 12);
@@ -506,7 +539,7 @@ for (const kit of kits) {
     const sansExt = rel.replace(/\.md$/i, '');
     // Les titres sont lus AVANT tout contexte de renvois : un titre n'appelle aucun renvoi,
     // il ne doit donc pas entrer dans le compte des liens.
-    const md = retirerFrontmatter(readFileSync(join(LOCAL, kit, rel), 'utf8'));
+    const md = retirerFrontmatter(lireMd(join(LOCAL, kit, rel)));
     const titre = (md.match(/^#\s+(.*)$/m) || [, sansExt])[1].trim();
     return { rel, sansExt, page: nommerPage(sansExt), titre };
   });
@@ -537,7 +570,7 @@ for (const kit of kits) {
 
 /* ── Génération des documents à plat ─────────────────────────────────────────── */
 for (const p of pages) {
-  const md = readFileSync(join(src, p.fichier), 'utf8');
+  const md = lireMd(join(src, p.fichier));
   const titre = (md.match(/^#\s+(.*)$/m) || [, p.nom])[1].trim();
   let corps = convertir(md);
 
@@ -545,7 +578,7 @@ for (const p of pages) {
   // puis, à la suite, un lien vers chaque kit (un kit = un lien, pas dix-neuf).
   if (p.cible === 'index.html') {
     const liens = sommaire.map((s) => {
-      const t = (readFileSync(join(src, s.fichier), 'utf8').match(/^#\s+(.*)$/m) || [, s.nom])[1].trim();
+      const t = (lireMd(join(src, s.fichier)).match(/^#\s+(.*)$/m) || [, s.nom])[1].trim();
       return `<li><a href="${s.cible}">${enLigne(t)}</a></li>`;
     }).join('');
     const liensKits = kits.map((kit) => {
@@ -594,7 +627,7 @@ for (const kit of kits) {
    * l'exemple de syntaxe `[[questions-ouvertes]]` du README ne doit pas devenir une citation. */
   const citesPar = new Map();
   for (const p of liste) {
-    const brut = retirerFrontmatter(readFileSync(join(LOCAL, kit, p.rel), 'utf8')).replace(/`[^`]*`/g, ' ');
+    const brut = retirerFrontmatter(lireMd(join(LOCAL, kit, p.rel))).replace(/`[^`]*`/g, ' ');
     for (const m of brut.matchAll(/\[\[([^\[\]|#]+)(?:\|[^\[\]]*)?\]\]/g)) {
       const cle = m[1].trim().replace(/^\.\//, '').replace(/\.md$/i, '').toLowerCase();
       const cible = parCle.get(cle) || parCle.get(cle.split('/').pop().toLowerCase());
@@ -608,7 +641,7 @@ for (const kit of kits) {
 
   for (const p of liste) {
     renvois = { depuis: kit + '/' + p.rel, parCle, page: p.page, bilan };
-    const md = retirerFrontmatter(readFileSync(join(LOCAL, kit, p.rel), 'utf8'));
+    const md = retirerFrontmatter(lireMd(join(LOCAL, kit, p.rel)));
     let corps = convertir(md);
     if (p.page === 'index.html') {
       corps = corps.replace(/(<\/h1>)/, `$1\n<ul class="sommaire">${sommaireKit}</ul>`);

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Carte du dossier 3D — de l'image au modèle qui tourne · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Carte du dossier 3D — de l'image au modèle qui tourne</h1>
+<blockquote><p><strong>Ce que ce dossier contient.</strong> Quatorze notes atomiques sur la 3D et la modélisation telles que le studio les pratique : la chaîne technique mesurée, ses contraintes de mémoire et de temps, ce qui sépare un rendu d'un asset de jeu, le cas de <em>Metroid</em> passé à la 3D, et la règle juridique qui encadre tout cela. Chaque note porte une seule idée et se lit seule.</p>
+<p><strong>Ce que ce dossier n'est pas.</strong> Ni un tutoriel, ni une compilation. Aucune note n'est un résumé d'une autre. Là où un chiffre n'est pas vérifiable, la note l'écrit.</p></blockquote>
+<h2>Groupe 1 — La chaîne : de l'image au maillage utilisable</h2>
+<p><em>Le studio a une chaîne image → maillage mesurée de bout en bout, et chaque maillon a une raison d'être technique, pas esthétique.</em></p>
+<table><thead><tr><th>Note</th><th>L'idée en une ligne</th></tr></thead>
+<tbody><tr><td><a href="la-chaine-image-vers-maillage.html">la-chaine-image-vers-maillage</a></td><td>L'ordre exact des nœuds, et pourquoi <code>remesh</code> doit être passé sous forme de dictionnaire</td></tr><tr><td><a href="un-maillage-genere-n-est-pas-utilisable.html">un-maillage-genere-n-est-pas-utilisable</a></td><td>La sortie brute est une poussière de 3,4 millions de morceaux, pas un objet</td></tr><tr><td><a href="le-remesh-et-la-densite.html">le-remesh-et-la-densite</a></td><td>Le réglage qui décide de la densité, et le même nœud qui sert le web et le moteur</td></tr><tr><td><a href="alleger-avant-de-texturer.html">alleger-avant-de-texturer</a></td><td>Texturer d'abord, c'est payer la texture deux fois et risquer de la perdre</td></tr></tbody></table>
+<h2>Groupe 2 — Les contraintes mesurées : mémoire et temps</h2>
+<p><em>Sur cette machine, la vraie limite est la mémoire de la carte graphique : tout le reste — sérialisation, plafonds de résolution, arrêt au premier plantage — en découle.</em></p>
+<table><thead><tr><th>Note</th><th>L'idée en une ligne</th></tr></thead>
+<tbody><tr><td><a href="la-vram-est-la-vraie-limite.html">la-vram-est-la-vraie-limite</a></td><td>10 240 Mio sur la carte, environ 8,4 Gio exploitables, et un modèle de langage qui laisse 1 668 Mo</td></tr><tr><td><a href="le-budget-mesure-d-un-run-trellis.html">le-budget-mesure-d-un-run-trellis</a></td><td>107 secondes, 4 447 Mio au pic, 5,66 Go de marge : le coût chiffré d'une génération</td></tr></tbody></table>
+<h2>Groupe 3 — Du modèle au jeu</h2>
+<p><em>Un maillage qui s'affiche n'est pas un asset qui tourne : il lui faut des UV, une échelle, des matériaux, des collisions, un squelette — et un poids compatible avec une page.</em></p>
+<table><thead><tr><th>Note</th><th>L'idée en une ligne</th></tr></thead>
+<tbody><tr><td><a href="l-uv-et-la-texture.html">l-uv-et-la-texture</a></td><td>Sans UV le maillage reste gris, et le dépliage peut le découper en une île par triangle</td></tr><tr><td><a href="l-echelle-et-les-unites.html">l-echelle-et-les-unites</a></td><td>Un pipeline sans normalisation livre des objets justes et invisibles</td></tr><tr><td><a href="le-squelette-et-l-animation.html">le-squelette-et-l-animation</a></td><td>Le maillon que le studio n'a pas encore installé — et les candidats interdits ou hors budget</td></tr><tr><td><a href="ce-qui-separe-un-rendu-d-un-asset-de-jeu.html">ce-qui-separe-un-rendu-d-un-asset-de-jeu</a></td><td>Polygones, LOD, UV, matériaux, collisions, échelle, performance : la liste des conditions</td></tr><tr><td><a href="le-poids-d-un-modele-dans-une-page.html">le-poids-d-un-modele-dans-une-page</a></td><td>Un fichier de 10,3 Mo coûte dix fois le budget d'une page, et une scène 3D coûte des requêtes</td></tr></tbody></table>
+<h2>Groupe 4 — Metroid, étude de cas 3D</h2>
+<p><em>Le passage de la 2D à la première personne a coûté à Retro Studios la quasi-totalité de son travail déjà fait, et a produit un compromis de visée inédit.</em></p>
+<table><thead><tr><th>Note</th><th>L'idée en une ligne</th></tr></thead>
+<tbody><tr><td><a href="le-passage-de-metroid-a-la-3d.html">le-passage-de-metroid-a-la-3d</a></td><td>L'intervention de Miyamoto, le <em>lock-on</em>, le HUD du casque, le Speed Booster écarté et l'absence d'épisode sur Nintendo 64</td></tr></tbody></table>
+<h2>Groupe 5 — La règle juridique appliquée à la 3D</h2>
+<p><em>Un modèle 3D d'un personnage protégé reste une œuvre protégée, même généré par une IA — et la licence qui compte est celle des poids, pas celle affichée par le dépôt.</em></p>
+<table><thead><tr><th>Note</th><th>L'idée en une ligne</th></tr></thead>
+<tbody><tr><td><a href="un-modele-3d-n-est-pas-une-ressource-libre.html">un-modele-3d-n-est-pas-une-ressource-libre</a></td><td>Citer n'est pas utiliser : le genre et la technique sont libres, le nom et le design sont pris</td></tr><tr><td><a href="le-registre-des-licences-refusees.html">le-registre-des-licences-refusees</a></td><td>Pixal3D, Meshy, Tripo, Modddif refusés ; TRELLIS.2, ComfyUI-SplatKit et Modly autorisés</td></tr></tbody></table>
+<h2>Notes de référence du vault</h2>
+<ul><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> — le passage 2D/3D, la lecture de l'espace, le genre.</li><li><a href="../03-les-createurs-et-studios.html">03-les-createurs-et-studios</a> — les studios, les bascules, les chaînes de décision.</li><li><a href="../01-la-licence.html">01-la-licence</a> — la frontière juridique de la licence.</li><li><a href="../08-etat-actuel-2026.html">08-etat-actuel-2026</a> — l'état de la licence et de ses branches en 2026.</li><li><a href="../09-annexes-reperes-et-lexique.html">09-annexes-reperes-et-lexique</a> — les dates, les versions, les abandons.</li></ul>
+<h2>Cité par</h2>
+<p>1 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="../00-carte-du-vault.html">🗺️ Carte du vault — Metroid, vue 360°</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

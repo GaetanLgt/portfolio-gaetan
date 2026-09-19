@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Conception et architecture — carte du dossier · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Conception et architecture — carte du dossier</h1>
+<p><em>Quatorze atomes, quatre familles : ce qui se conçoit comme un jeu, comme une information, comme un logiciel — et une hypothèse qui relie tout cela à une cathédrale.</em></p>
+<h2>Ce que ce dossier est</h2>
+<p>Un dossier d'<strong>atomes</strong> : chaque note porte <strong>une seule idée</strong>, se lit sans les autres et ne compile pas les autres. La règle est écrite dans <a href="une-idee-par-note.html">une-idee-par-note</a> ; le format est celui du dossier <code>art/</code> du même vault.</p>
+<p>Il croise deux matières. Celle du vault : les notes <code>01</code> à <code>11</code>, <code>dossier-metroid-360</code>, <code>objectifs</code>. Et celle du studio : <code>AGENTS.md</code>, <code>ARCHITECTURE-FUGU-GL.md</code>, <code>modeles/methode-creation-jeu-video.md</code>, l'architecture du musée, le cadrage « site comme un métroidvania », et la documentation du harnais à plugins.</p>
+<h2>Les quatre familles</h2>
+<p><strong>1 · Concevoir un jeu ou un système.</strong> La boucle, le prototype, la contrainte qui engendre la forme, et le niveau comme parcours — quatre notes sur ce qui <em>produit</em> un jeu plutôt que sur ce qu'il contient.</p>
+<p><strong>2 · Architecturer l'information.</strong> Le vault est lui-même une architecture : atomes, renvois, cartes, couches de fiabilité. Ces quatre notes décrivent les principes qu'il applique réellement, y compris ceux qu'il n'écrit nulle part.</p>
+<p><strong>3 · Architecturer un logiciel.</strong> Séparer l'orchestration de l'exécution, borner le périmètre d'un exécutant, retirer un plugin proprement, et savoir à quel plan appartient une ligne qui publie un service : quatre règles du harnais et du studio.</p>
+<p><strong>4 · Le pont vers la cathédrale.</strong> Deux notes, et la seconde est une hypothèse assumée : le principe structurel de la voûte sur croisée d'ogives et de l'arc-boutant, puis la question de savoir si un niveau de jeu et une cathédrale se conçoivent de la même façon.</p>
+<h2>Les atomes</h2>
+<table><thead><tr><th>Atome</th><th>L'idée en une ligne</th><th>Référence</th></tr></thead>
+<tbody><tr><td><a href="la-boucle-explorer-trouver-ouvrir.html">la-boucle-explorer-trouver-ouvrir</a></td><td>Un monde fermé, un objet qui l'ouvre, un retour — la progression se lit dans le monde.</td><td><code>06</code></td></tr><tr><td><a href="la-tranche-verticale-avant-la-promesse.html">la-tranche-verticale-avant-la-promesse</a></td><td>Un jeu ne se juge pas sur sa chaîne d'outils, mais sur un niveau jouable et mesuré.</td><td><code>06</code></td></tr><tr><td><a href="la-contrainte-engendre-la-forme.html">la-contrainte-engendre-la-forme</a></td><td>Une machine limitée produit une échelle, un style, et parfois un genre.</td><td><code>06</code></td></tr><tr><td><a href="un-niveau-se-concoit-comme-un-parcours.html">un-niveau-se-concoit-comme-un-parcours</a></td><td>Ce qui compte, c'est la suite de ce qu'on rencontre : un seuil, une chose cachée, une chose montrée.</td><td><code>06</code></td></tr><tr><td><a href="une-idee-par-note.html">une-idee-par-note</a></td><td>Une note qui ne porte qu'une idée peut se lire, se citer et se corriger seule.</td><td><code>00</code></td></tr><tr><td><a href="un-renvoi-vaut-une-phrase.html">un-renvoi-vaut-une-phrase</a></td><td>Un lien sans raison est un lien qu'on ne suit pas.</td><td><code>09</code></td></tr><tr><td><a href="une-carte-repond-a-trois-questions.html">une-carte-repond-a-trois-questions</a></td><td>De quoi ça parle, ce qui est établi et par quoi, ce qui reste à faire et à qui.</td><td><code>11</code></td></tr><tr><td><a href="trois-couches-de-fiabilite.html">trois-couches-de-fiabilite</a></td><td>La couche dit ce qu'on a le droit de faire d'une affirmation.</td><td><code>11</code></td></tr><tr><td><a href="separer-orchestration-et-execution.html">separer-orchestration-et-execution</a></td><td>Router et exécuter sont deux savoirs distincts.</td><td><code>11</code></td></tr><tr><td><a href="un-worker-ne-voit-que-son-perimetre.html">un-worker-ne-voit-que-son-perimetre</a></td><td>Instruction ciblée, visibilité limitée : le reste est du bruit.</td><td><code>11</code></td></tr><tr><td><a href="un-plugin-se-retire-proprement.html">un-plugin-se-retire-proprement</a></td><td>Un enregistrement est un effet qui se dénoue.</td><td><code>11</code></td></tr><tr><td><a href="un-service-qui-publie-appartient-a-l-hote.html">un-service-qui-publie-appartient-a-l-hote</a></td><td>Ce qui publie un service ne peut pas vivre dans une seule session.</td><td><code>11</code></td></tr><tr><td><a href="les-forces-sont-conduites-quelque-part.html">les-forces-sont-conduites-quelque-part</a></td><td>On ne porte pas une charge, on l'achemine.</td><td><code>11</code></td></tr><tr><td><a href="cathedrale-et-niveau-se-concoivent-pareil.html">cathedrale-et-niveau-se-concoivent-pareil</a></td><td>Hypothèse : circulation, seuils et lumière dans les deux cas — et rien de plus.</td><td><code>06</code></td></tr></tbody></table>
+<h2>Ce que cette carte ne dit pas</h2>
+<ul><li><strong>Aucun atome n'a été passé au vérificateur automatique</strong> du studio (<code>node forge-ia/verifier-kits.mjs</code>) : les renvois et les comptages ont été contrôlés ici à la main, pas par machine.</li><li><strong>L'hypothèse « cathédrale et niveau » n'est soutenue par aucune source lue.</strong> Elle est produite par ce dossier ; <a href="cathedrale-et-niveau-se-concoivent-pareil.html">cathedrale-et-niveau-se-concoivent-pareil</a> dit ce qui la soutient et ce qui la contredit.</li><li><strong>Les faits précis sur la cathédrale d'Amiens — dates, dimensions, records — ne sont pas ici.</strong> Ils appartiennent à une note de pont à venir ; le dossier <code>ponts\</code> est vide au 14/09/2026.</li><li><strong>Aucune note de <code>science\</code> n'existe à cette heure</strong>, et le dossier <code>art\</code> n'est pas le mien : les renvois de référence pointent donc vers <code>06</code>, <code>09</code>, <code>00</code> et <code>11</code>.</li></ul>
+<p><em>GL Digital Lab — dossier créé le 14/09/2026. Quatorze atomes, une carte, aucune œuvre protégée reproduite.</em></p>
+<h2>Cité par</h2>
+<p>1 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="../00-carte-du-vault.html">🗺️ Carte du vault — Metroid, vue 360°</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Ce qu'un découpage ne recolle pas · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Ce qu'un découpage ne recolle pas</h1>
+<p><em>Un chunk est lu hors de son document : le découpage perd le contexte, et le ratio change avec le corpus.</em></p>
+<h2>L'idée</h2>
+<p>Un carnet ne stocke pas des documents : il stocke des <strong>morceaux</strong>. Le carnet agence <code>Vault-GL-Digital-Lab</code> (id <code>4e67c75c-aa9c-453a-80d7-96348357350f</code>) porte <strong>11 488 chunks</strong> et <strong>7 628 610 caractères</strong> vectorisés, soit <strong>664,1 caractères par chunk</strong> ; le carnet <code>Metroid</code> est à <strong>819 caractères par chunk</strong> (extension RAG § 1 et § 7). Le ratio <strong>n'est donc pas une constante du studio</strong> : un chunk « de référence » n'existe pas, le découpage change avec le corpus.</p>
+<p>Et <strong>le morceau voyage seul</strong> : l'extrait retrouvé arrive sans que le titre, la section et le document d'origine l'accompagnent toujours. L'estimateur qui prévoit une extension <strong>utilise ce ratio</strong> : pour un dossier non indexé, l'on divise les caractères par 664,1. Validé là où le réel existe, il donne <strong>7 565 chunks estimés contre 7 858 réels, soit −3,7 %</strong>, avec un pire cas à <strong>−12,6 %</strong> sur <code>livrables</code>. <em>L'estimation vaut pour décider, pas pour un budget au chunk près.</em></p>
+<h2>Ce qui est établi</h2>
+<ul><li>Carnet agence : <strong>11 488 chunks</strong>, <strong>7 628 610 caractères</strong>, ratio <strong>664,1 caractères/chunk</strong> ; carnet Metroid : <strong>1 356 chunks</strong>, <strong>819 caractères/chunk</strong> (§ 1 et § 7).</li><li>Les quatre dossiers indexés : <code>vault-agence/</code> <strong>3 587</strong> chunks réels, <code>modeles/</code> <strong>2 461</strong>, <code>livrables/</code> <strong>1 125</strong>, <code>ecole/</code> <strong>685</strong> — total <strong>527 fichiers, 4 994 563 caractères, 7 858 chunks</strong> (mesure du 13 h 45).</li><li>L'estimateur est validé : <strong>7 565 estimés / 7 858 réels</strong>, écart <strong>−3,7 %</strong>, pire cas <code>livrables</code> <strong>−12,6 %</strong> (§ 1).</li><li>Le dépôt entier porterait <strong>39 313 chunks</strong> : <strong>la mémoire du studio est à 29 % de son propre dépôt</strong> (§ 1). Chunks comptés par requête SQL, « jamais devinés ».</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li><strong>Aucune taille de chunk en caractères</strong> n'est donnée : ni minimum, ni maximum, ni chevauchement. Le ratio est un <strong>résultat</strong>, pas une recette.</li><li>Aucun <strong>test A/B</strong> de récupération dossier par dossier : le risque de « noyade » est <strong>chiffré, pas démontré par l'usage</strong> (§ 7). Le ratio du carnet Metroid (819) n'est pas expliqué.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>vault-agence/extension-rag-et-indexation-2026-09-14.md</code> § 1, § 2, § 6 et § 7 — document du studio.</li><li><code>indexer-agence.js</code> — <code>DOSSIERS_SOURCES</code> (ligne 47) et <code>EXT_OK</code> (ligne 38).</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="ce-qu-un-extrait-retrouve-ne-prouve-pas.html">ce-qu-un-extrait-retrouve-ne-prouve-pas</a> — ce qu'un morceau retrouvé permet de dire, et pas plus.</li><li><a href="un-emetteur-un-journal-un-filtre.html">un-emetteur-un-journal-un-filtre</a> — le composant qui verse ces morceaux dans le carnet.</li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a> — la note de méthode et son tableau des sources.</li></ul>
+<h2>Cité par</h2>
+<p>3 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-physique-et-flux.html">Physique et flux d'information — carte du dossier</a></li><li><a href="ce-qu-un-extrait-retrouve-ne-prouve-pas.html">Ce qu'un extrait retrouvé ne prouve pas</a></li><li><a href="l-ascenseur-est-l-ecran-de-chargement.html">L'ascenseur est l'écran de chargement</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Le squelette et l'animation · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Le squelette et l'animation</h1>
+<p><em>Un maillage n'est pas encore un personnage : il faut un squelette, un skinning et des animations — et c'est le maillon que le studio n'a pas encore installé.</em></p>
+<p>La chaîne du studio sait produire une forme, la nettoyer et la texturer. Elle ne sait pas encore faire bouger le résultat. Or un personnage jouable suppose trois choses distinctes, souvent confondues : un <strong>squelette</strong> (les os), un <strong>skinning</strong> (le rattachement des sommets aux os) et des <strong>animations</strong> (les mouvements).</p>
+<p>L'état mesuré est un trou, pas une ambiguïté. <strong>Les seuls nœuds de rig installés sont Meshy et Tripo</strong>, deux services en ligne interdits par le registre des licences du studio. Le nœud GeomPack, lui, fait de l'<strong>extraction de squelette</strong>, pas du skinning : ce n'est donc pas un remplaçant. Les candidats identifiés n'étaient pas installés aux dates lues :</p>
+<table><thead><tr><th>Candidat</th><th>Licence</th><th>Contrainte</th></tr></thead>
+<tbody><tr><td>UniRig</td><td>MIT</td><td>au moins 8 Go de VRAM</td></tr><tr><td>AnimoFlow</td><td>AGPL-3.0</td><td>backend Docker et WSL2 ; exige un personnage <strong>déjà riggé</strong></td></tr><tr><td>Skin Tokens (ErrorX)</td><td>MIT <strong>annoncée</strong></td><td>6 Go de VRAM annoncés ; licence à lire dans le dépôt officiel</td></tr><tr><td>ARDY (NVIDIA)</td><td>code Apache-2.0, poids sous NVIDIA Open Model Agreement</td><td>encodeur d'environ 14 Go de VRAM en bf16 → hors budget de la carte</td></tr></tbody></table>
+<h2>Ce qui est établi</h2>
+<ul><li>Les seuls nœuds de rig installés sont Meshy et Tripo, interdits, et GeomPack ne fait pas de skinning (plan de travail du studio, 10/09/2026).</li><li>UniRig : MIT, au moins 8 Go de VRAM (même source et synthèse de veille, 13/09/2026).</li><li>AnimoFlow : AGPL-3.0, Docker et WSL2, personnage déjà riggé exigé (registre des licences ; fiche de veille).</li><li>ARDY : code Apache-2.0, poids sous NVIDIA Open Model Agreement, encodeur d'environ 14 Go de VRAM (registre des licences et veille).</li><li>Aucun de ces outils n'était installé (documents du studio, 10 et 11/09/2026).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>La licence de Skin Tokens : <strong>annoncée</strong> MIT, non vérifiée à la source.</li><li>La VRAM réelle d'ARDY : le « 6 Go » du titre n'est confirmé par <strong>aucune</strong> source officielle, et l'encodeur annoncé est bien plus lourd.</li><li>Le comportement de ces outils sur un maillage généré par IA : aucun test n'a été fait.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/plan-de-travail-2026-09-10.md</code> — chaînon rig, nœuds installés, UniRig.</li><li><code>vault-agence/licences-refusees.md</code> — AnimoFlow, ARDY, services interdits.</li><li><code>forge-ia/pipeline-ia-3d-indie-game.md</code> — briques auto-rig et animation, non installées.</li><li><code>modeles/applicable-veille-nuit-2026-09-10.md</code> — vérification des annonces ARDY et LTX.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="ce-qui-separe-un-rendu-d-un-asset-de-jeu.html">ce-qui-separe-un-rendu-d-un-asset-de-jeu</a> — où le squelette se place dans les conditions d'un asset de jeu.</li><li><a href="le-registre-des-licences-refusees.html">le-registre-des-licences-refusees</a> — pourquoi Meshy et Tripo ne peuvent pas servir de solution.</li><li><a href="../03-les-createurs-et-studios.html">03-les-createurs-et-studios</a> — un maillon manquant se confie à un partenaire externe, comme pour <em>Other M</em>.</li></ul>
+<h2>Cité par</h2>
+<p>3 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="ce-qui-separe-un-rendu-d-un-asset-de-jeu.html">Ce qui sépare un rendu d'un asset de jeu</a></li><li><a href="le-registre-des-licences-refusees.html">Le registre des licences refusées</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

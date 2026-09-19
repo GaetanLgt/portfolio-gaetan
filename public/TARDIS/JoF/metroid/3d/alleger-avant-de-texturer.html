@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Alléger avant de texturer · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Alléger avant de texturer</h1>
+<p><em>Dans la chaîne, l'allègement se fait avant le texturage — texturer d'abord, c'est payer la texture deux fois et risquer de la perdre au remaillage.</em></p>
+<p>La règle est écrite noir sur blanc dans le document de méthode du studio : <strong>alléger avant de texturer</strong>. Texturer 115 866 faces pour les ramener ensuite à 30 000 revient à calculer une texture sur une géométrie qui va disparaître en partie. La formulation du document est plus directe encore : « c'est payer la texture deux fois — et risquer de la perdre au remaillage ».</p>
+<p>Cette règle n'est pas théorique : le studio a mesuré ce qui arrive quand le dépliage des UV et la rasterisation PBR arrivent sur un maillage non préparé. Sur le <strong>même</strong> asset, avec une chaîne <code>Simplify</code> + <code>UVUnwrap</code> :</p>
+<table><thead><tr><th>Mesure</th><th>Avant l'étape UV</th><th>Après UV + PBR</th></tr></thead>
+<tbody><tr><td>Faces</td><td>29 678</td><td>29 264</td></tr><tr><td>Arêtes uniques</td><td>3 484</td><td>87 729</td></tr><tr><td>Arêtes de bord (trous)</td><td>2</td><td>87 666</td></tr><tr><td>Arêtes non-manifold</td><td>3 389</td><td>0</td></tr></tbody></table>
+<p>La géométrie sortait quasi fermée (2 arêtes de bord) et ressort pulvérisée (87 666). Le journal du worker le confirme à sa manière : « Get 29 176 clusters after fast clustering » pour 29 264 faces, soit <strong>une île UV par triangle</strong>.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>La règle d'ordre « alléger avant de texturer », formulée dans <code>modeles/methode-creation-jeu-video.md</code> (11/09/2026).</li><li>Les quatre mesures avant/après UV + PBR, sur le même asset (document du studio, 11/09/2026).</li><li>Le message du journal : 29 176 grappes pour 29 264 faces (même source).</li><li>La chaîne texturée aboutie, une fois l'ordre respecté : 5 265 Ko, 28 299 triangles, deux textures, <code>baseColorFactor</code> à 1,0, 24,7 s (méthode jeu vidéo, 11/09/2026).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>La cause exacte de la destruction : le document désigne <code>weld_vertices</code> et <code>floater_threshold</code> comme piste, sans run de confirmation.</li><li>Le comportement à d'autres densités : la mesure porte sur un asset d'environ 29 000 faces.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/methode-creation-jeu-video.md</code> — règle d'ordre et résultat texturé.</li><li><code>modeles/pipeline-3d-trellis2-2026-09-11.md</code> — mesures avant/après UV, journal du worker.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="le-remesh-et-la-densite.html">le-remesh-et-la-densite</a> — le nœud et ses paramètres.</li><li><a href="l-uv-et-la-texture.html">l-uv-et-la-texture</a> — ce que le dépliage d'UV exige et détruit.</li><li><a href="../03-les-createurs-et-studios.html">03-les-createurs-et-studios</a> — une chaîne de production se lit par ses bascules, pas par ses intentions.</li></ul>
+<h2>Cité par</h2>
+<p>4 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="l-uv-et-la-texture.html">L'UV et la texture</a></li><li><a href="la-chaine-image-vers-maillage.html">La chaîne, de l'image au maillage</a></li><li><a href="le-remesh-et-la-densite.html">Le remesh et la densité</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

@@ -2,6 +2,7 @@
 tags: [metroid, vault, convention]
 date: 2026-09-14
 statut: note de travail
+verifie: 2026-09-14
 ---
 
 # 🎮 Vault Metroid — porte d'entrée

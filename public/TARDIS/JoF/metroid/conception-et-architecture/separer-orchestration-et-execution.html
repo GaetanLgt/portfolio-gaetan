@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Séparer l'orchestration de l'exécution · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Séparer l'orchestration de l'exécution</h1>
+<p><em>Celui qui décide qui fait quoi n'a pas besoin d'être celui qui fait le mieux : router et exécuter sont deux savoirs.</em></p>
+<h2>L'idée</h2>
+<p>Un système qui confie tout à un seul exécutant mélange deux métiers : décider <em>qui</em> fait quoi, et <em>faire</em>. Le studio les sépare, et il a les deux moitiés écrites.</p>
+<p>La moitié théorique vient de l'architecture d'agents : « séparer le savoir d'orchestration du savoir d'exécution — le coordinateur n'a pas besoin d'être le modèle le plus fort ; il doit bien router. » La moitié pratique est une règle de la maison : si une tâche correspond à un agent du registre, elle passe par son outil dédié — <em>ne pas réinventer ce qui existe déjà.</em></p>
+<p>Cette règle n'est pas née d'un principe, mais d'un échec mesuré : un agent a reconstruit par essais-erreurs un pipeline <strong>déjà documenté</strong>, a fait tomber ComfyUI quatre fois, et a failli réactiver un modèle neutralisé pour raison juridique. Rien de tout cela n'était un problème de compétence : c'était un problème de routage.</p>
+<p>Deux garde-fous l'accompagnent : un plafond de tours par mission, et une détection de non-convergence. Et une limite de bon sens — l'orchestration coûte cher, elle se réserve aux missions à forte valeur ; une demande simple part vers une seule Loi.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>« Séparer le savoir d'orchestration du savoir d'exécution : le coordinateur n'a pas besoin d'être le modèle le plus fort ; il doit bien router » (<code>ARCHITECTURE-FUGU-GL.md</code> § 1).</li><li>« Si une tâche correspond à un agent du registre → l'exécuter via l'outil dédié. Ne pas réinventer ce qui existe déjà » (<code>AGENTS.md</code>, règle d'or).</li><li>L'échec qui a produit la règle : pipeline déjà écrit reconstruit par essais-erreurs, ComfyUI tombé quatre fois, template à neutralisation juridique presque réactivé (même fichier, § « LIRE, pas deviner »).</li><li>Anti-boucles : plafond de tours par mission, superviseur de non-convergence, et « ne pas fuguiser à l'excès » sur les demandes simples (<code>ARCHITECTURE-FUGU-GL.md</code> § 3).</li><li>L'orchestrateur-worker coûte ×4 à ×15 en tokens : à réserver aux missions à forte valeur (même note, § 1, citant Anthropic).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le rapport ×4 à ×15 vient d'une source externe (Anthropic) : il n'a pas été mesuré sur cette machine.</li><li>Le studio ne mesure pas encore le coût par mission, ni la part des demandes routées vers une seule Loi (<code>ARCHITECTURE-FUGU-GL.md</code> § 5).</li><li>« Agent compétent » n'a pas de critère écrit : la table de routage est le seul arbitre, et elle a déjà été prise en défaut une fois (« relis ce document » part sur Réalisation).</li></ul>
+<h2>Sources</h2>
+<ul><li><code>ARCHITECTURE-FUGU-GL.md</code> § 1, 3 et 5 — GL Digital Lab, 09-10/2026.</li><li><code>AGENTS.md</code> — règle d'or, § « LIRE, pas deviner », table de routage et routage mesuré du 10/09/2026.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="un-worker-ne-voit-que-son-perimetre.html">un-worker-ne-voit-que-son-perimetre</a></li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a></li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-conception-et-architecture.html">Conception et architecture — carte du dossier</a></li><li><a href="un-worker-ne-voit-que-son-perimetre.html">Un worker ne voit que son périmètre</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

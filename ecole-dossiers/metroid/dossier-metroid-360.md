@@ -2,6 +2,7 @@
 tags: [metroid, pedagogie, dossier, transversal]
 date: 2026-09-14
 statut: proposition — à valider par Gaëtan
+verifie: 2026-09-14
 ---
 
 # Metroid — dossier transversal

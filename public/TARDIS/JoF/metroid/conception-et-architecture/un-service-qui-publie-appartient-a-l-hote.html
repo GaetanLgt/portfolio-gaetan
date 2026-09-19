@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Un service qui publie appartient à l'hôte · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Un service qui publie appartient à l'hôte</h1>
+<p><em>Une ligne qui publie un service ne peut pas rester dans un preset : la deuxième session entrerait en collision avec la première.</em></p>
+<h2>L'idée</h2>
+<p>Un harnais à plugins a deux plans, et le choix ne se fait pas au feeling : il se fait sur la question « est-ce que cette chose doit être <strong>partagée</strong> ? » Le <strong>plan hôte</strong> porte les registres, tout ce qui traverse les sessions (persistance, réglages, identifiants, télémétrie), la pile de bac à sable et d'approbation, la route des modèles et le registre des sous-agents — une seule instance pour le processus.</p>
+<p>Le <strong>plan preset</strong> porte ce qu'*une* session apporte à ces registres : ses outils, sa persona, sa politique de compaction — une instance par session, démontée avec elle. D'où la règle la plus contre-intuitive du lot : <strong>une ligne qui publie un service ne peut pas rester dans un preset.</strong> Sans realm d'isolement, le service atterrit dans le realm global du processus : la deuxième session entre en collision avec la première, et le montage le refuse.</p>
+<p>L'exemple travaillé est celui des sous-agents : le registre répond à des requêtes inter-sessions pour l'hôte, donc une copie par session affamerait cette ligne <em>et</em> entrerait en collision. Le preset apporte les <strong>outils</strong> de délégation ; le registre reste côté hôte. Quand un preset possède réellement un service, il enferme le fournisseur <strong>et tous ses consommateurs</strong> dans un même groupe portant un realm d'isolement.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Les deux plans et leur critère : « the choice is not about how agent-related something feels — it is about whether the thing must be shared » (skill <code>editing-cordis-compositions</code>, « Decide the plane first »).</li><li>« A row that publishes a service may not sit loose in a preset » : sans realm <code>isolate</code>, le second montage entre en collision et le montage le refuse (même source, « The rule that catches people »).</li><li>Un service dont un consommateur vit hors du plan agent ne peut pas descendre dans un preset (même source).</li><li>Message d'audit du montage : « a preset service must sit behind an isolate realm or move to the host composition » (même source, « Verifying a change »).</li><li>Le harnais n'a « pas de cœur privilégié à corriger » : tout est plugin, y compris le registre d'outils et la boucle d'agent (<code>docs/architecture.md</code>).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>La collision n'a <strong>pas</strong> été reproduite ici sur une deuxième session réelle : elle est décrite par la documentation et par l'audit de montage.</li><li>Le nombre de services réellement publiés par les presets du studio n'est pas compté (non vérifié).</li><li>Le comportement d'un realm à libellé partagé n'est rapporté que tel que la source l'énonce : un libellé ne mutualise pas les instances, et <code>provide()</code> lève sur la seconde inscription.</li></ul>
+<h2>Sources</h2>
+<ul><li>Skill <code>editing-cordis-compositions</code> — preset <code>cordis</code> du harnais, lu le 14/09/2026.</li><li><code>docs/architecture.md</code> — DeepSeek Harness, checkout local, lu le 14/09/2026.</li><li><code>AGENTS.md</code> § « Auto-référentialité » — GL Digital Lab.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="un-plugin-se-retire-proprement.html">un-plugin-se-retire-proprement</a></li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a></li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-conception-et-architecture.html">Conception et architecture — carte du dossier</a></li><li><a href="un-plugin-se-retire-proprement.html">Un plugin se retire proprement</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

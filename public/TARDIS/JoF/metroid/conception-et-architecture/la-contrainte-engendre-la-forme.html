@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>La contrainte engendre la forme · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>La contrainte engendre la forme</h1>
+<p><em>Une machine limitée ne produit pas seulement des compromis : elle produit une échelle, un style et parfois un genre.</em></p>
+<h2>L'idée</h2>
+<p>La contrainte n'est pas l'ennemie de la forme, elle en est la cause. Trois cas, mesurés ou documentés.</p>
+<p><strong>La mémoire de la machine.</strong> Mesure du studio : avec <code>qwen3.5:9b</code> chargé il reste 1 668 Mo de VRAM libres ; <code>qwen3-coder-16k</code> plus ComfyUI tombent à 437 Mo. Un modèle de travail et une génération 3D ne cohabitent pas. La réponse choisie n'est pas « faire moins bien » : on <strong>sérialise</strong> les travaux, et le <strong>low-poly devient un choix de production</strong> — 2 500 faces soigneusement décimées battent 115 866 faces illisibles sur le web.</p>
+<p><strong>Le point de vue.</strong> Le Speed Booster, envisagé pour <em>Metroid Prime</em>, a été écarté : inadapté à la vue subjective et à l'échelle des environnements. Et aucun <em>Metroid</em> n'est sorti sur Nintendo 64, faute d'idées arrêtées sur la manette.</p>
+<p><strong>Le support.</strong> Trois parties sur disquette Famicom au Japon ; un mot de passe de 24 lettres sur la NES.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Mesure de VRAM : <code>qwen3.5:9b</code> chargé, <strong>1 668 Mo</strong> libres ; <code>qwen3-coder-16k</code> + ComfyUI, <strong>437 Mo</strong> (plancher) (<code>modeles/methode-creation-jeu-video.md</code> § 5).</li><li>« Le low-poly est un choix de production, pas un pis-aller » : 2 500 faces décimées contre 115 866 (même document, § 4).</li><li>Le <strong>Speed Booster</strong> a été écarté de <em>Metroid Prime</em>, jugé inadapté à la vue subjective et à l'échelle des environnements (<code>06-les-mecaniques-et-le-genre</code> § 7).</li><li>Pas de <em>Metroid</em> sur Nintendo 64 : Sakamoto ne voyait pas comment utiliser la manette, et une autre société a refusé le projet (même note).</li><li><em>Metroid</em> (1986) : trois parties sur disquette Famicom au Japon ; mot de passe de 24 lettres sur NES (même note, § 4).</li><li>Les mesures de VRAM sont <strong>rattachées à une machine</strong> : EVA-01, 10 Go (<code>AGENTS.md</code>, interdit n° 2).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le lien de <strong>cause</strong> entre le support et le mot de passe n'est écrit par aucune source lue : la note <code>06</code> constate deux systèmes de sauvegarde, elle n'explique pas le passage de l'un à l'autre.</li><li>Le mot « genre » n'est pas un terme des sources : il vient du cadrage de ce dossier.</li><li>Aucune source lue ne mesure l'effet esthétique de la contrainte de VRAM sur les rendus obtenus.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/methode-creation-jeu-video.md</code> § 4 et § 5 — GL Digital Lab, 10/09/2026.</li><li><code>06-les-mecaniques-et-le-genre.md</code> § 4 et § 7 — vault Metroid, 14/09/2026.</li><li><code>AGENTS.md</code> — GL Digital Lab, interdit n° 2.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="la-tranche-verticale-avant-la-promesse.html">la-tranche-verticale-avant-la-promesse</a></li><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a></li></ul>
+<h2>Cité par</h2>
+<p>3 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-conception-et-architecture.html">Conception et architecture — carte du dossier</a></li><li><a href="la-tranche-verticale-avant-la-promesse.html">La tranche verticale avant la promesse</a></li><li><a href="../ponts/evoland-progression-et-histoire-du-media.html">Evoland — quand la progression <strong>est</strong> l'histoire du médium</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

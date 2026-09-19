@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>La carte interconnectée : le socle du metroidvania · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>La carte interconnectée : le socle du metroidvania</h1>
+<p><em>Un metroidvania tient sur une seule carte continue, dont les zones restent fermées jusqu'à ce qu'un objet les ouvre.</em></p>
+<h2>L'idée</h2>
+<p>Ce qui définit le genre n'est ni la vue de profil, ni le thème, mais <strong>une carte unique et interconnectée</strong> dont certaines zones sont <strong>verrouillées</strong> au départ. Le verrou n'est pas un mot de passe : c'est un objet, une arme ou une capacité qui lève l'obstacle. Le jeu est donc une suite de portes et de clés, et la clé de la porte suivante est presque toujours gardée par un boss.</p>
+<p>Cette structure a une conséquence de conception qui se paie cher : <strong>le level design et le récit sont liés</strong>. Modifier une seule capacité oblige à retester tout le jeu, parce qu'une capacité nouvelle peut ouvrir un passage là où le concepteur ne l'avait pas prévu. Le genre se lit donc moins comme une ambiance que comme un système de dépendances.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Définition retenue par les sources : une seule grande carte interconnectée, découpée en salles ou sections (Wikipédia FR et EN, « Metroidvania », 14/09/2026).</li><li>Toutes les zones ne sont pas accessibles au départ ; un objet, une arme, une clé ou une capacité lève l'obstacle, et l'objet qui débloque la suite est souvent protégé par un boss (Wikipédia EN, 14/09/2026).</li><li>Les cartes sont non linéaires et imposent de parcourir plusieurs fois le monde ; les ennemis faibles réapparaissent (même source).</li><li>Les gros jeux ajoutent points de sauvegarde et téléportation rapide pour supprimer les déplacements fastidieux en fin de partie (même source).</li><li>Le level design et le récit sont liés : modifier une capacité oblige à retester tout le jeu (même source).</li><li>Les jeux qui empruntent seulement l'exploration et le développement du personnage ne sont « généralement pas » classés comme metroidvanias (même source).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le <strong>nombre d'objets</strong> par épisode et la valeur exacte d'un 100 % : les notes consultées ne donnent aucune liste complète ni aucun seuil.</li><li>Un <strong>seuil quantitatif</strong> de zones verrouillées : personne, dans les sources lues, ne propose de mesure du degré de verrouillage.</li><li>La population exacte du genre : « plus de 2 200 jeux » étiquetés sur Steam début 2025 est une mesure d'étiquette commerciale, pas un recensement de jeux conformes à la définition.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>06-les-mecaniques-et-le-genre.md</code> § 2, § 8 — <a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> (note du vault, 14/09/2026).</li><li>Wikipédia FR et EN, article « Metroidvania » — cités et lus par la note du vault, non rouverts ici.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="l-objet-comme-cle-et-comme-obligation.html">l-objet-comme-cle-et-comme-obligation</a> — la porte a une clé ; encore faut-il distinguer la clé de l'obligation.</li><li><a href="ce-que-la-carte-montre-au-joueur.html">ce-que-la-carte-montre-au-joueur</a> — une carte interconnectée ne sert à rien si le joueur ne peut pas la lire.</li><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> — la note de référence dont cet atome isole une seule idée.</li></ul>
+<h2>Cité par</h2>
+<p>5 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-science.html">Carte du dossier <code>science</code> — les atomes</a></li><li><a href="ce-que-la-carte-montre-au-joueur.html">Ce que la carte montre au joueur</a></li><li><a href="l-objet-comme-cle-et-comme-obligation.html">L'objet comme clé et comme obligation</a></li><li><a href="le-mouvement-et-sa-physique.html">Le mouvement et sa physique</a></li><li><a href="le-retour-en-arriere-comme-friction.html">Le retour en arrière : une friction choisie, puis compensée</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

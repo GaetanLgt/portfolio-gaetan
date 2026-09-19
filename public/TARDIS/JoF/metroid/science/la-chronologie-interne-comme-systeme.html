@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>La chronologie interne comme système de cohérence · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>La chronologie interne comme système de cohérence</h1>
+<p><em>L'ordre du récit n'est pas l'ordre de sortie, et l'écart entre les deux est mesurable.</em></p>
+<h2>L'idée</h2>
+<p>Une série de quarante ans a deux histoires : celle de ses <strong>sorties</strong> et celle de son <strong>récit</strong>. Confondre les deux fait dire n'importe quoi — <em>Metroid Prime</em>, sorti en 2002, se déroule <strong>avant</strong> <em>Metroid II</em>, sorti en 1991 : à sa sortie, le joueur reçoit une <strong>préquelle</strong>, pas une suite.</p>
+<p>Cet écart est instructif parce qu'il est <strong>mesurable</strong> : on peut compter combien de positions sont documentées par l'éditeur, combien sont reconstituées, combien restent non tranchées, et de combien d'années la fiction retarde sur le calendrier commercial. Trois faits donnent l'échelle :</p>
+<ul><li>le bloc <em>Prime</em> sort entre 2002 et 2016 et se place, dans le récit, **entre <em>Metroid</em> (1986) et <em>Metroid II</em> (1991)** ;</li><li><em>Zero Mission</em> (2004) est le <strong>premier</strong> épisode du récit et le <strong>sixième</strong> jeu sorti ;</li><li>une compilation comme <em>Prime: Trilogy</em> (2009) occupe une place dans l'ordre de sortie et <strong>aucune</strong> dans le récit.</li></ul>
+<p>Pourquoi l'éditeur laisse-t-il cet écart ? Le vault cite une raison explicite : Nintendo indique, à propos de <em>Prime 4: Beyond</em>, que le jeu se déroule dans « une autre dimension », précisément pour ne pas faire dépendre la continuité 2D de la sous-série <em>Prime</em> — et pour qu'un nouveau joueur n'ait pas besoin de connaître douze jeux. L'ordre de sortie est donc <strong>éditorial et commercial</strong> ; l'ordre du récit est <strong>narratif</strong>, et l'éditeur ne le verrouille que quand cela sert ses jeux.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Les cinq jeux <em>Prime</em> sortent entre 2002 et 2016, mais le récit les place entre <em>Metroid</em> (1986) et <em>Metroid II</em> (1991) (notes du vault <code>01</code> et <code>02</code>).</li><li><em>Zero Mission</em> (2004) est le premier épisode du récit et le sixième jeu sorti ; <em>Samus Returns</em> (2017) est le septième épisode du récit et le quatorzième jeu sorti (<a href="../02-la-chronologie-interne.html">02-la-chronologie-interne</a> § 2).</li><li><em>Other M</em> (2010), sorti après <em>Prime 3</em> (2007), se déroule après <em>Super Metroid</em> (1994), donc après tout le bloc <em>Prime</em> (même note).</li><li><em>Prime 4: Beyond</em> (2025) est un « Prime 4 » par le titre, mais Nintendo le situe après <em>Super Metroid</em> et avant <em>Metroid Fusion</em> (déclaration de l'équipe relayée par Nintendo Life et Puissance Nintendo, décembre 2025).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>L'<strong>ordre relatif exact</strong> entre <em>Other M</em> et <em>Prime 4: Beyond</em> : Nintendo dit seulement « après <em>Super Metroid</em>, avant <em>Fusion</em> », ce qui laisse les deux ordres possibles.</li><li>La place de <em>Metroid Ravenous</em> dans le récit : aucune déclaration Nintendo lue au 14/09/2026.</li><li>L'existence d'une <strong>chronologie officielle complète</strong> publiée par Nintendo, et les <strong>dates du calendrier interne</strong> (« an 20X5 », « 2075 ») : la seconde est une reconstruction de fans, présentée comme hypothèse par la base communautaire elle-même.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>02-la-chronologie-interne.md</code> § 1, § 2, § 5 — <a href="../02-la-chronologie-interne.html">02-la-chronologie-interne</a> (note du vault, 14/09/2026).</li><li><code>01-la-licence.md</code> — <a href="../01-la-licence.html">01-la-licence</a>, pour les années de sortie.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="deux-statuts-dans-une-meme-chronologie.html">deux-statuts-dans-une-meme-chronologie</a> — ce que ce système doit à la reconstitution.</li><li><a href="la-lecture-de-l-espace-en-2d-et-en-3d.html">la-lecture-de-l-espace-en-2d-et-en-3d</a> — l'autre écart documenté de la série, celui des manières de jouer.</li><li><a href="../02-la-chronologie-interne.html">02-la-chronologie-interne</a> — la note de référence dont cet atome isole une seule idée.</li></ul>
+<h2>Cité par</h2>
+<p>3 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-science.html">Carte du dossier <code>science</code> — les atomes</a></li><li><a href="deux-statuts-dans-une-meme-chronologie.html">Deux statuts dans une même chronologie</a></li><li><a href="la-production-qui-developpe-et-ce-qui-reste-hors-de-vue.html">La production : qui développe, et ce qui reste hors de vue</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

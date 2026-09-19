@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Un worker ne voit que son périmètre · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Un worker ne voit que son périmètre</h1>
+<p><em>Un exécutant à qui l'on donne tout le contexte reçoit surtout du bruit : instruction ciblée, visibilité limitée.</em></p>
+<h2>L'idée</h2>
+<p>Donner à un exécutant l'accès à tout n'est pas une générosité, c'est une faute de conception. Le principe retenu est double : <strong>une instruction ciblée</strong> et <strong>une visibilité limitée</strong> — pas de contexte global partagé. Le coordinateur sait tout ; le worker sait ce qu'il doit faire.</p>
+<p>Le studio applique la même idée hors du logiciel : les artefacts s'écrivent sur disque et seules des références légères remontent. Un worker ne « raconte » pas son travail dans un message qu'un autre résumera — il le dépose. La mémoire est un fichier, pas une conversation.</p>
+<p>La contrepartie doit être dite, parce qu'elle se paie : un exécutant qui ne voit pas la conversation ne peut pas lever une ambiguïté. Son instruction doit donc être <strong>autonome</strong> — complète, datée, avec son périmètre et son critère d'acceptation. Un périmètre borné n'est tenable que si la consigne est entière.</p>
+<p>La même frontière vaut pour les outils : une sonde posée sur un système vivant se retire quand on a fini. Elle sert à regarder, pas à rester.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>« Donner à chaque worker une instruction ciblée + une visibilité limitée : pas de contexte global partagé (leçon Conductor <code>access_list</code>) » (<code>ARCHITECTURE-FUGU-GL.md</code> § 1).</li><li>Les workers écrivent leurs artefacts <strong>sur disque</strong> et ne renvoient que des références légères (même note, § 3).</li><li>Une sonde de montage se démonte quand on a fini : « it is a probe, not a capability to leave behind » (skill <code>editing-cordis-compositions</code>, preset <code>cordis</code> du harnais).</li><li>Une sonde évalue du code contre le runtime vivant et disparaît au redémarrage : « for probing, not for shipping a capability » (même source).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Aucune mesure du studio ne compare un worker à contexte large et un worker à périmètre borné : la leçon vient de la littérature (Conductor, Fugu) et n'a pas été reproduite ici.</li><li>L'<code>access_list</code> n'est pas implémentée dans le harnais : le studio lit le principe, il ne l'exécute pas — c'est une cible déclarée.</li><li>Rien ne dit quelle <strong>taille</strong> de périmètre est la bonne : le principe est qualitatif.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>ARCHITECTURE-FUGU-GL.md</code> § 1 et § 3 — GL Digital Lab, 09-10/2026.</li><li>Skill <code>editing-cordis-compositions</code> — preset <code>cordis</code> du harnais, lu le 14/09/2026.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="separer-orchestration-et-execution.html">separer-orchestration-et-execution</a></li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a></li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-conception-et-architecture.html">Conception et architecture — carte du dossier</a></li><li><a href="separer-orchestration-et-execution.html">Séparer l'orchestration de l'exécution</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

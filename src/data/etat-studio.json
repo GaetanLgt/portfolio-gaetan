@@ -3,18 +3,18 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "d7b181f",
-    "sujet": "Le kit Metroid devient atteignable, et le projet de l'armure entre en ligne",
-    "date": "2026-09-19T12:30:12+02:00",
+    "court": "5dab881",
+    "sujet": "La typographie francaise est appliquee au site publie — 204 corrections",
+    "date": "2026-09-19T12:53:57+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-19 12:43:10",
-    "horodatage_minute": "2026-09-19 12:43",
-    "horodatage_iso": "2026-09-19T10:43:10.760Z",
+    "horodatage_local": "2026-09-19 13:22:05",
+    "horodatage_minute": "2026-09-19 13:22",
+    "horodatage_iso": "2026-09-19T11:22:05.480Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 64,
+  "pages_prerendues": 183,
   "page_la_plus_lourde": {
     "chemin": "/",
     "ko_servis": 407.8,

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Le retour en arrière : une friction choisie, puis compensée · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Le retour en arrière : une friction choisie, puis compensée</h1>
+<p><em>Parcourir plusieurs fois le même monde est le prix de la non-linéarité — et les jeux passent leur temps à en réduire le coût.</em></p>
+<h2>L'idée</h2>
+<p>Une carte interconnectée impose de <strong>repasser par où l'on est déjà passé</strong>. Ce n'est pas un défaut d'exécution : c'est la conséquence directe de la structure, puisque la clé d'une zone se trouve dans une autre et que le joueur ne connaît pas encore le plan.</p>
+<p>Le vault documente trois façons de traiter cette friction, et elles ne disent pas la même chose :</p>
+<ol><li><strong>La subir</strong> — les cartes sont non linéaires et imposent de parcourir plusieurs fois le monde ; les ennemis faibles réapparaissent à chaque passage (Wikipédia EN, « Metroidvania »).</li><li><strong>La réduire par le confort</strong> — les gros jeux ajoutent des points de sauvegarde et une téléportation rapide entre zones éloignées, précisément pour supprimer les déplacements fastidieux en fin de partie (même source).</li><li><strong>La supprimer par la linéarité</strong> — <em>Metroid Fusion</em> (2002) est plus linéaire que les autres épisodes à cause de son récit, et il introduit des <strong>salles de navigation</strong> qui indiquent où aller (Wikipédia EN, « Metroid Fusion »).</li></ol>
+<p>Le troisième cas est le plus instructif : c'est la seule fois où le vault attribue explicitement une contrainte de structure à une <strong>décision</strong>, et non à une contrainte technique.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Les cartes non linéaires imposent de parcourir plusieurs fois le monde ; les ennemis faibles réapparaissent (Wikipédia EN, « Metroidvania »).</li><li>Points de sauvegarde et téléportation rapide sont ajoutés par les gros jeux pour supprimer les déplacements fastidieux en fin de partie (même source).</li><li><em>Metroid Fusion</em> est plus linéaire que les autres épisodes à cause de son récit, et introduit des salles de navigation (Wikipédia EN, « Metroid Fusion »).</li><li>Dans <em>Super Metroid</em>, la sauvegarde se fait aux stations disséminées sur la planète et au vaisseau, qui recharge aussi vie et munitions (Wikipédia EN, « Super Metroid »).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li><strong>Aucun temps de trajet</strong> mesuré : personne, dans les sources consultées, ne chiffre le coût du retour en arrière dans un épisode.</li><li>La <strong>date et la forme exactes</strong> du passage à la soute de navigation dans <em>Fusion</em> : la note dit « plus linéaire à cause de son récit », sans document de conception à l'appui.</li><li>Une <strong>courbe</strong> de réduction de la friction : les sources décrivent trois procédés, elles ne les ordonnent pas.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>06-les-mecaniques-et-le-genre.md</code> § 2, § 4 — <a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> (note du vault, 14/09/2026).</li><li>Wikipédia EN, « Metroidvania », « Metroid Fusion », « Super Metroid » — cités par la note du vault, non rouverts ici.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="la-carte-interconnectee.html">la-carte-interconnectee</a> — la structure qui rend le retour inévitable.</li><li><a href="la-cassure-de-sequence.html">la-cassure-de-sequence</a> — quand le joueur retourne la contrainte en raccourci.</li><li><a href="../06-les-mecaniques-et-le-genre.html">06-les-mecaniques-et-le-genre</a> — la note de référence dont cet atome isole une seule idée.</li></ul>
+<h2>Cité par</h2>
+<p>1 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-science.html">Carte du dossier <code>science</code> — les atomes</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

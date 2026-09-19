@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Le budget mesuré d'un run TRELLIS · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Le budget mesuré d'un run TRELLIS</h1>
+<p><em>Un run de génération 3D a un coût chiffré sur cette machine : environ deux minutes de calcul et moins de la moitié de la mémoire de la carte.</em></p>
+<p>Le premier essai complet de la chaîne image → maillage, piloté par l'API, a été mesuré étape par étape. Résultat de référence : <strong>29 536 triangles</strong>, 29 176 sommets, un matériau, une texture, pour un GLB de <strong>1 260 Ko</strong> dont 1 259 Ko de géométrie.</p>
+<table><thead><tr><th>Ressource</th><th>Mesure</th></tr></thead>
+<tbody><tr><td>Durée totale, du lancement à l'écriture du fichier</td><td>107 s (107 146 ms)</td></tr><tr><td>Pic de VRAM</td><td>4 447 Mio, sur une base de 1 616 Mio, soit +2,8 Go</td></tr><tr><td>Marge restante</td><td>5,66 Go</td></tr></tbody></table>
+<p>La méthode de mesure compte : le pic a été échantillonné toutes les 2 secondes par <code>nvidia-smi</code>, et non estimé. À titre de comparaison, la chaîne <strong>complète</strong> — image, maillage, nettoyage, texture PBR — est annoncée à environ <strong>12 minutes</strong> en résolution 512.</p>
+<p>Deux ordres de grandeur complètent le tableau, et ils encadrent la machine : la vidéo locale Wan 2.2 tient <strong>832×480</strong> (80 s pour 49 images, environ 2 s de vidéo) et <strong>fait tomber le serveur en 1280×720</strong>. La règle qui en découle est celle du studio : un seul travail lourd à la fois, vidéo plafonnée à 832×480, 3D plafonnée à 512, arrêt au premier plantage.</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Toutes les valeurs du tableau (méthode jeu vidéo, mesuré le 10/09/2026 ; capacités machine, 11/09/2026).</li><li>La chaîne complète à environ 12 min en 512 (document de veille et capacités machine).</li><li>Wan 832×480 : 80 s pour 49 images ; 1280×720 : plantage du pilote (capacités machine, 10/09/2026).</li><li>La règle de plafonds et d'arrêt au premier plantage (même document).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le plafond de résolution 512 comme optimum : le document de veille laisse une décision en attente — relancer en 1024 si le mesh « chasseur v2 » a les membres fusionnés. Aucune mesure en 1024 n'a été lue.</li><li>Le coût réel d'un run à 30 000 faces texturé, en pic de VRAM : seule la durée (24,7 s) est connue pour cet enchaînement.</li><li>L'attribution exacte des 12 minutes entre les maillons : le détail n'a pas été relevé.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/methode-creation-jeu-video.md</code> — mesures de bout en bout du 10 et du 11/09/2026.</li><li><code>notebooklm-pack-ecosysteme-2026-09-11/04-MACHINE-CAPACITES.md</code> — tableau des capacités, plafonds.</li><li><code>forge-ia/pipeline-ia-3d-indie-game.md</code> — environ 12 min en 512, décision en attente sur la résolution 1024.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="la-vram-est-la-vraie-limite.html">la-vram-est-la-vraie-limite</a> — pourquoi ce budget se partage avec le reste.</li><li><a href="la-chaine-image-vers-maillage.html">la-chaine-image-vers-maillage</a> — la chaîne à laquelle ce budget correspond.</li><li><a href="../03-les-createurs-et-studios.html">03-les-createurs-et-studios</a> — ce qu'une machine permet et ce qu'une chaîne de décisions produit : deux récits de production différents.</li></ul>
+<h2>Cité par</h2>
+<p>3 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="la-vram-est-la-vraie-limite.html">La VRAM est la vraie limite</a></li><li><a href="le-poids-d-un-modele-dans-une-page.html">Le poids d'un modèle dans une page</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

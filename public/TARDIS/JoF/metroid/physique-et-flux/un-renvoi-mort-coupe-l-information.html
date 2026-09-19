@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Un renvoi mort coupe l'information · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Un renvoi mort coupe l'information</h1>
+<p><em>Un lien qui pointe dans le vide ne casse pas un affichage : il coupe une information, et il la sert périmée en silence.</em></p>
+<h2>L'idée</h2>
+<p>Un vault est un <strong>graphe</strong>, et un renvoi est une <strong>arête</strong>. Quand l'arête casse, il ne reste pas un trou visible : il reste un lecteur qui croit avoir trouvé. La règle est écrite dans le dépôt du studio, au moment où elle a servi : <em>« un document qui renvoie vers un fichier disparu <strong>sert une réponse périmée en silence</strong> — c'est la règle écrite du dépôt »</em> (<code>veille-video/README.md</code>, contrôle du 11/09/2026 après la restructuration).</p>
+<p>Le contrôle existe, et il est chiffré : <strong>1 180 renvois testés, 80 morts</strong> — <strong>aucun venant de ces déplacements</strong> (même source, <code>node forge-ia/verifier-renvois.mjs</code>). Cette précision compte : quand on déplace des fichiers, on veut savoir <strong>si c'est le déplacement qui a cassé les liens</strong>, et la réponse ici est non.</p>
+<p>Le motif le plus instructif est ailleurs, dans le vault : une <strong>source morte invalide l'affirmation qu'elle portait</strong> — non parce qu'elle est fausse, mais parce qu'elle <strong>n'est plus vérifiable</strong> (<a href="../11-sources-et-verification.html">11-sources-et-verification</a> § 1). C'est exactement le cas <strong>P1</strong> : la mort de Ridley, tranchée contre Wikipédia FR <strong>parce que sa source unique — un site personnel <code>free.fr</code> — répond 404</strong> (même source, § 6).</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Le dépôt dispose d'un vérificateur de renvois, <code>node forge-ia/verifier-renvois.mjs</code>, et d'une règle écrite : un renvoi vers un fichier disparu <strong>sert une réponse périmée en silence</strong> (<code>veille-video/README.md</code>).</li><li>Contrôle du 11/09/2026 après restructuration : <strong>1 180 renvois testés, 80 morts, aucun venant de ces déplacements</strong>.</li><li>Règle du vault : <strong>« une source morte invalide l'affirmation qu'elle portait »</strong> — pas parce qu'elle est fausse, parce qu'elle n'est plus vérifiable (<a href="../11-sources-et-verification.html">11-sources-et-verification</a> § 1).</li><li>Cas <strong>P1</strong> : la mort de Ridley est tranchée contre Wikipédia FR, dont la source unique (un site personnel <code>free.fr</code>) est <strong>morte (404)</strong> (même note, § 6).</li><li>Le déplacement d'un fichier laisse <strong>deux traces</strong> : une ligne morte dans la mémoire du veilleur, et parfois des vecteurs que rien ne rattache (document d'extension RAG § 6).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li><strong>Aucune répartition</strong> des 80 renvois morts : ni par dossier, ni par cause. Le contrôle donne le compte, pas la liste.</li><li>Je <strong>ne sais pas</strong> si les 80 morts ont été réparés depuis le 11/09/2026 : rien ne le dit dans les documents lus.</li><li>Aucune <strong>cadence de contrôle</strong> n'est écrite : le README pose le geste en fin de lot, sans périodicité chiffrée.</li><li>Je <strong>n'ai pas</strong> exécuté <code>verifier-renvois.mjs</code> : les renvois de mes propres atomes n'ont <strong>pas</strong> été validés par l'outil.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>veille-video/README.md</code> — règle de fin de lot, contrôle du 11/09/2026 (1 180 renvois, 80 morts).</li><li><code>11-sources-et-verification.md</code> § 1 et § 6 — <a href="../11-sources-et-verification.html">11-sources-et-verification</a> (règle de la source morte, cas P1).</li><li><code>vault-agence/extension-rag-et-indexation-2026-09-14.md</code> § 6 — les deux traces d'un déplacement.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="l-index-ne-rattrape-pas-son-retard.html">l-index-ne-rattrape-pas-son-retard</a> — l'autre endroit où une trace survit au fichier.</li><li><a href="ce-qu-un-extrait-retrouve-ne-prouve-pas.html">ce-qu-un-extrait-retrouve-ne-prouve-pas</a> — la provenance qui manque, dans le carnet plutôt que dans le graphe.</li><li><a href="../11-sources-et-verification.html">11-sources-et-verification</a> — la note de méthode qui porte la règle.</li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-physique-et-flux.html">Physique et flux d'information — carte du dossier</a></li><li><a href="ce-qu-un-extrait-retrouve-ne-prouve-pas.html">Ce qu'un extrait retrouvé ne prouve pas</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>

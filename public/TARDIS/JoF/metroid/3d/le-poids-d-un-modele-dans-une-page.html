@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ NON RÉPERTORIÉ — décision de Gaëtan, 13/09/2026.
+     Cette page est volontairement absente du sitemap, de la navigation et du pied de page.
+     Elle n'est atteignable que par son adresse directe. On l'indexe donc PAS.
+     Et elle n'est PAS interdite dans robots.txt, volontairement : une exclusion de chemin
+     empêcherait le robot de lire ce noindex, ce qui serait une contradiction. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Le poids d'un modèle dans une page · Génie IT Tek FR</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #080b14; color: #eaf0f7;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.75; padding: 3rem 1.25rem 6rem;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  .bandeau {
+    font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
+    border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
+    padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
+  }
+  .bandeau strong { color: #eaf0f7; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
+  h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
+  h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
+  pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
+  pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  li { margin-bottom: 0.4rem; }
+  hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
+  .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
+  .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
+  .sommaire a:hover { color: #7ad6ff; }
+  .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+<main>
+<div class="bandeau">Page <strong>non répertoriée</strong> — hors plan du site et hors navigation</div>
+<h1>Le poids d'un modèle dans une page</h1>
+<p><em>Sur le web, un modèle 3D n'est pas jugé sur sa beauté mais sur son poids : un fichier de 10 Mo coûte dix fois le budget d'une page du studio.</em></p>
+<p>Le studio a une règle de poids pour ses pages, et un modèle 3D entre en tension directe avec elle. Le cas mesuré est le vaisseau du studio : le fichier source pèse <strong>10,3 Mo</strong>, alors que le verrou d'une page est <strong>inférieur à 1 Mo</strong> — dix fois moins. Une version « web » du Galion pèse <strong>416 Ko</strong>, ce qui montre que l'écart se comble, mais par un travail d'allègement, pas par hasard. Les leviers nommés sont la compression Draco et les niveaux de détail.</p>
+<p>Le second budget est celui des requêtes. Le premier chargement du site tient aujourd'hui en <strong>12 requêtes</strong>, pour une limite d'environ 20 par adresse IP chez l'hébergeur. Une scène 3D ajoute <strong>au moins</strong> un moteur ou un fichier vidéo : une scène temps réel coûte 1 à 2 requêtes, une vidéo pré-rendue 1 requête — mais elle ne réagit pas à la souris.</p>
+<p>Ce que la chaîne de production sait livrer est déjà calibré pour cette contrainte : six unités 3D pour <strong>408 Ko au total</strong>, à 2 500 faces chacune, contre 938 Ko pour des avatars plus anciens fabriqués en primitives. La compression par quantification ramène chaque unité à 57-78 Ko. Une sortie brute de générateur, elle, pèse 5 à 7 Mo, et le poids est dans la <strong>géométrie</strong>, pas dans les textures (26 Ko d'images sur une unité mesurée).</p>
+<h2>Ce qui est établi</h2>
+<ul><li>Les 10,3 Mo du fichier source et le verrou de page sous 1 Mo (cadrage espace 3D, 14/09/2026).</li><li>La version web du vaisseau à 416 Ko (référence hero 3D, 11/09/2026).</li><li>Les 12 requêtes du premier chargement et le coût de 1 à 2 requêtes d'une scène 3D (même source).</li><li>Les six unités à 408 Ko, les 57-78 Ko par quantification, les 26 Ko de textures (méthode jeu vidéo, 10/09/2026).</li></ul>
+<h2>Ce qui n'est pas établi</h2>
+<ul><li>Le poids après compression Draco et niveaux de détail pour le vaisseau : le cadrage pose la question (« on mesure, on n'espère pas ») et ne donne pas la réponse.</li><li>Le temps de chargement sur une connexion réelle : non mesuré, alors que c'est le chiffre qui compte pour un visiteur.</li></ul>
+<h2>Sources</h2>
+<ul><li><code>modeles/CADRAGE-espace-3d-persistant-2026-09-14.md</code> — poids du fichier, verrou de page, leviers.</li><li><code>modeles/site-hero-3d-reference-2026-09-11.md</code> — version web à 416 Ko, budget de requêtes, trois voies.</li><li><code>modeles/methode-creation-jeu-video.md</code> — poids livrés par la chaîne.</li></ul>
+<h2>Renvois</h2>
+<ul><li><a href="ce-qui-separe-un-rendu-d-un-asset-de-jeu.html">ce-qui-separe-un-rendu-d-un-asset-de-jeu</a> — le poids web n'est qu'une des conditions.</li><li><a href="le-budget-mesure-d-un-run-trellis.html">le-budget-mesure-d-un-run-trellis</a> — le coût en calcul de ce qui finit sur une page.</li><li><a href="../08-etat-actuel-2026.html">08-etat-actuel-2026</a> — une licence se juge aussi à ce qu'elle coûte à montrer.</li></ul>
+<h2>Cité par</h2>
+<p>2 note(s) de ce kit renvoient ici.</p>
+<ul><li><a href="carte-3d.html">Carte du dossier 3D — de l'image au modèle qui tourne</a></li><li><a href="l-echelle-et-les-unites.html">L'échelle et les unités</a></li></ul>
+<a class="retour" href="../index.html">← Sommaire du kit</a>
+</main>
+</body>
+</html>
