@@ -128,7 +128,7 @@
     <section class="tuto-section">
       <div class="container">
         <div class="tuto-cta glass reveal">
-          <h3>Un sujet que vous aimeriez voir traité ?</h3>
+          <h3>Un sujet que vous aimeriez voir traité ?</h3>
           <p>Je publie régulièrement des guides techniques. N'hésitez pas à me suggérer des sujets.</p>
           <router-link to="/contact" class="btn btn--primary">
             Suggérer un tutoriel →

@@ -21,7 +21,7 @@
         <h1 class="ia-bord__titre">L'IA de bord</h1>
         <p class="ia-bord__chapeau">
           Le navire a une passerelle, une salle des machines, une soute et un dossier de
-          bord. Il lui manquait une pièce : <strong>l'intelligence qui vit à bord, et à
+          bord. Il lui manquait une pièce : <strong>l'intelligence qui vit à bord, et à
           qui le capitaine parle</strong>. Cette page décrit ce poste — ce qu'il fait,
           qui le compose, et <strong>ce qu'il ne fait pas</strong>.
         </p>
@@ -32,20 +32,20 @@
         <h2 id="titre-voix" class="ia-bord__sous-titre">La voix de bord</h2>
         <p>
           La voix de bord est l'interlocutrice du capitaine. <strong>Elle écoute et elle
-          répond</strong>, sur le canal du studio, et elle le fait <strong>en local</strong> :
+          répond</strong>, sur le canal du studio, et elle le fait <strong>en local</strong> :
           la parole reçue n'est pas envoyée à un service extérieur pour être comprise, et
           la réponse n'est pas fabriquée ailleurs. C'est la même règle que pour le reste
           du navire — ce qui se dit à bord reste à bord.
         </p>
         <p>
-          Elle n'est pas l'équipage, et c'est une distinction qui compte : <strong>elle
+          Elle n'est pas l'équipage, et c'est une distinction qui compte : <strong>elle
           est la porte d'entrée, pas la main-d'œuvre</strong>. Quand la demande dépasse
           son périmètre, elle passe la consigne au poste compétent plutôt que d'improviser
-          une réponse. Un poste qui répond hors de son domaine n'est pas plus serviable :
+          une réponse. Un poste qui répond hors de son domaine n'est pas plus serviable :
           il est moins fiable, et il ne le dit pas.
         </p>
         <p class="ia-bord__note">
-          Elle n'a pas d'yeux : elle écoute, elle lit, elle ne regarde pas. Ce point est
+          Elle n'a pas d'yeux : elle écoute, elle lit, elle ne regarde pas. Ce point est
           repris dans les limites, plus bas, parce qu'il décide de ce qu'on peut lui
           confier.
         </p>
@@ -53,11 +53,11 @@
 
       <!-- ══ L'ÉQUIPAGE — SEPT POSTES ════════════════════════════════════════ -->
       <section class="ia-bord__bloc" aria-labelledby="titre-equipage">
-        <h2 id="titre-equipage" class="ia-bord__sous-titre">L'équipage : sept postes, sept périmètres</h2>
+        <h2 id="titre-equipage" class="ia-bord__sous-titre">L'équipage : sept postes, sept périmètres</h2>
         <p>
-          Le navire porte <strong>sept postes de travail distincts</strong> : la voix, et
+          Le navire porte <strong>sept postes de travail distincts</strong> : la voix, et
           six postes d'équipage. Chacun a une mission séparée, et surtout
-          <strong>une frontière explicite</strong>. C'est le vrai sujet de cette page :
+          <strong>une frontière explicite</strong>. C'est le vrai sujet de cette page :
           <em>chaque poste sait ce qu'il ne fait pas</em>. Un équipage sans frontières
           produit des réponses plausibles et fausses ; c'est exactement ce que le studio
           refuse de livrer.
@@ -90,12 +90,12 @@
         <h2 id="titre-memoire" class="ia-bord__sous-titre">La mémoire du navire</h2>
         <p>
           Une intelligence de bord sans mémoire recommence chaque quart à zéro. Le studio
-          tient donc deux règles d'écriture, et elles coûtent du temps à chaque session :
+          tient donc deux règles d'écriture, et elles coûtent du temps à chaque session :
         </p>
         <ul class="ia-bord__liste">
           <li>
             <strong>Les consignes sont réécrites après chaque synthèse de session.</strong>
-            Une consigne qui n'est écrite que dans l'échange en cours disparaît avec lui :
+            Une consigne qui n'est écrite que dans l'échange en cours disparaît avec lui :
             le poste suivant ne l'a jamais lue. On réécrit donc les consignes <em>après</em>
             la synthèse, pas avant — sinon la synthèse emporte ce qu'elle vient de résumer.
           </li>
@@ -107,9 +107,9 @@
           </li>
         </ul>
         <p>
-          La mémoire du bord n'est pas un résumé du studio : c'est <strong>une trace datée
-          et sourcée</strong>. Une affirmation sans source n'y entre pas, et « je ne sais
-          pas » y est une réponse valable — souvent la meilleure.
+          La mémoire du bord n'est pas un résumé du studio : c'est <strong>une trace datée
+          et sourcée</strong>. Une affirmation sans source n'y entre pas, et « je ne sais
+          pas » y est une réponse valable — souvent la meilleure.
         </p>
       </section>
 
@@ -119,7 +119,7 @@
         <p>
           Le studio s'impose quatre verrous, et il les <strong>mesure à chaque
           construction du site</strong> plutôt que de les promettre. Ce sont des contrôles
-          automatiques : quand l'un tombe, la construction échoue, et rien ne part en
+          automatiques : quand l'un tombe, la construction échoue, et rien ne part en
           ligne. On les nomme, parce qu'un garde qu'on ne nomme pas ne garde rien.
         </p>
         <dl class="ia-bord__gardes">
@@ -145,7 +145,7 @@
         </p>
         <ul class="ia-bord__liste">
           <li>
-            <strong>Elle ne juge pas le visuel.</strong> Elle n'a pas d'yeux : elle ne voit
+            <strong>Elle ne juge pas le visuel.</strong> Elle n'a pas d'yeux : elle ne voit
             ni un espacement raté, ni une image mal cadrée, ni une couleur qui jure. Elle
             peut décrire une mesure de contraste, pas dire si une page est belle. Le goût
             reste dehors, et c'est très bien ainsi.
@@ -160,7 +160,7 @@
           <li>
             <strong>Le verdict final appartient à l'humain.</strong> Aucun poste de
             l'équipage ne tranche seul une décision visuelle, stratégique, juridique ou
-            budgétaire : ces points remontent au capitaine. La machine sert, l'humain
+            budgétaire : ces points remontent au capitaine. La machine sert, l'humain
             décide — c'est la première ligne du règlement de bord, et elle engage aussi
             cette page.
           </li>

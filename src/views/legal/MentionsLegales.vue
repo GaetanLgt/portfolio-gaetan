@@ -14,13 +14,13 @@
             <strong>Génie IT Tek FR</strong><br>
             Gaëtan LANGLET<br>
             80560 Harponville, Somme, Hauts-de-France, France<br>
-            Email : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a><br>
-            Téléphone : <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
+            Email : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a><br>
+            Téléphone : <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
           </p>
           <p v-if="siret">
             SIRET : {{ siret }}<br>
             Statut : Société par Actions Simplifiée Unipersonnelle (SASU)<br>
-            Code APE : 6201Z - Programmation informatique
+            Code APE : 6201Z - Programmation informatique
           </p>
           <p v-else class="legal-pending">
             <em>Entreprise en cours d'immatriculation — SIRET disponible prochainement</em>
@@ -31,14 +31,14 @@
           <h2>2. Directeur de publication</h2>
           <p>
             Le directeur de la publication est <strong>Gaëtan LANGLET</strong>, en sa qualité de fondateur de Génie IT Tek FR.<br>
-            Contact : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
+            Contact : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
         </section>
         
         <section class="legal-section">
           <h2>3. Hébergement</h2>
           <p>
-            Ce site est hébergé par :<br>
+            Ce site est hébergé par :<br>
             <strong>{{ hebergeur.nom }}</strong><br>
             {{ hebergeur.adresse }}<br>
             <a :href="hebergeur.url" target="_blank" rel="noopener noreferrer">{{ hebergeur.url }}</a>
@@ -70,7 +70,7 @@
             et de portabilité de vos données personnelles.
           </p>
           <p>
-            Pour exercer ces droits, contactez-nous à : 
+            Pour exercer ces droits, contactez-nous à : 
             <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
           <p>
@@ -116,10 +116,10 @@
         <section class="legal-section">
           <h2>9. Crédits</h2>
           <p>
-            <strong>Conception et développement :</strong> Génie IT Tek FR (Gaëtan LANGLET)<br>
-            <strong>Technologies :</strong> Vue.js 3, Three.js, GSAP, Vite<br>
-            <strong>Typographies :</strong> JetBrains Mono, Inter (Google Fonts)<br>
-            <strong>Icônes :</strong> Lucide Icons (MIT License)
+            <strong>Conception et développement :</strong> Génie IT Tek FR (Gaëtan LANGLET)<br>
+            <strong>Technologies :</strong> Vue.js 3, Three.js, GSAP, Vite<br>
+            <strong>Typographies :</strong> JetBrains Mono, Inter (Google Fonts)<br>
+            <strong>Icônes :</strong> Lucide Icons (MIT License)
           </p>
         </section>
         

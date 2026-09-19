@@ -53,7 +53,7 @@
           <div><dt>Références légales</dt><dd>Les références légales (SIREN, SIRET, code APE, numéro de TVA) figureront en pied de facture dès l'immatriculation. Aucune facture n'est émise avant.</dd></div>
         </dl>
         <p class="dossier__note">
-          Un seul interlocuteur : Gaëtan Langlet, pas de sous-traitance, pas de chaîne de
+          Un seul interlocuteur : Gaëtan Langlet, pas de sous-traitance, pas de chaîne de
           prestataires. C'est un choix, et c'est aussi une limite — elle est décrite au point 6.
         </p>
       </section>
@@ -63,7 +63,7 @@
         <h2 id="offres">2. Prestations et prix</h2>
         <p class="dossier__chapeau">
           Prix publics, hors taxes, exprimés en euros. Ils ne sont pas
-          « sur devis » : un acheteur doit pouvoir comparer avant de nous écrire.
+          « sur devis » : un acheteur doit pouvoir comparer avant de nous écrire.
         </p>
         <table class="dossier__table">
           <caption class="dossier__legende">Prestations, prix de référence et délais</caption>
@@ -109,7 +109,7 @@
           </tbody>
         </table>
         <p class="dossier__note">
-          <strong>Ce que le prix ne comprend pas, et qui doit être budgété :</strong>
+          <strong>Ce que le prix ne comprend pas, et qui doit être budgété :</strong>
           l'hébergement et le nom de domaine (frais annuels du prestataire retenu),
           les licences de composants tiers éventuels, la maintenance corrective et
           évolutive, et le temps de vos équipes pour les ateliers de cadrage et la
@@ -122,7 +122,7 @@
         <h2 id="methode">3. Méthode</h2>
         <ol class="dossier__etapes">
           <li>
-            <strong>État des lieux.</strong> Audit factuel de l'existant :
+            <strong>État des lieux.</strong> Audit factuel de l'existant :
             sécurité, performance, automatisation possible. Risques énoncés en
             une phrase, sans jargon.
           </li>
@@ -149,13 +149,13 @@
         <ul class="dossier__liste">
           <li>
             <strong>ArkAdiA</strong> — réseau social souverain en production
-            publique : comptes, communautés, messagerie temps réel, modération
+            publique : comptes, communautés, messagerie temps réel, modération
             humaine, analyse d'audience auto-hébergée. Accessible à l'adresse
             <a class="dossier__lien" href="https://arkadia.gldigitallab.fr" target="_blank" rel="noopener noreferrer">arkadia.gldigitallab.fr</a>. <em>Preuve technique et opérationnelle.</em>
           </li>
           <li>
             <strong>ARKADIA France PvE</strong> — cluster de jeu exploité
-            18 mois : 9 serveurs synchronisés, 150 joueurs, sauvegardes
+            18 mois : 9 serveurs synchronisés, 150 joueurs, sauvegardes
             automatiques, supervision. Service arrêté depuis.
             <em>Preuve d'exploitation dans la durée.</em>
           </li>
@@ -166,7 +166,7 @@
           </li>
         </ul>
         <p class="dossier__note">
-          <strong>Ce que nous ne pouvons pas encore produire :</strong> des
+          <strong>Ce que nous ne pouvons pas encore produire :</strong> des
           références clients nominatives sur des projets comparables à votre
           besoin. Le studio est récent sur ce marché et ne dispose pas encore
           d'études de cas client publiables. Nous préférons vous le dire que de
@@ -179,29 +179,29 @@
         <h2 id="donnees">5. Traitement des données</h2>
         <ul class="dossier__liste">
           <li>
-            <strong>Analyse d'audience</strong> : Matomo installé sur notre
+            <strong>Analyse d'audience</strong> : Matomo installé sur notre
             hébergement, en France. Aucun outil d'analyse tiers, aucun traceur
             publicitaire.
           </li>
           <li>
-            <strong>Formulaire de contact</strong> : traité par un script hébergé
+            <strong>Formulaire de contact</strong> : traité par un script hébergé
             sur notre serveur, en France. Aucun transfert de données hors de
             l'Union européenne.
           </li>
           <li>
-            <strong>Traitements d'IA</strong> : exécutés sur le poste du studio ou
+            <strong>Traitements d'IA</strong> : exécutés sur le poste du studio ou
             sur votre matériel. Ce qui sort et ce qui ne sort pas est décrit
             précisément dans la politique de confidentialité, sans formule
             absolue.
           </li>
           <li>
-            <strong>Conservation</strong> : les données de contact sont
+            <strong>Conservation</strong> : les données de contact sont
             conservées 3 ans à compter du dernier échange.
           </li>
         </ul>
         <p class="dossier__note">
-          Nous n'employons pas les formulations du type « vos données ne quittent
-          jamais votre réseau » : elles sont trop absolues pour être tenues dans
+          Nous n'employons pas les formulations du type « vos données ne quittent
+          jamais votre réseau » : elles sont trop absolues pour être tenues dans
           tous les cas de figure. Chaque flux est décrit au cas par cas.
         </p>
       </section>
@@ -252,7 +252,7 @@
         <ol class="dossier__etapes">
           <li>Vous écrivez ou appelez, en décrivant le besoin en quelques lignes.</li>
           <li>Nous convenons d'un premier échange de 30 minutes, gratuit et sans engagement.</li>
-          <li>Vous recevez sous 24 heures une première lecture : ce qui est faisable, ce qui ne l'est pas, et une fourchette de prix.</li>
+          <li>Vous recevez sous 24 heures une première lecture : ce qui est faisable, ce qui ne l'est pas, et une fourchette de prix.</li>
           <li>Si le projet se poursuit, l'atelier de cadrage fixe le périmètre et le prix ferme.</li>
         </ol>
         <p class="dossier__contact">
@@ -260,7 +260,7 @@
           <a class="dossier__lien" :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
         </p>
         <p class="dossier__note">
-          Ce dossier est aussi disponible en version imprimable : utilisez
+          Ce dossier est aussi disponible en version imprimable : utilisez
           l'impression de votre navigateur, la mise en page est prévue pour le
           papier.
         </p>

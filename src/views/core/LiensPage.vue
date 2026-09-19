@@ -19,7 +19,7 @@
         </h1>
         <p class="page-desc">
           Cette page rassemble nos adresses — et <strong>elle dit aussi ce qui n'existe pas
-          encore</strong>. C'est la différence entre un annuaire et une vitrine :
+          encore</strong>. C'est la différence entre un annuaire et une vitrine :
           <strong>une rubrique vide qu'on masque laisse croire qu'il y a quelque chose
           derrière</strong>. Ici, ce qui manque est écrit, à sa place, à côté du reste.
         </p>
@@ -224,7 +224,7 @@
           </li>
         </ul>
         <p class="bloc__note">
-          Deux de ces pages ne sont pas des arguments : elles sont là pour qu'on puisse
+          Deux de ces pages ne sont pas des arguments : elles sont là pour qu'on puisse
           <strong>nous opposer ce que nous nous imposons</strong>. Elles nomment ce que le
           studio s'interdit, ce qu'il n'a pas encore mis en place, et la mesure qui
           pourrait nous contredire.
@@ -253,7 +253,7 @@
         <p class="bloc__chapeau-petit">
           Ces quatre rubriques existent chez d'autres — chez le CNRS, elles sont pleines.
           Ici elles sont vides, et <strong>nous les affichons vides plutôt que de les
-          retirer</strong> : un visiteur qui ne trouve pas la rubrique « recrutement » ne
+          retirer</strong> : un visiteur qui ne trouve pas la rubrique « recrutement » ne
           sait pas si le studio n'embauche pas ou s'il a mal cherché.
         </p>
 
@@ -268,9 +268,9 @@
         </ul>
 
         <p class="bloc__note">
-          <strong>La phrase que nous employons, et qui vaut pour les quatre :</strong>
+          <strong>La phrase que nous employons, et qui vaut pour les quatre :</strong>
           « <em>Cette rubrique n'existe pas encore chez nous. Nous ne la remplissons pas, et
-          nous ne la retirons pas : elle est écrite ici pour que personne ne la cherche.</em> »
+          nous ne la retirons pas : elle est écrite ici pour que personne ne la cherche.</em> »
         </p>
       </section>
 
@@ -293,15 +293,15 @@
 
       <p class="note">
         Studio indépendant français, dans la Somme. Tout le calcul d'intelligence
-        artificielle tourne sur notre propre machine : aucune donnée client ne sort.
+        artificielle tourne sur notre propre machine : aucune donnée client ne sort.
         <RouterLink to="/dossier">Voir le dossier professionnel</RouterLink>.
       </p>
 
       <p class="note note--source">
         La structure de cet annuaire est adaptée de la page
-        <a href="https://www.cnrs.fr/fr/cbox/ontheweb" target="_blank" rel="noopener noreferrer">« Suivre
-        et découvrir le CNRS sur le web »</a> — l'annuaire des liens du CNRS, que nous
-        remercions pour la forme. <strong>Elle est adaptée, pas copiée</strong> : ses
+        <a href="https://www.cnrs.fr/fr/cbox/ontheweb" target="_blank" rel="noopener noreferrer">« Suivre
+        et découvrir le CNRS sur le web »</a> — l'annuaire des liens du CNRS, que nous
+        remercions pour la forme. <strong>Elle est adaptée, pas copiée</strong> : ses
         rubriques ne sont pas remplies, et les onze qu'il publie ne sont pas onze ici.
       </p>
     </div>

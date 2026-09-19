@@ -142,7 +142,7 @@
 
     <!-- ═══════════════════════════════════════════════════════════════════════
          PLAN DU DOSSIER — APPLIQUÉ LE 11/09/2026
-         Cette page n'avait AUCUN <h2> : son titre passait de <h1> à <h3> — un saut
+         Cette page n'avait AUCUN <h2> : son titre passait de <h1> à <h3> — un saut
          de niveau que la règle d'accessibilité du studio interdit, et que l'audit
          signalait. Ni plan pour un lecteur, ni repère pour un moteur, ni structure
          pour un lecteur d'écran.
@@ -152,14 +152,14 @@
          ═══════════════════════════════════════════════════════════════════════ -->
     <section class="lib-dossier">
       <h2>Éléments vérifiables</h2>
-      <p>Rien de ce qui suit n'est une promesse : ce sont des mesures, produites par des commandes rejouables, et publiées quelle que soit leur valeur.</p>
+      <p>Rien de ce qui suit n'est une promesse : ce sont des mesures, produites par des commandes rejouables, et publiées quelle que soit leur valeur.</p>
       <ul class="lib-dossier__preuves">
-        <li><strong>Lighthouse — 98 / 100 / 100 / 100</strong> : performances, accessibilité, bonnes pratiques, référencement. Le verrou du studio est 95.</li>
+        <li><strong>Lighthouse — 98 / 100 / 100 / 100</strong> : performances, accessibilité, bonnes pratiques, référencement. Le verrou du studio est 95.</li>
         <li><strong>839 Ko</strong> pour une page complète, contre un verrou fixé à 1 024 Ko.</li>
         <li><strong>13 pages publiques à 100/100</strong> en accessibilité, mesurées sur le DOM réellement rendu.</li>
         <li><strong>6 en-têtes de sécurité sur 6</strong>, TLS 1.3, certificat valide.</li>
-        <li><strong>Six épreuves de produits</strong> rejouées : 6/6, 9/9, 10/10, écosystème vérifié, gabarit établi, 35 vérifications sans échec.</li>
-        <li><strong>102 documents internes scellés</strong> et vérifiés par empreinte : la traçabilité n'est pas déclarative.</li>
+        <li><strong>Six épreuves de produits</strong> rejouées : 6/6, 9/9, 10/10, écosystème vérifié, gabarit établi, 35 vérifications sans échec.</li>
+        <li><strong>102 documents internes scellés</strong> et vérifiés par empreinte : la traçabilité n'est pas déclarative.</li>
       </ul>
 
       <h2>Traitement des données</h2>
@@ -173,10 +173,10 @@
       <h2>Limites assumées</h2>
       <p>Ce que cette page ne fait pas, et ce que nous ne faisons pas — dit avant qu'on nous le demande, parce qu'un prestataire qui n'énonce aucune limite n'en a pas moins.</p>
       <ul class="lib-dossier__preuves">
-        <li><strong>Cette bibliothèque montre des composants, elle n'en distribue aucun.</strong> Les exemples interactifs sont des <em>démonstrations</em> : aucun n'est un produit vendu en l'état.</li>
+        <li><strong>Cette bibliothèque montre des composants, elle n'en distribue aucun.</strong> Les exemples interactifs sont des <em>démonstrations</em> : aucun n'est un produit vendu en l'état.</li>
         <li><strong>Vue 3 uniquement.</strong> Les composants ne sont fournis pour aucun autre framework, ni comme thème de CMS.</li>
         <li><strong>Deux familles de police au maximum</strong>, dont une seule téléchargée. C'est un verrou de poids, pas une préférence.</li>
-        <li><strong>Le contenu reste lisible sans JavaScript</strong> : 25 routes prérendues, une page 404 réelle servie par le serveur.</li>
+        <li><strong>Le contenu reste lisible sans JavaScript</strong> : 25 routes prérendues, une page 404 réelle servie par le serveur.</li>
       </ul>
     </section></template>
 
@@ -1149,7 +1149,7 @@ if (props.id && sessionStorage.getItem(\`content_revealed_\${props.id}\`) === 't
     
     <!-- Spoiler -->
     <ContentWarning category="spoiler" id="post-123-spoiler">
-      <p>Le méchant était en fait le gentil depuis le début !</p>
+      <p>Le méchant était en fait le gentil depuis le début !</p>
     </ContentWarning>
   </div>
 </template>`
@@ -1214,7 +1214,7 @@ if (props.id && sessionStorage.getItem(\`content_revealed_\${props.id}\`) === 't
       
       <!-- Content Warning Input -->
       <div v-if="showCWInput" class="cw-input">
-        <label for="cw-saisie">Avertissement de contenu :</label>
+        <label for="cw-saisie">Avertissement de contenu :</label>
         <input id="cw-saisie" v-model="contentWarning" placeholder="Ex: NSFW, Spoilers, Violence..." />
       </div>
       

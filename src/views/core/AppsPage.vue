@@ -45,7 +45,7 @@
 
       <p class="apps__note">
         Ces outils tournent <strong>chez nous</strong>. Aucun n'est un service en ligne
-        auquel vous vous abonnez : ils servent à produire les livraisons du studio.
+        auquel vous vous abonnez : ils servent à produire les livraisons du studio.
       </p>
     </section>
   </div>

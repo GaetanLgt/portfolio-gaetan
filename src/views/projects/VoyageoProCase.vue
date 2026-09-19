@@ -40,7 +40,7 @@
         </h1>
 
         <p class="case-intro reveal">
-          <strong>Démonstration.</strong> Ce cas est un <strong>scénario</strong> : le client,
+          <strong>Démonstration.</strong> Ce cas est un <strong>scénario</strong> : le client,
           les chiffres présentés et le témoignage sont des <strong>exemples</strong>, pas une
           référence cliente. Il sert à montrer la méthode et le type de résultat visé.
           Transformation digitale d'une agence de voyage professionnelle — de la gestion Excel
@@ -123,7 +123,7 @@
             <div class="client-profile reveal">
               <h3>Le client du scénario</h3>
               <p>
-                <strong>VoyageoPro</strong> est l'agence fictive du scénario : une agence de voyage B2B basée à Lyon, 
+                <strong>VoyageoPro</strong> est l'agence fictive du scénario : une agence de voyage B2B basée à Lyon, 
                 spécialisée dans l'organisation de séminaires, incentives et voyages d'affaires 
                 pour les entreprises du CAC40 et ETI.
               </p>
@@ -235,7 +235,7 @@
         
         <div class="solution-overview reveal">
           <p class="solution-intro">
-            Une plateforme SaaS sur-mesure couvrant l'ensemble du cycle commercial : 
+            Une plateforme SaaS sur-mesure couvrant l'ensemble du cycle commercial : 
             de la demande client à la facturation, en passant par la création de devis 
             et le suivi des réservations.
           </p>
@@ -661,7 +661,7 @@
             <h3>Migration des données</h3>
             <p>
               15 fichiers Excel avec des formats incohérents, données dupliquées et 
-              relations implicites. Solution : script de migration sur-mesure avec 
+              relations implicites. Solution : script de migration sur-mesure avec 
               validation manuelle par lot.
             </p>
           </div>
@@ -681,7 +681,7 @@
             <h3>Intégrations tierces</h3>
             <p>
               Connexion avec 3 APIs fournisseurs aux formats différents. 
-              Solution : couche d'abstraction avec pattern adaptateur 
+              Solution : couche d'abstraction avec pattern adaptateur 
               et nouvelle tentative automatique.
             </p>
           </div>
@@ -772,9 +772,9 @@
     <section class="case-cta" aria-labelledby="cta-title">
       <div class="container">
         <div class="cta-content reveal">
-          <h2 id="cta-title">Un projet similaire ?</h2>
+          <h2 id="cta-title">Un projet similaire ?</h2>
           <p>
-            Vous gérez encore votre activité sur Excel ? 
+            Vous gérez encore votre activité sur Excel ? 
             Discutons de votre transformation digitale.
           </p>
           <div class="cta-buttons">

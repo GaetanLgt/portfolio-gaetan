@@ -19,12 +19,12 @@
         
         <section class="legal-section">
           <h2>Article 2 - Services proposés</h2>
-          <p>Génie IT Tek FR propose les protocoles suivants :</p>
+          <p>Génie IT Tek FR propose les protocoles suivants :</p>
           <ul>
-            <li><strong>PERFORMANCE :</strong> Audit, refonte et optimisation web</li>
-            <li><strong>DIGITAL FACTORY :</strong> Application métier sur-mesure</li>
-            <li><strong>NEURAL OPS :</strong> Automatisation et intégration IA locale</li>
-            <li><strong>CONSULTING :</strong> Accompagnement technique et stratégique</li>
+            <li><strong>PERFORMANCE :</strong> Audit, refonte et optimisation web</li>
+            <li><strong>DIGITAL FACTORY :</strong> Application métier sur-mesure</li>
+            <li><strong>NEURAL OPS :</strong> Automatisation et intégration IA locale</li>
+            <li><strong>CONSULTING :</strong> Accompagnement technique et stratégique</li>
           </ul>
         </section>
         
@@ -54,7 +54,7 @@
             Les tarifs sont indiqués en euros. Le régime de TVA applicable sera mentionné
             sur chaque facture dès l'immatriculation de l'entreprise.
           </p>
-          <p><strong>Modalités de paiement :</strong></p>
+          <p><strong>Modalités de paiement :</strong></p>
           <ul>
             <li>Acompte de 30% à la commande</li>
             <li>40% à la validation du développement</li>
@@ -78,7 +78,7 @@
         
         <section class="legal-section">
           <h2>Article 6 - Obligations du client</h2>
-          <p>Le client s'engage à :</p>
+          <p>Le client s'engage à :</p>
           <ul>
             <li>Fournir les informations et contenus nécessaires dans les délais convenus</li>
             <li>Valider les étapes intermédiaires dans un délai raisonnable (5 jours ouvrés)</li>

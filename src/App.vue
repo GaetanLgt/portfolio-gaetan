@@ -1,7 +1,7 @@
 <template>
   <!-- ⚠ `id="app"` RETIRÉ DE CETTE RACINE LE 13/09/2026 — DÉFAUT MESURÉ.
        `index.html` monte l'application dans `<div id="app">`. Ce composant
-       réutilisait LE MÊME identifiant pour sa propre racine : le HTML livré
+       réutilisait LE MÊME identifiant pour sa propre racine : le HTML livré
        contenait donc `<div id="app"><div id="app" class="app--loaded">`,
        **sur 24 pages** (règle Opquast 229 : « chaque identifiant HTML n'est
        utilisé qu'une seule fois par page »).

@@ -3,15 +3,15 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "03dc368",
-    "sujet": "Le verrou enregistre la decision au lieu de la signaler",
-    "date": "2026-09-19T12:16:53+02:00",
+    "court": "d7b181f",
+    "sujet": "Le kit Metroid devient atteignable, et le projet de l'armure entre en ligne",
+    "date": "2026-09-19T12:30:12+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-19 12:29:29",
-    "horodatage_minute": "2026-09-19 12:29",
-    "horodatage_iso": "2026-09-19T10:29:29.077Z",
+    "horodatage_local": "2026-09-19 12:43:10",
+    "horodatage_minute": "2026-09-19 12:43",
+    "horodatage_iso": "2026-09-19T10:43:10.760Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 64,

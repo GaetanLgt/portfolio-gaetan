@@ -126,17 +126,17 @@
         <div class="reference-grid">
           <div class="ref-card">
             <h3>📄 Game.ini</h3>
-            <p>Configuration gameplay : taux, stats dinos/joueurs.</p>
+            <p>Configuration gameplay : taux, stats dinos/joueurs.</p>
             <code>ShooterGame/Saved/Config/WindowsServer/Game.ini</code>
           </div>
           <div class="ref-card">
             <h3>📄 GameUserSettings.ini</h3>
-            <p>Paramètres serveur : nom, mot de passe, difficulté.</p>
+            <p>Paramètres serveur : nom, mot de passe, difficulté.</p>
             <code>ShooterGame/Saved/Config/WindowsServer/GameUserSettings.ini</code>
           </div>
           <div class="ref-card">
             <h3>📄 Engine.ini</h3>
-            <p>Configuration moteur : tickrate, network.</p>
+            <p>Configuration moteur : tickrate, network.</p>
             <code>ShooterGame/Saved/Config/WindowsServer/Engine.ini</code>
           </div>
         </div>
@@ -159,7 +159,7 @@
 
     <!-- TOAST -->
     <Transition name="toast">
-      <div v-if="showToast" class="toast">✓ Code copié !</div>
+      <div v-if="showToast" class="toast">✓ Code copié !</div>
     </Transition>
   </div>
 </template>

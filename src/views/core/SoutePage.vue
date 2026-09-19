@@ -23,7 +23,7 @@
         <h1 class="soute__titre">La soute</h1>
         <p class="soute__chapeau">
           Vous êtes descendu. Que ce soit par le tuyau vert ou par le plan complet, le
-          résultat est le même : <strong>vous êtes dans la seule zone du navire qui
+          résultat est le même : <strong>vous êtes dans la seule zone du navire qui
           contient la carte entière</strong>.
         </p>
       </header>
@@ -36,7 +36,7 @@
           adresses, et personne ne les avait jamais rassemblés au même endroit.
         </p>
         <p>
-          Cette page ne cache rien et ne débloque rien : <strong>tout ce qui est listé
+          Cette page ne cache rien et ne débloque rien : <strong>tout ce qui est listé
           ci-dessous est atteignable à tout moment</strong>, y compris sans jamais avoir vu
           le tuyau. C'est une carte, pas une récompense exclusive — une carte qu'on tend à
           ceux qui sont venus voir.
@@ -58,8 +58,8 @@
             <!--
               ⚠️ UNE BALISE `<a>` ORDINAIRE, ET NON UN `<RouterLink>` — DEPUIS LE 19/09/2026.
               Toutes les zones sauf une sont des routes du site, et vue-router intercepte le
-              clic sur un lien interne : `<RouterLink>` n'apportait donc rien qu'une contrainte.
-              Il en coûtait une, en revanche : le dossier pédagogique publié sous
+              clic sur un lien interne : `<RouterLink>` n'apportait donc rien qu'une contrainte.
+              Il en coûtait une, en revanche : le dossier pédagogique publié sous
               `/TARDIS/JoF/` est du HTML STATIQUE, hors routeur — avec un `<RouterLink>`, ce
               lien aurait mené nulle part.
 
@@ -92,7 +92,7 @@
       <section class="soute__bloc" aria-labelledby="titre-porte-dossiers">
         <h2 id="titre-porte-dossiers" class="soute__sous-titre">Une porte qui n'était reliée à rien</h2>
         <p>
-          Sous ce pont se trouve un dossier entier : <strong>22 pages de travail scolaire</strong>,
+          Sous ce pont se trouve un dossier entier : <strong>22 pages de travail scolaire</strong>,
           du CP à la 3<sup>e</sup>, écrites par le studio. Elles étaient en ligne depuis le
           14 septembre 2026, à une adresse réelle — et <strong>aucune page du site ne les
           liait</strong>. Un moteur pouvait tomber dessus ; vous, non.
@@ -109,12 +109,12 @@
         <ul class="soute__liste">
           <li>
             <strong>Elle ne compte pas vos découvertes.</strong> Il n'y a nulle part un
-            « 6 zones sur 14 ». Le petit repère « vu » existe, l'addition n'existe pas.
+            « 6 zones sur 14 ». Le petit repère « vu » existe, l'addition n'existe pas.
           </li>
           <li>
             <strong>Elle ne vous suit pas.</strong> Votre progression tient dans le
             <code>localStorage</code> de votre navigateur — sur votre machine. Rien n'est
-            envoyé, ni à nous, ni à personne : il n'y a pas de serveur derrière ceci.
+            envoyé, ni à nous, ni à personne : il n'y a pas de serveur derrière ceci.
           </li>
           <li>
             <strong>Elle ne verrouille rien.</strong> Aucune page du site n'exige d'avoir
@@ -127,7 +127,7 @@
         <h2 class="soute__sous-titre">Les verrous du studio</h2>
         <p>
           Le studio s'impose des seuils mesurés, et les publie parce qu'ils engagent. Ce sont
-          des <strong>seuils</strong>, pas des scores du jour : un chiffre mesuré une fois
+          des <strong>seuils</strong>, pas des scores du jour : un chiffre mesuré une fois
           vieillit, un seuil tient.
         </p>
         <dl class="soute__verrous">
@@ -141,7 +141,7 @@
           </div>
           <div class="soute__verrou">
             <dt>Accessibilité</dt>
-            <dd>axe-core : 0 violation</dd>
+            <dd>axe-core : 0 violation</dd>
           </div>
           <div class="soute__verrou">
             <dt>Sémantique</dt>

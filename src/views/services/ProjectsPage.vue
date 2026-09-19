@@ -14,7 +14,7 @@
           </h1>
           
           <p class="projects-hero__desc">
-            Une sélection de réalisations professionnelles : applications Symfony,
+            Une sélection de réalisations professionnelles : applications Symfony,
             interfaces Vue 3, automatisations n8n et infrastructure souveraine.
           </p>
           
@@ -205,7 +205,7 @@
       <div class="container">
         <div class="projects-cta__box glass">
           <div class="projects-cta__content">
-            <h2>Un projet en tête ?</h2>
+            <h2>Un projet en tête ?</h2>
             <p>Discutons de comment je peux vous aider à le réaliser.</p>
           </div>
           <router-link to="/contact" class="projects-cta__btn">

@@ -151,7 +151,7 @@
 
                 <!-- Client -->
                 <div class="doc-client">
-                  <div class="client-label">Facturer à :</div>
+                  <div class="client-label">Facturer à :</div>
                   <div class="client-name">{{ client.name || 'Client' }}</div>
                   <div class="client-company">{{ client.company }}</div>
                   <div class="client-address">{{ client.address }}</div>
@@ -160,15 +160,15 @@
                 <!-- Dates -->
                 <div class="doc-dates">
                   <div class="date-item">
-                    <span class="date-label">Date :</span>
+                    <span class="date-label">Date :</span>
                     <span>{{ formatDate(docDate) }}</span>
                   </div>
                   <div class="date-item" v-if="docType === 'quote'">
-                    <span class="date-label">Valide jusqu'au :</span>
+                    <span class="date-label">Valide jusqu'au :</span>
                     <span>{{ formatDate(validUntil) }}</span>
                   </div>
                   <div class="date-item" v-if="docType === 'invoice'">
-                    <span class="date-label">Échéance :</span>
+                    <span class="date-label">Échéance :</span>
                     <span>{{ formatDate(dueDate) }}</span>
                   </div>
                 </div>
@@ -211,7 +211,7 @@
 
                 <!-- Notes -->
                 <div class="doc-notes" v-if="notes">
-                  <div class="notes-label">Notes :</div>
+                  <div class="notes-label">Notes :</div>
                   <div class="notes-content">{{ notes }}</div>
                 </div>
 

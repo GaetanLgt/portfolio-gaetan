@@ -17,7 +17,7 @@
         <p class="armure__sur-titre">L'atelier · un projet de jeu, montré en cours</p>
         <h1 class="armure__titre">L'armure</h1>
         <p class="armure__chapeau">
-          Ceci n'est pas une page de vente : c'est <strong>un projet du studio montré
+          Ceci n'est pas une page de vente : c'est <strong>un projet du studio montré
           en cours de route</strong>, avec ce qui est fait, ce qui ne l'est pas encore, et
           ce que personne ne peut affirmer à ce stade. L'armure est
           <strong>notre dessin</strong> — six lois de forme tirées d'une œuvre qu'on a
@@ -30,7 +30,7 @@
            Le même choix de forme qu'à « l'état du studio » : une liste de définitions,
            chaque valeur portant SON intitulé et SA source. Un `<dl>` ne contient que des
            `<dt>` et des `<dd>` — la source d'une valeur est une DÉFINITION, pas une note
-           en marge : elle va donc à l'intérieur du `<dd>`. -->
+           en marge : elle va donc à l'intérieur du `<dd>`. -->
       <section class="armure__bloc" aria-labelledby="titre-projet">
         <h2 id="titre-projet" class="armure__sous-titre">Le projet, en clair</h2>
         <dl class="armure__fiche">
@@ -45,7 +45,7 @@
         <p class="armure__note">
           <strong>Le nom du projet n'est pas définitif.</strong> C'est un nom de travail, et
           il le restera tant qu'une recherche d'antériorité n'a pas été faite. Le studio ne
-          l'annonce pas comme un titre : il l'écrit pour ne pas laisser croire que la
+          l'annonce pas comme un titre : il l'écrit pour ne pas laisser croire que la
           question est réglée.
         </p>
       </section>
@@ -57,7 +57,7 @@
       <section class="armure__bloc" aria-labelledby="titre-planche">
         <h2 id="titre-planche" class="armure__sous-titre">La planche, et ce qu'elle montre</h2>
         <p>
-          Voici la première planche de conception : <strong>une vue de face, sur fond de
+          Voici la première planche de conception : <strong>une vue de face, sur fond de
           studio neutre</strong>. Elle a été produite par le studio, et c'est la seule image
           de l'armure publiée ici.
         </p>
@@ -73,7 +73,7 @@
           >
           <figcaption class="armure__legende">
             <strong>Planche n° 1 — vue de face.</strong> 832 × 1216 pixels, produite par
-            le studio. Ce qu'on y lit, et qui est vérifiable en la regardant :
+            le studio. Ce qu'on y lit, et qui est vérifiable en la regardant :
             <strong>graphite et un seul accent ambre</strong>, casque entièrement fermé,
             visière pleine, antenne sur l'épaule, plaques séparées par des jointures
             apparentes. <strong>Aucune arme tenue, aucune signature, aucune inscription</strong> —
@@ -83,7 +83,7 @@
 
         <p>
           Cette planche est <strong>antérieure à la réception de l'œuvre décrite plus
-          bas</strong> : elle n'en dérive pas. Les six lois qui suivent ont donc été
+          bas</strong> : elle n'en dérive pas. Les six lois qui suivent ont donc été
           écrites <em>après</em> elle, et elles décrivent une direction que le studio tient
           déjà — elles ne l'ont pas fabriquée.
         </p>
@@ -108,16 +108,16 @@
               <span class="armure__loi-num">{{ loi.n }}</span>{{ loi.titre }}
             </p>
             <p class="armure__loi-texte">{{ loi.texte }}</p>
-            <p class="armure__loi-gain"><strong>Ce que ça évite :</strong> {{ loi.gain }}</p>
+            <p class="armure__loi-gain"><strong>Ce que ça évite :</strong> {{ loi.gain }}</p>
           </li>
         </ol>
 
         <p class="armure__note armure__note--incertitude">
           <strong>Ce que ces six lois ne sont pas.</strong> Ce n'est pas une copie par
-          contournement, et ce n'est pas non plus une preuve d'originalité : c'est une
+          contournement, et ce n'est pas non plus une preuve d'originalité : c'est une
           <strong>grammaire</strong>. Une armure énergétique à visière pleine et à élément
-          d'énergie unique est un vocabulaire, comme « vaisseau spatial » ou « épée
-          longue ». Ce qui s'emprunte, c'est un dessin précis et un nom — et
+          d'énergie unique est un vocabulaire, comme « vaisseau spatial » ou « épée
+          longue ». Ce qui s'emprunte, c'est un dessin précis et un nom — et
           <strong>ni l'un ni l'autre ne sont ici</strong>.
         </p>
       </section>
@@ -130,7 +130,7 @@
         <h2 id="titre-variante" class="armure__sous-titre">Notre variante, ligne par ligne</h2>
         <p>
           La direction retenue est <strong>l'inverse de l'œuvre décrite</strong>, sur chaque
-          point qui la caractérisait. Ce n'est pas une nuance : c'est un renversement, et il
+          point qui la caractérisait. Ce n'est pas une nuance : c'est un renversement, et il
           est écrit pour être opposable au studio.
         </p>
 
@@ -153,9 +153,9 @@
         </table>
 
         <p>
-          Dit en une phrase : <strong>une combinaison blindée fine, segmentée, sans excès, à
+          Dit en une phrase : <strong>une combinaison blindée fine, segmentée, sans excès, à
           accent unique</strong> — l'armure d'un corsaire, pas d'un chevalier. Et ce n'est
-          pas une image choisie après coup : le personnage que le studio met dans cette
+          pas une image choisie après coup : le personnage que le studio met dans cette
           armure est décrit comme <strong>le corsaire</strong> dans les documents du projet.
           Une armure de corsaire n'est pas une armure de héros lourd.
         </p>
@@ -179,7 +179,7 @@
         <p class="armure__note">
           <strong>La lecture de cette liste est celle du studio, pas un état d'avancement
           commercial.</strong> Les trois vues et le maillage dépendent de deux choses qui
-          n'existent pas encore : le feu vert visuel du dirigeant, et la disponibilité de la
+          n'existent pas encore : le feu vert visuel du dirigeant, et la disponibilité de la
           machine. Une seule génération lourde tourne à la fois ici, et le premier incident
           matériel arrête tout — ce n'est pas une précaution, c'est une contrainte mesurée.
         </p>
@@ -195,7 +195,7 @@
         <ul class="armure__limites">
           <li>
             <strong>Elle ne montre aucun jeu.</strong> Une planche de conception n'est pas un
-            jeu : elle ne dit rien d'un déplacement, d'une caméra, d'un son, d'une boucle de
+            jeu : elle ne dit rien d'un déplacement, d'une caméra, d'un son, d'une boucle de
             jeu ni d'une durée de vie. Rien de tout cela n'existe aujourd'hui, et
             <strong>aucune capture, aucune vidéo, aucune démonstration jouable n'est
             publiée</strong> — parce qu'il n'y en a pas. Ce qui existe tient sur cette page,
@@ -207,21 +207,21 @@
             <strong>n'est pas juriste</strong> et ne produit aucun avis juridique. Aucune
             recherche d'antériorité n'a été menée, aucun dépôt n'a été fait, et
             <strong>le nom du projet n'est ni vérifié ni protégé</strong>. L'originalité
-            d'un dessin ne se déclare pas : elle se constate par ceux que cela concerne.
+            d'un dessin ne se déclare pas : elle se constate par ceux que cela concerne.
           </li>
           <li>
             <strong>Elle ne remplace pas l'œil du dirigeant, qui seul valide le
             visuel.</strong> Les outils de vision locale du studio ont produit des
-            <strong>hallucinations répétées</strong> : ils décrivent, ils ne jugent pas. La
+            <strong>hallucinations répétées</strong> : ils décrivent, ils ne jugent pas. La
             planche et la variante attendent donc un verdict humain. Tant qu'il n'est pas
             rendu, cette page décrit une <strong>intention tenue par écrit</strong>, pas un
             design validé.
           </li>
           <li>
-            <strong>Et le point qui coûte le plus au studio : la rigidité de l'armure ne
+            <strong>Et le point qui coûte le plus au studio : la rigidité de l'armure ne
             répond pas à ce qui manque.</strong> Le choix d'un corps blindé évite de
             modéliser un visage et de l'animer — c'est réel. Il ne supprime pas ce qui
-            bloque encore : <strong>le déplacement, le vol, la caméra et la physique</strong>
+            bloque encore : <strong>le déplacement, le vol, la caméra et la physique</strong>
             restent à écrire. <em>Une armure contourne le chaînon manquant du studio ; elle
             ne le remplace pas.</em>
           </li>

@@ -161,7 +161,7 @@
             </div>
           </div>
           <p class="uptime-note">
-            Un seul point : aucun historique n'est conservé. Une courbe sur sept jours
+            Un seul point : aucun historique n'est conservé. Une courbe sur sept jours
             demanderait sept jours de relevés réels — pas sept valeurs inventées.
           </p>
         </div>

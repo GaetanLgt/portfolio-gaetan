@@ -62,7 +62,7 @@
               <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
             </p>
           </address>
-          <p class="footer__response">SLA réponse : 24h</p>
+          <p class="footer__response">SLA réponse : 24h</p>
         </div>
         
         <!-- Navigation Principale — parcours prospect (audit Awwwards D2) -->

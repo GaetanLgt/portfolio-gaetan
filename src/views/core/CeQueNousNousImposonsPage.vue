@@ -19,7 +19,7 @@
           Cette page ne dit pas ce que le studio sait faire — il y en a d'autres pour cela.
           Elle dit <strong>ce qu'il s'interdit, et sur quoi il se contrôle</strong>. La liste
           est courte, elle est tenue, et <strong>quand un point n'est pas encore en place, il
-          est écrit comme tel</strong> : une page de règles qui s'attribuerait une règle non
+          est écrit comme tel</strong> : une page de règles qui s'attribuerait une règle non
           appliquée serait exactement le défaut qu'elle prétend corriger.
         </p>
         <p class="impose__date">Règles arrêtées et publiées le 19 septembre 2026.</p>
@@ -38,7 +38,7 @@
         <ul class="impose__liste">
           <li>
             <strong>Nous ne construisons pas de plateforme qui centralise toutes vos
-            données.</strong> Parce qu'un fichier central est ce qu'on vole : un endroit qui
+            données.</strong> Parce qu'un fichier central est ce qu'on vole : un endroit qui
             rassemble tout est un endroit qui, s'il tombe, livre tout d'un coup. Ce qui n'a
             pas été copié ne peut pas fuir.
             <!--
@@ -64,7 +64,7 @@
               « nous ne perdrons pas vos données » — c'est « nous ne détenons pas la pièce
               qui rend dangereuse la fuite de quelqu'un d'autre ».
             -->
-            <span class="impose__precision">Et la raison de fond est plus forte que ça : le
+            <span class="impose__precision">Et la raison de fond est plus forte que ça : le
             danger d'une fuite ne vient pas seulement de la fuite. Il vient de ce qu'on peut
             faire en <strong>recoupant plusieurs bases</strong> — un nom ici, une adresse
             là, un identifiant ailleurs, et une identité se reconstitue. Ne pas détenir la
@@ -74,12 +74,12 @@
           <li>
             <strong>Nous ne publions aucun chiffre sans sa source et sa date.</strong> Parce
             qu'un nombre sans origine a la forme d'un fait sans en être un. Un chiffre est
-            une mesure : il porte l'instrument, le moment et le périmètre qui l'ont produit —
+            une mesure : il porte l'instrument, le moment et le périmètre qui l'ont produit —
             sinon ce n'est pas un chiffre, c'est une impression écrite en chiffres.
           </li>
           <li>
             <strong>Nous ne déléguons pas la décision.</strong> Parce qu'un système qui
-            produit une réponse ne stocke rien : il n'a ni la responsabilité de ce qu'il
+            produit une réponse ne stocke rien : il n'a ni la responsabilité de ce qu'il
             affirme, ni le moyen de savoir qu'il se trompe. Il faut quelqu'un pour vérifier,
             et ce quelqu'un doit pouvoir être nommé.
           </li>
@@ -87,7 +87,7 @@
 
         <p class="impose__note">
           Ce ne sont pas des promesses commerciales, ce sont des <strong>règles de
-          travail</strong> : elles coûtent du temps, et c'est pourquoi on les écrit ici
+          travail</strong> : elles coûtent du temps, et c'est pourquoi on les écrit ici
           plutôt que de les laisser dans nos têtes.
         </p>
       </section>
@@ -113,7 +113,7 @@
               échouent quand une règle est cassée</strong> — contrastes, poids de la page
               livrée, nombre de requêtes du premier chargement, cohérence des adresses,
               coordonnées réellement arrivées au visiteur, et la signature qualité qui les
-              survole. Un contrôle qui échoue <strong>arrête la livraison</strong> : il ne
+              survole. Un contrôle qui échoue <strong>arrête la livraison</strong> : il ne
               produit pas un avertissement qu'on pourrait choisir de ne pas lire.
               <RouterLink to="/etat-du-studio" class="impose__lien">Le relevé du dernier
               build</RouterLink> montre leur état, tel qu'il a été mesuré, avec l'heure.
@@ -123,7 +123,7 @@
           <li class="impose__geste">
             <p class="impose__geste-titre">Garder des moments sans assistance</p>
             <p>
-              Quatre décisions ne passent par aucun outil d'intelligence artificielle :
+              Quatre décisions ne passent par aucun outil d'intelligence artificielle :
               <strong>la stratégie, le visuel, le juridique et la mise en ligne</strong>.
               Elles restent au dirigeant, qui les assume. Ce n'est pas une pudeur : c'est le
               seul endroit où la responsabilité peut être nommée quand quelque chose se passe
@@ -154,7 +154,7 @@
       <section class="impose__bloc" aria-labelledby="titre-memoire">
         <h2 id="titre-memoire" class="impose__sous-titre">Notre mémoire de nos propres erreurs</h2>
         <p>
-          Le studio tient <strong>un registre de ses échecs</strong> : chaque entrée porte sa
+          Le studio tient <strong>un registre de ses échecs</strong> : chaque entrée porte sa
           date, ce qui a échoué, et <strong>la mesure qui l'établit</strong>. Peu
           d'organisations le font, et ce n'est pas confortable à tenir — un registre d'échecs
           est un document qui vous contredit à chaque page.
@@ -164,27 +164,27 @@
           <p class="impose__fait-titre">Le 19 septembre 2026, six affirmations produites par nos propres outils étaient fausses ou non mesurées</p>
           <p>
             Elles ont été trouvées, nommées et corrigées le jour même, et elles tiennent en
-            trois familles :
+            trois familles :
           </p>
           <ul class="impose__liste impose__liste--serree">
             <li><strong>cinq dates</strong> fausses dans quatre fichiers — un travail fait le
               19 estampillé du 20, et une page créée le 19 datée du 18 ;</li>
             <li><strong>un contrôle cité qui n'existait pas</strong> : un fichier affirmait que
               son résultat était mesuré par une commande… que personne n'avait écrite ;</li>
-            <li><strong>une alerte qui annonçait « skipped »</strong> alors qu'un
+            <li><strong>une alerte qui annonçait « skipped »</strong> alors qu'un
               déploiement avait échoué — et un site resté figé derrière un message qui se
-              lisait comme « rien ne s'est passé ».</li>
+              lisait comme « rien ne s'est passé ».</li>
           </ul>
           <p>
             Le détail est dans l'historique du dépôt, daté. Ce qui compte ici n'est pas le
-            total : c'est que <strong>ces six-là n'ont été vues ni par un contrôle ni par une
+            total : c'est que <strong>ces six-là n'ont été vues ni par un contrôle ni par une
             relecture</strong>, mais par le dirigeant qui a lu ce que la machine avait écrit.
           </p>
         </div>
 
         <p class="impose__note impose__note--incertitude">
           <strong>Le chiffre exact, et ce qu'il ne dit pas.</strong> Le relevé du dernier
-          build affiche le nombre de contrôles qui ont réellement tourné : c'est lui qui fait
+          build affiche le nombre de contrôles qui ont réellement tourné : c'est lui qui fait
           foi, pas cette page, et le nombre a changé plusieurs fois cette semaine. Cette page
           ne cite donc <strong>ni la liste de ces contrôles, ni leur nombre</strong> — elle
           cite six affirmations fausses, parce que celles-là sont des faits datés.
@@ -202,27 +202,27 @@
           <li>
             <strong>Cela ne rend personne invulnérable.</strong> Aucune méthode ne rend un
             système inviolable, et nous n'en vendons aucune. Ce que ces règles changent est
-            plus étroit, et c'est déjà beaucoup : <strong>une compromission de ce studio ne
+            plus étroit, et c'est déjà beaucoup : <strong>une compromission de ce studio ne
             donne pas accès au fichier de plus d'un million de personnes dont parlent les
             faits divers de cette rentrée</strong> — parce que ce fichier n'existe pas ici, et
             que rien chez nous ne le rassemble. De la même manière, une erreur du studio
-            porte un nom et une date : elle est écrite, et elle reste lisible.
+            porte un nom et une date : elle est écrite, et elle reste lisible.
           </li>
           <li>
             <strong>Un travail non évalué par les pairs n'est pas une preuve.</strong>
             Le texte que nous citons plus haut — Solé et Ruffini, identifiant
-            <span class="impose__reference">2509.03344</span> — est un <strong>pré-print :
+            <span class="impose__reference">2509.03344</span> — est un <strong>pré-print :
             il n'a pas été évalué par les pairs</strong>, et cette fiche le dit
-            elle-même. Nous ne nous appuyons donc pas dessus comme sur un résultat établi :
+            elle-même. Nous ne nous appuyons donc pas dessus comme sur un résultat établi :
             nous le lisons comme une <strong>hypothèse intéressante</strong>, et nous
             appliquons des gestes que nous jugerions utiles même si l'hypothèse était fausse.
             L'étude économique citée à côté des mêmes faits d'actualité n'est pas davantage
-            une garantie : c'est une étude, avec son échantillon et ses limites.
+            une garantie : c'est une étude, avec son échantillon et ses limites.
           </li>
           <li>
             <strong>Nous ne sommes pas juristes.</strong> Nous n'avons qualifié
             juridiquement aucun des faits qui ont motivé cette page, et nous ne le ferons
-            pas : la qualification appartient aux autorités, et le conseil au conseil de
+            pas : la qualification appartient aux autorités, et le conseil au conseil de
             ceux que cela concerne. Nos règles sont des <strong>règles de métier</strong>,
             pas un avis de droit — et cette page n'en donne aucun.
           </li>

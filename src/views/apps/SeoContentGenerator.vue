@@ -19,7 +19,7 @@
             avec des affirmations non mesurées — il a été vidé de ces chiffres.
           -->
           <p class="avert-exemples">
-            Les modèles pré-remplis sont des <strong>exemples fictifs</strong> : les noms
+            Les modèles pré-remplis sont des <strong>exemples fictifs</strong> : les noms
             d'entreprises et les chiffres y sont inventés pour la démonstration.
             Remplacez-les toujours par vos faits vérifiables.
           </p>

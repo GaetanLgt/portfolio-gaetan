@@ -322,7 +322,7 @@
         <div class="charts__callout glass">
           <span class="charts__callout-icon">🦖</span>
           <div>
-            <span class="charts__callout-label">PRIME TIME :</span>
+            <span class="charts__callout-label">PRIME TIME :</span>
             Le pic à 20h correspond au raid time — le moment où les tribus s'affrontent et où la charge serveur explose. 
             L'infrastructure doit absorber ces pics sans broncher.
           </div>
@@ -367,7 +367,7 @@
                   <span class="task__icon">🎫</span>
                   <div class="task__content">
                     <strong>Support N1</strong>
-                    <p>Tickets Discord : joueur bloqué, perte de dino, crash client.</p>
+                    <p>Tickets Discord : joueur bloqué, perte de dino, crash client.</p>
                   </div>
                 </div>
               </div>
@@ -524,7 +524,7 @@ cheat destroytarget  # Suppression chirurgicale</code></pre>
             </div>
             <div class="event-card__content">
               <h3>DINO CHAMPIONSHIP</h3>
-              <p>Tournoi de courses et combats de dinosaures. Qui a le meilleur Rex ?</p>
+              <p>Tournoi de courses et combats de dinosaures. Qui a le meilleur Rex ?</p>
               <div class="event-card__tags">
                 <span>🏆 Tournament</span>
                 <span>🦕 Dinos</span>
@@ -641,7 +641,7 @@ cheat destroytarget  # Suppression chirurgicale</code></pre>
             <span>🦖</span>
             <span>🦕</span>
           </div>
-          <h2 class="cta-box__title">Cette rigueur appliquée à votre projet ?</h2>
+          <h2 class="cta-box__title">Cette rigueur appliquée à votre projet ?</h2>
           <p class="cta-box__desc">
             Les mêmes méthodes de monitoring, backup et gestion de crise<br>
             appliquées à votre infrastructure métier.

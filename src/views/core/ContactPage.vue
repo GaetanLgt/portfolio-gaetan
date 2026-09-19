@@ -28,7 +28,7 @@
             <div class="contact-card__header">
               <span class="mono-tag">/// L'EMBARQUEMENT</span>
               <h2>Dites-moi où vous voulez aller</h2>
-              <p>Décrivez votre besoin en quelques lignes. Je reviens vers vous sous 24 h avec une première lecture honnête : ce qui est faisable, ce qui ne l'est pas, et ce que ça coûte.</p>
+              <p>Décrivez votre besoin en quelques lignes. Je reviens vers vous sous 24 h avec une première lecture honnête : ce qui est faisable, ce qui ne l'est pas, et ce que ça coûte.</p>
             </div>
             
             <div class="contact-card__details">

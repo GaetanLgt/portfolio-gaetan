@@ -16,7 +16,7 @@
         <p class="etat__sur-titre">Compartiment de bord · le relevé du présent</p>
         <h1 class="etat__titre">L'état du studio</h1>
         <p class="etat__chapeau">
-          Cette page ne raconte pas ce que le studio sait faire : elle montre
+          Cette page ne raconte pas ce que le studio sait faire : elle montre
           <strong>ce qui s'est réellement passé</strong> — le commit livré, la minute du
           build, ce que les contrôles du dépôt ont rendu, et qui est venu nous lire.
           <strong>Chaque chiffre porte son heure ou sa date</strong>, et ceux qui n'ont pas
@@ -32,7 +32,7 @@
         <h2 id="titre-build" class="etat__sous-titre">Le relevé du build</h2>
         <p>
           Ces valeurs sont écrites <strong>au moment de la construction du site</strong>,
-          puis figées : elles décrivent le site tel qu'il a été assemblé, pas une
+          puis figées : elles décrivent le site tel qu'il a été assemblé, pas une
           intention.
         </p>
 
@@ -42,11 +42,11 @@
             <!--
               ⚠️ RIEN D'AUTRE QU'UN `<dt>` ET UN `<dd>` ENTRE `<dl>` ET CETTE `<div>`.
               Défaut réellement produit ici le 19/09/2026, trouvé par `npx axe` et non
-              par relecture : le premier jet mettait la phrase de source dans un `<p>`
+              par relecture : le premier jet mettait la phrase de source dans un `<p>`
               placé À CÔTÉ du `<dd>`, ce qui donne `dl > div > p` — du contenu qui
-              n'appartient à aucune définition. axe l'a nommé : « Ensure <dl> elements
-              are structured correctly ». **La source d'une mesure est une DÉFINITION,
-              pas une note en marge** : elle va donc à l'intérieur du `<dd>`.
+              n'appartient à aucune définition. axe l'a nommé : « Ensure <dl> elements
+              are structured correctly ». **La source d'une mesure est une DÉFINITION,
+              pas une note en marge** : elle va donc à l'intérieur du `<dd>`.
             -->
             <dd class="etat__mesure-valeur">
               <span
@@ -60,7 +60,7 @@
         </dl>
 
         <p v-if="etat.commit.arbre_modifie === true" class="etat__note">
-          ⚠️ Le relevé a été fait sur un <strong>arbre de travail modifié</strong> : les
+          ⚠️ Le relevé a été fait sur un <strong>arbre de travail modifié</strong> : les
           fichiers livrés ne sont pas exactement ceux du commit affiché. C'est dit ici
           parce qu'un relevé qui laisse croire le contraire n'est pas un relevé.
         </p>
@@ -75,7 +75,7 @@
       <section class="etat__bloc" aria-labelledby="titre-verrous">
         <h2 id="titre-verrous" class="etat__sous-titre">Ce qui a été vérifié, et quand</h2>
         <p>
-          Le studio ne promet pas la qualité : il la <strong>mesure</strong>, à chaque
+          Le studio ne promet pas la qualité : il la <strong>mesure</strong>, à chaque
           construction, avec des contrôles automatiques qui échouent quand une règle est
           cassée. Voici <strong>leur code de sortie réel</strong>, tel que la construction
           l'a obtenu — et c'est un code, pas un avis.
@@ -98,10 +98,10 @@
         </ul>
 
         <p class="etat__note">
-          ⚠️ « Code de sortie 0 » veut dire <strong>le contrôle n'a pas échoué</strong>, et
+          ⚠️ « Code de sortie 0 » veut dire <strong>le contrôle n'a pas échoué</strong>, et
           rien de plus. Un code de sortie ne dit jamais ce qui s'est passé : il faut lire
           la sortie du contrôle. On écrit donc le code tel quel plutôt que de le traduire
-          en « tout va bien », parce que la traduction serait un jugement de plus.
+          en « tout va bien », parce que la traduction serait un jugement de plus.
         </p>
       </section>
 
@@ -141,7 +141,7 @@
           <strong>journal d'accès du serveur</strong> — la seule source qui les voit, parce
           qu'un compteur dans la page ne s'exécute jamais chez un robot. Le relevé
           ci-dessous est donc lu <strong>sur le serveur</strong>, et il ne rend que des
-          <strong>compteurs agrégés</strong> : aucune adresse, aucune page consultée,
+          <strong>compteurs agrégés</strong> : aucune adresse, aucune page consultée,
           aucun identifiant de visiteur.
         </p>
 
@@ -153,7 +153,7 @@
             Relevé vivant · mesuré le {{ heureLisible(moteurs.mesureA) }}
           </p>
           <p v-else class="etat__releve-tete etat__releve-tete--indisponible">
-            Relevé indisponible · dernier relevé connu : celui du build, plus bas
+            Relevé indisponible · dernier relevé connu : celui du build, plus bas
           </p>
 
           <table v-if="moteurs.etat === 'lu'" class="etat__table">
@@ -176,20 +176,20 @@
 
           <p v-else-if="moteurs.etat === 'vide'" class="etat__releve-vide">
             Le journal a été lu, et <strong>aucun moteur reconnu n'y figure</strong>. Ce n'est
-            pas une panne : c'est un résultat. Un site jeune et peu cité peut n'avoir encore
+            pas une panne : c'est un résultat. Un site jeune et peu cité peut n'avoir encore
             reçu la visite d'aucun moteur d'IA.
           </p>
 
           <p v-else class="etat__releve-vide">
             Le relevé n'a pas pu être obtenu à l'instant de votre visite
             ({{ moteurs.raison }}). Le comptage ne s'affiche pas, et il n'est remplacé par
-            aucun zéro : <strong>« pas de réponse » n'est pas « personne n'est venu »</strong>.
+            aucun zéro : <strong>« pas de réponse » n'est pas « personne n'est venu »</strong>.
           </p>
 
           <p class="etat__note etat__note--dans-releve">
             ⚠️ Un moteur qui <strong>passe</strong> n'est pas un moteur qui <strong>cite</strong>.
             Ce tableau compte des passages. Et il les identifie par ce que le visiteur
-            déclare de lui-même : <strong>un robot peut mentir sur son nom</strong>. Ce relevé
+            déclare de lui-même : <strong>un robot peut mentir sur son nom</strong>. Ce relevé
             identifie, il ne prouve pas.
           </p>
         </div>
@@ -205,14 +205,14 @@
         <ul class="etat__liste">
           <li>
             <strong>Elle ne connaît pas le présent.</strong> Le relevé du build a été figé à
-            la minute indiquée plus haut : si le site a été mis à jour depuis, cette page ne
+            la minute indiquée plus haut : si le site a été mis à jour depuis, cette page ne
             le sait pas avant la prochaine construction. Seul le comptage des moteurs est
             lu en direct, et il peut être indisponible — c'est écrit quand c'est le cas.
           </li>
           <li>
             <strong>Elle ne compte pas les visiteurs humains.</strong> L'analyse d'audience du
             studio est auto-hébergée et n'a rien à voir avec ce relevé. Les passages des
-            moteurs d'IA sont un comptage de robots : ils ne disent rien de l'audience.
+            moteurs d'IA sont un comptage de robots : ils ne disent rien de l'audience.
           </li>
           <li>
             <strong>Elle ne mesure pas la disponibilité ni la vitesse.</strong> Aucun temps de

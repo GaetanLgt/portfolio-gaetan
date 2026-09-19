@@ -60,7 +60,7 @@
         
         <!-- Quick Links -->
         <div class="not-found__links">
-          <span class="links-label">Accès rapide :</span>
+          <span class="links-label">Accès rapide :</span>
           <router-link to="/services">Services</router-link>
           <router-link to="/arkadia">Case Study</router-link>
           <router-link to="/carte-holistique">Parcours</router-link>

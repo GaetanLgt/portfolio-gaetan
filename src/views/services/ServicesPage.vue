@@ -15,7 +15,7 @@
         <p class="hero__subtitle">
           Des systèmes multi-agents locaux — agents, mémoire, automatisations — conçus pour
           <strong>votre</strong> métier. Nous construisons le navire, <strong>vous en devenez le
-          capitaine</strong> : vos outils, vos données, vos clés. Pas de dépendance au cloud
+          capitaine</strong> : vos outils, vos données, vos clés. Pas de dépendance au cloud
           lointain, pas de licence qui augmente chaque année.
         </p>
       </div>
@@ -69,7 +69,7 @@
       <div class="container">
         <div class="section-header section-header--center">
           <span class="mono-tag">/// À LA CARTE</span>
-          <h2>Un besoin ponctuel ? Une intervention claire.</h2>
+          <h2>Un besoin ponctuel ? Une intervention claire.</h2>
         </div>
         
         <div class="pricing-grid">
@@ -132,7 +132,7 @@
         </div>
         
         <p class="pricing-note">
-          <strong>Note :</strong> Tous les tarifs sont HT. Devis personnalisé sur demande pour les projets complexes.
+          <strong>Note :</strong> Tous les tarifs sont HT. Devis personnalisé sur demande pour les projets complexes.
         </p>
       </div>
     </section>
@@ -142,7 +142,7 @@
       <div class="container">
         <div class="section-header section-header--center">
           <span class="mono-tag">/// LES CHEMINS</span>
-          <h2>Plusieurs chemins, un même centre : vous</h2>
+          <h2>Plusieurs chemins, un même centre : vous</h2>
         </div>
         
         <!-- Filtres -->
@@ -193,7 +193,7 @@
               <li><span class="check">✓</span> Réponses sourcées (chaque réponse cite son document)</li>
               <li><span class="check">✓</span> Hébergement France — données jamais utilisées pour entraîner</li>
               <li><span class="check">✓</span> RGPD : suppression sur demande (droit à l'effacement)</li>
-              <li><span class="check">✓</span> 3 niveaux : Découverte 3k€ · Standard 8k€ · Sur-mesure 15k€</li>
+              <li><span class="check">✓</span> 3 niveaux : Découverte 3k€ · Standard 8k€ · Sur-mesure 15k€</li>
             </ul>
             
             <div class="offer-card__footer">
@@ -347,9 +347,9 @@
             <p class="preuve-arkadia__desc">
               <strong>ArkAdiA</strong> — notre réseau social souverain (comptes, communautés,
               messagerie temps réel, IA 100 % locale, zéro traceur) — est aujourd'hui une
-              <strong>preuve de concept en développement</strong> : sa propre page l'annonce,
+              <strong>preuve de concept en développement</strong> : sa propre page l'annonce,
               l'interface finale reste à valider visuellement. Ce n'est pas encore un réseau ouvert.
-              Même rigueur, mêmes standards pour vos outils : code sur-mesure, données qui ne
+              Même rigueur, mêmes standards pour vos outils : code sur-mesure, données qui ne
               sortent pas, hébergement en France.
             </p>
             <div class="preuve-arkadia__actions">
@@ -369,7 +369,7 @@
     <section class="cta-section">
       <div class="container">
         <div class="cta-box glass">
-          <h2 class="cta-box__title">PRÊT À REPRENDRE LA MAIN ?</h2>
+          <h2 class="cta-box__title">PRÊT À REPRENDRE LA MAIN ?</h2>
           <p class="cta-box__desc">
             Je prends 2 nouveaux projets par mois pour garantir la qualité.<br>
             Commençons par un <strong>diagnostic de 30 minutes</strong>, gratuit et sans engagement.

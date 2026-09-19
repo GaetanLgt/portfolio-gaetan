@@ -14,13 +14,13 @@
             <strong>Génie IT Tek FR</strong><br>
             Gaëtan LANGLET<br>
             Harponville, Somme, Hauts-de-France, France<br>
-            Email : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
+            Email : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
         </section>
         
         <section class="legal-section">
           <h2>Données collectées</h2>
-          <p>Lors de l'utilisation du formulaire de contact, nous collectons :</p>
+          <p>Lors de l'utilisation du formulaire de contact, nous collectons :</p>
           <ul>
             <li>Nom / Entreprise</li>
             <li>Adresse email</li>
@@ -36,7 +36,7 @@
         
         <section class="legal-section">
           <h2>Finalité du traitement</h2>
-          <p>Les données collectées via le formulaire de contact sont utilisées uniquement pour :</p>
+          <p>Les données collectées via le formulaire de contact sont utilisées uniquement pour :</p>
           <ul>
             <li>Répondre à votre demande de contact</li>
             <li>Vous fournir un devis personnalisé si demandé</li>
@@ -57,22 +57,22 @@
             hébergé sur notre propre hébergement <strong>o2switch, en France</strong>,
             qui se contente d'envoyer un e-mail à notre boîte de réception.
           </p>
-          <p>Concrètement, lorsque vous envoyez le formulaire :</p>
+          <p>Concrètement, lorsque vous envoyez le formulaire :</p>
           <ul>
             <li>nom, adresse e-mail et contenu du message sont transmis à notre hébergeur en France ;</li>
             <li>l'adresse IP est utilisée <em>en mémoire, sous forme d'empreinte non réversible</em>,
                 uniquement pour limiter les envois abusifs, et n'est pas conservée en clair ;</li>
             <li>aucun service tiers (américain ou autre) n'intervient dans cet acheminement ;</li>
-            <li>aucune base de données ne conserve le contenu de votre message : il n'existe
+            <li>aucune base de données ne conserve le contenu de votre message : il n'existe
                 que dans l'e-mail reçu.</li>
           </ul>
           <p>
-            L'analyse d'audience est elle aussi auto-hébergée : <strong>Matomo installé sur
+            L'analyse d'audience est elle aussi auto-hébergée : <strong>Matomo installé sur
             notre serveur, en France</strong> (§ suivant). Aucun outil d'analyse externe
             n'est utilisé.
           </p>
           <p class="legal-note">
-            Une question sur ce point, ou une demande d'accès ? Écrivez à
+            Une question sur ce point, ou une demande d'accès ? Écrivez à
             <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
             ou appelez le {{ TELEPHONE_AFFICHE }}.
           </p>
@@ -88,17 +88,17 @@
         
         <section class="legal-section">
           <h2>Vos droits</h2>
-          <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+          <p>Conformément au RGPD, vous disposez des droits suivants :</p>
           <ul>
-            <li><strong>Droit d'accès :</strong> obtenir la confirmation que vos données sont traitées</li>
-            <li><strong>Droit de rectification :</strong> faire corriger des données inexactes</li>
-            <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
-            <li><strong>Droit à la limitation :</strong> limiter le traitement de vos données</li>
-            <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré</li>
-            <li><strong>Droit d'opposition :</strong> vous opposer au traitement de vos données</li>
+            <li><strong>Droit d'accès :</strong> obtenir la confirmation que vos données sont traitées</li>
+            <li><strong>Droit de rectification :</strong> faire corriger des données inexactes</li>
+            <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
+            <li><strong>Droit à la limitation :</strong> limiter le traitement de vos données</li>
+            <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré</li>
+            <li><strong>Droit d'opposition :</strong> vous opposer au traitement de vos données</li>
           </ul>
           <p>
-            Pour exercer ces droits : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
+            Pour exercer ces droits : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
         </section>
         
@@ -106,7 +106,7 @@
           <h2>Analyse d'audience (Matomo)</h2>
           <p>
             Ce site utilise <strong>Matomo Analytics</strong>, une solution d'analyse d'audience 
-            respectueuse de la vie privée. Contrairement à d'autres outils d'analyse, Matomo est :
+            respectueuse de la vie privée. Contrairement à d'autres outils d'analyse, Matomo est :
           </p>
           <ul>
             <li><strong>Hébergé en France</strong> — Vos données restent sur le territoire français</li>
@@ -116,7 +116,7 @@
           </ul>
           
           <h3>Données collectées par Matomo</h3>
-          <p>Avec votre consentement, nous collectons :</p>
+          <p>Avec votre consentement, nous collectons :</p>
           <ul>
             <li>Pages visitées et durée de visite</li>
             <li>Origine du trafic (moteur de recherche, lien direct)</li>
@@ -182,7 +182,7 @@
           <h2>Contact DPO</h2>
           <p>
             Pour toute question relative à la protection de vos données personnelles, 
-            vous pouvez contacter notre délégué à la protection des données :
+            vous pouvez contacter notre délégué à la protection des données :
           </p>
           <p>
             <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>

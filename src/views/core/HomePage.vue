@@ -129,7 +129,7 @@
                      identifiée, en France. -->
                 <p class="hero__subtitle">
                   Nos agents — rédaction, code, audit, visuels — ne tournent pas dans
-                  un <strong>cloud que vous ne pouvez pas nommer</strong> : ils
+                  un <strong>cloud que vous ne pouvez pas nommer</strong> : ils
                   travaillent sur notre propre navire, à Harponville. Vos documents
                   restent dans la cale. En 48 h, nous rendons visible ce qui freine
                   votre système.
@@ -173,11 +173,11 @@
                 <div class="hero__paths">
                   <router-link to="/contact" class="hero__path hero__path--pme">
                     <span class="hero__path-tag">PME</span>
-                    Vous dirigez une entreprise ? Commencez par le diagnostic 30 min.
+                    Vous dirigez une entreprise ? Commencez par le diagnostic 30 min.
                   </router-link>
                   <router-link to="/projets" class="hero__path hero__path--cto">
                     <span class="hero__path-tag">TECH</span>
-                    Vous pilotez la technique ? Voir l'architecture.
+                    Vous pilotez la technique ? Voir l'architecture.
                   </router-link>
                 </div>
                 
@@ -234,7 +234,7 @@
             <p class="section-header__desc">
               Un seul navire, et il est réel. Tous les agents qui travaillent pour vous
               tournent sur cette machine, dans la Somme. Pas de ferme de serveurs louée,
-              pas de sous-traitance : le vaisseau est identifié et ses caractéristiques
+              pas de sous-traitance : le vaisseau est identifié et ses caractéristiques
               sont publiques.
             </p>
           </div>
@@ -291,7 +291,7 @@
           <div class="vaisseau__bloc">
             <h3 class="vaisseau__sous-titre">Le bateau, c'est l'ordinateur</h3>
             <p class="vaisseau__intro">
-              Un navire et une machine de calcul font le même métier : porter une charge
+              Un navire et une machine de calcul font le même métier : porter une charge
               utile d'un point à un autre sans la perdre en route. Voici le vocabulaire
               de bord, traduit — c'est exactement comme cela que fonctionne le poste.
             </p>
@@ -356,7 +356,7 @@
                 <tr>
                   <th scope="row">Le journal de bord</th>
                   <td>Les journaux d'exécution</td>
-                  <td>Chaque action est traçable. On peut toujours répondre à « qui a fait quoi, et quand ».</td>
+                  <td>Chaque action est traçable. On peut toujours répondre à « qui a fait quoi, et quand ».</td>
                 </tr>
                 <tr>
                   <th scope="row">L'ancre</th>
@@ -371,7 +371,7 @@
                 <tr>
                   <th scope="row">Le pavillon</th>
                   <td>Notre signature</td>
-                  <td>Le cercle-à-point : on sait qui a fait le travail, et on répond de ce qu'on livre.</td>
+                  <td>Le cercle-à-point : on sait qui a fait le travail, et on répond de ce qu'on livre.</td>
                 </tr>
                 <tr>
                   <th scope="row">Le port d'attache</th>
@@ -388,7 +388,7 @@
             <h3 class="vaisseau__sous-titre">Le navire, en clair</h3>
             <p class="vaisseau__intro">
               Relevé sur la machine elle-même, pas recopié d'une fiche commerciale.
-              Une seule unité, pas un parc : c'est ce qui nous empêche de vous vendre
+              Une seule unité, pas un parc : c'est ce qui nous empêche de vous vendre
               de la capacité que nous n'avons pas.
             </p>
             <dl class="vaisseau__fiche">
@@ -432,7 +432,7 @@
                  exigences de continuité. -->
             <p class="vaisseau__note vaisseau__note--alerte">
               <strong>Ce que ce navire n'est pas.</strong> C'est une unité de
-              recherche et de démonstration : elle ne prétend pas à la haute
+              recherche et de démonstration : elle ne prétend pas à la haute
               disponibilité, et <strong>la continuité de service n'est jamais
               garantie par ce seul poste</strong>. Un projet dont l'activité ne
               peut pas s'interrompre se conçoit sur une architecture dédiée,
@@ -441,7 +441,7 @@
             </p>
             <p class="vaisseau__note">
               Caractéristiques relevées sur la machine le 10 septembre 2026. Elles ne sont
-              pas mises à jour automatiquement : si le navire change, cette page change.
+              pas mises à jour automatiquement : si le navire change, cette page change.
             </p>
           </div>
         </ScrollReveal>
@@ -500,7 +500,7 @@
               <h2 id="cta-title">Qu'est-ce qu'on fait avancer&nbsp;?</h2>
               <p>Dites-moi ce qui vous ralentit. Je réponds sous 24 h, avec une première estimation gratuite et sans engagement — et si votre besoin n'est pas de notre ressort, je vous le dis aussi.</p>
               <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large" :strength="35" :text-strength="45">
-                Parlons-en !
+                Parlons-en !
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                   <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                 </svg>
