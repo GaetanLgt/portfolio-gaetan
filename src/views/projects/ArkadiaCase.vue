@@ -1776,7 +1776,7 @@ const uptimeAccessibleData = ref([
   font-weight: 700;
   color: var(--primary);
   /* ⚠️ 0.3 → 0.6 LE 13/09/2026. Ce numéro d'étape est du TEXTE (1,5 rem, gras) : il doit
-     atteindre 3:1 sur le fond de page. À 0,3 le vert #00FF41 ne donnait que 2,2:1 — échec
+     atteindre 3:1 sur le fond de page. À 0,3 le vert #2abfff ne donnait que 2,2:1 — échec
      relevé par l'analyse automatique sur trois occurrences.
      Calcul (formule WCAG, composition alpha sur les cinq fonds plausibles du thème) :
        0,30 → 2,19-2,25  ✗      0,50 → 4,12-4,15  ✓

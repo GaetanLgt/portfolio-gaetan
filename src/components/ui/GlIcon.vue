@@ -15,7 +15,7 @@
       3. `currentColor`, JAMAIS UNE COULEUR EN DUR. C'est la règle qui protège la
          charte : une icône prend la couleur de son contexte — `--ink` par défaut,
          `--accent` seulement là où une décision humaine est marquée. L'émeraude
-         reste rare, comme la doctrine l'exige. Si une icône portait `#00FF41` en
+         reste rare, comme la doctrine l'exige. Si une icône portait `#2abfff` en
          dur, elle diluerait le seul signal sacré du site.
 
     RÈGLES DE DESSIN, et elles sont volontairement mécaniques :

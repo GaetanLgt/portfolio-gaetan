@@ -1196,7 +1196,7 @@ const methodGuarantees = [
    « Inversée » veut dire : son texte ne suit PAS le fond de la page, il reste
    clair, et son accent est --accent-inv (que variables.css documente comme
    « sections sur fond encre »). Ce bandeau prenait son fond sur --ink, qui valait
-   #1A1A18 (sombre) en D1 mais #E8F7EE (clair) en D5 : le fond est donc devenu
+   #1A1A18 (sombre) en D1 mais #EAF0F7 (clair) en D5 : le fond est donc devenu
    clair alors que le texte l'était resté — illisible. Le fond vient désormais de
    --paper-alt, la surface sombre de D5 prévue pour alterner les sections. */
 .proof {

@@ -353,13 +353,43 @@ if (!fichierVariables) {
   }
 }
 
-// ─── VERROU 7 : l'ancienne DA claire n'a aucun survivant ────────────────────
+// ─── VERROU 7 : aucune valeur d'une DA RÉVOLUE n'a de survivant ─────────────
 // Né du même incident : après le passage à D5, `critical.css`, le bloc <noscript>
 // de index.html, la barre de navigation et le mode contraste élevé servaient
 // encore du papier clair — et de l'encre sombre par-dessus.
-console.log('\n  ── Aucune valeur de l\'ancienne DA claire ──');
-const DA_CLAIRE = ['#F4F1EA', '#EBE7DD', '#D6D1C4', '#1A1A18', '#5F5E5A', '#A63F26',
-  '#7E2E1A', '#6E6352', '#10100E', '#33322F', '#6B665A', '#8F3019'];
+//
+// ⛔ ÉTENDU LE 19/09/2026 — LE VERROU SURVEILLAIT LA MAUVAISE DA.
+//
+// Il ne listait que les douze valeurs de la DA CLAIRE. Or la bascule D6 (DA
+// bleu-noir MND × cyan) a laissé VINGT occurrences de D5 dans DIX fichiers, et
+// ce verrou ne pouvait pas les voir :
+//
+//   · un fond `background: #0E1A17` EN DUR dans le mode contraste élevé ;
+//   · quatre accents verts `#00ff88` dans la page du plan du site ;
+//   · un accent vert dans MatrixBackground, un dans le glyphe, un dans la page
+//     du navire, un dans le portail d'administration ;
+//   · le bloc entier de `a11y.css` — cinq valeurs vertes ;
+//   · l'encre verte réutilisée dans CharactersHero et HomePage.
+//
+// ⚠️ POURQUOI LE VERROU 6 NE LES A PAS VUES NON PLUS : il protège les 60 jetons
+// CANONIQUES, et une valeur hexadécimale écrite en dur dans un composant lui
+// échappe. Les deux verrous ont donc un angle mort COMMUN — la valeur littérale.
+// On le comble ici : la liste ci-dessous est la mémoire des DA révolues, et elle
+// doit être complétée à CHAQUE bascule, pas seulement quand la DA est claire.
+//
+// Ce qui n'est PAS dans la liste, et pourquoi : `#FF2D95` (magenta) et `#FF6A00`
+// (alerte) traversent D5 et D6 — ils portent des ÉTATS, pas l'identité. Les
+// inscrire ici ferait échouer le verrou sur des valeurs légitimes.
+console.log('\n  ── Aucune valeur d\'une DA révolue ──');
+const DA_REVOLUE = [
+  // DA claire (D1) — l'incident d'origine, 08-10/09/2026
+  '#F4F1EA', '#EBE7DD', '#D6D1C4', '#1A1A18', '#5F5E5A', '#A63F26',
+  '#7E2E1A', '#6E6352', '#10100E', '#33322F', '#6B665A', '#8F3019',
+  // DA « Matrix » (D5) — 11/09 au 19/09/2026, remplacée par D6
+  '#00FF41', '#66FF88', '#00FF88', '#E8F7EE', '#A9C4B4', '#7FA895',
+  '#CFE3D8', '#7FBFA8', '#A8DCC7', '#03060A', '#08100F', '#0E1A17',
+  '#16302A', '#357A6B', '#FCEE0A', '#FF0033', '#00E5FF',
+];
 const publics = existsSync(join(RACINE, 'public'))
   ? fichiers(join(RACINE, 'public'), ['.html', '.css', '.js'])
   : [];
@@ -367,11 +397,26 @@ const aScanner = [join(RACINE, 'index.html'), ...sources, ...publics].filter(exi
 const residus = [];
 for (const f of aScanner) {
   const code = sansCommentaires(readFileSync(f, 'utf8')).toUpperCase();
-  const trouves = DA_CLAIRE.filter((h) => code.includes(h));
+  const trouves = DA_REVOLUE.filter((h) => code.includes(h));
+  // ⛔ TROIS ÉCRITURES, PAS UNE — ajouté le 19/09/2026 après la bascule D6.
+  // La liste ci-dessus ne cherche que la forme `#RRGGBB`. Le vert de D5 a survécu
+  // sous DEUX AUTRES formes que personne ne regardait :
+  //   · `rgba(0, 255, 65, 0.18)` — 19 occurrences dans 10 fichiers, invisibles ;
+  //   · `0x00ff41` — 4 lumières three.js, en littéral NUMÉRIQUE, sans `#`.
+  // Un verrou qui ne cherche qu'une écriture d'une valeur en rate les autres, et
+  // c'est exactement ce qui a laissé l'ancienne DA en place une seconde fois.
+  const rgbRevolus = [
+    /\bRGBA?\(\s*0\s*,\s*255\s*,\s*65\b/g,                   // vert #00FF41 en rgb()
+    /0X00FF41\b/g,                                            // littéral numérique three.js
+  ];
+  for (const re of rgbRevolus) {
+    const m = code.match(re);
+    if (m) trouves.push(`${m.length}× ${re.source.slice(0, 22)}…`);
+  }
   if (trouves.length) residus.push(`${f.split(/[\\/]/).pop()} → ${trouves.join(', ')}`);
 }
-dire(residus.length === 0, 'aucune valeur de l\'ancienne DA claire dans le code actif',
-  residus.length ? residus.join(' ; ') : `${DA_CLAIRE.length} valeur(s) surveillée(s), ${aScanner.length} fichier(s)`);
+dire(residus.length === 0, 'aucune valeur d\'une DA révolue dans le code actif',
+  residus.length ? residus.join(' ; ') : `${DA_REVOLUE.length} valeur(s) + 2 écritures surveillées, ${aScanner.length} fichier(s)`);
 
 // ─── VERROU 8 : une famille citée doit être une famille déclarée ────────────
 // 11/09/2026 : `critical.css` demandait `'Space Grotesk'` alors que le @font-face

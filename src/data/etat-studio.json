@@ -3,15 +3,15 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "bddc25f",
-    "sujet": "Ce que nous nous imposons — et deux verrous qui ne tournaient pas au déploiement",
-    "date": "2026-09-19T11:00:10+02:00",
+    "court": "4c39a14",
+    "sujet": "L'argument de fond du refus de centraliser — source citée, et sa raison",
+    "date": "2026-09-19T11:06:36+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-19 11:06:33",
-    "horodatage_minute": "2026-09-19 11:06",
-    "horodatage_iso": "2026-09-19T09:06:33.838Z",
+    "horodatage_local": "2026-09-19 11:33:53",
+    "horodatage_minute": "2026-09-19 11:33",
+    "horodatage_iso": "2026-09-19T09:33:53.044Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 63,

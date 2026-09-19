@@ -1,67 +1,70 @@
 :root {
   /* ═══════════════════════════════════════════════════════════════════════
-     DESIGN SYSTEM — DA « D5 » (direction sombre, Matrix Resurrections × MND)
+     DESIGN SYSTEM — DA « D6 » (bleu-noir MND × cyan, jaune dominant)
 
-     ARBITRAGE GAËTAN DU 11/09/2026 : « D5 ». Application de la palette unifiée
-     D5 (modeles/decisions-concept-flagship-d5.md §5) et de la décision D4
-     (modeles/decisions-da-matrix-resurrections.md).
+     ARBITRAGE GAËTAN DU 19/09/2026, sur une direction artistique rendue :
+     « Voici notre nouvelle direction artistique, tu rebranches le site avec ces
+     éléments, tu fais que le Digital Lab parle comme ça maintenant. »
 
-     ⚠️ TRACABILITÉ — CETTE PALETTE DÉFAIT UNE DÉCISION DATÉE, ET C'EST ASSUMÉ
-     Historique mesuré dans ce fichier même :
-       · 08/09 (D1)  clair papier + accent brique unique — FAIT et DÉPLOYÉ,
-                     avec un verrou de non-régression (decisions-refonte-awwwards-2026.md)
-       · 10/09 (D4)  rupture assumée : la vitrine adopte Matrix Resurrections
-                     (palette sombre, digital rain, glitchs) — étapes 1 à 3 appliquées
-       · 10/09       puis RETOUR À D1, les néons étant « neutralisés »
-       · 11/09 (D5)  Gaëtan tranche : D5. C'est le présent fichier.
+     LA SOURCE N'EST PAS UNE OPINION, C'EST UN FICHIER MESURÉ.
+     `Mnd-Pi-Production-Complete.html` (1 603 665 o, reçu le 19/09) porte cette
+     palette, comptée par occurrence : #ffe650 ×40 · #080b14 ×19 · #ff2a3d ×16 ·
+     #2abfff ×10 · #0d111f ×7 · #12172a ×2. Et les trois visuels MND reçus le
+     même jour la confirment : kanji cyan et ambre sur un bleu-noir.
 
-     Ce fichier est donc la 3e bascule sur la même semaine. Si c'est une erreur,
-     le retour à D1 tient en un remplacement de ce seul bloc : les noms de jetons
-     sont identiques dans les deux directions, aucun composant n'a à changer.
+     ⚠️ CE QUI CHANGE VRAIMENT : LE VERT S'EN VA.
+     Depuis le 10/09 (D4), l'accent du studio est le vert code Matrix #00FF41.
+     La nouvelle palette n'en contient AUCUN — elle a un cyan (#2abfff) et un
+     jaune dominant (#ffe650). Ce n'est donc pas un ajustement : c'est un
+     changement d'identité, et il est assumé.
+
+     CINQUIÈME BASCULE EN ONZE JOURS — et c'est précisément pourquoi ce fichier
+     isole tout dans ce bloc : 08/09 D1 clair · 10/09 D4 Matrix · 10/09 retour D1 ·
+     11/09 D5 (le bloc précédent) · 19/09 D6 (celui-ci). Les NOMS de jetons ne
+     changent pas, les VALEURS si : aucun composant n'a à être touché, et le
+     retour en arrière tient toujours en un remplacement de ce seul bloc.
 
      CONTRASTES — vérifiés, pas supposés (outil : scripts/verifier-verrous.mjs)
-       ink/paper 18,34:1 · ink-soft/paper 10,87:1 · accent/paper 14,87:1
-       action/paper 16,80:1 · alert/paper 7,07:1 · critical/paper 5,12:1
-       neon-cyan/paper 13,20:1 · neon-magenta/paper 5,86:1
-       rule-strong/paper 3,14:1  ← bordure FONCTIONNELLE (nouveau jeton de valeur)
-       rule/paper 1,44:1         ← DÉCORATIF UNIQUEMENT, jamais bordure de contrôle
+       Le verrou lit les jetons de CE fichier et les mesure sur les DEUX fonds.
+       Un jeton ne « passe » pas dans l'absolu : il passe sur un fond donné.
+       ⚠️ Ne jamais relever une valeur à l'œil — lancer le verrou.
 
-     Répartition visée (D4) : 60 % noir · 30 % vert Matrix · 10 % néons.
+     Répartition visée : 60 % bleu-noir · 30 % cyan · 10 % jaune.
      ═══════════════════════════════════════════════════════════════════════ */
 
-  /* ── Fonds — Matrix Resurrections ── */
-  --paper: #03060A;      /* noir Matrice — jamais #000 pur */
-  --paper-alt: #08100F;  /* vert-noir : alternance de section, cartes */
+  /* ── Fonds — bleu-noir MND ── */
+  --paper: #080b14;      /* bleu-noir, plus clair que le noir Matrice — jamais #000 */
+  --paper-alt: #0d111f;  /* alternance de section, cartes */
 
-  /* ── Encre ── */
-  --ink: #E8F7EE;        /* blanc-vert, texte principal */
-  --ink-soft: #A9C4B4;   /* texte secondaire */
-  --ink-faint: #7FA895;  /* texte tertiaire — réservé au texte de grande taille */
+  /* ── Encre — désaturée du vert, passée au froid ──
+     Les trois valeurs précédentes étaient teintées de vert (#E8F7EE, #A9C4B4,
+     #7FA895) parce que l'accent l'était. Avec un accent cyan, elles viraient
+     au sale. Elles sont refroidies à teinte constante : même clarté, même
+     contraste, plus de vert. */
+  --ink: #EAF0F7;        /* blanc froid, texte principal */
+  --ink-soft: #A9B8CC;   /* texte secondaire */
+  --ink-faint: #8496AD;  /* texte tertiaire — réservé au texte de grande taille */
 
   /* ── Trait ──
      Deux jetons, deux rôles, et la distinction n'est pas cosmétique :
-       --rule        habille (1,44:1). Sous 3:1, WCAG 1.4.11 ne s'applique pas.
+       --rule        habille (sous 3:1 : WCAG 1.4.11 ne s'applique pas)
        --rule-strong délimite un CONTRÔLE. Un bouton, un champ ou un état de
-                     focus dont la bordure est à 1,44:1 n'est pas distinguable.
+                     focus dont la bordure est trop sombre n'est pas distinguable.
+     ⚠️ Et il doit passer sur --paper ET sur --paper-alt : « ça passe » dépend
+     du fond. Le verrou mesure les deux, et c'est lui qui tranche. */
+  --rule: #131a2f;
+  --rule-strong: #35719B;
 
-     ⚠️ VALEUR CORRIGÉE LE 11/09/2026 — #2E685C était FAUSSE.
-     Elle donnait 3,14:1 sur --paper (donc conforme) mais **2,98:1 sur
-     --paper-alt** : le seuil de 3:1 n'est atteint que sur le fond de page, et
-     manqué dès qu'une bordure est posée sur une CARTE — c'est-à-dire presque
-     partout. « Ça passe » dépend du fond : un jeton doit être vérifié sur les
-     DEUX. #357A6B donne 4,01:1 sur le fond et 3,80:1 sur les cartes.
-     Défaut trouvé en migrant la maquette La Barre, pas en relisant ce fichier. */
-  --rule: #16302A;
-  --rule-strong: #357A6B;
+  /* ── Accent — cyan MND ── */
+  --accent: #2abfff;     /* titres, liens, point MND — « sacré », reste rare */
+  --accent-ink: #7AD6FF; /* état survol */
+  --accent-inv: #2abfff; /* sections sur fond encre : même valeur */
 
-  /* ── Accent — vert code Matrix ── */
-  --accent: #00FF41;     /* titres, liens, point MND — « sacré », reste rare */
-  --accent-ink: #66FF88; /* état survol */
-  --accent-inv: #00FF41; /* sections sur fond encre : même valeur */
-
-  /* ── Néons secondaires (D4 : magenta de San Francisco, cyan de la Matrice) ── */
-  --neon-magenta: #FF2D95;  /* ponctuations */
-  --neon-cyan: #00E5FF;     /* micro-labels, états */
+  /* ── Néons secondaires ── */
+  --neon-magenta: #FF2D95;  /* ponctuations — INCHANGÉ : la nouvelle palette n'a
+                               pas de magenta, et le retirer ferait perdre une
+                               ponctuation sans rien apporter. À trancher si besoin. */
+  --neon-cyan: #2abfff;     /* micro-labels, états — aligné sur l'accent */
 
   /* ═══════════════════════════════════════════════════════════════════════
      ALIASES — mêmes noms qu'avant, valeurs de D5.
@@ -69,14 +72,14 @@
      ═══════════════════════════════════════════════════════════════════════ */
   --bg: var(--paper);
   --surface: var(--paper-alt);
-  --surface-light: #0E1A17;
+  --surface-light: #12172a;
   --border: var(--rule);
   --border-hover: var(--rule-strong);
 
   --primary: var(--accent);
   --primary-dark: var(--accent-ink);
   --primary-light: var(--accent-inv);
-  --primary-soft: rgba(0, 255, 65, 0.10);
+  --primary-soft: rgba(42, 191, 255, 0.10);
 
   --text-main: var(--ink);
   --text-muted: var(--ink-soft);
@@ -112,15 +115,21 @@
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
 
-  /* ── Action : le jaune de Cyberpunk, CTA uniquement (D5) ── */
-  --action: #FCEE0A;
-  --action-ink: #03060A;    /* texte sombre sur le bouton jaune */
-  --action-dark: #D4C800;
+  /* ── Action : le jaune dominant de la nouvelle DA (D6) ──
+     `#ffe650` est le jeton le PLUS utilisé du fichier de DA reçu — 40 occurrences,
+     contre 19 pour le fond et 16 pour le rouge. C'est la couleur de l'action, et
+     elle devient dominante là où le vert l'était. */
+  --action: #ffe650;
+  --action-ink: #080b14;    /* texte sombre sur le bouton jaune — aligné sur --paper */
+  --action-dark: #D6BE2E;
 
-  /* ── Alertes : Evangelion (D5) ── */
+  /* ── Alertes : conservées (D6) ──
+     L'orange #FF6A00 n'est PAS dans la nouvelle palette, et il n'y a aucune raison
+     de le changer : il porte un état (alerte) qui n'a rien à voir avec l'identité.
+     Le rouge, lui, s'aligne sur le #ff2a3d du fichier de DA. */
   --alert: #FF6A00;
-  --alert-ink: #03060A;
-  --critical: #FF0033;
+  --alert-ink: #080b14;
+  --critical: #ff2a3d;
 
   --ink-2: var(--ink-soft);
   --surface-deep: var(--paper);
@@ -130,8 +139,8 @@
   --hatch-alert: repeating-linear-gradient(45deg, var(--alert) 0 6px, var(--paper) 6px 12px);
 
   /* Halos néon — le glow est de retour (D4 motif 3) */
-  --glow-accent: 0 0 12px rgba(0, 255, 65, 0.35);
-  --glow-accent-strong: 0 0 24px rgba(0, 255, 65, 0.5);
+  --glow-accent: 0 0 12px rgba(42, 191, 255, 0.35);
+  --glow-accent-strong: 0 0 24px rgba(42, 191, 255, 0.5);
   --glow-action: 0 0 12px rgba(252, 238, 10, 0.35);
   --glow-magenta: 0 0 12px rgba(255, 45, 149, 0.35);
   --glow-cyan: 0 0 12px rgba(0, 229, 255, 0.35);

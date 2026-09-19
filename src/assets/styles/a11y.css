@@ -21,7 +21,7 @@ textarea:focus-visible,
 [tabindex="0"]:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(0, 255, 65, 0.18);
+  box-shadow: 0 0 0 4px rgba(42, 191, 255, 0.18);
 }
 
 /* Cards et éléments cliquables */
@@ -35,7 +35,7 @@ textarea:focus-visible,
 .nav-dropdown__item:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 4px;
-  box-shadow: 0 0 0 6px rgba(0, 255, 65, 0.12);
+  box-shadow: 0 0 0 6px rgba(42, 191, 255, 0.12);
 }
 
 /* Remove default focus styles on mouse interactions */
@@ -83,19 +83,33 @@ a:focus:not(:focus-visible) {
 /* HIGH CONTRAST MODE — versions maximales du DS sombre (D5).
    Ce bloc servait les valeurs de la DA claire (texte #10100E, accent #8F3019).
    Sur le fond noir de D5, il rendait du texte NOIR sur NOIR : le mode contraste
-   élevé, censé aider, rendait la page illisible. */
+   élevé, censé aider, rendait la page illisible.
+
+   ⚠️ TEINTE MISE À JOUR LE 19/09/2026 (DA D6). Ce bloc portait les valeurs de
+   D5 — un vert Matrix (#66FF8C, #E8F7EE, #CFE3D8, #7FBFA8, #A8DCC7). La nouvelle
+   DA n'a plus de vert. **La CLARTÉ est conservée à l'identique** (c'est elle qui
+   porte le contraste élevé, et le verrou la mesure) ; **seule la teinte passe au
+   froid.** Un mode accessibilité qui garderait l'ancienne identité serait un
+   écran d'exception qui contredit le reste du site. */
 @media (prefers-contrast: high) {
   :root {
-    --ink: #FFFFFF;        /* texte principal au maximum */
-    --ink-soft: #E8F7EE;
-    --ink-faint: #CFE3D8;
-    --rule: #7FBFA8;       /* bordures nettement visibles sur le noir */
-    --rule-strong: #A8DCC7;
-    --accent: #66FF8C;     /* vert plus lumineux */
+    --ink: #FFFFFF;        /* texte principal au maximum — inchangé : le blanc est neutre */
+    --ink-soft: #E8F0F7;   /* même clarté que #E8F7EE, teinte froide */
+    --ink-faint: #CFE0EC;  /* même clarté que #CFE3D8, teinte froide */
+    --rule: #7FA8BF;       /* bordures nettement visibles sur le bleu-noir */
+    --rule-strong: #A8C7DC;
+    --accent: #7AD6FF;     /* cyan plus lumineux — remplace le vert plus lumineux */
   }
 
   .glass {
-    background: #0E1A17;
+    /* ⚠️ VALEUR EN DUR, ET C'ÉTAIT UNE ERREUR — corrigée le 19/09/2026.
+       Ce fond était écrit `#0E1A17` : le jeton `--surface-light` de D5, recopié
+       à la main au lieu d'être référencé. Le verrou de jetons ne l'a pas vu —
+       il protège les 60 jetons CANONIQUES, et une valeur écrite en dur dans un
+       composant lui échappe. C'est exactement ce qui a laissé survivre l'ancienne
+       DA dans dix fichiers pendant la bascule D6.
+       On référence le jeton : la prochaine bascule n'aura plus rien à rattraper. */
+    background: var(--surface-light);
     border: 2px solid var(--rule);
   }
 }

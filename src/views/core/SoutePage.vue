@@ -162,7 +162,7 @@ const ponts = computed(() => [
 <style scoped>
 .soute {
   min-height: 100vh;
-  background: #03060a;
+  background: #080b14;
   color: #e8f0ec;
   padding: 4rem 1.25rem 6rem;
 }
@@ -351,7 +351,7 @@ const ponts = computed(() => [
   margin-top: 1rem;
   padding: 0.85rem 1.6rem;
   background: #10b981;
-  color: #03060a;
+  color: #080b14;
   font-weight: 600;
   text-decoration: none;
   border-radius: 3px;

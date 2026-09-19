@@ -130,8 +130,8 @@ onUnmounted(() => {
 
 /* Matrix - Vert néon */
 .theme--matrix {
-  --progress-color: #00ff41;
-  --progress-glow: rgba(0, 255, 65, 0.6);
+  --progress-color: #2abfff;
+  --progress-glow: rgba(42, 191, 255, 0.6);
 }
 
 /* Tron - Cyan électrique */
@@ -239,7 +239,7 @@ onUnmounted(() => {
 /* Multivers Hub - Gradient animé */
 .theme--multivers .progress-fill,
 .theme--multivers .progress-glow {
-  background: linear-gradient(90deg, #00ff41, #00d4ff, #9d4edd, #ff00ff, #ff6b2b);
+  background: linear-gradient(90deg, #2abfff, #00d4ff, #9d4edd, #ff00ff, #ff6b2b);
   background-size: 300% 100%;
   animation: multiversGradient 3s ease infinite;
 }

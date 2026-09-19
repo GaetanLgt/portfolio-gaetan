@@ -69,7 +69,7 @@ onUnmounted(() => {
   inset: 0;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0, 255, 65, 0.030) 0 1px,
+    rgba(42, 191, 255, 0.030) 0 1px,
     transparent 1px 3px
   );
   mix-blend-mode: screen;

@@ -70,7 +70,7 @@ a:hover {
 
    C'était l'inverse qu'il fallait faire, et je ne l'ai vu que le 13/09/2026,
    parce que Gaëtan a regardé la page /services : les cartes d'offres y
-   gardaient un fond #08100F, soit du texte en encre (#1A1A18) sur du quasi-noir.
+   gardaient un fond #0d111f, soit du texte en encre (#1A1A18) sur du quasi-noir.
    Contraste mesuré par Lighthouse : 1,1:1. Illisible.
 
    Aligner deux définitions contradictoires ne suffit pas : il faut les aligner
@@ -186,7 +186,7 @@ a:hover {
 
 /* SELECTION */
 ::selection {
-  background: rgba(0, 255, 65, 0.28);
+  background: rgba(42, 191, 255, 0.28);
   color: var(--ink);
 }
 

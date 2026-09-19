@@ -520,7 +520,7 @@ function closeProject() {
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   background: var(--primary-soft);
-  border: 1px solid rgba(0, 255, 65, 0.2);
+  border: 1px solid rgba(42, 191, 255, 0.2);
   border-radius: 2rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.55rem;
@@ -965,7 +965,7 @@ function closeProject() {
 
 .projects-cta__btn:hover {
   background: var(--primary-dark);
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+  box-shadow: 0 0 20px rgba(42, 191, 255, 0.4);
 }
 
 /* TRANSITIONS */

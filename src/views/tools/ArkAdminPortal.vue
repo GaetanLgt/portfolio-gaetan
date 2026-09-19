@@ -276,7 +276,7 @@ const copyCode = async (code, id) => {
 </script>
 
 <style scoped>
-.ark-portal { --primary: #ff6b00; --accent: #00ff88; --bg: #0a0a0f; --surface: #12121a; --text: #e5e5e5; --text-muted: rgba(229,229,229,0.6); --border: rgba(255,107,0,0.2); background: var(--bg); color: var(--text); min-height: 100vh; font-family: 'JetBrains Mono', monospace; }
+.ark-portal { --primary: #ff6b00; --accent: #2abfff; --bg: #0a0a0f; --surface: #12121a; --text: #e5e5e5; --text-muted: rgba(229,229,229,0.6); --border: rgba(255,107,0,0.2); background: var(--bg); color: var(--text); min-height: 100vh; font-family: 'JetBrains Mono', monospace; }
 .portal-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
 .hex-grid { position: absolute; inset: 0; background: radial-gradient(circle at 25% 25%, rgba(255,107,0,0.03) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(0,255,136,0.03) 0%, transparent 50%); }
 .scan-line { position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 4s linear infinite; }

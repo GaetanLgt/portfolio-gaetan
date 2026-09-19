@@ -356,7 +356,7 @@ const toggleSection = (sectionId) => {
 .glow-orb--1 {
   width: 500px;
   height: 500px;
-  background: var(--primary, #00ff88);
+  background: var(--primary, #2abfff);
   top: -150px;
   right: -150px;
 }
@@ -399,7 +399,7 @@ const toggleSection = (sectionId) => {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--primary, #00ff88);
+  color: var(--primary, #2abfff);
   letter-spacing: 0.1em;
 }
 
@@ -421,7 +421,7 @@ const toggleSection = (sectionId) => {
   display: block;
   font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 800;
-  background: linear-gradient(135deg, #fff 0%, var(--primary, #00ff88) 50%, #8B5CF6 100%);
+  background: linear-gradient(135deg, #fff 0%, var(--primary, #2abfff) 50%, #8B5CF6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -452,7 +452,7 @@ const toggleSection = (sectionId) => {
   font-family: 'JetBrains Mono', monospace;
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--primary, #00ff88);
+  color: var(--primary, #2abfff);
 }
 
 .stat-label {

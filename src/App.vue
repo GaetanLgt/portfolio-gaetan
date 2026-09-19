@@ -321,7 +321,7 @@ const onLoaded = () => {
     to right,
     transparent 0%,
     rgba(0, 229, 255, 0.06) 38%,
-    rgba(0, 255, 65, 0.10) 50%,
+    rgba(42, 191, 255, 0.10) 50%,
     rgba(0, 229, 255, 0.06) 62%,
     transparent 100%
   );
@@ -337,7 +337,7 @@ const onLoaded = () => {
   bottom: 0;
   width: 2px;
   background: var(--accent);
-  box-shadow: 0 0 24px 4px rgba(0, 255, 65, 0.55);
+  box-shadow: 0 0 24px 4px rgba(42, 191, 255, 0.55);
   transform: translateX(-10px);
   animation: balayage-trait 420ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }

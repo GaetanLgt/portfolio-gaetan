@@ -21,11 +21,11 @@ const props = defineProps({
   fontSize: { type: Number, default: 15 },
   speed: { type: Number, default: 50 }, // ms entre frames
   opacity: { type: Number, default: 0.18 },
-  color: { type: String, default: '#00FF41' } // vert code Matrix (DA D4)
+  color: { type: String, default: '#2abfff' } // vert code Matrix (DA D4)
 });
 
 const draw = () => {
-  // Fade : teinte du fond Matrice (#03060A) pour un fondu cohérent
+  // Fade : teinte du fond Matrice (#080b14) pour un fondu cohérent
   ctx.fillStyle = 'rgba(3, 6, 10, 0.06)';
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 

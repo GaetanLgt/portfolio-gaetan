@@ -27,16 +27,24 @@
      =================================================================== -->
 
 <style>
+/* ⚠️ PALETTE ET MESURES REMISES À JOUR LE 19/09/2026 (bascule DA D6).
+   Cette page portait la palette D5 ET ses mesures de contraste. Les valeurs ont
+   changé ; les commentaires, non — ils annonçaient donc des rapports que le
+   nouveau jeu de couleurs n'a plus. C'est le défaut que ce dépôt combat : un
+   chiffre qui a été vrai et qui ne l'est plus.
+   Les valeurs ci-dessous sont celles que scripts/verifier-verrous.mjs MESURE,
+   sur le fond de page puis sur les cartes. Si un jeton change, ces deux nombres
+   changent — et le verrou est le seul à pouvoir les redonner. */
 :root{
-  --paper:#03060A; --paper-alt:#08100F; --carte:#0B1512;
-  --ink:#E8F7EE;          /* 18,34:1 sur le fond — AAA */
-  --ink-soft:#A9C4B4;     /* 10,87:1             — AAA */
-  --ink-faint:#6F8C7C;    /*  5,53:1             — AA  */
-  --accent:#00FF41;       /* 14,87:1             — AAA */
-  --action:#FCEE0A;       /* 15,44:1             — AAA */
-  --alerte:#FF6A00;       /*  6,69:1             — AA  */
-  --critique:#FF0033;     /*  5,12:1             — AA  */
-  --filet:#1C2A28;
+  --paper:#080b14; --paper-alt:#0d111f; --carte:#12172a;
+  --ink:#EAF0F7;          /* 17,14:1 sur le fond · 16,39:1 sur carte — AAA */
+  --ink-soft:#A9B8CC;     /*  9,75:1             ·  9,32:1            — AAA */
+  --ink-faint:#8496AD;    /*  6,50:1             ·  6,22:1            — AA  */
+  --accent:#2abfff;       /*  9,36:1             ·  8,95:1            — AAA */
+  --action:#ffe650;       /* 15,62:1             · 14,94:1            — AAA */
+  --alerte:#FF6A00;       /*  6,85:1             ·  6,55:1            — AA  */
+  --critique:#ff2a3d;     /*  5,29:1             ·  5,06:1            — AA  */
+  --filet:#131a2f;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:4rem}
@@ -71,7 +79,7 @@ th{text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em
 td{padding:.6rem;border-bottom:1px solid var(--filet);color:var(--ink-soft)}
 td:first-child{color:var(--ink);font-weight:600}
 .etat{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .5rem;border-radius:.2rem;text-transform:uppercase;letter-spacing:.04em}
-.ok{background:rgba(0,255,65,.14);color:var(--accent)}
+.ok{background:rgba(42,191,255,.14);color:var(--accent)}
 .bientot{background:rgba(255,106,0,.16);color:var(--alerte)}
 .depasse{background:rgba(255,0,51,.16);color:var(--critique)}
 .manque{background:rgba(255,255,255,.08);color:var(--ink-faint)}

@@ -237,9 +237,9 @@ onUnmounted(() => {
 
 /* Matrix - Vert néon avec glitch */
 .theme--matrix {
-  --cursor-color: #00ff41;
-  --cursor-accent: #00ff41;
-  --cursor-glow: rgba(0, 255, 65, 0.6);
+  --cursor-color: #2abfff;
+  --cursor-accent: #2abfff;
+  --cursor-glow: rgba(42, 191, 255, 0.6);
   mix-blend-mode: normal;
 }
 
@@ -486,13 +486,13 @@ onUnmounted(() => {
 }
 
 .theme--multivers .cursor-dot {
-  background: linear-gradient(135deg, #00ff41, #00d4ff, #9d4edd, #ff00ff);
+  background: linear-gradient(135deg, #2abfff, #00d4ff, #9d4edd, #ff00ff);
   background-size: 200% 200%;
   animation: multiversDot 2s ease infinite;
 }
 
 .theme--multivers .cursor-ring {
-  border-image: linear-gradient(135deg, #00ff41, #00d4ff, #9d4edd, #ff00ff) 1;
+  border-image: linear-gradient(135deg, #2abfff, #00d4ff, #9d4edd, #ff00ff) 1;
   animation: multiversRing 3s linear infinite;
 }
 

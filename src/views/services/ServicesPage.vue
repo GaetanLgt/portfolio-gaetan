@@ -722,7 +722,7 @@ const steps = [
   bottom: 0;
   left: 15px;
   width: 2px;
-  background: linear-gradient(to bottom, var(--primary), rgba(0, 255, 65, 0.1));
+  background: linear-gradient(to bottom, var(--primary), rgba(42, 191, 255, 0.1));
 }
 
 .timeline__item {
@@ -892,8 +892,8 @@ const steps = [
 }
 
 .pricing-card--highlight {
-  border-color: rgba(0, 255, 65, 0.4);
-  background: rgba(0, 255, 65, 0.05);
+  border-color: rgba(42, 191, 255, 0.4);
+  background: rgba(42, 191, 255, 0.05);
 }
 
 .pricing-card__badge {
@@ -1000,8 +1000,8 @@ const steps = [
 }
 
 .awakening-card--red {
-  border-color: rgba(0, 255, 65, 0.4);
-  background: rgba(0, 255, 65, 0.05);
+  border-color: rgba(42, 191, 255, 0.4);
+  background: rgba(42, 191, 255, 0.05);
 }
 
 /* Marqueur de carte : une bande hachurée d'alerte (motif du système de design)

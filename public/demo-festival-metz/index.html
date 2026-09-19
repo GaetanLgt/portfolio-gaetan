@@ -26,14 +26,18 @@
 
 <style>
 /* --- Palette DA5 : valeurs MESURÉES, contraste vérifié sur ce fond --- */
+/* ⚠️ PALETTE ET MESURES REMISES À JOUR LE 19/09/2026 (bascule DA D6).
+   Même défaut que sur /demo-conformite : les valeurs avaient changé, les
+   commentaires annonçaient encore les anciens rapports. Les nombres ci-dessous
+   sont ceux que scripts/verifier-verrous.mjs MESURE — sur le fond, puis sur carte. */
 :root{
-  --paper:#03060A;
-  --paper-alt:#08100F;
-  --ink:#E8F7EE;        /* 18,34:1 sur le fond  — AAA */
-  --ink-soft:#A9C4B4;   /* 10,87:1              — AAA */
-  --accent:#00FF41;     /* 14,87:1              — AAA */
-  --action:#FCEE0A;     /* 15,44:1              — AAA */
-  --filet:#1C2A28;
+  --paper:#080b14;
+  --paper-alt:#0d111f;
+  --ink:#EAF0F7;        /* 17,14:1 sur le fond · 16,39:1 sur carte — AAA */
+  --ink-soft:#A9B8CC;   /*  9,75:1             ·  9,32:1            — AAA */
+  --accent:#2abfff;     /*  9,36:1             ·  8,95:1            — AAA */
+  --action:#ffe650;     /* 15,62:1             · 14,94:1            — AAA */
+  --filet:#131a2f;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}

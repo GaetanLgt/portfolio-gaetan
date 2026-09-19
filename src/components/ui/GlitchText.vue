@@ -64,8 +64,8 @@ const onMouseLeave = () => {
    l'emporte sur color : sans lui, les clones resteraient invisibles dès que le
    titre parent utilise .text-gradient (fill transparent). */
 .glitch-text--active .glitch-text__clone--1 {
-  color: #00E5FF;
-  -webkit-text-fill-color: #00E5FF;
+  color: #2abfff;
+  -webkit-text-fill-color: #2abfff;
   animation: glitch1 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
   clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
 }

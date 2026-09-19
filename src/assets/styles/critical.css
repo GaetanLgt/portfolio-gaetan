@@ -6,7 +6,7 @@
    égale, le dernier :root gagne. Tant que ce bloc redéclarait --bg, --text-main,
    --primary…, il écrasait la charte D5 et servait un fond papier clair
    (#F4F1EA) avec de l'encre sombre — alors que variables.css déclarait du noir
-   (#03060A) et du blanc-vert. Le commentaire précédent disait « DOIVENT rester
+   (#080b14) et du blanc-vert. Le commentaire précédent disait « DOIVENT rester
    alignées » : c'est exactement ce qui n'a pas été fait au passage à D5, et rien
    ne le mesurait. Un commentaire ne protège pas d'un désalignement ; un verrou
    si (scripts/verifier-verrous.mjs, contrôle « jetons-de-couleur-dupliques »).

@@ -51,7 +51,7 @@ const themeConfigs = {
     glow: true
   },
   matrix: {
-    color: '#00ff41',
+    color: '#2abfff',
     particleCount: 80,
     particleSize: [1, 3],
     speed: 2,
@@ -196,7 +196,7 @@ class Particle {
   }
   
   getRandomColor() {
-    const colors = ['#00ff41', '#00d4ff', '#9d4edd', '#ff00ff', '#ff6b2b', '#ffd700'];
+    const colors = ['#2abfff', '#00d4ff', '#9d4edd', '#ff00ff', '#ff6b2b', '#ffd700'];
     return colors[Math.floor(Math.random() * colors.length)];
   }
   
