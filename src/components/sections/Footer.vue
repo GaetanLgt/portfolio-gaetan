@@ -118,6 +118,13 @@
                  qu'on puisse opposer au studio. **Un engagement qu'on ne peut pas trouver
                  n'oppose rien à personne.** -->
             <router-link to="/ce-que-nous-nous-imposons">Ce que nous nous imposons (nos règles)</router-link>
+            <!-- L'ARMATURE — ajoutée le 19/09/2026, même règle que les quatre précédentes :
+                 une page doit être atteignable par un lien ordinaire, sinon elle n'existe ni
+                 pour un moteur de recherche ni pour un lecteur d'écran. Et elle en dépend
+                 plus encore : c'est la seule page du site qui montre un projet du studio
+                 AVANT qu'il soit fini — un projet qu'on ne peut pas trouver n'est pas
+                 montré, il est caché. -->
+            <router-link to="/armure">L'armure (le projet de jeu, en cours)</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>

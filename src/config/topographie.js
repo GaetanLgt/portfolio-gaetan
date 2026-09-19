@@ -251,6 +251,35 @@ export const TOPOGRAPHIE = [
       note: "Ce que nous nous imposons (ajoutée le 19/09/2026) : les règles que le studio se donne, publiées pour qu'elles puissent être opposées au studio — refus argumentés (aucune plateforme qui centralise les données d'un client, aucun chiffre sans source ni date, aucune décision déléguée), la discipline de vérification, la mémoire datée des erreurs du studio et de ses propres outils, et une rubrique « ce que cette page ne garantit pas ». Trois pièces d'actualité ont motivé la page ; aucune n'y est exploitée : la société victime d'une fuite n'est pas nommée, aucun chiffre de cette fuite n'est repris, le lieu de vente des données n'est ni nommé ni désigné, et AUCUN LIEN n'est établi entre l'argumentaire commercial et la fuite — suggérer un rapport serait une allégation. Le pré-print cité (Solé et Ruffini, identifiant arXiv 2509.03344) est présenté comme non évalué par les pairs AVANT l'usage qu'on en fait. UN POINT DE LA PAGE EST DÉCLARÉ NON APPLIQUÉ : le studio n'a pas encore de périodes déconnectées, et il l'écrit plutôt que de se l'attribuer. Priorité 0.6 : c'est une pièce de méthode et de confiance, pas une porte commerciale. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'un engagement qu'on ne peut pas trouver n'oppose rien à personne. Aucun numéro de port, aucun nom de fichier, aucun nom de modèle, aucun nom de franchise : les contrôles automatiques y sont décrits par ce qu'ils vérifient, jamais par le fichier qui les porte.",
     },
   },
+
+  // ═══ LE KIT PÉDAGOGIQUE — publié, et longtemps orphelin ══════════════════════════
+  // ⚠️ IL N'EST PAS DANS LE TABLEAU CI-DESSUS, ET C'EST UNE MESURE, PAS UN GOÛT.
+  //
+  // Le premier jet l'y avait mis, avec un compartiment. `npm run audit:topographie` a
+  // répondu : « compartiments de la CARTE qui ne correspondent à aucune page » — le
+  // contrôle normalise une route servie en `/TARDIS/JoF/metroid` et comparait à un
+  // `chemin` qui finissait par `/index.html`. Une zone de la carte qui ne correspond à
+  // aucune page est exactement ce que ce fichier interdit : un compartiment est une PORTE
+  // DE ROUTEUR, et le kit est du HTML statique servi hors routeur.
+  //
+  // Ce qui est donc écrit ici, à part du manifeste : la SEULE adresse du kit, exportée.
+  // Elle est lue par la page qui la publie, jamais recopiée — et la porte n'est pas
+  // déclarée comme une zone du navire, parce qu'elle n'en est pas une.
+
+  // ═══ L'ARMATURE — un projet du studio montré en cours de route ═══════════════════
+  // ⚠️ AJOUTÉE EN DERNIER, ET CE N'EST PAS DE LA NÉGLIGENCE : c'est la règle de ce
+  // fichier appliquée à lui-même. Les compartiments et les `chemin` sont appariés PAR
+  // ORDRE D'APPARITION ; insérer cette entrée plus haut décalerait tous les appariements
+  // suivants, et `verifier-topographie.mjs` lirait une carte fausse. Une entrée nouvelle
+  // se pose donc à la fin, jamais au milieu.
+  {
+    chemin: '/armure',
+    compartiment: { id: 'armure', nom: "L'atelier de l'armure", pont: 'inferieur' },
+    declaration: {
+      lastmod: '2026-09-19', changefreq: 'monthly', priority: '0.6',
+      note: "L'armure (ajoutée le 19/09/2026) : le projet de jeu du studio montré EN COURS DE ROUTE — une planche de conception originale, six lois de forme écrites après la réception d'une œuvre décrite et NON reprise, une variante qui en est l'inverse ligne par ligne, l'état réel de ce qui est fait et de ce qui ne l'est pas, et une rubrique « ce que cette page ne garantit pas » qui dit les trois manques. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'un projet qu'on ne peut pas trouver n'est pas montré : il est caché. Priorité 0.6 : c'est une pièce d'atelier et de méthode, pas une porte commerciale, et rien n'y est vendu. Famille de limites : AUCUN NOM DE FRANCHISE, de marque, de personnage protégé ni d'artiste — l'œuvre de tiers qui a servi de point de départ est décrite par sa FORME et jamais nommée ; aucune image d'un autre (la seule image de la page est la planche produite par le studio, réduite de 1 076 519 à 43 564 octets pour tenir le verrou de poids) ; aucun nom de fichier, aucun chemin local, aucun nom d'outil ni de modèle. Aucune date de sortie, aucun moteur, aucun modèle économique : ils ne sont pas décidés, et une valeur par défaut serait une invention.",
+    },
+  },
 ];
 
 /** Les compartiments de la carte du navire, dérivés du manifeste. */
@@ -260,5 +289,50 @@ export const COMPARTIMENTS = TOPOGRAPHIE
 
 /** Les pages déclarées aux moteurs, avec leur métadonnée éditoriale. */
 export const DECLAREES = TOPOGRAPHIE.filter((e) => e.declaration);
+
+/**
+ * LA PORTE DU KIT PÉDAGOGIQUE — la seule adresse du site qui ne soit pas une route.
+ *
+ * ⛔ ELLE N'EST PAS DANS `TOPOGRAPHIE`, ET CE N'EST PAS UN OUBLI. `TOPOGRAPHIE` décrit les
+ * COMPARTIMENTS du navire : chaque entrée avec un `compartiment` doit correspondre à une
+ * route réellement servie, et `scripts/verifier-topographie.mjs` ÉCHOUE dans le cas
+ * contraire. Le kit pédagogique est du HTML statique publié hors du routeur, sous une
+ * arborescence dictée (`/TARDIS/JoF/`, casse exacte) : il n'est pas une route, donc il
+ * n'est pas un compartiment. Le premier jet l'y avait mis — et le contrôle l'a dit :
+ * « compartiments de la CARTE qui ne correspondent à aucune page ». *Un contrôle qui
+ * contredit une conclusion, c'est la conclusion qui tombe.*
+ *
+ * ⛔ CE QUE CETTE PORTE CORRIGE, ET C'EST UNE MESURE DU 19/09/2026.
+ * Les 22 pages du dossier étaient publiées, dans `dist/`, avec de vraies adresses, et
+ * `audit:topographie` les listait dans les « pages ni sur la carte, ni dans le plan du site
+ * — atteignables par aucun chemin balisé ». Un robot pouvait les trouver ; un visiteur,
+ * non. C'était le défaut que ce module existe pour empêcher, appliqué à un dossier entier.
+ *
+ * ⚠️ ATTEIGNABLE N'EST PAS INDEXABLE, ET LES DEUX NE SE CONFONDENT PAS ICI.
+ * Les trois verrous posés le 13/09 par le dirigeant tiennent toujours : `noindex, nofollow`
+ * dans chacune des 22 pages générées, aucune entrée au sitemap, et AUCUNE exclusion dans
+ * `robots.txt` (une exclusion empêcherait le robot de lire le `noindex` : ce serait une
+ * contradiction, et c'est la leçon que le `robots.txt` du site porte déjà). Si Gaëtan décide
+ * un jour d'ouvrir ce dossier, ce sont LES TROIS qu'il faudra défaire — pas seulement le lien.
+ */
+export const PORTE_DOSSIERS = {
+  chemin: '/TARDIS/JoF/metroid/index.html',
+  nom: 'Les dossiers pédagogiques',
+  libelle: 'Entrer dans les dossiers pédagogiques',
+  // Ce que la porte dit d'elle-même, à l'écran. Écrit ici plutôt que dans la page pour que
+  // l'adresse, le fait et sa raison restent au même endroit.
+  //
+  // ⚠️ CE TEXTE NE RÉPÈTE PAS CELUI DE LA PAGE QUI L'AFFICHE. Le premier jet disait deux
+  // fois la même chose à deux paragraphes d'intervalle — la page raconte l'histoire du lien
+  // manquant, et cette ligne-ci dit ce qui la distingue d'une publication : elle est
+  // ATTEIGNABLE, pas INDEXABLE. *Une porte qui explique deux fois pourquoi elle existe
+  // n'explique rien deux fois.*
+  pourquoi:
+    "Ce n'est pas une publication : ce dossier ne figure pas au plan du site. C'est une "
+    + "pièce qu'on envoie à une école, et elle est publiée en « ne pas indexer ». Le lien "
+    + "ci-dessous la rend joignable par un visiteur ; il ne la rend pas trouvable par un "
+    + "moteur de recherche, et c'est voulu.",
+  indexable: false,
+};
 
 export const DOMAINE = 'https://gldigitallab.fr';

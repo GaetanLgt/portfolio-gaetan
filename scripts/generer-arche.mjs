@@ -98,51 +98,51 @@ const SCENES = [
 const CSS = `
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
-  body { margin:0; background:#03060a; color:#e8f0ec;
+  body { margin:0; background:#080b14; color:#eaf0f7;
     font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     line-height:1.7; padding:3rem 1.25rem 6rem; }
   main { max-width:56rem; margin:0 auto; }
   .bandeau { font-family: ui-monospace, Consolas, monospace; font-size:.7rem;
-    letter-spacing:.16em; text-transform:uppercase; color:#10b981;
+    letter-spacing:.16em; text-transform:uppercase; color:#2abfff;
     border:1px dashed rgba(16,185,129,.4); border-radius:3px;
     padding:.5rem .75rem; margin-bottom:2.5rem; }
-  .bandeau strong { color:#e8f0ec; }
+  .bandeau strong { color:#eaf0f7; }
   h1 { font-size:clamp(1.8rem,4.5vw,2.6rem); line-height:1.12; margin:0 0 1rem; font-weight:500; }
   h2 { font-size:1.1rem; font-weight:500; margin:3rem 0 1rem; padding-bottom:.6rem;
     border-bottom:1px solid rgba(16,185,129,.22); }
-  h3 { font-size:.98rem; font-weight:600; margin:2rem 0 .6rem; color:#10b981; }
-  p, li { color:#b9c9c2; }
-  strong { color:#e8f0ec; }
-  em { color:#cfe0d9; }
-  a { color:#10b981; }
-  a:focus-visible { outline:2px solid #10b981; outline-offset:2px; }
+  h3 { font-size:.98rem; font-weight:600; margin:2rem 0 .6rem; color:#2abfff; }
+  p, li { color:#a9b8cc; }
+  strong { color:#eaf0f7; }
+  em { color:#cfe0ec; }
+  a { color:#2abfff; }
+  a:focus-visible { outline:2px solid #2abfff; outline-offset:2px; }
   code { font-family: ui-monospace, Consolas, monospace; font-size:.86em;
-    background:rgba(255,255,255,.06); padding:.1rem .3rem; border-radius:2px; color:#e8f0ec; }
-  .lede { font-size:1.05rem; color:#cfe0d9; }
+    background:rgba(255,255,255,.06); padding:.1rem .3rem; border-radius:2px; color:#eaf0f7; }
+  .lede { font-size:1.05rem; color:#cfe0ec; }
   table { border-collapse:collapse; width:100%; margin:1.25rem 0; font-size:.87rem; }
-  th, td { text-align:left; padding:.55rem .65rem; border-bottom:1px solid rgba(255,255,255,.08); color:#b9c9c2; vertical-align:top; }
-  th { color:#e8f0ec; font-weight:600; }
+  th, td { text-align:left; padding:.55rem .65rem; border-bottom:1px solid rgba(255,255,255,.08); color:#a9b8cc; vertical-align:top; }
+  th { color:#eaf0f7; font-weight:600; }
   td.num, th.num { text-align:right; font-family: ui-monospace, Consolas, monospace; }
   hr { border:none; border-top:1px solid rgba(255,255,255,.08); margin:3rem 0; }
   .sommaire { list-style:none; padding:0; margin:2rem 0 0; }
   .sommaire li { border-bottom:1px solid rgba(255,255,255,.06); }
   .sommaire a { display:block; padding:.7rem .2rem; text-decoration:none; }
-  .sommaire small { display:block; color:#7f9189; font-size:.8rem; }
+  .sommaire small { display:block; color:#8496ad; font-size:.8rem; }
   .retour { display:inline-block; margin-top:3rem; font-family: ui-monospace, Consolas, monospace; font-size:.78rem; }
   .duo { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.25rem 0; }
   .branche { border-left:2px solid rgba(16,185,129,.45); padding:.4rem 0 .4rem 1rem; }
   .branche p { margin:.2rem 0; }
-  .verdict { border-left:2px solid #10b981; padding:.4rem 0 .4rem 1rem; margin:.6rem 0 0; }
-  .verdict p { color:#cfe0d9; }
+  .verdict { border-left:2px solid #2abfff; padding:.4rem 0 .4rem 1rem; margin:.6rem 0 0; }
+  .verdict p { color:#cfe0ec; }
   .frise { list-style:none; padding:0; margin:2rem 0; }
   .frise li { display:grid; grid-template-columns:5.5rem 1fr; gap:1rem; padding:.45rem 0;
     border-bottom:1px solid rgba(255,255,255,.06); }
-  .frise .an { font-family: ui-monospace, Consolas, monospace; color:#10b981; }
-  .avenir { color:#7f9189; font-style:italic; }
+  .frise .an { font-family: ui-monospace, Consolas, monospace; color:#2abfff; }
+  .avenir { color:#8496ad; font-style:italic; }
   .mesure { border:1px solid rgba(16,185,129,.3); border-radius:4px; padding:1rem 1.25rem; margin:1.5rem 0; }
   .mesure p { margin:.35rem 0; }
   figure { margin:2rem 0; }
-  figcaption { color:#7f9189; font-size:.8rem; margin-top:.6rem; }
+  figcaption { color:#8496ad; font-size:.8rem; margin-top:.6rem; }
   svg { max-width:100%; height:auto; }
   @media (max-width:640px) { .duo { grid-template-columns:1fr; } }
 `;
@@ -241,7 +241,7 @@ décision de Gaëtan</em>, et ce dépôt ne pousse pas.</li>
       const cible = parCle.get(c);
       if (!cible || cible.cle === n.cle) continue;
       const A = pos.get(n.cle), B = pos.get(cible.cle);
-      aretes.push(`<line x1="${A.x.toFixed(0)}" y1="${A.y.toFixed(0)}" x2="${B.x.toFixed(0)}" y2="${B.y.toFixed(0)}" stroke="#10b981" stroke-width="1" opacity="0.12"/>`);
+      aretes.push(`<line x1="${A.x.toFixed(0)}" y1="${A.y.toFixed(0)}" x2="${B.x.toFixed(0)}" y2="${B.y.toFixed(0)}" stroke="#2abfff" stroke-width="1" opacity="0.12"/>`);
     }
   }
   const noeuds = notes.map((n) => {
@@ -250,8 +250,8 @@ décision de Gaëtan</em>, et ce dépôt ne pousse pas.</li>
     const r = 5 + 11 * (e / maxEnt);
     const anc = Math.cos(p.a) >= 0 ? 'start' : 'end';
     const dx = Math.cos(p.a) >= 0 ? r + 8 : -(r + 8);
-    return `<circle cx="${p.x.toFixed(0)}" cy="${p.y.toFixed(0)}" r="${r.toFixed(1)}" fill="#10b981" fill-opacity="0.65" stroke="#03060a" stroke-width="2"/>` +
-      `<text x="${(p.x + dx).toFixed(0)}" y="${(p.y + 4).toFixed(0)}" text-anchor="${anc}" font-size="15" fill="#cfe0d9">${n.titre.length > 34 ? n.titre.slice(0, 33) + '…' : n.titre} <tspan fill="#7f9189">${e}</tspan></text>`;
+    return `<circle cx="${p.x.toFixed(0)}" cy="${p.y.toFixed(0)}" r="${r.toFixed(1)}" fill="#2abfff" fill-opacity="0.65" stroke="#080b14" stroke-width="2"/>` +
+      `<text x="${(p.x + dx).toFixed(0)}" y="${(p.y + 4).toFixed(0)}" text-anchor="${anc}" font-size="15" fill="#cfe0ec">${n.titre.length > 34 ? n.titre.slice(0, 33) + '…' : n.titre} <tspan fill="#8496ad">${e}</tspan></text>`;
   });
   const svg = `<svg viewBox="0 0 940 940" role="img" aria-label="Graphe des renvois entre les ${N} notes du vault : chaque trait est un renvoi, la taille du point est le nombre de renvois entrants.">
 ${aretes.join('\n')}
@@ -294,17 +294,17 @@ notes terminales. Repérer les secondes est le seul moyen de savoir quoi relier 
   const x = (p) => M + ((p - 1) / 12) * (W - 2 * M);
   const yRecit = 120, ySortie = 350;
   const lignes = J.map(([nom, r, s]) =>
-    `<line x1="${x(r).toFixed(1)}" y1="${yRecit}" x2="${x(s).toFixed(1)}" y2="${ySortie}" stroke="#10b981" stroke-width="1" opacity="0.28"/>` +
-    `<circle cx="${x(r).toFixed(1)}" cy="${yRecit}" r="5" fill="#10b981"/>` +
-    `<circle cx="${x(s).toFixed(1)}" cy="${ySortie}" r="5" fill="#10b981" fill-opacity="0.55"/>`
+    `<line x1="${x(r).toFixed(1)}" y1="${yRecit}" x2="${x(s).toFixed(1)}" y2="${ySortie}" stroke="#2abfff" stroke-width="1" opacity="0.28"/>` +
+    `<circle cx="${x(r).toFixed(1)}" cy="${yRecit}" r="5" fill="#2abfff"/>` +
+    `<circle cx="${x(s).toFixed(1)}" cy="${ySortie}" r="5" fill="#2abfff" fill-opacity="0.55"/>`
   ).join('\n');
   const etiquettes = J.map(([nom, r, s]) =>
-    `<text x="${x(r).toFixed(1)}" y="${yRecit - 16}" text-anchor="middle" font-size="13" fill="#cfe0d9" transform="rotate(-38 ${x(r).toFixed(1)} ${yRecit - 16})">${nom}</text>` +
-    `<text x="${x(s).toFixed(1)}" y="${ySortie + 30}" text-anchor="middle" font-size="13" fill="#7f9189" transform="rotate(-38 ${x(s).toFixed(1)} ${ySortie + 30})">${nom}</text>`
+    `<text x="${x(r).toFixed(1)}" y="${yRecit - 16}" text-anchor="middle" font-size="13" fill="#cfe0ec" transform="rotate(-38 ${x(r).toFixed(1)} ${yRecit - 16})">${nom}</text>` +
+    `<text x="${x(s).toFixed(1)}" y="${ySortie + 30}" text-anchor="middle" font-size="13" fill="#8496ad" transform="rotate(-38 ${x(s).toFixed(1)} ${ySortie + 30})">${nom}</text>`
   ).join('\n');
   const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Deux axes : en haut les treize positions du récit, en bas les mêmes jeux rangés par année de sortie, reliés par un trait.">
-<text x="${M - 60}" y="${yRecit - 40}" font-size="14" fill="#e8f0ec">récit</text>
-<text x="${M - 60}" y="${ySortie + 60}" font-size="14" fill="#e8f0ec">sortie</text>
+<text x="${M - 60}" y="${yRecit - 40}" font-size="14" fill="#eaf0f7">récit</text>
+<text x="${M - 60}" y="${ySortie + 60}" font-size="14" fill="#eaf0f7">sortie</text>
 ${lignes}
 ${etiquettes}
 </svg>`;

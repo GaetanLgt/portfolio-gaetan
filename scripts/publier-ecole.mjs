@@ -411,42 +411,42 @@ const enveloppe = (titre, corps, retour, libelleRetour) => `<!DOCTYPE html>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
   body {
-    margin: 0; background: #03060a; color: #e8f0ec;
+    margin: 0; background: #080b14; color: #eaf0f7;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     line-height: 1.75; padding: 3rem 1.25rem 6rem;
   }
   main { max-width: 46rem; margin: 0 auto; }
   .bandeau {
     font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.7rem;
-    letter-spacing: 0.16em; text-transform: uppercase; color: #10b981;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #2abfff;
     border: 1px dashed rgba(16,185,129,0.4); border-radius: 3px;
     padding: 0.5rem 0.75rem; margin-bottom: 2.5rem;
   }
-  .bandeau strong { color: #e8f0ec; }
+  .bandeau strong { color: #eaf0f7; }
   h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); line-height: 1.1; margin: 0 0 1.5rem; font-weight: 500; }
   h2 { font-size: 1.15rem; font-weight: 500; margin: 3rem 0 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(16,185,129,0.22); }
-  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #10b981; }
+  h3 { font-size: 1rem; font-weight: 600; margin: 2rem 0 0.75rem; color: #2abfff; }
   h4 { font-size: 0.9rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
-  p { color: #b9c9c2; margin: 0 0 1rem; }
-  strong { color: #e8f0ec; }
-  em { color: #cfe0d9; }
-  a { color: #10b981; }
-  a:focus-visible { outline: 2px solid #10b981; outline-offset: 2px; }
-  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #e8f0ec; }
+  p { color: #a9b8cc; margin: 0 0 1rem; }
+  strong { color: #eaf0f7; }
+  em { color: #cfe0ec; }
+  a { color: #2abfff; }
+  a:focus-visible { outline: 2px solid #2abfff; outline-offset: 2px; }
+  code { font-family: ui-monospace, 'JetBrains Mono', monospace; font-size: 0.85em; background: rgba(255,255,255,0.06); padding: 0.1rem 0.3rem; border-radius: 2px; color: #eaf0f7; }
   pre { background: rgba(255,255,255,0.04); border-left: 2px solid rgba(16,185,129,0.4); padding: 1rem; overflow-x: auto; border-radius: 2px; }
   pre code { background: none; padding: 0; font-size: 0.8rem; line-height: 1.6; }
-  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #10b981; }
-  blockquote p { color: #cfe0d9; margin-bottom: 0.5rem; }
-  ul, ol { color: #b9c9c2; padding-left: 1.4rem; margin: 0 0 1.25rem; }
+  blockquote { margin: 1.5rem 0; padding: 0.25rem 0 0.25rem 1.25rem; border-left: 2px solid #2abfff; }
+  blockquote p { color: #cfe0ec; margin-bottom: 0.5rem; }
+  ul, ol { color: #a9b8cc; padding-left: 1.4rem; margin: 0 0 1.25rem; }
   li { margin-bottom: 0.4rem; }
   hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0; }
   table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: 0.88rem; }
-  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #b9c9c2; }
-  th { color: #e8f0ec; font-weight: 600; }
+  th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: #a9b8cc; }
+  th { color: #eaf0f7; font-weight: 600; }
   .sommaire { margin: 2rem 0 0; padding: 0; list-style: none; }
   .sommaire li { border-bottom: 1px solid rgba(255,255,255,0.06); }
   .sommaire a { display: block; padding: 0.7rem 0.25rem; text-decoration: none; }
-  .sommaire a:hover { color: #34d399; }
+  .sommaire a:hover { color: #7ad6ff; }
   .retour { display: inline-block; margin-top: 3rem; font-family: ui-monospace, monospace; font-size: 0.78rem; }
 </style>
 </head>

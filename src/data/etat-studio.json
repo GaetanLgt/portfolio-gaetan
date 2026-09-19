@@ -3,21 +3,21 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "34d3b26",
-    "sujet": "L'annuaire du studio — et ce qu'il n'a pas encore",
-    "date": "2026-09-19T11:39:23+02:00",
+    "court": "03dc368",
+    "sujet": "Le verrou enregistre la decision au lieu de la signaler",
+    "date": "2026-09-19T12:16:53+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-19 12:11:28",
-    "horodatage_minute": "2026-09-19 12:11",
-    "horodatage_iso": "2026-09-19T10:11:28.467Z",
+    "horodatage_local": "2026-09-19 12:29:29",
+    "horodatage_minute": "2026-09-19 12:29",
+    "horodatage_iso": "2026-09-19T10:29:29.077Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 63,
+  "pages_prerendues": 64,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 407,
+    "ko_servis": 407.8,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {

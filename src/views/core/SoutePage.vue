@@ -55,13 +55,53 @@
         <p class="soute__note">{{ pont.note }}</p>
         <ul class="soute__zones">
           <li v-for="zone in pont.zones" :key="zone.id" class="soute__zone">
-            <RouterLink :to="zone.chemin" class="soute__lien">
+            <!--
+              ⚠️ UNE BALISE `<a>` ORDINAIRE, ET NON UN `<RouterLink>` — DEPUIS LE 19/09/2026.
+              Toutes les zones sauf une sont des routes du site, et vue-router intercepte le
+              clic sur un lien interne : `<RouterLink>` n'apportait donc rien qu'une contrainte.
+              Il en coûtait une, en revanche : le dossier pédagogique publié sous
+              `/TARDIS/JoF/` est du HTML STATIQUE, hors routeur — avec un `<RouterLink>`, ce
+              lien aurait mené nulle part.
+
+              Et c'est le défaut que cette ligne corrige : les 22 pages de ce dossier étaient
+              en ligne, avec de vraies adresses, et AUCUNE page du site ne les liait. Un robot
+              pouvait les trouver ; un visiteur, non. Le lien vient maintenant du manifeste
+              (`src/config/topographie.js`), comme le reste de cette carte : une source, pas
+              une adresse recopiée ici.
+            -->
+            <a :href="zone.chemin" class="soute__lien">
               <span class="soute__zone-nom">{{ zone.nom }}</span>
               <span class="soute__zone-chemin">{{ zone.chemin }}</span>
-            </RouterLink>
+            </a>
             <span v-if="aTrouve(zone.id)" class="soute__vu" title="Vous êtes déjà passé par là">vu</span>
           </li>
         </ul>
+      </section>
+
+      <!-- ══ LA PORTE DU KIT PÉDAGOGIQUE ══════════════════════════════════════
+           Ce bloc n'est pas un compartiment de plus : c'est une PORTE. Le dossier
+           pédagogique est un dossier entier, publié sous une adresse qui n'appartient pas
+           au routeur (`/TARDIS/JoF/`), et dont les 22 pages se renvoient entre elles.
+           La carte ci-dessus n'en montre donc que la porte d'entrée — le reste est dedans.
+
+           ⚠️ ON LE DIT ICI PLUTÔT QUE DE LE LAISSER DEVINER : ce dossier est publié
+           `noindex` (décision du dirigeant, 13/09/2026). Le lien le rend ATTEIGNABLE par
+           un visiteur ; il ne le rend pas INDEXABLE par un moteur. Les deux choses sont
+           différentes, et confondre les deux ferait passer un dossier destiné à une école
+           pour une porte d'entrée commerciale. -->
+      <section class="soute__bloc" aria-labelledby="titre-porte-dossiers">
+        <h2 id="titre-porte-dossiers" class="soute__sous-titre">Une porte qui n'était reliée à rien</h2>
+        <p>
+          Sous ce pont se trouve un dossier entier : <strong>22 pages de travail scolaire</strong>,
+          du CP à la 3<sup>e</sup>, écrites par le studio. Elles étaient en ligne depuis le
+          14 septembre 2026, à une adresse réelle — et <strong>aucune page du site ne les
+          liait</strong>. Un moteur pouvait tomber dessus ; vous, non.
+        </p>
+        <p>{{ porte.pourquoi }}</p>
+        <a :href="porte.chemin" class="soute__lien soute__lien--porte">
+          <span class="soute__zone-nom">{{ porte.libelle }}</span>
+          <span class="soute__zone-chemin">{{ porte.chemin }}</span>
+        </a>
       </section>
 
       <section class="soute__bloc">
@@ -127,6 +167,9 @@
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import { ZONES, aTrouve } from '@/composables/useDecouvertes.js';
+// La porte du kit pédagogique : une adresse, sa raison, et le fait qu'elle n'est pas
+// indexable. Elle vient du manifeste — voir le commentaire long plus bas.
+import { PORTE_DOSSIERS } from '@/config/topographie.js';
 
 /**
  * LA SOUTE — la zone optionnelle du cadrage « site comme un métroidvania » (13/09/2026).
@@ -137,6 +180,26 @@ import { ZONES, aTrouve } from '@/composables/useDecouvertes.js';
  * topographie. Si une route est ajoutée au site sans être ajoutée là-bas, cette carte
  * deviendra fausse — c'est le défaut à surveiller.
  */
+
+/**
+ * LA PORTE DU KIT PÉDAGOGIQUE — la seule adresse de cette page qui ne soit PAS une route.
+ *
+ * ⛔ ELLE VIENT DU MANIFESTE, ELLE N'EST PAS RECOPIÉE ICI. `src/config/topographie.js`
+ * l'exporte sous le nom `PORTE_DOSSIERS`, avec la raison de son existence et le fait
+ * qu'elle n'est PAS indexable. Une adresse écrite à deux endroits finit par diverger :
+ * c'est exactement le défaut que ce dépôt a corrigé quatre fois en septembre.
+ *
+ * ⚠️ POURQUOI CE N'EST PAS UN COMPARTIMENT DE LA CARTE CI-DESSOUS, ET POURQUOI CE N'EST
+ * PAS UN OUBLI. Le premier jet avait ajouté le kit à `TOPOGRAPHIE` avec un compartiment ;
+ * `node scripts/verifier-topographie.mjs` a répondu « compartiments de la CARTE qui ne
+ * correspondent à aucune page ». Il avait raison : un compartiment est une route du
+ * routeur, et ce dossier est du HTML statique publié hors routeur. La porte est donc
+ * déclarée à part — et le contrôle de topographie, lui, continue de dire que les 22 pages
+ * du kit restent « atteignables par aucun chemin balisé » au sens des quatre listes.
+ * **C'est un fait, et on l'écrit plutôt que de le maquiller en zone du navire.**
+ */
+const porte = PORTE_DOSSIERS;
+
 const ponts = computed(() => [
   {
     cle: 'superieur',
@@ -277,6 +340,42 @@ const ponts = computed(() => [
 
 .soute__zone-nom {
   font-size: 0.95rem;
+}
+
+/* ── LA PORTE DU KIT PÉDAGOGIQUE (19/09/2026) ─────────────────────────────────
+   C'est le SEUL lien de cette page qui mène hors du routeur : il doit se voir comme une
+   porte, pas comme une ligne de plus dans la liste des compartiments. On le sort donc de
+   la grille par un cadre plein et un peu d'air — sans changer la palette ni la typo de
+   la page, qui a la sienne.
+
+   ⚠️ Cette page garde sa palette d'origine (`#10b981` / `#b9c9c2`), et ce n'est pas un
+   oubli : `/soute` a été écrite avant la bascule vers la charte courante, et sa migration
+   est un chantier à part, qui ne se fait pas au détour d'un ajout de lien. Introduire ici
+   les jetons actuels mélangerait deux DA sur une même page — ce qui serait un défaut
+   visible, à l'endroit exact où l'on corrige un défaut invisible. */
+.soute__lien--porte {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 3px;
+  color: #e8f0ec;
+  text-decoration: none;
+}
+.soute__lien--porte:hover,
+.soute__lien--porte:focus-visible {
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+}
+.soute__lien--porte:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+.soute__lien--porte .soute__zone-nom {
+  font-weight: 600;
 }
 
 .soute__zone-chemin {

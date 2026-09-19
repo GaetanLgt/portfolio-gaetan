@@ -181,4 +181,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <!-- L'armure (ajoutée le 19/09/2026) : le projet de jeu du studio montré EN COURS DE ROUTE — une planche de conception originale, six lois de forme écrites après la réception d'une œuvre décrite et NON reprise, une variante qui en est l'inverse ligne par ligne, l'état réel de ce qui est fait et de ce qui ne l'est pas, et une rubrique « ce que cette page ne garantit pas » qui dit les trois manques. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'un projet qu'on ne peut pas trouver n'est pas montré : il est caché. Priorité 0.6 : c'est une pièce d'atelier et de méthode, pas une porte commerciale, et rien n'y est vendu. Famille de limites : AUCUN NOM DE FRANCHISE, de marque, de personnage protégé ni d'artiste — l'œuvre de tiers qui a servi de point de départ est décrite par sa FORME et jamais nommée ; aucune image d'un autre (la seule image de la page est la planche produite par le studio, réduite de 1 076 519 à 43 564 octets pour tenir le verrou de poids) ; aucun nom de fichier, aucun chemin local, aucun nom d'outil ni de modèle. Aucune date de sortie, aucun moteur, aucun modèle économique : ils ne sont pas décidés, et une valeur par défaut serait une invention. -->
+    <loc>https://gldigitallab.fr/armure</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>

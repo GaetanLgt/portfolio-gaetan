@@ -299,8 +299,20 @@ dire(fuites.length === 0, 'aucun nom protégé dans les composants .vue',
 //   · **aucun asset de la franchise** dans un livrable — image, modèle 3D, son, logo ;
 //   · **aucun autre nom protégé** que ceux du kit, et jamais dans un composant `.vue`
 //     (c'est ce que la boucle ci-dessus continue de faire respecter) ;
-//   · **le fan art `samus-gavit_fusion.jpg`** — signé « © Korntr13 » — **n'entre nulle
-//     part** : *il porte DEUX droits, la franchise et son auteur.*
+//   · **le fan art qui a servi de point de départ au projet `armure-neo` n'entre nulle
+//     part** : *il porte DEUX droits superposés — la franchise, et celui de son auteur,
+//     dont la signature est lisible dans l'image.*
+//
+// ⚠️ CORRIGÉ LE 19/09/2026, QUELQUES MINUTES APRÈS AVOIR ÉCRIT CE COMMENTAIRE.
+// Sa première version **nommait le fichier du fan art et recopiait la signature de son
+// auteur** « pour que la règle soit claire ». **C'était une faute** : *un script du dépôt
+// n'a aucune raison de republier le nom d'un artiste ni le titre d'un fichier qui n'a
+// pas le droit d'entrer ici.* **Décrire le risque ne demande pas de citer la personne.**
+// *Voir la règle du registre : « un texte qui parle d'une erreur n'est pas l'erreur » —
+// et il ne doit pas non plus la reproduire.*
+//
+// Le fichier concerné vit hors des dépôts, sur le poste de travail. Sa situation est
+// écrite là où c'est utile : `jeux/armure-neo/da/grammaire-armure-2026-09-19.md`.
 //
 // ⚠️ Le périmètre n'a donc TOUJOURS PAS été étendu à `dist/`, mais pour une raison qui a
 // changé : avant, c'était « je ne veux pas trancher la décision de Gaëtan » ; maintenant,

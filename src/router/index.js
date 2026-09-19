@@ -17,6 +17,8 @@ const AppsPage = () => import('@/views/core/AppsPage.vue');
 const EtatStudioPage = () => import('@/views/core/EtatStudioPage.vue');
 // CE QUE NOUS NOUS IMPOSONS (19/09/2026) — les règles que le studio se donne.
 const CeQueNousNousImposonsPage = () => import('@/views/core/CeQueNousNousImposonsPage.vue');
+// L'ARMATURE (19/09/2026) — le projet de jeu montré en cours de route.
+const ArmurePage = () => import('@/views/core/ArmurePage.vue');
 
 // SERVICES - Offres et solutions
 const ServicesPage = () => import('@/views/services/ServicesPage.vue');
@@ -244,6 +246,38 @@ const routes = [
     meta: {
       title: 'Ce que nous nous imposons | Nos règles, nos limites',
       description: 'Ce que ce studio s\'interdit et pourquoi : pas de plateforme qui centralise vos données, aucun chiffre sans source ni date, aucune décision déléguée. Avec les règles qu\'il tient, celles qu\'il ne tient pas encore, et ce que rien de tout cela ne garantit.'
+    }
+  },
+
+  {
+    // L'ARMATURE (19/09/2026) — le projet de jeu du studio, montré en cours de route.
+    //
+    // POURQUOI CETTE PAGE EXISTE. Le studio a ouvert un projet de jeu le 19/09/2026 : une
+    // exo-combinaison blindée motorisée portée par son propre personnage. Le jour même, il
+    // a produit deux documents de travail et une planche de conception — et **rien de tout
+    // cela n'était atteignable depuis le site**. Cette page est la porte.
+    //
+    // ⚠️ PAGE ORDINAIRE, LIÉE DEPUIS LE PIED DE PAGE. Même règle qu'à `/soute`,
+    // `/ia-de-bord`, `/etat-du-studio` et `/ce-que-nous-nous-imposons` : un contenu
+    // atteignable seulement par un chemin non balisé n'existe ni pour un lecteur d'écran
+    // ni pour un moteur de recherche.
+    //
+    // ⛔ CE QU'ELLE NE CONTIENT PAS, ET NE CONTIENDRA PAS : aucun nom de franchise, de
+    // marque, de personnage protégé ni d'artiste — l'œuvre de tiers qui a servi de point
+    // de départ est DÉCRITE en mots, jamais nommée, jamais servie ; aucune image d'un
+    // autre (la seule image de la page est la planche produite par le studio) ; aucun nom
+    // de fichier, aucun chemin local, aucun nom d'outil ni de modèle. Le verrou juridique
+    // de `scripts/verifier-verrous.mjs` lit le composant ENTIER, commentaires retirés.
+    //
+    // ⚠️ SON POIDS EST MESURÉ, PAS ESTIMÉ : la planche servie fait 43 564 octets, contre
+    // 1 076 519 pour l'original — le verrou de la charte juge les octets SERVIIS, page par
+    // page. La valeur est écrite dans l'en-tête du composant et dans sa légende.
+    path: '/armure',
+    name: 'Armure',
+    component: ArmurePage,
+    meta: {
+      title: 'L\'armure | Un projet de jeu montré en cours de route',
+      description: 'L\'armure d\'un projet de jeu du studio : une planche de conception originale, six lois de forme écrites à partir d\'une œuvre décrite et non reprise, une variante qui en est l\'inverse — et ce que cette page ne garantit pas.'
     }
   },
 
