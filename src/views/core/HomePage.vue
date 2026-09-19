@@ -505,6 +505,27 @@
                   <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                 </svg>
               </MagneticButton>
+              <!-- LES DEUX BOUTONS DIRECTS — ajoutés le 19/09/2026, à la demande
+                   de Gaëtan : « je veux 2 boutons call-to-action : un qui envoie
+                   un mail bien câblé sur l'adresse correspondante, et un avec mon
+                   numéro de téléphone ».
+                   ⚠️ PLACÉS DANS LA SORTIE QUI EXISTAIT DÉJÀ, à côté du CTA
+                   « Parlons-en ! » — aucune section créée, aucune réorganisation
+                   de la page. Le motif du dépôt est une section de sortie en fin
+                   de page ; on l'utilise, on n'en ajoute pas une deuxième.
+                   Ce sont de VRAIS `<a href>` (mailto: objet pré-rempli, tel:) et
+                   non des `<button>` avec un `onclick` : c'est ce qui fait qu'un
+                   `tel:` compose sur un téléphone. `useMatomo` suit déjà ces deux
+                   schémas par un écouteur global posé sur `document` — les boutons
+                   sont donc mesurés sans qu'on touche au suivi.
+                   Intitulés lisibles HORS CONTEXTE (WCAG 2.4.4) ; contraste par
+                   les jetons existants (.btn-primary : texte --action-ink sur
+                   --action, 16,80:1 sur le fond ; .btn-outline : --ink, 18,34:1
+                   sur le fond de la DA — relevés du verrou). -->
+              <div class="cta-final__actions">
+                <a class="btn-primary" :href="LIEN_COURRIEL">{{ LIBELLE_ECRIRE }}</a>
+                <a class="btn-outline" :href="LIEN_TELEPHONE">{{ LIBELLE_APPELER }}</a>
+              </div>
               <ul class="cta-final__trust" aria-label="Garanties">
                 <li>✓ Réponse sous 24h</li>
                 <li>✓ Premier échange gratuit</li>
@@ -559,6 +580,10 @@ import TuyauVert from '@/components/ui/TuyauVert.vue';
 // de nouveau, à la carte du navire (voir plus bas). `onUnmounted` arrive avec lui, pour
 // retirer proprement les écouteurs de geste.
 import { ref, onMounted, onUnmounted, defineAsyncComponent } from 'vue';
+// Coordonnées publiques : une seule source, `src/config/contact.js`. Les deux
+// boutons de la sortie (écrire / appeler) les lisent ici, comme le pied de page,
+// la page contact, le dossier et les pages légales.
+import { LIEN_COURRIEL, LIEN_TELEPHONE, LIBELLE_ECRIRE, LIBELLE_APPELER } from '@/config/contact.js';
 
 /**
  * DÉCALAGE DE LA 3D HORS DU CHEMIN CRITIQUE (10/09/2026, audit Lighthouse).
@@ -1307,6 +1332,27 @@ const methodGuarantees = [
   color: var(--text-muted);
   list-style: none;
   padding: 0;
+}
+
+/* ── LES DEUX BOUTONS DIRECTS DE LA SORTIE ────────────────────────────────────
+   Mise en forme SEULEMENT. `.btn-primary` (écrire) et `.btn-outline` (appeler)
+   viennent de `global.css`, comme partout ailleurs dans le dépôt : aucune
+   couleur nouvelle, aucun jeton redéclaré — le verrou « un seul foyer des
+   jetons » lit ce fichier, et une valeur recopiée ici le casserait. */
+.cta-final__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: var(--space-sm);
+}
+
+@media (max-width: 560px) {
+  /* Sous 560 px, deux boutons sur une ligne tombent sous la cible tactile de
+     44 px de haut : on les empile, chacun sur toute la largeur. */
+  .cta-final__actions > a {
+    flex-basis: 100%;
+  }
 }
 
 .cta-final__trust li {

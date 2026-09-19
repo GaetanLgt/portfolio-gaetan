@@ -37,13 +37,13 @@
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                   <polyline points="22,6 12,13 2,6"/>
                 </svg>
-                <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+                <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
               </div>
               <div class="detail-item">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
-                <a href="tel:+33686474610">06 86 47 46 10</a>
+                <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
               </div>
               <div class="detail-item">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -60,7 +60,27 @@
                 <span>Réponse sous 24h</span>
               </div>
             </div>
-            
+
+            <!-- LES DEUX BOUTONS D'APPEL À L'ACTION — ajoutés le 20/09/2026.
+                 Demandés par Gaëtan : « un qui envoie un mail bien câblé sur
+                 l'adresse correspondante, et un avec mon numéro de téléphone
+                 pour qu'on m'appelle directement ».
+                 Deux VRAIS `<a href>` et non deux `<button>` : c'est ce qui fait
+                 qu'un `tel:` compose sur un téléphone et qu'un `mailto:` ouvre le
+                 client de messagerie. `useMatomo` suit déjà les clics
+                 `mailto:`/`tel:` par un écouteur global — ces deux boutons en
+                 bénéficient sans une ligne de plus.
+                 Les intitulés sont lisibles HORS CONTEXTE (WCAG 2.4.4) : dans la
+                 liste des liens d'un lecteur d'écran, « Écrire » seul ne dit pas
+                 à qui. Contraste : jetons existants (.btn-primary 16,80:1 sur le
+                 fond, .btn-outline = --ink, 18,34:1 / 17,38:1 selon le fond —
+                 les deux relevés du verrou), aucune couleur nouvelle, aucun
+                 jeton redéclaré. -->
+            <div class="contact-card__actions">
+              <a class="btn-primary" :href="LIEN_COURRIEL">{{ LIBELLE_ECRIRE }}</a>
+              <a class="btn-outline" :href="LIEN_TELEPHONE">{{ LIBELLE_APPELER }}</a>
+            </div>
+
             <!-- Process Steps -->
             <div class="process-mini">
               <div class="process-mini__step">
@@ -241,7 +261,7 @@
               <!-- Le message vient du serveur : il explique en français ce qui
                    ne va pas (champ manquant, trop d'envois, panne d'expédition)
                    au lieu d'un « une erreur est survenue » qui n'aide personne. -->
-              <p>{{ erreurEnvoi || 'Une erreur est survenue. Réessayez, écrivez à gtn.langlet+lab@gmail.com ou appelez le 06 86 47 46 10.' }}</p>
+              <p>{{ erreurEnvoi || messageErreurDefaut }}</p>
               <button @click="resetForm" class="form-error__retry">
                 Réessayer
               </button>
@@ -265,11 +285,20 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted } from 'vue';
 import MagneticButton from '@/components/common/MagneticButton.vue';
 import SystemTerminal from '@/components/common/SystemTerminal.vue';
 import { useScrollAnimations } from '@/composables/useScrollAnimations';
 import { useMatomo } from '@/composables/useMatomo';
+// Coordonnées publiques : une seule source, `src/config/contact.js`.
+import {
+  COURRIEL,
+  TELEPHONE_AFFICHE,
+  LIEN_COURRIEL,
+  LIEN_TELEPHONE,
+  LIBELLE_ECRIRE,
+  LIBELLE_APPELER,
+} from '@/config/contact.js';
 
 const { fadeInUp, scaleIn } = useScrollAnimations();
 
@@ -288,6 +317,14 @@ const terminalLines = ref([
 const matomo = useMatomo();
 const formStatus = ref('idle'); // idle | sending | success | error
 const erreurEnvoi = ref('');
+
+// Le message de repli quand le serveur ne dit rien d'utile. Il portait les
+// coordonnées écrites en dur : il les lit maintenant dans `contact.js`, comme
+// le reste de la page. Un repli qui cite une adresse fausse est pire que pas
+// de repli — le visiteur en panne écrit… dans le vide.
+const messageErreurDefaut = computed(
+  () => `Une erreur est survenue. Réessayez, écrivez à ${COURRIEL} ou appelez le ${TELEPHONE_AFFICHE}.`
+);
 
 // ENDPOINT AUTO-HÉBERGÉ (10/09/2026) — remplace Formspree.
 // Formspree est une société américaine : le nom, l'e-mail et le message du
@@ -357,7 +394,7 @@ const handleSubmit = async () => {
     formStatus.value = 'error';
   } catch (error) {
     console.error('Form error:', error);
-    erreurEnvoi.value = 'Connexion impossible. Écrivez à gtn.langlet+lab@gmail.com ou appelez le 06 86 47 46 10.';
+    erreurEnvoi.value = `Connexion impossible. Écrivez à ${COURRIEL} ou appelez le ${TELEPHONE_AFFICHE}.`;
     formStatus.value = 'error';
   }
 };
@@ -490,6 +527,44 @@ onMounted(() => {
 .detail-item svg {
   color: var(--primary);
   flex-shrink: 0;
+}
+
+/* ── LES DEUX BOUTONS DE CONTACT ──────────────────────────────────────────────
+   Mise en forme SEULEMENT : les couleurs, la bordure, la typographie et les
+   états viennent de `.btn-primary` / `.btn-outline`, définis une fois dans
+   `global.css` (contraste déjà mesuré là-bas). On n'invente donc aucun langage
+   visuel, et on ne redéclare aucun jeton — un jeton redéclaré hors de
+   `variables.css` fait échouer le verrou « un seul foyer ». */
+.contact-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: var(--space-md) 0;
+}
+
+.contact-card__actions a {
+  flex: 1 1 auto;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* `prefers-reduced-motion` : `.btn-primary:hover` de global.css soulève le
+   bouton de 2 px (`translateY(-2px)`). Le dépôt neutralise DÉJÀ les durées de
+   transition, mais la règle globale ne supprime pas le DÉPLACEMENT lui-même —
+   or c'est le déplacement que la préférence demande d'arrêter, pas seulement sa
+   lenteur. On l'annule donc ici, sur ce bloc uniquement. */
+@media (prefers-reduced-motion: reduce) {
+  .contact-card__actions a:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Deux boutons côte à côte sous 480 px tombent sous la cible tactile de
+     44 px de haut : on les empile, chacun sur toute la largeur. */
+  .contact-card__actions a {
+    flex-basis: 100%;
+  }
 }
 
 /* MINI PROCESS */

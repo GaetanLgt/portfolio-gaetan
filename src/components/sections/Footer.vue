@@ -56,10 +56,10 @@
             <p>Gaëtan LANGLET</p>
             <p>Harponville, Somme (80) — Hauts-de-France</p>
             <p>
-              <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+              <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
             </p>
             <p>
-              <a href="tel:+33686474610">06 86 47 46 10</a>
+              <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
             </p>
           </address>
           <p class="footer__response">SLA réponse : 24h</p>
@@ -168,23 +168,22 @@
           SIRET : {{ siret }}
         </p>
         <div class="footer__social">
-          <a 
-            href="https://github.com/GaetanLgt" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            GITHUB
-          </a>
-          <span class="footer__separator">|</span>
-          <a 
-            href="https://www.linkedin.com/in/gldigitallab/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            LINKEDIN
-          </a>
+          <!-- Les deux adresses de réseaux sociaux vivaient ici en dur ; elles
+               viennent désormais du même foyer que le courriel et le téléphone
+               (`src/config/contact.js`). Le séparateur est rendu ENTRE les
+               liens, pas après le dernier : un `|` orphelin en fin de ligne est
+               lu à voix haute par un lecteur d'écran. -->
+          <template v-for="(reseau, i) in RESEAUX" :key="reseau.url">
+            <span v-if="i > 0" class="footer__separator" aria-hidden="true">|</span>
+            <a
+              :href="reseau.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              :aria-label="reseau.nom"
+            >
+              {{ reseau.nom.toUpperCase() }}
+            </a>
+          </template>
         </div>
       </div>
     </div>
@@ -195,6 +194,9 @@
 import { computed } from 'vue';
 import { decorActif, basculerDecor } from '@/composables/mode-sobre.js';
 import { audioActif, basculerAudio } from '@/composables/audio-poste.js';
+// Coordonnées publiques : une seule source, `src/config/contact.js`.
+// Elles étaient recopiées à la main ici ET dans sept autres fichiers.
+import { COURRIEL, TELEPHONE_AFFICHE, LIEN_COURRIEL, LIEN_TELEPHONE, RESEAUX } from '@/config/contact.js';
 
 const currentYear = computed(() => new Date().getFullYear());
 const siret = null; // TODO: Remplacer par ton vrai SIRET

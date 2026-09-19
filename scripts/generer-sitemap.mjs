@@ -44,12 +44,27 @@ if (!existsSync(SITEMAP)) {
 const existant = readFileSync(SITEMAP, 'utf8');
 
 /* ── 1. PRÉSERVER l'en-tête : tout jusqu'à la balise <urlset …> incluse ─────────── */
-const marqueur = existant.match(/^[\s\S]*?<urlset[^>]*>\s*/);
+// ⛔ CORRIGÉ LE 19/09/2026 — CE GÉNÉRATEUR N'ÉTAIT PAS IDEMPOTENT.
+//
+// L'ancienne expression était : /^[\s\S]*?<urlset[^>]*>\s*/
+// Son « \s* » final avalait TOUT l'espacement qui suit <urlset>, y compris
+// l'indentation qui appartient à la PREMIÈRE entrée. « entete » se terminait
+// donc par cette indentation, et « entree() » réécrivait par-dessus les deux
+// espaces de «   <url> ». Mesure : 34 espaces avant, 36 après — et 38 au build
+// suivant, indéfiniment. Chaque build salissait un fichier suivi par git, et
+// le blanc s'accumulait.
+//
+// Le marqueur s'arrête donc à la balise, et les deux retours à la ligne qui la
+// séparent de la première entrée sont posés explicitement. Le générateur
+// redevient idempotent : deux exécutions de suite produisent le MÊME fichier.
+// ⚠️ Effet unique du correctif : la première entrée perd une indentation
+// héritée de 34 espaces et reprend celle de toutes les autres (2 espaces).
+const marqueur = existant.match(/^[\s\S]*?<urlset[^>]*>/);
 if (!marqueur) {
   console.error('  la balise <urlset> est introuvable : le fichier n\'est pas dans la forme attendue.');
   process.exit(2);
 }
-const entete = marqueur[0];
+const entete = marqueur[0] + '\n\n';
 
 /* ── 2. Vérifier, si dist/ existe, que chaque déclaration rend une page ─────────── */
 const manquantes = [];

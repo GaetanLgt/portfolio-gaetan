@@ -14,7 +14,7 @@
             <strong>Génie IT Tek FR</strong><br>
             Gaëtan LANGLET<br>
             Harponville, Somme, Hauts-de-France, France<br>
-            Email : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+            Email : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
         </section>
         
@@ -73,8 +73,8 @@
           </p>
           <p class="legal-note">
             Une question sur ce point, ou une demande d'accès ? Écrivez à
-            <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
-            ou appelez le 06 86 47 46 10.
+            <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
+            ou appelez le {{ TELEPHONE_AFFICHE }}.
           </p>
         </section>
 
@@ -98,7 +98,7 @@
             <li><strong>Droit d'opposition :</strong> vous opposer au traitement de vos données</li>
           </ul>
           <p>
-            Pour exercer ces droits : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+            Pour exercer ces droits : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
         </section>
         
@@ -185,7 +185,7 @@
             vous pouvez contacter notre délégué à la protection des données :
           </p>
           <p>
-            <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+            <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
           <p>
             Vous pouvez également introduire une réclamation auprès de la 
@@ -203,6 +203,8 @@
 
 <script setup>
 import { useMatomo } from '@/composables/useMatomo';
+// Coordonnées publiques : une seule source, `src/config/contact.js`.
+import { COURRIEL, TELEPHONE_AFFICHE, LIEN_COURRIEL } from '@/config/contact.js';
 
 const { consentGiven, consentAsked, resetConsent } = useMatomo();
 const lastUpdate = 'Janvier 2026';

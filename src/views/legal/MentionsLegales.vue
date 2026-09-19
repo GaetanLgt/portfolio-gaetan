@@ -14,8 +14,8 @@
             <strong>Génie IT Tek FR</strong><br>
             Gaëtan LANGLET<br>
             80560 Harponville, Somme, Hauts-de-France, France<br>
-            Email : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a><br>
-            Téléphone : <a href="tel:+33686474610">06 86 47 46 10</a>
+            Email : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a><br>
+            Téléphone : <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
           </p>
           <p v-if="siret">
             SIRET : {{ siret }}<br>
@@ -31,7 +31,7 @@
           <h2>2. Directeur de publication</h2>
           <p>
             Le directeur de la publication est <strong>Gaëtan LANGLET</strong>, en sa qualité de fondateur de Génie IT Tek FR.<br>
-            Contact : <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+            Contact : <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
         </section>
         
@@ -71,7 +71,7 @@
           </p>
           <p>
             Pour exercer ces droits, contactez-nous à : 
-            <a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a>
+            <a :href="LIEN_COURRIEL">{{ COURRIEL }}</a>
           </p>
           <p>
             Pour plus d'informations sur le traitement de vos données, consultez notre 
@@ -141,6 +141,8 @@
 
 <script setup>
 import { reactive } from 'vue';
+// Coordonnées publiques : une seule source, `src/config/contact.js`.
+import { COURRIEL, TELEPHONE_AFFICHE, LIEN_COURRIEL, LIEN_TELEPHONE } from '@/config/contact.js';
 
 // TODO: Remplacer par ton SIRET une fois l'immatriculation effectuée
 const siret = null; // Ex: '123 456 789 00012'

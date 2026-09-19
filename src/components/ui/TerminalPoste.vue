@@ -86,6 +86,8 @@
 <script setup>
 import { ref } from 'vue';
 import { jouerSignal } from '@/composables/audio-poste.js';
+// Coordonnées publiques : une seule source, `src/config/contact.js`.
+import { COURRIEL, TELEPHONE_AFFICHE } from '@/config/contact.js';
 
 /**
  * Table des commandes. Tout le contenu est PUBLIC et déjà présent sur le site :
@@ -153,7 +155,9 @@ const REPONSES = {
     '  2. premier échange de 30 minutes, gratuit et sans engagement',
     '  3. réponse sous 24 h : faisable, non faisable, fourchette de prix',
     '',
-    '  gtn.langlet+lab@gmail.com   ·   06 86 47 46 10   ·   /contact',
+    // Les coordonnées viennent de `src/config/contact.js`, comme le pied de page
+    // et les pages légales : cette ligne les recopiait à la main.
+    `  ${COURRIEL}   ·   ${TELEPHONE_AFFICHE}   ·   /contact`,
   ],
 };
 

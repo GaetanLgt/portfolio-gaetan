@@ -49,7 +49,7 @@
           <div><dt>Dirigeant</dt><dd>Gaëtan Langlet</dd></div>
           <div><dt>Adresse</dt><dd>Harponville, Somme (80), Hauts-de-France</dd></div>
           <div><dt>Activité</dt><dd>Développement web, applications métier, intégration d'intelligences artificielles exécutées localement ou en France</dd></div>
-          <div><dt>Contact</dt><dd><a href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a> · <a href="tel:+33686474610">06 86 47 46 10</a></dd></div>
+          <div><dt>Contact</dt><dd><a :href="LIEN_COURRIEL">{{ COURRIEL }}</a> · <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a></dd></div>
           <div><dt>Références légales</dt><dd>Les références légales (SIREN, SIRET, code APE, numéro de TVA) figureront en pied de facture dès l'immatriculation. Aucune facture n'est émise avant.</dd></div>
         </dl>
         <p class="dossier__note">
@@ -256,8 +256,8 @@
           <li>Si le projet se poursuit, l'atelier de cadrage fixe le périmètre et le prix ferme.</li>
         </ol>
         <p class="dossier__contact">
-          <a class="dossier__lien" href="mailto:gtn.langlet+lab@gmail.com">gtn.langlet+lab@gmail.com</a><br>
-          <a class="dossier__lien" href="tel:+33686474610">06 86 47 46 10</a>
+          <a class="dossier__lien" :href="LIEN_COURRIEL">{{ COURRIEL }}</a><br>
+          <a class="dossier__lien" :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
         </p>
         <p class="dossier__note">
           Ce dossier est aussi disponible en version imprimable : utilisez
@@ -272,9 +272,18 @@
 
 <script setup>
 /**
- * Page volontairement SANS script : aucun état, aucun effet, aucune animation.
- * Elle doit rester lisible et imprimable même si JavaScript est désactivé.
+ * Page volontairement SANS logique : aucun état, aucun effet, aucune animation.
+ * Elle doit rester lisible et imprimable même si JavaScript ne s'exécute pas.
+ *
+ * ⚠️ CE QU'ON Y IMPORTE, ET CE QU'ON N'Y IMPORTE PAS (20/09/2026). Les seules
+ * lignes ci-dessous rapatrient les coordonnées, qui étaient recopiées en dur
+ * ici comme dans sept autres fichiers. Ce sont des CONSTANTES résolues au
+ * build : ni état, ni effet, ni écouteur — la page reste sans logique, et le
+ * HTML prérendu porte bien le courriel et le numéro en clair. Importer la
+ * source unique ne change pas ce que reçoit un visiteur sans JavaScript ;
+ * recopier les valeurs, si.
  */
+import { COURRIEL, TELEPHONE_AFFICHE, LIEN_COURRIEL, LIEN_TELEPHONE } from '@/config/contact.js';
 </script>
 
 <style scoped>
