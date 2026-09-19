@@ -184,7 +184,7 @@
 
 <script setup>
 /**
- * L'IA DE BORD — le poste de l'assistante du navire. GL Digital Lab, 18/09/2026.
+ * L'IA DE BORD — le poste de l'assistante du navire. GL Digital Lab, 19/09/2026.
  *
  * ═══════════════════════════════════════════════════════════════════════════════
  * CE QUE CETTE PAGE EST : UNE ADAPTATION DE GENRE, ET RIEN DE PLUS.

@@ -1,10 +1,10 @@
 /**
- * CONTACT — LA SOURCE UNIQUE DES COORDONNÉES PUBLIQUES. GL Digital Lab, 20/09/2026.
+ * CONTACT — LA SOURCE UNIQUE DES COORDONNÉES PUBLIQUES. GL Digital Lab, 19/09/2026.
  *
  * POURQUOI CE FICHIER EXISTE
  * Les mêmes deux coordonnées étaient RECOPIÉES À LA MAIN dans huit fichiers
  * (pied de page, page contact, dossier, mentions légales, confidentialité,
- * terminal du poste). Mesuré le 20/09/2026 : 25 occurrences du courriel et
+ * terminal du poste). Mesuré le 19/09/2026 : 25 occurrences du courriel et
  * 14 du téléphone, chacune écrite deux fois quand ce n'était pas trois
  * (`href` + texte affiché). Huit occasions de diverger, et aucune ne se voit
  * à la relecture — c'est le même motif que la topographie, qui a fini par
@@ -50,7 +50,7 @@ export const RESEAUX = [
 ];
 
 /* ── L'OBJET DU COURRIEL PRÉ-REMPLI ─────────────────────────────────────────
-   Constaté le 20/09/2026 : un `mailto:` nu ouvre le client de messagerie avec
+   Constaté le 19/09/2026 : un `mailto:` nu ouvre le client de messagerie avec
    un message VIDE. Le visiteur doit écrire un objet lui-même, et l'objet qu'il
    écrit n'est presque jamais celui qui aide à trier. On en propose donc un.
 

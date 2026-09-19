@@ -275,7 +275,7 @@
  * Page volontairement SANS logique : aucun état, aucun effet, aucune animation.
  * Elle doit rester lisible et imprimable même si JavaScript ne s'exécute pas.
  *
- * ⚠️ CE QU'ON Y IMPORTE, ET CE QU'ON N'Y IMPORTE PAS (20/09/2026). Les seules
+ * ⚠️ CE QU'ON Y IMPORTE, ET CE QU'ON N'Y IMPORTE PAS (19/09/2026). Les seules
  * lignes ci-dessous rapatrient les coordonnées, qui étaient recopiées en dur
  * ici comme dans sept autres fichiers. Ce sont des CONSTANTES résolues au
  * build : ni état, ni effet, ni écouteur — la page reste sans logique, et le

@@ -61,7 +61,7 @@
               </div>
             </div>
 
-            <!-- LES DEUX BOUTONS D'APPEL À L'ACTION — ajoutés le 20/09/2026.
+            <!-- LES DEUX BOUTONS D'APPEL À L'ACTION — ajoutés le 19/09/2026.
                  Demandés par Gaëtan : « un qui envoie un mail bien câblé sur
                  l'adresse correspondante, et un avec mon numéro de téléphone
                  pour qu'on m'appelle directement ».
