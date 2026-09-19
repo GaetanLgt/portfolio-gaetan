@@ -65,6 +65,37 @@
         </li>
       </ul>
 
+      <!--
+        SECTION « NOS SOURCES » (ajoutée le 19/09/2026, à la demande de Gaëtan :
+        « juste un lien, en indiquant qu'ils sont source d'inspiration et source
+        d'information »).
+
+        ⚠️ CE QUE CETTE SECTION DIT, ET CE QU'ELLE NE DIT PAS.
+        Elle dit : ces institutions sont des SOURCES — on les lit, on les cite, et
+        chaque chiffre publié par le studio porte la sienne et sa date.
+        Elle ne dit PAS : partenariat, affiliation, labellisation, ni validation.
+        Le studio n'a aucune référence nominative, et le revendique. Un lien
+        présenté comme un partenariat serait exactement la sur-promesse que la
+        page /dossier s'interdit.
+
+        Le CNRS y est par sa DÉLÉGATION HAUTS-DE-FRANCE : c'est la région du
+        studio (Harponville, Somme). Vérifié le 19/09/2026 — hauts-de-france.cnrs.fr
+        existe et répond.
+      -->
+      <h2 class="section-titre">Nos sources</h2>
+      <ul class="liens">
+        <li v-for="lien in sources" :key="lien.href">
+          <a :href="lien.href" class="lien" rel="noopener">
+            <span class="lien__icone" aria-hidden="true">{{ lien.icone }}</span>
+            <span class="lien__corps">
+              <span class="lien__titre">{{ lien.titre }}</span>
+              <span class="lien__desc">{{ lien.desc }}</span>
+            </span>
+            <span class="lien__hors" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      </ul>
+
       <p class="note">
         Studio indépendant français, dans la Somme. Tout le calcul d'IA tourne sur notre
         propre machine : aucune donnée client ne sort.
@@ -121,6 +152,29 @@ const productions = [
     icone: '🕸️',
     titre: 'ArkAdiA — le réseau triple A',
     desc: 'Notre réseau social : amitié, aventure, art. Landing publique sur notre domaine, moteur sur notre serveur.',
+  },
+];
+
+// Nos SOURCES. Ce ne sont pas nos partenaires, ni nos clients, ni des labellisations :
+// ce sont les institutions dont le studio lit les travaux et cite les chiffres, avec
+// leur date. Ajouté le 19/09/2026 sur demande de Gaëtan — « source d'inspiration et
+// source d'information ».
+//
+// Règle de cette liste, la même que celle des productions : n'y mettre que ce qui est
+// vérifié. `hauts-de-france.cnrs.fr` répond (mesuré le 19/09/2026). La délégation
+// Hauts-de-France est celle du studio — Harponville est dans la Somme.
+//
+// ⚠️ Deux autres sources sont légitimes et vérifiées, mais NE SONT PAS ICI : l'ANSSI
+// (source primaire du communiqué du 07/09/2026 sur REACTIV) et la Banque centrale
+// européenne (communiqué du 23/07/2026 sur la refonte des billets). Elles ont été
+// proposées le 19/09 ; Gaëtan a demandé « juste un lien ». Ne pas les ajouter sans
+// son accord — une page de sources n'est pas une page de collecte.
+const sources = [
+  {
+    href: 'https://www.hauts-de-france.cnrs.fr/',
+    icone: '🔬',
+    titre: 'CNRS — délégation Hauts-de-France',
+    desc: "Source d'inspiration et source d'information : les travaux que nous lisons, et dont nous citons les chiffres avec leur date.",
   },
 ];
 </script>

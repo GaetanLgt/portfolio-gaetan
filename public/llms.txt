@@ -44,6 +44,15 @@ Public visé : PME, TPE, artisans, collectivités et administrations françaises
 - Aucune conformité RGAA revendiquée : les livrables visent le niveau WCAG AA, vérifié par mesure, sans attestation d'un tiers.
 - Aucune référence client nominative publiée à ce jour.
 
+## Sources et références
+
+Ces institutions sont des **sources d'inspiration et d'information** : le studio lit
+leurs travaux et cite leurs chiffres, chacun avec sa date de mesure. Elles ne sont
+ni des partenaires, ni des clients, ni une labellisation — le studio n'a aucune
+référence nominative et l'écrit ci-dessus.
+
+- [CNRS — délégation Hauts-de-France](https://www.hauts-de-france.cnrs.fr/) : la région du studio (Harponville, Somme).
+
 ## Contact
 
 - Adresse électronique : gtn.langlet+lab@gmail.com
