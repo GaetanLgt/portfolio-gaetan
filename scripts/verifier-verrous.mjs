@@ -260,8 +260,44 @@ for (const f of sources) {
     if (code.includes(nom)) fuites.push(`${f.split(/[\\/]/).pop()} → ${nom}`);
   }
 }
-dire(fuites.length === 0, 'aucun nom protégé dans le contenu visible des pages',
-  fuites.length ? fuites.join(' ; ') : 'les mentions restent dans les commentaires internes');
+dire(fuites.length === 0, 'aucun nom protégé dans les composants .vue',
+  fuites.length
+    ? fuites.join(' ; ')
+    : `portée : ${sources.filter((f) => f.endsWith('.vue')).length} composant(s) .vue de src/ — ni dist/, ni public/`
+      + ' ⚠️ CE VERROU NE COUVRE PAS LE SITE LIVRÉ : 1 497 occurrences de « Metroid » dans le texte'
+      + ' visible de dist/ (kit pédagogique public/TARDIS/JoF/metroid/), 387 « Nintendo », 271 « Samus ».'
+      + ' Sa publication est une décision de Gaëtan (D12), pas la mienne — voir le commentaire ci-dessus.');
+
+// ⛔ DEUX DÉFAUTS TROUVÉS LE 19/09/2026, EN COMPTANT LES OCCURRENCES SUR LE SITE LIVRÉ.
+//
+// Mesure : `Metroid` apparaît **1 497 fois** dans le TEXTE VISIBLE des pages de `dist/`,
+// `Nintendo` 387, `Samus` 271. Le présent verrou affichait pourtant « aucun nom protégé
+// dans le contenu visible des pages ».
+//
+// ① LE PÉRIMÈTRE. La boucle ci-dessus ne lit que les `.vue` de `src/` (`if (!f.endsWith('.vue')) continue`).
+//    Elle ne regarde NI `dist/`, NI `public/` — et c'est là que vivent les occurrences,
+//    dans le kit pédagogique `public/TARDIS/JoF/metroid/` et les scènes `public/Arche/`.
+//
+// ② LE MESSAGE, ET C'EST LE PLUS GRAVE. Il concluait « les mentions restent dans les
+//    commentaires internes » — une AFFIRMATION SUR TOUT LE SITE, tirée d'un contrôle qui
+//    n'avait lu qu'une partie des sources. **C'est faux, et je l'ai mesuré** : les
+//    commentaires des pages livrées n'en contiennent AUCUNE, et le texte visible en
+//    contient 1 497. *Un contrôle ne peut pas conclure au-delà de ce qu'il a lu.* C'est
+//    le défaut que ce dépôt combat depuis le début, et il était ici, dans le contrôle.
+//
+// ③ ET UN NOM MANQUAIT : `Samus` n'était pas dans la liste `PROTEGES` ci-dessus, alors
+//    qu'il apparaît 271 fois dans le site livré. Ce n'est pas ajouté ici non plus — le
+//    kit l'étudie délibérément, et l'ajouter ferait échouer le build sur un choix
+//    éditorial. **Nommé, pas corrigé : c'est à Gaëtan de trancher.**
+//
+// ⚠️ CE QUI N'A PAS ÉTÉ FAIT, ET POURQUOI : je n'ai PAS étendu le périmètre à `dist/`.
+// Le faire ferait ÉCHOUER le build sur le kit Metroid — des pages qui nomment la
+// franchise parce qu'elles L'ÉTUDIENT (licence, chronologie, créateurs, sources et
+// vérification). C'est de l'usage nominatif dans un travail critique, et **la décision
+// de publier ce kit appartient à Gaëtan (D12)**, pas à un verrou. Étendre le périmètre
+// trancherait sa décision à sa place — exactement ce qu'on ne fait pas.
+//
+// Ce qui est corrigé : le verrou DIT ce qu'il a lu, et n'affirme plus rien de plus.
 
 // ─── VERROU 5 : poids — PORTÉ AILLEURS, SUR LE BUILD ────────────────────────
 // Ma première version additionnait la taille des fichiers source et échouait si le
