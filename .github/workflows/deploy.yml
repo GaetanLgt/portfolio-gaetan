@@ -331,24 +331,65 @@ jobs:
           echo "🔖 **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
 
   # ═══════════════════════════════════════════════════════════════════════════
-  # JOB 5: Notify Discord (optionnel)
+  # JOB 5: Notify Discord
+  # ═══════════════════════════════════════════════════════════════════════════
+  # ⛔ CORRIGÉ LE 19/09/2026 — L'ALERTE EXISTAIT, ELLE A TOURNÉ, ET ELLE A DIT
+  #    LE CONTRAIRE DE CE QUI S'ÉTAIT PASSÉ.
+  #
+  #    Mesuré sur le run du 18/09 à 20 h 37 (celui du commit « ecole + Arche ») :
+  #
+  #        🔍 Lint & Quality    : success
+  #        📦 Build & Test      : FAILURE     ← le build a échoué
+  #        🔦 Lighthouse Audit  : skipped
+  #        🚀 Deploy Production : skipped     ← le site n'a PAS été mis à jour
+  #        💬 Notify            : success     ← et l'alerte a été envoyée
+  #
+  #    Le webhook existe (`DISCORD_WEBHOOK`, posé le 07/01/2026), la notification
+  #    est partie, et elle disait `status: skipped`. **Le site est resté figé
+  #    quatre jours, et le message reçu se lisait « rien ne s'est passé ».**
+  #
+  #    La cause est en une ligne : `needs: deploy`. Ce job ne regardait QUE le
+  #    déploiement — or le déploiement n'a jamais tourné, parce que c'est le
+  #    BUILD qui avait échoué. Un surveillant qui ne regarde qu'un maillon ne
+  #    voit pas la chaîne s'arrêter au maillon d'avant.
+  #
+  #    Le correctif : ce job regarde les quatre, et il les NOMME.
+  #
+  #    ⚠️ `lighthouse` N'EST PAS DANS LE VERDICT, ET C'EST VOULU — voir le
+  #    commentaire du job Lighthouse (l.226-230) : *« ce job ne bloque pas le
+  #    déploiement, et c'est voulu. Sur ce dépôt, pousser EST mettre en ligne, et
+  #    cette décision appartient à Gaëtan, pas à un audit automatique. »* Son
+  #    résultat est donc **affiché**, jamais **compté** dans le statut.
   # ═══════════════════════════════════════════════════════════════════════════
   notify:
     name: 💬 Notify
     runs-on: ubuntu-latest
-    needs: deploy
+    needs: [lint, build, lighthouse, deploy]
     if: always() && github.ref == 'refs/heads/main'
-    
+
     steps:
       - name: 💬 Discord Notification
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ needs.deploy.result }}
-          title: "GL Digital Lab Deployment"
+          # Le verdict porte sur la CHAÎNE QUI MET LE SITE EN LIGNE : lint → build
+          # → deploy. Si l'un des trois n'est pas « success », l'alerte est rouge.
+          # `skipped` n'est PAS un succès : un déploiement sauté veut dire que le
+          # site n'a pas été mis à jour.
+          status: ${{ (needs.lint.result == 'success' && needs.build.result == 'success' && needs.deploy.result == 'success') && 'success' || 'failure' }}
+          title: ${{ (needs.lint.result == 'success' && needs.build.result == 'success' && needs.deploy.result == 'success') && '✅ Site déployé' || '⛔ ÉCHEC — le site N''A PAS été mis à jour' }}
           description: |
-            **Commit:** ${{ github.event.head_commit.message }}
-            **Author:** ${{ github.actor }}
+            **Commit :** ${{ github.event.head_commit.message }}
+            **Auteur :** ${{ github.actor }}
+
+            **Chaîne de mise en ligne**
+            · Lint : ${{ needs.lint.result }}
+            · Build : ${{ needs.build.result }}
+            · Déploiement : ${{ needs.deploy.result }}
+
+            **Audit (informatif — ne bloque pas la publication)**
+            · Lighthouse : ${{ needs.lighthouse.result }}
           url: "https://gldigitallab.fr"
-          color: ${{ needs.deploy.result == 'success' && '0x10b981' || '0xef4444' }}
+          color: ${{ (needs.lint.result == 'success' && needs.build.result == 'success' && needs.deploy.result == 'success') && '0x10b981' || '0xef4444' }}
         continue-on-error: true
+
