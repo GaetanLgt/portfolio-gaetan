@@ -104,6 +104,13 @@
                  pages du site, la pièce qui parle est donc réellement liée partout —
                  condition du référentiel d'accessibilité (axe 0) et du verrou SEO. -->
             <router-link to="/ia-de-bord">L'IA de bord (la pièce qui parle)</router-link>
+            <!-- L'ÉTAT DU STUDIO — ajoutée le 19/09/2026, même règle que les deux
+                 précédentes : une page doit être atteignable par un lien ordinaire,
+                 sinon elle n'existe ni pour un moteur de recherche ni pour un lecteur
+                 d'écran. Cette page-là compte double : son objet est précisément de
+                 montrer ce qui est vérifiable, et une page de preuve qu'on ne peut pas
+                 trouver ne prouve rien à personne. -->
+            <router-link to="/etat-du-studio">L'état du studio (le relevé du présent)</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>

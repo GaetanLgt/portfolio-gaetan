@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
+  "_source": "scripts/generer-etat.mjs",
+  "commit": {
+    "court": "8dbb2e4",
+    "sujet": "L'alerte de déploiement disait « skipped » quand le build échouait",
+    "date": "2026-09-19T09:50:31+02:00",
+    "arbre_modifie": true
+  },
+  "build": {
+    "horodatage_local": "2026-09-19 10:09:03",
+    "horodatage_minute": "2026-09-19 10:09",
+    "horodatage_iso": "2026-09-19T08:09:03.707Z",
+    "fuseau": "Europe/Paris"
+  },
+  "pages_prerendues": 62,
+  "page_la_plus_lourde": {
+    "chemin": "/",
+    "ko_servis": 406,
+    "seuil_ko": 1024
+  },
+  "requetes_premier_chargement": {
+    "total": 13,
+    "seuil": 14
+  },
+  "moteurs_ia": {
+    "source": "api/etat.php",
+    "releve": null,
+    "mesure_a": null,
+    "moteurs": []
+  },
+  "verrous": [
+    {
+      "cle": "verrous",
+      "nom": "Verrous de la signature qualité",
+      "script": "scripts/verifier-verrous.mjs",
+      "code": 0,
+      "motif": null
+    },
+    {
+      "cle": "poids",
+      "nom": "Poids du premier chargement",
+      "script": "scripts/verifier-poids.mjs",
+      "code": 0,
+      "motif": null
+    },
+    {
+      "cle": "requetes",
+      "nom": "Requêtes du premier chargement",
+      "script": "scripts/verifier-requetes.mjs",
+      "code": 0,
+      "motif": null
+    },
+    {
+      "cle": "topographie",
+      "nom": "Topographie du site",
+      "script": "scripts/verifier-topographie.mjs",
+      "code": 0,
+      "motif": null
+    },
+    {
+      "cle": "contact",
+      "nom": "Contact livré au visiteur",
+      "script": "scripts/verifier-contact.mjs",
+      "code": 0,
+      "motif": null
+    }
+  ]
+}

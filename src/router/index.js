@@ -13,6 +13,8 @@ const NotFound = () => import('@/views/core/NotFound.vue');
 // lien « ← Retour aux Apps » vers /apps, une adresse qui n'existait pas — en ligne elle
 // répondait 403, donc les sept boutons de retour menaient à une erreur.
 const AppsPage = () => import('@/views/core/AppsPage.vue');
+// L'ÉTAT DU STUDIO (19/09/2026) — le relevé du présent.
+const EtatStudioPage = () => import('@/views/core/EtatStudioPage.vue');
 
 // SERVICES - Offres et solutions
 const ServicesPage = () => import('@/views/services/ServicesPage.vue');
@@ -170,6 +172,39 @@ const routes = [
     meta: {
       title: 'L\'IA de bord | La pièce qui parle, ses sept postes et ses limites',
       description: 'L\'intelligence qui vit à bord : la voix locale du capitaine, sept postes aux périmètres séparés, la mémoire du navire, quatre verrous mesurés — et trois limites dites franchement.'
+    }
+  },
+
+  {
+    // L'ÉTAT DU STUDIO (19/09/2026) — le présent réel, mesuré, et seulement lui.
+    //
+    // POURQUOI CETTE PAGE EXISTE. Gaëtan a demandé « un site vivant qui réagit en temps
+    // réel, pas un site statique ou mort ». La réponse du studio n'est pas un compteur
+    // qui s'agite : c'est une page qui dit ce qui est VRAI maintenant — le commit livré,
+    // la minute du build, le verdict réel des contrôles du dépôt, et qui est venu nous
+    // lire. La règle qui la commande, écrite dans son en-tête : *une pastille verte qui
+    // clignote sans rien mesurer est pire qu'une page statique, parce qu'elle ajoute le
+    // mensonge à l'immobilité.*
+    //
+    // ⚠️ PAGE ORDINAIRE, LIÉE DEPUIS LE PLAN DU SITE ET LE PIED DE PAGE. Même règle
+    // qu'à `/soute` et `/ia-de-bord` : un contenu atteignable seulement par un chemin
+    // non balisé n'existe ni pour un lecteur d'écran ni pour un moteur de recherche.
+    //
+    // ⚠️ SES CHIFFRES SONT PRÉRENDUS. La page importe le relevé écrit au build par
+    // `scripts/generer-etat.mjs` (`src/data/etat-studio.json`) : les nombres sont donc
+    // dans le HTML livré, lisibles sans exécuter de JavaScript. Le complément vivant —
+    // les passages des moteurs d'IA — vient de `public/api/etat.php`, qui ne rend que
+    // des compteurs agrégés : aucune adresse, aucun chemin de page, aucun agent brut.
+    //
+    // ⚠️ RIEN D'INTERNE DANS LE CONTENU RENDU : ni numéro de port, ni nom de fichier,
+    // ni nom de modèle, ni version logicielle, ni nom de franchise. Les services sont
+    // décrits par leur RÔLE, jamais par leur architecture réseau.
+    path: '/etat-du-studio',
+    name: 'EtatDuStudio',
+    component: EtatStudioPage,
+    meta: {
+      title: 'L\'état du studio | Le relevé du présent, mesuré et daté',
+      description: 'Le studio en ce moment : commit livré, horodatage du build, pages prérendues, poids, requêtes, verdict des cinq contrôles du dépôt — et les moteurs d\'IA qui sont venus nous lire. Chaque chiffre porte son heure, et ce qui n\'est pas mesuré le dit.'
     }
   },
 

@@ -221,6 +221,21 @@ export const TOPOGRAPHIE = [
   // pied de page, `noindex`. Écrit ici pour que ce ne soit pas pris pour un oubli.
   // Adresse visée : gldigitallab.fr/Arche/
   { chemin: '/Arche', declaration: null },
+
+  // ═══ LE RELEVÉ DU PRÉSENT — la pièce qui ne raconte pas, qui mesure ═══════════════
+  // ⚠️ AJOUTÉE EN DERNIER, ET CE N'EST PAS DE LA NÉGLIGENCE : c'est la règle de ce
+  // fichier appliquée à lui-même. Les compartiments et les `chemin` sont appariés PAR
+  // ORDRE D'APPARITION ; insérer cette entrée plus haut décalerait tous les appariements
+  // suivants, et `verifier-topographie.mjs` lirait une carte fausse. Une entrée nouvelle
+  // se pose donc à la fin, jamais au milieu.
+  {
+    chemin: '/etat-du-studio',
+    compartiment: { id: 'journal-bord', nom: 'Le journal de bord', pont: 'inferieur' },
+    declaration: {
+      lastmod: '2026-09-19', changefreq: 'daily', priority: '0.7',
+      note: "L'état du studio (ajoutée le 19/09/2026) : le présent réel du studio, mesuré et daté — commit livré, horodatage du build, pages prérendues, poids et requêtes du premier chargement, verdict des cinq contrôles du dépôt, et les passages des moteurs d'IA en compteurs agrégés. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'une page qui dit la vérité sur un studio doit pouvoir être trouvée par ceux qui la vérifient. `changefreq: daily` : c'est la seule page du site dont le contenu change à chaque construction, et la seule dont une partie est lue en direct. Priorité 0.7 : c'est une pièce de confiance, pas une porte commerciale. Aucun numéro de port, aucun nom de fichier, aucun nom de modèle : les services y sont décrits par leur rôle, jamais par leur architecture réseau.",
+    },
+  },
 ];
 
 /** Les compartiments de la carte du navire, dérivés du manifeste. */
