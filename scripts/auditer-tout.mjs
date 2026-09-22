@@ -22,7 +22,7 @@
  *    signalé comme tel — ni vert par silence, ni rouge par confusion.
  */
 
-import { readdirSync, existsSync } from 'node:fs';
+import { readdirSync, existsSync, appendFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
@@ -138,6 +138,59 @@ for (const v of verrous) {
   console.log(`  ${marque}${nom.padEnd(26)} ${gris(String(ms).padStart(6) + ' ms')}   exit=${code}`);
 }
 
+/* --- LE RÉSUMÉ POUR LA CI ----------------------------------------------------
+ *
+ * ⛔ POURQUOI CETTE FONCTION EXISTE — DÉFAUT MESURÉ LE 22/09/2026.
+ *
+ *   Le workflow portait DEUX listes de verrous : quatre étapes écrites à la main
+ *   (« 🧮 Requêtes », « ⚖️ Poids », « 🗺️ Topographie », « 📇 Contact ») ET ce
+ *   passage unique, qui ÉNUMÈRE le dossier. Deux listes pour la même chose.
+ *   ⭐ **Deux listes divergent toujours** — et elles avaient déjà divergé : un
+ *     commentaire du workflow déclarait deux verrous « volontairement dehors »
+ *     alors que ce passage les exécutait depuis la veille.
+ *
+ *   Fusion demandée par Gaëtan : « t'analyses, tu merges, et tu fais en sorte
+ *   que ça se fasse normalement. »
+ *
+ *   ⚠️ MAIS on ne perd pas ce que les étapes nommées apportaient : dans l'onglet
+ *     Actions, un échec s'y lisait comme une ÉTAPE ROUGE portant le nom du
+ *     verrou fautif. Un seul passage perdrait cette lisibilité — d'où ce résumé,
+ *     écrit dans `GITHUB_STEP_SUMMARY` quand la CI l'appelle.
+ *     *Une fusion qui fait perdre une information n'est pas une fusion, c'est
+ *     une suppression.*
+ */
+function resumerPourLaCI(resultats, verdict) {
+  const cible = process.env.GITHUB_STEP_SUMMARY;
+  if (!cible) return;                       // hors CI : rien à écrire, et on le dit par le silence
+
+  const lignes = [];
+  lignes.push('## 🧭 Tous les verrous, un seul passage');
+  lignes.push('');
+  lignes.push(`${resultats.length} verrou(x) découvert(s) **par énumération de \`scripts/\`** —`);
+  lignes.push('jamais par une liste écrite à la main, qui deviendrait fausse.');
+  lignes.push('');
+  lignes.push('| Verrou | Durée | Code de sortie | État |');
+  lignes.push('|---|---:|---:|---|');
+  for (const r of resultats) {
+    const nom = r.v.replace(/^verifier-/, '').replace(/\.mjs$/, '');
+    const etat = r.etat === 'ok' ? '✅ tenu' : r.etat === 'ko' ? '❌ **ne passe pas**' : '⚠️ planté (tué ou délai)';
+    lignes.push(`| \`${nom}\` | ${r.ms} ms | ${r.code} | ${etat} |`);
+  }
+  lignes.push('');
+  lignes.push(verdict);
+  lignes.push('');
+  lignes.push('> ⭐ Un verrou qui n’apparaît PAS dans ce tableau ne s’appelle pas');
+  lignes.push('> `verifier-*.mjs` dans `scripts/` — donc **personne ne le lance**, et');
+  lignes.push('> *un verrou écrit mais jamais lancé n’est pas un verrou : c’est un fichier.*');
+  lignes.push('');
+
+  try {
+    appendFileSync(cible, lignes.join('\n'), 'utf8');
+  } catch {
+    // Un résumé illisible ne doit pas faire échouer un audit réussi.
+  }
+}
+
 /* --- LE VERDICT -------------------------------------------------------------- */
 const casses = resultats.filter((r) => r.etat !== 'ok');
 
@@ -146,6 +199,7 @@ console.log('='.repeat(78));
 if (casses.length === 0) {
   console.log(vert(`  Les ${resultats.length} verrous sont tenus.`));
   console.log('='.repeat(78) + '\n');
+  resumerPourLaCI(resultats, `**Les ${resultats.length} verrous sont tenus.**`);
   process.exit(0);
 }
 
@@ -173,4 +227,9 @@ console.log('  Ne pas désactiver ce contrôle : corriger ce qu’il signale.');
 console.log('  ⭐ Et si un verrou est absent de ce passage, c’est qu’il ne s’appelle');
 console.log('     pas `verifier-*.mjs` dans scripts/ — donc personne ne le lance.');
 console.log('='.repeat(78) + '\n');
+resumerPourLaCI(
+  resultats,
+  `**${casses.length} verrou(x) sur ${resultats.length} ne passent pas.** ` +
+  `Corriger ce qu’ils signalent — ne pas désactiver le contrôle.`
+);
 process.exit(1);

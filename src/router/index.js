@@ -40,6 +40,14 @@ const CGV = () => import('@/views/legal/CGV.vue');
 const TutorielsPage = () => import('@/views/resources/TutorielsPage.vue');
 const ComponentsLibrary = () => import('@/views/resources/components-library/ComponentsLibrary.vue');
 
+// MODÈLES — les gabarits vendables du studio.
+// ⭐ Construit le 22/09/2026 en « tranche verticale » : un seul modèle, entier et
+// mesuré, plutôt que vingt annoncés. Doctrine du studio : *« tant que cette
+// tranche n'existe pas, l'offre n'est pas vendable. »*
+// ⛔ Rien d'un tiers n'y entre : boutique, objets, textes et pictogrammes sont
+// inventés, et les couleurs viennent des jetons de `variables.css`.
+const ModeleBorealBoutique = () => import('@/views/modeles/ModeleBorealBoutique.vue');
+
 // TOOLS - Outils admin
 // /ark-admin retirée du build le 11/09/2026 (décision Gaëtan) — voir la section TOOLS.
 
@@ -95,6 +103,27 @@ const routes = [
     meta: {
       title: 'Dossier professionnel | Prestations, prix, méthode et limites',
       description: 'Prestations, prix publics hors taxes, délais, méthode et limites assumées de Génie IT Tek FR, studio indépendant dans la Somme. Document imprimable, sans animation.'
+    }
+  },
+  // ── MODÈLES : le gabarit vendable, en tranche verticale ──────────────────
+  {
+    path: '/modeles/boutique-boreal',
+    name: 'ModeleBorealBoutique',
+    // UNE SEULE ROUTE POUR CINQ MARCHES, ET C'EST DÉLIBÉRÉ.
+    // La vitrine, le catalogue, la fiche produit, le panier et la commande vivent
+    // dans l'état local et le fragment d'adresse (`#catalogue`, `#fiche/<id>`,
+    // `#panier`, `#commande` : liens directs qui marchent).
+    // Cinq routes séparées auraient eu besoin de cinq entrées au routeur, au
+    // prérendu et à la topographie — cinq occasions de divergence, pour un seul
+    // modèle. *On ne multiplie pas les portes quand une suffit.*
+    // ⚠️ `topographie.js` est la source du PLAN DE SITE, pas le routeur : sans
+    //   entrée là-bas, `verifier-topographie.mjs` rend une NOTE non bloquante.
+    //   Le prérendu, lui, lit le routeur : la page SERA prérendue. La note est
+    //   assumée tant que la publication de ces modèles au sitemap n'est pas décidée.
+    component: ModeleBorealBoutique,
+    meta: {
+      title: 'Modèle de boutique — démonstration Atelier Boréal | Génie IT TeK FR',
+      description: 'Démonstration d\'un modèle de boutique : catalogue filtrable, fiche produit, panier persistant et tunnel de commande simulé — aucun paiement, aucune donnée transmise. Navigation clavier et manette Xbox.'
     }
   },
   {

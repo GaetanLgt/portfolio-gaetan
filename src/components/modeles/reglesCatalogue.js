@@ -7,7 +7,7 @@
  * faut pouvoir l'appeler sur des catalogues faux — or `donneesProduits.js` importe le
  * JSON, et Node ne sait pas relire un `import … .json` sans attribut d'import. En
  * séparant les RÈGLES des DONNÉES, le banc d'essai `banc-donnees-boreal.mjs` importe ce
- * fichier-ci (du JavaScript pur, exécutable partout) et lui sert sept catalogues abîmés.
+ * fichier-ci (du JavaScript pur, exécutable partout) et lui sert des catalogues abîmés.
  *
  * *Une règle qui ne peut pas être appelée seule ne peut pas être éprouvée.*
  */

@@ -1,0 +1,1308 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BOREAL.CSS — LA FEUILLE DE STYLES DE LA TRANCHE VERTICALE « ATELIER BORÉAL »
+
+   Modèle de boutique de démonstration. Cette feuille est importée UNE fois, par la page
+   qui l'utilise (`ModeleBorealBoutique.vue`), et nulle part ailleurs.
+
+   ⛔ AUCUNE RESSOURCE EXTERNE. Pas de `@import`, pas d'`url()` vers une image ou une
+   police, pas de police téléchargée : les seuls dessins de la tranche sont des tracés SVG
+   écrits dans les composants, et la seule police est celle du studio.
+
+   ⛔ AUCUNE COULEUR ÉCRITE À LA MAIN. Toutes les valeurs viennent des jetons déclarés
+   dans `src/assets/styles/variables.css` (`--paper`, `--ink`, `--accent`, `--action`,
+   `--rule-strong`, `--primary-soft`, `--glow-*`, les espacements et les transitions).
+   Un modèle vendu qui code une couleur en dur devient faux à la prochaine bascule de
+   direction artistique — et le studio en a déjà fait cinq en onze jours.
+
+   ⚠ LES CLASSES SONT PRÉFIXÉES `boreal-` : le modèle est destiné à être copié dans
+   d'autres projets, donc il ne doit pas pouvoir entrer en collision avec un `container`,
+   un `card` ou un `badge` déjà présent chez l'acheteur.
+
+   ⚠ ET TOUT MOUVEMENT EST DÉSACTIVÉ sous `prefers-reduced-motion: reduce` — la règle est
+   en bas du fichier, elle porte sur l'ensemble de la tranche, et elle est vérifiable.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   1. LE BLOC DE LA TRANCHE
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--space-md) var(--space-sm) var(--space-lg);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.boreal code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper-alt);
+  color: var(--ink);
+}
+
+/* L'en-tête de la tranche — il porte le SEUL `h1` de la page, et il reste affiché à
+   toutes les étapes. C'est ce titre qui manquait, et c'est l'audit axe qui l'a dit. */
+.boreal-entete {
+  margin-bottom: var(--space-md);
+}
+
+.boreal-entete .boreal-bandeau {
+  margin-top: var(--space-md);
+  margin-bottom: 0;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   2. TYPOGRAPHIE — trois niveaux, pas plus
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-titre-1 {
+  margin: 0 0 var(--space-sm);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.boreal-titre-2 {
+  margin: var(--space-md) 0 var(--space-sm);
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+.boreal-titre-3 {
+  margin: var(--space-sm) 0 var(--space-xs);
+  font-size: 1.15rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+/* Titres atteints par le focus après un changement d'étape : on ne veut PAS voir le
+   cadre de focus sur un titre qu'on vient de déplacer par programme, mais on veut le
+   voir dès qu'un utilisateur y arrive au clavier. */
+.boreal h1:focus-visible,
+.boreal h2:focus-visible,
+.boreal-titre-1:focus,
+.boreal-titre-2:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.boreal-chapeau {
+  margin: 0 0 var(--space-sm);
+  max-width: 68ch;
+  color: var(--ink-soft);
+}
+
+.boreal-chapeau--large {
+  font-size: 1.1rem;
+}
+
+.boreal-surtitre {
+  margin: var(--space-sm) 0 var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.boreal-mention {
+  margin: var(--space-xs) 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.boreal-mention--pied {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--rule);
+}
+
+.boreal-etiquette {
+  display: inline-block;
+  margin: 0 0 var(--space-xs);
+  padding: 0.15em 0.6em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.boreal-etiquette--rupture {
+  border-color: var(--alert);
+  color: var(--alert);
+}
+
+.boreal-etiquette--succes {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   3. BANDEAUX — la démonstration se dit AVANT tout le reste
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-bandeau {
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-sm);
+  border: 1px solid var(--rule-strong);
+  border-left-width: 4px;
+  border-radius: 4px;
+  background: var(--paper-alt);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.boreal-bandeau__marque {
+  display: inline-block;
+  margin-right: 0.6em;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  background: var(--action);
+  color: var(--action-ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.boreal-avertissement {
+  margin: var(--space-sm) 0;
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--alert);
+  border-radius: 4px;
+  background: var(--paper-alt);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.boreal-erreur {
+  margin: var(--space-xs) 0;
+  color: var(--critical);
+  font-size: 0.9rem;
+}
+
+.boreal-erreur--resume {
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--critical);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   4. BARRE D'ÉTAPES
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-barre {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  padding: var(--space-xs) 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.boreal-barre__liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.boreal-onglet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.5em 0.9em;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.boreal-onglet:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+.boreal-onglet[aria-current='page'] {
+  border-color: var(--accent);
+  background: var(--primary-soft);
+  color: var(--ink);
+}
+
+.boreal-onglet__compte {
+  min-width: 1.5em;
+  padding: 0 0.4em;
+  border-radius: 999px;
+  background: var(--action);
+  color: var(--action-ink);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.boreal-barre__etat {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   5. MANETTE — l'état et la légende
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-manette {
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+.boreal-manette__etat {
+  margin: 0 0 var(--space-xs);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.boreal-legende {
+  display: grid;
+  grid-template-columns: minmax(11rem, max-content) 1fr;
+  gap: var(--space-xs) var(--space-sm);
+  margin: var(--space-sm) 0 0;
+}
+
+.boreal-legende dt {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--accent);
+}
+
+.boreal-legende dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   6. BOUTONS — cinq rôles, jamais deux pour la même chose
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.6em 1.1em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+/* L'ACTION PRINCIPALE : jaune dominant, texte sombre — c'est la couleur d'action du
+   studio, et elle porte le contraste le plus haut disponible dans les jetons. */
+.boreal-bouton--action {
+  border-color: var(--action);
+  background: var(--action);
+  color: var(--action-ink);
+  font-weight: 600;
+}
+
+.boreal-bouton--action:hover {
+  background: var(--action-dark);
+  border-color: var(--action-dark);
+}
+
+.boreal-bouton--principal {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.boreal-bouton--principal:hover {
+  background: var(--accent-ink);
+  border-color: var(--accent-ink);
+}
+
+.boreal-bouton--discret {
+  border-color: var(--rule-strong);
+  color: var(--ink-soft);
+}
+
+.boreal-bouton--discret:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.boreal-bouton--retrait {
+  border-color: var(--critical);
+  color: var(--critical);
+}
+
+.boreal-bouton--retrait:hover {
+  background: var(--critical);
+  color: var(--paper);
+}
+
+/* Le vidage confirmé : le rouge d'alerte du studio, avec SON encre sombre.
+   ⚠ Pas de hachures ici : le texte posé sur un motif alterné n'a plus de contraste
+   mesurable, et « ça se voit quand même » n'est pas une mesure. */
+.boreal-bouton--insistant {
+  border-color: var(--alert);
+  background: var(--alert);
+  color: var(--alert-ink);
+  font-weight: 600;
+}
+
+.boreal-bouton--rond {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.1rem;
+}
+
+.boreal-bouton:disabled {
+  border-color: var(--rule);
+  background: transparent;
+  color: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+.boreal-bouton--action:disabled,
+.boreal-bouton--principal:disabled {
+  background: var(--paper-alt);
+  color: var(--ink-faint);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   7. SECTIONS, FILTRES, JETONS
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-section {
+  margin-bottom: var(--space-lg);
+}
+
+.boreal-section__entete {
+  max-width: 70ch;
+}
+
+.boreal-filtres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin: var(--space-sm) 0;
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+.boreal-filtres__groupe {
+  min-width: min(100%, 18rem);
+}
+
+.boreal-filtres__boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+/* Un jeton à état : `aria-pressed` porte l'information, la couleur la rend visible.
+   L'information n'est donc jamais portée par la seule couleur. */
+.boreal-jeton {
+  padding: 0.45em 0.85em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.boreal-jeton:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.boreal-jeton[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--primary-soft);
+  color: var(--ink);
+  box-shadow: var(--glow-accent);
+}
+
+.boreal-compte {
+  margin: var(--space-xs) 0 var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.boreal-vide {
+  padding: var(--space-md);
+  border: 1px dashed var(--rule-strong);
+  border-radius: 4px;
+  background: var(--paper-alt);
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   8. GRILLE ET CARTES PRODUIT
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-grille-produits {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.boreal-grille-produits__item {
+  display: flex;
+}
+
+.boreal-carte {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.boreal-carte:hover {
+  border-color: var(--rule-strong);
+  transform: translateY(-2px);
+}
+
+.boreal-carte:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--glow-accent);
+}
+
+.boreal-carte__visuel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--surface-light);
+  color: var(--ink-soft);
+}
+
+.boreal-pictogramme {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.boreal-carte__categorie {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.boreal-carte__nom {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.boreal-carte__resume {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.boreal-carte__prix {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  margin: var(--space-xs) 0 0;
+}
+
+.boreal-carte__montant {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  color: var(--action);
+}
+
+.boreal-carte__mention {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+.boreal-carte__variantes {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+
+.boreal-carte__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: auto;
+  padding-top: var(--space-xs);
+}
+
+.boreal-carte__actions .boreal-bouton {
+  flex: 1 1 auto;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   9. FICHE PRODUIT
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-retour {
+  margin-bottom: var(--space-sm);
+  padding: 0.4em 0.8em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.boreal-retour:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.boreal-fiche {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+@media (min-width: 52rem) {
+  .boreal-fiche {
+    grid-template-columns: minmax(14rem, 20rem) minmax(0, 1fr);
+  }
+}
+
+.boreal-fiche__visuel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 14rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--surface-light);
+  color: var(--ink-soft);
+}
+
+.boreal-fiche__visuel .boreal-pictogramme {
+  width: 9rem;
+  height: 9rem;
+}
+
+.boreal-fiche__corps {
+  min-width: 0;
+}
+
+.boreal-fiche__prix {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  margin: var(--space-xs) 0 var(--space-sm);
+}
+
+.boreal-fiche__montant {
+  font-family: var(--font-mono);
+  font-size: 1.8rem;
+  color: var(--action);
+}
+
+.boreal-fiche__unite {
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+}
+
+.boreal-fiche__resume {
+  margin: 0 0 var(--space-xs);
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.boreal-fiche__description {
+  margin: 0 0 var(--space-sm);
+  max-width: 68ch;
+  color: var(--ink-soft);
+}
+
+.boreal-fiche__details {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--space-xs) var(--space-sm);
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+.boreal-fiche__details dt {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+}
+
+.boreal-fiche__details dd {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.boreal-fiche__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   10. CHOIX (variantes, livraison) ET QUANTITÉ
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-choice {
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+.boreal-choice legend {
+  padding: 0 0.5em;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.boreal-choice__options {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.boreal-choice__option {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.boreal-choice__option:hover {
+  border-color: var(--accent);
+}
+
+.boreal-choice__option--active {
+  border-color: var(--accent);
+  background: var(--primary-soft);
+}
+
+.boreal-choice__libelle {
+  color: var(--ink);
+}
+
+.boreal-choice__prix {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--action);
+}
+
+.boreal-choice__detail {
+  grid-column: 2 / -1;
+  color: var(--ink-faint);
+  font-size: 0.82rem;
+}
+
+.boreal-choice__option input {
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--accent);
+}
+
+.boreal-quantite {
+  margin: 0 0 var(--space-sm);
+}
+
+.boreal-quantite__commande {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.boreal-quantite__valeur {
+  min-width: 3rem;
+  padding: 0.35em 0.5em;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  text-align: center;
+  color: var(--ink);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   11. PANIER ET RÉCAPITULATIFS
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-panier {
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.boreal-panier__ligne {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) max-content max-content max-content;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (max-width: 46rem) {
+  .boreal-panier__ligne {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+}
+
+.boreal-panier__visuel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--surface-light);
+  color: var(--ink-soft);
+}
+
+.boreal-panier__visuel .boreal-pictogramme {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.boreal-panier__identite {
+  min-width: 0;
+}
+
+.boreal-panier__nom {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.boreal-panier__variante,
+.boreal-panier__unite {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.84rem;
+}
+
+.boreal-panier__total {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--action);
+  white-space: nowrap;
+}
+
+.boreal-recap {
+  margin-top: var(--space-sm);
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+.boreal-recap__lignes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: var(--space-xs) var(--space-sm);
+  margin: 0 0 var(--space-sm);
+}
+
+.boreal-recap__lignes dt {
+  color: var(--ink-soft);
+}
+
+.boreal-recap__lignes dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  text-align: right;
+  color: var(--ink);
+}
+
+.boreal-recap__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-sm);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--rule-strong);
+  color: var(--ink);
+}
+
+.boreal-recap__total strong {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  color: var(--action);
+}
+
+.boreal-recap__actions,
+.boreal-formulaire__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.boreal-recap__articles {
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.boreal-recap__articles li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) max-content max-content;
+  gap: var(--space-xs) var(--space-sm);
+  align-items: baseline;
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.boreal-recap__article-nom {
+  color: var(--ink);
+}
+
+.boreal-recap__article-variante,
+.boreal-recap__article-quantite {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+.boreal-recap__article-total {
+  font-family: var(--font-mono);
+  text-align: right;
+  color: var(--ink);
+}
+
+.boreal-recap__adresse {
+  font-style: normal;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.boreal-confirmation {
+  padding: var(--space-md);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   12. TUNNEL — ÉTAPES ET FORMULAIRE
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-etapes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-sm);
+  padding: 0;
+  list-style: none;
+  counter-reset: etape;
+}
+
+.boreal-etapes__item {
+  display: flex;
+  align-items: center;
+}
+
+.boreal-etapes__lien,
+.boreal-etapes__fixe {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.35em 0.7em;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink-faint);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.boreal-etapes__lien {
+  border-color: var(--rule-strong);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.boreal-etapes__lien:hover {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.boreal-etapes__item--courante .boreal-etapes__fixe,
+.boreal-etapes__item--courante .boreal-etapes__lien {
+  border-color: var(--accent);
+  background: var(--primary-soft);
+  color: var(--ink);
+}
+
+.boreal-etapes__rang {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6em;
+  height: 1.6em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.boreal-etapes__item--courante .boreal-etapes__rang {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.boreal-formulaire {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+.boreal-formulaire__duo {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+@media (min-width: 44rem) {
+  .boreal-formulaire__duo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.boreal-champ {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.boreal-champ__etiquette {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.boreal-champ__requis {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.boreal-champ__saisie {
+  padding: 0.6em 0.75em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.boreal-champ__saisie::placeholder {
+  color: var(--ink-faint);
+}
+
+.boreal-champ--erreur .boreal-champ__saisie {
+  border-color: var(--critical);
+}
+
+.boreal-champ--actif .boreal-champ__saisie {
+  border-color: var(--accent);
+}
+
+.boreal-champ__clavier {
+  justify-self: start;
+  padding: 0.35em 0.8em;
+  font-size: 0.85rem;
+}
+
+.boreal-livraison {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   13. CLAVIER À L'ÉCRAN
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-clavier {
+  margin-top: var(--space-xs);
+  padding: var(--space-sm);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--paper);
+}
+
+.boreal-clavier__entete {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: space-between;
+  margin: 0 0 var(--space-xs);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.boreal-clavier__valeur {
+  color: var(--action);
+  overflow-wrap: anywhere;
+}
+
+.boreal-clavier__rangee {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.boreal-clavier__commandes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--rule);
+}
+
+.boreal-touche {
+  min-width: 2.6rem;
+  min-height: 2.6rem;
+  padding: 0.3em 0.5em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 4px;
+  background: var(--paper-alt);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.boreal-touche:hover {
+  border-color: var(--accent);
+}
+
+.boreal-touche--large {
+  min-width: 6rem;
+}
+
+.boreal-touche--valider {
+  border-color: var(--action);
+  background: var(--action);
+  color: var(--action-ink);
+  font-weight: 600;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   14. VITRINE
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal-vitrine {
+  padding-bottom: var(--space-md);
+}
+
+.boreal-vitrine__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.boreal-contenu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.boreal-contenu__item {
+  padding: var(--space-sm);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-alt);
+}
+
+.boreal-contenu__titre {
+  margin: 0 0 var(--space-xs);
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.boreal-contenu__detail {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.boreal-parcours {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: parcours;
+}
+
+.boreal-parcours__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+}
+
+.boreal-parcours__rang {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8em;
+  height: 1.8em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   15. LE FOCUS VISIBLE — on le renforce, on ne le supprime jamais
+   La feuille d'accessibilité du studio pose déjà un contour sur `:focus-visible`.
+   Ici on l'élargit pour les éléments de la tranche, parce qu'ils sont petits et que
+   le contour par défaut s'y confond avec la bordure.
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+.boreal :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.boreal-bouton--action:focus-visible,
+.boreal-touche--valider:focus-visible {
+  outline-color: var(--action);
+  outline-offset: 3px;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   16. MOUVEMENT RÉDUIT — la règle porte sur TOUTE la tranche, pas sur un composant
+   ⚠ Elle est ici, en bas, exprès : elle doit pouvoir être lue d'un coup d'œil, et
+   couvrir sans exception tout ce qui bouge dans ce fichier.
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .boreal *,
+  .boreal *::before,
+  .boreal *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  .boreal-carte:hover {
+    transform: none;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────────
+   17. L'IMPRESSION — un récapitulatif de commande s'imprime
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+@media print {
+  .boreal-barre,
+  .boreal-manette,
+  .boreal-clavier,
+  .boreal-bouton,
+  .boreal-retour {
+    display: none !important;
+  }
+
+  .boreal {
+    color: var(--paper);
+  }
+}

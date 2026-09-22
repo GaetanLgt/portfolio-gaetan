@@ -8,9 +8,9 @@
  * assurance, puisqu'elle annonce « catalogue vérifié » sans avoir jamais eu à dire non.
  *
  * D'où DEUX contrôles, et le second compte plus que le premier :
- *   ① le VRAI catalogue passe, et il rend un compte (13 produits) — un compte à zéro
+ *   ① le VRAI catalogue passe, et il rend un compte NON NUL — un compte à zéro
  *      prouverait seulement que la lecture n'a rien trouvé ;
- *   ② SEPT catalogues abîmés sont REFUSÉS, un défaut par essai, et le message d'erreur
+ *   ② HUIT catalogues abîmés sont REFUSÉS, un défaut par essai, et le message d'erreur
  *      doit nommer le produit fautif. Un garde-fou muet serait à moitié inutile.
  *
  * Usage :  node src/components/modeles/banc-donnees-boreal.mjs

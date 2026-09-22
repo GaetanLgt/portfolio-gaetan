@@ -82,6 +82,17 @@ export const nomManette = ref('');
 export const derniereAction = ref('');
 export const indexManette = ref(-1);
 
+/**
+ * QUI A DONNÉ LE FOCUS. « manette » ou « autre » (souris, Tab).
+ *
+ * ⚠ CE N'EST PAS UN DÉTAIL DE CONFORT : c'est ce qui permet au clavier virtuel de
+ * s'ouvrir pour un joueur de manette SANS s'imposer à quelqu'un qui clique dans un champ
+ * pour taper au clavier. Un clavier virtuel qui s'ouvre à chaque clic souris est une
+ * gêne ; un clavier virtuel qui ne s'ouvre jamais rend la promesse « tout à la manette »
+ * fausse. Les deux cas sont distingués ici, à la source du focus.
+ */
+export const origineFocus = ref('autre');
+
 /* ────────────────────────────────────────────────────────────────────────────────
    PILE DE GESTIONNAIRES
    ──────────────────────────────────────────────────────────────────────────────── */
@@ -145,8 +156,26 @@ function estVisible(element) {
   return style.visibility !== 'hidden' && style.display !== 'none';
 }
 
+/**
+ * LA PORTÉE DU FOCUS — et elle existe pour une raison précise.
+ *
+ * Quand le clavier virtuel est ouvert, le stick ne doit PAS pouvoir sortir du clavier et
+ * aller se promener dans la page : le visiteur taperait dans le vide sans comprendre
+ * pourquoi. Le clavier déclare donc sa portée en s'ouvrant, et la retire en se fermant.
+ * Une contrainte déclarée par celui qui la subit, pas une exception écrite ailleurs.
+ */
+let portee = null;
+
+export function definirPorteeFocus(element) {
+  portee = element || null;
+}
+
 /** Les candidats, dans l'ordre du document, débarrassés des invisibles. */
 export function candidatsFocus() {
+  const racine = portee && portee.isConnected ? portee : document;
+  if (racine !== document) {
+    return Array.from(racine.querySelectorAll(SELECTEUR_FOCUSABLE)).filter(estVisible);
+  }
   return Array.from(document.querySelectorAll(SELECTEUR_FOCUSABLE)).filter(estVisible);
 }
 
@@ -232,6 +261,7 @@ export function focusElementSuivant(direction) {
   cible.focus({ preventScroll: true });
   cible.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   dernierFocalise = cible;
+  origineFocus.value = 'manette';
   derniereAction.value = `focus ${direction}`;
   return true;
 }
@@ -245,6 +275,7 @@ export function activerElementCourant() {
       candidats[0].focus();
       candidats[0].scrollIntoView({ block: 'nearest' });
       dernierFocalise = candidats[0];
+      origineFocus.value = 'manette';
       derniereAction.value = 'focus sur le premier élément';
       return true;
     }
@@ -255,6 +286,7 @@ export function activerElementCourant() {
   // qui le gère) : le « cliquer » ferait autre chose, et pas ce qu'on veut.
   if (actif instanceof HTMLInputElement || actif instanceof HTMLTextAreaElement) {
     actif.focus();
+    origineFocus.value = 'manette';
     derniereAction.value = 'champ de saisie actif';
     return true;
   }
@@ -311,7 +343,12 @@ function traiterBoutons(manette) {
     const avant = etaitPresse[numero] === true;
     if (maintenant && !avant) {
       switch (numero) {
-        case BOUTON.A: declencher('valider'); break;
+        // ⚠ « A » RETOMBE SUR SON GESTE PAR DÉFAUT QUAND PERSONNE NE LE PREND. C'est ce
+        // qui fait fonctionner le clavier à l'écran, les cases à cocher et les boutons
+        // ordinaires sans que chaque composant ait à déclarer quoi que ce soit.
+        // *Un bouton « A » qui ne fait rien tant qu'on ne l'a pas câblé rendrait la
+        // manette inutilisable sur tout ce qui n'a pas été prévu.*
+        case BOUTON.A: if (!declencher('valider')) activerElementCourant(); break;
         case BOUTON.B: declencher('retour'); break;
         case BOUTON.X: declencher('ajouter'); break;
         case BOUTON.Y: declencher('panier'); break;
@@ -396,6 +433,11 @@ export function demarrerManette() {
   if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
   actif = true;
 
+  // Un clic ou un appui de touche remet l'origine du focus à « autre » : à partir de là,
+  // le clavier virtuel ne s'invite plus tout seul.
+  window.addEventListener('pointerdown', marquerOrigineHumaine, { passive: true });
+  window.addEventListener('keydown', marquerOrigineHumaine, { passive: true });
+
   const manette = manetteCourante();
   if (manette) {
     boucleImages = window.requestAnimationFrame(image);
@@ -404,14 +446,21 @@ export function demarrerManette() {
   }
 }
 
+function marquerOrigineHumaine() {
+  origineFocus.value = 'autre';
+}
+
 /** Arrête l'écoute et lâche tout : aucune boucle ne survit au démontage. */
 export function arreterManette() {
   actif = false;
+  window.removeEventListener('pointerdown', marquerOrigineHumaine);
+  window.removeEventListener('keydown', marquerOrigineHumaine);
   if (boucleImages) window.cancelAnimationFrame(boucleImages);
   if (veille) window.clearInterval(veille);
   boucleImages = 0;
   veille = 0;
   etaitPresse = [];
+  definirPorteeFocus(null);
   manetteConnectee.value = false;
   nomManette.value = '';
   indexManette.value = -1;
@@ -448,6 +497,10 @@ function estChampDeSaisie(element) {
 
 export function surToucheClavier(evenement) {
   if (estChampDeSaisie(evenement.target)) return;
+  // ⚠ L'origine du focus est marquée par l'écouteur global posé dans `demarrerManette`,
+  // et par lui SEUL : si les deux la touchaient, l'ordre d'exécution déciderait du
+  // résultat, et une flèche au clavier ouvrirait — ou non — le clavier virtuel selon un
+  // détail d'enregistrement. Une règle à deux endroits est une règle qui se contredit.
   switch (evenement.key) {
     case 'ArrowUp': evenement.preventDefault(); focusElementSuivant('haut'); break;
     case 'ArrowDown': evenement.preventDefault(); focusElementSuivant('bas'); break;

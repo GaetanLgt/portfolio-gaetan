@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Essai de rendu — modèle Atelier Boréal</title>
+    <!-- ⛔ PAGE DE CONTRÔLE, PAS UNE PAGE DU SITE. Elle n'est référencée par AUCUNE route
+         et ne doit pas être publiée : elle sert à REGARDER la tranche et à l'ÉPROUVER
+         automatiquement, avant que la ligne de routeur n'existe. C'est aussi ce qui
+         permet de compiler et de mesurer la tranche toute seule — sans elle, `vite build`
+         ne verrait rien de la tranche, puisqu'aucune route ne la référence. -->
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <!-- ⚠ `main` ICI, ET CE N'EST PAS UN DÉTAIL DE BALISAGE : dans le site, la page est
+         rendue À L'INTÉRIEUR du `<main id="main-content">` de `App.vue`. Cette page d'essai
+         doit donc fournir le même repère, sinon un audit d'accessibilité l'accuse — à
+         juste titre — de n'avoir aucun repère principal. *Un hôte d'essai qui ne ressemble
+         pas à l'hôte réel fabrique de faux défauts.* -->
+    <main id="app" aria-label="Essai de rendu du modèle de boutique"></main>
+    <script type="module" src="./essai-rendu.js"></script>
+  </body>
+</html>
