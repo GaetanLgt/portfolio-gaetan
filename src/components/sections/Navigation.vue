@@ -145,10 +145,30 @@ onUnmounted(() => {
 
 <style scoped>
 .navigation {
-  position: fixed;
+  /* ⚠ `fixed` → `sticky` LE 22/09/2026 — DÉCISION GAËTAN, citée :
+       « Je veux ce bloc en page principale, je veux rien autour.
+         Je veux que là où ce qu'il y a autour soit à l'intérieur. »
+
+     `position: fixed` faisait de cette barre LA CHOSE LA PLUS « AUTOUR » DU
+     SITE : collée à la fenêtre, au-dessus de tout, appartenant à aucun bloc.
+     Aucun habillage posé autour d'elle n'aurait pu corriger ça — le problème
+     n'était pas son style, c'était son rattachement.
+
+     En `sticky`, elle rend le MÊME service au visiteur (elle reste visible au
+     défilement, elle s'efface vers le haut quand on descend : `--hidden`
+     continue de fonctionner, `transform` s'applique aussi en sticky) mais elle
+     est désormais DANS la coque : elle s'arrête à ses bords au lieu de
+     traverser l'écran.
+
+     `left: 0` et `right: 0` DISPARAISSENT, et c'est voulu : en `sticky`, un
+     élément prend la largeur de son parent. Les garder l'étirerait à la fenêtre
+     et le défaut reviendrait par la porte de derrière.
+
+     ⛔ `body` porte `overflow-x: clip` et NON `hidden` — le commentaire de
+     `global.css` L22 dit pourquoi : `hidden` créerait un conteneur de
+     défilement et tuerait ce `sticky`. Vérifié avant d'écrire, pas supposé. */
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 100;
   height: 80px;
   /* Bandeau papier translucide, dérivé du jeton de charte : il suit donc

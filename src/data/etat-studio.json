@@ -9,15 +9,15 @@
     "arbre_modifie": null
   },
   "build": {
-    "horodatage_local": "2026-09-22 14:08:45",
-    "horodatage_minute": "2026-09-22 14:08",
-    "horodatage_iso": "2026-09-22T12:08:45.044Z",
+    "horodatage_local": "2026-09-22 14:16:24",
+    "horodatage_minute": "2026-09-22 14:16",
+    "horodatage_iso": "2026-09-22T12:16:24.452Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 184,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 340.5,
+    "ko_servis": 340.6,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {

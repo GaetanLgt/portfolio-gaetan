@@ -14,7 +14,7 @@
        s'appliquer à lui, comme avant), et cette racine prend la classe
        `app-shell` avec **exactement les mêmes déclarations** — la géométrie
        rendue a été capturée avant et après pour le prouver. -->
-  <div class="app-shell" :class="{ 'app--loaded': isLoaded, 'app--sobre': modeSobre }">
+  <div class="app-shell" :class="{ 'app--loaded': isLoaded, 'app--sobre': modeSobre, 'app--plein': isFullscreenGame }">
     <!-- Skip Link (Opquast A11Y) -->
     <a href="#main-content" class="skip-link">
       Passer au contenu principal
@@ -65,8 +65,36 @@
     <!-- Noise Overlay -->
     <NoiseOverlay v-if="isLoaded && !isFullscreenGame" />
     
-    <!-- Navigation -->
-    <Navigation v-if="isLoaded && !isFullscreenGame" />
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         LA COQUE — décision Gaëtan, 22/09/2026, citée mot pour mot :
+
+           « Je veux ce bloc en page principale, je veux rien autour.
+             Je veux que là où ce qu'il y a autour soit à l'intérieur. »
+
+         CE QUI CHANGE, ET POURQUOI CE N'EST PAS UNE DÉCORATION.
+         Jusqu'ici la navigation et le pied de page étaient les FRÈRES de
+         `<main>` : deux bandes qui encadraient le contenu. C'est exactement ce
+         que « autour » veut dire. Le bloc les CONTIENT désormais — ils ne sont
+         plus le cadre du bloc, ils en sont les parties.
+
+         ⚠️ CE QUI REND LA CHOSE VISIBLE, ET CE N'EST PAS LE FOND.
+         Mesure : `--bg: var(--paper)` — le vide et le papier portent la MÊME
+         valeur (`#080b14`). Un bloc de la même couleur sur le même fond ne se
+         voit pas. La séparation est donc portée par une ARÊTE (bordure
+         `--rule-strong` + halo), jamais par un remplissage — et surtout pas par
+         un noir pur, que la charte interdit (« jamais #000 »).
+
+         ⚠️ `position: sticky` À LA PLACE DE `fixed` : voir `Navigation.vue`.
+         Sans ce changement, la barre restait collée à la fenêtre et le bloc
+         n'aurait été qu'un cadre dessiné SOUS une barre flottante.
+
+         ⛔ NE PAS mettre `overflow: hidden` ici : cela créerait un conteneur de
+         défilement et tuerait le `sticky` de la navigation. (`global.css` porte
+         `overflow-x: clip` sur `body` pour cette raison précise.)
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div class="coque">
+      <!-- Navigation -->
+      <Navigation v-if="isLoaded && !isFullscreenGame" />
     
     <!-- LE BALAYAGE : le scan qui traverse l'écran au changement de page.
          Décoratif (aria-hidden), CSS pur, coupé en reduced-motion. -->
@@ -86,8 +114,10 @@
       </router-view>
     </main>
     
-    <!-- Footer classique -->
-    <Footer v-if="isLoaded && !isFullscreenGame" />
+      <!-- Footer classique -->
+      <Footer v-if="isLoaded && !isFullscreenGame" />
+    </div>
+    <!-- ═══ fin de la coque : tout ce qui suit est un calque, pas un cadre ═══ -->
     
     <!-- Self-Diagnostic Bar (Footer fixe) — réservée aux pages lore/expériences -->
     <SelfDiagnosticBar v-if="isLoaded && !isFullscreenGame && !isShowcasePage" />
@@ -253,6 +283,55 @@ const onLoaded = () => {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* ── LE VIDE AUTOUR ───────────────────────────────────────────────────────
+     La coque ne touche plus les bords de la fenêtre. C'est ce qui rend
+     « rien autour » VISIBLE : sans retrait, un bloc qui remplit tout l'écran
+     n'est pas un bloc, il est la page — et rien ne changerait.
+     `clamp(0px, …)` : sur un écran étroit, le retrait tombe à zéro et la coque
+     reprend toute la largeur. Un cadre n'a pas de sens là où il n'y a pas la
+     place pour un cadre. */
+  padding: clamp(0px, 1.1vw, 18px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA COQUE — l'objet, pas un conteneur de mise en page de plus.
+   La navigation, le contenu et le pied de page sont DEDANS : ils ne l'encadrent
+   plus, ils en font partie.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.coque {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+
+  /* L'ARÊTE PORTE LA SÉPARATION, PAS LE FOND.
+     Mesure du 22/09/2026 : `--bg: var(--paper)` — le vide et le papier ont la
+     MÊME valeur (`#080b14`). Un bloc de la même couleur sur le même fond ne se
+     voit pas. C'est donc le bord qui parle, et c'est aussi ce qui évite un noir
+     pur, interdit par la charte (« jamais #000 »). */
+  border: 1px solid var(--rule-strong);
+
+  /* Le halo : un pixel d'arête ne suffit pas à lire un bloc sur un écran à
+     forte densité. Trois ombres font le relief — un liseré froid, la teinte
+     « sacrée » du site en trace, et une ombre portée profonde.
+     Aucune image, aucune licence, aucun coût réseau. */
+  box-shadow:
+    0 0 0 1px rgba(53, 113, 155, 0.22),
+    0 0 90px rgba(42, 191, 255, 0.05),
+    0 32px 110px rgba(0, 0, 0, 0.55);
+}
+
+/* Expériences plein écran (`/play/*`) : la coque disparaît entièrement. Un jeu
+   immersif encadré par une bordure n'est plus immersif — et sur ces routes,
+   `Navigation` et `Footer` ne sont de toute façon pas montés. */
+.app--plein {
+  padding: 0;
+}
+
+.app--plein .coque {
+  border: none;
+  box-shadow: none;
 }
 
 .app-shell.app--loaded .main-content {

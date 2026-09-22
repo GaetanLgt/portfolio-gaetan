@@ -126,7 +126,33 @@ RewriteRule ^(.*)$ $1/index.html [L]
   #
   # `upgrade-insecure-requests` : toute ressource en clair est promue en HTTPS.
   # ---------------------------------------------------------------------------
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.gldigitallab.fr; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://analytics.gldigitallab.fr; font-src 'self' data:; connect-src 'self' blob: https://analytics.gldigitallab.fr; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+  # ⛔ CONTRADICTION CORRIGÉE LE 22/09/2026 — MESURÉE, PAS SUPPOSÉE.
+  #
+  # Ce bloc envoyait DEUX en-têtes qui disaient le CONTRAIRE :
+  #     X-Frame-Options: SAMEORIGIN     (ligne 97) → « même origine PEUT m'encadrer »
+  #     frame-ancestors 'none'          (ci-dessous) → « PERSONNE ne peut m'encadrer »
+  # Or `frame-ancestors` ÉCRASE `X-Frame-Options` dans tout navigateur moderne.
+  # Le premier en-tête ne servait donc à rien, et pire : il ANNONÇAIT une
+  # politique que le second révoquait. Un en-tête de sécurité qui ment sur sa
+  # propre politique est un en-tête que personne ne peut auditer.
+  # `'self'` est la valeur qui rend les deux cohérents : c'est exactement ce que
+  # `SAMEORIGIN` veut dire. Le cadrage par un TIERS reste refusé — c'est la
+  # protection contre le détournement de clic, et elle est intacte.
+  #
+  # ⚠️ CE QUI N'EST PAS LA CAUSE DU BLOCAGE SIGNALÉ PAR GAËTAN, ET IL FAUT LE
+  # DIRE : Firefox distingue DEUX erreurs différentes, lues dans son propre
+  # dictionnaire (`chrome/en-US/locale/browser/appstrings.properties`) :
+  #     xfoBlocked      = « This page has an X-Frame-Options policy that
+  #                        prevents it from being loaded in this context. »
+  #     blockedByPolicy = « Your organization has blocked access to this page. »
+  # La seconde ne vient PAS du site : elle est produite par
+  # `modules/policies/WebsiteFilter.sys.mjs` (`channel.cancel(
+  # Cr.NS_ERROR_BLOCKED_BY_POLICY)`), c'est-à-dire par une politique appliquée
+  # SUR LA MACHINE. Or il n'existe aucune politique Firefox sur ce poste :
+  # ni `distribution/policies.json`, ni clé de registre sous
+  # `HKLM|HKCU\SOFTWARE\Policies\Mozilla\Firefox`. Le déclencheur n'est donc pas
+  # identifié, et on ne l'invente pas ici.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.gldigitallab.fr; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://analytics.gldigitallab.fr; font-src 'self' data:; connect-src 'self' blob: https://analytics.gldigitallab.fr; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
 
   # Cache control pour assets hashés
   <FilesMatch "\.(js|css|woff2?)$">
