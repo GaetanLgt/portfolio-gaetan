@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Génie IT Tek FR | Architecture Numérique Souveraine</title>
-<meta name="description" content="Studio indépendant dans la Somme : sites web, applications métier et agents d'IA qui tournent sur notre propre machine, en France. Audit en 48 h, réponse sous 24 h." />
+<meta name="description" content="Sites web, applications métier et agents d'IA exécutés sur notre propre machine, dans la Somme. Tournez autour du navire ARKADIA en 3D, sans plugin. Audit en 48 h, réponse sous 24 h." />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
@@ -39,19 +39,19 @@
     <meta name="theme-color" content="#080b14" />
 <meta property="og:type" content="website" />
     <meta property="og:title" content="Génie IT Tek FR | Architecture Numérique Souveraine" />
-    <meta property="og:description" content="Sites web, applications métier et agents d'IA sur notre propre machine, dans la Somme. Audit en 48 h." />
-    <meta property="og:image" content="https://gldigitallab.fr/og-image.png" />
+    <meta property="og:description" content="Sites web, applications métier et agents d'IA exécutés sur notre propre machine, dans la Somme. Le navire ARKADIA se visite en 3D, dans votre navigateur — souris ou manette Xbox." />
+    <meta property="og:image" content="https://gldigitallab.fr/og-navire.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Génie IT Tek FR - Architecture Numérique Souveraine" />
+    <meta property="og:image:alt" content="Le navire ARKADIA en 3D : un galion fantôme qu'on fait tourner à la souris, avec les sept compartiments du site posés sur la coque." />
     <meta property="og:site_name" content="Génie IT Tek FR" />
     <meta property="og:url" content="https://gldigitallab.fr" />
     <meta property="og:locale" content="fr_FR" />
 <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Génie IT Tek FR | Architecture Numérique Souveraine" />
-    <meta name="twitter:description" content="Sites web, applications métier et agents d'IA sur notre propre machine, en France." />
-    <meta name="twitter:image" content="https://gldigitallab.fr/og-image.png" />
-    <meta name="twitter:image:alt" content="Génie IT Tek FR - Architecture Numérique Souveraine" />
+    <meta name="twitter:description" content="Sites web, applications métier et agents d'IA exécutés sur notre propre machine, dans la Somme. Le navire ARKADIA se visite en 3D, dans votre navigateur — souris ou manette Xbox." />
+    <meta name="twitter:image" content="https://gldigitallab.fr/og-navire.jpg" />
+    <meta name="twitter:image:alt" content="Le navire ARKADIA en 3D : un galion fantôme qu'on fait tourner à la souris, avec les sept compartiments du site posés sur la coque." />
 <meta name="author" content="Gaëtan LANGLET - Génie IT Tek FR" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
@@ -63,6 +63,25 @@
 <meta name="keywords" content="développeur web Somme, développeur web Amiens, Symfony, Vue.js, développement sur-mesure, IA locale, architecture logicielle, PME France, freelance développeur" />
 <meta name="geo.region" content="FR-HDF" />
     <meta name="geo.placename" content="Harponville, Somme" />
+<!-- ⏳ LA LICENCE DU MODÈLE — L'ENDROIT EST POSÉ, LA VALEUR NE L'EST PAS.
+
+     Le 22/09/2026, Gaëtan a demandé de « mettre à disposition de la Communauté ce
+     qu'on a décidé de laisser en accès libre ». Si le navire en fait partie, la
+     déclaration s'écrit ICI, dans l'objet « 3DModel » ci-dessous :
+
+         "license": "https://…"          (URL de la licence choisie)
+         "creditText": "…"               (le crédit à afficher)
+         "copyrightNotice": "…"          (la mention de droit)
+
+     ⛔ ON N'ÉCRIT PAS LA VALEUR ICI : **choisir une licence est une décision de
+        Gaëtan**, pas un effet de bord technique. Tant qu'elle n'est pas tranchée,
+        le balisage se tait — *déclarer une licence qu'on n'a pas décidée serait
+        exactement le genre d'affirmation que ce dépôt refuse.*
+
+     ⚠️ Et il y a un second endroit à tenir d'accord avec celui-ci : la page
+        /ce-que-nous-nous-imposons, qui énonce les règles du studio. *Deux endroits,
+        une seule vérité — sinon le second deviendra faux.* -->
+
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -203,6 +222,22 @@
                 }
               }
             ]
+          }
+        }
+,
+        {
+          "@type": "3DModel",
+          "@id": "https://gldigitallab.fr/#galion",
+          "name": "ARKADIA SS00999 — le galion, navigable dans le navigateur",
+          "description": "Le navire du studio en trois dimensions : on tourne autour de la coque à la souris ou à la manette Xbox, sept ancres marquent les sept compartiments du site, et l'on s'amarre à l'un d'eux. Modèle tracé par script (Blender), rendu en Three.js, servi depuis notre propre domaine — aucune bibliothèque chargée depuis un CDN.",
+          "encodingFormat": "model/gltf-binary",
+          "contentUrl": "https://gldigitallab.fr/galion.glb",
+          "thumbnailUrl": "https://gldigitallab.fr/og-navire.jpg",
+          "isPartOf": {
+            "@id": "https://gldigitallab.fr/#website"
+          },
+          "creator": {
+            "@id": "https://gldigitallab.fr/#founder"
           }
         }
       ]

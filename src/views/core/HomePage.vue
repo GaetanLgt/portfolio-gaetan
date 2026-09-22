@@ -225,66 +225,58 @@
          (Win32_Processor, Win32_PhysicalMemory, nvidia-smi), pas estimée. Le
          visuel est généré par notre propre chaîne locale et étiqueté comme tel.
          ═══════════════════════════════════════════════════════════════════════ -->
-    <section class="vaisseau" aria-labelledby="vaisseau-title">
+    <section class="vaisseau" data-vaisseau aria-labelledby="vaisseau-title">
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// LE VAISSEAU</span>
+            <!-- ⭐ FUSION DU 22/09/2026 — DEUX SECTIONS DISAIENT LE MÊME SUJET.
+                 Le titre du navire (le vocabulaire, la fiche) et « Un navire domotisé »
+                 (la 3D) se suivaient, et le VISUEL SIMULÉ passait avant le MODÈLE RÉEL :
+                 le visiteur voyait d'abord la version faible. Il n'en reste qu'une, et
+                 c'est la 3D qui ouvre — les deux textes sont repris MOT POUR MOT. -->
+            <span class="mono-tag" aria-hidden="true">/// LE VAISSEAU · LE NAVIRE</span>
             <h2 id="vaisseau-title">ARKADIA <span class="text-gradient">SS00999</span></h2>
             <p class="section-header__desc">
-              Un seul navire, et il est réel. Tous les agents qui travaillent pour vous
+              Un seul navire, et il est réel : tous les agents qui travaillent pour vous
               tournent sur cette machine, dans la Somme. Pas de ferme de serveurs louée,
-              pas de sous-traitance : le vaisseau est identifié et ses caractéristiques
-              sont publiques.
+              pas de sous-traitance — le vaisseau est identifié et ses caractéristiques
+              sont publiques. Chaque pièce du bord rend compte toute seule : la
+              <strong>propulsion</strong>, le <strong>lest</strong>, la <strong>cale</strong>,
+              l'<strong>équipage</strong>, la <strong>vigie</strong>. C'est le vocabulaire de
+              la marine, et c'est aussi celui d'une machine qui se surveille —
+              <em>la même chose, dite autrement.</em> Il n'a pas de voiles : il a le vide.
+              Et l'œil de proue s'allume.
             </p>
           </div>
         </ScrollReveal>
 
+        <!-- ⭐ LA 3D À LA PLACE DU VISUEL SIMULÉ — 22/09/2026.
+             Ce qui était ici : `vaisseau-arkadia-1400.jpg`, une image annoncée
+             « Visuel SIMULÉ, produit par notre propre chaîne locale (ComfyUI) ».
+             Ce qui y est : le MODÈLE, celui qu'on tourne à la souris et à la manette.
+             ⭐ On ne remplace pas une image par une autre : **on remplace une
+             représentation par la chose.** L'image n'a plus de raison d'être en tête de
+             section — *on a mieux, et c'est vrai.*
+             ⚠️ Les fichiers `/models/vaisseau-arkadia-*.jpg` RESTENT dans `public/` :
+             les retirer du dépôt est une décision de Gaëtan, pas un effet de bord. -->
         <ScrollReveal animation="fade-up">
-          <figure class="vaisseau__figure">
-            <!-- ⚠ `srcset`/`sizes` AJOUTÉS LE 13/09/2026 — DÉFAUT MESURÉ, PAS SUPPOSÉ.
-                 Un seul fichier de 1400 px était servi à tout le monde. Largeurs
-                 RÉELLEMENT PEINTES, mesurées écran par écran :
+          <div class="vaisseau__vue">
+            <VaisseauNavigable />
+          </div>
 
-                     écran 320 px  ->  image peinte à 270 px   ->  27,0x trop de pixels
-                     écran 390 px  ->  image peinte à 340 px   ->  16,9x
-                     écran 768 px  ->  image peinte à 718 px   ->   3,8x
-                     écran 1024 px ->  image peinte à 974 px   ->   2,1x
-                     écran 1280 px ->  image peinte à 1230 px  ->   1,3x  (plafond du conteneur)
-
-                 Un téléphone téléchargeait donc 27 fois les pixels nécessaires. C'est
-                 le poste « image delivery ≈ 65 KiB » que Lighthouse relevait depuis
-                 le début, et ce n'était PAS une histoire de format : la mesure a
-                 écarté le WebP (à toutes les qualités jusqu'à 82, il est PLUS LOURD
-                 que ce JPEG, qui est déjà bien encodé — et sharp 0.35.4 du dépôt ne
-                 fait pas d'AVIF).
-
-                 Variantes générées à partir du MÊME original, filtre lanczos3 :
-                     540 px -> 18,4 Ko (-73,5 %)   ·   800 px -> 37,1 Ko (-46,7 %)
-                    1000 px -> 54,8 Ko (-21,4 %)   ·  1400 px -> 69,6 Ko (inchangé)
-
-                 `sizes` décrit la largeur de MISE EN PAGE, mesurée ci-dessus — pas la
-                 largeur souhaitée : `84vw` aux petits écrans est le chiffre relevé
-                 (270/320 = 84 %), pas un arrondi confortable.
-                 `width`/`height` restent ceux de l'original : ils portent le rapport
-                 d'aspect et protègent le CLS, quelle que soit la variante servie. -->
-            <img
-              src="/models/vaisseau-arkadia-1400.jpg"
-              srcset="/models/vaisseau-arkadia-540.jpg 540w,
-                      /models/vaisseau-arkadia-800.jpg 800w,
-                      /models/vaisseau-arkadia-1000.jpg 1000w,
-                      /models/vaisseau-arkadia-1400.jpg 1400w"
-              sizes="(min-width: 1280px) 1230px, (min-width: 768px) 94vw, 84vw"
-              width="1400" height="583"
-              loading="lazy" decoding="async"
-              alt="Le vaisseau ARKADIA : un galion volant qui traverse un espace
-                   numérique, propulsé par un sillage de code lumineux."
-            >
-            <figcaption>
-              Visuel <strong>simulé</strong>, produit par notre propre chaîne locale
-              (ComfyUI sur ARKADIA). Aucune image de banque, aucun droit tiers.
-            </figcaption>
-          </figure>
+          <p class="vaisseau__legende-3d">
+            <strong>Naviguez autour.</strong> Glissez à la souris — ou prenez la manette Xbox :
+            stick gauche pour tourner, stick droit pour approcher, <strong>A</strong> pour
+            s'amarrer. Les sept points posés sur la coque sont les sept compartiments du site :
+            <em>le navire est le plan.</em>
+            Modèle <strong>tracé par script</strong> (Blender) et rendu en Three.js — déjà
+            une dépendance du site, donc <strong>aucun CDN ajouté</strong>. Aucune image de
+            banque, aucun asset acheté, <strong>aucune licence tierce</strong>. Ce que vous
+            voyez est le <strong>modèle lui-même</strong>, tourné dans votre navigateur : plus
+            aucune image de synthèse ne tient lieu de démonstration. Les valeurs du bord sont
+            les caractéristiques <strong>publiées</strong> de la machine —
+            <em>aucune métrique inventée.</em>
+          </p>
         </ScrollReveal>
 
         <ScrollReveal animation="fade-up">
@@ -454,43 +446,7 @@
          (distinct du réseau social ArkAdiA, arkadia.gldigitallab.fr) -->
 
     
-    <!-- LE GALION — 22/09/2026. Modèle produit par `galion.py` (Blender, Pays-Bas),
-         exporté en GLB, chargé par Three.js — déjà une dépendance du site, donc
-         AUCUN CDN ajouté, et la CSP (`script-src 'self'`) est respectée sans y toucher.
-         Aucune image de banque, aucun asset acheté, aucune licence tierce. -->
-    <section class="galion-section" aria-labelledby="galion-title">
-      <div class="container">
-        <ScrollReveal animation="fade-up">
-          <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// · LE NAVIRE</span>
-            <h2 id="galion-title">Un navire domotisé</h2>
-            <p class="section-header__desc">
-              Chaque pièce du bord rend compte toute seule : la <strong>propulsion</strong>,
-              le <strong>lest</strong>, la <strong>cale</strong>, l'<strong>équipage</strong>,
-              la <strong>vigie</strong>. C'est le vocabulaire de la marine, et c'est aussi
-              celui d'une machine qui se surveille — <em>la même chose, dite autrement.</em>
-              Il n'a pas de voiles : il a le vide. Et l'œil de proue s'allume.
-            </p>
-          </div>
-        </ScrollReveal>
 
-        <ScrollReveal animation="fade-up">
-          <VaisseauNavigable />
-        </ScrollReveal>
-
-        <p class="galion-note">
-          <strong>Naviguez autour.</strong> Glissez à la souris — ou prenez la manette Xbox :
-          stick gauche pour tourner, stick droit pour approcher, <strong>A</strong> pour
-          s’amarrer. Les sept points posés sur la coque sont les sept compartiments du site :
-          <em>le navire est le plan.</em>
-          Modèle <strong>tracé par script</strong> (Blender) et rendu en Three.js — déjà
-          une dépendance du site, donc <strong>aucun CDN ajouté</strong>. Aucune image de
-          banque, aucun asset acheté, <strong>aucune licence tierce</strong>. Les valeurs du
-          bord sont les caractéristiques <strong>publiées</strong> de la machine —
-          <em>aucune métrique inventée.</em>
-        </p>
-      </div>
-    </section>
 
     <!-- LE JEU — 22/09/2026.
          ⚠️ `loading="lazy"` N'EST PAS DÉCORATIF, et `allow="gamepad"` non plus.
@@ -1635,19 +1591,12 @@ html {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LE GALION ET LE JEU — 22/09/2026
-   Le rendu 3D vit dans GalionViewer.vue (styles scopés). Ici, les sections.
+   LE JEU — 22/09/2026
+   ⚠️ `.galion-section` et `.galion-note` ont été RETIRÉES le 22/09/2026 avec la
+   fusion : la section « Un navire domotisé » n'existe plus, la 3D vit désormais
+   DANS la section du vaisseau. *Une classe dont le balisage a disparu laisse ses
+   murs* — et le verrou `css-sans-balisage` les aurait signalés, à juste titre.
    ═══════════════════════════════════════════════════════════════════════════ */
-
-.galion-section { padding: var(--space-xl) 0; }
-
-.galion-note {
-  margin-top: var(--space-sm);
-  max-width: 68ch;
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: var(--ink-faint);
-}
 
 .jeu { padding: var(--space-xl) 0; }
 
@@ -1978,32 +1927,19 @@ html {
   padding: var(--space-xl) 0;
 }
 
-.vaisseau__figure {
-  margin: 2.5rem 0 0;
-  position: relative;
-  border: 1px solid var(--rule);
-  overflow: hidden;
+/* ── La vue 3D : elle ouvre la section, et elle se donne de la place ──
+   ⚠️ Aucun cadre, aucun `overflow: hidden` : le composant gère son propre
+   conteneur, et un cadre ajouté rognait les étiquettes des ancres. */
+.vaisseau__vue {
+  margin-top: 2.5rem;
 }
 
-.vaisseau__figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.vaisseau__figure figcaption {
-  padding: 0.7rem 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.10em;
+.vaisseau__legende-3d {
+  margin-top: var(--space-sm);
+  max-width: 68ch;
+  font-size: 0.85rem;
+  line-height: 1.6;
   color: var(--ink-faint);
-  border-top: 1px solid var(--rule);
-  background: var(--paper-alt);
-}
-
-.vaisseau__figure figcaption strong {
-  color: var(--alert);
-  font-weight: 700;
 }
 
 .vaisseau__bloc {

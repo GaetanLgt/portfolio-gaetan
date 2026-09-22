@@ -9,19 +9,19 @@
     "arbre_modifie": null
   },
   "build": {
-    "horodatage_local": "2026-09-22 13:27:04",
-    "horodatage_minute": "2026-09-22 13:27",
-    "horodatage_iso": "2026-09-22T11:27:04.988Z",
+    "horodatage_local": "2026-09-22 13:46:12",
+    "horodatage_minute": "2026-09-22 13:46",
+    "horodatage_iso": "2026-09-22T11:46:12.077Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 184,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 410.4,
+    "ko_servis": 340.5,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
-    "total": 13,
+    "total": 12,
     "seuil": 14
   },
   "moteurs_ia": {

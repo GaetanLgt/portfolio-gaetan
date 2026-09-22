@@ -58,6 +58,16 @@
 const SEPT = ['Le pont', 'La soute', 'La cale', 'Le gaillard', 'La vigie', 'Le journal de bord', 'La proue'];
 
 export const ACTIFS = [
+  {
+    // ⭐ POSÉE LE 22/09/2026, DANS LE MÊME MOUVEMENT QUE L'ATTRIBUT — c'est ce que ce
+    //    fichier demandait (« à ajouter quand l'ancre sera posée, dans le même commit »).
+    //    *Et vérifié dans le HTML LIVRÉ, pas seulement dans la source : un attribut
+    //    qu'un prérendu retire serait une ancre en papier.*
+    nom: 'l’ancre du navire',
+    fichier: 'index.html',
+    motifs: ['data-vaisseau'],
+    pourquoi: 'l’ancre canonique — un contrat, pas un détail de style',
+  },
   /*
    * ⛔ L'ACTIF « ANCRE DU NAVIRE » A ÉTÉ RETIRÉ LE 22/09/2026, ET C'EST MA PROPRE
    *    RÈGLE QUI ME L'A DIT.
