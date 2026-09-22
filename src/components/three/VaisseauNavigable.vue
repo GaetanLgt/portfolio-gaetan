@@ -131,7 +131,7 @@ const COMPARTIMENTS = [
  *   `site`   : de quelle hauteur on regarde (radians au-dessus de l'horizon).
  *   `recul`  : de combien on recule, en multiples de la longueur du navire.
  */
-const VUE = { azimut: -0.62, site: 0.24, recul: 1.78 };
+const VUE = { azimut: -0.62, site: 0.24, recul: 1.5 };
 
 const racine = ref(null);
 const etat = ref('attente'); // attente | chargement | pret | repli
@@ -365,20 +365,45 @@ async function construire() {
   rendu.setClearColor(0x03060a, 0);
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x03060a, 0.021);
+  scene.fog = new THREE.FogExp2(0x03060a, 0.013);
 
   camera = new THREE.PerspectiveCamera(42, 1, 0.1, 240);
 
+  /*
+   * ⭐⭐⭐ L'ENVIRONNEMENT — ET C'EST LA CORRECTION QUI COMPTE.
+   *
+   * MESURE, pas intuition : les matériaux du GLB sont `coque` = **metallic 0,7** avec
+   * une couleur de base de (0,0044 ; 0,0103 ; 0,0086) — presque noire — et `mat` =
+   * metallic 0,3. Or **un métal ne diffuse pas : il RÉFLÉCHIT.** Sans environnement
+   * à réfléchir, `MeshStandardMaterial` ne rend RIEN, et la coque sort NOIRE.
+   * C'est exactement ce que la première capture montrait : un navire deviné, pas vu.
+   *
+   * On ne touche donc PAS au modèle — les textures sont un autre chantier, et
+   * `galion.glb` est hors périmètre. On lui donne ce qu'il attendait : un
+   * environnement. Il est PROCÉDURAL, bleu, semé d'une graine fixe : aucune image,
+   * aucune licence, aucun appel réseau, et deux lancements donnent le même reflet.
+   */
+  scene.environment = fabriquerEnvironnement(rendu, THREE);
+  scene.environmentIntensity = 0.9;
+
   // --- Lumières : le navire est éclairé en bleu, la palette du site ---------
-  scene.add(new THREE.AmbientLight(0x1b3a30, 1.5));
-  const cle = new THREE.DirectionalLight(0x2abfff, 2.7);
+  scene.add(new THREE.AmbientLight(0x2a4a63, 1.7));
+  // L'hémisphérique donne le dessus froid et le dessous très sombre : c'est elle qui
+  // DÉTACHE la silhouette du fond, là où les directionnelles ne font que des reflets.
+  scene.add(new THREE.HemisphereLight(0x7ad6ff, 0x080b14, 1.3));
+  const cle = new THREE.DirectionalLight(0x2abfff, 3.1);
   cle.position.set(-8, 9, 7);
   scene.add(cle);
-  const contre = new THREE.DirectionalLight(0x7ad6ff, 1.15);
+  const contre = new THREE.DirectionalLight(0x7ad6ff, 1.6);
   contre.position.set(9, -3, -8);
   scene.add(contre);
-  const froid = new THREE.DirectionalLight(0x9fd8ff, 0.7);
+  const froid = new THREE.DirectionalLight(0x9fd8ff, 1.0);
   froid.position.set(2, 6, -11);
+  scene.add(froid);
+  // Un ras-de-coque à peine chaud : il fait ressortir les membrures du ventre.
+  const ras = new THREE.DirectionalLight(0xffe650, 0.3);
+  ras.position.set(0, -6, 3);
+  scene.add(ras);
   scene.add(froid);
 
   // --- Le ciel : procédural, semé d'une graine fixe, donc REJOUABLE ---------
@@ -518,7 +543,7 @@ async function construire() {
   vueCourante = { azimut: VUE.azimut - 0.55, site: VUE.site + 0.2, recul: VUE.recul * 1.55 * r0 };
   vueVoulue = { azimut: VUE.azimut, site: VUE.site, recul: VUE.recul * r0 };
   regardCourant = { x: 0, y: navireDim.y * 0.55, z: 0 };
-  regardVoulu = { x: 0, y: navireDim.y * 0.34, z: 0 };
+  regardVoulu = { x: 0, y: navireDim.y * 0.40, z: 0 };
   dernierGeste = performance.now();
 
   let dernierTemps = performance.now();
@@ -619,6 +644,56 @@ async function construire() {
  */
 function tailleRef() {
   return Math.max(navireDim.x, navireDim.z * 2.6, navireDim.y * 0.85);
+}
+
+/*
+ * ⭐ L'ENVIRONNEMENT PROCÉDURAL — le remède au métal noir.
+ *
+ * `PMREMGenerator` transforme une petite scène en carte d'environnement
+ * pré-filtrée : c'est ce que `MeshStandardMaterial` échantillonne pour ses
+ * reflets. On la fabrique avec QUATRE panneaux et une boîte — aucune image,
+ * aucun HDRI téléchargé (donc aucune licence, et la CSP `img-src 'self'` n'est
+ * même pas sollicitée). Les couleurs sont celles du site, la graine est fixe,
+ * donc le reflet est REJOUABLE.
+ *
+ * ⚠️ `RoomEnvironment` de three ferait aussi l'affaire, mais elle éclaire en BLANC
+ *    de studio : le navire sortirait gris, pas bleu. Ici l'environnement est dans
+ *    la DA — c'est le même choix que pour les lampes.
+ */
+function fabriquerEnvironnement(rendu, THREE) {
+  const sceneEnv = new THREE.Scene();
+
+  const boite = new THREE.Mesh(
+    new THREE.BoxGeometry(24, 16, 24),
+    new THREE.MeshBasicMaterial({ color: 0x0c1626, side: THREE.BackSide })
+  );
+  sceneEnv.add(boite);
+
+  const panneau = (x, y, z, rx, ry, couleur, w, h) => {
+    const m = new THREE.Mesh(
+      new THREE.PlaneGeometry(w, h),
+      new THREE.MeshBasicMaterial({ color: couleur, side: THREE.DoubleSide })
+    );
+    m.position.set(x, y, z);
+    m.rotation.set(rx, ry, 0);
+    sceneEnv.add(m);
+  };
+  panneau(0, 8, 0, Math.PI / 2, 0, 0x9fd8ff, 20, 20);      // le dessus : le ciel froid
+  panneau(-10, 0, 0, 0, Math.PI / 2, 0x2abfff, 16, 12);    // bâbord : l'accent du site
+  panneau(10, 0, 0, 0, -Math.PI / 2, 0x35719b, 16, 12);    // tribord : le bleu de règle
+  panneau(0, -7, 0, -Math.PI / 2, 0, 0x080b14, 20, 20);    // le dessous : le vide
+  panneau(0, 0, 0, 0, 0, 0x7ad6ff, 3, 3);                  // une source franche, pour l'arête
+
+  const pmrem = new THREE.PMREMGenerator(rendu);
+  const cible = pmrem.fromScene(sceneEnv, 0.06);
+  pmrem.dispose();
+  // La scène d'essai a fait son travail : on la libère. *Un décor qui reste
+  // allumé après la scène, c'est de la mémoire gardée pour rien.*
+  sceneEnv.traverse((o) => {
+    o.geometry?.dispose?.();
+    o.material?.dispose?.();
+  });
+  return cible.texture;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -758,7 +833,7 @@ function ressortir() {
   vueVoulue.azimut = VUE.azimut;
   vueVoulue.site = VUE.site;
   vueVoulue.recul = VUE.recul * r0;
-  regardVoulu = { x: 0, y: navireDim.y * 0.34, z: 0 };
+  regardVoulu = { x: 0, y: navireDim.y * 0.40, z: 0 };
   dire('Amarres larguées. Le navire reprend sa route.');
 }
 
@@ -792,74 +867,74 @@ function choisir(c) {
 <template>
   <div
     ref="racine"
-    class="vaisseau"
+    class="vaisseau-vue"
     :data-etat="etat"
     :style="{ height: hauteur }"
   >
-    <canvas class="vaisseau__toile" aria-hidden="true"></canvas>
+    <canvas class="vaisseau-vue__toile" aria-hidden="true"></canvas>
 
     <!-- Les étiquettes des ancres : du DOM projeté, donc lisible et net. -->
     <span
       v-for="c in COMPARTIMENTS"
       :key="'e-' + c.id"
       :ref="(el) => { if (el) elEtiq[c.id] = el; }"
-      class="vaisseau__etiq"
+      class="vaisseau-vue__etiq"
       :data-allume="c.id === actif"
       aria-hidden="true"
     >{{ c.nom }}</span>
 
     <!-- Le repli : jamais un vide, et la cause est dite. -->
-    <p v-if="etat === 'repli'" class="vaisseau__repli">
+    <p v-if="etat === 'repli'" class="vaisseau-vue__repli">
       <strong>La vue 3D ne s’affiche pas ici</strong> — {{ motif || 'WebGL indisponible' }}.
       Les sept compartiments restent atteignables par la liste, à droite.
     </p>
-    <p v-else-if="etat !== 'pret'" class="vaisseau__attente">Le navire se hisse…</p>
+    <p v-else-if="etat !== 'pret'" class="vaisseau-vue__attente">Le navire se hisse…</p>
 
     <!-- LE PLAN DU NAVIRE — toujours dans le DOM.
          ⭐ C'est ce qui rend la vue utilisable SANS souris et SANS manette : des
          liens réels, focusables, lus par les lecteurs d'écran. Et c'est aussi le
          repli quand WebGL manque. Une scène 3D seule serait une impasse. -->
-    <nav class="vaisseau__plan" aria-label="Les sept compartiments du navire">
-      <p class="vaisseau__plan-titre">/// · LE PLAN DU NAVIRE</p>
+    <nav class="vaisseau-vue__plan" aria-label="Les sept compartiments du navire">
+      <p class="vaisseau-vue__plan-titre">/// · LE PLAN DU NAVIRE</p>
       <ul>
         <li v-for="c in COMPARTIMENTS" :key="c.id">
           <button
             type="button"
-            class="vaisseau__plan-btn"
+            class="vaisseau-vue__plan-btn"
             :data-actif="c.id === actif"
             :aria-current="c.id === actif ? 'true' : undefined"
             @mouseenter="actif = c.id"
             @focus="actif = c.id"
             @click="choisir(c)"
           >
-            <span class="vaisseau__plan-nom">{{ c.nom }}</span>
-            <span class="vaisseau__plan-lieu">{{ c.lieu }}</span>
+            <span class="vaisseau-vue__plan-nom">{{ c.nom }}</span>
+            <span class="vaisseau-vue__plan-lieu">{{ c.lieu }}</span>
           </button>
         </li>
       </ul>
     </nav>
 
     <!-- LE HUD : où l'on est, et comment on manœuvre. -->
-    <div class="vaisseau__hud">
-      <p class="vaisseau__cap">
+    <div class="vaisseau-vue__hud">
+      <p class="vaisseau-vue__cap">
         <i></i>
         <span>{{ compartimentActif.nom }}</span>
         <em>{{ compartimentActif.quoi }}</em>
       </p>
-      <p class="vaisseau__ordre" aria-live="polite">{{ journal[0] }}</p>
+      <p class="vaisseau-vue__ordre" aria-live="polite">{{ journal[0] }}</p>
 
-      <div class="vaisseau__gestes">
+      <div class="vaisseau-vue__gestes">
         <button
           type="button"
-          class="vaisseau__btn vaisseau__btn--fort"
+          class="vaisseau-vue__btn vaisseau-vue__btn--fort"
           @click="amarmer()"
         >S’amarrer à {{ compartimentActif.nom.toLowerCase() }}</button>
-        <button type="button" class="vaisseau__btn" @click="ressortir">Vue d’ensemble</button>
+        <button type="button" class="vaisseau-vue__btn" @click="ressortir">Vue d’ensemble</button>
       </div>
 
       <!-- ⭐ LA MANETTE EST LE CHEMIN NORMAL. Elle est annoncée, pas cachée.
            Zéro touche clavier n'est nécessaire pour tourner et amarrer. -->
-      <p class="vaisseau__manette" :data-presente="manette ? 'oui' : 'non'">
+      <p class="vaisseau-vue__manette" :data-presente="manette ? 'oui' : 'non'">
         <template v-if="manette">
           <b>Manette prête.</b>
           Stick gauche : tourner autour · Stick droit ou gâchettes : approcher ·
@@ -874,43 +949,43 @@ function choisir(c) {
     </div>
 
     <!-- LE BORD PILOTABLE — repris de la fenêtre : la démonstration ne disparaît pas. -->
-    <div v-if="etat === 'pret'" class="vaisseau__bord">
-      <ul class="vaisseau__chiffres">
+    <div v-if="etat === 'pret'" class="vaisseau-vue__bord">
+      <ul class="vaisseau-vue__chiffres">
         <li>
           <span>Le réacteur a faim</span>
           <b :data-alerte="faim > 80">{{ faim }} %</b>
-          <span class="vaisseau__jauge"><i :style="{ width: faim + '%' }"></i></span>
+          <span class="vaisseau-vue__jauge"><i :style="{ width: faim + '%' }"></i></span>
         </li>
         <li>
           <span>Il vous reste de quoi tenir</span>
           <b :data-alerte="autonomie < 25">{{ autonomie }} %</b>
-          <span class="vaisseau__jauge"><i :style="{ width: autonomie + '%' }"></i></span>
+          <span class="vaisseau-vue__jauge"><i :style="{ width: autonomie + '%' }"></i></span>
         </li>
         <li>
           <span>Le navire est entier</span>
           <b :data-alerte="integrite < 40">{{ integrite }} %</b>
-          <span class="vaisseau__jauge"><i :style="{ width: integrite + '%' }"></i></span>
+          <span class="vaisseau-vue__jauge"><i :style="{ width: integrite + '%' }"></i></span>
         </li>
       </ul>
-      <div class="vaisseau__bord-gestes">
-        <button type="button" class="vaisseau__btn vaisseau__btn--petit" :class="{ 'vaisseau__btn--actif': auto }" @click="rendreLaBarre">
+      <div class="vaisseau-vue__bord-gestes">
+        <button type="button" class="vaisseau-vue__btn vaisseau-vue__btn--petit" :class="{ 'vaisseau-vue__btn--actif': auto }" @click="rendreLaBarre">
           Laisser le bord faire
         </button>
-        <button type="button" class="vaisseau__btn vaisseau__btn--petit" :class="{ 'vaisseau__btn--actif': !auto }" @click="reprendreLaBarre">
+        <button type="button" class="vaisseau-vue__btn vaisseau-vue__btn--petit" :class="{ 'vaisseau-vue__btn--actif': !auto }" @click="reprendreLaBarre">
           Reprendre la barre
         </button>
-        <button type="button" class="vaisseau__btn vaisseau__btn--petit vaisseau__btn--fort" @click="nourrir">
+        <button type="button" class="vaisseau-vue__btn vaisseau-vue__btn--petit vaisseau-vue__btn--fort" @click="nourrir">
           Nourrir le réacteur
         </button>
       </div>
-      <p class="vaisseau__aveu">
+      <p class="vaisseau-vue__aveu">
         Démonstration — les trois chiffres montrent comment le navire se comporte, ils ne
         mesurent rien de réel. Les caractéristiques techniques de la machine sont publiées
         plus bas sur cette page.
       </p>
     </div>
 
-    <div class="vaisseau__legende" aria-hidden="true">
+    <div class="vaisseau-vue__legende" aria-hidden="true">
       <span><i></i>GALION ARKADIA · SS00999</span>
       <span>tracé procédural · aucune licence tierce</span>
     </div>
@@ -924,7 +999,7 @@ function choisir(c) {
  * ⚠️ Et `cursor: none` est banni (verrou 1) : le curseur système dit qu'on peut
  *    saisir le navire — `grab` puis `grabbing` le disent mieux qu'un curseur masqué.
  */
-.vaisseau {
+.vaisseau-vue {
   position: relative;
   overflow: hidden;
   background: var(--paper);
@@ -932,9 +1007,16 @@ function choisir(c) {
   border-radius: 4px;
 }
 
-.vaisseau__toile {
+.vaisseau-vue__toile {
   display: block;
-  width: 100%;
+  /*
+   * ⭐ LE CANVAS NE PASSE PAS SOUS LE PLAN. Mesuré : plein cadre, le navire est
+   * centré sur la largeur TOTALE, donc au milieu de 1230 px — alors que le panneau
+   * du plan en masque 248. Le navire sortait décalé vers la droite, à moitié caché.
+   * ⚠️ Et ce n'est PAS un détail de décoration : une ancre cachée sous un panneau
+   *    n'est pas cliquable, donc un compartiment devenait inatteignable.
+   */
+  width: calc(100% - 15.5rem);
   height: 100%;
   cursor: grab;
   /* ⚠️ `pan-y` et non `none` : `none` capturerait TOUT le geste, et un visiteur
@@ -945,7 +1027,7 @@ function choisir(c) {
 
 /* --- Les étiquettes des ancres : projetées depuis la 3D ------------------- */
 
-.vaisseau__etiq {
+.vaisseau-vue__etiq {
   position: absolute;
   top: 0;
   left: 0;
@@ -964,13 +1046,13 @@ function choisir(c) {
   transition: opacity 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 }
 
-.vaisseau__etiq[data-allume='true'] {
+.vaisseau-vue__etiq[data-allume='true'] {
   border-color: var(--accent);
   color: var(--accent-ink);
 }
 
-.vaisseau__attente,
-.vaisseau__repli {
+.vaisseau-vue__attente,
+.vaisseau-vue__repli {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -985,11 +1067,11 @@ function choisir(c) {
   text-align: center;
 }
 
-.vaisseau__repli strong { display: block; margin-bottom: 0.4em; color: var(--alert); }
+.vaisseau-vue__repli strong { display: block; margin-bottom: 0.4em; color: var(--alert); }
 
 /* --- Le plan du navire : le repli utile, et la voie sans souris ----------- */
 
-.vaisseau__plan {
+.vaisseau-vue__plan {
   position: absolute;
   top: 0;
   right: 0;
@@ -1000,7 +1082,7 @@ function choisir(c) {
   background: linear-gradient(to left, rgba(8, 11, 20, 0.9), rgba(8, 11, 20, 0.55) 80%, transparent);
 }
 
-.vaisseau__plan-titre {
+.vaisseau-vue__plan-titre {
   margin: 0 0 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -1009,9 +1091,9 @@ function choisir(c) {
   color: var(--ink-faint);
 }
 
-.vaisseau__plan ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.vaisseau-vue__plan ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
 
-.vaisseau__plan-btn {
+.vaisseau-vue__plan-btn {
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
@@ -1027,12 +1109,12 @@ function choisir(c) {
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.vaisseau__plan-btn:hover,
-.vaisseau__plan-btn:focus-visible { background: rgba(42, 191, 255, 0.09); border-color: var(--rule-strong); }
-.vaisseau__plan-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.vaisseau__plan-btn[data-actif='true'] { border-left-color: var(--accent); background: rgba(42, 191, 255, 0.12); }
+.vaisseau-vue__plan-btn:hover,
+.vaisseau-vue__plan-btn:focus-visible { background: rgba(42, 191, 255, 0.09); border-color: var(--rule-strong); }
+.vaisseau-vue__plan-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.vaisseau-vue__plan-btn[data-actif='true'] { border-left-color: var(--accent); background: rgba(42, 191, 255, 0.12); }
 
-.vaisseau__plan-nom {
+.vaisseau-vue__plan-nom {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
@@ -1040,13 +1122,13 @@ function choisir(c) {
   color: var(--ink);
 }
 
-.vaisseau__plan-btn[data-actif='true'] .vaisseau__plan-nom { color: var(--accent-ink); }
+.vaisseau-vue__plan-btn[data-actif='true'] .vaisseau-vue__plan-nom { color: var(--accent-ink); }
 
-.vaisseau__plan-lieu { font-size: 0.66rem; color: var(--ink-faint); }
+.vaisseau-vue__plan-lieu { font-size: 0.66rem; color: var(--ink-faint); }
 
 /* --- Le HUD ------------------------------------------------------------- */
 
-.vaisseau__hud {
+.vaisseau-vue__hud {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1056,9 +1138,9 @@ function choisir(c) {
   pointer-events: none;
 }
 
-.vaisseau__hud > * { pointer-events: auto; }
+.vaisseau-vue__hud > * { pointer-events: auto; }
 
-.vaisseau__cap {
+.vaisseau-vue__cap {
   display: flex;
   align-items: baseline;
   gap: 0.6em;
@@ -1067,7 +1149,7 @@ function choisir(c) {
   color: var(--ink);
 }
 
-.vaisseau__cap i {
+.vaisseau-vue__cap i {
   align-self: center;
   width: 7px;
   height: 7px;
@@ -1076,19 +1158,19 @@ function choisir(c) {
   animation: vaisseau-souffle 2.6s ease-in-out infinite;
 }
 
-.vaisseau__cap span { font-weight: 600; font-size: 1rem; }
-.vaisseau__cap em { font-style: normal; font-size: 0.8rem; color: var(--ink-soft); }
+.vaisseau-vue__cap span { font-weight: 600; font-size: 1rem; }
+.vaisseau-vue__cap em { font-style: normal; font-size: 0.8rem; color: var(--ink-soft); }
 
-.vaisseau__ordre {
+.vaisseau-vue__ordre {
   margin: 0 0 0.7rem;
   font-size: 0.8rem;
   color: var(--ink-soft);
   min-height: 1.3em;
 }
 
-.vaisseau__gestes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem; }
+.vaisseau-vue__gestes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem; }
 
-.vaisseau__btn {
+.vaisseau-vue__btn {
   min-height: 46px;                       /* une cible qu'un pouce atteint */
   padding: 0.65em 1.2em;
   border: 1px solid var(--rule-strong);
@@ -1101,27 +1183,27 @@ function choisir(c) {
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.vaisseau__btn:hover { border-color: var(--accent); }
-.vaisseau__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.vaisseau__btn--petit { min-height: 38px; padding: 0.45em 0.9em; font-size: 0.78rem; }
+.vaisseau-vue__btn:hover { border-color: var(--accent); }
+.vaisseau-vue__btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.vaisseau-vue__btn--petit { min-height: 38px; padding: 0.45em 0.9em; font-size: 0.78rem; }
 
-.vaisseau__btn--fort { border-color: var(--action); color: var(--action); }
-.vaisseau__btn--fort:hover { background: rgba(255, 230, 80, 0.1); }
-.vaisseau__btn--actif { border-color: var(--accent); background: rgba(42, 191, 255, 0.1); color: var(--accent-ink); }
+.vaisseau-vue__btn--fort { border-color: var(--action); color: var(--action); }
+.vaisseau-vue__btn--fort:hover { background: rgba(255, 230, 80, 0.1); }
+.vaisseau-vue__btn--actif { border-color: var(--accent); background: rgba(42, 191, 255, 0.1); color: var(--accent-ink); }
 
-.vaisseau__manette {
+.vaisseau-vue__manette {
   margin: 0;
   font-size: 0.72rem;
   line-height: 1.5;
   color: var(--ink-faint);
 }
 
-.vaisseau__manette b { color: var(--accent-ink); font-weight: 600; }
-.vaisseau__manette[data-presente='oui'] b { color: var(--action); }
+.vaisseau-vue__manette b { color: var(--accent-ink); font-weight: 600; }
+.vaisseau-vue__manette[data-presente='oui'] b { color: var(--action); }
 
 /* --- Le bord pilotable --------------------------------------------------- */
 
-.vaisseau__bord {
+.vaisseau-vue__bord {
   position: absolute;
   top: 0;
   left: 0;
@@ -1134,7 +1216,7 @@ function choisir(c) {
   background: linear-gradient(to bottom, rgba(8, 11, 20, 0.88), transparent);
 }
 
-.vaisseau__chiffres {
+.vaisseau-vue__chiffres {
   display: flex;
   gap: 1.4rem;
   flex-wrap: wrap;
@@ -1143,10 +1225,10 @@ function choisir(c) {
   list-style: none;
 }
 
-.vaisseau__chiffres li { display: flex; flex-direction: column; gap: 0.15rem; min-width: 9rem; }
-.vaisseau__chiffres > li > span:first-child { font-size: 0.7rem; color: var(--ink-faint); }
+.vaisseau-vue__chiffres li { display: flex; flex-direction: column; gap: 0.15rem; min-width: 9rem; }
+.vaisseau-vue__chiffres > li > span:first-child { font-size: 0.7rem; color: var(--ink-faint); }
 
-.vaisseau__chiffres b {
+.vaisseau-vue__chiffres b {
   font-family: var(--font-mono);
   font-size: 1.05rem;
   font-weight: 600;
@@ -1154,14 +1236,14 @@ function choisir(c) {
   font-variant-numeric: tabular-nums;
 }
 
-.vaisseau__chiffres b[data-alerte='true'] { color: var(--alert); }
+.vaisseau-vue__chiffres b[data-alerte='true'] { color: var(--alert); }
 
-.vaisseau__jauge { display: block; height: 3px; border-radius: 99px; background: var(--rule); overflow: hidden; }
-.vaisseau__jauge i { display: block; height: 100%; border-radius: 99px; background: var(--accent); transition: width 0.4s ease; }
+.vaisseau-vue__jauge { display: block; height: 3px; border-radius: 99px; background: var(--rule); overflow: hidden; }
+.vaisseau-vue__jauge i { display: block; height: 100%; border-radius: 99px; background: var(--accent); transition: width 0.4s ease; }
 
-.vaisseau__bord-gestes { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.vaisseau-vue__bord-gestes { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
-.vaisseau__aveu {
+.vaisseau-vue__aveu {
   flex: 1 1 100%;
   margin: 0;
   font-size: 0.66rem;
@@ -1169,7 +1251,7 @@ function choisir(c) {
   color: var(--ink-faint);
 }
 
-.vaisseau__legende {
+.vaisseau-vue__legende {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -1185,7 +1267,7 @@ function choisir(c) {
   opacity: 0.65;
 }
 
-.vaisseau__legende i {
+.vaisseau-vue__legende i {
   display: inline-block;
   width: 6px;
   height: 6px;
@@ -1203,41 +1285,42 @@ function choisir(c) {
 /* --- Le format ----------------------------------------------------------- */
 
 @media (max-width: 1100px) {
-  .vaisseau__plan { width: 12.5rem; }
-  .vaisseau__hud, .vaisseau__bord { right: 12.5rem; }
+  .vaisseau-vue__plan { width: 12.5rem; }
+  .vaisseau-vue__hud, .vaisseau-vue__bord { right: 12.5rem; }
+  .vaisseau-vue__toile { width: calc(100% - 12.5rem); }
 }
 
 @media (max-width: 860px) {
   /* Sur un téléphone, la 3D passe au-dessus et le plan devient une liste
      pleine largeur : on ne superpose pas deux choses illisibles. */
-  .vaisseau__plan {
+  .vaisseau-vue__plan {
     position: static;
     width: auto;
     max-height: none;
     background: none;
     border-top: 1px solid var(--rule);
   }
-  .vaisseau {
+  .vaisseau-vue {
     height: auto !important;
   }
-  .vaisseau__toile { height: 58vh; }
-  .vaisseau__hud, .vaisseau__bord {
+  .vaisseau-vue__toile { width: 100%; height: 58vh; }
+  .vaisseau-vue__hud, .vaisseau-vue__bord {
     position: static;
     right: auto;
     background: none;
     border-top: 1px solid var(--rule);
   }
-  .vaisseau__bord { display: block; }
-  .vaisseau__chiffres { margin-bottom: 0.7rem; }
-  .vaisseau__chiffres li { min-width: 7rem; }
-  .vaisseau__legende { display: none; }
-  .vaisseau__btn { flex: 1 1 100%; }
-  .vaisseau__bord-gestes { margin-bottom: 0.6rem; }
+  .vaisseau-vue__bord { display: block; }
+  .vaisseau-vue__chiffres { margin-bottom: 0.7rem; }
+  .vaisseau-vue__chiffres li { min-width: 7rem; }
+  .vaisseau-vue__legende { display: none; }
+  .vaisseau-vue__btn { flex: 1 1 100%; }
+  .vaisseau-vue__bord-gestes { margin-bottom: 0.6rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .vaisseau__cap i { animation: none; }
-  .vaisseau__jauge i { transition: none; }
-  .vaisseau__etiq { transition: none; }
+  .vaisseau-vue__cap i { animation: none; }
+  .vaisseau-vue__jauge i { transition: none; }
+  .vaisseau-vue__etiq { transition: none; }
 }
 </style>

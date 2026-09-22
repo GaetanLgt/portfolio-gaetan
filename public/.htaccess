@@ -45,9 +45,6 @@ RewriteRule ^(.*)$ $1/index.html [L]
   AddOutputFilterByType DEFLATE text/css
   AddOutputFilterByType DEFLATE text/javascript
   AddOutputFilterByType DEFLATE text/xml
-AddOutputFilterByType DEFLATE model/gltf-binary
-AddOutputFilterByType DEFLATE application/octet-stream
-AddOutputFilterByType DEFLATE image/svg+xml
   AddOutputFilterByType DEFLATE text/plain
   AddOutputFilterByType DEFLATE application/javascript
   AddOutputFilterByType DEFLATE application/x-javascript
@@ -55,6 +52,7 @@ AddOutputFilterByType DEFLATE image/svg+xml
   AddOutputFilterByType DEFLATE application/xml
   AddOutputFilterByType DEFLATE application/rss+xml
   AddOutputFilterByType DEFLATE application/atom+xml
+  AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
 # ------------------------------
@@ -163,4 +161,3 @@ AddOutputFilterByType DEFLATE image/svg+xml
 # 404 : la page prérendue dédiée (canonical retiré), servie avec le VRAI code 404.
 ErrorDocument 404 /404.html
 ErrorDocument 500 /index.html
-

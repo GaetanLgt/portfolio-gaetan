@@ -475,10 +475,14 @@
         </ScrollReveal>
 
         <ScrollReveal animation="fade-up">
-          <GalionViewer modele="/galion.glb" :vitesse="0.18" />
+          <VaisseauNavigable />
         </ScrollReveal>
 
         <p class="galion-note">
+          <strong>Naviguez autour.</strong> Glissez à la souris — ou prenez la manette Xbox :
+          stick gauche pour tourner, stick droit pour approcher, <strong>A</strong> pour
+          s’amarrer. Les sept points posés sur la coque sont les sept compartiments du site :
+          <em>le navire est le plan.</em>
           Modèle <strong>tracé par script</strong> (Blender) et rendu en Three.js — déjà
           une dépendance du site, donc <strong>aucun CDN ajouté</strong>. Aucune image de
           banque, aucun asset acheté, <strong>aucune licence tierce</strong>. Les valeurs du
@@ -635,12 +639,26 @@ import DecorTunnel from '@/components/ui/DecorTunnel.vue';
 // n'est qu'un `<span>` décoratif tant qu'il est fermé.
 import TuyauVert from '@/components/ui/TuyauVert.vue';
 
-// ⭐ LE GALION — 22/09/2026. En DIFFÉRÉ, et ce n'est pas une coquetterie.
-// `three` pèse lourd, et ce dépôt tient un verrou sur le NOMBRE DE REQUÊTES du
-// premier chargement (`scripts/verifier-requetes.mjs`, seuil 14, contrainte
-// hébergeur ~20/IP). Un import direct ferait entrer Three.js dans le premier
-// chargement et ferait tomber le verrou.
-const GalionViewer = defineAsyncComponent(() => import('@/components/GalionViewer.vue'));
+// ⭐⭐ LE SITE-VAISSEAU — 22/09/2026, étapes 1 à 3 de
+// `MND/90-archive/SITE-VAISSEAU-ARCHITECTURE.md`.
+//
+// ⛔ CE QUI A CHANGÉ, ET POURQUOI : la section montrait une FENÊTRE — un cadre 16/9
+// avec un navire qui tournait tout seul. Gaëtan : « je ne t'ai pas dit de me faire
+// juste une fenêtre. Je veux qu'on navigue autour du vaisseau. » `VaisseauNavigable`
+// remplace donc la fenêtre par une NAVIGATION : on ORBITE autour de la coque
+// (souris ET manette Xbox), sept ANCRES 3D marquent les sept compartiments du site,
+// et cliquer une ancre AMARRE la caméra puis ouvre la section.
+//
+// En DIFFÉRÉ, et ce n'est pas une coquetterie : `three` pèse lourd, et ce dépôt tient
+// un verrou sur le NOMBRE DE REQUÊTES du premier chargement
+// (`scripts/verifier-requetes.mjs`, seuil 14, contrainte hébergeur ~20/IP). Un import
+// direct ferait entrer Three.js dans le premier chargement et ferait tomber le verrou.
+//
+// ⚠️ `GalionViewer.vue` reste dans le dépôt, INTACT mais PLUS MONTÉ : c'est lui qui
+// portait la fenêtre. Il n'est plus référencé que par son propre fichier. On ne le
+// supprime pas — Gaëtan tranche, et le contenu du bord pilotable a été repris dans la
+// nouvelle vue.
+const VaisseauNavigable = defineAsyncComponent(() => import('@/components/three/VaisseauNavigable.vue'));
 // ── LE FOND 3D DE LA PAGE D'ACCUEIL — DÉMONTÉ le 13/09/2026 ────────────────
 // Décision de Gaëtan (13/09) : option B, la scène 3D pilotée par le défilement —
 // elle ROUVRE explicitement le verdict du 10/09 (« enlève le WebGL qui ressemble
