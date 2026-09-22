@@ -13,7 +13,7 @@
       (`scripts/verifier-requetes.mjs`) : o2switch renvoie un 429 au-delà d'une
       rafale d'environ 20 par IP, et l'application ne se monte plus.
 
-  Les couleurs sont celles du site (`--accent` #00FF41 sur `--paper` #03060A),
+  Les couleurs sont celles du site (`--accent` #2ABFFF sur `--paper` #080B14),
   pas celles d'ArkAdiA : décision de Gaëtan, « t'accorde dans le site ».
 -->
 <script setup>
@@ -69,7 +69,7 @@ function bordFrancais() {
 
 /**
  * L'éclairage suit le quart. ⚠️ On ne change PAS la palette (loi n° 6) : on
- * change l'INTENSITÉ et la COULEUR DES LAMPES. Le vert du site reste le vert,
+ * change l'INTENSITÉ et la COULEUR DES LAMPES. Le cyan du site reste le cyan,
  * mais il brille plus fort la nuit — et la journée, c'est le ciel qui éclaire.
  */
 const HUMEURS = {
@@ -184,10 +184,10 @@ async function construire() {
   }
 
   rendu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  rendu.setClearColor(0x03060a, 0);
+  rendu.setClearColor(0x080b14, 0);
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x03060a, 0.028);
+  scene.fog = new THREE.FogExp2(0x080b14, 0.028);
 
   camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
   camera.position.set(11, 5.5, 13);
@@ -195,16 +195,16 @@ async function construire() {
 
   // --- Lumière : elle suit LE QUART, à l'heure de Paris ---------------------
   // ⚠️ On ne change pas la palette (loi n° 6) : on change l'intensité et la
-  //    couleur DES LAMPES. Le vert du site reste le vert ; il brille plus fort
+  //    couleur DES LAMPES. Le cyan du site reste le cyan ; il brille plus fort
   //    la nuit, et la journée c'est le ciel qui éclaire.
-  const ambiante = new THREE.AmbientLight(0x1b3a30, 1.4);
+  const ambiante = new THREE.AmbientLight(0x16283f, 1.4);
   scene.add(ambiante);
 
-  const cle = new THREE.DirectionalLight(0x00ff41, 2.6);
+  const cle = new THREE.DirectionalLight(0x2abfff, 2.6);
   cle.position.set(-8, 9, 7);
   scene.add(cle);
 
-  const contre = new THREE.DirectionalLight(0x66ff88, 1.1);
+  const contre = new THREE.DirectionalLight(0x7ad6ff, 1.1);
   contre.position.set(9, -3, -8);
   scene.add(contre);
 
@@ -476,7 +476,7 @@ onBeforeUnmount(() => {
   left: 0;
   right: 0;
   padding: var(--space-sm);
-  background: linear-gradient(to top, rgba(3, 6, 10, 0.94), rgba(3, 6, 10, 0.6) 70%, transparent);
+  background: linear-gradient(to top, rgba(8, 11, 20, 0.94), rgba(8, 11, 20, 0.6) 70%, transparent);
   border-top: 1px solid var(--rule);
 }
 
@@ -651,7 +651,7 @@ onBeforeUnmount(() => {
 
 .galion__btn--actif {
   border-color: var(--accent);
-  background: rgba(0, 255, 65, 0.1);
+  background: rgba(42, 191, 255, 0.1);
   color: var(--accent-ink);
 }
 
@@ -659,7 +659,7 @@ onBeforeUnmount(() => {
   border-color: var(--action);
   color: var(--action);
 }
-.galion__btn--fort:hover { background: rgba(252, 238, 10, 0.1); }
+.galion__btn--fort:hover { background: rgba(255, 230, 80, 0.1); }
 
 .galion__journal {
   margin: 0 0 0.6rem;
