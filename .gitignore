@@ -49,3 +49,11 @@ lighthouse-report.json
 # ⚠️ Les fichiers restent sur le disque, ils ne partent simplement jamais.
 /public/world/
 /audit-auto/
+
+# ─── SECRETS — ajoute le 22/09/2026 (le distant ne les protegeait pas) ───
+.env.*
+!.env.example
+*.key
+*.pem
+.credentials*
+sauvegarder-ftp.env

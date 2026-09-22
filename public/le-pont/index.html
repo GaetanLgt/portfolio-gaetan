@@ -1,0 +1,812 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARKADIA — La salle du pont</title>
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Preuve jouable : la première salle du galion. Canon ArkAdiA, aucun asset de franchise.">
+<style>
+/* Palette reprise de arkadia-landing-site/index.html — aucune teinte inventée. */
+:root{
+  --bg0:#080b14; --bg1:#0d111f; --panel:#101815;
+  --ink:#eaf0f7; --mut:#a9b8cc; --faint:#8496ad;
+  --acc:#2ce39b; --bleu:#4da6ff; --vert:#2abfff; --rouge:#ff5a5f;
+  --line:hsla(0,0%,100%,.12);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg0); color:var(--ink); overflow:hidden;
+  font-family:'Space Grotesk',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+#scene{display:block; width:100vw; height:100vh}
+
+/* ---- bandeau titre ---- */
+.titre{
+  position:fixed; top:0; left:0; right:0; z-index:5; pointer-events:none;
+  padding:14px clamp(14px,3vw,26px);
+  display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+  background:linear-gradient(to bottom,rgba(8,11,20,.9),transparent);
+}
+.titre h1{margin:0; font-family:Georgia,serif; font-weight:400; font-size:clamp(1rem,2.2vw,1.35rem)}
+.titre h1 i{color:var(--acc); font-style:normal}
+.titre p{margin:0; font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint)}
+
+/* ---- jauges ---- */
+.hud{
+  position:fixed; left:0; right:0; bottom:0; z-index:5; pointer-events:none;
+  display:flex; flex-wrap:wrap; gap:12px 20px; align-items:flex-end;
+  padding:12px clamp(14px,3vw,26px) 14px;
+  background:linear-gradient(to top,rgba(8,11,20,.94),rgba(8,11,20,.5) 60%,transparent);
+  border-top:1px solid var(--line);
+}
+.jauge{min-width:110px}
+.jauge b{display:block; font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); font-weight:600}
+.jauge .rail{height:5px; margin-top:5px; border-radius:99px; background:hsla(0,0%,100%,.12); overflow:hidden}
+.jauge .rail i{display:block; height:100%; border-radius:99px; transition:width .25s ease}
+.jauge .v{font-size:.7rem; color:var(--mut); margin-top:3px; font-variant-numeric:tabular-nums}
+#j-faim i{background:var(--rouge)}
+#j-auto i{background:var(--bleu)}
+#j-integ i{background:var(--acc)}
+.meta{margin-left:auto; text-align:right; font-size:.66rem; color:var(--faint); line-height:1.6; max-width:46ch}
+.meta code{color:var(--acc)}
+kbd{background:hsla(0,0%,100%,.1); border:1px solid var(--line); border-radius:5px; padding:0 5px; font-size:.9em}
+
+/* ---- cartouches ramassées ---- */
+.sac{display:flex; gap:6px; align-items:center}
+.sac span{
+  font-size:.58rem; letter-spacing:.14em; text-transform:uppercase;
+  border:1px solid var(--line); border-radius:4px; padding:2px 7px; color:var(--faint);
+}
+.sac span[data-pris="1"]{border-color:var(--acc); color:var(--acc); background:rgba(44,227,155,.1)}
+
+/* ---- écran d'ouverture / avis ---- */
+.avis{
+  position:fixed; inset:0; z-index:20; display:grid; place-content:center; gap:16px;
+  text-align:center; padding:26px; background:var(--bg0);
+}
+.avis[hidden]{display:none}
+.avis h2{margin:0; font-family:Georgia,serif; font-weight:300; font-size:clamp(1.3rem,3.6vw,2rem)}
+.avis p{margin:0 auto; max-width:54ch; color:var(--mut); font-size:.9rem; line-height:1.6}
+.avis .cle{
+  margin:0 auto; padding:11px 26px; border:0; border-radius:999px; cursor:pointer;
+  background:var(--acc); color:var(--bg0); font:inherit; font-weight:600; min-height:44px;
+}
+.avis small{color:var(--faint); font-size:.74rem}
+@media (max-width:640px){ .meta{display:none} }
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+
+<div class="titre">
+  <h1><i>A</i>rkAdiA — le pont et la cale</h1>
+  <p>preuve jouable · le capitaine, c'est toi</p>
+</div>
+
+<div class="hud">
+  <div class="jauge" id="j-faim"><b>Faim</b><div class="rail"><i></i></div><span class="v">0 %</span></div>
+  <div class="jauge" id="j-auto"><b>Autonomie</b><div class="rail"><i></i></div><span class="v">0 %</span></div>
+  <div class="jauge" id="j-integ"><b>Intégrité</b><div class="rail"><i></i></div><span class="v">0 %</span></div>
+  <div class="sac" id="sac"></div>
+  <div class="jauge" id="j-objectif" style="min-width:220px">
+    <b>Ce que le navire attend</b>
+    <span class="v" id="v-objectif">descends dans la cale</span>
+  </div>
+  <div class="meta">
+    <div>Monde <b>généré</b> — graine : <code id="graine-affichee">—</code></div>
+    <div>Manette : <kbd>stick</kbd> bouger · <kbd>A</kbd> sauter · <kbd>X</kbd> tirer · <kbd>Start</kbd> reprendre</div>
+    <div>Clavier : <kbd>←→</kbd> <kbd>Espace</kbd> <kbd>F</kbd> — le secours</div>
+  </div>
+</div>
+
+<div class="avis" id="avis">
+  <h2>Le galion n'a pas de voiles.<br>Il a le vide.</h2>
+  <p>Tu es le capitaine. La soute est ouverte et quelque chose, dedans, a faim.
+     Descends sur le pont, ramasse la première cartouche de langage, et regarde ce que le navire en fait.</p>
+  <button class="cle" id="cle">Prendre la barre</button>
+  <small>Nintendo, Marvel, Albator : rien de tout ça n'est ici. Le capitaine est à toi.</small>
+</div>
+
+<script>
+"use strict";
+
+/* ================================================================
+   GRAINE — deux lancements avec la même graine donnent le même
+   monde. La graine est affichée en permanence (règle Makoto).
+   ================================================================ */
+const GRAINE = Number(new URLSearchParams(location.search).get("graine")) || 50999;
+document.getElementById("graine-affichee").textContent = GRAINE;
+
+function mulberry32(a){
+  return function(){ a|=0; a=(a+0x6D2B79F5)|0;
+    let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t;
+    return ((t^(t>>>14))>>>0)/4294967296; };
+}
+
+/* ================================================================
+   PALETTE — miroir exact de la feuille du site
+   ================================================================ */
+const C = {
+  vide:'#080b14', pont:'#0d111f', panneau:'#101815',
+  encre:'#eaf0f7', sourd:'#a9b8cc', faible:'#8496ad',
+  acc:'#2ce39b', bleu:'#4da6ff', vert:'#2abfff', rouge:'#ff5a5f'
+};
+
+/* ================================================================
+   LE MONDE — DEUX SALLES, et le vide entre les deux n'est pas la
+   mort : c'est une DESCENTE. On tombe du pont dans la cale.
+   ================================================================ */
+const SALLE = { l: 4800, h: 1560 };
+
+const SOLIDES = [
+  /* --- SALLE 1 · LE PONT ---------------------------------------- */
+  { x: 0,    y: 660, w: 920,  h: 60 },   // avant du pont
+  { x: 1000, y: 660, w: 1400, h: 60 },   // arrière — le trou fait 80 px, il se saute
+  { x: 380,  y: 540, w: 210,  h: 20 },
+  { x: 700,  y: 470, w: 180,  h: 20 },
+  { x: 1180, y: 520, w: 220,  h: 20 },
+  { x: 1560, y: 430, w: 200,  h: 20 },
+  { x: 1880, y: 350, w: 240,  h: 20 },   // la coursive haute
+
+  /* --- SALLE 2 · LA CALE ---------------------------------------- */
+  { x: 2400, y: 1320, w: 1300, h: 240 }, // le fond de cale
+  { x: 3780, y: 1320, w: 1020, h: 240 }, // le fond, après le puits
+  { x: 2700, y: 1120, w: 200,  h: 20 },
+  { x: 3040, y:  960, w: 220,  h: 20 },
+  { x: 3400, y: 1120, w: 200,  h: 20 },
+  { x: 3980, y: 1080, w: 240,  h: 20 },
+  { x: 4320, y:  940, w: 220,  h: 20 },
+  { x: 4680, y:  620, w: 120,  h: 940 }, // cloison de poupe
+];
+
+/* Tomber plus bas que ça coûte de l'intégrité — et on remonte. */
+const VIDE_Y = 1500;
+
+/* ================================================================
+   LE CAPITAINE — aucun trait emprunté : pas de visière, pas
+   d'épaulière sphérique, pas de canon d'avant-bras. Un manteau,
+   un chapeau à bords, et la lueur du réacteur à la poitrine.
+   ================================================================ */
+const CAP = { l: 26, h: 44, vMax: 3.6, saut: -10.4, g: 0.52, coyote: 6, sautMax: 13 };
+/* Le dessin dépasse la boîte de collision : à 26×44 px, le visage et les
+   circuits ne se distinguent pas. On dessine 1,3× plus grand, on garde la
+   boîte — c'est indulgent, et ça ne change aucune physique. */
+const ECHELLE_DESSIN = 1.3;
+
+const joueur = {
+  x: 90, y: 600, vx: 0, vy: 0,
+  auSol: false, face: 1, depuisSol: 99, sautEnCours: 0,
+  tir: 0, vivant: true, sautBonus: 0
+};
+
+/* ================================================================
+   LES AUTRES — des drones de ronde, et les cartouches de langage.
+   ⭐ Chaque cartouche que le navire prend CHANGE le capitaine.
+      C'est l'assimilation, rendue mécanique.
+   ================================================================ */
+const LANGS = ['BASIC', 'FORTH', 'LISP', 'C', 'ASM'];
+let sacPris = [];
+let drones = [];
+let cartouches = [];
+
+function semer(){
+  const r = mulberry32(GRAINE);
+
+  drones = [
+    { x: 1120 + r()*160, y: 640,  vx:  1.5, l: 34, h: 20, min: 1040, max: 1520 },
+    { x: 1960 + r()*160, y: 640,  vx: -1.4, l: 34, h: 20, min: 1620, max: 2320 },
+    { x: 2680 + r()*160, y: 1300, vx:  1.6, l: 34, h: 20, min: 2480, max: 3180 },
+    { x: 4120 + r()*160, y: 1300, vx: -1.5, l: 34, h: 20, min: 3860, max: 4600 },
+  ];
+
+  cartouches = [
+    { x: 1960, y: 322, l: 18, h: 22, pris: false, quel: 0 },  // BASIC — coursive haute du pont
+    { x: 4420, y: 912, l: 18, h: 22, pris: false, quel: 1 },  // FORTH — haut de la cale
+  ];
+}
+semer();
+
+/* ================================================================
+   LES TROIS NOMBRES — faim monte, autonomie et intégrité baissent.
+   Tirer coûte de l'autonomie. Tomber coûte de l'intégrité.
+   ================================================================ */
+const etat = { faim: 12, autonomie: 88, integrite: 100, vu: false, vuJusqua: 0 };
+
+function majJauges(){
+  const paires = [['j-faim', etat.faim], ['j-auto', etat.autonomie], ['j-integ', etat.integrite]];
+  for (const [id, v] of paires){
+    const el = document.getElementById(id);
+    el.querySelector('i').style.width = Math.max(0, Math.min(100, v)) + '%';
+    el.querySelector('.v').textContent = Math.round(Math.max(0, Math.min(100, v))) + ' %';
+  }
+  const sac = document.getElementById('sac');
+  sac.innerHTML = LANGS.map((n, i) =>
+    `<span data-pris="${sacPris.includes(i) ? 1 : 0}">${n}</span>`).join('');
+
+  // Ce que le navire attend — et ça change avec ce qu'on lui apporte.
+  const obj = document.getElementById('v-objectif');
+  if (obj){
+    if (etat.vuJusqua > performance.now()){
+      // ⭐ Le seul mot du jeu écrit en capitales, et il ne revient jamais.
+      obj.textContent = "IL T'A VU — ils viennent";
+      obj.style.color = 'var(--rouge)';
+    } else {
+      const reste = LANGS.length - sacPris.length;
+      obj.textContent = sacPris.length === 0
+        ? 'descends dans la cale — quelque chose y attend'
+        : `${sacPris.length} langage${sacPris.length > 1 ? 's' : ''} sur ${LANGS.length} — il en manque ${reste}`;
+      obj.style.color = '';
+    }
+  }
+}
+
+/* ================================================================
+   LE DÉCOR — procédural, semé. Pas d'asset, donc pas de droit.
+   ================================================================ */
+const cv = document.getElementById('scene');
+const cx = cv.getContext('2d');
+let L = 0, H = 0, dpr = 1, etoiles = [];
+
+function dim(){
+  dpr = Math.min(2, window.devicePixelRatio || 1);
+  L = window.innerWidth; H = window.innerHeight;
+  cv.width = L*dpr; cv.height = H*dpr;
+  cv.style.width = L+'px'; cv.style.height = H+'px';
+  cx.setTransform(dpr,0,0,dpr,0,0);
+
+  const r = mulberry32(GRAINE ^ 0x5f3a);
+  const n = Math.round(L*H/11000);
+  etoiles = Array.from({length:n}, () => ({ x: r()*SALLE.l, y: r()*SALLE.h, z:.2+r()*.8 }));
+}
+dim();
+addEventListener('resize', dim);
+
+/* ================================================================
+   COMMANDES — manette Xbox d'abord (consigne du studio).
+   ================================================================ */
+const cmd = { gauche:false, droite:false, saut:false, tir:false, sautNouveau:false };
+const clavier = {};
+let manetteVue = '';
+
+addEventListener('keydown', e => {
+  clavier[e.code] = true;
+  if (e.code === 'Space') e.preventDefault();
+  if (e.code === 'KeyR') reprendre();
+});
+addEventListener('keyup', e => { clavier[e.code] = false; });
+addEventListener('gamepadconnected', e => { manetteVue = e.gamepad.id.slice(0, 40); });
+
+let sautAvant = false;
+
+function lireManette(){
+  const pads = navigator.getGamepads ? navigator.getGamepads() : [];
+  let g = null;
+  for (const p of pads) if (p) { g = p; break; }
+
+  let gauche = false, droite = false, saut = false, tir = false;
+
+  if (g){
+    const ax = g.axes[0] || 0;
+    gauche = ax < -0.35 || (g.buttons[14] && g.buttons[14].pressed);
+    droite = ax >  0.35 || (g.buttons[15] && g.buttons[15].pressed);
+    saut = (g.buttons[0] && g.buttons[0].pressed);
+    tir  = (g.buttons[2] && g.buttons[2].pressed);
+    if (g.buttons[9] && g.buttons[9].pressed) reprendre();
+  }
+
+  gauche = gauche || !!(clavier['ArrowLeft']  || clavier['KeyA']);
+  droite = droite || !!(clavier['ArrowRight'] || clavier['KeyD']);
+  saut   = saut   || !!clavier['Space'];
+  tir    = tir    || !!clavier['KeyF'];
+
+  cmd.gauche = gauche; cmd.droite = droite;
+  cmd.sautNouveau = saut && !sautAvant;
+  cmd.saut = saut; cmd.tir = tir;
+  sautAvant = saut;
+
+  requestAnimationFrame(lireManette);
+}
+
+/* ================================================================
+   PHYSIQUE — une fonction, une responsabilité.
+   ================================================================ */
+function dansSolide(x, y, l, h){
+  for (const s of SOLIDES){
+    if (x < s.x + s.w && x + l > s.x && y < s.y + s.h && y + h > s.y) return true;
+  }
+  return false;
+}
+
+function bouger(dt){
+  const p = joueur;
+
+  // --- horizontal
+  const cible = (cmd.droite ? 1 : 0) - (cmd.gauche ? 1 : 0);
+  p.vx += (cible * CAP.vMax - p.vx) * 0.35;
+  if (!cible) p.vx *= 0.72;
+  if (cible) p.face = cible;
+
+  const nx = p.x + p.vx;
+  if (!dansSolide(nx, p.y, CAP.l, CAP.h)) p.x = nx;
+  else p.vx = 0;
+
+  // --- saut : hauteur variable + temps de coyote
+  if (p.auSol) p.depuisSol = 0; else p.depuisSol++;
+
+  if (cmd.sautNouveau && p.depuisSol <= CAP.coyote){
+    p.vy = CAP.saut - p.sautBonus;
+    p.sautEnCours = CAP.sautMax;
+    p.auSol = false;
+  }
+  if (!cmd.saut) p.sautEnCours = 0;
+  if (p.sautEnCours > 0 && p.vy < 0){ p.vy *= 0.86; p.sautEnCours--; }
+
+  // --- vertical
+  p.vy += CAP.g;
+  if (p.vy > 16) p.vy = 16;
+
+  const ny = p.y + p.vy;
+  if (!dansSolide(p.x, ny, CAP.l, CAP.h)){
+    p.y = ny;
+    p.auSol = false;
+  } else {
+    if (p.vy > 0) p.auSol = true;
+    p.vy = 0;
+  }
+
+  // --- le vide : on tombe, on paie, on repart
+  if (p.y > VIDE_Y){
+    etat.integrite -= 18;
+    etat.faim += 6;
+    p.x = 90; p.y = 600; p.vx = 0; p.vy = 0;
+    if (etat.integrite <= 0) mourir();
+  }
+}
+
+/* ================================================================
+   TIR — un éclat de langage. Court, sec, et il coûte.
+   ================================================================ */
+const eclats = [];
+
+function tirer(){
+  if (joueur.tir > 0) return;
+  if (etat.autonomie < 2) return;
+
+  joueur.tir = 13;
+  etat.autonomie -= 0.9;
+  eclats.push({
+    x: joueur.x + (joueur.face > 0 ? CAP.l : -8),
+    y: joueur.y + 17, vx: joueur.face * 8.4, vie: 62
+  });
+}
+
+function majEclats(){
+  for (let i = eclats.length - 1; i >= 0; i--){
+    const e = eclats[i];
+    e.x += e.vx; e.vie--;
+    if (e.vie <= 0 || dansSolide(e.x, e.y, 6, 6)) eclats.splice(i, 1);
+  }
+}
+
+/* ================================================================
+   LES DRONES — et L'HORREUR.
+   ⭐ Tant que tu n'as rien pris, ils font leur ronde et t'ignorant :
+      tu n'es personne. Dès la PREMIÈRE cartouche, ils savent que tu
+      es à bord, et ils viennent.
+      Prendre a un prix, et le prix est qu'on te voit.
+   ================================================================ */
+function majDrones(){
+  const eveille = sacPris.length > 0;
+
+  for (const d of drones){
+    if (eveille){
+      const dx = (joueur.x + CAP.l/2) - (d.x + d.l/2);
+      const dy = (joueur.y + CAP.h/2) - (d.y + d.h/2);
+      const dist = Math.hypot(dx, dy);
+
+      // Il ne voit pas à travers tout le navire : la portée est courte.
+      if (dist < 360 && Math.abs(dy) < 170){
+        d.vx += Math.sign(dx) * 0.055;
+        d.vx = Math.max(-2.7, Math.min(2.7, d.vx));
+        d.chasse = true;
+      } else {
+        d.vx += (Math.sign(d.vx) * 1.5 - d.vx) * 0.02;   // il retourne à sa ronde
+        d.chasse = false;
+      }
+    }
+
+    d.x += d.vx;
+    if (dansSolide(d.x, d.y, d.l, d.h) || d.x < d.min || d.x > d.max) d.vx *= -1;
+
+    if (joueur.vivant && recouvre(joueur, CAP.l, CAP.h, d, d.l, d.h)){
+      // Le contact ne tue pas : il repousse. On paie en intégrité.
+      joueur.vx = (joueur.x < d.x ? -1 : 1) * 6;
+      joueur.vy = -5;
+      etat.integrite -= 7;
+      if (etat.integrite <= 0) mourir();
+    }
+
+    for (let i = eclats.length - 1; i >= 0; i--){
+      const e = eclats[i];
+      if (recouvre({ x: e.x, y: e.y }, 6, 6, d, d.l, d.h)){
+        eclats.splice(i, 1);
+        d.vx *= -1;
+      }
+    }
+  }
+}
+
+function recouvre(a, al, ah, b, bl, bh){
+  return a.x < b.x + bl && a.x + al > b.x && a.y < b.y + bh && a.y + ah > b.y;
+}
+
+/* ================================================================
+   LES CARTOUCHES — le navire prend ce qu'on lui donne, et il rend.
+   ================================================================ */
+function majCartouches(){
+  for (const c of cartouches){
+    if (c.pris) continue;
+    if (!recouvre(joueur, CAP.l, CAP.h, c, c.l, c.h)) continue;
+
+    c.pris = true;
+    sacPris.push(c.quel);
+
+    // La faim monte, l'autonomie suit : c'est le troc du bord.
+    etat.faim += 14;
+    etat.autonomie = Math.min(100, etat.autonomie + 22);
+
+    // ⭐ Et le capitaine change. Chaque langage pris allonge le saut —
+    //    l'assimilation n'est pas un décor, elle se joue.
+    joueur.sautBonus = sacPris.length * 0.55;
+
+    // ⭐ L'HORREUR, et elle se dit une seule fois : la première fois
+    //    qu'on prend, le navire cesse de nous ignorer.
+    if (!etat.vu){
+      etat.vu = true;
+      etat.vuJusqua = performance.now() + 4200;
+    }
+  }
+}
+
+/* ================================================================
+   LA SOURCE — le navire attend, et il compte ce qu'on lui apporte.
+   ⭐ C'est ici que le jeu dit son sujet : on ne combat pas le navire,
+      on le nourrit. Et on décide de ce qu'on lui donne.
+   ================================================================ */
+const SOURCE = { x: 4620, y: 1240, r: 130 };
+
+let fin = false;
+
+function majSource(){
+  if (fin) return;
+
+  const d = Math.hypot((joueur.x + CAP.l/2) - SOURCE.x, (joueur.y + CAP.h/2) - SOURCE.y);
+  if (d > SOURCE.r) return;
+
+  fin = true;
+  const pris = sacPris.length;
+
+  if (pris === 0){
+    afficher("Tu es arrivé les mains vides.",
+      "LA SOURCE pulse, patiente, et ne dit rien. Il y a cinq langages à bord. Remonte et prends-en.");
+  } else if (pris < LANGS.length){
+    afficher("Le navire prend ce que tu apportes.",
+      `Il a digéré ${pris} langage${pris > 1 ? 's' : ''} sur ${LANGS.length} — ${sacPris.map(i => LANGS[i]).join(', ')}. ` +
+      "Ce que tu ne lui as pas donné, il ne l'a pas. Et il le sait.");
+  } else {
+    afficher("LA SOURCE a tout pris.",
+      "Cinq langages. Le dernier était l'assembleur, et c'est celui qui traverse tout. " +
+      "Le navire n'a plus faim. Il a autre chose — et tu es encore à la barre, donc c'est toi qui décides de la suite.");
+  }
+}
+function mourir(){
+  joueur.vivant = false;
+  afficher("Le navire t'a digéré.", "La faim ne se négocie pas. Reprends la barre.");
+}
+
+function reprendre(){
+  joueur.x = 90; joueur.y = 600; joueur.vx = 0; joueur.vy = 0;
+  joueur.vivant = true; joueur.sautBonus = 0;
+  etat.faim = 12; etat.autonomie = 88; etat.integrite = 100;
+  sacPris = []; eclats.length = 0; fin = false;
+  semer();
+  document.getElementById('avis').hidden = true;
+}
+
+function afficher(titre, texte){
+  const a = document.getElementById('avis');
+  a.querySelector('h2').innerHTML = titre;
+  a.querySelector('p').textContent = texte;
+  a.hidden = false;
+}
+
+/* ================================================================
+   DESSIN
+   ================================================================ */
+let camX = 0, camY = 0;
+
+function dessiner(){
+  // La caméra suit les deux axes : on descend dans la cale.
+  camX += ((joueur.x - L*0.38) - camX) * 0.14;
+  camY += ((joueur.y - H*0.55) - camY) * 0.12;
+  camX = Math.max(0, Math.min(Math.max(0, SALLE.l - L), camX));
+  camY = Math.max(0, Math.min(Math.max(0, SALLE.h - H), camY));
+
+  cx.fillStyle = C.vide;
+  cx.fillRect(0, 0, L, H);
+
+  // --- le vide étoilé, derrière tout
+  for (const e of etoiles){
+    const x = e.x - camX*e.z*0.5, y = e.y - camY*e.z*0.5;
+    if (x < -4 || x > L+4 || y < -4 || y > H+4) continue;
+    cx.globalAlpha = .2 + e.z*.55;
+    cx.fillStyle = e.z > .75 ? C.encre : C.faible;
+    cx.fillRect(x, y, 1.4*e.z, 1.4*e.z);
+  }
+  cx.globalAlpha = 1;
+
+  cx.save();
+  cx.translate(-camX, -camY);
+
+  // --- le pont : membrures, et surtout une ARÊTE qui dise où on marche
+  for (const s of SOLIDES){
+    cx.fillStyle = C.pont;
+    cx.fillRect(s.x, s.y, s.w, s.h);
+
+    cx.strokeStyle = C.faible;
+    cx.globalAlpha = .22;
+    cx.lineWidth = 1;
+    for (let x = s.x + 18; x < s.x + s.w; x += 44){
+      cx.beginPath();
+      cx.moveTo(x, s.y + 6);
+      cx.lineTo(x, s.y + Math.min(s.h, 74) - 6);
+      cx.stroke();
+    }
+    cx.globalAlpha = 1;
+
+    // l'arête marchable : un trait franc, puis sa lumière qui tombe
+    cx.fillStyle = C.acc;
+    cx.globalAlpha = .95;
+    cx.fillRect(s.x, s.y, s.w, 2);
+    cx.globalAlpha = .16;
+    cx.fillRect(s.x, s.y + 2, s.w, 8);
+    cx.globalAlpha = 1;
+
+    cx.strokeStyle = C.acc;
+    cx.globalAlpha = .42;
+    cx.lineWidth = 1;
+    cx.strokeRect(s.x + .5, s.y + .5, s.w - 1, s.h - 1);
+    cx.globalAlpha = 1;
+  }
+
+  // --- les drones — et quand ils chassent, ça se voit
+  for (const d of drones){
+    const chasse = !!d.chasse;
+    cx.fillStyle = C.panneau;
+    cx.strokeStyle = chasse ? C.encre : C.rouge;
+    cx.lineWidth = chasse ? 2.4 : 1.6;
+    cx.beginPath();
+    cx.moveTo(d.x, d.y + d.h);
+    cx.lineTo(d.x + d.l*0.5, d.y);
+    cx.lineTo(d.x + d.l, d.y + d.h);
+    cx.closePath();
+    cx.fill(); cx.stroke();
+
+    // L'œil : rouge au repos, il s'allume franchement quand il te suit.
+    cx.fillStyle = chasse ? C.encre : C.rouge;
+    cx.globalAlpha = chasse ? 1 : .8 + Math.sin(performance.now()/220)*.2;
+    cx.fillRect(d.x + d.l*0.5 - 2, d.y + 6, 4, 4);
+    if (chasse){
+      cx.globalAlpha = .35;
+      cx.beginPath();
+      cx.arc(d.x + d.l*0.5, d.y + 8, 8, 0, 6.2832);
+      cx.fill();
+    }
+    cx.globalAlpha = 1;
+  }
+
+  // --- les cartouches
+  for (const c of cartouches){
+    if (c.pris) continue;
+    cx.save();
+    cx.translate(c.x + c.l/2, c.y + c.h/2);
+    cx.rotate(Math.sin(performance.now()/700) * 0.12);
+    cx.fillStyle = C.panneau;
+    cx.strokeStyle = C.acc;
+    cx.lineWidth = 1.8;
+    cx.fillRect(-c.l/2, -c.h/2, c.l, c.h);
+    cx.strokeRect(-c.l/2, -c.h/2, c.l, c.h);
+    cx.fillStyle = C.acc;
+    cx.fillRect(-4, -2, 8, 4);
+    cx.restore();
+  }
+
+  // --- LA SOURCE — au fond de la cale. Elle bat plus fort à mesure
+  //     qu'on lui apporte des langages. Elle attend, et elle compte.
+  const sourceX = SOURCE.x, sourceY = SOURCE.y;
+  const battement = 0.72 + Math.sin(performance.now()/900) * 0.12 + sacPris.length * 0.06;
+  cx.save();
+  cx.globalAlpha = Math.min(.6, .22 + sacPris.length * .1);
+  cx.fillStyle = C.acc;
+  cx.beginPath();
+  cx.ellipse(sourceX, sourceY, 78 * battement, 96 * battement, 0, 0, 6.2832);
+  cx.fill();
+  cx.globalAlpha = .85;
+  cx.strokeStyle = C.acc;
+  cx.lineWidth = 1.6;
+  cx.beginPath();
+  cx.ellipse(sourceX, sourceY, 46 * battement, 62 * battement, 0, 0, 6.2832);
+  cx.stroke();
+  cx.globalAlpha = .5;
+  cx.beginPath();
+  cx.ellipse(sourceX, sourceY, 26, 34, 0.4, 0, 6.2832);
+  cx.stroke();
+  cx.restore();
+
+  // --- les éclats
+  cx.fillStyle = C.vert;
+  for (const e of eclats) cx.fillRect(e.x, e.y, 4, 4);
+
+  // --- le capitaine
+  if (joueur.vivant) dessinerCapitaine(cx, joueur.x, joueur.y, joueur.face, joueur.auSol);
+
+  cx.restore();
+}
+
+/* Le capitaine : la silhouette SOMBRE est définie par ses circuits cyan,
+   pas par un contour clair. Un manteau noir ourlé de lumière se lit sur
+   le vide ; un manteau blanc faisait un fantôme.
+   Aucun trait de Power Suit — ni visière, ni épaulière sphérique, ni
+   canon d'avant-bras. Et pas de chapeau : ce n'est pas lui. */
+function dessinerCapitaine(g, x, y, face, auSol){
+  const l = CAP.l, h = CAP.h;
+  const t = performance.now();
+  const marche = auSol ? Math.sin(t/95) * 2 : 0;
+
+  g.save();
+  g.translate(x + l/2, y - (ECHELLE_DESSIN - 1) * h);
+  g.scale(face * ECHELLE_DESSIN, ECHELLE_DESSIN);
+
+  g.fillStyle = 'rgba(0,0,0,.55)';
+  g.beginPath();
+  g.ellipse(0, h + 3, l*0.58, 3.5, 0, 0, 6.2832);
+  g.fill();
+
+  // jambes — sombres, bordées de cyan
+  g.strokeStyle = C.vert;
+  g.lineWidth = 5;
+  g.beginPath();
+  g.moveTo(-3, h - 15); g.lineTo(-4 + marche, h - 1);
+  g.moveTo( 3, h - 15); g.lineTo( 4 - marche, h - 1);
+  g.stroke();
+  g.strokeStyle = C.vide;
+  g.lineWidth = 3;
+  g.beginPath();
+  g.moveTo(-3, h - 15); g.lineTo(-4 + marche, h - 1);
+  g.moveTo( 3, h - 15); g.lineTo( 4 - marche, h - 1);
+  g.stroke();
+
+  // manteau : masse noire, liseré cyan des deux côtés
+  g.beginPath();
+  g.moveTo(-l*0.46, h - 9);
+  g.quadraticCurveTo(-l*0.60, h - 30, -l*0.28, h - 41);
+  g.lineTo(l*0.28, h - 41);
+  g.quadraticCurveTo(l*0.60, h - 30, l*0.46, h - 9);
+  g.closePath();
+  g.fillStyle = C.vide;
+  g.fill();
+  g.strokeStyle = C.vert;
+  g.globalAlpha = .85;
+  g.lineWidth = 1.4;
+  g.stroke();
+  g.globalAlpha = 1;
+
+  // circuits du manteau — deux traits qui descendent
+  g.strokeStyle = C.vert;
+  g.globalAlpha = .55;
+  g.lineWidth = 1;
+  g.beginPath();
+  g.moveTo(-l*0.20, h - 38); g.lineTo(-l*0.24, h - 14);
+  g.moveTo( l*0.22, h - 38); g.lineTo( l*0.26, h - 16);
+  g.stroke();
+  g.globalAlpha = 1;
+
+  // la lueur du réacteur, à la poitrine
+  g.fillStyle = C.acc;
+  g.beginPath(); g.arc(1, h - 30, 6.5, 0, 6.2832);
+  g.globalAlpha = .22; g.fill(); g.globalAlpha = 1;
+  g.beginPath(); g.arc(1, h - 30, 2.4, 0, 6.2832); g.fill();
+
+  // le bras qui tient l'instrument
+  g.strokeStyle = C.vert;
+  g.lineWidth = 3.6;
+  g.beginPath();
+  g.moveTo(l*0.20, h - 34);
+  g.lineTo(l*0.50, h - 29);
+  g.stroke();
+  g.strokeStyle = C.vide;
+  g.lineWidth = 1.8;
+  g.stroke();
+
+  // tête : cheveux sombres en masse haute, pas de chapeau
+  g.fillStyle = C.pont;
+  g.beginPath();
+  g.moveTo(-l*0.30, h - 40);
+  g.quadraticCurveTo(-l*0.36, h - 52, -l*0.06, h - 54);
+  g.quadraticCurveTo( l*0.30, h - 55,  l*0.26, h - 44);
+  g.quadraticCurveTo( l*0.16, h - 48,  l*0.02, h - 47);
+  g.quadraticCurveTo(-l*0.14, h - 47, -l*0.30, h - 40);
+  g.closePath();
+  g.fill();
+  g.strokeStyle = C.vert;
+  g.globalAlpha = .7;
+  g.lineWidth = 1.1;
+  g.stroke();
+  g.globalAlpha = 1;
+
+  // le visage : sombre, avec l'œil qui porte la lumière
+  g.fillStyle = C.vide;
+  g.beginPath();
+  g.ellipse(2, h - 44, l*0.20, 3.4, 0, 0, 6.2832);
+  g.fill();
+  g.fillStyle = C.acc;   // vert décidé (palette --acc), pas de violet inventé
+  g.fillRect(l*0.02, h - 45.5, 4, 1.8);
+  g.globalAlpha = .5;
+  g.fillRect(l*0.02, h - 45.5, 4, 1.8);
+  g.globalAlpha = 1;
+
+  g.restore();
+}
+
+/* ================================================================
+   LA BOUCLE — un seul requestAnimationFrame, pas de setInterval.
+   ================================================================ */
+let dernier = 0, accum = 0;
+const PAS = 1000/60;
+
+function boucle(ts){
+  requestAnimationFrame(boucle);
+  if (!dernier) dernier = ts;
+  let ecoule = ts - dernier;
+  dernier = ts;
+  if (ecoule > 120) ecoule = 120;
+  accum += ecoule;
+
+  while (accum >= PAS){
+    if (joueur.vivant && !fin){
+      if (joueur.tir > 0) joueur.tir--;
+      if (cmd.tir) tirer();
+      bouger();
+      majEclats();
+      majDrones();
+      majCartouches();
+      majSource();
+
+      // la faim monte toute seule : le réacteur ne s'arrête jamais
+      etat.faim = Math.min(100, etat.faim + 0.012);
+      etat.autonomie = Math.max(0, etat.autonomie - 0.006);
+      if (etat.autonomie <= 0 || etat.faim >= 100) mourir();
+    }
+    accum -= PAS;
+  }
+
+  dessiner();
+  majJauges();
+}
+
+/* ================================================================
+   DÉMARRAGE
+   ================================================================ */
+document.getElementById('cle').addEventListener('click', () => {
+  document.getElementById('avis').hidden = true;
+  dernier = 0;
+});
+
+majJauges();
+requestAnimationFrame(lireManette);
+requestAnimationFrame(boucle);
+</script>
+</body>
+</html>

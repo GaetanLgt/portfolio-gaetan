@@ -454,6 +454,79 @@
          (distinct du réseau social ArkAdiA, arkadia.gldigitallab.fr) -->
 
     
+    <!-- LE GALION — 22/09/2026. Modèle produit par `galion.py` (Blender, Pays-Bas),
+         exporté en GLB, chargé par Three.js — déjà une dépendance du site, donc
+         AUCUN CDN ajouté, et la CSP (`script-src 'self'`) est respectée sans y toucher.
+         Aucune image de banque, aucun asset acheté, aucune licence tierce. -->
+    <section class="galion-section" aria-labelledby="galion-title">
+      <div class="container">
+        <ScrollReveal animation="fade-up">
+          <div class="section-header">
+            <span class="mono-tag" aria-hidden="true">/// · LE NAVIRE</span>
+            <h2 id="galion-title">Un navire domotisé</h2>
+            <p class="section-header__desc">
+              Chaque pièce du bord rend compte toute seule : la <strong>propulsion</strong>,
+              le <strong>lest</strong>, la <strong>cale</strong>, l'<strong>équipage</strong>,
+              la <strong>vigie</strong>. C'est le vocabulaire de la marine, et c'est aussi
+              celui d'une machine qui se surveille — <em>la même chose, dite autrement.</em>
+              Il n'a pas de voiles : il a le vide. Et l'œil de proue s'allume.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal animation="fade-up">
+          <GalionViewer modele="/galion.glb" :vitesse="0.18" />
+        </ScrollReveal>
+
+        <p class="galion-note">
+          Modèle <strong>tracé par script</strong> (Blender) et rendu en Three.js — déjà
+          une dépendance du site, donc <strong>aucun CDN ajouté</strong>. Aucune image de
+          banque, aucun asset acheté, <strong>aucune licence tierce</strong>. Les valeurs du
+          bord sont les caractéristiques <strong>publiées</strong> de la machine —
+          <em>aucune métrique inventée.</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- LE JEU — 22/09/2026.
+         ⚠️ `loading="lazy"` N'EST PAS DÉCORATIF, et `allow="gamepad"` non plus.
+         Le verrou des requêtes du premier chargement interdit d'en ajouter : une
+         iframe paresseuse ne charge pas tant qu'elle n'entre pas dans le champ.
+         Et sans `allow="gamepad"`, la manette est invisible — or c'est le chemin normal. -->
+    <section class="jeu" aria-labelledby="jeu-title">
+      <div class="container">
+        <ScrollReveal animation="fade-up">
+          <div class="section-header">
+            <span class="mono-tag" aria-hidden="true">/// · LE JEU</span>
+            <h2 id="jeu-title">Montez à bord</h2>
+            <p class="section-header__desc">
+              Le navire n'est pas qu'une fiche technique — il se joue. Une salle et sa cale,
+              quatre silhouettes en ronde, des langages à ramasser, et quelque chose qui
+              attend au fond. <strong>La manette est le chemin normal</strong> ; le clavier
+              ne sert que de secours.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal animation="fade-up">
+          <div class="jeu__cadre">
+            <iframe
+              src="/le-pont/index.html"
+              title="ArkAdiA — le pont et la cale, démonstration jouable"
+              loading="lazy"
+              allow="gamepad"
+              class="jeu__frame"
+            ></iframe>
+          </div>
+          <p class="jeu__note">
+            Démonstration technique. Tout est <strong>tracé dans le canvas</strong> : aucune
+            image importée, aucun modèle tiers, aucune requête réseau. Le monde se régénère
+            à partir de sa graine, affichée à l'écran.
+          </p>
+        </ScrollReveal>
+      </div>
+    </section>
+
     <!-- MÉTHODE : fonctionnement du studio, présenté de façon pragmatique (2026-09) -->
     <section class="method" aria-labelledby="method-title">
       <div class="container">
@@ -561,6 +634,13 @@ import DecorTunnel from '@/components/ui/DecorTunnel.vue';
 // il tient dans le HTML (aucune requête), il est visible dès le premier écran, et il
 // n'est qu'un `<span>` décoratif tant qu'il est fermé.
 import TuyauVert from '@/components/ui/TuyauVert.vue';
+
+// ⭐ LE GALION — 22/09/2026. En DIFFÉRÉ, et ce n'est pas une coquetterie.
+// `three` pèse lourd, et ce dépôt tient un verrou sur le NOMBRE DE REQUÊTES du
+// premier chargement (`scripts/verifier-requetes.mjs`, seuil 14, contrainte
+// hébergeur ~20/IP). Un import direct ferait entrer Three.js dans le premier
+// chargement et ferait tomber le verrou.
+const GalionViewer = defineAsyncComponent(() => import('@/components/GalionViewer.vue'));
 // ── LE FOND 3D DE LA PAGE D'ACCUEIL — DÉMONTÉ le 13/09/2026 ────────────────
 // Décision de Gaëtan (13/09) : option B, la scène 3D pilotée par le défilement —
 // elle ROUVRE explicitement le verdict du 10/09 (« enlève le WebGL qui ressemble
@@ -1530,6 +1610,48 @@ html {
    LA MÉTHODE — fonctionnement du studio (remplace la section « cercle » lore,
    09/2026) : message pragmatique, étapes de travail + garanties.
    ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LE GALION ET LE JEU — 22/09/2026
+   Le rendu 3D vit dans GalionViewer.vue (styles scopés). Ici, les sections.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.galion-section { padding: var(--space-xl) 0; }
+
+.galion-note {
+  margin-top: var(--space-sm);
+  max-width: 68ch;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+.jeu { padding: var(--space-xl) 0; }
+
+.jeu__cadre {
+  position: relative;
+  margin-top: var(--space-md);
+  aspect-ratio: 16 / 10;
+  max-height: min(82vh, 780px);
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+.jeu__frame { display: block; width: 100%; height: 100%; border: 0; }
+
+.jeu__note {
+  margin-top: var(--space-sm);
+  max-width: 68ch;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 860px) {
+  .jeu__cadre { aspect-ratio: 3 / 4; max-height: none; }
+}
 
 .method {
   padding: var(--space-xl) 0;

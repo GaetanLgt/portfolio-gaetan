@@ -3,21 +3,21 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "dcb5a0c",
-    "sujet": "Le kit Metroid passe de 22 a 141 pages — et le publieur bouclait a l'infini",
-    "date": "2026-09-19T13:30:10+02:00",
-    "arbre_modifie": true
+    "court": null,
+    "sujet": null,
+    "date": null,
+    "arbre_modifie": null
   },
   "build": {
-    "horodatage_local": "2026-09-19 13:32:15",
-    "horodatage_minute": "2026-09-19 13:32",
-    "horodatage_iso": "2026-09-19T11:32:15.879Z",
+    "horodatage_local": "2026-09-22 12:21:40",
+    "horodatage_minute": "2026-09-22 12:21",
+    "horodatage_iso": "2026-09-22T10:21:40.224Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 183,
+  "pages_prerendues": 184,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 407.8,
+    "ko_servis": 410.1,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
@@ -35,7 +35,7 @@
       "cle": "verrous",
       "nom": "Verrous de la signature qualité",
       "script": "scripts/verifier-verrous.mjs",
-      "code": 0,
+      "code": 1,
       "motif": null
     },
     {

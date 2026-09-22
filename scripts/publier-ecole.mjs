@@ -1,4 +1,4 @@
-// ============================================================
+﻿// ============================================================
 // publier-ecole.mjs — GL Digital Lab — 13/09/2026
 //   étendu le 14/09/2026 : publication des KITS (sous-dossiers) et des renvois [[…]]
 //
@@ -326,7 +326,7 @@ function enLigne(t) {
 }
 
 function convertir(md) {
-  const lignes = md.split('\n');
+  const lignes = md.split(/\r?\n/);
   const sortie = [];
   let i = 0;
 
@@ -702,3 +702,4 @@ console.log('  ⚠️  Ces pages portent `noindex, nofollow` et ne seront JAMAIS
 console.log('      Le manifeste src/config/topographie.js les déclare avec `declaration: null`.');
 console.log('      Si vous voulez les rendre publiques un jour, il faudra DÉFAIRE ces trois choses.');
 console.log('');
+
