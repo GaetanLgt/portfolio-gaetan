@@ -126,7 +126,7 @@ RewriteRule ^(.*)$ $1/index.html [L]
   #
   # `upgrade-insecure-requests` : toute ressource en clair est promue en HTTPS.
   # ---------------------------------------------------------------------------
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.gldigitallab.fr; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://analytics.gldigitallab.fr; font-src 'self' data:; connect-src 'self' https://analytics.gldigitallab.fr; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.gldigitallab.fr; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://analytics.gldigitallab.fr; font-src 'self' data:; connect-src 'self' blob: https://analytics.gldigitallab.fr; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
 
   # Cache control pour assets hashés
   <FilesMatch "\.(js|css|woff2?)$">
