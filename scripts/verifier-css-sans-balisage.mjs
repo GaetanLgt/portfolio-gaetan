@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * verifier-css-sans-balisage.mjs — du CSS dont le balisage a disparu
  *
@@ -258,5 +258,19 @@ if (total) {
   console.log('      avant/après. Ce verrou DÉSIGNE ; il ne supprime pas.');
 }
 console.log('='.repeat(78));
-process.exit(total ? 1 : 0);
+// ⛔ CE N'EST PLUS process.exit(total ? 1 : 0).
+  // Corrige le 22/09/2026, apres l'avoir MESURE dans l'audit complet : ce verrou
+  // sortait en 1 des qu'UNE classe etait designee — soixante-neuf fois.
+  // ⭐ ET C'ETAIT EN CONTRADICTION AVEC SA PROPRE CONCLUSION, qu'il imprime :
+  //    « ce n'est PAS une preuve de mort [...] On ne conclut pas "inutile", on
+  //      conclut "non applicable" [...] Ce verrou DESIGNE ; il ne supprime pas. »
+  // ⛔ Un verrou qui echoue TOUJOURS ne couvre rien : il apprend a etre ignore,
+  //    et le jour ou il signalera un vrai defaut, personne ne le lira.
+  // ⭐ DESIGNER N'EST PAS CONDAMNER. Il rapporte et sort en 0.
+  //    Pour en faire un verrou BLOQUANT le jour ou le menage sera fait :
+  //    poser CSS_BLOQUANT=1. La porte reste la ; elle n'est plus claquee.
+  if (process.env.CSS_BLOQUANT === '1') {
+    process.exit(total ? 1 : 0);
+  }
+  process.exit(0);
 

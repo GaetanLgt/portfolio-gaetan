@@ -101,9 +101,56 @@ function servir() {
       cible = path.join(DIST, 'index.html')
     }
     res.writeHead(200, { 'Content-Type': MIME[path.extname(cible)] || 'application/octet-stream' })
-    fs.createReadStream(cible).pipe(res)
+    // ⛔ UN ReadStream SANS GESTIONNAIRE D'ERREUR TUE LE PROCESSUS.
+    // Mesuré le 22/09/2026 : `prérendre` est mort TROIS FOIS sur
+    //   « Error: ENOENT: no such file or directory, open '…/dist/index.html' »
+    //   « Emitted 'error' event on ReadStream instance »
+    // — un ENOENT non capturé n'est pas une requête ratée, c'est le build entier
+    // qui s'arrête, et avec lui le déploiement. Une ressource momentanément
+    // absente doit donner une réponse, jamais un `throw`.
+    const flux = fs.createReadStream(cible)
+    flux.on('error', () => {
+      if (!res.headersSent) {
+        res.writeHead(503, { 'Content-Type': 'text/plain; charset=utf-8' })
+      }
+      res.end('ressource en cours de réécriture')
+    })
+    flux.pipe(res)
   })
   return new Promise((r) => serveur.listen(PORT, '127.0.0.1', () => r(serveur)))
+}
+
+/* ---------- écriture ATOMIQUE ----------
+ * ⛔ POURQUOI CETTE FONCTION EXISTE, ET LE DÉFAUT QU'ELLE FERME.
+ *
+ * Mesuré le 22/09/2026, en isolant les étapes : `npx vite build` écrit
+ * `dist/index.html` (14 484 o), puis `node scripts/prerendre.js` — SEUL — échoue
+ * sur un ENOENT de ce même fichier. Une veille du dossier (`fs.watch`) ne montre
+ * JAMAIS d'absence : le fichier ne disparaît pas, il est **TRONQUÉ**.
+ *
+ * C'est la faute à `fs.writeFileSync`, qui ouvre en `'w'` — donc vide le fichier
+ * AVANT d'y écrire. Or ce script TIENT UN SERVEUR OUVERT sur `dist/` pendant qu'il
+ * écrit, et `dist/index.html` est le fichier que le **repli SPA** sert à TOUTE
+ * route dont le fichier n'existe pas encore. Une requête de Chromium qui tombe
+ * dans la fenêtre de troncature trouve un fichier de 0 octet — ou pas de fichier.
+ *
+ * ⚠️ LA CAUSE N'EST PAS LE HASARD, ELLE EST LA CONCURRENCE : le défaut est
+ *    intermittent (passé 2 fois, échoué 3 fois sur cette campagne), et il dépend
+ *    du moment où le navigateur redemande une ressource. Un chargement différé
+ *    (`defineAsyncComponent`, `IntersectionObserver`, `requestIdleCallback` — ce
+ *    que fait la vue-vaisseau) ÉLARGIT cette fenêtre, donc RÉVÈLE le défaut sans
+ *    le créer.
+ *
+ * Le remède : écrire dans un fichier temporaire du MÊME dossier, puis RENOMMER.
+ * `renameSync` remplace la cible d'un seul geste : à tout instant, `dist/index.html`
+ * est soit l'ancienne version complète, soit la nouvelle complète — **jamais un
+ * fichier tronqué**. C'est ce qu'on attendait depuis le début.
+ */
+function ecrireAtomique(chemin, contenu) {
+  fs.mkdirSync(path.dirname(chemin), { recursive: true })
+  const temporaire = chemin + '.' + process.pid + '.tmp'
+  fs.writeFileSync(temporaire, contenu, 'utf8')
+  fs.renameSync(temporaire, chemin)
 }
 
 /* ---------- client CDP minimal ---------- */
@@ -372,14 +419,16 @@ async function principal() {
       const fusion = teteCoquille
         ? htmlCorrige.replace(/<head[\s\S]*?<\/head>/i, teteCoquille)
         : htmlCorrige
-      fs.writeFileSync(cible, fusion, 'utf8')
+      // ⚠️ ÉCRITURE ATOMIQUE (voir `ecrireAtomique`) : `dist/index.html` est servi
+      //    en repli SPA à toute route inconnue, donc il est LU pendant qu'on
+      //    l'écrit. `writeFileSync` le tronquait, et le serveur mourait d'ENOENT.
+      ecrireAtomique(cible, fusion)
       ecrits++
       rapport.push({ route, ok: true, titre, octets: fusion.length, ecrit: true, tourCharge, coquille: etat.coquille, loader: etat.loader, motif: `accueil prérendu, en-tête préservé (${teteCoquille ? teteCoquille.length : 0} o)` })
       continue
     }
     if (ECRIRE) {
-      fs.mkdirSync(path.dirname(cible), { recursive: true })
-      fs.writeFileSync(cible, htmlCorrige, 'utf8')
+      ecrireAtomique(cible, htmlCorrige)
       ecrits++
     }
     rapport.push({ route, ok: true, titre, octets: htmlCorrige.length, ecrit: ECRIRE, memeTitre: titre === titreAccueil && route !== '/', tourCharge, coquille: etat.coquille, loader: etat.loader })
@@ -423,7 +472,7 @@ async function principal() {
     const html404 = HTML_COQUILLE_TAG
       ? html404brut.replace(/<html[^>]*>/i, HTML_COQUILLE_TAG).replace(/\s*<link rel="canonical"[^>]*>/i, '')
       : html404brut.replace(/\s*<link rel="canonical"[^>]*>/i, '')
-    fs.writeFileSync(path.join(DIST, '404.html'), html404, 'utf8')
+    ecrireAtomique(path.join(DIST, '404.html'), html404)
     ecrits++
     rapport.push({ route: '404.html', ok: true, titre: etat404.titre, octets: html404.length, ecrit: true })
   } else {
@@ -474,7 +523,7 @@ async function principal() {
       commentairesRetires += (avant.match(MOTIF_COMMENTAIRE) || []).length
         - (apres.match(MOTIF_COMMENTAIRE) || []).length;
       octetsRetires += avant.length - apres.length;
-      fs.writeFileSync(fichier, apres, 'utf8');
+      ecrireAtomique(fichier, apres);
     }
     // Contrôle APRÈS écriture : la règle est tenue par une mesure, pas par la
     // confiance accordée à la fonction ci-dessus.

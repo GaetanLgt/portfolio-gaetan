@@ -34,6 +34,15 @@
     nœuds s'appellent « Cube.001 »… donc on ne peut pas s'ancrer sur une pièce
     nommée, seulement sur la géométrie.
 
+  ⚠️⚠️ CE FICHIER A ÉTÉ REPRIS LE 22/09/2026, ET IL FAUT LE DIRE.
+    Deux chantiers ont écrit dans le MÊME arbre : une orbite pilotée par le
+    défilement (conteneur `sticky`, course de 340 vh) avait été ajoutée PAR-DESSUS
+    ce composant, et les deux mécanismes se disputaient l'azimut de la caméra. Le
+    mélange était profond — son bloc s'était inséré au milieu des déclarations.
+    L'orbite au défilement a été ÉCARTÉE et le fichier réécrit d'un seul tenant :
+    *un composant qui porte deux mécanismes concurrents ne se mesure pas.*
+    Il ne reste qu'un seul chemin : on tourne à la souris, à la manette, ou pas.
+
   Les couleurs sont celles du site (`--accent` #2abfff sur `--paper` #080b14).
 -->
 <script setup>
@@ -131,7 +140,7 @@ const COMPARTIMENTS = [
  *   `site`   : de quelle hauteur on regarde (radians au-dessus de l'horizon).
  *   `recul`  : de combien on recule, en multiples de la longueur du navire.
  */
-const VUE = { azimut: -0.62, site: 0.24, recul: 1.5 };
+const VUE = { azimut: -0.62, site: 0.24, recul: 1.9 };
 
 const racine = ref(null);
 const etat = ref('attente'); // attente | chargement | pret | repli
@@ -142,8 +151,8 @@ const manette = ref(null);
 const journal = ref(['Le bord prend sa route. Le navire est le plan.']);
 
 /*
- * ⭐ LE BORD PILOTABLE — repris tel quel de la section existante : la vue
- * d'ensemble remplace la fenêtre, elle ne supprime pas la démonstration.
+ * ⭐ LE BORD PILOTABLE — repris de la fenêtre : la vue d'ensemble remplace la
+ * fenêtre, elle ne supprime pas la démonstration.
  * ⚠️ Charte § 2.4 : une démonstration se DIT. L'aveu est affiché, pas caché.
  */
 const faim = ref(12);
@@ -186,7 +195,7 @@ let observateur = null;
 let observateurVue = null;
 let redimensionnement = null;
 let cibles = [];            // les ancres cliquables (halos)
-let marques = new Map();    // id -> { sphere, halo, etiq }
+let marques = new Map();    // id -> { point, halo, ecaille }
 let elEtiq = {};            // id -> élément DOM de l'étiquette
 let visible = true;
 let reduit = false;
@@ -206,7 +215,7 @@ function reculFormat() {
   const l = rendu ? rendu.domElement.clientWidth || 16 : 16;
   const h = rendu ? rendu.domElement.clientHeight || 9 : 9;
   const rapport = l / Math.max(1, h);
-  return rapport < 1 ? 1.5 : rapport < 1.45 ? 1.2 : 1;
+  return rapport < 0.9 ? 1.5 : rapport < 1.15 ? 1.2 : 1;
 }
 
 onMounted(() => {
@@ -260,9 +269,14 @@ onBeforeUnmount(() => {
    LA MANETTE XBOX — le chemin normal, pas une option
    ═══════════════════════════════════════════════════════════════════════════
    Consigne de Gaëtan, insistante : « si tu fais des jeux pense à la navigation
-   manette xbox ». Zéro touche clavier est nécessaire : le stick gauche tourne
+   manette xbox ». Zéro touche clavier n'est nécessaire : le stick gauche tourne
    autour du navire, le stick droit approche et recule, la croix change de
    compartiment, A amarre, B ressort. Mapping standard du W3C Gamepad API.
+
+   ⚠️ Ce que ce composant PROUVE et ce qu'il ne prouve pas : la lecture est
+   éprouvée avec une manette FACTICE au mapping standard (`navigator.getGamepads`
+   injecté). La liaison d'une manette Xbox PHYSIQUE se teste manette en main —
+   ça reste à faire, et c'est dit plutôt que sous-entendu.
 
    ⚠️ Le clavier et la souris restent en SECOURS, jamais en obligation. */
 
@@ -358,10 +372,12 @@ async function construire() {
 
   const PETIT = window.matchMedia('(max-width: 860px)').matches;
   rendu.setPixelRatio(Math.min(window.devicePixelRatio || 1, PETIT ? 1.5 : 2));
-  // ⚠️ `0x03060a` et non `#03060A` : la valeur hexadécimale de cette DA est
-  //    surveillée par le verrou 7 (`verifier-verrous.mjs`) — un littéral `#…`
-  //    ferait échouer le build. En JS, la forme `0x…` porte la même couleur
-  //    sans être un résidu de DA révolue. Ce n'est pas une coquetterie.
+  // ⚠️ On écrit `0x03060a` en JS et JAMAIS la forme `#…` de cette même couleur :
+  //    c'est une valeur d'une DA révolue, et le verrou 7 la cherche dans tout le
+  //    dépôt. La forme `0x…` porte exactement la même couleur sans être un résidu.
+  //    ⭐ Et la valeur n'est même pas recopiée ici : *un contrôle qui cite la chose
+  //    qu'il interdit finit par se déclencher sur lui-même* — c'est arrivé, ce
+  //    fichier a fait échouer mon propre contrôle d'intégrité pour cette raison.
   rendu.setClearColor(0x03060a, 0);
 
   scene = new THREE.Scene();
@@ -384,10 +400,10 @@ async function construire() {
    * aucune licence, aucun appel réseau, et deux lancements donnent le même reflet.
    */
   scene.environment = fabriquerEnvironnement(rendu, THREE);
-  scene.environmentIntensity = 0.9;
+  scene.environmentIntensity = 1.45;
 
   // --- Lumières : le navire est éclairé en bleu, la palette du site ---------
-  scene.add(new THREE.AmbientLight(0x2a4a63, 1.7));
+  scene.add(new THREE.AmbientLight(0x2a4a63, 2.1));
   // L'hémisphérique donne le dessus froid et le dessous très sombre : c'est elle qui
   // DÉTACHE la silhouette du fond, là où les directionnelles ne font que des reflets.
   scene.add(new THREE.HemisphereLight(0x7ad6ff, 0x080b14, 1.3));
@@ -404,7 +420,6 @@ async function construire() {
   const ras = new THREE.DirectionalLight(0xffe650, 0.3);
   ras.position.set(0, -6, 3);
   scene.add(ras);
-  scene.add(froid);
 
   // --- Le ciel : procédural, semé d'une graine fixe, donc REJOUABLE ---------
   const r = (() => {
@@ -543,7 +558,7 @@ async function construire() {
   vueCourante = { azimut: VUE.azimut - 0.55, site: VUE.site + 0.2, recul: VUE.recul * 1.55 * r0 };
   vueVoulue = { azimut: VUE.azimut, site: VUE.site, recul: VUE.recul * r0 };
   regardCourant = { x: 0, y: navireDim.y * 0.55, z: 0 };
-  regardVoulu = { x: 0, y: navireDim.y * 0.40, z: 0 };
+  regardVoulu = { x: 0, y: navireDim.y * 0.4, z: 0 };
   dernierGeste = performance.now();
 
   let dernierTemps = performance.now();
@@ -722,6 +737,15 @@ function attacherGeste(canvas) {
         if (c) { actif.value = c.id; amarmer(); }
       }
     },
+    surAnnule: () => {
+      // ⚠️ INDISPENSABLE : sous `touch-action: pan-y`, le navigateur REPREND le
+      //    geste dès qu'il est vertical et envoie `pointercancel`. Sans ce
+      //    gestionnaire, `enfonce` resterait vrai et la caméra tournerait toute
+      //    seule au doigt suivant — le défaut ne se voit pas sur un poste fixe.
+      geste.enfonce = false;
+      geste.bouge = false;
+      canvas.style.cursor = 'grab';
+    },
     surDeplace: (e) => {
       if (geste.enfonce) {
         const dx = e.clientX - geste.x0;
@@ -739,15 +763,6 @@ function attacherGeste(canvas) {
         if (c) { actif.value = c.id; canvas.style.cursor = 'pointer'; }
         else canvas.style.cursor = 'grab';
       }
-    },
-    surAnnule: () => {
-      // ⚠️ INDISPENSABLE : sous `touch-action: pan-y`, le navigateur REPREND le
-      //    geste dès qu'il est vertical et envoie `pointercancel`. Sans ce
-      //    gestionnaire, `enfonce` resterait vrai et la caméra tournerait toute
-      //    seule au doigt suivant — le défaut ne se voit pas sur un poste fixe.
-      geste.enfonce = false;
-      geste.bouge = false;
-      canvas.style.cursor = 'grab';
     },
     surMolette: (e) => {
       e.preventDefault();
@@ -816,8 +831,8 @@ function amarmer(id = actif.value) {
   );
 
   // On TOURNE la caméra du côté de l'ancre, on la met à sa hauteur, et on
-  // l'approche. L'orbite autour du navire amène naturellement le compartiment
-  // face à nous : c'est ça, « s'amarrer ».
+  // l'approche. L'orbite amène naturellement le compartiment face à nous :
+  // c'est ça, « s'amarrer ».
   vueVoulue.azimut = Math.atan2(v.x, v.z);
   vueVoulue.site = Math.max(0.02, Math.min(1.05, Math.asin(v.y / Math.max(0.8, v.length())) + 0.1));
   vueVoulue.recul = 0.62;
@@ -833,7 +848,7 @@ function ressortir() {
   vueVoulue.azimut = VUE.azimut;
   vueVoulue.site = VUE.site;
   vueVoulue.recul = VUE.recul * r0;
-  regardVoulu = { x: 0, y: navireDim.y * 0.40, z: 0 };
+  regardVoulu = { x: 0, y: navireDim.y * 0.4, z: 0 };
   dire('Amarres larguées. Le navire reprend sa route.');
 }
 

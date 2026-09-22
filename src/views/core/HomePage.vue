@@ -655,9 +655,14 @@ import TuyauVert from '@/components/ui/TuyauVert.vue';
 // direct ferait entrer Three.js dans le premier chargement et ferait tomber le verrou.
 //
 // ⚠️ `GalionViewer.vue` reste dans le dépôt, INTACT mais PLUS MONTÉ : c'est lui qui
-// portait la fenêtre. Il n'est plus référencé que par son propre fichier. On ne le
-// supprime pas — Gaëtan tranche, et le contenu du bord pilotable a été repris dans la
-// nouvelle vue.
+// portait la fenêtre. Le contenu du bord pilotable a été repris dans la nouvelle vue.
+//
+// ⚠️⚠️ RÉAPPLIQUÉ LE 22/09/2026 APRÈS UNE PERTE. Cette modification avait été écrite
+// puis EFFACÉE : `git log` porte deux commits d'urgence du même jour (« erreur 500
+// sur tout le site — un BOM UTF-8 en tête du .htaccess », puis « retour a l'etat qui
+// fonctionnait »), et le retour en arrière a restauré `HomePage.vue` à sa version
+// d'avant. *Un incident sans rapport avec ce chantier a emporté ce chantier — d'où
+// cette note : la prochaine fois, la trace dit pourquoi la même ligne revient.*
 const VaisseauNavigable = defineAsyncComponent(() => import('@/components/three/VaisseauNavigable.vue'));
 // ── LE FOND 3D DE LA PAGE D'ACCUEIL — DÉMONTÉ le 13/09/2026 ────────────────
 // Décision de Gaëtan (13/09) : option B, la scène 3D pilotée par le défilement —

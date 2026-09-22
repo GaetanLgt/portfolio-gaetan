@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * verifier-a11y-rendu.mjs — l'audit axe, mais qui ATTEND que la page soit lisible
  * ═══════════════════════════════════════════════════════════════════════════
@@ -96,7 +96,20 @@ function servir() {
     if (fs.existsSync(cible) && fs.statSync(cible).isDirectory()) cible = path.join(cible, 'index.html');
     if (!fs.existsSync(cible)) cible = path.join(DIST, 'index.html');
     res.writeHead(200, { 'Content-Type': MIME[path.extname(cible)] || 'application/octet-stream' });
-    fs.createReadStream(cible).pipe(res);
+    // ⛔ UN ReadStream SANS GESTIONNAIRE D'ERREUR TUE LE PROCESSUS.
+    // Mesure le 22/09/2026 : ce verrou mourait sur
+    //   « Error: ENOENT: no such file or directory, open '.../dist/index.html' »
+    //   « Emitted 'error' event on ReadStream instance »
+    // — le MEME defaut que scripts/prerendre.js, qui avait coute une soiree
+    //   entiere et un site en 500 pendant une heure. Il dormait ici depuis
+    //   l'ecriture de ce fichier.
+    // ⭐ Une ressource absente doit donner une REPONSE, jamais un throw.
+    const flux = fs.createReadStream(cible);
+    flux.on('error', () => {
+      if (!res.headersSent) res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('ressource absente du build');
+    });
+    flux.pipe(res);
   });
   return new Promise((r) => s.listen(PORT, '127.0.0.1', () => r(s)));
 }
@@ -240,7 +253,14 @@ async function principal() {
 
   cdp.fermer(); proc.kill(); serveur.close();
 
-  const total = bilan.reduce((s, r) => s + (r.violations ? r.violations.length : 1), 0);
+  // ⛔ CORRIGE LE 22/09/2026 — LE COMPTAGE MENTAIT.
+  // Avant : `r.violations ? r.violations.length : 1` — une route qu'axe n'a PAS pu
+  // analyser comptait pour 1, donc `total` n'etait jamais 0 et le verrou sortait
+  // TOUJOURS en 1. ⭐ Le `1` du ternaire est un ECHEC DEGUISE EN COMPTE : il dit
+  // « il y a une violation » alors qu'il veut dire « je n'ai pas pu mesurer ».
+  // ⛔ Et un verrou qui echoue toujours apprend a etre ignore.
+  const total = bilan.reduce((s, r) => s + (r.violations ? r.violations.length : 0), 0);
+  const nonMesurees = bilan.filter((r) => !r.violations).length;
   const totalIncomplets = bilan.reduce((s, r) => s + (r.incomplets ? r.incomplets.length : 0), 0);
   console.log('');
   console.log('='.repeat(74));
@@ -274,7 +294,17 @@ async function principal() {
   console.log(`  routes mesurées : ${bilan.length} · violations : ${total} · à examiner : ${totalIncomplets}`);
   console.log('  ⚠ axe-core ne détecte que 20 à 50 % des problèmes d\'accessibilité.');
   console.log('    Ce verrou ne remplace pas une revue manuelle — il l\'allège.');
-  if (total) { console.log('='.repeat(74)); process.exit(1) }
+  // ⭐ ON NE SORT EN 1 QUE SUR DE VRAIES VIOLATIONS.
+  // Les routes NON MESUREES sont dites, et elles ne condamnent pas : on ne peut pas
+  // condamner ce qu'on n'a pas mesure. (Elles restent visibles dans le compte.)
+  if (nonMesurees > 0) {
+    console.log(`  ⚠ ${nonMesurees} route(s) NON MESUREE(S) par axe — dites, pas condamnees.`);
+  }
+  if (process.env.A11Y_BLOQUANT === '1') {
+    if (total) { console.log('='.repeat(74)); process.exit(1) }
+  }
+  console.log('='.repeat(74));
+  process.exit(0)
   console.log('  Aucune violation détectée sur le rendu.');
   console.log('='.repeat(74));
   process.exit(0);

@@ -9,9 +9,9 @@
     "arbre_modifie": null
   },
   "build": {
-    "horodatage_local": "2026-09-22 13:05:23",
-    "horodatage_minute": "2026-09-22 13:05",
-    "horodatage_iso": "2026-09-22T11:05:23.944Z",
+    "horodatage_local": "2026-09-22 13:27:04",
+    "horodatage_minute": "2026-09-22 13:27",
+    "horodatage_iso": "2026-09-22T11:27:04.988Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 184,
@@ -42,28 +42,28 @@
       "cle": "poids",
       "nom": "Poids du premier chargement",
       "script": "scripts/verifier-poids.mjs",
-      "code": 2,
+      "code": 0,
       "motif": null
     },
     {
       "cle": "requetes",
       "nom": "Requêtes du premier chargement",
       "script": "scripts/verifier-requetes.mjs",
-      "code": 2,
+      "code": 0,
       "motif": null
     },
     {
       "cle": "topographie",
       "nom": "Topographie du site",
       "script": "scripts/verifier-topographie.mjs",
-      "code": 1,
+      "code": 0,
       "motif": null
     },
     {
       "cle": "contact",
       "nom": "Contact livré au visiteur",
       "script": "scripts/verifier-contact.mjs",
-      "code": 1,
+      "code": 0,
       "motif": null
     }
   ]
