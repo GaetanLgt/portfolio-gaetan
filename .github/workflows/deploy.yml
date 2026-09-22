@@ -234,73 +234,41 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Total dist size:** $(du -sh dist | cut -f1)" >> $GITHUB_STEP_SUMMARY
 
-      - name: 🧮 Requêtes du premier chargement
-        # Le verrou qui manquait. `verifier-verrous.mjs` couvre AA, reduced-motion,
-        # curseur, jetons de couleur, typographie — et renvoie le POIDS à l'étape
-        # « Check file sizes ». Mais la contrainte d'o2switch n'est pas la taille,
-        # c'est la RAFALE : ~20 requêtes rapprochées par IP renvoient un 429, et
-        # l'application ne se monte pas (ni navigation, ni pied de page, ni
-        # bandeau). Mesuré le 11/09/2026 : 12 requêtes, seuil 14.
-        #
-        # Cette étape tourne APRÈS le build, et c'est délibéré : compter depuis
-        # src/ sous-estime (Vite n'a encore ni haché les noms, ni produit le
-        # vendor, ni posé le modulepreload). Un verrou qui reçoit l'information
-        # et la jette est un rituel.
-        run: node scripts/verifier-requetes.mjs --detail
-
-      - name: ⚖️ Poids du premier chargement, par page
-        # Le verrou chiffré de la charte : « < 1 MB par page ». Il n'était vérifié
-        # nulle part — `verifier-verrous.mjs` renvoyait à « Check file sizes », qui
-        # affiche sans jamais échouer.
-        #
-        # Mesure, page par page, les ressources que chaque page HTML demande au
-        # premier chargement, depuis `dist/`. Textes compressés en gzip niveau 6
-        # (ce que le serveur sert réellement), binaires pris sur disque (woff2,
-        # jpg… sont déjà compressés). **Aucune dépendance à la machine** : c'est un
-        # compte d'octets, pas un score — il ne peut donc pas varier comme le score
-        # Lighthouse en environnement sans carte graphique.
-        #
-        # Mesuré le 13/09/2026, build du 11/09 : page la plus lourde = accueil,
-        # 12 requêtes, 333,4 Ko servis sur un seuil de 1 024 Ko (marge 690,6 Ko).
-        run: node scripts/verifier-poids.mjs --detail
-
-      # ⛔ AJOUTÉS LE 19/09/2026 — DEUX VERROUS EXISTAIENT ET NE TOURNAIENT PAS ICI.
+      # ⛔ FUSIONNÉ LE 22/09/2026 — IL Y AVAIT DEUX LISTES, IL N’EN RESTE QU’UNE.
       #
-      # Constat mesuré ce jour, en comptant : `scripts/` contient SEPT fichiers
-      # `verifier-*.mjs`, `generer-etat.mjs` en enregistre CINQ (ceux que la page
-      # /etat-du-studio affiche), et CE WORKFLOW n'en appelait que TROIS — verrous,
-      # requêtes, poids.
+      # DÉCISION DE GAËTAN : « t’analyses, tu merges, et puis tu fais en sorte
+      # que ça se fasse normalement. »
       #
-      # Autrement dit : **les deux verrous écrits le 19/09 ne protégeaient rien au
-      # déploiement.** Le plan du site et la topographie pouvaient devenir
-      # incohérents, et un `mailto:` pouvait se casser entre la source et le HTML
-      # livré — la CI aurait laissé passer les deux et déployé.
+      # CE QUI A ÉTÉ RETIRÉ, ET POURQUOI. Quatre étapes nommées à la main
+      # vivaient ici — « Requêtes », « Poids », « Topographie », « Contact » —
+      # et elles exécutaient EXACTEMENT les mêmes verrous que le passage unique
+      # ci-dessous. ⭐ **Deux listes pour la même chose divergent toujours** : un
+      # commentaire du 19/09 déclarait encore deux verrous « volontairement
+      # dehors » alors que le passage unique les exécutait depuis la veille.
+      # *Un fichier qui se contredit fait douter de tout ce qu’il contient.*
       #
-      # C'est le défaut que ce studio combat depuis le début : **un contrôle qui
-      # n'est pas branché n'est pas un contrôle.** Il rassure sur le papier et ne
-      # mesure rien. Les deux étapes ci-dessous tournent APRÈS le build, parce
-      # qu'elles lisent `dist/` — même raison que les requêtes et le poids.
+      # CE QUI EST GARDÉ, ET CE QUI LE REMPLACE. On garde la liste ÉNUMÉRÉE
+      # (`auditer-tout.mjs` découvre les verrous en listant `scripts/`) : un
+      # verrou déposé dans le dossier est pris en compte SANS toucher à ce
+      # fichier, alors qu’une liste écrite à la main devient fausse en silence.
+      # ⚠️ MAIS on ne perd pas ce que les étapes nommées apportaient : dans
+      # l’onglet Actions, un échec se lisait comme une ÉTAPE ROUGE portant le
+      # nom du verrou fautif. `auditer-tout.mjs` écrit donc désormais un
+      # **tableau des verrous** dans `GITHUB_STEP_SUMMARY` (durée, code de
+      # sortie, état) — visible sur la page du passage, à côté du journal.
+      # *Une fusion qui fait perdre une information n’est pas une fusion,*
+      # *c’est une suppression.*
       #
-      # ⚠️ ET IL EN RESTE DEUX, VOLONTAIREMENT DEHORS :
-      #   · `verifier-a11y-rendu.mjs` pilote un Chrome sans interface : il ne peut
-      #     pas tourner sur ce poste (voir le commentaire du job Lighthouse, l.260),
-      #     et son verdict y est un artefact de mesure, pas un verdict sur le site ;
-      #   · `verifier-css-sans-balisage.mjs` désigne des classes mortes SANS les
-      #     supprimer — il informe, il ne verrouille pas. Le brancher en échec
-      #     bloquerait un déploiement pour un constat qui demande un arbitrage.
-      # Ces deux-là sont NOMMÉS ici pour qu'on ne les croie pas branchés.
-
-      - name: 🗺️ Topographie du site
-        # Compare les quatre listes — manifeste, plan du site, plan montré au
-        # visiteur, pages réellement livrées — et échoue si l'une dérive.
-        run: node scripts/verifier-topographie.mjs
-
-      - name: 📇 Contact livré au visiteur
-        # Les liens `mailto:` et `tel:` RÉELLEMENT présents dans le HTML livré :
-        # une seule forme distincte pour chacun, un objet pré-rempli qui se décode,
-        # un `tel:` conforme, et aucune coordonnée en dur hors de la source unique.
-        run: node scripts/verifier-contact.mjs
-
+      # ⭐ ET LA RÈGLE SUR LES DEUX VERROUS QUI DÉSIGNENT SANS CONDAMNER :
+      #   · `verifier-a11y-rendu.mjs` pilote un Chrome sans interface ;
+      #   · `verifier-css-sans-balisage.mjs` désigne des classes mortes sans les
+      #     supprimer — il demande un arbitrage, il ne le prend pas.
+      # Ils TOURNENT (ils mesurent, et leur verdict est publié), et ils sortent
+      # en 0 par défaut : **ils désignent au lieu de condamner.** Le jour où
+      # l’un doit bloquer un déploiement, son interrupteur est NOMMÉ et visible :
+      #     A11Y_BLOQUANT=1  ·  CSS_BLOQUANT=1  ·  MIROIRS_BLOQUANT=1
+      # ⛔ Un verrou qui échoue sur une décision qu’il n’a pas le droit de prendre
+      # bloque la CI pour rien. *Il rapporte ; on décide.*
       # ⭐ LE POINT DE PASSAGE UNIQUE — ajoute le 22/09/2026.
       # Il decouvre les verrous par ENUMERATION du dossier, pas par une liste ecrite a
       # la main : un verrou depose dans scripts/ est pris en compte sans toucher ce
