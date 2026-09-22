@@ -1,4 +1,4 @@
-# ============================================================================
+﻿# ============================================================================
 # GL DIGITAL LAB - Pipeline CI/CD Complet
 # ============================================================================
 # 🔍 Lint & Format check
@@ -216,6 +216,17 @@ jobs:
         # une seule forme distincte pour chacun, un objet pré-rempli qui se décode,
         # un `tel:` conforme, et aucune coordonnée en dur hors de la source unique.
         run: node scripts/verifier-contact.mjs
+
+      # ⭐ LE POINT DE PASSAGE UNIQUE — ajoute le 22/09/2026.
+      # Il decouvre les verrous par ENUMERATION du dossier, pas par une liste ecrite a
+      # la main : un verrou depose dans scripts/ est pris en compte sans toucher ce
+      # fichier. Les quatre etapes ci-dessus nomment les pannes ; celle-ci garantit
+      # qu'AUCUN verrou n'est oublie.
+      # ⚠️ Mesure du 22/09 : trois verrous existaient et ne tournaient NULLE PART
+      #    (presence, a11y-rendu, css-sans-balisage). *Un verrou ecrit mais jamais
+      #    lance n'est pas un verrou : c'est un fichier.*
+      - name: 🧭 Tous les verrous, un seul passage
+        run: node scripts/auditer-tout.mjs
 
       - name: 📤 Upload build artifact
         uses: actions/upload-artifact@v4
