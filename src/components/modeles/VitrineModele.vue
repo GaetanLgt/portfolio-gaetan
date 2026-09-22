@@ -16,8 +16,12 @@
 
 import { computed } from 'vue';
 import { CRITERES_TRI, categories, livraisons, produits } from './donneesProduits.js';
+import { nomDe } from '@/views/modeles/modeles-adresses.js';
 
-const emit = defineEmits(['entrer', 'voir-catalogue']);
+/** Les deux appels de la vitrine sont des LIENS, pas des boutons : ce sont les deux
+ *  seules adresses de la démonstration qu'un visiteur doive pouvoir copier depuis la
+ *  première marche. Le nom de la route est LU dans la source unique des adresses. */
+const routeCatalogue = nomDe('catalogue');
 
 /** Les nombres de la vitrine : comptés depuis les données, au rendu. */
 const compteProduits = computed(() => produits.length);
@@ -91,12 +95,20 @@ const etapesParcours = [
        quatre autres marches. La vitrine commence donc à `h2`, comme toute section. -->
   <section class="boreal-vitrine" aria-labelledby="titre-contenu">
     <div class="boreal-vitrine__actions">
-      <button type="button" class="boreal-bouton boreal-bouton--action" data-manette @click="emit('entrer')">
+      <RouterLink
+        class="boreal-bouton boreal-bouton--action"
+        data-manette
+        :to="{ name: routeCatalogue }"
+      >
         Entrer dans la boutique
-      </button>
-      <button type="button" class="boreal-bouton boreal-bouton--discret" data-manette @click="emit('voir-catalogue')">
+      </RouterLink>
+      <RouterLink
+        class="boreal-bouton boreal-bouton--discret"
+        data-manette
+        :to="{ name: routeCatalogue }"
+      >
         Aller droit au catalogue
-      </button>
+      </RouterLink>
     </div>
 
     <h2 id="titre-contenu" class="boreal-titre-2">Ce que le modèle contient</h2>

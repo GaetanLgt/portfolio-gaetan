@@ -1,0 +1,103 @@
+# ============================================================
+# docker-compose.yml — LE BUILD DU SITE, ET DE QUOI LE REGARDER
+# ============================================================
+# ⛔ CE FICHIER NE REMPLACE PAS L'HÉBERGEMENT.
+#
+#    La production, c'est o2switch, sous Apache, réglé par
+#    `public/.htaccess`, et la CI (`.github/workflows/deploy.yml`) déploie
+#    par FTP. Changer d'hébergeur est une décision du dirigeant.
+#
+#    Ici, deux services et deux seulement :
+#      · `build`  — construit le site et ÉCRIT le rapport d'étapes ;
+#      · `serve`  — sert `dist/` sur un port local pour le REGARDER.
+#
+# ⚠️ NOM ET PORTS DISTINCTS DE `infrastructure/docker-compose.yml`.
+#    Ce fichier-là décrit « GL TOWER » (Traefik, n8n, Ollama, Postgres,
+#    Redis, ChromaDB, Prometheus, Grafana) et occupe les ports 80, 443,
+#    8080, 5432, 6379 et 5678. Les deux peuvent tourner en même temps :
+#      · réseau dédié `portfolio-build` (GL TOWER est sur `gl-tower`) ;
+#      · aucun port publié par le service de build ;
+#      · le service de test écoute sur 8088, libre.
+#
+# Ce fichier n'a PAS de clé `version:` — elle est obsolète depuis Compose v2
+# et ne produit qu'un avertissement.
+#
+# USAGE — voir CONTENEUR.md. En résumé :
+#   docker compose build
+#   docker compose run --rm build          # construit, écrit le rapport
+#   docker compose up serve                # http://localhost:8088
+# ============================================================
+
+name: portfolio-gaetan-build
+
+services:
+  # ------------------------------------------------------------
+  # 1. LE BUILD — et son rapport d'étapes
+  # ------------------------------------------------------------
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: portfolio-gaetan-build:local
+    container_name: portfolio-build
+    # Le dépôt de l'hôte n'est JAMAIS monté en écriture : le build écrit
+    # dans `public/` et `src/data/` (Arche, TARDIS/JoF, sitemap, relevé).
+    # Monter le dépôt en écriture ferait réécrire par Linux des fichiers
+    # VERSIONNÉS — donc modifier l'arbre de travail de Gaëtan depuis un
+    # conteneur. Les sources entrent par `COPY` (gelées à la construction
+    # de l'image), la sortie ressort par un volume.
+    working_dir: /app
+    environment:
+      # ⛔ `RAPPORTS` DOIT ÊTRE ICI. Sans lui, `etapes-build.sh` écrit ses
+      # rapports dans `/app` — donc DANS le conteneur, et ils disparaissent
+      # avec lui. Mesuré le 22/09/2026 : première version de ce fichier, le
+      # script tournait, sortait en code 0, et `build-etapes.txt` n'existait
+      # nulle part sur l'hôte. *Un rapport qu'on croit écrit et qu'on ne
+      # retrouve pas est pire qu'un rapport absent.*
+      RAPPORTS: /app/rapports
+      # Le vault Metroid sert à générer /Arche/. Non monté par défaut :
+      # c'est le mode RÉVÉLATEUR, celui qui montre ce que le build sait
+      # faire SANS la machine du studio.
+      VAULT_METROID: ${VAULT_METROID:-/vault-absent}
+      ECOLE_STUDIO: ${ECOLE_STUDIO:-/studio-absent}
+    volumes:
+      # `dist/` construit, partagé avec le service `serve`.
+      - dist-construit:/app/dist
+      # Le rapport d'étapes, l'empreinte du dist et la sortie brute,
+      # lisibles depuis l'hôte.
+      - ./rapports-conteneur:/app/rapports
+    # ⚠️ PAS DE `exit 0` ICI, ET C'EST VOULU. La première version en portait
+    # un, pour « ne pas casser la mesure » : il masquait aussi le code de
+    # sortie du build, donc `docker compose run` annonçait un succès sur un
+    # build en échec. Ici le code du script REMONTE : un build rouge est
+    # rouge. Le rapport, lui, est écrit dans tous les cas.
+    command: sh /app/conteneur/etapes-build.sh
+
+  # ------------------------------------------------------------
+  # 2. LE SERVEUR DE TEST — pour REGARDER le résultat
+  # ------------------------------------------------------------
+  # ⚠️ Ce n'est PAS la production. Voir l'en-tête de `conteneur/nginx.conf` :
+  #    le `.htaccess` d'Apache n'est PAS interprété ici. Les en-têtes de
+  #    sécurité sont RECOPIÉS dans la configuration nginx — ils s'affichent,
+  #    mais cela ne prouve PAS que le `.htaccess` d'o2switch les envoie.
+  serve:
+    image: nginx:1.29.3-alpine@sha256:b3c656d55d7ad751196f21b7fd2e8d4da9cb430e32f646adcf92441b72f82b14
+    container_name: portfolio-serve
+    depends_on:
+      - build
+    ports:
+      # 8088 : libre. Évite 80, 443 et 8080, pris par GL TOWER.
+      - "8088:80"
+    volumes:
+      - dist-construit:/usr/share/nginx/html:ro
+      - ./conteneur/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  # Volume NOMMÉ et non bind : le build conteneur ne touche jamais le
+  # `dist/` du poste. Pour comparer les deux, on compte et on hache à
+  # l'intérieur (voir CONTENEUR.md § « Mesurer sans se tromper »).
+  dist-construit:
+
+networks:
+  default:
+    name: portfolio-build

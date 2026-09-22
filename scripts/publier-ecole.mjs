@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // publier-ecole.mjs — GL Digital Lab — 13/09/2026
 //   étendu le 14/09/2026 : publication des KITS (sous-dossiers) et des renvois [[…]]
 //
@@ -72,7 +72,14 @@ const RACINE = process.cwd();
  * exactement le défaut qu'on vient de corriger quatre fois aujourd'hui.*
  */
 const LOCAL = join(RACINE, 'ecole-dossiers');
-const STUDIO = 'C:\\IA\\gl-digital-lab\\ecole\\dossiers-pedagogiques';
+/* ⚠️ CE CHEMIN N'EST PAS LA SOURCE — IL N'EST QUE LE TÉMOIN.
+ * La source publiée est `ecole-dossiers/` ci-dessus, DANS le dépôt du site.
+ * `STUDIO` sert uniquement à COMPARER les empreintes et à avertir quand un
+ * document a changé d'un côté sans l'autre : tout son usage est enveloppé
+ * dans un `existsSync(STUDIO)`, et son absence ne fait rien échouer.
+ * Surchargeable par `ECOLE_STUDIO` pour un conteneur ou une autre machine.
+ * Défaut inchangé : sur le poste du studio, rien ne bouge. */
+const STUDIO = process.env.ECOLE_STUDIO || 'C:\\IA\\gl-digital-lab\\ecole\\dossiers-pedagogiques';
 
 if (!existsSync(LOCAL)) {
   console.error('  Dossier source introuvable : ' + LOCAL);
@@ -169,7 +176,7 @@ if (existsSync(STUDIO)) {
  *
  * Le vault est dans OneDrive et ne doit JAMAIS être modifié par ce script : il est LU.
  */
-const KIT_SOURCE = 'C:\\Users\\neosp\\OneDrive\\Documents\\Metroid\\Vault-Metroid';
+const KIT_SOURCE = process.env.VAULT_METROID || 'C:\\Users\\neosp\\OneDrive\\Documents\\Metroid\\Vault-Metroid';
 const KIT_LOCAL = join(LOCAL, 'metroid');
 
 if (existsSync(KIT_SOURCE) || existsSync(KIT_LOCAL)) {

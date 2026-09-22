@@ -1,33 +1,36 @@
 <script setup>
 /**
- * ModeleBorealBoutique.vue — LA TRANCHE VERTICALE, ASSEMBLÉE.
+ * ModeleBorealBoutique.vue — LA TRANCHE VERTICALE, ASSEMBLÉE, SUR CINQ VRAIES ADRESSES.
  *
- * ⚠ CE QUE CE FICHIER EST, ET CE QU'IL N'EST PAS.
- * C'est UNE page et UNE route. Les cinq marches de la démonstration (vitrine, catalogue,
- * fiche, panier, commande) vivent dans l'état local et dans le FRAGMENT D'ADRESSE
- * (`#catalogue`, `#fiche/plume-boreal`, `#panier`, `#commande`), pas dans cinq routes.
+ * ⭐ LA MARCHE NE SE STOCKE PLUS : ELLE SE LIT DANS LA ROUTE.
+ * `route.meta.modele` désigne la marche servie, et cette valeur vient de
+ * `modeles-adresses.js` par `routes-modele.js`. Il n'y a donc AUCUN état local qui
+ * reproduise l'adresse — *deux sources de vérité pour la même chose, c'est une divergence
+ * programmée* — et un lien collé dans un message rouvre exactement la même marche.
  *
- * POURQUOI CE CHOIX, ET IL EST DÉLIBÉRÉ : la tranche est livrée dans un dépôt dont le
- * routeur n'appartient pas à cette livraison. Poser cinq routes aurait voulu dire soit
- * modifier `src/router/index.js` (interdit ici), soit livrer cinq liens morts qui
- * répondraient 404 tant que la ligne n'est pas ajoutée. Avec un fragment d'adresse, LA
- * SEULE LIGNE À AJOUTER AU ROUTEUR OUVRE TOUT, et chaque étape reste atteignable par un
- * lien direct : `#panier` rouvre le panier.
+ * ⛔ PLUS AUCUN FRAGMENT D'ADRESSE DANS CE FICHIER. La version précédente pilotait les cinq
+ * marches par `#catalogue`, `#fiche/<id>`, `#panier`, `#commande` : elle tenait dans une
+ * seule route, mais **une adresse en `#` ne s'indexe pas, ne se partage pas, ne s'achète
+ * pas.** Le fragment était une contrainte de livraison, pas un choix de conception.
  *
- * ⚠ ET LE FRAGMENT EST ÉCRIT EN `replaceState`, PAS EN AFFECTATION DE `location.hash` :
- * une affectation empile une entrée d'historique par clic, et le bouton « précédent » du
- * navigateur devient inutilisable au bout de dix gestes.
+ * ⚠ CE QUI RESTE EN ÉTAT LOCAL, ET RIEN D'AUTRE : le panier (persistant pour lui-même dans
+ * `usePanier`), le filtre et le tri (dans la grille), et la saisie du tunnel en cours
+ * (dans le tunnel). Ce qui doit survivre à un rechargement et à un partage de lien est dans
+ * l'ADRESSE ; le reste est dans l'état. La saisie d'un formulaire en cours est le cas
+ * limite assumé : elle ne survit pas à un rechargement, et c'est écrit.
  *
- * ⛔ AUCUN APPEL RÉSEAU DANS CETTE PAGE NI DANS SES ENFANTS. Le panier vit dans le
- * stockage local du navigateur ; la commande est simulée jusqu'au bout.
+ * ⛔ AUCUN APPEL RÉSEAU DANS CETTE PAGE NI DANS SES ENFANTS. Le panier vit dans le stockage
+ * local du navigateur ; la commande est simulée jusqu'au bout.
  */
 
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 // La feuille de styles de la tranche est importée ICI, une seule fois, et nulle part
 // ailleurs : un modèle qui dépend d'un ordre d'imports est un modèle qui casse en silence.
 import '@/assets/styles/modeles/boreal.css';
 
+import { ADRESSES_MODELE, adresseParNom, adressesDeNavigation, nomDe } from './modeles-adresses.js';
 import { boutique, formaterPrix, produits } from '@/components/modeles/donneesProduits.js';
 import { usePanier } from '@/components/modeles/usePanier.js';
 import {
@@ -49,79 +52,104 @@ import FicheProduit from '@/components/modeles/FicheProduit.vue';
 import PanneauPanier from '@/components/modeles/PanneauPanier.vue';
 import TunnelCommande from '@/components/modeles/TunnelCommande.vue';
 
-const { nombreArticles, panierVide, sousTotal, dernierMessage, ajouter } = usePanier();
+const route = useRoute();
+const router = useRouter();
+const { nombreArticles, sousTotal, dernierMessage, ajouter } = usePanier();
 
-/** Les étapes, dans l'ordre du parcours. La liste est écrite une fois.
- *  ⚠ L'étape « vitrine » renvoie au `h1` de la PAGE (`titre-modele`) et non à un titre de
- *  la vitrine : ce titre existe à toutes les étapes, donc le focus après un changement
- *  d'étape ne peut jamais viser un élément qui n'est plus là. */
-const ETAPES = [
-  { id: 'vitrine', libelle: 'Vitrine', titre: 'titre-modele' },
-  { id: 'catalogue', libelle: 'Catalogue', titre: 'titre-catalogue' },
-  { id: 'fiche', libelle: 'Fiche produit', titre: 'titre-fiche' },
-  { id: 'panier', libelle: 'Panier', titre: 'titre-panier' },
-  { id: 'commande', libelle: 'Commande', titre: 'titre-commande' },
-];
-
-const etape = ref('vitrine');
-const idProduitActif = ref(produits[0].id);
 const aideOuverte = ref(false);
 
+/** LA MARCHE COURANTE, LUE DANS LA ROUTE — et lue PAR LE NOM, pas par un `meta` du
+ *  routeur. ⚠ C'EST UNE CORRECTION, ET ELLE A ÉTÉ PAYÉE.
+ *
+ *  La première version lisait `route.meta.modele`. Or le routeur du site appartient au
+ *  dépôt, et les cinq routes y ont été écrites SANS ce champ : les cinq adresses auraient
+ *  donc toutes rendu la vitrine, en silence, sans qu'aucune erreur ne soit levée. Mon banc
+ *  d'essai ne pouvait pas le voir — il monte SES enregistrements, où le champ existe.
+ *  ⭐ *Un banc qui teste ses propres données ne teste pas l'intégration.*
+ *
+ *  Le NOM de la route, lui, est déjà la clé qui sert à naviguer : il ne peut pas manquer
+ *  là où la navigation fonctionne. On le lit donc en premier, `meta.modele` ne sert plus
+ *  que de renfort (mes enregistrements le portent), et le repli est la vitrine — jamais
+ *  une page blanche. Le banc `banc-routes-boreal.mjs` compare ensuite les noms du routeur
+ *  RÉEL à cette source, pour que la divergence ne puisse plus passer inaperçue. */
+const etape = computed(() => {
+  const parNom = adresseParNom(route.name);
+  if (parNom) return parNom.id;
+  const declaree = route.meta && route.meta.modele ? route.meta.modele : '';
+  if (ADRESSES_MODELE.some((adresse) => adresse.id === declaree)) return declaree;
+  return 'vitrine';
+});
+
+const indexEtape = computed(() => {
+  const position = ADRESSES_MODELE.findIndex((adresse) => adresse.id === etape.value);
+  return position < 0 ? 0 : position;
+});
 const libelleEtape = computed(
-  () => (ETAPES.find((e) => e.id === etape.value) || ETAPES[0]).libelle,
+  () => (ADRESSES_MODELE[indexEtape.value] || ADRESSES_MODELE[0]).libelle,
 );
+const nomRouteCourante = computed(() => (adresseParNom(route.name) || {}).nom || '');
 
-const indexEtape = computed(() => ETAPES.findIndex((e) => e.id === etape.value));
-
-/* ────────────────────────────────────────────────────────────────────────────────
-   LE FRAGMENT D'ADRESSE — lecture, écriture, et la boucle qu'on évite
-   ──────────────────────────────────────────────────────────────────────────────── */
-
-function hashPour(etapeVoulue, idProduit) {
-  if (etapeVoulue === 'fiche' && idProduit) return `#fiche/${idProduit}`;
-  return `#${etapeVoulue}`;
-}
-
-function ecrireFragment() {
-  const cible = hashPour(etape.value, idProduitActif.value);
-  if (window.location.hash === cible) return;
-  // `replaceState` n'empile rien et ne déclenche AUCUN `hashchange` : c'est ce qui rend
-  // l'écriture sûre — elle ne peut pas rappeler le lecteur ci-dessous.
-  if (window.history && typeof window.history.replaceState === 'function') {
-    window.history.replaceState(null, '', cible);
-  } else {
-    window.location.hash = cible;
-  }
-}
-
-function appliquerFragment() {
-  const brut = window.location.hash.replace(/^#/, '');
-  if (brut === '') return;
-  const [nom, parametre] = brut.split('/');
-  const connue = ETAPES.some((e) => e.id === nom);
-  if (!connue) return;
-  if (nom === 'fiche' && parametre) {
-    idProduitActif.value = parametre;
-    etape.value = 'fiche';
-    return;
-  }
-  if (nom === 'fiche') return; // une fiche sans produit ne s'ouvre pas : on ne devine pas
-  etape.value = nom;
-}
+/** L'identifiant de produit porté par l'adresse (`/produit/:id`), ou une chaîne vide.
+ *  ⚠ On ne devine PAS l'écran quand le paramètre manque : `FicheProduit` reçoit une chaîne
+ *  vide et affiche « ce produit n'existe pas » — un identifiant inconnu ne fait jamais une
+ *  page blanche. */
+const idProduitActif = computed(() => {
+  const brut = route.params && route.params.id ? route.params.id : '';
+  return Array.isArray(brut) ? (brut[0] || '') : String(brut);
+});
 
 /* ────────────────────────────────────────────────────────────────────────────────
-   NAVIGATION DANS LA TRANCHE
+   NAVIGATION — PAR NOM DE ROUTE, JAMAIS PAR CHEMIN ÉCRIT À LA MAIN
    ──────────────────────────────────────────────────────────────────────────────── */
 
-const premierRendu = ref(true);
+/** Message posé quand une navigation est refusée par le routeur (route non déclarée). */
+const incidentNavigation = ref('');
 
-function allerA(nouvelleEtape, idProduit) {
-  if (idProduit) idProduitActif.value = idProduit;
-  etape.value = nouvelleEtape;
+/**
+ * Va vers une marche, par son NOM de route. Les paramètres de route sont passés en objet :
+ * c'est le routeur qui construit l'adresse, jamais nous.
+ *
+ * ⚠ L'ÉCHEC EST PARLÉ, PAS AVALÉ. Si la route n'existe pas (modèle branché à moitié), Vue
+ * Router rend une promesse rejetée : on l'écrit à l'écran. *Un bouton qui ne fait rien sans
+ * rien dire est un défaut qu'on ne trouve jamais.*
+ */
+async function allerA(idMarche, parametres = {}) {
+  const nom = nomDe(idMarche);
+  if (!router.hasRoute(nom)) {
+    incidentNavigation.value =
+      `La route « ${nom} » n'est pas déclarée dans le routeur du site : la marche `
+      + `« ${idMarche} » ne peut pas s'ouvrir. C'est un défaut de branchement, pas de la page.`;
+    return false;
+  }
+  incidentNavigation.value = '';
+  const echec = await router.push({ name: nom, params: parametres });
+  if (echec) {
+    // Vue Router 4 rend un « NavigationFailure » (et non une exception) quand la
+    // navigation est refusée. On ne le confond pas avec une navigation nulle ni avec un
+    // doublon (aller sur l'adresse où l'on est déjà), qui sont des cas normaux.
+    const estDoublon = echec.type === 16; // NavigationFailureType.duplicated
+    if (!estDoublon) {
+      incidentNavigation.value = `Navigation vers « ${nom} » refusée (type ${echec.type}).`;
+      return false;
+    }
+  }
+  return true;
 }
 
-function ouvrirFiche(idProduit) {
-  allerA('fiche', idProduit);
+/** Revenir à la marche précédente, dans l'ORDRE DU PARCOURS — pas dans l'historique.
+ *  ⚠ ET C'EST UN CHOIX : ouvert directement sur `/commande` par un lien partagé, un
+ *  « retour » d'historique ferait QUITTER le site, ce qui est désorientant. L'ordre du
+ *  parcours, lui, ramène toujours à la marche précédente du modèle. */
+function reculer() {
+  const position = indexEtape.value;
+  if (position <= 0) return;
+  const precedente = ADRESSES_MODELE[position - 1].id;
+  // La fiche n'a pas de sens sans produit derrière : on ne remonte jamais vers elle.
+  allerA(precedente === 'fiche' ? 'catalogue' : precedente);
+}
+
+function ouvrirPanier() {
+  allerA('panier');
 }
 
 function ajouterDirect(charge) {
@@ -138,39 +166,30 @@ function ajouterDirect(charge) {
   ajouter(produit, charge.idVariante || produit.variantes[0].id, 1);
 }
 
-/** Revenir d'une marche : c'est le geste de la manette « B » et de la touche Échap. */
-function reculer() {
-  const position = indexEtape.value;
-  if (position <= 0) return;
-  const precedente = ETAPES[position - 1].id;
-  // La fiche n'a de sens qu'avec un catalogue derrière : on ne remonte jamais vers elle.
-  etape.value = precedente === 'fiche' ? 'catalogue' : precedente;
+/* ────────────────────────────────────────────────────────────────────────────────
+   LE FOCUS SUIT LA MARCHE
+   ──────────────────────────────────────────────────────────────────────────────── */
+
+/** Le titre à viser au focus après un changement de marche. Le `h1` de la page est visé
+ *  pour la vitrine : il existe à toutes les marches, donc la cible existe toujours. */
+function titreDeMarche(idMarche) {
+  return idMarche === 'vitrine' ? 'titre-modele' : `titre-${idMarche}`;
 }
 
-function allerAuPanier() {
-  if (panierVide.value) {
-    dernierMessage.value =
-      'Le panier est vide : ajoutez d\'abord un objet depuis le catalogue ou une fiche produit.';
-    etape.value = 'catalogue';
-    return;
-  }
-  etape.value = 'panier';
-}
+const premierRendu = ref(true);
 
-/** Le focus suit la marche : sans ça, une étape change à l'écran et le focus reste
- *  derrière, dans un bouton qui n'existe plus. */
-watch(etape, async () => {
-  if (premierRendu.value) return;
-  ecrireFragment();
-  await nextTick();
-  const cible = document.getElementById(
-    (ETAPES.find((e) => e.id === etape.value) || ETAPES[0]).titre,
-  );
-  if (cible && typeof cible.focus === 'function') cible.focus();
-});
+watch(
+  () => [route.name, route.params.id],
+  async () => {
+    if (premierRendu.value) return;
+    await nextTick();
+    const cible = document.getElementById(titreDeMarche(etape.value));
+    if (cible && typeof cible.focus === 'function') cible.focus();
+  },
+);
 
 useActionsManette({
-  panier: allerAuPanier,
+  panier: ouvrirPanier,
   retour: reculer,
   aide: () => { aideOuverte.value = !aideOuverte.value; },
 });
@@ -184,19 +203,15 @@ useActionsManette({
 onMounted(async () => {
   demarrerManette();
   window.addEventListener('keydown', surToucheClavier);
-  window.addEventListener('hashchange', appliquerFragment);
-  appliquerFragment();
-  // ⚠ `premierRendu` est abaissé APRÈS le tour de rendu : sans ça, arriver sur `#panier`
-  // par un lien direct déplacerait le focus tout seul au chargement, ce qui désoriente
-  // — en lecteur d'écran comme à la manette.
+  // ⚠ `premierRendu` est abaissé APRÈS le tour de rendu : sans ça, ouvrir directement
+  // `/commande` par un lien partagé déplacerait le focus tout seul au chargement, ce qui
+  // désoriente — en lecteur d'écran comme à la manette.
   await nextTick();
   premierRendu.value = false;
-  if (window.location.hash === '') ecrireFragment();
 });
 
 onUnmounted(() => {
   window.removeEventListener('keydown', surToucheClavier);
-  window.removeEventListener('hashchange', appliquerFragment);
   arreterManette();
 });
 </script>
@@ -211,12 +226,12 @@ onUnmounted(() => {
          n'avait plus AUCUN titre de niveau 1**. Axe le dit : `page-has-heading-one`.
          Trois défauts distincts en découlaient : un lecteur d'écran ne savait plus sur
          quelle page il était après le premier changement d'étape ; la hiérarchie des
-         titres repartait d'un `h2` orphelin ; et un lien profond (`#commande`) ouvrait
+         titres repartait d'un `h2` orphelin ; et un lien direct (`/commande`) ouvrait
          une page sans titre.
 
          *Un titre qui n'existe que sur la première marche n'est pas le titre de la page :
          c'est le titre d'une marche.* Le `h1` est donc dans l'en-tête, il ne bouge plus
-         d'une étape à l'autre, et chaque étape garde ses `h2`.
+         d'une adresse à l'autre, et chaque marche garde ses `h2`.
          ═══════════════════════════════════════════════════════════════════════════ -->
     <header class="boreal-entete">
       <p class="boreal-etiquette">Modèle de boutique — démonstration</p>
@@ -234,29 +249,40 @@ onUnmounted(() => {
       </p>
     </header>
 
+    <!-- ⚠ LA BARRE EST FAITE DE LIENS (`<RouterLink>`), PAS DE BOUTONS.
+         Trois raisons, et aucune n'est esthétique : un lien a une adresse qu'on peut copier
+         dans un message, ouvrir dans un nouvel onglet, ou suivre par un moteur de
+         recherche ; un bouton n'en a pas. *Un menu de boutique qui n'est pas fait de liens
+         n'est pas un menu : c'est une suite de boutons.* -->
     <nav class="boreal-barre" aria-label="Étapes de la démonstration">
       <ul class="boreal-barre__liste">
-        <li v-for="item in ETAPES" :key="item.id">
-          <button
-            type="button"
+        <li v-for="adresse in adressesDeNavigation()" :key="adresse.id">
+          <RouterLink
             class="boreal-onglet"
             data-manette
-            :aria-current="item.id === etape ? 'page' : undefined"
-            @click="item.id === 'panier' ? allerAuPanier() : allerA(item.id)"
+            :to="{ name: adresse.nom }"
+            :aria-current="adresse.id === etape ? 'page' : undefined"
           >
-            {{ item.libelle }}
-            <span v-if="item.id === 'panier' && nombreArticles > 0" class="boreal-onglet__compte">
+            {{ adresse.libelle }}
+            <span v-if="adresse.id === 'panier' && nombreArticles > 0" class="boreal-onglet__compte">
               {{ nombreArticles }}
               <span class="sr-only">article(s) dans le panier</span>
             </span>
-          </button>
+          </RouterLink>
         </li>
       </ul>
 
       <p class="boreal-barre__etat">
-        Étape {{ indexEtape + 1 }} sur {{ ETAPES.length }} — {{ libelleEtape }}
+        Étape {{ indexEtape + 1 }} sur {{ ADRESSES_MODELE.length }} — {{ libelleEtape }}
+        <span v-if="idProduitActif" class="boreal-barre__parametre">
+          · référence : <code>{{ idProduitActif }}</code>
+        </span>
       </p>
     </nav>
+
+    <p v-if="incidentNavigation" class="boreal-avertissement" role="alert">
+      {{ incidentNavigation }}
+    </p>
 
     <section class="boreal-manette" aria-labelledby="titre-manette">
       <h2 id="titre-manette" class="boreal-surtitre">Manette &amp; clavier</h2>
@@ -286,9 +312,9 @@ onUnmounted(() => {
         <dt>Stick gauche / croix directionnelle</dt>
         <dd>Déplacer le focus dans la direction voulue (le focus ne saute jamais au hasard : la distance est calculée).</dd>
         <dt>A</dt>
-        <dd>Valider l'élément visé, cocher une variante, insérer une lettre au clavier à l'écran.</dd>
+        <dd>Valider l'élément visé, suivre un lien, cocher une variante, insérer une lettre au clavier à l'écran.</dd>
         <dt>B</dt>
-        <dd>Revenir d'une étape.</dd>
+        <dd>Revenir à l'étape précédente du parcours.</dd>
         <dt>X</dt>
         <dd>Ajouter au panier depuis le catalogue ou depuis une fiche produit.</dd>
         <dt>Y ou Start</dt>
@@ -304,15 +330,10 @@ onUnmounted(() => {
       </dl>
     </section>
 
-    <VitrineModele
-      v-if="etape === 'vitrine'"
-      @entrer="allerA('catalogue')"
-      @voir-catalogue="allerA('catalogue')"
-    />
+    <VitrineModele v-if="etape === 'vitrine'" />
 
     <GrilleProduits
       v-else-if="etape === 'catalogue'"
-      @ouvrir-fiche="ouvrirFiche"
       @ajouter-direct="ajouterDirect"
     />
 
@@ -320,20 +341,12 @@ onUnmounted(() => {
       v-else-if="etape === 'fiche'"
       :id-produit="idProduitActif"
       @retour="allerA('catalogue')"
-      @aller-au-panier="allerAuPanier"
+      @aller-au-panier="ouvrirPanier"
     />
 
-    <PanneauPanier
-      v-else-if="etape === 'panier'"
-      @retour="allerA('catalogue')"
-      @commander="allerA('commande')"
-    />
+    <PanneauPanier v-else-if="etape === 'panier'" />
 
-    <TunnelCommande
-      v-else-if="etape === 'commande'"
-      @retour="allerA('panier')"
-      @terminer="allerA('catalogue')"
-    />
+    <TunnelCommande v-else-if="etape === 'commande'" />
 
     <p class="boreal-mention boreal-mention--pied">
       Sous-total du panier : {{ formaterPrix(sousTotal) }} ·

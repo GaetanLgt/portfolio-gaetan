@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ⛔ Cette page est un BANC D'ESSAI, pas une page du site : elle n'est dans
+     aucun routeur, et elle demande explicitement à ne pas être indexée. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Essai — les runes viking du studio</title>
+<!-- Les jetons de couleur du studio, en LECTURE. Aucun code couleur n'est écrit
+     à la main dans cet essai : --paper, --ink, --accent, --rule viennent d'ici. -->
+<link rel="stylesheet" href="../../assets/styles/variables.css">
+<style>
+  /* Mise en page du BANC uniquement. Aucune couleur en dur, aucune police
+     chargée : on reste sur la pile système du poste. */
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 32px 40px 96px;
+  }
+  h1 { font-size: 20px; letter-spacing: 0.06em; margin: 0 0 8px; color: var(--ink); }
+  h2 {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--accent); margin: 44px 0 16px;
+    border-top: 1px solid var(--rule); padding-top: 16px;
+  }
+  p { margin: 0 0 12px; color: var(--ink-soft); max-width: 92ch; }
+  code { color: var(--accent-ink); }
+  .banc__note { color: var(--ink-faint); font-size: 12px; }
+  .banc__grille {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+    gap: 8px; margin-top: 8px;
+  }
+  .banc__carte {
+    border: 1px solid var(--rule); background: var(--paper-alt);
+    padding: 12px 10px 10px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .banc__carte-rune { height: 74px; display: flex; align-items: center; color: var(--ink); }
+  .banc__carte-lettre { color: var(--accent); letter-spacing: 0.1em; }
+  .banc__carte-nom { color: var(--ink); }
+  .banc__carte-sens { color: var(--ink-faint); font-size: 11px; text-align: center; }
+  .banc__rangee { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin: 14px 0; }
+  .banc__etiquette { color: var(--ink-faint); min-width: 108px; font-size: 11px; }
+  .banc__mot { color: var(--ink); }
+  .banc__mot--accent { color: var(--accent); }
+  .banc__mot--faible { color: var(--ink-faint); }
+  .banc__alt {
+    background: var(--paper-alt); border: 1px solid var(--rule);
+    padding: 22px; display: flex; flex-direction: column; gap: 18px;
+  }
+  .banc__bloc-erreur {
+    border-left: 2px solid var(--alert); background: var(--paper-alt);
+    padding: 12px 14px; color: var(--ink-soft); white-space: pre-wrap; word-break: break-word;
+  }
+  .banc__liste { margin: 0; padding-left: 18px; color: var(--ink-soft); }
+  .banc__liste li { margin-bottom: 6px; }
+  .banc__liste strong { color: var(--ink); }
+  .banc__sep { border: 0; border-top: 1px solid var(--rule); margin: 26px 0; }
+</style>
+</head>
+<body>
+  <div id="essai">
+    <noscript>Cet essai a besoin de JavaScript : il monte les vrais composants Vue.</noscript>
+  </div>
+  <script type="module" src="./essai-runes.js"></script>
+</body>
+</html>

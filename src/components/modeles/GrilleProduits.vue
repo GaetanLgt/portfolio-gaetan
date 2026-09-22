@@ -29,7 +29,7 @@ import {
 import { useActionsManette } from './useManette.js';
 import CarteProduit from './CarteProduit.vue';
 
-const emit = defineEmits(['ouvrir-fiche', 'ajouter-direct']);
+const emit = defineEmits(['ajouter-direct']);
 
 const categorieActive = ref('toutes');
 const critereActif = ref(CRITERES_TRI[0].id);
@@ -66,8 +66,6 @@ function reinitialiser() {
   categorieActive.value = 'toutes';
   critereActif.value = CRITERES_TRI[0].id;
 }
-
-const ouvrir = (idProduit) => emit('ouvrir-fiche', idProduit);
 
 /**
  * LA MANETTE, DANS LA GRILLE. « X » fait exactement ce que fait le bouton « Ajouter »
@@ -159,7 +157,6 @@ useActionsManette({
       <li v-for="produit in listeAffichee" :key="produit.id" class="boreal-grille-produits__item">
         <CarteProduit
           :produit="produit"
-          @ouvrir-fiche="ouvrir"
           @ajouter-direct="(charge) => emit('ajouter-direct', charge)"
         />
       </li>

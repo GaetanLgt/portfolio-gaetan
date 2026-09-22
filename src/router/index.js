@@ -126,6 +126,58 @@ const routes = [
       description: 'Démonstration d\'un modèle de boutique : catalogue filtrable, fiche produit, panier persistant et tunnel de commande simulé — aucun paiement, aucune donnée transmise. Navigation clavier et manette Xbox.'
     }
   },
+  // Catalogue — une VRAIE adresse, pas un fragment d’ancre.
+  // ⭐ « Le garde-fou qui gère qu’une seule route à la fois… tu le dégages. »
+  //   (Gaëtan, 22/09/2026) — un panier en `#panier` ne s’indexe pas, ne se
+  //   partage pas, ne s’achète pas. Un modèle vendable a des adresses.
+  {
+    path: '/modeles/boutique-boreal/catalogue',
+    name: 'ModeleBorealCatalogue',
+    component: ModeleBorealBoutique,
+    meta: {
+      title: 'Catalogue — modèle de boutique Atelier Boréal | Génie IT TeK FR',
+      description: 'Catalogue filtrable et triable du modèle de boutique Atelier Boréal : 13 objets, 4 catégories, aucune ressource externe.',
+    }
+  },
+  // Fiche produit — une VRAIE adresse, pas un fragment d’ancre.
+  // ⭐ « Le garde-fou qui gère qu’une seule route à la fois… tu le dégages. »
+  //   (Gaëtan, 22/09/2026) — un panier en `#panier` ne s’indexe pas, ne se
+  //   partage pas, ne s’achète pas. Un modèle vendable a des adresses.
+  {
+    path: '/modeles/boutique-boreal/produit/:id',
+    name: 'ModeleBorealProduit',
+    component: ModeleBorealBoutique,
+    meta: {
+      title: 'Fiche produit — modèle de boutique Atelier Boréal | Génie IT TeK FR',
+      description: 'Fiche produit du modèle de boutique Atelier Boréal : variantes, quantité, ajout au panier persistant.',
+    }
+  },
+  // Panier — une VRAIE adresse, pas un fragment d’ancre.
+  // ⭐ « Le garde-fou qui gère qu’une seule route à la fois… tu le dégages. »
+  //   (Gaëtan, 22/09/2026) — un panier en `#panier` ne s’indexe pas, ne se
+  //   partage pas, ne s’achète pas. Un modèle vendable a des adresses.
+  {
+    path: '/modeles/boutique-boreal/panier',
+    name: 'ModeleBorealPanier',
+    component: ModeleBorealBoutique,
+    meta: {
+      title: 'Panier — modèle de boutique Atelier Boréal | Génie IT TeK FR',
+      description: 'Panier persistant du modèle de boutique Atelier Boréal : quantités, suppression, sous-total et livraison.',
+    }
+  },
+  // Commande simulée — une VRAIE adresse, pas un fragment d’ancre.
+  // ⭐ « Le garde-fou qui gère qu’une seule route à la fois… tu le dégages. »
+  //   (Gaëtan, 22/09/2026) — un panier en `#panier` ne s’indexe pas, ne se
+  //   partage pas, ne s’achète pas. Un modèle vendable a des adresses.
+  {
+    path: '/modeles/boutique-boreal/commande',
+    name: 'ModeleBorealCommande',
+    component: ModeleBorealBoutique,
+    meta: {
+      title: 'Commande simulée — modèle de boutique Atelier Boréal | Génie IT TeK FR',
+      description: 'Tunnel de commande SIMULÉ du modèle de boutique Atelier Boréal : coordonnées, livraison, récapitulatif. Aucun paiement, aucune donnée transmise.',
+    }
+  },
   {
     path: '/contact',
     name: 'Contact',

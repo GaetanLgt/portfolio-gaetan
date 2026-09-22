@@ -5,6 +5,36 @@
 
 ---
 
+## ⚠️ BANDEAU DE CORRECTION — 22/09/2026
+
+> **Ce document a été corrigé le 22/09/2026 par un audit à 360°, et une de ses
+> affirmations était la plus dangereuse du dépôt.**
+>
+> Il dit, dans sa troisième action : **« Le site n'est pas déployé. Il tourne en
+> local. »** ⛔ **C'est faux depuis un moment, et il le dit dans la même page,
+> douze lignes plus bas** : le workflow `deploy.yml` **publie automatiquement au
+> push sur `main`** (mesuré : `on: push: branches: [main]`).
+>
+> ⭐ **Pourquoi c'est la plus dangereuse** : quelqu'un qui ouvre ce document
+> pour savoir où en est le site lit « pas déployé » et agit en conséquence —
+> alors que **pousser, c'est publier**. *Une porte d'entrée qui rassure à tort
+> coûte plus cher qu'une porte fermée.*
+>
+> | Ce qu'il disait | La vérité mesurée le 22/09/2026 |
+> |---|---|
+> | « **Le site n'est pas déployé.** Il tourne en local » | `deploy.yml` **publie au push sur `main`** (FTP o2switch) — le fichier se contredit lui-même à la ligne 49 |
+> | « Poids : **878 Ko** » | **340,1 Ko** servis pour la page la plus lourde (relevé de build du 22/09, seuil 1024 Ko) |
+> | « 0 échec sur **4 pages** » | le prérendu rend **32 pages** — relevé du 22/09 : « 32 route(s) au routeur, 32 à rendre, 32 fichiers écrits » |
+> | `cd C:\Users\neosp\code\portfolio-gaetan` | **c'est la SECONDE copie du dépôt, et ce n'est PAS celle de travail.** Mesuré le 22/09/2026 : elle est à `b4ba149` (19/09, **209 commits**), contre **`5a6b133`** (22/09, **224 commits**) pour `C:\IA\portfolio-gaetan` — soit **15 commits de retard**. ⛔ **Ne rien y supprimer** : c'est une décision du dirigeant, pas d'un agent |
+>
+> ⛔ **Rien n'a été supprimé en silence** : les phrases fausses sont conservées
+> sous `⛔ FAUX`, avec la mesure qui les contredit.
+>
+> ⚠️ **Et ce document reste daté du 10/09/2026.** Il décrit une passation
+> précise ; **ce n'est pas la liste des choses à faire d'aujourd'hui.**
+
+---
+
 ## Les trois choses que je ne peux pas faire à ta place
 
 ### 1. Le vrai chiffre de performance (30 secondes)
@@ -34,17 +64,41 @@ J'ai mesuré des pixels, des contrastes, des poids — je n'ai pas d'yeux.
 | Offre | http://localhost:4173/services |
 | Contact | http://localhost:4173/contact |
 
-Si le serveur d'aperçu s'est arrêté : `cd C:\Users\neosp\code\portfolio-gaetan`
-puis `npx vite preview --port 4173`.
+Si le serveur d'aperçu s'est arrêté : ⛔ **le chemin ci-dessous est celui de la
+SECONDE copie du dépôt, en retard de 15 commits** — utiliser
+`C:\IA\portfolio-gaetan` :
+```bash
+cd C:\Users\neosp\code\portfolio-gaetan   # ⛔ FAUX — seconde copie, 15 commits de retard
+cd C:\IA\portfolio-gaetan                 # ✅ le dépôt de travail
+npx vite preview --port 4173
+```
 
 Ce que je te propose de regarder en priorité : **le hero** (les six unités
 générées), **le fond d'écran** (déjà appliqué), et **la section du vaisseau**.
 
 ### 3. Le feu vert de déploiement
 
-**Le site n'est pas déployé.** Il tourne en local. Je ne touche pas à o2switch
-sans ton accord, parce que remplacer ta vitrine en ligne par une refonte non
-validée n'est pas une décision d'agent.
+⛔ **FAUX — corrigé le 22/09/2026. Ce paragraphe disait : « Le site n'est pas
+déployé. Il tourne en local. »** C'était **déjà contredit douze lignes plus bas
+dans ce même document** : le workflow `deploy.yml` **publie automatiquement au
+push sur `main`** — mesuré le 22/09/2026, `on: push: branches: [main]`,
+déploiement FTP vers o2switch.
+
+⭐ **La conséquence est celle qu'il fallait lire d'abord : pousser, c'est
+publier.** Il n'y a **pas** de préproduction, pas d'étape intermédiaire. *Un
+`git push` de sauvegarde part en ligne.*
+
+⚠️ **Et ce document parlait de la production comme d'une « ancienne version
+intacte » au 19/09** : entre-temps, **15 commits ont été poussés** (mesuré :
+`5a6b133`, 22/09). Le « feu vert » demandé ici **a donc déjà été donné**, et la
+question qui reste n'est plus « faut-il déployer » mais **« qu'est-ce qui est
+parti en ligne, et depuis quand »**. C'est une question de mesure, pas de
+décision — et elle n'est pas tranchée dans ce document.
+
+> ⛔ La phrase d'origine est conservée ci-dessus parce qu'elle documente
+> l'histoire du dépôt — et parce que c'est **la plus dangereuse qu'il
+> contenait** : quelqu'un qui ouvrait ce fichier pour savoir où en était le
+> site lisait « pas déployé » et agissait en conséquence.
 
 ⚠️ **ATTENTION — LE PIÈGE À CONNAÎTRE** : le workflow
 `.github/workflows/deploy.yml` **déploie automatiquement en production à chaque
@@ -109,6 +163,18 @@ vrai** et vérifie que l'e-mail arrive. Il a été testé en local, où l'expéd
   aucun transfert de données hors UE.
 - **Poids : 878 Ko** mesurés (verrou du mégaoctet tenu). Contrastes : 31 paires
   mesurées, toutes conformes. Accessibilité structurelle : 0 échec sur 4 pages.
+
+> ⛔ **FAUX — corrigé le 22/09/2026.** Les trois chiffres de cette phrase sont
+> périmés, et l'écart n'est pas une virgule :
+>
+> | Ce qui était écrit | Mesure du 22/09/2026 |
+> |---|---|
+> | « Poids : **878 Ko** » | **340,1 Ko** servis pour la page la plus lourde (relevé de build, seuil 1024 Ko) |
+> | « 0 échec sur **4 pages** » | le prérendu rend **32 pages** — « 32 route(s) au routeur, 32 à rendre, 32 fichiers écrits » |
+> | « le verrou du mégaoctet tenu » | ✅ **toujours vrai** — mais il ne couvrait que le HTML : **2,72 Mo de 3D livrée** ne figuraient dans aucun verrou (voir `scripts/verifier-poids-3d.mjs`, écrit le 22/09/2026) |
+>
+> ⭐ **Un chiffre écrit à la main devient faux sans le dire** : celui-ci l'était
+> devenu. Les valeurs vivantes sont **mesurées à chaque build**, jamais recopiées.
 
 ## Ce qui n'est PAS fait ou pas prouvé
 

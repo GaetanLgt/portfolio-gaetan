@@ -151,11 +151,33 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
+// ═══════════════════════════════════════════════════════════════════════════════
+//  CE QUI SE MONTE TOUT DE SUITE, ET CE QUI SE DIFFÈRE — 22/09/2026.
+//
+//  ⛔ `Navigation` et `Footer` NE SE DIFFÈRENT PAS. Ils sont affichés dès le premier
+//     rendu, et `scripts/prerendre.js` les exige dans le HTML LIVRÉ :
+//     « coquille (header.navigation + footer.footer) dans le HTML LIVRÉ : 28/28 routes ».
+//     Les différer ferait un trou à l'écran ET ferait tomber ce verrou.
+//  ⛔ `Loader` ne se diffère pas non plus : c'est lui qui déclenche `isLoaded`.
 import Navigation from '@/components/sections/Navigation.vue';
 import Footer from '@/components/sections/Footer.vue';
+import Loader from '@/components/common/Loader.vue';
+
+// ── LES CALQUES CONDITIONNELS — MONTÉS IMMÉDIATEMENT (état du 22/09/2026) ──────
+// ⛔⛔ LE DIFFÉRÉ A ÉTÉ TENTÉ, MESURÉ, PUIS ANNULÉ LE 22/09/2026. VOICI POURQUOI.
+// Les huit composants ci-dessous avaient été passés en `defineAsyncComponent` et
+// regroupés dans UN SEUL morceau (`manualChunks: 'calques'`) — la règle « grouper ce
+// qu'on diffère » était respectée. Le découpage ne tenait pas pour autant :
+// le chantier a été suspendu sur ordre du dirigeant, parce qu'il faisait perdre des
+// pages au prérendu (`verifier-topographie.mjs`) et qu'un dépôt qui ne compile pas
+// bloque tous les autres agents. **Un découpage qui fait perdre des pages n'est pas
+// un découpage.** On le reprendra sur un dépôt sain, un geste à la fois, avec un build
+// de vérification entre chaque.
+// ⭐ Ce qui est DÉFINITIF dans ce fichier, et seulement ça : l'import mort retiré.
+// Les huit restent MONTÉS TOUT DE SUITE : c'est l'état sur lequel le site est livré
+// et vérifié.
 import SelfDiagnosticBar from '@/components/sections/SelfDiagnosticBar.vue';
 import CookieBanner from '@/components/common/CookieBanner.vue';
-import Loader from '@/components/common/Loader.vue';
 import NoiseOverlay from '@/components/common/NoiseOverlay.vue';
 // CustomCursor volontairement NON importé (D5) : voir le commentaire dans le
 // gabarit. Le fichier reste sur disque pour les expériences immersives futures.
@@ -164,6 +186,7 @@ import ScrollProgressBar from '@/components/common/ScrollProgressBar.vue';
 import ToastNotifications from '@/components/common/ToastNotifications.vue';
 import KeyboardNavigator from '@/components/common/KeyboardNavigator.vue';
 import PWAUpdatePrompt from '@/components/common/PWAUpdatePrompt.vue';
+
 // ── FONDS DÉCORATIFS : LES IMPORTS ONT ÉTÉ RETIRÉS LE 13/09/2026 ───────────
 // Ils étaient devenus du CODE MORT, et c'est mesuré, pas supposé.
 // La décision du 10/09 (« enlève le WebGL qui ressemble à rien ») avait retiré
@@ -181,7 +204,16 @@ import PWAUpdatePrompt from '@/components/common/PWAUpdatePrompt.vue';
 // Le composant de production `three/ScrollScene.vue` (effet 3D piloté par le
 // scroll) est prêt et compile ; son montage attend une décision de Gaëtan, qui
 // rouvrirait la décision du 10/09.
-import FloatingElements from '@/components/ui/FloatingElements.vue'; // non monté (D5)
+// ⛔ `FloatingElements` : L'IMPORT A ÉTÉ RETIRÉ LE 22/09/2026, ET C'EST MESURÉ.
+// Le fichier était importé et JAMAIS MONTÉ — le commentaire du gabarit le disait
+// déjà (« non monté (D5) »), et le gabarit ne portait aucune balise
+// `<FloatingElements>`. Ce n'est pas un doublon de commentaire, c'est du POIDS :
+// `App.vue` est la coquille chargée sur TOUTES les pages, donc ce composant était
+// embarqué et téléchargé par chaque visiteur de chaque page, pour ne rien afficher.
+// C'est exactement le défaut réparé le 13/09 sur les trois fonds décoratifs :
+// *la décision avait retiré le RENDU, l'import était resté.*
+// ⭐ Le composant reste sur disque, intact. Pour le rebrancher, le geste est de
+// MONTER une balise dans le gabarit — pas de ressusciter un import que personne ne lit.
 // Mode sobre : préférence explicite du visiteur, distincte de reduced-motion.
 import { modeSobre } from '@/composables/mode-sobre.js';
 

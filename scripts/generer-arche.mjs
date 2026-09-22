@@ -34,7 +34,26 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { join } from 'node:path';
 
 const RACINE = process.cwd();
-const VAULT = 'C:\\Users\\neosp\\OneDrive\\Documents\\Metroid\\Vault-Metroid';
+/* ── OÙ EST LE VAULT, ET POURQUOI UNE VARIABLE D'ENVIRONNEMENT ────────────────
+ * Le chemin d'origine est celui de la machine du studio. Il reste le DÉFAUT :
+ * sur Windows, rien ne change, et `npm run arche` se comporte exactement comme
+ * avant.
+ *
+ * ⭐ MAIS UN CHEMIN ABSOLU EN DUR REND LE BUILD DÉPENDANT D'UNE MACHINE. Mesuré
+ * le 22/09/2026 en construisant dans un conteneur Linux : le chemin n'existe
+ * pas, le script affiche « vault non accessible — génération sautée » et sort
+ * en code 0. Le build RÉUSSIT donc en produisant MOINS — et comme
+ * `public/Arche/` est versionné, les pages d'hier sont recopiées à l'identique.
+ * Un build vert qui sert du périmé est plus dangereux qu'un build rouge.
+ *
+ * `VAULT_METROID` permet de dire au script où est le vault, sans le modifier :
+ *   · sur le poste    : rien à faire (défaut inchangé) ;
+ *   · dans un conteneur : `-e VAULT_METROID=/vault` avec le vault monté ;
+ *   · absent          : le script se saute toujours « proprement » — mais le
+ *     message le dit, et les pages ne sont plus silencieusement périmées
+ *     si l'appelant a vidé `public/Arche/` avant (voir conteneur/etapes-build.sh).
+ */
+const VAULT = process.env.VAULT_METROID || 'C:\\Users\\neosp\\OneDrive\\Documents\\Metroid\\Vault-Metroid';
 const DEST = join(RACINE, 'public/Arche');
 
 if (!existsSync(VAULT)) {

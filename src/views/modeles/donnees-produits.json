@@ -67,7 +67,7 @@
       "matiere": "Laiton massif non verni",
       "variantes": [
         { "id": "brut", "libelle": "Laiton brut", "supplement": 0 },
-        { "id": "brossé", "libelle": "Laiton brossé", "supplement": 400 }
+        { "id": "brosse", "libelle": "Laiton brossé", "supplement": 400 }
       ]
     },
     {
@@ -103,7 +103,7 @@
       ]
     },
     {
-      "id": "bloc-accordéon",
+      "id": "bloc-accordeon",
       "nom": "Bloc accordéon",
       "categorie": "papier",
       "prix": 1200,

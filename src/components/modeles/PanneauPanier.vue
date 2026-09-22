@@ -14,12 +14,23 @@
  */
 
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { formaterPrix } from './donneesProduits.js';
 import { QUANTITE_MAX, usePanier } from './usePanier.js';
 import { useActionsManette } from './useManette.js';
+import { nomDe } from '@/views/modeles/modeles-adresses.js';
 import PictogrammeProduit from './PictogrammeProduit.vue';
 
-const emit = defineEmits(['retour', 'commander']);
+/** ⚠ PLUS AUCUN ÉVÉNEMENT VERS LA PAGE POUR NAVIGUER, ET C'EST VOULU.
+ *  Ce composant n'émet plus `retour` ni `commander` : ses appels vers le catalogue et
+ *  vers le tunnel sont des LIENS (`<RouterLink>`), donc de vraies adresses, copiables et
+ *  suivables par un robot. Le seul geste qui reste n'est pas une navigation — c'est le
+ *  réglage des quantités, et il est local. */
+const routeCatalogue = nomDe('catalogue');
+const routeCommande = nomDe('commande');
+/** Le routeur, pour le seul geste de la manette qui navigue (« B » : revenir en arrière
+ *  dans le parcours). Les appels visibles, eux, sont des liens. */
+const router = useRouter();
 
 const {
   lignesDetaillees,
@@ -77,14 +88,16 @@ function reglerQuantiteSousLeFocus(delta) {
 }
 
 useActionsManette({
-  retour: () => emit('retour'),
+  // « B » dans le panier ramène au catalogue, dans l'ordre du parcours. Le composant
+  // navigue lui-même : il n'a plus besoin de la page pour ça.
+  retour: () => router.push({ name: routeCatalogue }),
   quantitePlus: () => reglerQuantiteSousLeFocus(1),
   quantiteMoins: () => reglerQuantiteSousLeFocus(-1),
   // ⚠ « A » N'EST PAS DÉCLARÉ ICI. Le déclarer pour « passer commande » ferait que
-  // l'appui A n'activerait plus JAMAIS le bouton qui a le focus dans le panier : on ne
+  // l'appui A n'activerait plus JAMAIS l'élément qui a le focus dans le panier : on ne
   // pourrait plus vider le panier, retirer une ligne, ni continuer ses achats à la
-  // manette. Le bouton « Passer commande » reste activable à la manette — en le visant
-  // au stick puis en appuyant sur A, comme tous les autres boutons de la page.
+  // manette. Le lien « Passer commande » reste activable à la manette — en le visant au
+  // stick puis en appuyant sur A, comme tous les autres éléments de la page.
 });
 </script>
 
@@ -102,9 +115,9 @@ useActionsManette({
 
     <div v-if="panierVide" class="boreal-vide">
       <p>Le panier est vide.</p>
-      <button type="button" class="boreal-bouton boreal-bouton--principal" data-manette @click="emit('retour')">
+      <RouterLink class="boreal-bouton boreal-bouton--principal" data-manette :to="{ name: routeCatalogue }">
         Parcourir le catalogue
-      </button>
+      </RouterLink>
     </div>
 
     <template v-else>
@@ -200,12 +213,12 @@ useActionsManette({
         </p>
 
         <div class="boreal-recap__actions">
-          <button type="button" class="boreal-bouton boreal-bouton--action" data-manette @click="emit('commander')">
+          <RouterLink class="boreal-bouton boreal-bouton--action" data-manette :to="{ name: routeCommande }">
             Passer commande
-          </button>
-          <button type="button" class="boreal-bouton boreal-bouton--discret" data-manette @click="emit('retour')">
+          </RouterLink>
+          <RouterLink class="boreal-bouton boreal-bouton--discret" data-manette :to="{ name: routeCatalogue }">
             Continuer mes achats
-          </button>
+          </RouterLink>
 
           <template v-if="!vidageDemande">
             <button

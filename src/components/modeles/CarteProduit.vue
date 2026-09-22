@@ -6,19 +6,32 @@
  * L'ajout direct prend la PREMIÈRE variante du produit, et il le DIT dans l'annonce
  * vocale : *un choix fait à la place du visiteur doit au moins être annoncé.*
  *
- * Les deux boutons portent `data-manette` : c'est le repère que la navigation spatiale
- * de la manette utilise, et il n'a aucun effet sur le rendu ni sur le clavier.
+ * ⚠ « VOIR LA FICHE » EST UN LIEN, PAS UN BOUTON — et ce n'est pas cosmétique.
+ * Un `<RouterLink>` produit une VRAIE adresse (`/modeles/boutique-boreal/produit/<id>`)
+ * que l'on peut copier dans un message, ouvrir dans un nouvel onglet, ou suivre par un
+ * moteur de recherche. Un bouton qui appelle `router.push` ne donne rien de tout ça : le
+ * clic droit n'a pas de « copier l'adresse », et un robot ne le suit pas.
+ * L'AJOUT AU PANIER, lui, reste un bouton : ce n'est pas une navigation, ça n'a pas
+ * d'adresse, et ça ne doit pas en avoir.
+ *
+ * Les deux repères `data-manette` servent à la navigation spatiale de la manette ; ils
+ * n'ont aucun effet sur le rendu ni sur le clavier.
  */
 
 import { computed } from 'vue';
 import { formaterPrix, trouverCategorie } from './donneesProduits.js';
+import { nomDe } from '@/views/modeles/modeles-adresses.js';
 import PictogrammeProduit from './PictogrammeProduit.vue';
 
 const props = defineProps({
   produit: { type: Object, required: true },
 });
 
-const emit = defineEmits(['ouvrir-fiche', 'ajouter-direct']);
+const emit = defineEmits(['ajouter-direct']);
+
+/** Le nom de la route de la fiche, LU dans la source unique des adresses : ce nom est
+ *  aussi celui que le routeur enregistre, et il ne peut donc pas diverger. */
+const routeFiche = nomDe('fiche');
 
 const categorie = computed(() => trouverCategorie(props.produit.categorie));
 const enRupture = computed(() => props.produit.stock <= 0);
@@ -57,15 +70,14 @@ const nombreVariantes = computed(() => props.produit.variantes.length);
     </p>
 
     <div class="boreal-carte__actions">
-      <button
-        type="button"
+      <RouterLink
         class="boreal-bouton boreal-bouton--principal"
         data-manette
+        :to="{ name: routeFiche, params: { id: produit.id } }"
         :aria-label="`Voir la fiche de ${produit.nom}`"
-        @click="emit('ouvrir-fiche', produit.id)"
       >
         Voir la fiche
-      </button>
+      </RouterLink>
 
       <button
         type="button"

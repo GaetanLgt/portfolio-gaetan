@@ -25,6 +25,7 @@ import {
   trouverProduit,
   trouverVariante,
 } from './donneesProduits.js';
+import { nomDe } from '@/views/modeles/modeles-adresses.js';
 import { QUANTITE_MAX, usePanier } from './usePanier.js';
 import { useActionsManette } from './useManette.js';
 import PictogrammeProduit from './PictogrammeProduit.vue';
@@ -34,6 +35,10 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['retour', 'aller-au-panier']);
+
+/** Le nom des routes de la tranche, LU dans la source unique des adresses. */
+const routeCatalogue = nomDe('catalogue');
+const routePanier = nomDe('panier');
 
 const { ajouter } = usePanier();
 
@@ -101,17 +106,18 @@ useActionsManette({
       <h2 id="titre-fiche" class="boreal-titre-2">Ce produit n'existe pas</h2>
       <p>
         L'identifiant « {{ props.idProduit }} » ne figure pas au catalogue. C'est le cas
-        normal d'un lien profond périmé : la page le dit au lieu de rester blanche.
+        normal d'un lien profond périmé : la page le dit au lieu de rester blanche, et le
+        chemin de retour est un LIEN, donc une adresse qui marche même sans JavaScript.
       </p>
-      <button type="button" class="boreal-bouton boreal-bouton--principal" data-manette @click="emit('retour')">
+      <RouterLink class="boreal-bouton boreal-bouton--principal" data-manette :to="{ name: routeCatalogue }">
         Revenir au catalogue
-      </button>
+      </RouterLink>
     </div>
 
     <template v-else>
-      <button type="button" class="boreal-retour" data-manette @click="emit('retour')">
+      <RouterLink class="boreal-retour" data-manette :to="{ name: routeCatalogue }">
         ← Retour au catalogue
-      </button>
+      </RouterLink>
 
       <div class="boreal-fiche">
         <div class="boreal-fiche__visuel">
@@ -210,14 +216,13 @@ useActionsManette({
               {{ rupture ? 'Produit indisponible' : `Ajouter au panier — ${formaterPrix(totalFiche)}` }}
             </button>
 
-            <button
-              type="button"
+            <RouterLink
               class="boreal-bouton boreal-bouton--discret"
               data-manette
-              @click="emit('aller-au-panier')"
+              :to="{ name: routePanier }"
             >
               Voir le panier
-            </button>
+            </RouterLink>
           </div>
 
           <p class="boreal-mention" role="status">{{ messageAjout }}</p>

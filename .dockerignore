@@ -1,0 +1,85 @@
+# ============================================================
+# .dockerignore — ce qui N'ENTRE PAS dans le contexte de build
+# ============================================================
+# Règle : le contexte porte les SOURCES, jamais les sorties de build
+# ni les dépendances installées sur l'hôte.
+#
+# ⚠️ CE QUI EST EXCLU ICI N'EXISTE PAS DANS L'IMAGE. Et l'inverse est
+# vrai aussi : ce qui n'est PAS listé ici entre dans l'image, y compris
+# les secrets s'il y en a. La liste des exclusions est donc un acte de
+# sécurité, pas un réglage de confort.
+#
+# Mesuré le 22/09/2026 : sans ces exclusions, le contexte embarquait
+# `node_modules/` (binaires Windows de `sharp`, inutilisables sous Linux)
+# et `dist/` (sortie du build précédent) — de quoi faire croire à un
+# build réussi qui n'aurait rien reconstruit.
+
+# ---- Dépendances installées : réinstallées POUR la plateforme du conteneur ----
+node_modules
+**/node_modules
+.pnpm-store
+
+# ---- Sorties de build : elles doivent être PRODUITES, pas recopiées ----
+dist
+dist-ssr
+
+# ---- Historique git : inutile au build, lourd ----
+.git
+.gitignore
+.worktrees
+.worktrees/
+
+# ---- Rapports de mesure locaux ----
+audit-auto/
+lighthouse-report.json
+lighthouse-rapports/
+.lighthouseci/
+*.log
+
+# ---- Les rapports du conteneur lui-même ----
+# `docker-compose.yml` monte ce dossier sur /app/rapports. Sans cette ligne,
+# les mesures du build PRÉCÉDENT entreraient dans l'image — et un rapport
+# périmé qui accompagne un build frais, c'est exactement le genre de
+# confusion que ce conteneur est fait pour éviter.
+rapports-conteneur/
+
+# ---- Secrets ----
+# ⛔ `.env` et `.env.local` sont exclus. `.env.production` ne l'est PAS.
+#    Ce n'est pas un oubli : le build Vite s'en SERT (VITE_MATOMO_URL,
+#    VITE_MATOMO_SITE_ID, VITE_MATOMO_ENABLED), et le site construit ne
+#    serait pas le même sans lui. Vérifié le 22/09/2026 : ce fichier ne
+#    contient que des valeurs publiques (URL d'analytics, identifiant de
+#    site). ⚠️ SI UN JOUR UN SECRET Y ENTRE, IL ENTRE DANS L'IMAGE.
+.env
+.env.local
+.env.production.local
+.env.*.local
+*.key
+*.pem
+.credentials*
+sauvegarder-ftp.env
+
+# ---- Éditeurs ----
+.vscode
+.idea
+.DS_Store
+
+# ============================================================
+# ⛔ CE QUI N'EST **PAS** EXCLU, ET C'EST VOLONTAIRE :
+#
+#   public/          — contient le `.htaccess` (sécurité + 404), les
+#                      favicons, les polices auto-hébergées, /Arche et
+#                      /TARDIS/JoF. C'est une PARTIE DU BUILD.
+#   ecole-dossiers/  — SOURCE des pages publiées par `npm run ecole`.
+#                      Sans lui, `publier-ecole.mjs` sort en code 2 et
+#                      le build s'arrête net.
+#   content/         — matière éditoriale lue par les scripts.
+#   src/             — l'application.
+#   scripts/         — les étapes du build elles-mêmes.
+#   index.html       — la coquille que `prerendre.js` relit pour
+#                      restaurer la balise <html> d'origine.
+#   .github/         — certains verrous lisent les workflows ; l'exclure
+#                      ferait échouer un contrôle sans rapport.
+#                      ⚠️ Exclure `.git` suffit à ne pas embarquer
+#                      l'historique ; `.github` n'est QUE des textes.
+# ============================================================

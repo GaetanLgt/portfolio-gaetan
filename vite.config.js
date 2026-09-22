@@ -28,6 +28,17 @@ export default defineConfig({
       output: {
         // Code splitting par chunk
         manualChunks(id) {
+          // ⛔⛔ LE REGROUPEMENT DES « CALQUES » A ÉTÉ RETIRÉ LE 22/09/2026.
+          // Il groupait les huit calques conditionnels de `App.vue` en un seul
+          // morceau `calques` : la règle « grouper ce qu'on diffère » était tenue,
+          // et c'était la BONNE réponse au piège des requêtes. Mais le différé
+          // lui-même a été annulé avec le reste du chantier — le découpage de
+          // `HomePage.vue` faisait perdre des pages au prérendu. **Le regroupement
+          // ne sert à rien tant que rien n'est différé**, et un morceau nommé qui
+          // ne contient plus rien est un piège pour le prochain lecteur.
+          // ⭐ À reprendre ensemble : `defineAsyncComponent` DANS `App.vue` ET
+          // `manualChunks` ICI, dans le même geste. Jamais l'un sans l'autre.
+
           // Vendor chunks
           if (id.includes('node_modules')) {
             if (id.includes('three')) {

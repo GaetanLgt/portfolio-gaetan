@@ -22,12 +22,21 @@
  */
 
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { formaterPrix, livraisons } from './donneesProduits.js';
 import { fraisLivraison, usePanier } from './usePanier.js';
 import { useActionsManette } from './useManette.js';
+import { nomDe } from '@/views/modeles/modeles-adresses.js';
 import ChampTexteManette from './ChampTexteManette.vue';
 
-const emit = defineEmits(['retour', 'terminer']);
+/** ⚠ LES DEUX SORTIES DU TUNNEL SONT DES LIENS, PAS DES ÉVÉNEMENTS.
+ *  « Retour au panier » et « Revenir à la boutique » sont des ADRESSES : elles doivent
+ *  pouvoir être copiées, suivies par un moteur de recherche, et fonctionner même si la
+ *  page hôte ne réagit pas. Le routeur ne sert donc ici qu'au seul geste de la manette
+ *  (« B », qui remonte dans le parcours). */
+const routePanier = nomDe('panier');
+const routeCatalogue = nomDe('catalogue');
+const router = useRouter();
 
 const { lignesDetaillees, sousTotal, panierVide, nombreArticles, vider, dernierMessage } = usePanier();
 
@@ -168,12 +177,14 @@ function validerCommande() {
 
 function revenirEnArriere() {
   if (etape.value === 'confirmation') {
-    emit('terminer');
+    // Sortie du tunnel vers la boutique, par le NOM de la route : le tunnel navigue
+    // lui-même, il n'a plus besoin que la page lui rende ce service.
+    router.push({ name: routeCatalogue });
     return;
   }
   const position = ETAPES.findIndex((e) => e.id === etape.value);
   if (position <= 0) {
-    emit('retour');
+    router.push({ name: routePanier });
     return;
   }
   etape.value = ETAPES[position - 1].id;
@@ -210,9 +221,9 @@ useActionsManette({
 
     <div v-if="panierVide && etape !== 'confirmation'" class="boreal-vide">
       <p>Le panier est vide : il n'y a rien à commander.</p>
-      <button type="button" class="boreal-bouton boreal-bouton--principal" data-manette @click="emit('retour')">
+      <RouterLink class="boreal-bouton boreal-bouton--principal" data-manette :to="{ name: routePanier }">
         Revenir au panier
-      </button>
+      </RouterLink>
     </div>
 
     <template v-else>
@@ -348,9 +359,9 @@ useActionsManette({
           <button type="submit" class="boreal-bouton boreal-bouton--action" data-manette>
             Continuer vers la livraison
           </button>
-          <button type="button" class="boreal-bouton boreal-bouton--discret" data-manette @click="emit('retour')">
+          <RouterLink class="boreal-bouton boreal-bouton--discret" data-manette :to="{ name: routePanier }">
             Retour au panier
-          </button>
+          </RouterLink>
         </div>
       </form>
 
@@ -487,9 +498,9 @@ useActionsManette({
         </address>
 
         <div class="boreal-formulaire__actions">
-          <button type="button" class="boreal-bouton boreal-bouton--action" data-manette @click="emit('terminer')">
+          <RouterLink class="boreal-bouton boreal-bouton--action" data-manette :to="{ name: routeCatalogue }">
             Revenir à la boutique
-          </button>
+          </RouterLink>
         </div>
       </div>
 

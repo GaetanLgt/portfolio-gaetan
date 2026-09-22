@@ -1,0 +1,8 @@
+etape	code	duree_s	dist_fichiers	html	Arche	TARDIS
+1. prebuild — relever l'état du studio (generer-etat.mjs)	0	2	299	188	5	146
+2. sitemap — generer-sitemap.mjs	0	0	299	188	5	146
+3. ecole — publier-ecole.mjs	0	0	299	188	5	146
+4. arche — generer-arche.mjs	0	0	299	188	5	146
+5. vite build — compilation des 144 modules	0	14	267	156	5	146
+6. prerendre — 32 routes rendues par Chrome	0	38	299	188	5	146
+7. postbuild — releve final dans le HTML prerendu	0	1	299	188	5	146

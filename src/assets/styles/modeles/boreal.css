@@ -268,6 +268,12 @@
   color: var(--ink-faint);
 }
 
+/* La référence portée par l'adresse (`/produit/:id`), rappelée dans la barre : c'est ce
+   qui rend visible le fait que la marche courante vient de l'ADRESSE, pas d'un état. */
+.boreal-barre__parametre {
+  margin-left: 0.4em;
+}
+
 /* ───────────────────────────────────────────────────────────────────────────────
    5. MANETTE — l'état et la légende
    ─────────────────────────────────────────────────────────────────────────────── */
@@ -403,6 +409,17 @@
 .boreal-bouton--principal:disabled {
   background: var(--paper-alt);
   color: var(--ink-faint);
+}
+
+/* ⚠ LES LIENS DÉGUISÉS EN BOUTONS PERDENT LEUR SOULIGNEMENT, PAS LEUR NATURE.
+   Depuis le passage aux cinq vraies adresses, la navigation est faite de `<RouterLink>`
+   — donc de `<a>` — habillés comme des boutons. Un lien souligné dans un bouton jaune
+   serait illisible, mais la nature de lien reste : adresse copiable, ouverture dans un
+   nouvel onglet, suivi par un moteur de recherche. On ne retire QUE le trait. */
+.boreal a.boreal-bouton,
+.boreal a.boreal-onglet,
+.boreal a.boreal-retour {
+  text-decoration: none;
 }
 
 /* ───────────────────────────────────────────────────────────────────────────────

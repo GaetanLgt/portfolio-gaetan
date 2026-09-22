@@ -54,9 +54,13 @@ export default defineConfig({
     outDir: join(tmpdir(), 'build-controle-tranche'),
     emptyOutDir: true,
     cssCodeSplit: true,
-    // Chemins RELATIFS : la page d'essai construite doit pouvoir être ouverte depuis
-    // n'importe où (serveur local ou fichier), sans dépendre d'une racine d'URL.
-    base: './',
+    // ⚠ `base: '/'` — ET C'EST PASSÉ DE RELATIF À ABSOLU PAR NÉCESSITÉ, PAS PAR GOÛT.
+    // Depuis que les cinq marches sont cinq VRAIES ADRESSES, le banc ouvre des URL
+    // profondes : `/modeles/boutique-boreal/produit/<id>`. Avec des chemins relatifs
+    // (`./assets/…`), le navigateur chercherait les fichiers dans
+    // `/modeles/boutique-boreal/produit/assets/…` — donc nulle part. L'absolu est aussi
+    // ce que fait le site en production.
+    base: '/',
     minify: 'terser',
     terserOptions: {
       compress: {
