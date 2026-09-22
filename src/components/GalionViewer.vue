@@ -1,4 +1,4 @@
-﻿<!--
+<!--
   GalionViewer.vue — le galion d'ArkAdiA, rendu en 3D dans le site.
 
   ⭐ POURQUOI CE COMPOSANT EST AINSI
@@ -84,6 +84,15 @@ const etat = ref('chargement');   // chargement | pret | repli
 const motif = ref('');
 const bord = ref(bordFrancais());
 let lampes = null;                // peuplé par construire(), lu par appliquerHeure()
+
+// ⚠️ DÉCLARÉS ICI, ET PAS PLUS BAS — `cadrer()` les écrit, et il est appelé avant.
+//    *Un `let` lu avant sa ligne est dans la zone morte temporelle : ça lève.*
+// ⚠️ Et PAS de `new THREE.Vector3()` : **`THREE` est importé dynamiquement dans
+//    `construire()`** — au niveau du module, il n'existe pas encore. Un objet
+//    simple fait exactement le même travail ici.
+const cible = { x: 11, y: 5.5, z: 13 };   // ⭐ le point d'arrivée, mémorisé
+let arrivee = 0;                          // ⭐ les premières images : la caméra se pose
+let ARRIVEE = 150;                        // recalculé par cadrer() selon le format
 
 /*
  * ⭐⭐ LES TROIS NOMBRES, ET LE PANNEAU PILOTABLE.
@@ -183,15 +192,41 @@ async function construire() {
     etat.value = 'repli'; motif.value = 'WebGL indisponible'; return;
   }
 
-  rendu.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  // --- LE FORMAT : la caméra s'y ADAPTE, elle ne le subit pas --------------
+  // ⚠️ C'ÉTAIT LE DÉFAUT RESPONSIVE. FOV fixe à 42° et position fixe : sur un
+  //    écran PORTRAIT, un navire de 8 unités de long est coupé aux deux bouts.
+  //    On ne tourne pas le navire — on RÈGLE LA CAMÉRA selon le rapport.
+  const PETIT = window.matchMedia('(max-width: 860px)').matches;
+
+  // ⚠️ Le rapport de pixels : un téléphone en dpr 3 rendrait en 2× pour rien.
+  //    On plafonne à 1,5 sur petit écran — l'œil ne voit pas la différence,
+  //    la batterie et le GPU, si.
+  rendu.setPixelRatio(Math.min(window.devicePixelRatio || 1, PETIT ? 1.5 : 2));
   rendu.setClearColor(0x03060a, 0);
 
   scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x03060a, 0.028);
 
   camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
-  camera.position.set(11, 5.5, 13);
-  camera.lookAt(0, 2.4, 0);
+
+  // Le cadrage selon le format : en portrait on RECULE et on ÉLARGIT, parce que
+  // c'est la LARGEUR du navire qui ne tient pas — pas sa hauteur.
+  function cadrer(l, h) {
+    const rapport = l / Math.max(1, h);
+    const recul = rapport < 1.0 ? 1.62 : (rapport < 1.45 ? 1.24 : 1.0);
+    camera.fov = rapport < 1.0 ? 58 : (rapport < 1.45 ? 48 : 42);
+    // ⚠️ ON MÉMORISE LE POINT D'ARRIVÉE. Sans ça, le dolly relit une position
+    //    qu'il vient de modifier — et la caméra dérive en s'éloignant à l'infini.
+    cible.x = 11 * recul;
+    cible.y = 5.5 * (rapport < 1.0 ? 1.22 : 1);
+    cible.z = 13 * recul;
+    camera.position.set(cible.x, cible.y, cible.z);
+    camera.lookAt(0, 2.4, 0);
+    camera.updateProjectionMatrix();
+    ARRIVEE = PETIT ? 90 : 150;
+    arrivee = 0;          // ⭐ on rejoue l'arrivée : un changement de format est une arrivée
+  }
+  cadrer(rendu.domElement.clientWidth || 16, rendu.domElement.clientHeight || 9);
 
   // --- Lumière : elle suit LE QUART, à l'heure de Paris ---------------------
   // ⚠️ On ne change pas la palette (loi n° 6) : on change l'intensité et la
@@ -216,7 +251,7 @@ async function construire() {
 
   // --- Le ciel étoilé : procédural, semé, donc rejouable -------------------
   const r = (() => { let a = 0x50999; return () => { a |= 0; a = a + 0x6d2b79f5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; })();
-  const n = 1400;
+  const n = PETIT ? 420 : 1400;
   const pos = new Float32Array(n * 3);
   for (let i = 0; i < n; i++) {
     pos[i * 3] = (r() - 0.5) * 190;
@@ -262,7 +297,9 @@ async function construire() {
     const l = Math.max(1, b.width), h = Math.max(1, b.height);
     rendu.setSize(l, h, false);
     camera.aspect = l / h;
-    camera.updateProjectionMatrix();
+    // ⭐ ET ON RECADRE. Sans cet appel, la caméra reprend le FOV de l'arrivée :
+    //    on pivote le téléphone, et le navire ressort coupé.
+    cadrer(l, h);
   }
   redimensionnement = new ResizeObserver(mesurer);
   redimensionnement.observe(canvas);
@@ -300,6 +337,22 @@ async function construire() {
     if (t % 240 === 0) pasDeBord();
     if (!visible) return;
     if (!reduit) t += 1;
+
+    // ⭐⭐⭐ LE « BAOU » : L'ARRIVÉE.
+    //   La caméra ne surgit pas d'un coup — elle ARRIVE. Elle part de loin, un
+    //   peu plus haut, et se pose en douceur. Trois secondes, et le navire paraît
+    //   grand avant qu'on ait lu un mot.
+    //   ⚠️ On calcule depuis `cible` — JAMAIS depuis `camera.position`. Lire la
+    //      position qu'on vient d'écrire la ferait dériver à chaque image.
+    if (arrivee < ARRIVEE && !reduit) {
+      arrivee += 1;
+      const e = 1 - Math.pow(1 - arrivee / ARRIVEE, 3);   // ease-out : ça freine en arrivant
+      const loin = (1 - e) * 1.5;
+      camera.position.set(cible.x * (1 + loin), cible.y * (1 + loin * 0.45), cible.z * (1 + loin));
+      camera.lookAt(0, 2.4, 0);
+    } else {
+      camera.position.copy(cible);
+    }
     if (objet && !reduit) {
       objet.rotation.y = -0.55 + Math.sin(t * 0.0025) * 0.42;
       objet.rotation.z = Math.sin(t * 0.0013) * 0.012;

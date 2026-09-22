@@ -1,4 +1,4 @@
-﻿# ===========================================
+# ===========================================
 # GL Digital Lab - Configuration Apache/O2Switch
 # ===========================================
 
@@ -55,7 +55,6 @@ AddOutputFilterByType DEFLATE image/svg+xml
   AddOutputFilterByType DEFLATE application/xml
   AddOutputFilterByType DEFLATE application/rss+xml
   AddOutputFilterByType DEFLATE application/atom+xml
-  AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
 # ------------------------------
@@ -63,15 +62,15 @@ AddOutputFilterByType DEFLATE image/svg+xml
 # ------------------------------
 <IfModule mod_expires.c>
   ExpiresActive On
-  
+
   # HTML - pas de cache (SPA dynamique)
   ExpiresByType text/html "access plus 0 seconds"
-  
+
   # CSS & JS - cache 1 an (Vite ajoute des hash)
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType text/javascript "access plus 1 year"
-  
+
   # Images - cache 1 mois
   ExpiresByType image/jpeg "access plus 1 month"
   ExpiresByType image/png "access plus 1 month"
@@ -79,13 +78,13 @@ AddOutputFilterByType DEFLATE image/svg+xml
   ExpiresByType image/webp "access plus 1 month"
   ExpiresByType image/svg+xml "access plus 1 month"
   ExpiresByType image/x-icon "access plus 1 year"
-  
+
   # Fonts - cache 1 an
   ExpiresByType font/woff "access plus 1 year"
   ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType application/font-woff "access plus 1 year"
   ExpiresByType application/font-woff2 "access plus 1 year"
-  
+
   # JSON/XML - cache court
   ExpiresByType application/json "access plus 1 hour"
   ExpiresByType application/xml "access plus 1 hour"
@@ -100,10 +99,10 @@ AddOutputFilterByType DEFLATE image/svg+xml
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set X-XSS-Protection "1; mode=block"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-  
+
   # HSTS (force HTTPS pendant 1 an)
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-  
+
   # Permissions Policy (ex-Feature-Policy)
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 
@@ -130,12 +129,12 @@ AddOutputFilterByType DEFLATE image/svg+xml
   # `upgrade-insecure-requests` : toute ressource en clair est promue en HTTPS.
   # ---------------------------------------------------------------------------
   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://analytics.gldigitallab.fr; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://analytics.gldigitallab.fr; font-src 'self' data:; connect-src 'self' https://analytics.gldigitallab.fr; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
-  
+
   # Cache control pour assets hashés
   <FilesMatch "\.(js|css|woff2?)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
-  
+
   # Pas de cache pour HTML
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
