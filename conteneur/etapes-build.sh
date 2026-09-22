@@ -111,7 +111,13 @@ printf '  fichiers dans %s/ : %s\n' "$DIST" "$(dossier "$DIST")"
 # On hache le CONTENU (pas les dates : elles changent à chaque build et ne
 # disent rien de la reproductibilité). `sort -z` + `xargs -0` : les noms de
 # fichiers du site contiennent des espaces et des accents.
-EMPREINTE="$RAPPORTS/empreinte-dist.txt"
+#
+# ⚠️ NOM DISTINCT, ET C'EST VOLONTAIRE : l'empreinte qui FAIT FOI est écrite
+#    par `conteneur/construire-et-verifier.sh`, APRÈS l'audit des verrous.
+#    Celle-ci est prise juste après les 7 étapes — même contenu, mais deux
+#    moments de la chaîne. Deux fichiers du même nom se recouvriraient, et on
+#    ne saurait plus laquelle on lit.
+EMPREINTE="$RAPPORTS/empreinte-apres-etapes.txt"
 if [ -d "$DIST" ]; then
   ( cd "$DIST" && find . -type f -print0 | sort -z | xargs -0 sha256sum ) > "$EMPREINTE" 2>/dev/null
   printf '  empreinte SHA-256 de %s/ : %s lignes → %s\n' "$DIST" "$(wc -l < "$EMPREINTE" | tr -d ' ')" "$EMPREINTE"

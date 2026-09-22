@@ -1,5 +1,5 @@
 # ============================================================
-# docker-compose.yml — LE BUILD DU SITE, ET DE QUOI LE REGARDER
+# docker-compose.yml — L'ATELIER STANDARD DU STUDIO
 # ============================================================
 # ⛔ CE FICHIER NE REMPLACE PAS L'HÉBERGEMENT.
 #
@@ -7,97 +7,159 @@
 #    `public/.htaccess`, et la CI (`.github/workflows/deploy.yml`) déploie
 #    par FTP. Changer d'hébergeur est une décision du dirigeant.
 #
-#    Ici, deux services et deux seulement :
-#      · `build`  — construit le site et ÉCRIT le rapport d'étapes ;
-#      · `serve`  — sert `dist/` sur un port local pour le REGARDER.
+# ⭐ LA COMMANDE UNIQUE — c'est LA façon de construire désormais :
 #
-# ⚠️ NOM ET PORTS DISTINCTS DE `infrastructure/docker-compose.yml`.
-#    Ce fichier-là décrit « GL TOWER » (Traefik, n8n, Ollama, Postgres,
+#       docker compose run --rm build
+#   ou, depuis Windows, sans se soucier du PATH de `docker` :
+#
+#       conteneur\construire.cmd
+#
+#   Elle enchaîne : `npm ci` → les 7 étapes → TOUS les verrous → l'empreinte,
+#   et elle REMONTE le code de sortie. Voir CONTENEUR.md.
+#
+# ------------------------------------------------------------
+# ⭐ LE DÉPÔT EST MONTÉ, PAS COPIÉ
+#
+#   `C:\IA\portfolio-gaetan` est monté sur `/atelier`, donc le conteneur voit
+#   l'arbre de travail VIVANT : une correction est prise en compte sans
+#   reconstruire l'image (1 à 3 s de synchronisation, mesuré).
+#
+#   ⛔ ET LE MONTAGE EST EN LECTURE SEULE (`:ro`), CE QUI N'EST PAS UN DÉTAIL.
+#      La chaîne de build RÉÉCRIT l'arbre de travail : `public/sitemap.xml`,
+#      `public/Arche/`, `public/TARDIS/JoF/` et `src/data/etat-studio.json`.
+#      Mesuré le 22/09/2026 : **153 fichiers VERSIONNÉS** sont sous ces
+#      chemins. Les faire réécrire par un Linux depuis un conteneur, c'est
+#      modifier l'arbre de travail de Gaëtan — et sous Windows, où
+#      `core.autocrlf=true`, c'est aussi mélanger les fins de ligne. Le
+#      conteneur LIT le dépôt vivant et écrit dans sa propre copie.
+#
+#   ⛔ ET IL N'Y A PLUS DE VOLUME NOMMÉ PARTAGÉ. La version précédente
+#      partageait `dist-construit` : mesuré le 22/09/2026, il PERSISTAIT
+#      d'un `docker compose run` à l'autre — un build pouvait donc compter et
+#      empreinter le `dist` du PRÉCÉDENT, et se déclarer vert sans rien avoir
+#      produit. Chaque exécution a maintenant SON dossier de sortie, et le
+#      `dist` est vidé avant de construire (dans le script, pas ici).
+#
+#   ⭐ ET C'EST CE QUI REND DEUX BUILDS SIMULTANÉS POSSIBLES : pas de
+#      `container_name` (deux conteneurs du même nom ne peuvent pas
+#      coexister), pas de volume partagé, pas de port publié. Deux
+#      exécutions ne partagent RIEN.
+#
+# ⚠️ NOM ET PORTS DISTINCTS DE `infrastructure/docker-compose.yml` :
+#    ce fichier-là décrit « GL TOWER » (Traefik, n8n, Ollama, Postgres,
 #    Redis, ChromaDB, Prometheus, Grafana) et occupe les ports 80, 443,
-#    8080, 5432, 6379 et 5678. Les deux peuvent tourner en même temps :
-#      · réseau dédié `portfolio-build` (GL TOWER est sur `gl-tower`) ;
-#      · aucun port publié par le service de build ;
-#      · le service de test écoute sur 8088, libre.
+#    8080, 5432, 6379 et 5678. Ici, un seul port publié, 8088.
 #
 # Ce fichier n'a PAS de clé `version:` — elle est obsolète depuis Compose v2
 # et ne produit qu'un avertissement.
-#
-# USAGE — voir CONTENEUR.md. En résumé :
-#   docker compose build
-#   docker compose run --rm build          # construit, écrit le rapport
-#   docker compose up serve                # http://localhost:8088
 # ============================================================
 
-name: portfolio-gaetan-build
+name: portfolio-gaetan-atelier
 
 services:
   # ------------------------------------------------------------
-  # 1. LE BUILD — et son rapport d'étapes
+  # 1. LA COMMANDE UNIQUE — construire ET vérifier
   # ------------------------------------------------------------
   build:
     build:
       context: .
       dockerfile: Dockerfile
     image: portfolio-gaetan-build:local
-    container_name: portfolio-build
-    # Le dépôt de l'hôte n'est JAMAIS monté en écriture : le build écrit
-    # dans `public/` et `src/data/` (Arche, TARDIS/JoF, sitemap, relevé).
-    # Monter le dépôt en écriture ferait réécrire par Linux des fichiers
-    # VERSIONNÉS — donc modifier l'arbre de travail de Gaëtan depuis un
-    # conteneur. Les sources entrent par `COPY` (gelées à la construction
-    # de l'image), la sortie ressort par un volume.
     working_dir: /app
     environment:
-      # ⛔ `RAPPORTS` DOIT ÊTRE ICI. Sans lui, `etapes-build.sh` écrit ses
-      # rapports dans `/app` — donc DANS le conteneur, et ils disparaissent
-      # avec lui. Mesuré le 22/09/2026 : première version de ce fichier, le
-      # script tournait, sortait en code 0, et `build-etapes.txt` n'existait
-      # nulle part sur l'hôte. *Un rapport qu'on croit écrit et qu'on ne
-      # retrouve pas est pire qu'un rapport absent.*
+      # ⛔ `RAPPORTS` DOIT ÊTRE ICI. Sans lui, le script écrit ses rapports
+      # dans `/app` — donc DANS le conteneur, et ils disparaissent avec lui.
+      # Mesuré le 22/09/2026 : première version de ce fichier, le script
+      # sortait en code 0 et `build-etapes.txt` n'existait nulle part sur
+      # l'hôte. *Un rapport qu'on croit écrit et qu'on ne retrouve pas est
+      # pire qu'un rapport absent.*
       RAPPORTS: /app/rapports
+      ETIQUETTE: ${ETIQUETTE:-build}
       # Le vault Metroid sert à générer /Arche/. Non monté par défaut :
-      # c'est le mode RÉVÉLATEUR, celui qui montre ce que le build sait
-      # faire SANS la machine du studio.
+      # c'est le mode RÉVÉLATEUR, celui qui montre ce que le build sait faire
+      # SANS la machine du studio.
       VAULT_METROID: ${VAULT_METROID:-/vault-absent}
       ECOLE_STUDIO: ${ECOLE_STUDIO:-/studio-absent}
+      # `1` force `npm ci` même quand l'image a déjà installé exactement ce
+      # lock. Par défaut `0` : l'installation est SAUTÉE, avec sa mesure
+      # affichée (empreinte du lock identique). Voir CONTENEUR.md § 3.
+      FORCER_NPM_CI: ${FORCER_NPM_CI:-0}
     volumes:
-      # `dist/` construit, partagé avec le service `serve`.
-      - dist-construit:/app/dist
-      # Le rapport d'étapes, l'empreinte du dist et la sortie brute,
-      # lisibles depuis l'hôte.
-      - ./rapports-conteneur:/app/rapports
-    # ⚠️ PAS DE `exit 0` ICI, ET C'EST VOULU. La première version en portait
+      # ⭐ L'ARBRE DE TRAVAIL VIVANT, EN LECTURE SEULE. `DEPOT` permet de
+      # pointer ailleurs ; par défaut, le dossier de ce fichier, c'est-à-dire
+      # `C:\IA\portfolio-gaetan`.
+      - ${DEPOT:-.}:/atelier:ro
+      # ⭐ LA SORTIE, PAR EXÉCUTION, ET **HORS DU DÉPÔT**.
+      #    `ETIQUETTE=A` et `ETIQUETTE=B` donnent deux dossiers distincts :
+      #    deux builds simultanés ne s'écrasent pas.
+      #    ⚠️ HORS DU DÉPÔT, ET C'EST UN CHOIX : mesuré le 22/09/2026, les
+      #    relevés de la version précédente (`rapports-conteneur/`) sont
+      #    VERSIONNÉS dans git (`git ls-files` les liste). Y verser la sortie
+      #    de chaque build ferait apparaître des fichiers non suivis dans
+      #    l'arbre de travail — donc du bruit dans le `git status` de tous
+      #    ceux qui travaillent sur ce dépôt. Une sortie de build n'est pas
+      #    une source. `SORTIE` permet de choisir ailleurs.
+      - ${SORTIE:-../_mesures-conteneur/atelier}/${ETIQUETTE:-build}:/app/rapports
+    # ⛔ PAS DE `exit 0` ICI, ET C'EST VOULU. La première version en portait
     # un, pour « ne pas casser la mesure » : il masquait aussi le code de
     # sortie du build, donc `docker compose run` annonçait un succès sur un
     # build en échec. Ici le code du script REMONTE : un build rouge est
     # rouge. Le rapport, lui, est écrit dans tous les cas.
-    command: sh /app/conteneur/etapes-build.sh
+    command: bash /app/conteneur/construire-et-verifier.sh
 
   # ------------------------------------------------------------
-  # 2. LE SERVEUR DE TEST — pour REGARDER le résultat
+  # 2. LE DIAGNOSTIC — les 7 étapes, une par une, avec leur tableau
+  # ------------------------------------------------------------
+  # ⚠️ CE SERVICE N'EST PAS LA FAÇON DE CONSTRUIRE : il ne lance pas les
+  #    verrous et ne remonte qu'un code partiel. Il sert à VOIR où la chaîne
+  #    casse, quand la commande unique est déjà rouge.
+  #      docker compose run --rm etapes
+  etapes:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: portfolio-gaetan-build:local
+    working_dir: /app
+    environment:
+      RAPPORTS: /app/rapports
+      ETIQUETTE: ${ETIQUETTE:-etapes}
+      VAULT_METROID: ${VAULT_METROID:-/vault-absent}
+      ECOLE_STUDIO: ${ECOLE_STUDIO:-/studio-absent}
+    volumes:
+      - ${DEPOT:-.}:/atelier:ro
+      - ${SORTIE:-../_mesures-conteneur/atelier}/${ETIQUETTE:-etapes}:/app/rapports
+    command: bash /app/conteneur/etapes-build.sh
+
+  # ------------------------------------------------------------
+  # 3. LE SERVEUR DE TEST — pour REGARDER le résultat
   # ------------------------------------------------------------
   # ⚠️ Ce n'est PAS la production. Voir l'en-tête de `conteneur/nginx.conf` :
   #    le `.htaccess` d'Apache n'est PAS interprété ici. Les en-têtes de
   #    sécurité sont RECOPIÉS dans la configuration nginx — ils s'affichent,
   #    mais cela ne prouve PAS que le `.htaccess` d'o2switch les envoie.
+  #
+  #    Il sert ce que le build VIENT d'écrire : `<SORTIE>/<étiquette>/dist`,
+  #    c'est-à-dire par défaut `..\_mesures-conteneur\atelier\build\dist`.
+  #    (Et pas un volume nommé : c'était le défaut corrigé ci-dessus.)
+  #
+  #    `depends_on` a été retiré exprès : il ferait relancer tout le build à
+  #    chaque `docker compose up serve`. L'ordre est celui du mode d'emploi —
+  #    d'abord `docker compose run --rm build`, ensuite `up serve`.
   serve:
     image: nginx:1.29.3-alpine@sha256:b3c656d55d7ad751196f21b7fd2e8d4da9cb430e32f646adcf92441b72f82b14
     container_name: portfolio-serve
-    depends_on:
-      - build
     ports:
       # 8088 : libre. Évite 80, 443 et 8080, pris par GL TOWER.
       - "8088:80"
     volumes:
-      - dist-construit:/usr/share/nginx/html:ro
+      - ${SORTIE:-../_mesures-conteneur/atelier}/${ETIQUETTE:-build}/dist:/usr/share/nginx/html:ro
       - ./conteneur/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-
-volumes:
-  # Volume NOMMÉ et non bind : le build conteneur ne touche jamais le
-  # `dist/` du poste. Pour comparer les deux, on compte et on hache à
-  # l'intérieur (voir CONTENEUR.md § « Mesurer sans se tromper »).
-  dist-construit:
 
 networks:
   default:
-    name: portfolio-build
+    # ⚠️ Nom PROPRE À CET ATELIER. La version précédente déclarait
+    #    `portfolio-build`, ce qui faisait dire à Compose :
+    #    « a network with name portfolio-build exists but was not created for
+    #    project portfolio-gaetan-atelier » — le réseau du projet d'avant
+    #    traînait, et on ne savait plus lequel était utilisé.
+    name: portfolio-atelier

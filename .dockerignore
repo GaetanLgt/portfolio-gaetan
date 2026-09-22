@@ -36,6 +36,15 @@ lighthouse-rapports/
 .lighthouseci/
 *.log
 
+# ---- Environnements Python locaux ----
+# Le studio a maintenant `python3` DANS l'image. Un `.venv` monté depuis le
+# poste serait un environnement Windows (binaires PE), inutilisable sous
+# Linux — exactement le piège de `node_modules`, en plus discret.
+.venv
+**/.venv
+__pycache__
+**/__pycache__
+
 # ---- Les rapports du conteneur lui-même ----
 # `docker-compose.yml` monte ce dossier sur /app/rapports. Sans cette ligne,
 # les mesures du build PRÉCÉDENT entreraient dans l'image — et un rapport
