@@ -1,0 +1,42 @@
+{
+  "_lisez_moi": [
+    "LA LISTE DES MIROIRS — écrite UNE SEULE FOIS (loi n° 3).",
+    "",
+    "⭐ POURQUOI CE FICHIER EXISTE. Le même contenu vit à deux endroits, et AUCUN des deux",
+    "   ne dit lequel fait foi. Résultat mesuré le 22/09/2026 : les dossiers pédagogiques",
+    "   (5 fiches « contenu différent ») et le kit Metroid (141 notes) avaient divergé — et",
+    "   on ne l'a vu qu'en lisant le journal d'un build.",
+    "",
+    "⛔ LES TROIS CHAMPS, ET AUCUN N'EST OPTIONNEL :",
+    "   · source : le chemin QUI FAIT FOI, ABSOLU ou relatif à la racine du dépôt ;",
+    "   · copie  : le chemin de la copie, qui NE FAIT PAS foi ;",
+    "   · sens   : « source-vers-copie » ou « copie-vers-source ». ⭐ UN SEUL SENS.",
+    "     *On ne synchronise jamais dans les deux sens : c'est comme ça qu'on écrase du travail.*",
+    "",
+    "⚠️ ET SI LES DEUX CÔTÉS ONT RAISON : alors ce n'est PAS un miroir, ce sont DEUX contenus.",
+    "   Ils portent des noms différents, ou l'un des deux disparaît.",
+    "",
+    "⭐ Ce fichier ne synchronise rien. Il DÉCLARE. Le geste reste humain, avec un sens choisi.",
+    "",
+    "⚠️ LES CHEMINS ONT ÉTÉ CORRIGÉS LE 22/09 APRÈS MESURE — la première version était FAUSSE,",
+    "   et le verrou l'a dit : « copie absente ». *Un chemin qui n'a pas été listé n'est pas",
+    "   un chemin : c'est une hypothèse* (AGENTS.md §0 bis)."
+  ],
+
+  "MIROIRS": [
+    {
+      "nom": "les dossiers pédagogiques",
+      "source": "C:/IA/gl-digital-lab/ecole/dossiers-pedagogiques",
+      "copie": "ecole-dossiers",
+      "sens": "source-vers-copie",
+      "note": "⚠️ À TRANCHER — 5 fiches divergentes mesurées le 22/09. Le studio (14/09) est PLUS ANCIEN que la copie du dépôt (22/09 12:19) : une date plus récente ne veut donc PAS dire « c'est la source ». *Le sens est une décision, pas une déduction d'horodatage.*"
+    },
+    {
+      "nom": "le kit Metroid",
+      "source": "C:/Users/neosp/OneDrive/Documents/Metroid/Vault-Metroid",
+      "copie": "ecole-dossiers/metroid",
+      "sens": "source-vers-copie",
+      "note": "⭐ LE SENS EST ÉCRIT DANS LE SCRIPT (`publier-ecole.mjs` L172) : « le vault est dans OneDrive et ne doit JAMAIS être modifié par ce script : il est LU. Le vault, lui, est en LECTURE SEULE — décision du dirigeant. » ⚠️ 141 notes divergentes mesurées le 22/09."
+    }
+  ]
+}
