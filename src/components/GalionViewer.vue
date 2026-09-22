@@ -13,7 +13,7 @@
       (`scripts/verifier-requetes.mjs`) : o2switch renvoie un 429 au-delà d'une
       rafale d'environ 20 par IP, et l'application ne se monte plus.
 
-  Les couleurs sont celles du site (`--accent` #00FF41 sur `--paper` #03060A),
+  Les couleurs sont celles du site (`--accent` #2abfff sur `--paper` #080b14),
   pas celles d'ArkAdiA : décision de Gaëtan, « t'accorde dans le site ».
 -->
 <script setup>
@@ -200,11 +200,11 @@ async function construire() {
   const ambiante = new THREE.AmbientLight(0x1b3a30, 1.4);
   scene.add(ambiante);
 
-  const cle = new THREE.DirectionalLight(0x00ff41, 2.6);
+  const cle = new THREE.DirectionalLight(0x2abfff, 2.6);
   cle.position.set(-8, 9, 7);
   scene.add(cle);
 
-  const contre = new THREE.DirectionalLight(0x66ff88, 1.1);
+  const contre = new THREE.DirectionalLight(0x7ad6ff, 1.1);
   contre.position.set(9, -3, -8);
   scene.add(contre);
 
@@ -651,7 +651,7 @@ onBeforeUnmount(() => {
 
 .galion__btn--actif {
   border-color: var(--accent);
-  background: rgba(0, 255, 65, 0.1);
+  background: rgba(42, 191, 255, 0.1);
   color: var(--accent-ink);
 }
 
@@ -712,3 +712,4 @@ onBeforeUnmount(() => {
   .galion__btn { flex: 1 1 100%; }
 }
 </style>
+

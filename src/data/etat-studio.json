@@ -9,9 +9,9 @@
     "arbre_modifie": null
   },
   "build": {
-    "horodatage_local": "2026-09-22 12:21:40",
-    "horodatage_minute": "2026-09-22 12:21",
-    "horodatage_iso": "2026-09-22T10:21:40.224Z",
+    "horodatage_local": "2026-09-22 12:28:48",
+    "horodatage_minute": "2026-09-22 12:28",
+    "horodatage_iso": "2026-09-22T10:28:48.296Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 184,
@@ -35,7 +35,7 @@
       "cle": "verrous",
       "nom": "Verrous de la signature qualité",
       "script": "scripts/verifier-verrous.mjs",
-      "code": 1,
+      "code": 0,
       "motif": null
     },
     {
