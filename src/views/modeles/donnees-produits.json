@@ -1,0 +1,243 @@
+{
+  "_lisezMoi": "Catalogue de DÉMONSTRATION du modèle de boutique « Atelier Boréal ». Tout est fictif : aucune marque réelle, aucun produit réel, aucun prix réel. Les données sont DEHORS des composants (règle du studio) : le moteur ne contient que des règles, et `donneesProduits.js` refuse un catalogue incohérent au lieu de l'afficher.",
+  "_monnaie": "Les prix sont en CENTIMES ENTIERS. Un prix en euros flottants finit par produire 0,30000000000000004 dans un total : on ne mesure pas de l'argent en binaire à virgule.",
+  "boutique": {
+    "nom": "Atelier Boréal",
+    "accroche": "Objets d'écriture et de bureau, fabriqués en petite série.",
+    "devise": "EUR",
+    "francoDePort": 6000,
+    "noteDemonstration": "Boutique de démonstration : le catalogue, les prix et les stocks sont inventés et servent uniquement à éprouver le modèle."
+  },
+  "categories": [
+    { "id": "ecriture", "libelle": "Écriture", "resume": "Plumes, porte-plumes et encres." },
+    { "id": "papier", "libelle": "Papier", "resume": "Carnets, blocs et feuilles." },
+    { "id": "bureau", "libelle": "Bureau", "resume": "Ce qui tient le plan de travail." },
+    { "id": "lumiere", "libelle": "Lumière", "resume": "Éclairer sans éblouir." }
+  ],
+  "formesConnues": ["plume", "flacon", "carnet", "lampe", "cylindre", "plaque"],
+  "livraisons": [
+    {
+      "id": "standard",
+      "libelle": "Standard — 4 à 6 jours ouvrés",
+      "prix": 490,
+      "francDePort": true,
+      "detail": "Remise sans signature. Offerte au-delà du seuil de franco."
+    },
+    {
+      "id": "suivie",
+      "libelle": "Suivie — 2 à 3 jours ouvrés",
+      "prix": 790,
+      "francDePort": false,
+      "detail": "Numéro de suivi transmis par courriel."
+    },
+    {
+      "id": "retrait",
+      "libelle": "Retrait à l'atelier — sous 24 h",
+      "prix": 0,
+      "francDePort": false,
+      "detail": "Adresse de démonstration : 4 quai des Brumes, 44000 Nantes (fictif)."
+    }
+  ],
+  "produits": [
+    {
+      "id": "plume-boreal",
+      "nom": "Plume Boréal",
+      "categorie": "ecriture",
+      "prix": 8900,
+      "forme": "plume",
+      "stock": 12,
+      "resume": "Plume en acier trempé, corps en merisier huilé.",
+      "description": "Un stylo plume de 138 mm, taillé pour une prise en main haute. Le corps est tourné dans un merisier huilé à la cire d'abeille, la plume en acier trempé se remplace sans outil. Le convertisseur à piston accepte les encres en flacon comme les cartouches courtes.",
+      "matiere": "Merisier huilé, acier trempé, laiton",
+      "variantes": [
+        { "id": "plume-fine", "libelle": "Plume fine (F)", "supplement": 0 },
+        { "id": "plume-moyenne", "libelle": "Plume moyenne (M)", "supplement": 0 },
+        { "id": "plume-large", "libelle": "Plume large (B)", "supplement": 1200 }
+      ]
+    },
+    {
+      "id": "porte-plume-laiton",
+      "nom": "Porte-plume laiton",
+      "categorie": "ecriture",
+      "prix": 3400,
+      "forme": "cylindre",
+      "stock": 26,
+      "resume": "Un tube de laiton massif qui prend la patine de la main.",
+      "description": "Cylindre de laiton massif de 132 mm, fileté aux deux extrémités. Il se patine à l'usage et se ravive au chiffon doux. Compatible avec les plumes à visser de 8 mm et les pointes à douille.",
+      "matiere": "Laiton massif non verni",
+      "variantes": [
+        { "id": "brut", "libelle": "Laiton brut", "supplement": 0 },
+        { "id": "brossé", "libelle": "Laiton brossé", "supplement": 400 }
+      ]
+    },
+    {
+      "id": "encre-nuit-polaire",
+      "nom": "Encre Nuit polaire, 30 ml",
+      "categorie": "ecriture",
+      "prix": 1450,
+      "forme": "flacon",
+      "stock": 40,
+      "resume": "Bleu-noir profond, séchage lent, sans éclaboussure.",
+      "description": "Flacon de verre teinté de 30 ml, bouchon compte-gouttes. Une encre bleu-noir dense, fluide, formulée pour les plumes fines. Elle ne traverse pas le papier ordinaire et se conserve deux ans à l'abri de la lumière.",
+      "matiere": "Verre teinté, colorant, eau déminéralisée",
+      "variantes": [
+        { "id": "nuit-polaire", "libelle": "Nuit polaire", "supplement": 0 },
+        { "id": "encre-de-brume", "libelle": "Encre de brume", "supplement": 0 },
+        { "id": "noir-de-fumee", "libelle": "Noir de fumée", "supplement": 0 }
+      ]
+    },
+    {
+      "id": "carnet-aurore",
+      "nom": "Carnet Aurore, 192 pages",
+      "categorie": "papier",
+      "prix": 2600,
+      "forme": "carnet",
+      "stock": 34,
+      "resume": "Dos cousu, papier ivoire 90 g, à plat une fois ouvert.",
+      "description": "Format 145 × 210 mm, 192 pages cousues en cahiers de 16. Le papier ivoire de 90 g accepte l'encre comme le crayon graphite sans transpercer. Les plats sont en carton pressé recouvert de toile, et deux signets de tissu marquent la page.",
+      "matiere": "Toile, carton pressé, papier ivoire 90 g",
+      "variantes": [
+        { "id": "ligne", "libelle": "Ligné 6 mm", "supplement": 0 },
+        { "id": "pointe", "libelle": "Pointillé 5 mm", "supplement": 0 },
+        { "id": "blanche", "libelle": "Page blanche", "supplement": 0 }
+      ]
+    },
+    {
+      "id": "bloc-accordéon",
+      "nom": "Bloc accordéon",
+      "categorie": "papier",
+      "prix": 1200,
+      "forme": "carnet",
+      "stock": 58,
+      "resume": "Douze volets qui se déplient sans fin, pour penser large.",
+      "description": "Un leporello de 12 volets pliés, soit 1,80 m déplié. Papier 120 g légèrement grainé, couverture cartonnée souple. Se pose à plat sur un bureau, se replie dans une poche intérieure.",
+      "matiere": "Papier 120 g, carton souple",
+      "variantes": [
+        { "id": "kraft", "libelle": "Couverture kraft", "supplement": 0 },
+        { "id": "nuit", "libelle": "Couverture nuit", "supplement": 200 }
+      ]
+    },
+    {
+      "id": "calque-vegetal",
+      "nom": "Calque végétal, 50 feuilles",
+      "categorie": "papier",
+      "prix": 980,
+      "forme": "plaque",
+      "stock": 47,
+      "resume": "Transparent, mat, très résistant à la déchirure.",
+      "description": "Cinquante feuilles de calque végétal de 90 g au format A4. Le grain mat accepte le crayon gras comme l'encre de Chine. Se plie sans casser, se gomme sans pelucher.",
+      "matiere": "Calque végétal 90 g",
+      "variantes": [
+        { "id": "a4", "libelle": "A4 — 210 × 297 mm", "supplement": 0 },
+        { "id": "a3", "libelle": "A3 — 297 × 420 mm", "supplement": 700 }
+      ]
+    },
+    {
+      "id": "lampe-veilleuse-halo",
+      "nom": "Veilleuse Halo",
+      "categorie": "lumiere",
+      "prix": 6900,
+      "forme": "lampe",
+      "stock": 9,
+      "resume": "Un halo chaud de 2200 K, réglable en trois crans.",
+      "description": "Veilleuse en verre opalin soufflé, culot en chêne tourné, ampoule LED à filament de 2200 K fournie. Trois intensités au variateur tactile posé sur le culot. Cordons textiles de 1,80 m, interrupteur au pied.",
+      "matiere": "Verre opalin, chêne tourné, coton tressé",
+      "variantes": [
+        { "id": "ambre", "libelle": "Verre ambré", "supplement": 0 },
+        { "id": "ivoire", "libelle": "Verre ivoire", "supplement": 0 }
+      ]
+    },
+    {
+      "id": "lampe-sillage",
+      "nom": "Lampe de bureau Sillage",
+      "categorie": "lumiere",
+      "prix": 12900,
+      "forme": "lampe",
+      "stock": 5,
+      "resume": "Bras articulé en laiton, lumière sans ombre portée dure.",
+      "description": "Lampe d'atelier à bras articulé de 62 cm, trois points de rotation, réflecteur en tôle laquée. La lumière est diffusée par un bandeau de LED de 2700 K à 4000 K, réglable en température. Socle lesté de 2,4 kg, serre-joint fourni.",
+      "matiere": "Laiton, tôle laquée, fonte lestée",
+      "variantes": [
+        { "id": "craie", "libelle": "Laque craie", "supplement": 0 },
+        { "id": "encre", "libelle": "Laque encre", "supplement": 0 },
+        { "id": "serre-joint", "libelle": "Laque craie + serre-joint", "supplement": 1900 }
+      ]
+    },
+    {
+      "id": "sous-main-cuir",
+      "nom": "Sous-main cuir végétal",
+      "categorie": "bureau",
+      "prix": 5400,
+      "forme": "plaque",
+      "stock": 15,
+      "resume": "Deux faces : cuir tanné végétal d'un côté, feutre de laine de l'autre.",
+      "description": "Sous-main de 80 × 45 cm. Le dessus est en cuir à tannage végétal de 2 mm, cousu main au point sellier ; le dessous est doublé de feutre de laine de 3 mm qui ne glisse pas. Les angles sont arrondis au fer.",
+      "matiere": "Cuir tannage végétal, feutre de laine",
+      "variantes": [
+        { "id": "fauve", "libelle": "Fauve naturel", "supplement": 0 },
+        { "id": "ardoise", "libelle": "Ardoise", "supplement": 0 }
+      ]
+    },
+    {
+      "id": "pot-a-crayons-gres",
+      "nom": "Pot à crayons en grès",
+      "categorie": "bureau",
+      "prix": 2900,
+      "forme": "cylindre",
+      "stock": 22,
+      "resume": "Grès émaillé, cuit à 1280 °C, base feutrée.",
+      "description": "Pot tourné à la main en grès, émail satiné, hauteur 105 mm pour un diamètre de 82 mm. La base est poncée et feutrée pour ne pas rayer le bois. Chaque pièce porte une légère variation de teinte : c'est le grès, pas un défaut.",
+      "matiere": "Grès émaillé, feutre",
+      "variantes": [
+        { "id": "brume", "libelle": "Émail brume", "supplement": 0 },
+        { "id": "sable", "libelle": "Émail sable", "supplement": 0 }
+      ]
+    },
+    {
+      "id": "regle-laiton-30",
+      "nom": "Règle laiton 30 cm",
+      "categorie": "bureau",
+      "prix": 1800,
+      "forme": "plaque",
+      "stock": 31,
+      "resume": "Gravée au trait fin, chanfreinée à la main.",
+      "description": "Règle de 30 cm en laiton de 2 mm, gravée au trait de 1 mm sur toute la longueur, millimètres sur un bord et demi-centimètres sur l'autre. Les chants sont chanfreinés et adoucis à la lime douce.",
+      "matiere": "Laiton 2 mm",
+      "variantes": [
+        { "id": "20cm", "libelle": "20 cm", "supplement": -600 },
+        { "id": "30cm", "libelle": "30 cm", "supplement": 0 },
+        { "id": "50cm", "libelle": "50 cm", "supplement": 1400 }
+      ]
+    },
+    {
+      "id": "taille-crayon-laiton",
+      "nom": "Taille-crayon laiton massif",
+      "categorie": "bureau",
+      "prix": 1500,
+      "forme": "cylindre",
+      "stock": 44,
+      "resume": "Une lame en acier trempé, remplaçable, et rien d'autre.",
+      "description": "Corps usiné dans un barreau de laiton, logement de lame en acier trempé vissé par deux vis à tête fraisée. Copeaux contenus dans le corps, vidés par le bouchon fileté. Lame de rechange fournie.",
+      "matiere": "Laiton massif, acier trempé",
+      "variantes": [
+        { "id": "standard", "libelle": "Standard", "supplement": 0 },
+        { "id": "rechange", "libelle": "Standard + 3 lames", "supplement": 500 }
+      ]
+    },
+    {
+      "id": "encrier-de-voyage",
+      "nom": "Encrier de voyage",
+      "categorie": "ecriture",
+      "prix": 4200,
+      "forme": "flacon",
+      "stock": 0,
+      "resume": "Flacon de poche à joint de liège, bouchon vissé.",
+      "description": "Encrier de 15 ml en verre épais, bouchon en laiton vissé sur un joint de liège. Il se glisse dans une poche de veste sans fuir. Deuxième série en cours d'assemblage à l'atelier.",
+      "matiere": "Verre épais, laiton, liège",
+      "variantes": [
+        { "id": "naturel", "libelle": "Verre naturel", "supplement": 0 },
+        { "id": "fume", "libelle": "Verre fumé", "supplement": 300 }
+      ]
+    }
+  ]
+}

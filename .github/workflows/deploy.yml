@@ -1,4 +1,4 @@
-﻿# ============================================================================
+# ============================================================================
 # GL DIGITAL LAB - Pipeline CI/CD Complet
 # ============================================================================
 # 🔍 Lint & Format check
@@ -135,8 +135,92 @@ jobs:
           echo "    aucun cadre de test n'est installé."
           npm test --if-present || true
 
+      - name: 🌐 Chrome pour le prérendu
+        # ⛔ POURQUOI CETTE ÉTAPE EXISTE — DÉFAUT OUVERT, 22/09/2026.
+        #
+        # Mesure : le passage CI n°135 (commit `ffb8c09`) a échoué sur
+        # `🔨 Build production` en 79 s, et `🚀 Deploy Production` a été SAUTÉ.
+        # Le passage n°134 (`c3c9cc6`, dix minutes plus tôt) avait réussi.
+        # Le même build sur un clone frais, en local, sort en 0 : la cause est
+        # donc propre à l'environnement du coureur.
+        #
+        # Le seul chemin du build qui tue le processus sans que ce soit
+        # reproductible en local est dans `scripts/prerendre.js` :
+        #     const chrome = trouverChrome()
+        #     if (!chrome) { … process.exit(1) }
+        # Or `trouverChrome()` cherche des chemins FIXES (`/usr/bin/google-chrome`,
+        # `/opt/google/chrome/chrome`…), et `ubuntu-latest` est une image MOUVANTE :
+        # ce qu'elle embarque change sans que ce dépôt change.
+        # ⚠️ LA CAUSE N'EST PAS PROUVÉE : GitHub ne livre pas les journaux sans
+        # authentification (HTTP 403). Elle est FORTEMENT SUSPECTÉE, pas établie.
+        #
+        # ⛔ ET ON NE SE CONTENTE PAS DE LA CONTOURNER. Si Chrome manque, on
+        # l'INSTALLE, on ne saute pas le prérendu : sans lui, le HTML livré n'a
+        # NI navigation NI pied de page — c'est précisément le défaut que le
+        # studio a mis des semaines à fermer, et que `verifier-topographie.mjs`
+        # mesure sur 28/28 routes.
+        run: |
+          set -euo pipefail
+          CHROME=""
+          for c in "${CHROME_PATH:-}" /usr/bin/google-chrome /usr/bin/google-chrome-stable \
+                   /opt/google/chrome/chrome /usr/bin/chromium /usr/bin/chromium-browser; do
+            if [ -n "$c" ] && [ -x "$c" ]; then CHROME="$c"; break; fi
+          done
+          if [ -z "$CHROME" ]; then
+            echo "Chrome absent de l'image — installation depuis le dépôt Google."
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq google-chrome-stable || true
+            for c in /usr/bin/google-chrome /usr/bin/google-chrome-stable /opt/google/chrome/chrome; do
+              if [ -x "$c" ]; then CHROME="$c"; break; fi
+            done
+          fi
+          if [ -z "$CHROME" ]; then
+            echo "::error::Chrome INTROUVABLE sur le coureur. Le prérendu ne peut pas tourner, et sans lui le HTML livré n'a ni navigation ni pied de page."
+            exit 1
+          fi
+          echo "Chrome trouvé : $CHROME"
+          "$CHROME" --version
+          echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
+
       - name: 🔨 Build production
-        run: npm run build
+        # ⛔ LE BUILD EST DÉCOUPÉ EN ÉTAPES NOMMÉES, ET CE N'EST PAS COSMÉTIQUE.
+        # Mesure du 22/09/2026 : `npm run build` a échoué en CI, et GitHub n'a pu
+        # nommer que l'étape qui l'englobe — pas la commande coupable. On a perdu
+        # du temps à DEVINER. `::group::` fait que le journal nomme toujours la
+        # phase, et qu'une panne se lit au lieu de se déduire.
+        # ⚠️ La chaîne reproduite ici est celle de `package.json`, lue et non
+        # supposée : prebuild → sitemap && ecole && arche && vite build &&
+        # prerendre → postbuild.
+        run: |
+          set -euo pipefail
+          echo "::group::1/7 prebuild — generer-etat.mjs"
+          node scripts/generer-etat.mjs
+          echo "::endgroup::"
+
+          echo "::group::2/7 sitemap — generer-sitemap.mjs"
+          node scripts/generer-sitemap.mjs
+          echo "::endgroup::"
+
+          echo "::group::3/7 ecole — publier-ecole.mjs"
+          node scripts/publier-ecole.mjs
+          echo "::endgroup::"
+
+          echo "::group::4/7 arche — generer-arche.mjs"
+          node scripts/generer-arche.mjs
+          echo "::endgroup::"
+
+          echo "::group::5/7 vite build"
+          npx vite build
+          echo "::endgroup::"
+
+          echo "::group::6/7 prerendre — prerendre.js"
+          node scripts/prerendre.js
+          echo "::endgroup::"
+
+          echo "::group::7/7 postbuild — generer-etat.mjs + relever-dans-html.mjs"
+          node scripts/generer-etat.mjs
+          node scripts/relever-dans-html.mjs
+          echo "::endgroup::"
         env:
           NODE_ENV: production
 
