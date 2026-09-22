@@ -78,6 +78,15 @@ export const TOPOGRAPHIE = [
     declaration: { lastmod: '2026-09-10', changefreq: 'monthly', priority: '0.8' },
   },
   {
+    // ⭐ AJOUTÉ LE 22/09/2026 — demande de Gaëtan : « tu me le références dans la nav ».
+    // ⚠️ ET C'EST EXACTEMENT L'OUBLI QUE CE FICHIER EXISTE POUR EMPÊCHER : `/soute` avait été
+    //    construite, liée, éprouvée — et **oubliée du sitemap**. `generer-sitemap.mjs` écrit le
+    //    plan de site DEPUIS CE MANIFESTE, plus depuis une liste tenue à la main.
+    //    *Une page absente d'ici est une page que les moteurs ne verront pas.*
+    chemin: '/galion',
+    declaration: { lastmod: '2026-09-22', changefreq: 'monthly', priority: '0.8' },
+  },
+  {
     chemin: '/contact',
     compartiment: { id: 'contact', nom: 'La capitainerie', pont: 'superieur' },
     declaration: { lastmod: '2026-09-10', changefreq: 'monthly', priority: '0.8' },

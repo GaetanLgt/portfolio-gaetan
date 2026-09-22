@@ -409,6 +409,21 @@ const routes = [
       description: 'Administration de cluster ARK: Survival Ascended. 9 serveurs, 99.8% uptime. DevOps appliqué au gaming.'
     }
   },
+  // -------------------------------------------------------------------------
+  // LE NAVIRE — page unique, ajoutée le 22/09/2026 (demande de Gaëtan).
+  // `defineAsyncComponent` dans la vue : le chunk 3D reste hors du premier chargement.
+  // ⚠️ Le modèle servi est `public/galion-arkadia.glb` (764 Ko) — le navire CONSTRUIT.
+  //    L'ancien (`galion.glb`, 2 790 Ko) est le maître d'origine, requalifié en RUINE le 18/09.
+  // -------------------------------------------------------------------------
+  {
+    path: '/galion',
+    name: 'Galion',
+    component: () => import('@/views/core/GalionPage.vue'),
+    meta: {
+      title: 'Le galion — le navire d\'ArkAdiA, construit par le studio',
+      description: 'Le galion fantôme d\'ArkAdiA en 3D navigable : un kraken à tête de mort, deux yeux d\'or, soixante-quatre canons. Construit par un générateur — mêmes paramètres, même navire.'
+    }
+  },
   {
     path: '/voyageo-pro',
     name: 'VoyageoProCase',

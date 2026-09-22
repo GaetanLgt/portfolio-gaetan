@@ -40,6 +40,12 @@
           <span class="nav-link__num">03</span>
           PREUVE
         </router-link>
+        <!-- ⭐ Ajouté le 22/09/2026 (demande de Gaëtan : « tu me le références dans la nav »).
+             Le parcours prospect reste 01→04 : OFFRE → RÉALISATIONS → PREUVE → LE NAVIRE. -->
+        <router-link to="/galion" class="nav-link">
+          <span class="nav-link__num">04</span>
+          LE NAVIRE
+        </router-link>
 
         <router-link to="/contact" class="nav-cta">
           RÉSERVER UN AUDIT
@@ -77,6 +83,9 @@
         </router-link>
         <router-link to="/arkadia" class="nav-mobile__link" @click="closeMobile">
           <span class="nav-link__num">03</span> PREUVE — ARKADIA France (ARK)
+        </router-link>
+        <router-link to="/galion" class="nav-mobile__link" @click="closeMobile">
+          <span class="nav-link__num">04</span> LE NAVIRE — le galion en 3D
         </router-link>
 
         <!-- CTA -->

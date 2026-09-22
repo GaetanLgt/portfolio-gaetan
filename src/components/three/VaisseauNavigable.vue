@@ -54,6 +54,19 @@ const props = defineProps({
   modele: { type: String, default: '/galion.glb' },
   /** Hauteur de la vue. Le navire veut de la place : une fenêtre l'écrasait. */
   hauteur: { type: String, default: 'min(88vh, 860px)' },
+  /**
+   * Les sept ancres de compartiments. `true` par défaut.
+   *
+   * ⚠️ LEURS COORDONNÉES SONT MESURÉES SUR `galion.glb` — L'ANCIEN MODÈLE, dont la boîte
+   *    fait **9,5 unités** (X −5,221 → 4,296). Sur un autre modèle, **elles amarrent dans le
+   *    vide** : un clic ouvre une page sans qu'on ait rien visé.
+   *
+   * ⭐ MESURÉ LE 22/09/2026 : le navire **CONSTRUIT** (`public/galion-arkadia.glb`, 764 Ko)
+   *    fait **119,5 unités** de long — soit **~12,6×**. Les recaler demande une **mesure**
+   *    (`30-rnd/mesurer-glon.cjs` a servi pour les précédentes), **pas un facteur deviné.**
+   *    *Des ancres fausses ne sont pas un détail d'affichage : ce sont sept liens qui mentent.*
+   */
+  ancres: { type: Boolean, default: true },
 });
 
 const router = useRouter();
@@ -505,6 +518,10 @@ async function construire() {
   function poserLesAncres() {
     cibles = [];
     repere = new THREE.Vector3();
+    // ⛔ `ancres: false` — décision du 22/09/2026, page `/galion` : on montre LE NAVIRE, pas
+    //    le plan du site. Les sept positions sont mesurées sur l'ANCIEN modèle et n'ont pas
+    //    été recalées sur le nouveau : les poser ici serait **ouvrir sept liens qui mentent**.
+    if (!props.ancres) return;
     for (const c of COMPARTIMENTS) {
       const point = new THREE.Mesh(
         new THREE.SphereGeometry(0.2, 18, 14),

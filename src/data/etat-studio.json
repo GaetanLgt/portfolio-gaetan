@@ -3,21 +3,21 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": null,
-    "sujet": null,
-    "date": null,
-    "arbre_modifie": null
+    "court": "2f8b766",
+    "sujet": "Mise en place — 14 verrous tenus, et tout ce qui suit est mesure",
+    "date": "2026-09-22T15:22:55+02:00",
+    "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-22 15:12:33",
-    "horodatage_minute": "2026-09-22 15:12",
-    "horodatage_iso": "2026-09-22T13:12:33.967Z",
+    "horodatage_local": "2026-09-22 20:35:22",
+    "horodatage_minute": "2026-09-22 20:35",
+    "horodatage_iso": "2026-09-22T18:35:22.560Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 188,
+  "pages_prerendues": 189,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 340.4,
+    "ko_servis": 362,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {

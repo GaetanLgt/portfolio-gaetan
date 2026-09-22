@@ -41,6 +41,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gldigitallab.fr/galion</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://gldigitallab.fr/contact</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
