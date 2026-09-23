@@ -25,7 +25,9 @@ const ServicesPage = () => import('@/views/services/ServicesPage.vue');
 const ProjectsPage = () => import('@/views/services/ProjectsPage.vue');
 
 // PARCOURS - Histoire et parcours
-const HolisticMapPage = () => import('@/views/parcours/HolisticMapPage.vue');
+/* ⚠️ L'IMPORT DE HolisticMapPage EST RETIRÉ AVEC LA ROUTE.
+   *Un import de composant que plus aucune route ne sert est du poids mort dans le
+   paquet — et le bundler ne peut pas toujours le voir.* */
 
 // PROJECTS - Case studies
 const ArkadiaCase = () => import('@/views/projects/ArkadiaCase.vue');
@@ -387,15 +389,14 @@ const routes = [
   // -------------------------------------------------------------------------
   // PARCOURS
   // -------------------------------------------------------------------------
-  {
-    path: '/carte-holistique',
-    name: 'HolisticMap',
-    component: HolisticMapPage,
-    meta: { 
-      title: 'Carte Holistique | Neo',
-      description: 'Visualisation interactive de l\'écosystème Génie IT Tek FR : rôles, compétences, projets, services et vision. Carte conceptuelle du portfolio.'
-    }
-  },
+  /* ⛔ /carte-holistique A ÉTÉ RETIRÉE — consigne de Gaëtan, 23/09/2026.
+     ⚠️ Elle avait REMPLACÉ /parcours le 10/09/2026 : la page avait été
+     renommée, et l'ancienne adresse rendait un 404 alors qu'elle était
+     déclarée. En la retirant, on ferme les deux bouts.
+     *On ne retire pas une page en laissant ses portes ouvertes.*
+     ⚠️ HolisticMapPage.vue (38 699 o) n'est PAS supprimé : il reste sur le
+     disque, inatteignable. *Une page qu'aucune route ne sert n'est pas
+     publiée — et un fichier gardé n'est pas un fichier perdu.* */
 
   // -------------------------------------------------------------------------
   // PROJECTS (Case Studies)

@@ -165,7 +165,7 @@
             <span class="quick-icon">📧</span>
             <span class="quick-label">Contact</span>
           </router-link>
-          <router-link to="/carte-holistique" class="quick-card">
+          <router-link to="/" class="quick-card">
             <span class="quick-icon">🗺️</span>
             <span class="quick-label">Carte</span>
           </router-link>
@@ -230,7 +230,7 @@ const sections = ref([
       { name: 'Services', path: '/services', icon: '💼' },
       { name: 'Projets', path: '/projets', icon: '📂' },
       { name: 'Contact', path: '/contact', icon: '📧' },
-      { name: 'Carte Holistique', path: '/carte-holistique', icon: '🗺️' },
+      /* ⛔ « Carte Holistique » retirée le 23/09/2026. */
     ]
   },
   {

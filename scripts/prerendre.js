@@ -513,16 +513,111 @@ async function principal() {
     }
   })(DIST);
 
+  /* ⭐⭐⭐ LES BALISES hreflang — POSÉES ICI, ET SEULEMENT SI LA PAGE EXISTE.
+     ══════════════════════════════════════════════════════════════════════════
+     Consigne (A-FAIRE-2026-09-23, § 1) : « Métadonnées : hreflang, canonical,
+     JSON-LD, Open Graph. » Mesure du 23/09 : **hreflang = 0 sur 188 pages.**
+
+     ⛔ POURQUOI ICI ET PAS DANS LE COMPOSABLE — ET C'EST MESURÉ :
+     Une première version les posait au RUNTIME (`useSEOOptimization`). Après le
+     vrai build : **0 balise sur 188 pages.** Le prérendu les retire, selon sa
+     propre règle : *« un script injecté à l'exécution n'a rien à faire dans un HTML
+     figé. »* **Un `hreflang` doit être dans le HTML, sinon un moteur qui n'exécute
+     pas le JavaScript ne le voit pas.**
+
+     ⛔⛔ ET LE PIÈGE, QUI AURAIT ÉTÉ PIRE QUE LE DÉFAUT :
+     `hreflang` affirme « cette page existe dans cette langue ». Posé pour les sept
+     langues alors qu'**aucune traduction n'existe**, il enverrait les moteurs vers
+     des 404 — *c'est-à-dire qu'il ferait du mal en croyant réparer.*
+     ⇒ **ON NE L'ÉMET QUE POUR LES LANGUES DONT LA PAGE EXISTE SUR LE DISQUE.**
+     ⭐ Et c'est auto-activant : aujourd'hui **zéro** (aucune traduction), et le jour
+       où `dist/en/index.html` existe, la balise apparaît sans qu'on y touche.
+     ⚠️ *Un `hreflang` qui ne peut pas mentir, parce qu'il regarde avant de parler.* */
+  const LANGUES_DISPO = ['fr', 'en', 'de', 'es', 'it', 'nl', 'pt'];   // src/config/langues.js
+  const ACCUEIL = 'fr';
+
+  /** Le chemin de la page, tel qu'il se lit dans une URL : '' pour l'accueil. */
+  function cheminDePage(fichier) {
+    let p = path.relative(DIST, fichier).replace(/\\/g, '/');
+    p = p.replace(/index\.html$/, '').replace(/\.html$/, '');
+    return p.replace(/\/$/, '');
+  }
+
+  /** Cette page existe-t-elle, pour cette langue ? On REGARDE le disque. */
+  function pageExiste(langue, chemin) {
+    const dossier = langue === ACCUEIL ? DIST : path.join(DIST, langue);
+    const cible = chemin ? path.join(dossier, chemin) : dossier;
+    return fs.existsSync(path.join(cible, 'index.html')) || fs.existsSync(cible + '.html');
+  }
+
+  /** Les balises, ou rien si une seule langue est disponible. */
+  function balisesHreflang(chemin) {
+    const dispo = LANGUES_DISPO.filter((l) => pageExiste(l, chemin));
+    /* ⛔ UNE SEULE LANGUE N'EST PAS UN CHOIX : c'est une absence d'alternatives.
+       Émettre un `hreflang` unique ne dit rien à personne — et `x-default` seul
+       serait un aveu. *On ne parle d'alternatives que s'il y en a.* */
+    if (dispo.length < 2) return '';
+
+    const url = (l) => 'https://gldigitallab.fr/' + (l === ACCUEIL ? '' : l + '/') + chemin;
+    const lignes = dispo.map((l) => `<link rel="alternate" hreflang="${l}" href="${url(l)}">`);
+    lignes.push(`<link rel="alternate" hreflang="x-default" href="${url(ACCUEIL)}">`);
+    return lignes.join('\n');
+  }
+
+  let hreflangPoses = 0;
+  let hreflangPages = 0;
+
   let commentairesRetires = 0;
   let octetsRetires = 0;
   const restants = [];
   for (const fichier of fichiersHtml) {
     const avant = fs.readFileSync(fichier, 'utf8');
-    const apres = retirerCommentaires(avant);
+    /* ⛔ LA PROPRETÉ SE MESURE **AVANT** L'INJECTION DES BALISES — ET C'EST UNE
+       CORRECTION, PAS UNE PRÉCAUTION.
+       ────────────────────────────────────────────────────────────────────────
+       La première version calculait `octetsRetires += avant.length - apres.length`
+       APRÈS avoir ajouté les `hreflang`. Résultat mesuré, témoin en place :
+           « propreté : 0 commentaire(s) retiré(s), **-217 octets** rendus au visiteur »
+       ⭐ **Un compteur négatif.** Il mélangeait deux choses : les commentaires
+       RETIRÉS (le gain) et les balises AJOUTÉES (un coût assumé).
+       ⇒ *Une mesure qui se met à mesurer deux choses rend un chiffre qui ne veut
+       rien dire — et ici, il devenait même impossible à lire.*
+       On fige donc la propreté sur le HTML **nettoyé**, avant toute addition. */
+    const apresPropre = retirerCommentaires(avant);
+    let apres = apresPropre;
+
+    /* ⛔⛔ LE NETTOYAGE SE FAIT **TOUJOURS**, MÊME QUAND ON N'AJOUTE RIEN.
+       ────────────────────────────────────────────────────────────────────────
+       La première version mettait le `replace` de nettoyage DANS le `if` qui exclut
+       la 404. Conséquence mesurée : `404.html` portait **3 balises `hreflang`** —
+       ajoutées lors d'une passe antérieure (témoin en place), et **jamais retirées**,
+       puisque l'exclusion sautait tout le bloc.
+       ⭐ *Une exclusion qui saute l'étape « nettoyer » laisse la saleté en place.*
+       Et le pire : **c'était invisible** — le compteur global disait « 0 hreflang »
+       sur les autres pages, et une seule page gardait les siennes.
+       ⇒ On retire d'abord, **puis** on décide d'ajouter. *L'ordre compte : nettoyer
+       n'est pas conditionnel, ajouter l'est.* */
+    apres = apres.replace(/\s*<link rel="alternate"[^>]*hreflang[^>]*>/gi, '');
+
+    // ⚠️ LA 404 EST EXCLUE DE L'AJOUT : servie à TOUTES les adresses inconnues, elle
+    // est la même pour tout le monde et dans aucune langue en particulier.
+    // *Un `hreflang` sur une 404 désignerait un contenu qui n'existe pas.*
+    if (!/404\.html$/.test(fichier)) {
+      const chemin = cheminDePage(fichier);
+      const balises = balisesHreflang(chemin);
+      if (balises) {
+        apres = apres.replace(/<\/head>/i, balises + '\n</head>');
+        hreflangPoses += (balises.match(/<link/g) || []).length;
+        hreflangPages++;
+      }
+    }
+
     if (apres !== avant) {
       commentairesRetires += (avant.match(MOTIF_COMMENTAIRE) || []).length
-        - (apres.match(MOTIF_COMMENTAIRE) || []).length;
-      octetsRetires += avant.length - apres.length;
+        - (apresPropre.match(MOTIF_COMMENTAIRE) || []).length;
+      /* ⭐ ET LE GAIN SE LIT SUR `apresPropre`, PAS SUR `apres` : *ce sont les
+         commentaires en moins, pas le solde de tout ce qu'on a touché.* */
+      octetsRetires += avant.length - apresPropre.length;
       ecrireAtomique(fichier, apres);
     }
     // Contrôle APRÈS écriture : la règle est tenue par une mesure, pas par la
@@ -533,8 +628,7 @@ async function principal() {
       }
     }
   }
-  if (restants.length) {
-    echecs++;
+  if (restants.length) {    echecs++;
     rapport.push({ route: 'propreté', ok: false, motif: `${restants.length} commentaire(s) de travail encore livré(s) : ${restants.slice(0, 3).join(' ; ')}` });
   } else {
     rapport.push({ route: 'propreté', ok: true, titre: `${commentairesRetires} commentaire(s) de travail retiré(s)`, octets: octetsRetires, ecrit: true });

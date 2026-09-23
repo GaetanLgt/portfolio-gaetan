@@ -3,6 +3,63 @@
    Génie IT Tek FR - Janvier 2026
    ===================================================== */
 
+/* =====================================================
+   ⭐ LE BANC D'ESSAI ALLEMAND — ajouté le 23/09/2026
+   =====================================================
+   CONSIGNE (A-FAIRE-2026-09-23, § 1) :
+     « L'allemand est le banc d'essai. Ses mots composés n'ont pas de limite :
+      Rechtsschutzversicherungsgesellschaften = 39 lettres. »
+
+   ⛔ CE QUI A ÉTÉ MESURÉ AVANT D'ÉCRIRE CE BLOC, sur les 96 fichiers de style :
+       ① hyphens            : 0 occurrence   ← LE SEUL DÉFAUT
+       ② overflow-wrap      : 3              ✅ déjà présent par endroits
+       ③ min-width: 0       : 5              ✅ idem
+       ④ bouton largeur fixe: aucun          ✅
+       ⑤ tableau en px      : aucun          ✅
+     ⇒ *On mesure avant de corriger. Une correction sans relevé ne se vérifie pas.*
+
+   ⛔⛔ ET LE POINT QUI COMPTE, CELUI QU'ON OUBLIE TOUJOURS :
+   **`hyphens: auto` SEUL NE SUFFIT PAS.** La césure suit la LANGUE DE L'ÉLÉMENT,
+   pas celle du document. Le site porte `<html lang="fr">` : du texte allemand
+   **ne sera pas coupé** même avec cette propriété, tant qu'il n'est pas dans un
+   bloc portant `lang="de"`.
+   ⇒ Ce bloc-ci pose la RÈGLE. **Il ne remplace pas l'attribut `lang`** — c'est
+   l'infrastructure des sept langues qui le posera, bloc par bloc.
+   *Une propriété CSS et un attribut HTML font deux moitiés du même travail.*
+   ⚠️ Tant que les sept langues ne sont pas en place, ce bloc sert DÉJÀ au
+   français : un titre long ou un mot technique déborde aussi en français.
+
+   ⚠️ ET IL VA ICI, DANS `polish.css`, POUR UNE RAISON : c'est la dernière feuille
+   importée par `main.js`. *Une finition typographique qui perdrait la cascade ne
+   serait pas une finition.*
+   ===================================================== */
+
+/* Les titres, les cellules et les libellés courts : ceux qui dépassent. */
+h1, h2, h3, h4, h5, h6,
+th, td,
+legend, dt, dd,
+figcaption, blockquote,
+button, .btn, .bouton,
+label, .badge, .tag {
+  /* ⭐ La césure, avec les DEUX moitiés : `hyphens` autorise, et `lang` décide. */
+  hyphens: auto;
+  -webkit-hyphens: auto;
+
+  /* ⭐ Le filet de sécurité, et il ne dépend d'AUCUNE langue : un mot sans espace
+     qui ne peut pas être coupé phonétiquement — une URL, un identifiant, un mot
+     composé de 40 lettres — sera coupé n'importe où plutôt que de pousser sa boîte.
+     *`hyphens` coupe au bon endroit ; `overflow-wrap` coupe au pire endroit. Quand
+     il n'y a pas de bon endroit, le pire vaut mieux que le débordement.*
+     ⚠️ `anywhere` et non `break-word` : `anywhere` compte dans la largeur minimale
+     du conteneur, donc les grilles et les flex se recalculent au lieu de déborder. */
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* ⚠️ On NE met PAS `hyphens: auto` sur `body` en entier : la césure dans le texte
+   courant fatigue la lecture. *Elle est faite pour ce qui ne peut pas déborder —
+   un titre, une cellule, un libellé — pas pour des paragraphes.* */
+
 /* --------------------- MICRO-INTERACTIONS --------------------- */
 
 /* Liens avec underline animé */

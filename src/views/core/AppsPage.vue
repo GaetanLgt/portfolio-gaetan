@@ -4,15 +4,14 @@
       <div class="container">
         <div class="header-badge">
           <span class="badge-icon" aria-hidden="true">🧩</span>
-          <span class="badge-text">APPLICATIONS</span>
+          <span class="badge-text">{{ t('apps.badge') }}</span>
         </div>
         <h1 class="page-title">
-          <span class="title-pre">Les outils de</span>
-          <span class="title-main">L'ÉQUIPAGE</span>
+          <span class="title-pre">{{ t('apps.titreAvant') }}</span>
+          <span class="title-main">{{ t('apps.titrePrincipal') }}</span>
         </h1>
         <p class="page-desc">
-          Les applications que le studio utilise et montre. Chacune est un outil réel,
-          décrit sans promesse excessive — y compris ce qu'elle ne fait pas.
+          {{ t('apps.chapeau') }}
         </p>
       </div>
     </header>
@@ -29,29 +28,52 @@
         Correctif choisi : créer la page que le libellé annonçait, plutôt que de renommer
         sept liens. Le contenu existait déjà (chaque app a son titre et sa description).
       -->
-      <h2 class="section-titre">Nos applications</h2>
+      <h2 class="section-titre">{{ t('apps.sectionTitre') }}</h2>
       <ul class="apps">
         <li v-for="app in apps" :key="app.href">
           <RouterLink :to="app.href" class="app">
             <span class="app__icone" aria-hidden="true">{{ app.icone }}</span>
             <span class="app__corps">
               <span class="app__titre">{{ app.nom }}</span>
-              <span class="app__role">{{ app.role }}</span>
-              <span class="app__desc">{{ app.desc }}</span>
+              <span class="app__role">{{ t(app.cleRole) }}</span>
+              <span class="app__desc">{{ t(app.cleDesc) }}</span>
             </span>
           </RouterLink>
         </li>
       </ul>
 
       <p class="apps__note">
-        Ces outils tournent <strong>chez nous</strong>. Aucun n'est un service en ligne
-        auquel vous vous abonnez : ils servent à produire les livraisons du studio.
+        <!-- ⚠️ Le paragraphe porte une balise `<strong>`. On ne met donc PAS de HTML
+             dans la chaîne traduite : elle est coupée en trois morceaux, et c'est ici
+             qu'on les assemble. *Demander à un traducteur de ne pas casser une balise,
+             c'est parier qu'il la cassera.* -->
+        {{ t('apps.noteAvant') }}<strong>{{ t('apps.noteFort') }}</strong>{{ t('apps.noteApres') }}
       </p>
     </section>
   </div>
 </template>
 
 <script setup>
+/* ⭐ LES TEXTES VIENNENT DE `src/locales/fr.js` — plus rien en dur dans le gabarit.
+   ⛔ ET C'EST LA PREMIÈRE PAGE DU SITE QUI LE FAIT : c'est la TRANCHE VERTICALE.
+   On prouve la chaîne entière — source → `t()` → page rendue — sur un morceau
+   petit et vrai, avant de l'étendre aux 3 095 chaînes du site.
+   *Une chaîne qu'on n'a pas prouvée sur un cas ne marche pas sur trois mille.*
+
+   ⭐⭐ ET LE POINT QUI DÉCIDE DE LA CONCEPTION : LE TABLEAU PORTE DES **CLÉS**,
+   PAS DES TEXTES. Si on écrivait `role: t('appsRole.wa')` ici, la traduction
+   serait **résolue au chargement du module** : la langue se figerait à l'ouverture
+   de la page et **ne réagirait plus jamais au changement**.
+   ⇒ On stocke la clé, et **le gabarit résout** : `{{ t(app.cleRole) }}`.
+   *Une traduction calculée une fois n'est plus une traduction : c'est une copie.*
+
+   ⛔ ET LES NOMS NE SONT PAS TRADUITS : `Wa Router`, `Makoto Scanner`, `Dou Monitor`,
+   `Watashi Knowledge Base`, `Jitsu Pipeline`, `SEO Content Generator` et
+   `Invoice Generator` sont des **noms propres**. Ils restent tels quels. */
+import { useLangue } from '@/composables/useLangue.js';
+
+const { t } = useLangue();
+
 /* Liste des applications — reprise des routes du routeur (`src/router/index.js`).
    Toute app ajoutée au routeur doit l'être ici aussi, sinon elle devient invisible
    depuis cette page. */
@@ -60,50 +82,50 @@ const apps = [
     href: '/apps/agent/wa',
     icone: '🧭',
     nom: 'Wa Router',
-    role: 'Orchestrateur multi-agent',
-    desc: 'Oriente une demande vers le bon outil de l\'équipage et rassemble les réponses.'
+    cleRole: 'appsRole.wa',
+    cleDesc: 'appsDesc.wa'
   },
   {
     href: '/apps/agent/makoto',
     icone: '🛡️',
     nom: 'Makoto Scanner',
-    role: 'Audit de sécurité',
-    desc: 'Relève les vulnérabilités d\'un projet et de ses dépendances, avec le détail de chaque constat.'
+    cleRole: 'appsRole.makoto',
+    cleDesc: 'appsDesc.makoto'
   },
   {
     href: '/apps/agent/dou',
     icone: '📊',
     nom: 'Dou Monitor',
-    role: 'Supervision système',
-    desc: 'Surveille les services et les métriques de la machine : ports, processus, disponibilité.'
+    cleRole: 'appsRole.dou',
+    cleDesc: 'appsDesc.dou'
   },
   {
     href: '/apps/agent/watashi',
     icone: '📚',
     nom: 'Watashi Knowledge Base',
-    role: 'Base de connaissances',
-    desc: 'Indexe des documents et répond de façon citée, ancrée sur les sources fournies.'
+    cleRole: 'appsRole.watashi',
+    cleDesc: 'appsDesc.watashi'
   },
   {
     href: '/apps/agent/jitsu',
     icone: '⚙️',
     nom: 'Jitsu Pipeline',
-    role: 'Générateur CI/CD',
-    desc: 'Produit des configurations d\'intégration continue pour GitHub Actions et GitLab CI.'
+    cleRole: 'appsRole.jitsu',
+    cleDesc: 'appsDesc.jitsu'
   },
   {
     href: '/apps/seo-content',
     icone: '🔍',
     nom: 'SEO Content Generator',
-    role: 'Contenu optimisé',
-    desc: 'Rédige et structure du contenu en respectant les règles de référencement technique.'
+    cleRole: 'appsRole.seo',
+    cleDesc: 'appsDesc.seo'
   },
   {
     href: '/apps/invoice-generator',
     icone: '🧾',
     nom: 'Invoice Generator',
-    role: 'Devis et factures',
-    desc: 'Génère les documents commerciaux du studio à partir d\'un modèle.'
+    cleRole: 'appsRole.facture',
+    cleDesc: 'appsDesc.facture'
   }
 ];
 </script>

@@ -5,6 +5,14 @@
 
 import { onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
+/* ⛔ ICI IL Y AVAIT : `import { balisesHreflang, DOMAINE } from '@/config/url-langues.js';`
+   — RETIRÉ le 23/09/2026, **parce que plus rien ne l'utilise.**
+   La génération de `hreflang` au runtime a été supprimée : le prérendu la retire
+   (mesuré : **0 balise sur 188 pages**). ⇒ Laisser l'import aurait entretenu le
+   mensonge — *un import qu'on ne se sert pas laisse croire que le fichier fait le
+   travail qu'on a retiré.*
+   ⇒ Le générateur reste dans `@/config/url-langues.js` : **il est juste, c'est son
+   emplacement qui était faux.** Le brancher dans `scripts/prerendre.js`. */
 
 export function useSEOOptimization() {
   const router = useRouter();
@@ -203,6 +211,38 @@ export function useSEOOptimization() {
       }
       canonicalLink.setAttribute('href', canonical);
     }
+
+    /* =======================================================================
+       ⛔⛔ ICI J'AI MIS UNE GÉNÉRATION DE `hreflang` AU RUNTIME. ELLE A ÉTÉ RETIRÉE
+       LE 23/09/2026, PARCE QU'ELLE NE SERVAIENT À RIEN — ET C'EST MESURÉ.
+       =======================================================================
+       Ce que j'avais écrit : le composable créait sept `<link rel="alternate"
+       hreflang>` dans `<head>` à l'exécution, à côté du `canonical`.
+
+       ⛔ LA MESURE, APRÈS LE VRAI BUILD (`vite build && prerendre`) :
+            188 pages HTML prérendues  ·  balises `hreflang` : **0**
+       ⇒ **Le prérendu les retire.** Sa règle est écrite dans `prerendre.js` :
+          « un script injecté à l'exécution n'a rien à faire dans un HTML figé. »
+          *Il l'applique aussi aux `<link>` — et il a raison : un HTML figé qui
+          porte des balises posées par du JavaScript est incohérent le jour où le
+          JavaScript ne tourne pas.*
+
+       ⭐ POURQUOI JE LE RETIRE AU LIEU DE LE LAISSER : **du code qui a l'air de
+       marcher est pire que pas de code.** La session suivante l'aurait lu, vu
+       « hreflang généré », et conclu que le point (1c) était fait. *Un mensonge
+       qui ne se voit qu'à la relecture du HTML — c'est-à-dire trop tard.*
+
+       ⭐⭐ OÙ ÇA DOIT SE FAIRE, ET LE MOTIF EXISTE DÉJÀ :
+       dans **`scripts/prerendre.js`**, qui gère déjà `canonical` exactement de
+       cette façon — il RETIRE celui posé par le routeur
+       (`replace(/\s*<link rel="canonical"[^>]*>/i, '')`) et écrit le sien.
+       ⇒ Le générateur `balisesHreflang()` de `@/config/url-langues.js` est JUSTE :
+         il produit les 8 balises correctes (7 langues + `x-default`), vérifié.
+         **C'est son EMPLACEMENT qui était faux, pas lui.**
+       ⚠️ Et je ne l'ai pas déplacé dans ce round : `prerendre.js` fait 34 Ko et
+         porte 32 routes. *Une retouche précipitée dessus casserait tout le site —
+         et il est plus honnête de laisser un emplacement nommé qu'un patch douteux.*
+       ======================================================================= */
     
     // Open Graph Image
     if (ogImage) {

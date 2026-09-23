@@ -57,3 +57,7 @@ lighthouse-report.json
 *.pem
 .credentials*
 sauvegarder-ftp.env
+
+# Sauvegardes d'atelier — ajoute le 23/09/2026.
+# *Ce sont des artefacts de travail, pas le contenu du site : ils ne partent pas.*
+*.avant-*

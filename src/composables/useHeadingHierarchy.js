@@ -101,4 +101,41 @@ export function useHeadingHierarchy() {
   
   onMounted(() => {
     // Audit automatique en dev
-    if (import.meta.env.MODE === 'development') {\n      setTimeout(auditHeadings, 1000);\n    }\n  });\n  \n  return {\n    headingErrors,\n    checkHeadingHierarchy,\n    fixHeadingHierarchy,\n    auditHeadings\n  };\n}\n\n/**\n * Directive v-heading pour forcer une hiérarchie correcte\n * Usage: <h3 v-heading=\"2\">Title</h3> → Devient automatiquement H2\n */\nexport const headingDirective = {\n  mounted(el, binding) {\n    const targetLevel = binding.value;\n    const currentLevel = parseInt(el.tagName.substring(1));\n    \n    if (targetLevel && targetLevel !== currentLevel && targetLevel >= 1 && targetLevel <= 6) {\n      const newHeading = document.createElement(`h${targetLevel}`);\n      newHeading.innerHTML = el.innerHTML;\n      newHeading.className = el.className;\n      \n      // Copier les attributs\n      Array.from(el.attributes).forEach(attr => {\n        if (attr.name !== 'class') {\n          newHeading.setAttribute(attr.name, attr.value);\n        }\n      });\n      \n      el.parentNode.replaceChild(newHeading, el);\n    }\n  }\n};
+    if (import.meta.env.MODE === 'development') {
+      setTimeout(auditHeadings, 1000);
+    }
+  });
+  
+  return {
+    headingErrors,
+    checkHeadingHierarchy,
+    fixHeadingHierarchy,
+    auditHeadings
+  };
+}
+
+/**
+ * Directive v-heading pour forcer une hiérarchie correcte
+ * Usage: <h3 v-heading=\"2\">Title</h3> → Devient automatiquement H2
+ */
+export const headingDirective = {
+  mounted(el, binding) {
+    const targetLevel = binding.value;
+    const currentLevel = parseInt(el.tagName.substring(1));
+    
+    if (targetLevel && targetLevel !== currentLevel && targetLevel >= 1 && targetLevel <= 6) {
+      const newHeading = document.createElement(`h${targetLevel}`);
+      newHeading.innerHTML = el.innerHTML;
+      newHeading.className = el.className;
+      
+      // Copier les attributs
+      Array.from(el.attributes).forEach(attr => {
+        if (attr.name !== 'class') {
+          newHeading.setAttribute(attr.name, attr.value);
+        }
+      });
+      
+      el.parentNode.replaceChild(newHeading, el);
+    }
+  }
+};

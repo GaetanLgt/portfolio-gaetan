@@ -45,4 +45,73 @@ export function useOptimizedAnimations() {
     element.classList.add('visible');
     
     // Cleanup après l'animation
-    const cleanup = () => {\n      element.classList.add('animation-complete');\n      element.removeEventListener('transitionend', cleanup);\n      element.removeEventListener('animationend', cleanup);\n    };\n    \n    // Écouter la fin de l'animation/transition\n    element.addEventListener('transitionend', cleanup);\n    element.addEventListener('animationend', cleanup);\n    \n    // Fallback cleanup après 1s\n    setTimeout(cleanup, 1000);\n  };\n  \n  const animateOnScroll = (selector, animationType = 'fadeInUp') => {\n    nextTick(() => {\n      const elements = document.querySelectorAll(selector);\n      elements.forEach(el => observeElement(el, animationType));\n    });\n  };\n  \n  const fadeInUp = (selector) => animateOnScroll(selector, 'fadeInUp');\n  const scaleIn = (selector) => animateOnScroll(selector, 'scaleIn');\n  \n  // Performance: pause animations si prefers-reduced-motion\n  const respectsReducedMotion = () => {\n    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n  };\n  \n  onMounted(() => {\n    if (!respectsReducedMotion()) {\n      setupIntersectionObserver();\n    }\n  });\n  \n  onUnmounted(() => {\n    // Cleanup observers\n    intersectionObserver.value?.disconnect();\n    \n    // Cleanup will-change sur tous les éléments\n    animatedElements.value.forEach(element => {\n      if (element && element.style) {\n        element.style.willChange = 'auto';\n      }\n    });\n    \n    animatedElements.value.clear();\n  });\n  \n  return {\n    observeElement,\n    animateOnScroll,\n    fadeInUp,\n    scaleIn,\n    triggerAnimation\n  };\n}\n\n/**\n * useScrollAnimations - Version simplifiée et rétrocompatible\n * Pour remplacer l'ancienne version sans casser le code existant\n */\nexport function useScrollAnimations() {\n  const { fadeInUp, scaleIn } = useOptimizedAnimations();\n  \n  return {\n    fadeInUp,\n    scaleIn\n  };\n}
+    const cleanup = () => {
+      element.classList.add('animation-complete');
+      element.removeEventListener('transitionend', cleanup);
+      element.removeEventListener('animationend', cleanup);
+    };
+    
+    // Écouter la fin de l'animation/transition
+    element.addEventListener('transitionend', cleanup);
+    element.addEventListener('animationend', cleanup);
+    
+    // Fallback cleanup après 1s
+    setTimeout(cleanup, 1000);
+  };
+  
+  const animateOnScroll = (selector, animationType = 'fadeInUp') => {
+    nextTick(() => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => observeElement(el, animationType));
+    });
+  };
+  
+  const fadeInUp = (selector) => animateOnScroll(selector, 'fadeInUp');
+  const scaleIn = (selector) => animateOnScroll(selector, 'scaleIn');
+  
+  // Performance: pause animations si prefers-reduced-motion
+  const respectsReducedMotion = () => {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  };
+  
+  onMounted(() => {
+    if (!respectsReducedMotion()) {
+      setupIntersectionObserver();
+    }
+  });
+  
+  onUnmounted(() => {
+    // Cleanup observers
+    intersectionObserver.value?.disconnect();
+    
+    // Cleanup will-change sur tous les éléments
+    animatedElements.value.forEach(element => {
+      if (element && element.style) {
+        element.style.willChange = 'auto';
+      }
+    });
+    
+    animatedElements.value.clear();
+  });
+  
+  return {
+    observeElement,
+    animateOnScroll,
+    fadeInUp,
+    scaleIn,
+    triggerAnimation
+  };
+}
+
+/**
+ * useScrollAnimations - Version simplifiée et rétrocompatible
+ * Pour remplacer l'ancienne version sans casser le code existant
+ */
+export function useScrollAnimations() {
+  const { fadeInUp, scaleIn } = useOptimizedAnimations();
+  
+  return {
+    fadeInUp,
+    scaleIn
+  };
+}

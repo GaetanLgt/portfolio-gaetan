@@ -101,14 +101,17 @@ export const TOPOGRAPHIE = [
       note: "Dossier professionnel : ajouté le 10/09/2026. La page existait mais n'était déclarée nulle part — invisible pour les moteurs et pour les moteurs de réponse IA, alors que son objet même est d'être trouvée par des acheteurs publics et des appels d'offres. Priorité 0.9 assumée : c'est la porte commerciale du site, mise en avant dès le premier écran.",
     },
   },
-  {
-    chemin: '/carte-holistique',
-    compartiment: { id: 'carte', nom: 'La carte holistique', pont: 'inferieur' },
-    declaration: {
-      lastmod: '2026-09-10', changefreq: 'monthly', priority: '0.8',
-      note: "REMPLACE /parcours (10/09/2026) : la page a été renommée, l'ancienne adresse rendait un 404 alors qu'elle était déclarée.",
-    },
-  },
+  /* ⛔ L'ENTRÉE /carte-holistique A ÉTÉ RETIRÉE — consigne de Gaëtan, 23/09/2026.
+     ⚠️ Elle portait : `chemin: '/carte-holistique'`, le compartiment
+     `{ id: 'carte', nom: 'La carte holistique' }`, et une déclaration à
+     `priority: '0.8'` pour le sitemap.
+     ⛔ ET C'EST CE DERNIER POINT QUI COMPTAIT : cette table **génère le sitemap**.
+     Laisser l'entrée ici, c'est **redéclarer l'URL aux moteurs de recherche à la
+     prochaine génération** — après l'avoir retirée de `public/sitemap.xml`.
+     *Deux sources pour une même URL, c'est une qui gagne et l'autre qui ment.*
+     ⭐ Trouvée par le contrôle final du 23/09 : mon premier inventaire l'avait
+     listée, mais **ne l'avait pas mise dans l'outil**. *Un inventaire qui n'entre
+     pas dans le script est un inventaire qui n'existe pas.* */
   {
     chemin: '/voyageo-pro',
     compartiment: { id: 'voyageo', nom: "L'escale Voyageo", pont: 'inferieur' },
