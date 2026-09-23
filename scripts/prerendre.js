@@ -284,26 +284,42 @@ async function principal() {
   }
   const attendreSortie = (proc, delaiMax = 5000) =>
     new Promise((res) => {
-      if (!proc || proc.exitCode !== null || proc.killed) return res()
+      if (!proc || proc.exitCode !== null) return res(true)
       let fini = false
+      let sortieForcee = null
       const terminer = () => {
         if (fini) return
         fini = true
         clearTimeout(minuteur)
+        if (sortieForcee) clearTimeout(sortieForcee)
         proc.removeListener('exit', terminer)
         proc.removeListener('close', terminer)
-        res()
+        res(true)
       }
-      const minuteur = setTimeout(terminer, delaiMax)
+      const abandonner = () => {
+        if (fini) return
+        fini = true
+        proc.removeListener('exit', terminer)
+        proc.removeListener('close', terminer)
+        res(false)
+      }
+      const forcer = () => {
+        if (fini) return
+        try { proc.kill('SIGKILL') } catch {}
+        sortieForcee = setTimeout(abandonner, 2000)
+      }
+      const minuteur = setTimeout(forcer, delaiMax)
       proc.once('exit', terminer)
       proc.once('close', terminer)
-      try { proc.kill() } catch { terminer() }
+      try { proc.kill() } catch { forcer() }
     })
   const fermerSession = async (session) => {
     if (!session) return
     try { session.cdp.fermer() } catch {}
-    await attendreSortie(session.proc)
-    try { fs.rmSync(session.profil, { recursive: true, force: true }) } catch {}
+    const sortie = await attendreSortie(session.proc)
+    if (sortie || session.proc.exitCode !== null) {
+      try { fs.rmSync(session.profil, { recursive: true, force: true }) } catch {}
+    }
   }
   const retirerScriptsInjectes = async (cdp) => {
     await cdp.evaluer(`(() => {
