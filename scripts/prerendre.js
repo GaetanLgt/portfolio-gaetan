@@ -28,7 +28,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import http from 'node:http'
-import { spawn } from 'node:child_process'
+import { spawn, spawnSync } from 'node:child_process'
 
 const args = process.argv.slice(2)
 const option = (nom, defaut) => {
@@ -243,7 +243,30 @@ let chromeProc = null
 let serveurLocal = null
 
 function toutNettoyer() {
-  try { if (chromeProc && !chromeProc.killed) chromeProc.kill('SIGKILL') } catch {}
+  /* ⛔ `kill()` NE SUFFIT PAS SUR CHROME — mesuré le 23/09/2026.
+   *
+   * Le correctif précédent tuait `chromeProc`, et **deux Chrome survivaient quand
+   * même** après un run (mesuré : « chrome APRES le run : 2 »).
+   *
+   * ⭐ POURQUOI : Chrome ne tourne pas dans un seul processus. Il **forke** un
+   *   moteur de rendu, un processus GPU, un processus de service. `kill()` sur le
+   *   parent tue le parent — **pas ses enfants**, qui deviennent orphelins et
+   *   continuent de consommer.
+   *
+   * ⇒ Sur Windows, on tue l'ARBRE : `taskkill /T /F /PID`. Le `/T` fait tout le
+   *   travail — c'est précisément « et ses enfants ».
+   *   On garde `kill()` en second recours, si `taskkill` n'est pas là. */
+  try {
+    if (chromeProc && chromeProc.pid && !chromeProc.killed) {
+      const r = spawnSync(
+        'taskkill', ['/T', '/F', '/PID', String(chromeProc.pid)],
+        { stdio: 'ignore', windowsHide: true }
+      )
+      if (!r || r.status !== 0) chromeProc.kill('SIGKILL')
+    }
+  } catch {
+    try { if (chromeProc && !chromeProc.killed) chromeProc.kill('SIGKILL') } catch {}
+  }
   try { if (serveurLocal) serveurLocal.close() } catch {}
   chromeProc = null
   serveurLocal = null
