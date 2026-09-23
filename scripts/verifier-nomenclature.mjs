@@ -31,6 +31,31 @@
  *   (« ARKADIA reste-t-il au vaisseau, ou va-t-il au produit ? ») se répond
  *   mieux en sachant combien de mentions sont en jeu.
  *
+ * ⛔⛔⛔ AVERTISSEMENT — SES CHIFFRES NE SONT PAS FIABLES. NE PAS LES CITER.
+ *
+ * Mesuré le 23/09/2026, en vérifiant l'échantillon qu'il désignait :
+ *     le contrôle annonce « ServicesPage.vue : 14 mentions ambiguës »
+ *     les premières lignes désignées portent :
+ *         l.341   <div class="preuve-arkadia__box">
+ *         l.342   <div class="preuve-arkadia__texte">
+ * ⇒ **CE SONT DES CLASSES CSS, pas des mentions ambiguës en prose.**
+ *
+ * Le filtre `HORS_TEXTE` — qui doit retirer les routes, les domaines et les noms
+ * de classe en minuscules — NE FAIT PAS SON TRAVAIL. ⚠️ La cause n'est PAS
+ * établie : son motif devrait matcher `preuve-arkadia`. *Je ne la devine pas —
+ * cette session a déjà produit six diagnostics déduits au lieu d'être mesurés.*
+ *
+ * ⭐ CE QUI EST ÉTABLI EN REVANCHE, ET QUI A ÉTÉ CORRIGÉ :
+ *   la LOCALISATION. La version d'avant écrasait les nouvelles lignes en retirant
+ *   les commentaires, et annonçait « l.337 » pour du contenu situé ailleurs. *Un
+ *   contrôle dont les numéros de ligne mentent ne se vérifie pas — et un contrôle
+ *   qu'on ne peut pas vérifier n'est pas un contrôle.* C'est ce défaut-là qui a
+ *   permis de trouver le suivant.
+ *
+ * ⭐ CE QUI RESTE UTILISABLE MALGRÉ TOUT : les TÉMOINS. Ils prouvent que le
+ *   contrôle sait dire OUI et NON sur des cas dont on connaît la réponse. Le
+ *   moteur est bon ; c'est le filtre des emplois hors texte qu'il faut réparer.
+ *
  * Usage :
  *   node scripts/verifier-nomenclature.mjs [dossier]
  *   node scripts/verifier-nomenclature.mjs --liste    les formes reconnues
@@ -68,11 +93,30 @@ const HORS_TEXTE = [
 
 const EXT = new Set(['.vue', '.js', '.mjs', '.md', '.json', '.html', '.xml'])
 
-/** ⛔ On ne juge pas le contenu des commentaires : ils CITENT la règle. */
+/** ⛔ On ne juge pas le contenu des commentaires : ils CITENT la règle.
+ *
+ * ⚠️⚠️ ET LE RETRAIT DOIT PRÉSERVER LES NUMÉROS DE LIGNE — corrigé le 23/09/2026,
+ * après avoir vérifié l'échantillon que le contrôle désignait.
+ *
+ * La version fautive remplaçait un commentaire par un simple `' '` :
+ *     s.replace(/\/\*[\s\S]*?\*\//g, ' ')
+ * ⇒ un bloc de commentaire de trente lignes devenait UN caractère, **et tout ce
+ *   qui suivait remontait de vingt-neuf lignes.**
+ *   *Mesure du défaut, sur `ServicesPage.vue` : le contrôle annonçait
+ *    « l.337 arkadia ». La ligne 337 est VIDE ; la 338 est un commentaire ; la 339
+ *    porte `class="preuve-arkadia"`. Le compte pouvait être juste — la
+ *    LOCALISATION était fausse, donc invérifiable.*
+ * ⭐ Un contrôle dont les numéros de ligne mentent ne se vérifie pas : on ne peut
+ *   pas aller voir. Et un contrôle qu'on ne peut pas vérifier n'est pas un contrôle.
+ *
+ * ⇒ On remplace chaque caractère NON-NOUVELLE-LIGNE par une espace, et on GARDE
+ *   les nouvelles lignes. Le décalage disparaît. */
+const garderLignes = (m) => m.replace(/[^\n]/g, ' ')
+
 function sansCommentaires(s, ext) {
-  if (ext === '.md') return s.replace(/```[\s\S]*?```/g, ' ').replace(/`[^`\n]*`/g, ' ')
-  let t = s.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/(^|[^:'"\\])\/\/[^\n]*/g, '$1 ')
-  if (ext === '.vue' || ext === '.html') t = t.replace(/<!--[\s\S]*?-->/g, ' ')
+  if (ext === '.md') return s.replace(/```[\s\S]*?```/g, garderLignes).replace(/`[^`\n]*`/g, garderLignes)
+  let t = s.replace(/\/\*[\s\S]*?\*\//g, garderLignes).replace(/(^|[^:'"\\])\/\/[^\n]*/g, '$1 ')
+  if (ext === '.vue' || ext === '.html') t = t.replace(/<!--[\s\S]*?-->/g, garderLignes)
   return t
 }
 
