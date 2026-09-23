@@ -60,15 +60,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <!-- REMPLACE /parcours (10/09/2026) : la page a été renommée, l'ancienne adresse rendait un 404 alors qu'elle était déclarée. -->
-    <!-- ⛔ /carte-holistique retiree le 23/09/2026 : une URL qui reste dans le
-         sitemap est une page qu'on demande aux moteurs d'indexer alors qu'elle
-         n'existe plus. -->
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://gldigitallab.fr/voyageo-pro</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
