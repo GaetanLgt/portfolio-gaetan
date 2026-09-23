@@ -471,4 +471,48 @@ onUnmounted(() => {
   background: var(--rule-strong);
   border-radius: 2px;
 }
+/* ═══════════════════════════════════════════════════════════════════════════
+   BANC ALLEMAND — LES CINQ POINTS DE § 1, APPLIQUÉS À LA NAVBAR
+   ────────────────────────────────────────────────────────────────────────────
+   ⛔ MESURÉ LE 23/09/2026 : ce composant ne portait AUCUN des points ①②③,
+   alors que le banc `auditer-css-allemand.mjs` rendait ✅ pour le site entier.
+
+   POURQUOI LE BANC S'EST TROMPÉ. Il compte les occurrences du SITE. Les cinq
+   `min-width: 0` vivent dans `boreal.css`, `polish.css`, `ToastNotifications.vue`,
+   `TerminalPoste.vue` et `App.vue` — **aucun dans la navbar**, c'est-à-dire dans
+   le composant pour lequel la règle ③ existe. La consigne le dit elle-même :
+   « min-width: 0 sur les enfants de flex — SINON LA NAVBAR S'ALLONGE ET POUSSE TOUT ».
+   ⭐ Présent quelque part n'est pas présent là où il faut.
+
+   ⚠️ ET LE POINT ④ ÉTAIT EN FAIT SATISFAIT. Mon premier compteur annonçait
+   « 5 largeurs fixes » : il avait matché `max-width: 1024px` dans un `@media`.
+   Les seules largeurs en dur sont un badge d'icône carré et deux barres de
+   défilement — les trois sont légitimes. *Aucun bouton à largeur fixe.*
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ③ min-width: 0 SUR LES ENFANTS DE flex.
+   Neuf blocs `display: flex` dans ce fichier, pas un seul enfant protégé.
+   Sans ça, un mot long ne se comprime pas : il élargit son parent, qui élargit
+   la barre, qui pousse la page. *L'allemand en produit de 39 lettres.* */
+.nav-container > *,
+.nav-logo > *,
+.nav-logo__text > *,
+.nav-desktop > *,
+.nav-link > * {
+  min-width: 0;
+}
+
+/* ①② LA CÉSURE ET LA COUPURE DANS LA NAVBAR.
+   ⚠️ `hyphens: auto` SEUL NE SUFFIT PAS : la césure suit la LANGUE DE L'ÉLÉMENT.
+   Il faut donc aussi le `lang` correct — posé sur <html> par `useLangue.js`.
+   *Les deux vont ensemble, ou aucun des deux ne sert.* */
+.nav-logo__name,
+.nav-logo__tagline,
+.nav-link,
+.nav-link__num {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
 </style>
