@@ -3,26 +3,26 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "2f8b766",
-    "sujet": "Mise en place — 14 verrous tenus, et tout ce qui suit est mesure",
-    "date": "2026-09-22T15:22:55+02:00",
-    "arbre_modifie": true
+    "court": "e9d05ae",
+    "sujet": "Initial plan",
+    "date": "2026-09-23T05:18:34Z",
+    "arbre_modifie": false
   },
   "build": {
-    "horodatage_local": "2026-09-22 20:35:22",
-    "horodatage_minute": "2026-09-22 20:35",
-    "horodatage_iso": "2026-09-22T18:35:22.560Z",
+    "horodatage_local": "2026-09-23 07:20:05",
+    "horodatage_minute": "2026-09-23 07:20",
+    "horodatage_iso": "2026-09-23T05:20:05.361Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 189,
+  "pages_prerendues": null,
   "page_la_plus_lourde": {
-    "chemin": "/",
-    "ko_servis": 362,
-    "seuil_ko": 1024
+    "chemin": null,
+    "ko_servis": null,
+    "seuil_ko": null
   },
   "requetes_premier_chargement": {
-    "total": 12,
-    "seuil": 14
+    "total": null,
+    "seuil": null
   },
   "moteurs_ia": {
     "source": "api/etat.php",
@@ -35,36 +35,36 @@
       "cle": "verrous",
       "nom": "Verrous de la signature qualité",
       "script": "scripts/verifier-verrous.mjs",
-      "code": 0,
-      "motif": null
+      "code": null,
+      "motif": "dist/ absent à cet instant du build"
     },
     {
       "cle": "poids",
       "nom": "Poids du premier chargement",
       "script": "scripts/verifier-poids.mjs",
-      "code": 0,
-      "motif": null
+      "code": null,
+      "motif": "dist/ absent à cet instant du build"
     },
     {
       "cle": "requetes",
       "nom": "Requêtes du premier chargement",
       "script": "scripts/verifier-requetes.mjs",
-      "code": 0,
-      "motif": null
+      "code": null,
+      "motif": "dist/ absent à cet instant du build"
     },
     {
       "cle": "topographie",
       "nom": "Topographie du site",
       "script": "scripts/verifier-topographie.mjs",
-      "code": 0,
-      "motif": null
+      "code": null,
+      "motif": "dist/ absent à cet instant du build"
     },
     {
       "cle": "contact",
       "nom": "Contact livré au visiteur",
       "script": "scripts/verifier-contact.mjs",
-      "code": 0,
-      "motif": null
+      "code": null,
+      "motif": "dist/ absent à cet instant du build"
     }
   ]
 }
