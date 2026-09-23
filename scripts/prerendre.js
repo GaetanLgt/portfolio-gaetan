@@ -625,7 +625,15 @@ async function principal() {
      repli SPA renvoyait la coquille de l'accueil en HTTP 200 pour /arcade, /cv…
      — un doublon de l'accueil aux yeux d'un moteur, pas un 404. */
   const cheminIntrouvable = '/__page-introuvable__'
-  await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
+  cdp.fige = false
+  let navigation404Ok = true
+  try {
+    await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
+  } catch (e) {
+    navigation404Ok = false
+    rapport.push({ route: '404.html', ok: false, motif: `CDP : ${e.message}` })
+    echecs++
+  }
   // ⚠ MÊME ATTENTE QUE POUR LES ROUTES, ET ELLE COMPTE ENCORE PLUS ICI.
   // La 404 est servie à TOUT visiteur qui se trompe d'adresse. Constaté le 11/09/2026 :
   // cette page était la SEULE des 24 fichiers livrés à conserver encore un Loader, parce
@@ -637,32 +645,34 @@ async function principal() {
   // transparent par sa classe de sortie : il n'empêche pas de VOIR la page, mais
   // `opacity:0` ne désactive pas les clics — sur une page dont tout l'intérêt est de
   // proposer des liens de secours, c'est le pire endroit pour poser un intercepteur.
-  let etat404 = null
-  for (let i = 0; i < 40; i++) {
-    await attendre(250)
-    const brut = await cdp.evaluer(`JSON.stringify({
-      texte: (document.body && document.body.innerText || '').length,
-      app: !!(document.querySelector('#app') && document.querySelector('#app').children.length),
-      titre: document.title,
-      coquille: !!(document.querySelector('header.navigation') && document.querySelector('footer.footer')),
-      loader: !!document.querySelector('.loader')
-    })`)
-    try { etat404 = JSON.parse(brut) } catch { etat404 = null }
-    if (etat404 && etat404.coquille && !etat404.loader) break
-  }
-  const html404brut = await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
-  if (typeof html404brut === 'string' && etat404 && /404|non trouv/i.test(etat404.titre)) {
-    // Le routeur a posé un canonical sur le chemin de test : sur une page servie
-    // à TOUTES les adresses inconnues, il ne désigne rien. On le retire.
-    const html404 = HTML_COQUILLE_TAG
-      ? html404brut.replace(/<html[^>]*>/i, HTML_COQUILLE_TAG).replace(/\s*<link rel="canonical"[^>]*>/i, '')
-      : html404brut.replace(/\s*<link rel="canonical"[^>]*>/i, '')
-    ecrireAtomique(path.join(DIST, '404.html'), html404)
-    ecrits++
-    rapport.push({ route: '404.html', ok: true, titre: etat404.titre, octets: html404.length, ecrit: true })
-  } else {
-    rapport.push({ route: '404.html', ok: false, motif: 'page 404 non reconnue (titre : ' + ((etat404 && etat404.titre) || '?') + ')' })
-    echecs++
+  if (navigation404Ok) {
+    let etat404 = null
+    for (let i = 0; i < 40; i++) {
+      await attendre(250)
+      const brut = await cdp.evaluer(`JSON.stringify({
+        texte: (document.body && document.body.innerText || '').length,
+        app: !!(document.querySelector('#app') && document.querySelector('#app').children.length),
+        titre: document.title,
+        coquille: !!(document.querySelector('header.navigation') && document.querySelector('footer.footer')),
+        loader: !!document.querySelector('.loader')
+      })`)
+      try { etat404 = JSON.parse(brut) } catch { etat404 = null }
+      if (etat404 && etat404.coquille && !etat404.loader) break
+    }
+    const html404brut = await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
+    if (typeof html404brut === 'string' && etat404 && /404|non trouv/i.test(etat404.titre)) {
+      // Le routeur a posé un canonical sur le chemin de test : sur une page servie
+      // à TOUTES les adresses inconnues, il ne désigne rien. On le retire.
+      const html404 = HTML_COQUILLE_TAG
+        ? html404brut.replace(/<html[^>]*>/i, HTML_COQUILLE_TAG).replace(/\s*<link rel="canonical"[^>]*>/i, '')
+        : html404brut.replace(/\s*<link rel="canonical"[^>]*>/i, '')
+      ecrireAtomique(path.join(DIST, '404.html'), html404)
+      ecrits++
+      rapport.push({ route: '404.html', ok: true, titre: etat404.titre, octets: html404.length, ecrit: true })
+    } else {
+      rapport.push({ route: '404.html', ok: false, motif: 'page 404 non reconnue (titre : ' + ((etat404 && etat404.titre) || '?') + ')' })
+      echecs++
+    }
   }
 
   /* ---------- propreté du HTML LIVRÉ ----------
