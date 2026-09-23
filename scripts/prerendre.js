@@ -254,11 +254,13 @@ async function principal() {
   const serveur = await servir()
   const chrome = trouverChrome()
   if (!chrome) { console.error('Chrome introuvable (définir CHROME_PATH)'); process.exit(1) }
+  let prochainDebugPort = DEBUG_PORT
   const lancerSession = async () => {
     const profil = fs.mkdtempSync(path.join(os.tmpdir(), 'prerendu-'))
+    const portDebug = prochainDebugPort++
     const proc = spawn(chrome, [
       '--headless=new', '--disable-gpu', '--no-sandbox', '--no-first-run', '--no-default-browser-check',
-      `--remote-debugging-port=${DEBUG_PORT}`, `--user-data-dir=${profil}`,
+      `--remote-debugging-port=${portDebug}`, `--user-data-dir=${profil}`,
       `http://127.0.0.1:${PORT}/`,
     ], { stdio: 'ignore' })
 
@@ -266,7 +268,7 @@ async function principal() {
     for (let i = 0; i < 40 && !cdp; i++) {
       await attendre(300)
       try {
-        const cibles = await (await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/list`)).json()
+        const cibles = await (await fetch(`http://127.0.0.1:${portDebug}/json/list`)).json()
         const page = cibles.find((c) => c.type === 'page' && c.webSocketDebuggerUrl)
         if (page) cdp = await Cdp.connecter(page.webSocketDebuggerUrl)
       } catch {}
@@ -278,13 +280,37 @@ async function principal() {
     }
     await cdp.envoyer('Page.enable')
     await cdp.envoyer('Runtime.enable')
-    return { cdp, proc, profil }
+    return { cdp, proc, profil, portDebug }
   }
-  const fermerSession = (session) => {
+  const attendreSortie = (proc, delaiMax = 5000) =>
+    new Promise((res) => {
+      if (!proc || proc.exitCode !== null || proc.killed) return res()
+      let fini = false
+      const terminer = () => {
+        if (fini) return
+        fini = true
+        clearTimeout(minuteur)
+        proc.removeListener('exit', terminer)
+        proc.removeListener('close', terminer)
+        res()
+      }
+      const minuteur = setTimeout(terminer, delaiMax)
+      proc.once('exit', terminer)
+      proc.once('close', terminer)
+      try { proc.kill() } catch { terminer() }
+    })
+  const fermerSession = async (session) => {
     if (!session) return
     try { session.cdp.fermer() } catch {}
-    try { session.proc.kill() } catch {}
+    await attendreSortie(session.proc)
     try { fs.rmSync(session.profil, { recursive: true, force: true }) } catch {}
+  }
+  const retirerScriptsInjectes = async (cdp) => {
+    await cdp.evaluer(`(() => {
+      document
+        .querySelectorAll('script[src*="matomo.js"]')
+        .forEach((n) => n.remove())
+    })()`)
   }
 
   const coquille = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8').length
@@ -298,7 +324,7 @@ async function principal() {
     await attendre(2000)
     titreAccueil = (await sessionAccueil.cdp.evaluer('document.title')) || ''
   } finally {
-    fermerSession(sessionAccueil)
+    await fermerSession(sessionAccueil)
   }
   const rapport = []
   // Routes où le Loader n'a jamais laissé passer `app--loaded` dans la fenêtre :
@@ -428,8 +454,8 @@ async function principal() {
       // cette passe (voir plus bas) : c'est pourquoi il était la seule page propre.
       // Règle : un script injecté à l'exécution n'a rien à faire dans un HTML figé.
       // Il sera réinjecté normalement par l'application, côté navigateur.
-      const html = (await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML'))
-        .replace(/<script[^>]+src="[^"]*matomo\.js"[^>]*>\s*<\/script>/gi, '')
+      await retirerScriptsInjectes(cdp)
+      const html = await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
 
       /* ⚠ LA BALISE <html> LIVRÉE EST CELLE DE LA COQUILLE, PAS CELLE DE LA CAPTURE.
          MESURÉ LE 13/09/2026 — DÉFAUT RÉEL, ET IL ANNULAIT UNE PROTECTION ÉCRITE
@@ -523,7 +549,7 @@ async function principal() {
       echecs++
       continue
     } finally {
-      fermerSession(session)
+      await fermerSession(session)
     }
   }
 
@@ -562,6 +588,7 @@ async function principal() {
       try { etat404 = JSON.parse(brut) } catch { etat404 = null }
       if (etat404 && etat404.coquille && !etat404.loader) break
     }
+    await retirerScriptsInjectes(cdp404)
     const html404brut = await cdp404.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
     if (typeof html404brut === 'string' && etat404 && /404|non trouv/i.test(etat404.titre)) {
       // Le routeur a posé un canonical sur le chemin de test : sur une page servie
@@ -581,7 +608,7 @@ async function principal() {
     rapport.push({ route: '404.html', ok: false, motif: `CDP : ${e.message}` })
     echecs++
   } finally {
-    fermerSession(session404)
+    await fermerSession(session404)
     serveur.close()
   }
 
