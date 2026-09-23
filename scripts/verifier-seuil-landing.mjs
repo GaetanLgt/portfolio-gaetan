@@ -26,6 +26,44 @@
  *   · Il lit le TEMPLATE, pas le rendu. *Une page peut être dense en 6 blocs et
  *     aérée en 11. Les deux mesures ne se remplacent pas.*
  *
+ * ⚠️⚠️ AVERTISSEMENT AJOUTÉ LE 23/09/2026, APRÈS AVOIR LU LE FICHIER QU'IL MESURE.
+ *
+ * ⛔ CE CONTRÔLE MESURE UN PROXY, ET IL FAUT LE SAVOIR AVANT DE S'EN SERVIR.
+ *
+ * Il compte les <h2> et les <section>. Il a été écrit en croyant que « neuf <h2> »
+ * voulait dire « neuf chapitres », donc « un sommaire plutôt qu'un seuil ».
+ *
+ * ⛔ C'EST FAUX, ET LE FICHIER LE DIT LUI-MÊME — à la ligne 528 de HomePage.vue :
+ *      « LES SEPT QUARTIERS — sept DIRECTIONS, pas un menu. TROISIÈME DES QUATRE TEMPS. »
+ *    Et à la ligne 541 :
+ *      « LE SÉPARATEUR — une frise de runes (…) entre la coque et les quartiers,
+ *        comme un bordé qui marque une cloison. »
+ *
+ * ⇒ **La page est DÉJÀ conçue en quatre temps, avec des cloisons explicites.**
+ *   Les neuf <h2> ne sont pas neuf stations : ce sont les titres de ces temps et
+ *   de leurs blocs internes.
+ *
+ * ⭐ LA LEÇON, ET ELLE EST CELLE DU STUDIO ENTIER — « l'instrument répond à une
+ *   question voisine de celle qu'on lui pose » :
+ *      la question n'est pas « combien de titres ? »
+ *      c'est « COMBIEN DE TEMPS LE VISITEUR TRAVERSE-T-IL ? »
+ *   Et ce nombre-là n'est PAS dans le balisage : il est dans l'intention, écrite
+ *   en commentaire.
+ *
+ * ⛔ CONSÉQUENCE DIRECTE : une fusion des cinq sections `nav-*` — que ce contrôle
+ *   semblait justifier — DÉTRIRAIT une architecture déjà pensée. *Ne pas s'en
+ *   servir pour ça.*
+ *
+ * ⭐ CE QU'IL SERT DONC À FAIRE, ET RIEN DE PLUS : constater une DÉRIVE. Si le
+ *   nombre de <h2> monte seul au fil des ajouts, la page se fragmente. C'est un
+ *   signal, pas un verdict — et la cible ci-dessous est un ordre de grandeur,
+ *   pas une exigence.
+ *
+ * ⛔ Ce qu'il ne mesure pas, et qui décide vraiment :
+ *   · le nombre de TEMPS — il est dans les commentaires, pas dans les balises
+ *   · l'AÉRATION réelle — « aérée » est un jugement visuel, il appartient à Gaëtan
+ *   · le RENDU — il lit le template, pas la page
+ *
  * Usage :
  *   node scripts/verifier-seuil-landing.mjs [fichier]
  *   node scripts/verifier-seuil-landing.mjs --temoins
