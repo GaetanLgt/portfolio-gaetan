@@ -1344,19 +1344,18 @@ onMounted(() => {
 
   if (!vaisseauSection.value || typeof IntersectionObserver === 'undefined') {
     vaisseauPret.value = true;
-    return;
+  } else {
+    observateurVaisseau = new IntersectionObserver(
+      (entrees) => {
+        if (!entrees.some((entree) => entree.isIntersecting)) return;
+        vaisseauPret.value = true;
+        observateurVaisseau?.disconnect();
+        observateurVaisseau = null;
+      },
+      { rootMargin: '320px 0px' }
+    );
+    observateurVaisseau.observe(vaisseauSection.value);
   }
-
-  observateurVaisseau = new IntersectionObserver(
-    (entrees) => {
-      if (!entrees.some((entree) => entree.isIntersecting)) return;
-      vaisseauPret.value = true;
-      observateurVaisseau?.disconnect();
-      observateurVaisseau = null;
-    },
-    { rootMargin: '320px 0px' }
-  );
-  observateurVaisseau.observe(vaisseauSection.value);
 });
 
 onUnmounted(() => {
