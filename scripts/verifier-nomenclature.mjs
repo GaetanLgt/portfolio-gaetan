@@ -1,0 +1,226 @@
+#!/usr/bin/env node
+/**
+ * verifier-nomenclature.mjs — la règle de graphie d'ARKADIA, rendue vérifiable.
+ *
+ * ⭐ POURQUOI IL EXISTE
+ * `A-FAIRE-2026-09-23-consignes-gaetan.md` § 3 demande de fusionner ARKADIA.
+ * L'inventaire est fait : **138 mentions dans 27 fichiers** (23/09/2026).
+ * ⛔ Mais la fusion est IMPOSSIBLE telle quelle — et sa raison est écrite dans
+ * `docs/nomenclature-projet.md` :
+ *
+ *   « ARKADIA désigne TROIS choses différentes : le vaisseau (le poste de calcul),
+ *     le réseau social ArkAdiA en production, et le cluster de jeu
+ *     ARKADIA France PvE exploité 18 mois. »
+ *
+ * ⇒ Fondre ces trois-là ne les unirait pas : ça les EFFACERAIT.
+ *   *Trois choses distinctes qui partagent un nom ne se fondent pas — elles se
+ *    distinguent.*
+ *
+ * ⚠️ ET LE FICHIER LE DIT DÉJÀ. `HomePage.vue` sert le vaisseau sous le nom
+ *    complet `ARKADIA SS00999`, et `ArkadiaCase.vue` porte en commentaire :
+ *      « “ARKADIA” EN CAPITALES, ET C'EST DÉLIBÉRÉ (corrigé le 19/09/2026).
+ *        docs/nomenclature-projet.md dit que “ARKADIA” est le nom du cluster,
+ *        que “ArkAdiA” est celui du réseau social, et que “arkadia” en minuscules
+ *        est réservé aux routes et aux domaines. »
+ *
+ * ⇒ CE CONTRÔLE NE DÉCIDE RIEN. Il CONSTATE une seule chose, qui est mesurable :
+ *   **combien de mentions d'ARKADIA sont AMBIGUËS**, c'est-à-dire n'importe
+ *   laquelle des deux formes désambiguïsées.
+ *
+ * ⭐ ET C'EST CE CHIFFRE QUI MANQUE À GAËTAN POUR TRANCHER. La question ouverte
+ *   (« ARKADIA reste-t-il au vaisseau, ou va-t-il au produit ? ») se répond
+ *   mieux en sachant combien de mentions sont en jeu.
+ *
+ * Usage :
+ *   node scripts/verifier-nomenclature.mjs [dossier]
+ *   node scripts/verifier-nomenclature.mjs --liste    les formes reconnues
+ *   node scripts/verifier-nomenclature.mjs --temoins
+ *
+ * Codes de sortie :
+ *   0  aucune mention ambiguë
+ *   1  au moins une mention ambiguë
+ *   2  RIEN N'A ÉTÉ EXAMINÉ  (≠ 0)
+ */
+
+import fs from 'node:fs'
+import path from 'node:path'
+
+/* ⭐ LES FORMES DÉSAMBIGUÏSÉES — celles qui ne prêtent à aucune confusion.
+   Toute mention d'ARKADIA qui n'est AUCUNE de celles-là est AMBIGUË. */
+const DESAMBIGUISEES = [
+  { re: /ARKADIA\s+SS00999/g,            dit: 'le VAISSEAU   (toujours avec son code)' },
+  { re: /ARKADIA\s+France\s+PvE/g,       dit: 'le CLUSTER    (toujours avec « France PvE »)' },
+  { re: /ArkAdiA/g,                      dit: 'le RÉSEAU SOCIAL « ArkAdiA »' },
+]
+
+/* Toute graphie d'ARKADIA, quelle qu'elle soit. */
+const TOUTE = /ARKADIA|Arkadia|ArkAdiA|arkadia/g
+
+/* ⛔ LES EMPLOIS HORS TEXTE VISIBLE — ils ne comptent pas comme ambiguïtés.
+   Une route `/arkadia`, un identifiant `arkadia-page`, un domaine
+   `arkadia.gldigitallab.fr` : la nomenclature réserve explicitement les
+   minuscules aux routes et aux domaines. */
+const HORS_TEXTE = [
+  /[\w.'"/-]*\barkadia\b[\w.'"/-]*/g,     // minuscules : routes, classes, domaines
+  /\/arkadia\b/g,
+  /arkadia\.gldigitallab\.fr/g,
+]
+
+const EXT = new Set(['.vue', '.js', '.mjs', '.md', '.json', '.html', '.xml'])
+
+/** ⛔ On ne juge pas le contenu des commentaires : ils CITENT la règle. */
+function sansCommentaires(s, ext) {
+  if (ext === '.md') return s.replace(/```[\s\S]*?```/g, ' ').replace(/`[^`\n]*`/g, ' ')
+  let t = s.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/(^|[^:'"\\])\/\/[^\n]*/g, '$1 ')
+  if (ext === '.vue' || ext === '.html') t = t.replace(/<!--[\s\S]*?-->/g, ' ')
+  return t
+}
+
+function fichiers(dossier) {
+  const out = []
+  const marcher = (d) => {
+    let e; try { e = fs.readdirSync(d, { withFileTypes: true }) } catch { return }
+    for (const x of e) {
+      if (x.name === 'node_modules' || x.name === '.git' || x.name === 'dist') continue
+      const p = path.join(d, x.name)
+      if (x.isDirectory()) marcher(p)
+      else if (EXT.has(path.extname(x.name).toLowerCase())) out.push(p)
+    }
+  }
+  marcher(dossier)
+  return out
+}
+
+/** Les mentions ambiguës d'un fichier, avec leur ligne. */
+function ambigues(chemin) {
+  const ext = path.extname(chemin).toLowerCase()
+  let t
+  try { t = sansCommentaires(fs.readFileSync(chemin, 'utf8'), ext) } catch { return null }
+
+  // ① on retire les emplois hors texte visible (routes, domaines, classes)
+  let zone = t
+  for (const re of HORS_TEXTE) zone = zone.replace(re, '\u0000'.repeat(4))
+  // ② on retire les formes désambiguïsées
+  for (const d of DESAMBIGUISEES) zone = zone.replace(d.re, '\u0000'.repeat(4))
+
+  const trouvees = []
+  TOUTE.lastIndex = 0
+  let m
+  while ((m = TOUTE.exec(zone)) !== null) {
+    trouvees.push({ ligne: zone.slice(0, m.index).split('\n').length, texte: m[0] })
+  }
+  return trouvees
+}
+
+// ── TÉMOINS ─────────────────────────────────────────────────────────────────
+if (process.argv.includes('--temoins')) {
+  const d = fs.mkdtempSync(path.join(process.env.TEMP || '/tmp', 'temoin-nom-'))
+  const clair = path.join(d, 'clair.vue')
+  const flou = path.join(d, 'flou.vue')
+  fs.writeFileSync(clair, [
+    '<template>',
+    '  <h2>ARKADIA SS00999</h2>',
+    '  <p>Le réseau ArkAdiA est en production.</p>',
+    '  <p>ARKADIA France PvE a tourné 18 mois.</p>',
+    '  <a href="/arkadia">la preuve</a>',
+    '  <a href="https://arkadia.gldigitallab.fr">le site</a>',
+    '</template>',
+  ].join('\n'))
+  fs.writeFileSync(flou, [
+    '<template>',
+    '  <h2>ARKADIA</h2>',
+    '  <p>Nous avons lancé Arkadia en production.</p>',
+    '</template>',
+  ].join('\n'))
+  const a = ambigues(clair), b = ambigues(flou)
+  console.log('')
+  console.log('  ÉPREUVE SUR TÉMOINS — le contrôle doit savoir dire OUI et NON')
+  console.log('')
+  console.log(`  TÉMOIN 1 — formes désambiguïsées + routes et domaines`)
+  console.log(`    ambiguës trouvées : ${a.length}   (attendu 0)`)
+  console.log(`    verdict : ${a.length === 0 ? '✅ accepte' : '⛔ il signale : ' + a.map((x) => x.texte).join(', ')}`)
+  console.log('')
+  console.log(`  TÉMOIN 2 — « ARKADIA » nu et « Arkadia » ambigu`)
+  console.log(`    ambiguës trouvées : ${b.length}   (attendu 2)`)
+  console.log(`    verdict : ${b.length === 2 ? '✅ refuse' : '⛔ IL NE TROUVE PAS : le contrôle est faux'}`)
+  fs.rmSync(d, { recursive: true, force: true })
+  const ok = a.length === 0 && b.length === 2
+  console.log('')
+  console.log(ok ? '  VERDICT : le contrôle sait dire OUI et NON.'
+                 : '  VERDICT : ⛔ le contrôle ne tient pas. Ne pas s\'en servir.')
+  console.log('')
+  process.exit(ok ? 0 : 1)
+}
+
+if (process.argv.includes('--liste')) {
+  console.log('')
+  console.log('  LES FORMES QUI NE PRÊTENT PAS À CONFUSION — et ce qu\'elles désignent\n')
+  for (const d of DESAMBIGUISEES) console.log('    ' + d.re.source.padEnd(26) + d.dit)
+  console.log('')
+  console.log('  ⛔ Toute autre mention d\'ARKADIA est AMBIGUË : on ne sait pas laquelle')
+  console.log('     des trois choses elle désigne.')
+  console.log('  ⭐ Source : docs/nomenclature-projet.md, et le commentaire de')
+  console.log('     src/views/projects/ArkadiaCase.vue (corrigé le 19/09/2026).')
+  console.log('')
+  console.log('  ⚠️ Ce contrôle NE TRANCHE PAS la question ouverte — savoir si ARKADIA')
+  console.log('     reste au vaisseau ou va au produit. *Elle appartient à Gaëtan.*')
+  console.log('')
+  process.exit(0)
+}
+
+// ── PROGRAMME ───────────────────────────────────────────────────────────────
+const cibles = process.argv.slice(2).filter((a) => !a.startsWith('--'))
+const racine = cibles.length ? cibles[0] : 'src'
+
+console.log('')
+console.log('════════════════════════════════════════════════════════════════════')
+console.log(' Nomenclature ARKADIA — les mentions ambiguës')
+console.log('════════════════════════════════════════════════════════════════════')
+
+const liste = fichiers(racine)
+console.log('  fichiers examinés : ' + liste.length)
+console.log('')
+
+if (!liste.length) {
+  console.log('  ⛔ RIEN N\'A ÉTÉ EXAMINÉ — ce n\'est PAS un succès.')
+  console.log('')
+  process.exit(2)
+}
+
+let total = 0, touches = 0
+const parFichier = []
+
+for (const f of liste) {
+  const a = ambigues(f)
+  if (a === null || !a.length) continue
+  touches++
+  total += a.length
+  parFichier.push({ f, n: a.length, ex: a.slice(0, 2) })
+}
+
+parFichier.sort((x, y) => y.n - x.n)
+
+for (const p of parFichier.slice(0, 12)) {
+  console.log(`  ⛔ ${p.n.toString().padStart(3)}  ${p.f.replace(/\\/g, '/')}`)
+  for (const e of p.ex) console.log(`         l.${e.ligne}  ${e.texte}`)
+}
+if (parFichier.length > 12) console.log(`  … et ${parFichier.length - 12} autre(s) fichier(s)`)
+
+console.log('')
+console.log('────────────────────────────────────────────────────────────────────')
+if (total === 0) {
+  console.log('  ✅ aucune mention ambiguë sur ' + liste.length + ' fichier(s).')
+} else {
+  console.log(`  ⛔ ${total} mention(s) AMBIGUË(S) dans ${touches} fichier(s) sur ${liste.length}.`)
+  console.log('     *Chacune désigne « ARKADIA » sans dire laquelle des trois choses.*')
+}
+console.log('')
+console.log('  ⛔ CE QUE CE CONTRÔLE NE DIT PAS :')
+console.log('     · laquelle est la BONNE graphie dans chaque cas — *c\'est éditorial*')
+console.log('     · si « ARKADIA » doit rester au vaisseau ou aller au produit')
+console.log('       — *question ouverte, décision de Gaëtan*')
+console.log('     · l\'opportunité d\'une fusion — *il compte, il ne propose pas*')
+console.log('════════════════════════════════════════════════════════════════════')
+console.log('')
+
+process.exit(total > 0 ? 1 : 0)
