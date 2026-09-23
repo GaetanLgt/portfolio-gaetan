@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "//build": "NE REGENERE PAS les images (corrige le 10/09/2026) : voir le commentaire dans scripts/generate-favicons.js. Les PNG sont versionnés et le build les reprend tels quels, pour que ce qui est TESTE soit ce qui est DEPLOYE.",
-    "build": "npm run sitemap && npm run ecole && npm run arche && vite build && npm run prerendre",
+    "//build-langues": "⭐ LA PORTE DE LANGUES PASSE EN PREMIER — ajoutée le 23/09/2026. Une traduction incomplète doit arrêter le build AVANT qu'il coûte un Vite build et un prérendu. Elle n'était appelée par RIEN jusqu'ici : ses seules références étaient sa propre documentation et un commentaire dans fr.js. Une porte que personne n'appelle ne refuse rien.",
+    "build": "npm run langues && npm run sitemap && npm run ecole && npm run arche && vite build && npm run prerendre",
     "build:images": "npm run generate:assets && vite build && npm run prerendre",
     "prerendre": "node scripts/prerendre.js",
+    "//langues": "La porte i18n. Mode BUILD (--porte) : refuse une traduction INCOMPLÈTE (code 1) et laisse passer « je ne peux pas conclure » (code 3) — sinon elle interdirait de construire tant que les sept langues ne sont pas écrites, ce qui est exactement le défaut corrigé le 23/09. Sans --porte elle rend 3 quand aucune langue n'est comparable : utile à la main, bloquant en chaîne. Éprouvée sur quatre témoins le 23/09 : incomplet=1 · complet=0 · source=3 · --porte=0.",
+    "langues": "node scripts/verifier-langues.mjs --porte",
     "preview": "vite preview",
     "generate:favicons": "node scripts/generate-favicons.js",
     "generate:og": "node scripts/generate-og-image.js",

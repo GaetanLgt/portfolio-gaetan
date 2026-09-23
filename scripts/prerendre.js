@@ -155,7 +155,7 @@ function ecrireAtomique(chemin, contenu) {
 
 /* ---------- client CDP minimal ---------- */
 class Cdp {
-  constructor(ws) { this.ws = ws; this.seq = 0; this.attentes = new Map() }
+  constructor(ws) { this.ws = ws; this.seq = 0; this.attentes = new Map(); this.fige = false }
   static async connecter(wsUrl) {
     const ws = new WebSocket(wsUrl)
     await new Promise((res, rej) => { ws.addEventListener('open', res); ws.addEventListener('error', rej) })
@@ -166,11 +166,54 @@ class Cdp {
     })
     return c
   }
-  envoyer(method, params) {
-    return new Promise((res) => { const i = ++this.seq; this.attentes.set(i, res); this.ws.send(JSON.stringify({ id: i, method, params })) })
+  // ⛔ DÉFAUT MESURÉ LE 23/09/2026 — CETTE PROMESSE NE POUVAIT PAS ÉCHOUER.
+  // La version d'origine était `new Promise((res) => { … })` : pas de `rej`,
+  // aucune branche d'erreur. Si Chrome cessait de répondre (moteur de rendu
+  // figé, onglet planté), la réponse n'arrivait jamais : la promesse ne se
+  // réglait ni en succès ni en échec, et le script attendait indéfiniment.
+  //
+  // Mesure : 12 pages sur 33 écrites, puis 7,2 min sans une seule écriture,
+  // 8 processus Chrome vivants. Deux fois de suite (délai dépassé à 420 s,
+  // puis blocage franc à la relance).
+  //
+  // ⭐ ET LA LEÇON N'EST PAS « IL MANQUAIT UN DÉLAI » :
+  //   les deux boucles d'attente étaient bornées à 40 puis 20 tours. On croit
+  //   donc l'ensemble borné. Il ne l'était pas — parce que CHAQUE tour attend
+  //   une promesse qui ne pouvait pas se rompre.
+  //   **Une boucle bornée d'attentes non bornées reste non bornée.**
+  //   Le compteur à 40 donnait l'illusion d'un plafond ; il ne plafonnait rien.
+  envoyer(method, params, delaiMax = 15000) {
+    // ⭐ UN MOTEUR FIGÉ RESTE FIGÉ — mesuré le 23/09/2026.
+    // Sans ce court-circuit, une seule route bloquée coûtait 40 × 15 s = 10 min :
+    // on avait remplacé un blocage éternel par une lenteur. Ici, la première
+    // évaluation qui expire condamne la route, et les 39 suivantes rendent main.
+    if (this.fige) return Promise.reject(new Error(`CDP ${method} : moteur figé`))
+    return new Promise((res, rej) => {
+      const i = ++this.seq
+      const minuteur = setTimeout(() => {
+        this.attentes.delete(i)
+        this.fige = true
+        rej(new Error(`CDP ${method} sans réponse après ${delaiMax} ms`))
+      }, delaiMax)
+      this.attentes.set(i, (m) => { clearTimeout(minuteur); res(m) })
+      try {
+        this.ws.send(JSON.stringify({ id: i, method, params }))
+      } catch (e) {
+        clearTimeout(minuteur); this.attentes.delete(i); rej(e)
+      }
+    })
   }
+  // `evaluer` rend `undefined` au lieu de lever : ses appelants traitent déjà
+  // l'illisible (brut non analysable → route signalée et sautée). Le délai
+  // dégrade donc proprement au lieu de tuer le build.
   async evaluer(expression) {
-    const r = await this.envoyer('Runtime.evaluate', { expression, returnByValue: true })
+    let r
+    try {
+      r = await this.envoyer('Runtime.evaluate', { expression, returnByValue: true })
+    } catch (e) {
+      console.error(`  ⚠️  ${e.message} — expression ignorée`)
+      return undefined
+    }
     return r && r.result && r.result.result ? r.result.result.value : undefined
   }
   fermer() { try { this.ws.close() } catch {} }
@@ -248,7 +291,21 @@ async function principal() {
 
   for (const route of routes) {
     const url = `http://127.0.0.1:${PORT}${route}`
-    await cdp.envoyer('Page.navigate', { url })
+    // ⛔ `Page.navigate` peut ne JAMAIS répondre si le moteur est figé. Depuis
+    // l'ajout du délai dans `envoyer`, la promesse se rompt au lieu de pendre :
+    // on note la route et on passe à la suivante — c'est le comportement que le
+    // commentaire ci-dessus annonçait déjà (« signalée, jamais bloquante »), et
+    // il ne pouvait pas se produire tant que la promesse ne savait pas échouer.
+    cdp.fige = false   // on retente : `Page.navigate` est traité par le processus
+                       // navigateur, pas par le moteur — il répond même figé.
+                       // C'est précisément pour ça qu'on peut repartir à chaque route.
+    try {
+      await cdp.envoyer('Page.navigate', { url })
+    } catch (e) {
+      rapport.push({ route, ok: false, motif: `CDP : ${e.message}` })
+      echecs++
+      continue
+    }
     // ── PREMIÈRE ATTENTE : LE CONTENU ─────────────────────────────────────────
     // La vue doit avoir rendu du texte, pas seulement la coquille. C'est cette
     // attente — et elle seule, jusqu'au 11/09/2026 — qui décidait du moment de la

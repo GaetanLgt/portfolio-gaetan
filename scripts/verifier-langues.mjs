@@ -47,6 +47,10 @@ const DOSSIER = iDos >= 0 ? process.argv[iDos + 1] : join(RACINE, 'src', 'locale
 const FICHIER_LANGUES = join(RACINE, 'src', 'config', 'langues.js');
 
 const LISTE_SEULE = process.argv.includes('--liste');
+// `--porte` : le mode que le BUILD appelle. Seul un défaut réel bloque ;
+// « je ne peux pas conclure » (3) laisse construire — sinon la porte
+// interdirait le build tant que les sept langues ne sont pas écrites.
+const PORTE = process.argv.includes('--porte');
 
 /* ── ① QUELLES LANGUES SONT ATTENDUES — lues depuis `langues.js`, pas recopiées.
    ⛔ Une porte qui a sa propre liste vérifie une autre configuration que celle qui
@@ -132,13 +136,25 @@ if (!existsSync(DOSSIER)) {
       process.exitCode = 0;
     } else {
       const problemes = [];
+      const nonCommencees = [];
       let examinees = 0;
 
       for (const code of actives) {
         if (code === accueil) continue;
         const t = await chargerLangue(code);
         if (!t) {
-          problemes.push({ code, type: 'fichier absent', detail: 'src/locales/' + code + '.js n’existe pas' });
+          /* ⛔ « FICHIER ABSENT » N'EST PAS UN DÉFAUT — C'EST UN CHANTIER QUI N'A PAS COMMENCÉ.
+             Mesuré le 23/09/2026, sur témoin : `de.js` COPIÉ DE `fr.js` (22/22 clés, aucun
+             écart) rendait quand même « 5 PROBLÈME(S) » et sortait en 1, à cause des cinq
+             autres langues annoncées sans fichier.
+             ⇒ La porte ne pouvait donc JAMAIS rendre 0 avant que les sept langues soient
+               entièrement écrites — c'est-à-dire jamais.
+             ⭐ Une porte qui ne sait dire que NON ne contrôle rien : elle interdit tout.
+                C'est mesurable, et c'est très probablement pourquoi elle n'était branchée
+                sur rien. *On ne câble pas un contrôle qui refuse la totalité du travail.*
+             ⇒ Une langue annoncée sans fichier est un chantier ouvert. On la NOMME, à part,
+               et elle ne compte pas. Une langue qui n'existe pas ne peut pas être en retard. */
+          nonCommencees.push(code);
           continue;
         }
         if (t.__ERREUR__) {
@@ -177,8 +193,16 @@ if (!existsSync(DOSSIER)) {
          regardé.*
          ⭐ On dit donc D'ABORD ce qu'on a trouvé, ENSUITE qu'on ne peut pas conclure.
          *Deux informations différentes, et la seconde n'efface pas la première.* */
+      /* ⭐ ON DIT D'ABORD CE QU'ON A TROUVÉ — les chantiers ouverts, puis les défauts. */
+      if (nonCommencees.length) {
+        console.log('  ○  non commencée(s) : ' + nonCommencees.join(' '));
+        console.log('     *Annoncées dans langues.js, pas encore écrites. Ce n’est pas un défaut :*');
+        console.log('     *c’est un chantier — et une langue qui n’existe pas ne peut pas être en retard.*');
+        console.log('');
+      }
+
       if (problemes.length) {
-        console.log('  ⛔ ' + problemes.length + ' PROBLÈME(S) — LE BUILD DOIT ÉCHOUER :');
+        console.log('  ⛔ ' + problemes.length + ' DÉFAUT(S) — LE BUILD DOIT ÉCHOUER :');
         for (const p of problemes) {
           console.log('');
           console.log('   ' + p.code + '  —  ' + p.type);
@@ -189,22 +213,30 @@ if (!existsSync(DOSSIER)) {
           }
         }
         console.log('');
-      }
-
-      if (examinees === 0) {
-        console.log('  ⛔ AUCUNE LANGUE COMPARÉE — la porte ne peut RIEN conclure.');
-        console.log('     ⇒ Écrire au moins une traduction, ou ne pas faire tourner cette porte.');
-        console.log('     *« Aucune erreur » sur zéro fichier n’est pas un succès : c’est un mensonge.*');
-        process.exitCode = 3;
-      } else if (problemes.length) {
         console.log('  ⭐ POURQUOI ON ÉCHOUE AU LIEU DE PUBLIER :');
         console.log('     Une clé absente qui retombe sur le français donne une page qui a');
         console.log('     l’air terminée. *Elle ment à la relecture — c’est-à-dire trop tard.*');
         process.exitCode = 1;
+      } else if (examinees === 0) {
+        console.log('  ⛔ AUCUNE LANGUE COMPARÉE — la porte ne peut RIEN conclure.');
+        console.log('     ⇒ Écrire au moins une traduction, ou ne pas faire tourner cette porte.');
+        console.log('     *« Aucune erreur » sur zéro fichier n’est pas un succès : c’est un mensonge.*');
+        process.exitCode = 3;
       } else {
         console.log('  ✅ ' + examinees + ' langue(s) complète(s) — ' + clesRef.length + ' clés, aucune manquante.');
         console.log('     ⭐ Une traduction ne peut pas être en retard : elle ne peut pas être');
         console.log('        publiée incomplète.');
+        process.exitCode = 0;
+      }
+
+      /* ⭐ MODE PORTE — pour que le build puisse l'appeler sans risquer l'interdiction totale.
+         Un défaut (1) BLOQUE. « Je ne peux pas conclure » (3) NE BLOQUE PAS :
+         sinon la porte empêcherait de construire tant que les sept langues ne sont pas
+         écrites, ce qui est exactement le défaut qu'on vient de corriger plus haut. */
+      if (PORTE && process.exitCode === 3) {
+        console.log('');
+        console.log('  ⇒ MODE PORTE : « je ne peux pas conclure » (3) NE BLOQUE PAS le build.');
+        console.log('     *Seul un défaut réel arrête la construction.*');
         process.exitCode = 0;
       }
     }
