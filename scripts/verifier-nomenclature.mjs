@@ -84,9 +84,33 @@ const TOUTE = /ARKADIA|Arkadia|ArkAdiA|arkadia/g
 /* ⛔ LES EMPLOIS HORS TEXTE VISIBLE — ils ne comptent pas comme ambiguïtés.
    Une route `/arkadia`, un identifiant `arkadia-page`, un domaine
    `arkadia.gldigitallab.fr` : la nomenclature réserve explicitement les
-   minuscules aux routes et aux domaines. */
+   minuscules aux routes et aux domaines.
+
+   ⚠️⚠️ CORRIGÉ LE 23/09/2026 — LE MOTIF NE MATCHAIT QUE LA MOITIÉ DES CAS.
+   Il était :  une classe de caractères, puis arkadia encadré de deux frontières
+   de mot, le tout avec le drapeau global. *Le motif exact est écrit ci-dessous
+   dans la constante corrigée, sans risque de fermer ce commentaire.*
+   MESURÉ, un cas par ligne :
+       class="preuve-arkadia"  ->  retiré   ✅   (le guillemet après arkadia fait que la frontière est VRAIE)
+       preuve-arkadia-title    ->  retiré   ✅   (le tiret fait que la frontière est VRAIE)
+       preuve-arkadia__box     ->  NON RETIRÉ ⛔ (le souligné est un CARACTÈRE DE MOT)
+   ⇒ **le souligné appartient à la classe des caractères de mot**, donc entre
+     `arkadia` et le souligné il n'y a PAS de frontière de mot : elle est fausse,
+     et le motif entier échoue.
+   ⭐ C'est pour ça que le défaut était invisible : il ne se déclenchait que sur les
+     classes COMPOSÉES (avec un double souligné), pas sur les classes simples.
+     *Un défaut qui ne se déclenche que sur la moitié des cas passe pour un succès.*
+
+   ⇒ Corrigé : le souligné ajouté à la classe de caractères, et la frontière de mot
+     finale retirée — elle ne servait qu'à délimiter, ce que la classe fait déjà en
+     englobant le mot entier.
+   ⛔ ET CE COMMENTAIRE A D'ABORD ÉTÉ ÉCRIT AVEC LE MOTIF BRUT DEDANS : les deux
+     caractères de fin de commentaire s'y trouvaient, ils ont fermé le bloc, et
+     tout le reste est devenu du JavaScript invalide. *C'est le piège documenté
+     dans `regle-quoting-2026-09-23.md` — un contenu technique recopié dans un
+     commentaire le casse en silence. Le portier de syntaxe l'a vu.* */
 const HORS_TEXTE = [
-  /[\w.'"/-]*\barkadia\b[\w.'"/-]*/g,     // minuscules : routes, classes, domaines
+  /[\w.'"/_-]*arkadia[\w.'"/_-]*/g,       // minuscules : routes, classes, domaines
   /\/arkadia\b/g,
   /arkadia\.gldigitallab\.fr/g,
 ]
