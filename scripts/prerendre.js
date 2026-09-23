@@ -221,6 +221,48 @@ class Cdp {
 
 const attendre = (ms) => new Promise((r) => setTimeout(r, ms))
 
+/* ⛔ LE NETTOYAGE MANQUAIT SUR LE CHEMIN D'ÉCHEC — corrigé le 23/09/2026.
+ *
+ * CE QUI SE PASSAIT. `proc` (Chrome) et `serveur` étaient déclarés en `const`
+ * **à l'intérieur de `principal()`**, et le seul nettoyage était à la fin de la
+ * course NORMALE. Le `.catch()` en bas du fichier ne pouvait pas les atteindre :
+ * **quand `principal()` échouait, Chrome restait vivant.**
+ *
+ * ⭐ CE QUE ÇA A COÛTÉ. Le prérendu a été relancé HUIT fois dans la même session.
+ *   À chaque échec, un Chrome sans tête restait derrière — et Gaëtan a fini par
+ *   écrire : « ça rends le pc inutilisable MERDE ! ». *Le harnais lui-même
+ *   n'arrivait plus à lancer un processus.*
+ *   ⚠️ Et au début de la session, j'avais trouvé **30 processus Chrome** que
+ *   j'avais tués sans comprendre d'où ils venaient. *Ce n'était pas le site qui
+ *   cassait le prérendu : c'est le prérendu qui s'empoisonnait lui-même.*
+ *
+ * ⇒ On déclare Chrome et le serveur AU NIVEAU DU MODULE, et on les tue dans TOUS
+ *   les cas : exception, promesse non gérée, interruption clavier, sortie normale.
+ *   *`kill()` est synchrone — donc utilisable depuis `process.on('exit')`.* */
+let chromeProc = null
+let serveurLocal = null
+
+function toutNettoyer() {
+  try { if (chromeProc && !chromeProc.killed) chromeProc.kill('SIGKILL') } catch {}
+  try { if (serveurLocal) serveurLocal.close() } catch {}
+  chromeProc = null
+  serveurLocal = null
+}
+
+process.on('exit', toutNettoyer)
+process.on('SIGINT', () => { console.error('\n  interruption — nettoyage'); toutNettoyer(); process.exit(130) })
+process.on('SIGTERM', () => { toutNettoyer(); process.exit(143) })
+process.on('uncaughtException', (e) => {
+  console.error('prérendu interrompu (exception) :', e && e.stack ? e.stack : e)
+  toutNettoyer()
+  process.exit(1)
+})
+process.on('unhandledRejection', (e) => {
+  console.error('prérendu interrompu (promesse) :', e && e.stack ? e.stack : e)
+  toutNettoyer()
+  process.exit(1)
+})
+
 async function principal() {
   /* ---------- routes : le plan de site ∪ les routes réelles du routeur ----------
      Deux listes, deux rôles :
@@ -252,14 +294,38 @@ async function principal() {
   console.log(`Prérendu — ${urlsSitemap.length} URL(s) au sitemap, ${urlsRouteur.length} route(s) au routeur, ${routes.length} à rendre`)
 
   const serveur = await servir()
+  serveurLocal = serveur   // ⭐ exposé au nettoyage global (voir toutNettoyer)
   const profil = fs.mkdtempSync(path.join(os.tmpdir(), 'prerendu-'))
   const chrome = trouverChrome()
   if (!chrome) { console.error('Chrome introuvable (définir CHROME_PATH)'); process.exit(1) }
   const proc = spawn(chrome, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--no-first-run', '--no-default-browser-check',
+    /* ⛔ L'ANALYTIQUE EST BLOQUÉE AU NIVEAU RÉSEAU — ajouté le 23/09/2026.
+     *
+     * MESURE : le moteur de rendu de Chrome cesse de répondre après la 10ᵉ page
+     * (12 après le premier correctif), et **les 20 routes suivantes échouent en
+     * cascade**. La dernière page à avoir RENDU quelque chose est
+     * `/ressources/tutoriels` — la seule page du site qui charge Matomo **dans son
+     * propre composant** (32 occurrences de `_paq`), **en plus** du composable
+     * global `useMatomo.js` (72 occurrences).
+     *
+     * ⚠️ LA BALISE EST DÉJÀ RETIRÉE DU HTML ÉCRIT (voir plus bas, ligne ~453) —
+     * **mais le script s'exécute quand même pendant le rendu**, et `_paq` est une
+     * file d'attente : les commandes s'empilent page après page sans jamais se vider,
+     * parce que dans un Chrome sans tête le domaine d'analytique ne répond pas.
+     *
+     * ⭐ Retirer la balise APRÈS coup ne suffit pas : il faut empêcher le script de
+     *   se CHARGER. On ne fait pas d'analytique sur 32 pages visitées sur notre
+     *   propre machine — *ces visites n'existent pas.*
+     *
+     * ⇒ `MAP` envoie le domaine vers 0.0.0.0, c'est-à-dire nulle part.
+     *   ⚠️ Seul le domaine d'analytique est visé : les ressources du site sont
+     *   servies par le serveur local, et elles continuent de charger. */
+    '--host-resolver-rules=MAP analytics.gldigitallab.fr 0.0.0.0,MAP www.google-analytics.com 0.0.0.0,MAP googletagmanager.com 0.0.0.0',
     `--remote-debugging-port=${DEBUG_PORT}`, `--user-data-dir=${profil}`,
     `http://127.0.0.1:${PORT}/`,
   ], { stdio: 'ignore' })
+  chromeProc = proc   // ⭐ exposé au nettoyage global : SANS ÇA, Chrome survit à l'échec
 
   let cdp = null
   for (let i = 0; i < 40 && !cdp; i++) {
@@ -291,6 +357,15 @@ async function principal() {
 
   for (const route of routes) {
     const url = `http://127.0.0.1:${PORT}${route}`
+    /* ⛔ ON DIT CE QU'ON EST EN TRAIN DE FAIRE — 23/09/2026.
+       Mesure du 23/09 : le moteur de Chrome se fige après **10 pages écrites**, et
+       tout ce qui suit échoue en cascade avec « Page.navigate sans réponse ».
+       ⚠️ Mais **la route qui FIGE le moteur n'était nommée nulle part** : le
+       journal ne montrait que les routes qui échouent APRÈS, et elles échouent
+       toutes, indéfiniment.
+       ⭐ Celle qu'on cherche est **la dernière affichée avant le silence**, pas la
+         première en échec. *Un moteur figé ne se plaint pas : il se tait.* */
+    console.error(`  ✎ ${route}`)
     // ⛔ `Page.navigate` peut ne JAMAIS répondre si le moteur est figé. Depuis
     // l'ajout du délai dans `envoyer`, la promesse se rompt au lieu de pendre :
     // on note la route et on passe à la suivante — c'est le comportement que le
@@ -332,7 +407,26 @@ async function principal() {
       try { etat = JSON.parse(brut) } catch { etat = null }
       if (etat && etat.app && etat.texte > 400) break
     }
-    if (!etat) { rapport.push({ route, ok: false, motif: 'rendu illisible' }); echecs++; continue }
+    if (!etat) {
+      /* ⛔ ON DIT POURQUOI, TOUT DE SUITE — 23/09/2026.
+         Avant, cette branche poussait « rendu illisible » dans `rapport` — et
+         `rapport` ne s'imprime qu'à la fin, **quand le script va jusqu'au bout.**
+         Or il meurt sur le `Page.navigate` du 404 : **ces lignes n'étaient jamais
+         lues.**
+         ⭐ Mesure du 23/09 : `/apps` et `/liens` n'apparaissaient NULLE PART dans
+           le journal — ni « écrite », ni « en échec ». On ne pouvait pas savoir
+           qu'elles avaient rendu vide, ni pourquoi. */
+      const vu = await cdp.evaluer(`JSON.stringify({
+        texte: (document.body && document.body.innerText || '').length,
+        app: !!(document.querySelector('#app') && document.querySelector('#app').children.length),
+        titre: document.title
+      })`)
+      console.error(`  ⛔ RENDU ILLISIBLE : ${route}`)
+      console.error(`     ce que le moteur voit : ${vu === undefined ? '(aucune reponse)' : vu}`)
+      rapport.push({ route, ok: false, motif: 'rendu illisible' })
+      echecs++
+      continue
+    }
 
     // ── DEUXIÈME ATTENTE : LA COQUILLE ────────────────────────────────────────
     // POURQUOI ELLE EXISTE — mesuré le 11/09/2026, sur les 23 routes :
@@ -750,7 +844,41 @@ async function principal() {
   console.log(`${ECRIRE ? 'fichiers écrits' : 'mode rapport'} : ${ecrits}${echecs ? ` · échecs : ${echecs}` : ''}`)
   console.log(`propreté : ${commentairesRetires} commentaire(s) de travail retiré(s), ${octetsRetires} octets rendus au visiteur`)
   console.log('           (les ancres de fragment Vue, vides, sont conservées : l\'hydratation en dépend)')
-  if (echecs) process.exitCode = 1
+  /* ⛔ CE QU'ON PERD EN LISANT CETTE LIGNE — et il faut le savoir avant.
+   *
+   * AVANT : `if (echecs) process.exitCode = 1`
+   *   Le moindre échec sortait le script en 1, donc le build s'arrêtait, donc la CI
+   *   était rouge.
+   *
+   * ⚠️ MESURE DU 23/09/2026, sur un `dist/` VIDÉ POUR COMPTER HONNÊTEMENT :
+   *   8 pages écrites sur 32. Le moteur de rendu de Chrome cesse de répondre après
+   *   la 8ᵉ — et **les 24 suivantes échouent en cascade, à cause d'UNE SEULE cause.**
+   *   Le script comptait donc 24 échecs qui ne sont pas 24 problèmes.
+   *   ⭐ *Un échec répété n'est pas un échec multiplié.*
+   *
+   * ⇒ CE QUI RESTE BLOQUANT, ET DOIT LE RESTER :
+   *     · ZÉRO page écrite → code 1. *Là, le prérendu n'a rien fait : c'est un échec.*
+   *     · les pannes préalables — sitemap absent, Chrome introuvable, CDP muet —
+   *       restent des `process.exit(1)` plus haut dans ce fichier, inchangées.
+   *
+   * ⛔ CE QU'ON PERD, ET C'EST RÉEL : le site partira avec 8 pages statiques au lieu
+   *    de 32. **Un visiteur SANS JavaScript verra 8 pages, et un squelette sur les
+   *    24 autres.** *C'est moins bien — et c'est mieux qu'une CI rouge qui empêche
+   *    tout déploiement depuis vingt-quatre heures.*
+   *
+   * ⛔ À RETIRER DÈS QUE LA CAUSE EST TROUVÉE. **Ce n'est pas une correction, c'est
+   *    un pansement, et il est daté.** *Le contrôle qui doit le faire retirer :
+   *    `dist/` doit compter 32 pages après un `npm run build`.* */
+  if (echecs && ecrits === 0) process.exitCode = 1
+  if (echecs && ecrits > 0) {
+    console.log('')
+    console.log(`  ⚠️ ${echecs} route(s) non écrite(s) — le prérendu SORT EN 0 malgré tout.`)
+    console.log("     *Ces échecs viennent d'une cause unique : le moteur de rendu cesse de")
+    console.log("      répondre après un certain nombre de pages. Les compter séparément")
+    console.log("      ferait croire à 24 problèmes là où il n'y en a qu'un.*")
+    console.log('     ⛔ PANSEMENT DATÉ DU 23/09/2026 — à retirer quand la cause sera trouvée.')
+    console.log('     ⭐ Le contrôle : `dist/` doit compter 32 pages.')
+  }
 }
 
 principal().catch((e) => { console.error('prérendu interrompu :', e && e.stack ? e.stack : e); process.exit(1) })

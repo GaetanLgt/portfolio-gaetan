@@ -11,9 +11,20 @@ export function useScrollReveal(options = {}) {
     once = true
   } = options;
 
-  const elements = ref([]);
-  const observer = ref(null);
-  const prefersReducedMotion = ref(false);
+  /* ⛔ `elements` N'EST PAS UN `ref` — corrigé le 23/09/2026.
+     C'était `ref([])`, et on y faisait `elements.value.push(el)` pour chaque
+     élément observé. **Sur une page à plusieurs centaines de `.reveal`, ça
+     déclenche la réactivité des centaines de fois pour rien.**
+     ⭐ Et « pour rien » est le mot : `elements` **n'est jamais retourné** par le
+     composable (voir le `return` en fin de fichier) et **aucun `watch` ni
+     `computed` ne le lit**. C'est un accumulateur technique, pas un état
+     d'interface. *Un état réactif que personne n'observe ne coûte presque rien —
+     mais il n'a non plus aucune raison d'être réactif.* */
+  const elements = []
+  const observer = ref(null)
+  const prefersReducedMotion = ref(false)
+  // ⭐ La `MediaQueryList` qu'on écoute — gardée pour pouvoir RETIRER l'écouteur.
+  let mediaQueryRef = null
 
   // Check user preference for reduced motion
   const checkReducedMotion = () => {
@@ -31,6 +42,7 @@ export function useScrollReveal(options = {}) {
     // Listen for changes in motion preference
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     mediaQuery.addEventListener('change', checkReducedMotion);
+    mediaQueryRef = mediaQuery   // ⭐ conservée pour le retrait en onUnmounted
 
     observer.value = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -63,7 +75,7 @@ export function useScrollReveal(options = {}) {
   // Observe an element
   const observe = (el) => {
     if (el && observer.value) {
-      elements.value.push(el);
+      elements.push(el);
       observer.value.observe(el);
     }
   };
@@ -100,6 +112,18 @@ export function useScrollReveal(options = {}) {
   onUnmounted(() => {
     if (observer.value) {
       observer.value.disconnect();
+    }
+    /* ⛔ ET ON RETIRE L'ÉCOUTEUR DE PRÉFÉRENCE — ajouté le 23/09/2026.
+       `initObserver` pose un écouteur sur une `MediaQueryList` :
+           mediaQuery.addEventListener('change', checkReducedMotion)
+       ⭐ **Il n'était jamais retiré.** À chaque montage d'une page, un écouteur
+       de plus restait accroché. *Ce n'est pas ce qui fige un moteur de rendu,
+       mais c'est une fuite, et elle s'accumule à chaque navigation — donc
+       précisément dans un prérendu qui visite 32 pages d'affilée.*
+       ⇒ On garde la référence pour pouvoir le retirer. */
+    if (mediaQueryRef) {
+      mediaQueryRef.removeEventListener('change', checkReducedMotion);
+      mediaQueryRef = null;
     }
   });
 
