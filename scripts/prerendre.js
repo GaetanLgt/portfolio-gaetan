@@ -302,6 +302,17 @@ async function principal() {
     try {
       await cdp.envoyer('Page.navigate', { url })
     } catch (e) {
+      /* ⛔ ON NOMME LA ROUTE TOUT DE SUITE, SUR stderr — 23/09/2026.
+         Avant, la route était bien enregistrée dans `rapport`, **mais `rapport`
+         n'est imprimé qu'à la fin** — et le script meurt avant, sur le
+         `Page.navigate` du 404 qui n'est pas protégé. Résultat mesuré :
+             « prérendu interrompu : Error: CDP Page.navigate : moteur figé »
+         La ligne est nommée, **la page qui a tué le moteur ne l'est pas.**
+         ⭐ On ne peut donc pas corriger : on sait qu'il fige, pas où.
+         ⇒ On l'écrit immédiatement, et on dit aussi COMBIEN de pages ont été
+           écrites avant — c'est ce qui borne la recherche. */
+      console.error(`  ⛔ ROUTE EN ÉCHEC : ${route}  —  ${e.message}`)
+      console.error(`     (${ecrits} page(s) écrite(s) avant celle-ci)`)
       rapport.push({ route, ok: false, motif: `CDP : ${e.message}` })
       echecs++
       continue
