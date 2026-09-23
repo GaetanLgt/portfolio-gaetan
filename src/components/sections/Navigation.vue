@@ -28,23 +28,47 @@
       
       <!-- Desktop Navigation — parcours prospect épuré (audit Awwwards D2) -->
       <nav class="nav-desktop" aria-label="Navigation principale">
+        <!-- ⚠️ LIBELLÉS ENVELOPPÉS DANS UN <span> — 23/09/2026.
+             ⛔ ET CE CHANGEMENT N'A RIEN CORRIGÉ. Je l'écris pour que personne
+             ne croie qu'il sert à quelque chose.
+
+             MON DIAGNOSTIC ÉTAIT FAUX. J'avais déduit : « `.nav-link` est
+             `display: flex`, donc le texte nu devient un élément flex anonyme
+             qui ne se comprime pas ». J'ai enveloppé les libellés pour poser
+             `min-width: 0` dessus.
+
+             MESURE APRÈS, au banc aux trois extrêmes :
+                 avant : ⛔ <a> +55px   DE 2 ajoutés
+                 après : ⛔ <a> +55px   DE 2 ajoutés      ← AUCUN CHANGEMENT
+
+             ⭐ ET LE BANC DONNAIT DÉJÀ LA RÉPONSE : la classe de l'élément
+             signalé est `router-link-active router-link-exact-active` — **elle
+             ne contient pas `nav-link`**. Ce n'est donc pas un lien de la
+             navbar. *Je l'ai supposé parce que je le voulais.*
+             ⛔ Le banc balaie la PAGE ENTIÈRE : `vaisseau-vue__plan-titre` le
+             prouve, et c'est un autre composant.
+
+             CE QUI RESTE VRAI, ET POURQUOI CE BALISAGE EST GARDÉ :
+             il est cohérent avec `<span class="nav-link__num">`, qui existait
+             déjà juste à côté, et il rend le libellé adressable par le style.
+             ⚠️ Mais il ne répare RIEN, et il ne faut pas le lui faire dire. -->
         <router-link to="/services" class="nav-link">
           <span class="nav-link__num">01</span>
-          OFFRE
+          <span class="nav-link__libelle">OFFRE</span>
         </router-link>
         <router-link to="/projets" class="nav-link">
           <span class="nav-link__num">02</span>
-          RÉALISATIONS
+          <span class="nav-link__libelle">RÉALISATIONS</span>
         </router-link>
         <router-link to="/arkadia" class="nav-link">
           <span class="nav-link__num">03</span>
-          PREUVE
+          <span class="nav-link__libelle">PREUVE</span>
         </router-link>
         <!-- ⭐ Ajouté le 22/09/2026 (demande de Gaëtan : « tu me le références dans la nav »).
              Le parcours prospect reste 01→04 : OFFRE → RÉALISATIONS → PREUVE → LE NAVIRE. -->
         <router-link to="/galion" class="nav-link">
           <span class="nav-link__num">04</span>
-          LE NAVIRE
+          <span class="nav-link__libelle">LE NAVIRE</span>
         </router-link>
 
         <router-link to="/contact" class="nav-cta">
@@ -517,6 +541,26 @@ onUnmounted(() => {
   overflow-wrap: anywhere;
   word-break: normal;
   white-space: normal;
+}
+
+/* ⭐ LE LIBELLÉ, MAINTENANT NOMMÉ — mais ⛔ CE N'EST PAS LE CORRECTIF DU +55 px.
+   J'avais déduit que `.nav-link` (`display: flex`) transformait son texte nu en
+   élément flex anonyme non compressible. **Le banc a montré +55 px AVANT et
+   APRÈS — aucun changement.** Le diagnostic était faux.
+   ⚠️ Et le banc donnait la réponse : la classe de l'élément signalé est
+   `router-link-active router-link-exact-active`, elle ne contient PAS `nav-link`.
+   *Ce n'est pas un lien de la navbar. Je l'avais supposé parce que je le voulais.*
+
+   Ces règles sont GARDÉES parce qu'elles sont justes au titre de § 1 (elles
+   protègent le libellé si un mot allemand long arrive un jour), et parce que le
+   span rend le libellé adressable — comme `.nav-link__num` l'était déjà.
+   ⛔ Elles ne réparent rien, et il ne faut pas le leur faire dire. */
+.nav-link__libelle {
+  min-width: 0;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 /* ⛔ LE BANC A CONTREDIT MON PREMIER CORRECTIF — 23/09/2026.
