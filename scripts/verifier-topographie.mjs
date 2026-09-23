@@ -101,7 +101,30 @@ function sitemapDeclare() {
 function zonesDeLaCarte() {
   const p = join(RACINE, 'src/config/topographie.js');
   if (!existsSync(p)) return [];
-  const src = readFileSync(p, 'utf8');
+  /* ⛔ ON RETIRE LES COMMENTAIRES AVANT DE LIRE — corrigé le 23/09/2026.
+   *
+   * CE QUI SE PASSAIT. Le fichier était lu brut, et deux motifs ramassaient
+   * `compartiment: { … }` puis `chemin: '…'` — **commentaires compris**.
+   * Or `topographie.js` documente le retrait de `/carte-holistique` en citant
+   * littéralement son chemin :
+   *     * « Elle portait : `chemin: '/carte-holistique'`, le compartiment … »
+   * ⇒ **L'audit comptait le commentaire qui documente le retrait**, et
+   *   annonçait « compartiment sans page correspondante ».
+   *
+   * ⭐ ET LE PIRE EST LIGNE 114 : l'appariement entre `compartiment` et `chemin`
+   *   se fait PAR INDEX. **Une mention en trop dans un commentaire ne fait pas
+   *   qu'ajouter une fausse entrée : elle décale TOUTES les suivantes.**
+   *
+   * ⚠️ C'est la même faute que trois autres outils de ce dépôt — un contrôle qui
+   *   compte son propre texte. *Le correctif est le même, et il est en tête de
+   *   fonction pour qu'on ne l'oublie pas.* */
+  const brut = readFileSync(p, 'utf8');
+  // On garde les nouvelles lignes : le fichier n'a pas de numéros à rapporter,
+  // mais un retrait qui décale les lignes est un piège pour la prochaine lecture.
+  const garderLignes = (m) => m.replace(/[^\n]/g, ' ');
+  const src = brut
+    .replace(/\/\*[\s\S]*?\*\//g, garderLignes)
+    .replace(/(^|[^:'"\\])\/\/[^\n]*/g, '$1 ');
   // Un compartiment est déclaré par un bloc `compartiment: { id: '…', nom: '…', pont: '…' }`
   // suivi, dans la même entrée, de son `chemin`. On lit les deux et on apparie par ordre
   // d'apparition : plus robuste qu'une expression régulière qui traverserait tout le fichier.
