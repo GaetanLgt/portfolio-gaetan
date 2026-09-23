@@ -11,6 +11,30 @@
 
 import { ref, computed, readonly } from 'vue';
 import { LANGUES, LANGUES_ACTIVES, LANGUE_ACCUEIL, langue as trouverLangue } from '@/config/langues';
+/* ⭐ LA LANGUE D'ACCUEIL EST CHARGÉE STATIQUEMENT — ajouté le 23/09/2026.
+ *
+ * ⛔ CE QUE ÇA RÉPARE. Elle passait par le même `await import()` dynamique que les
+ * autres — donc par une promesse. Et **le prérendu mourait dessus** :
+ *
+ *   MESURE DU 23/09/2026, sur un `dist/` vidé et aucun Chrome au départ :
+ *      1-11.  onze pages ÉCRITES, dont /ressources/tutoriels et /components
+ *      12.    /apps   ⛔ « RENDU ILLISIBLE » — *ce que le moteur voit : (aucune réponse)*
+ *      13.    /liens  ⛔ idem
+ *      14+.   /ia-de-bord et les 19 suivantes ⛔ EN ÉCHEC EN CASCADE
+ *   ⇒ **8 pages écrites sur 32**, à cause d'une seule page.
+ *
+ *   ⚠️ Et « (aucune réponse) » n'est pas « la page est vide » : c'est `Runtime.evaluate`
+ *   qui ne revient jamais. *Si le texte avait été trop court, le moteur aurait rendu
+ *   un objet, pas rien.* **Une promesse qui pend fige le moteur de rendu.**
+ *
+ * ⭐ POURQUOI ELLE N'A AUCUNE RAISON D'ÊTRE DYNAMIQUE : c'est la langue par défaut,
+ *   celle qu'on sert à presque tous les visiteurs. *La charger « à la demande »
+ *   n'économise rien, et elle introduit un risque sur le chemin le plus fréquent.*
+ *   Les AUTRES langues gardent l'import dynamique — là, l'économie est réelle.
+ *
+ * ⚠️ CE QUE ÇA CHANGE POUR LE VISITEUR : `fr.js` (5 Ko) entre dans le paquet initial.
+ *   *C'est le prix d'un chemin qui ne peut pas pendre.* */
+import frStatique from '@/locales/fr.js';
 
 /* -----------------------------------------------------------------------------
    L'ÉTAT, AU NIVEAU DU MODULE — comme `useMatomo` et `mode-sobre`.
@@ -52,6 +76,14 @@ async function charger(code) {
     /* ⛔ Une langue `a-decider` n'est PAS chargée : Gaëtan n'a pas tranché.
        *Le code dit ce qui est décidé — il ne publie pas une décision qu'il n'a pas prise.* */
     return false;
+  }
+  /* ⭐ LA LANGUE D'ACCUEIL NE PASSE PAS PAR UNE PROMESSE — 23/09/2026.
+     Voir l'en-tête : c'est ce `await` qui figeait le moteur de rendu du prérendu,
+     sur `/apps`, et faisait tomber les 20 pages suivantes. */
+  if (code === LANGUE_ACCUEIL) {
+    textes.value = { ...textes.value, [code]: frStatique || {} };
+    chargee.value = true;
+    return true;
   }
   try {
     const m = await import(`../locales/${code}.js`);
