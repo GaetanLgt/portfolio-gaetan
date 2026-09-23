@@ -509,10 +509,30 @@ onUnmounted(() => {
 .nav-logo__name,
 .nav-logo__tagline,
 .nav-link,
-.nav-link__num {
+.nav-link__num,
+.nav-cta {
+  min-width: 0;
   hyphens: auto;
   -webkit-hyphens: auto;
   overflow-wrap: anywhere;
   word-break: normal;
+  white-space: normal;
 }
+
+/* ⛔ LE BANC A CONTREDIT MON PREMIER CORRECTIF — 23/09/2026.
+   J'avais posé les règles ci-dessus et annoncé « fait », sur la base d'un
+   COMPTEUR D'OCCURRENCES. Le banc aux trois extrêmes, lui, a mesuré le RENDU :
+       DE  3 cibles ajoutées
+       ⛔ <a> +55px  (nav-link)
+       ⛔ <a> +50px  (nav-cta)   <-- oublié par mon correctif
+       ⛔ <p> +36px  (vaisseau-vue__plan-titre — autre composant, hors navbar)
+   ⭐ Un compteur compte des RÈGLES ÉCRITES. Un banc mesure des BOÎTES QUI
+      DÉBORDENT. Les deux ne disent pas la même chose, et c'est le second
+      qui voit ce que voit un visiteur.
+   ⇒ `.nav-cta` ajouté : il est `display: inline-flex`, et dans un conteneur
+     flex son texte devient un élément ANONYME qui ne descend pas sous sa
+     largeur minimale. Sans `min-width: 0`, il pousse de 50 px.
+   ⚠️ Et j'ai d'abord écrit un sélecteur `.nav-cta__libelle` QUI N'EXISTE PAS —
+     le template porte `class="nav-cta"` sur un `router-link`, rien d'autre.
+     *Une règle sur une classe inexistante ne fait rien, en silence.* Retirée. */
 </style>
