@@ -3,15 +3,15 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "71c199b",
-    "sujet": "builder 3D : il lit les .glb, et le galion entre dans le monde",
-    "date": "2026-09-24T16:03:30+02:00",
+    "court": "91f6e88",
+    "sujet": "etude de cas Arkadia : ce qui est mesure, et ce qui ne l est pas",
+    "date": "2026-09-24T16:06:43+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 16:06:35",
-    "horodatage_minute": "2026-09-24 16:06",
-    "horodatage_iso": "2026-09-24T14:06:35.377Z",
+    "horodatage_local": "2026-09-24 16:11:13",
+    "horodatage_minute": "2026-09-24 16:11",
+    "horodatage_iso": "2026-09-24T14:11:13.684Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 203,
