@@ -733,7 +733,51 @@ async function principal() {
         : path.join(DIST, route.replace(/^\//, ''), 'index.html')
       if (fs.existsSync(fichierCible)) {
         const deja = fs.readFileSync(fichierCible, 'utf8')
-        if (!/interstitial-wrapper|main-frame-error/.test(deja)) {
+        /* ⛔⛔ LA COQUILLE N'EST PAS UNE PAGE PRÉ-RENDUE — 25/09/2026.
+         *
+         * MESURE, et c'est elle qui a coûté la page d'accueil :
+         *   · `dist/index.html` : **14 150 octets** — c'est la coquille écrite par `vite build`.
+         *   · `dist/services/index.html` : 39 861 o · `dist/apps/index.html` : 22 107 o ·
+         *     `dist/guides/index.html` : 23 293 o. **Toutes datées de 11:45:59.**
+         *   · Le DOM RENDU de `/`, mesuré dans Chrome : **107 243 octets**, avec
+         *     `data-vaisseau` (1), « LE PLAN DU NAVIRE » (1), `class="hero` (14 fois).
+         *   ⇒ **Le site va bien. C'est le pré-rendu qui n'écrivait pas l'accueil.**
+         *
+         * ⭐ LA CAUSE, ET ELLE TIENT EN UNE LIGNE DE CODE : le seul critère de propreté
+         *   était « le fichier ne contient pas une page d'erreur Chrome ». Or **la coquille
+         *   de `vite build` ne contient pas de page d'erreur** — elle est parfaitement
+         *   « propre ». Donc `--reprendre` la sautait, et `/` n'était **jamais** réécrite.
+         *   *Un contrôle de propreté qui accepte la coquille ne contrôle rien : il accepte
+         *   exactement ce qu'on lui demande de distinguer.*
+         *
+         * ⇒ On ajoute donc UNE AUTRE MESURE que la seule absence d'erreur Chrome : voir le
+         *   marqueur ci-dessous, mesuré sur les deux formes réelles du fichier.
+         *
+         * ⚠️ Effet de bord assumé : la première passe après un `vite build` réécrit
+         *    davantage de pages (elle ne saute plus celles dont seul le fichier de coquille
+         *    existe). C'est le but. *Le coût est de quelques secondes ; le défaut coûtait
+         *    la page d'accueil entière.* */
+        /* ⭐⭐ LE MARQUEUR QUI DISTINGUE LES DEUX — MESURÉ, PAS DÉDUIT.
+         *
+         *      motif                coquille   page rendue
+         *      <noscript                1          0
+         *      class="navigation        0          1
+         *      id="app"                 1          1
+         *
+         * ⇒ Une page est un RENDU si Vue a remplacé le contenu de `#app` : le `<noscript>`
+         *   de repli disparaît alors, et le `<header class="navigation">` apparaît.
+         *   **Deux marqueurs, dans deux sens** — un fichier qui n'a ni l'un ni l'autre
+         *   n'est ni la coquille ni un rendu, et on le réécrit. *En cas de doute, on
+         *   refait le travail : c'est le seul côté où l'erreur est réparable.*
+         *
+         * ⛔ POURQUOI PAS UNE COMPARAISON DE TAILLE : `coquille` est mesurée au début du
+         *    passage, sur `dist/index.html`. Après une première passe, ce fichier EST le
+         *    rendu de l'accueil — la référence dériverait, et plus aucune page ne serait
+         *    plus courte qu'elle. **Une borne qui se déplace avec ce qu'elle mesure ne
+         *    borne rien.** */
+        const pasUneErreurChrome = !/interstitial-wrapper|main-frame-error/.test(deja)
+        const estUnRendu = deja.includes('class="navigation') || !deja.includes('<noscript')
+        if (pasUneErreurChrome && estUnRendu) {
           ecrits++
           rapport.push({ route, ok: true, repris: true, motif: 'déjà écrite et propre — sautée' })
           continue

@@ -47,26 +47,29 @@ const CGV = () => import('@/views/legal/CGV.vue');
 import { GUIDES } from '@/data/guides.js';
 const GuidePage = () => import('@/views/guides/GuidePage.vue');
 const GuidesIndex = () => import('@/views/guides/GuidesIndex.vue');
-const routesGuides = [
-  // ⭐ LA PORTE D'ENTRÉE. Elle est accrochée au PIED DE PAGE, donc présente sur les
-  //    trente-deux pages du site — c'est ce qui fait d'elle un relais et pas un fil.
-  { path: '/guides', name: 'GuidesIndex', component: GuidesIndex,
-    meta: { title: 'Dix questions, dix réponses courtes | Génie IT Tek FR',
-            description: "Prix d'un site, hébergement en France, audit, IA locale, délai, propriété du code : dix réponses de 40 à 90 mots, avec les prix publics hors taxes." } },
-  ...GUIDES.map((g) => ({
-    path: `/guides/${g.slug}`,
-    name: `Guide-${g.slug}`,
-    component: GuidePage,
-    meta: {
-      title: g.title,
-      description: g.description,
-      // ⚠️ Le slug EST la donnée dont le composant a besoin pour se trouver lui-même.
-      //    Le passer par `meta` évite de le relire dans l'URL — donc de dépendre de la
-      //    forme du chemin le jour où on le change.
-      guideSlug: g.slug,
-    },
-  })),
-];
+/* ⭐ LES CONTENUS NE SONT PAS RECOPIÉS ICI — 25/09/2026.
+ * Les dix `path:` sont écrits EN LITTÉRAL, quelques lignes plus bas, parce que le verrou
+ * `verifier-build-livre.mjs` lit ce fichier par ARBRE et ne sait pas lire une route
+ * construite : une liste de routes étalée depuis GUIDES est un `SpreadElement`, donc
+ * « NON ANALYSABLE » — c'est-à-dire une route que PERSONNE NE VÉRIFIE.
+ * ⛔ Mais les titres et les descriptions ne sont pas recopiés : `metaGuide()` les lit
+ *    dans `GUIDES`, qui reste la source unique des contenus.
+ * *Une route écrite deux fois diverge — sauf si quelqu'un regarde.* */
+const parSlug = new Map(GUIDES.map((g) => [g.slug, g]));
+const metaGuide = (slug) => {
+  const g = parSlug.get(slug);
+  if (!g) {
+    throw new Error(
+      `[routeur] le guide « ${slug} » n'existe pas dans src/data/guides.js. ` +
+      `Une route qui pointe un guide absent rend une page vide.`
+    );
+  }
+  // ⚠️ Le slug EST la donnée dont le composant a besoin pour se trouver lui-même.
+  //    Le passer par `meta` évite de le relire dans l'URL — donc de dépendre de la
+  //    forme du chemin le jour où on le change.
+  return { title: g.title, description: g.description, guideSlug: g.slug };
+};
+
 
 // RESOURCES - Ressources et tutoriels
 const TutorielsPage = () => import('@/views/resources/TutorielsPage.vue');
@@ -113,7 +116,21 @@ const routes = [
   // ⭐ LES DIX GUIDES, EN TÊTE — et ce n'est pas cosmétique : la route attrape-tout
   //    (`/:pathMatch(.*)*`) vit plus bas, et tout ce qu'on place après elle devient
   //    inatteignable. *Une route morte n'est pas une route : c'est une ligne.*
-  ...routesGuides,
+  // ⭐ LA PORTE D'ENTRÉE. Elle est accrochée au PIED DE PAGE, donc présente sur les
+  //    trente-deux pages du site — c'est ce qui fait d'elle un relais et pas un fil.
+  { path: '/guides', name: 'GuidesIndex', component: GuidesIndex,
+    meta: { title: 'Dix questions, dix réponses courtes | Génie IT Tek FR',
+            description: "Prix d'un site, hébergement en France, audit, IA locale, délai, propriété du code : dix réponses de 40 à 90 mots, avec les prix publics hors taxes." } },
+  { path: '/guides/prix-site-web-pme', name: 'Guide-prix-site-web-pme', component: GuidePage, meta: metaGuide('prix-site-web-pme') },
+  { path: '/guides/heberger-ses-donnees-en-france', name: 'Guide-heberger-ses-donnees-en-france', component: GuidePage, meta: metaGuide('heberger-ses-donnees-en-france') },
+  { path: '/guides/audit-site-web', name: 'Guide-audit-site-web', component: GuidePage, meta: metaGuide('audit-site-web') },
+  { path: '/guides/sur-mesure-ou-wordpress', name: 'Guide-sur-mesure-ou-wordpress', component: GuidePage, meta: metaGuide('sur-mesure-ou-wordpress') },
+  { path: '/guides/application-metier-sur-mesure', name: 'Guide-application-metier-sur-mesure', component: GuidePage, meta: metaGuide('application-metier-sur-mesure') },
+  { path: '/guides/ia-locale-entreprise', name: 'Guide-ia-locale-entreprise', component: GuidePage, meta: metaGuide('ia-locale-entreprise') },
+  { path: '/guides/ce-qui-sort-dune-ia', name: 'Guide-ce-qui-sort-dune-ia', component: GuidePage, meta: metaGuide('ce-qui-sort-dune-ia') },
+  { path: '/guides/a-qui-appartient-le-code', name: 'Guide-a-qui-appartient-le-code', component: GuidePage, meta: metaGuide('a-qui-appartient-le-code') },
+  { path: '/guides/agence-web-somme', name: 'Guide-agence-web-somme', component: GuidePage, meta: metaGuide('agence-web-somme') },
+  { path: '/guides/delai-refaire-un-site', name: 'Guide-delai-refaire-un-site', component: GuidePage, meta: metaGuide('delai-refaire-un-site') },
   // -------------------------------------------------------------------------
   // CORE
   // -------------------------------------------------------------------------
@@ -632,8 +649,34 @@ const routes = [
       title: 'Page Non Trouvée',
       description: 'La page que vous recherchez n\'existe pas ou a été déplacée.'
     }
+  }];
+/* ⛔ L'ASSERTION QUI REND LA DOUBLE ÉCRITURE SÛRE — 25/09/2026.
+ * Les dix chemins de guides sont écrits EN LITTÉRAL dans `routes` (l'AST du verrou
+ * `verifier-build-livre.mjs` ne sait pas lire une route construite — et une route qu'un
+ * contrôle ne lit pas est une route que personne ne vérifie).
+ * ⛔ Mais `src/data/guides.js` reste la source des CONTENUS, et rien ne garantit que les
+ *    deux listes avancent ensemble si personne ne regarde.
+ * ⇒ On regarde ici, à chaque chargement du routeur. Si les dix slugs diffèrent,
+ *   l'application refuse de démarrer et le build échoue.
+ * *Mieux vaut un build rouge qu'une page qui répond 200 avec le mauvais guide dedans.* */
+{
+  const chemins = routes
+    .filter((r) => r.path.startsWith('/guides/'))
+    .map((r) => r.path.replace('/guides/', ''));
+  const attendus = GUIDES.map((g) => g.slug);
+  const ecart = chemins.length !== attendus.length
+    || chemins.some((c, i) => c !== attendus[i]);
+  if (ecart) {
+    throw new Error(
+      '[routeur] les routes /guides/ et src/data/guides.js ONT DIVERGÉ.\n' +
+      '  routes : ' + chemins.join(', ') + '\n' +
+      '  guides : ' + attendus.join(', ') + '\n' +
+      '  ⇒ corriger l\'un des deux avant de construire.'
+    );
   }
-];
+}
+
+;
 
 
 // ============================================================================
