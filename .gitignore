@@ -61,3 +61,12 @@ sauvegarder-ftp.env
 # Sauvegardes d'atelier â€” ajoute le 23/09/2026.
 # *Ce sont des artefacts de travail, pas le contenu du site : ils ne partent pas.*
 *.avant-*
+# Scripts de travail locaux, jamais des verrous du studio.
+# ? AJOUTÉ LE 24/09/2026 — `git add -A` les avait embarqués, et la CI les a
+# exécutés : `chaine-langue` a fait échouer le build, donc le déploiement.
+# *Un script d'atelier qui entre dans le dépôt devient un verrou pour tout le monde.*
+scripts/verifier-chaine-langue.mjs
+scripts/verifier-largeurs-fixes.mjs
+scripts/diagnostic-en-ligne.mjs
+scripts/eprouver-langues.mjs
+tmp/
