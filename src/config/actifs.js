@@ -65,7 +65,7 @@ export const ACTIFS = [
     //    qu'un prérendu retire serait une ancre en papier.*
     nom: 'l’ancre du navire',
     fichier: 'index.html',
-    motifs: ['data-vaisseau'],
+    motifs: ['ark-stage', 'data-act="0"', 'GRAINE 42'],
     pourquoi: 'l’ancre canonique — un contrat, pas un détail de style',
   },
   /*
@@ -89,7 +89,7 @@ export const ACTIFS = [
    */
   {
     nom: 'les sept compartiments',
-    fichier: 'index.html',
+    fichier: 'galion/index.html',
     // ⭐ LES SEPT NOMS DU CANON — et c'est le chemin qui TIENT AUJOURD'HUI.
     //    Ils viennent de `SITE-VAISSEAU-ARCHITECTURE.md` § 2, **pas d'un composant**.
     //    *Ils survivent à un renommage de classe ; ils disparaissent vraiment si le
@@ -99,14 +99,14 @@ export const ACTIFS = [
   },
   {
     nom: 'le plan du navire',
-    fichier: 'index.html',
+    fichier: 'galion/index.html',
     motifs: ['LE PLAN DU NAVIRE'],
     pourquoi: 'le titre du plan — un texte en français, pas une classe',
   },
   {
     nom: 'le jeu jouable',
-    fichier: 'index.html',
-    motifs: ['le-pont/index.html'],
+    fichier: 'galion/index.html',
+    motifs: ['/le-pont/'],
     pourquoi: 'l’iframe du jeu — il est sur le disque et il répond',
   },
   {
@@ -117,7 +117,7 @@ export const ACTIFS = [
   },
   {
     nom: 'la section du vaisseau',
-    fichier: 'index.html',
+    fichier: 'galion/index.html',
     motifs: ['ARKADIA', 'SS00999'],
     pourquoi: 'la fiche de la machine, mesurée et publiée',
   },
