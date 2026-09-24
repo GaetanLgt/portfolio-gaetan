@@ -150,7 +150,44 @@ function ecrireAtomique(chemin, contenu) {
   fs.mkdirSync(path.dirname(chemin), { recursive: true })
   const temporaire = chemin + '.' + process.pid + '.tmp'
   fs.writeFileSync(temporaire, contenu, 'utf8')
+  /* ⛔⛔ EPERM SUR WINDOWS — et ce défaut-là était invisible depuis le début.
+   *
+   * MESURÉ le 24/09/2026, en lançant le prérendu sur EVA-01 :
+   *     EPERM: operation not permitted, rename '…\dist\index.html.39548.tmp'
+   *     -> '…\dist\index.html'
+   *
+   * ⭐ POURQUOI ÇA N'ARRIVE QUE SUR WINDOWS : `renameSync` est atomique, mais
+   *   Windows **refuse de remplacer un fichier qu'un autre processus tient
+   *   ouvert**. Or `dist/index.html` est précisément le fichier que le SERVEUR
+   *   QUE CE SCRIPT GARDE OUVERT sert en repli SPA à toute route inconnue.
+   *   ⇒ Le script se bloque tout seul le fichier qu'il doit réécrire.
+   *
+   * ⛔ ET LA CONSÉQUENCE ÉTAIT PLUS GRAVE QUE LE BUG LUI-MÊME : **le prérendu
+   *   ne pouvait pas être testé en local.** Le studio poussait vers le CI pour
+   *   savoir si son correctif marchait — *c'est-à-dire qu'il n'avait aucun
+   *   moyen de mesurer avant de publier.*
+   *
+   * ⇒ On RÉESSAIE d'abord (le verrou est presque toujours momentané : une
+   *   lecture en cours par le serveur local), et on ne renonce à l'atomicité
+   *   qu'en DERNIER recours, après cinq tentatives.
+   *   ⚠️ Le repli n'est pas gratuit : `rmSync` puis `renameSync` laisse une
+   *      fenêtre où le fichier n'existe pas — **c'est exactement ce que la
+   *      version atomique avait fermé le 22/09.** Il n'est donc PAS le premier
+   *      choix : il est le dernier. */
+  for (let i = 0; i < 5; i++) {
+    try { fs.renameSync(temporaire, chemin); return }
+    catch (e) {
+      if (e.code !== 'EPERM' && e.code !== 'EACCES' && e.code !== 'EBUSY') {
+        try { fs.rmSync(temporaire, { force: true }) } catch {}
+        throw e
+      }
+      const fin = Date.now() + 60
+      while (Date.now() < fin) { /* attente courte, sans dépendance */ }
+    }
+  }
+  try { fs.rmSync(chemin, { force: true }) } catch {}
   fs.renameSync(temporaire, chemin)
+  console.error(`  ⚠️  ${path.basename(chemin)} : écriture NON atomique après 5 refus (verrou Windows)`)
 }
 
 /* ---------- client CDP minimal ---------- */
@@ -390,8 +427,29 @@ async function principal() {
      *
      * ⇒ `MAP` envoie le domaine vers 0.0.0.0, c'est-à-dire nulle part.
      *   ⚠️ Seul le domaine d'analytique est visé : les ressources du site sont
-     *   servies par le serveur local, et elles continuent de charger. */
-    '--host-resolver-rules=MAP analytics.gldigitallab.fr 0.0.0.0,MAP www.google-analytics.com 0.0.0.0,MAP googletagmanager.com 0.0.0.0',
+     *   servies par le serveur local, et elles continuent de charger.
+     *
+     * ⛔⛔ ET CE N'ÉTAIT PAS ASSEZ — mesuré le 24/09/2026, maintenant que le
+     *    prérendu tourne enfin EN LOCAL (il en était incapable : voir ecrireAtomique).
+     *
+     *    L'ordre exact des routes, obtenu par mesure :
+     *        … /ressources/tutoriels ✅ (elle passait : le blocage CDP a mordu)
+     *        /components ✅   /apps ✅   /liens ⚠️ RENDU ILLISIBLE (aucune réponse)
+     *        /ia-de-bord ⛔ ÉCHEC — et les 22 suivantes en cascade.
+     *
+     *    ⭐ LA ROUTE COUPABLE EST `/liens` — **une page de liens**. Elle déclenche
+     *      des dizaines de requêtes vers des domaines extérieurs. Chacune part,
+     *      aucune ne répond : elles s'empilent, et le moteur cesse de rendre.
+     *      *Le domaine d'analytique n'était qu'UN des émetteurs, pas le seul.*
+     *
+     * ⇒ `MAP * 0.0.0.0` : **la résolution de TOUT nom extérieur rend nulle part.**
+     *   ⭐ Et le serveur local n'est pas touché : on navigue vers `127.0.0.1`,
+     *     qui est une IP littérale — **elle ne passe pas par le résolveur.**
+     *   ⇒ Une page de liens ne peut plus noyer le moteur : ses requêtes
+     *     échouent instantanément au lieu d'attendre.
+     *   ⚠️ Ce qu'on perd : rien. *Un pré-rendu n'a jamais eu besoin du réseau
+     *      extérieur — il a besoin du `dist/` que ce script sert lui-même.* */
+    '--host-resolver-rules=MAP * 0.0.0.0',
     `--remote-debugging-port=${DEBUG_PORT}`, `--user-data-dir=${profil}`,
     `http://127.0.0.1:${PORT}/`,
   ], {
@@ -416,6 +474,40 @@ async function principal() {
     } catch {}
   }
   if (!cdp) { console.error('Chrome ne répond pas sur le port de débogage'); proc.kill(); serveur.close(); process.exit(1) }
+
+  /* ⛔⛔ ON BLOQUE L'ANALYTIQUE AU NIVEAU DU PROTOCOLE — 24/09/2026.
+   *
+   * MESURE, deux fois : `fichiers écrits : 10 · échecs : 23`, et **la 9ᵉ route
+   * rendue est `/ressources/tutoriels`** — celle que le commentaire ci-dessus
+   * désigne comme la SEULE à charger Matomo dans son propre composant.
+   * **Le moteur de Chrome cesse de répondre exactement là.**
+   *
+   * ⛔ ET LE CORRECTIF PRÉCÉDENT NE POUVAIT PAS SUFFIRE.
+   *   `--host-resolver-rules=MAP … 0.0.0.0` agit sur la RÉSOLUTION : la requête
+   *   part quand même, échoue, et **`_paq` continue d'empiler ses commandes** —
+   *   c'est une file, et rien ne la vide dans un navigateur sans tête dont le
+   *   domaine d'analytique ne répond pas. *Résoudre vers nulle part n'est pas
+   *   empêcher d'appeler.*
+   *   ⚠️ Et si le script Matomo est INLINE, `MAP` ne le voit même pas.
+   *
+   * ⭐ LA BONNE COUCHE, C'EST CELLE-CI : `Network.setBlockedURLs` refuse la
+   *   requête AVANT qu'elle parte, au niveau du protocole — pas du DNS, pas du
+   *   HTML. Elle ne dépend ni de la résolution, ni de l'endroit d'où le script
+   *   est chargé.
+   *
+   * ⇒ Et ce n'est pas une perte : *on ne fait pas d'analytique sur 32 pages
+   *   visitées par notre propre machine. **Ces visites n'existent pas.*** */
+  try {
+    await cdp.envoyer('Network.enable')
+    await cdp.envoyer('Network.setBlockedURLs', { urls: [
+      '*analytics.gldigitallab.fr*', '*matomo*', '*google-analytics*',
+      '*googletagmanager*', '*doubleclick*',
+    ] })
+    console.log('  🔒 analytique bloquée au niveau du protocole (Network.setBlockedURLs)')
+  } catch (e) {
+    console.error(`  ⚠️  blocage de l'analytique indisponible : ${e.message}`)
+    console.error('     (le prérendu continue — mais la file _paq risque de figer le moteur)')
+  }
   await cdp.envoyer('Page.enable')
   await cdp.envoyer('Runtime.enable')
 
