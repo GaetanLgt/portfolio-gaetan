@@ -42,23 +42,82 @@ if (vitrine.includes(LIEN_BOUCLE)) {
   liensCorriges = 1
 }
 
-/* ── 2. LE RETOUR VERS LE SITE ──────────────────────────────────────────────────
-   Le visiteur qui arrive sur le navire doit pouvoir rejoindre l'agence en un geste.
-   On ajoute une entree discrete dans le pied de page, pas un bandeau : *la visite du
-   navire ne doit pas etre interrompue par une publicite.* */
-const PIED = '<footer>'
-if (vitrine.includes(PIED) && !vitrine.includes('ark-retour-site')) {
-  vitrine = vitrine.replace(
-    PIED,
-    `<footer>
-  <p class="ark-retour-site" style="margin:0 0 18px;font:400 13px/1.6 ui-monospace,Consolas,monospace;letter-spacing:.06em">
-    <a href="/dossier" style="color:#2abfff;border-bottom:1px solid rgba(42,191,255,.4);text-decoration:none">Le dossier du studio</a>
-    <span style="opacity:.4"> · </span>
-    <a href="/services" style="color:#2abfff;border-bottom:1px solid rgba(42,191,255,.4);text-decoration:none">L'offre</a>
-    <span style="opacity:.4"> · </span>
-    <a href="/contact" style="color:#2abfff;border-bottom:1px solid rgba(42,191,255,.4);text-decoration:none">Écrire au capitaine</a>
-  </p>`,
-  )
+/* ── 2. LA NAVIGATION ET LE RETOUR VERS LE SITE ────────────────────────────────
+   ⛔ MESURE DU 24/09/2026, ET C'EST LE DÉFAUT LE PLUS BÊTE DE LA JOURNÉE :
+     `ark-retour-site`  SOURCE 0 · SCRIPT 2 · GÉNÉRÉ 0
+   Le script ÉCRIVAIT le bloc, et le fichier livré ne l'avait PAS. Parce que le
+   remplacement cherchait `<footer>` — qui n'existe pas dans cette page — et
+   qu'**un `replace()` qui ne trouve rien ne lève aucune erreur.**
+   ⭐ *Un remplacement sans assertion est un remplacement à l'aveugle* — la loi que
+   le studio a payée trois fois, et que je viens de repayer.
+   ⇒ On ancre sur `</body>`, qui existe dans toute page HTML, ET on l'assère.
+
+   ⭐ ET LA NAVIGATION VIT ICI, PAS DANS LE FICHIER GÉNÉRÉ. Elle y avait été posée
+   directement : au build suivant, ce script régénère la page depuis la source et
+   **la navigation disparaît**. *Ce qui doit survivre à une régénération s'écrit
+   dans le générateur, jamais dans le généré.* */
+const NAV = `
+<style id="ark-site-nav-style">
+  /* ⭐ LA NAVIGATION DU SITE, PAR-DESSUS LA VISITE.
+     Le visiteur arrive sur un navire : il doit pouvoir en SORTIR en un geste. */
+  .ark-site-nav {
+    position: fixed; top: 14px; right: 18px; z-index: 40;
+    display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+    justify-content: flex-end; max-width: min(680px, 62vw);
+  }
+  .ark-site-nav a {
+    font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: #9fc4d8; text-decoration: none; padding: 7px 11px;
+    border: 1px solid rgba(42,191,255,.22); border-radius: 3px;
+    background: rgba(8,11,20,.62); backdrop-filter: blur(6px);
+    transition: color .18s, border-color .18s, background .18s;
+  }
+  .ark-site-nav a:hover, .ark-site-nav a:focus-visible {
+    color: #eaf6ff; border-color: rgba(42,191,255,.75);
+    background: rgba(42,191,255,.12); outline: none;
+  }
+  .ark-site-nav a:focus-visible { box-shadow: 0 0 0 2px rgba(42,191,255,.55); }
+  .ark-site-nav__cta {
+    color: #080b14 !important; background: #2abfff !important;
+    border-color: #2abfff !important; font-weight: 700;
+  }
+  .ark-site-nav__cta:hover, .ark-site-nav__cta:focus-visible {
+    background: #7fd8ff !important; border-color: #7fd8ff !important;
+  }
+  @media (max-width: 720px) {
+    .ark-site-nav { top: auto; bottom: 10px; right: 10px; left: 10px; max-width: none; justify-content: center; gap: 5px; }
+    .ark-site-nav a { font-size: 10px; padding: 6px 8px; letter-spacing: .08em; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ark-site-nav a { transition: none; } }
+</style>
+<nav class="ark-site-nav" id="ark-site-nav" aria-label="Navigation du site GL Digital Lab">
+  <a href="/services">Offre</a>
+  <a href="/projets">Réalisations</a>
+  <a href="/dossier">Méthode</a>
+  <a href="/galion">Le navire</a>
+  <a href="/contact" class="ark-site-nav__cta">Parler de votre projet</a>
+</nav>
+`
+
+/* Cinq entrées, pas sept : *un menu qui liste tout ne guide personne.* */
+
+const ANCRE_FIN = '</body>'
+if (!vitrine.includes(ANCRE_FIN)) {
+  throw new Error('ASSERTION : </body> introuvable — impossible de poser la navigation sans casser la page')
+}
+if (!vitrine.includes('ark-site-nav')) {
+  // Le style va dans <head>, la barre juste apres <body> — l'ordre du document compte.
+  vitrine = vitrine.replace('</head>', NAV.split('<nav')[0] + '</head>')
+  vitrine = vitrine.replace(ANCRE_FIN, NAV.slice(NAV.indexOf('<nav')) + '\n' + ANCRE_FIN)
+}
+/* ⛔ L'ASSERTION QUI MANQUAIT : on VÉRIFIE que le bloc est bien dans le résultat.
+   Sans elle, un `replace()` qui ne trouve rien passe pour un succès. */
+if (!vitrine.includes('id="ark-site-nav"')) {
+  throw new Error('ASSERTION : la navigation n\'est PAS dans le resultat — le remplacement a echoue en silence')
+}
+if (!vitrine.includes('ark-site-nav-style')) {
+  throw new Error('ASSERTION : le style de la navigation n\'est PAS dans le resultat')
 }
 
 /* ── 3. ASSERTIONS — on refuse de poser une page qui n'est pas la vitrine ─────── */

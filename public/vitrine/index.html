@@ -154,11 +154,58 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="alternate icon" href="/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<style id="ark-site-nav-style">
+  /* ⭐ LA NAVIGATION DU SITE, PAR-DESSUS LA VISITE.
+     Le visiteur arrive sur un navire : il doit pouvoir en sortir en un geste. */
+  .ark-site-nav {
+    position: fixed; top: 14px; right: 18px; z-index: 40;
+    display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+    justify-content: flex-end; max-width: min(680px, 62vw);
+  }
+  .ark-site-nav a {
+    font-family: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: #9fc4d8; text-decoration: none; padding: 7px 11px;
+    border: 1px solid rgba(42,191,255,.22); border-radius: 3px;
+    background: rgba(8,11,20,.62); backdrop-filter: blur(6px);
+    transition: color .18s, border-color .18s, background .18s;
+  }
+  .ark-site-nav a:hover, .ark-site-nav a:focus-visible {
+    color: #eaf6ff; border-color: rgba(42,191,255,.75);
+    background: rgba(42,191,255,.12); outline: none;
+  }
+  .ark-site-nav a:focus-visible { box-shadow: 0 0 0 2px rgba(42,191,255,.55); }
+  .ark-site-nav__cta {
+    color: #080b14 !important; background: #2abfff !important;
+    border-color: #2abfff !important; font-weight: 700;
+  }
+  .ark-site-nav__cta:hover, .ark-site-nav__cta:focus-visible {
+    background: #7fd8ff !important; border-color: #7fd8ff !important;
+  }
+  /* Sur petit ecran, la barre passe en bas et reste atteignable au pouce. */
+  @media (max-width: 720px) {
+    .ark-site-nav {
+      top: auto; bottom: 10px; right: 10px; left: 10px; max-width: none;
+      justify-content: center; gap: 5px;
+    }
+    .ark-site-nav a { font-size: 10px; padding: 6px 8px; letter-spacing: .08em; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ark-site-nav a { transition: none; } }
+</style>
 </head>
 <body>
 <div class="ark-stage" id="ark-stage" aria-hidden="true"></div>
 <div class="ark-vignette" aria-hidden="true"></div>
 <div class="ark-hud" id="ark-hud" aria-hidden="true"><svg id="ark-hud-lines"></svg></div>
+
+<nav class="ark-site-nav" id="ark-site-nav" aria-label="Navigation du site GL Digital Lab">
+  <a href="/services">Offre</a>
+  <a href="/projets">Réalisations</a>
+  <a href="/dossier">Méthode</a>
+  <a href="/galion">Le navire</a>
+  <a href="/contact" class="ark-site-nav__cta">Parler de votre projet</a>
+</nav>
 
 <header class="ark-top">
   <div class="rune" title="ARKADIA en Elder Futhark">ᚨᚱᚲᚨᛞᛁᚨ</div>
