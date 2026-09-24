@@ -469,6 +469,16 @@ const routes = [
     },
   },
   {
+    path: '/arkadia-labo',
+    name: 'ArkadiaLabo',
+    component: () => import('../views/core/ArkadiaLaboPage.vue'),
+    meta: {
+      title: 'Arkadia — exploiter un écosystème communautaire comme un système critique',
+      description:
+        "Étude de cas : opérer un système vivant — disponibilité, sauvegardes, droits, modération et incidents. Ce qui est mesuré, et ce qui ne l'est pas encore.",
+    },
+  },
+  {
     path: '/laboratoire',
     name: 'Laboratoire',
     component: () => import('../views/core/LaboratoirePage.vue'),
