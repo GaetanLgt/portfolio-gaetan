@@ -1,0 +1,154 @@
+{
+  "titre": "Arkadia — le laboratoire, engendré",
+  "description": "74 sources du studio, 8 thèmes, un monde navigable. Engendré par site-generatif.mjs le 2026-09-24.",
+  "graine": 42,
+  "palette": {
+    "fond": "#060a14",
+    "accent": "#2abfff",
+    "or": "#ffe650",
+    "texte": "#d7e6f2",
+    "doux": "#8ea6b8"
+  },
+  "lieux": [
+    {
+      "id": "divers",
+      "nom": "Divers",
+      "texte": "<strong>3 source(s)</strong> · 3 591 mots lus.<br><br><p><strong>00-LES-30-PLUS-PERTINENTES.md</strong> — <em>&gt; **Question posée** : *Comment concevoir, opérer et faire évoluer un écosystème &gt; communautaire comme un système critique — et qu'est-ce que ça prouve pour une PME ?* &gt; &gt; **Ce dossier** contient **50 sources prises sur la machine**, classées par pertinence &gt; réelle, **les 30 premières en tête**, plus les **prompts** pour mener l'analyse complète. &gt; &gt; **Constitué le 24/09/2026.…</em></p><p><strong>ANALYSE-VIDEOS-2026-09-24.md</strong> — <em>&gt; **Ce que Néo a envoyé** : six vidéos et trois visuels. **Quatre étaient déjà &gt; transcrites** par le script du studio (`audio/veille-transcrire-2026-09-24.py`), &gt; en local, avec `faster-whisper large-v3` — **62 Ko de texte, 10 633 mots**. &gt; &gt; ⭐ **Je ne les ai pas retranscrites.** *Le travail était fait : le refaire aurait &gt; coûté 4 minutes de GPU pour rien.* --- **Le sujet** :…</em></p><p><strong>PROMPTS-ANALYSE.md</strong> — <em>&gt; **Comment s'en servir.** Les prompts sont **ordonnés** : le premier trie, le deuxième &gt; extrait, le troisième met en tension, le quatrième écrit. **On ne saute pas les étapes** : &gt; demander « écris l'étude de cas » à partir de 50 sources donne une synthèse floue ; &gt; demander « liste les incidents avec leur fichier et leur ligne » donne de la matière. &gt; &gt; ⭐ **Règle qui s'appli…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 285,
+      "hauteur": 39.74460368287141,
+      "taille": 14,
+      "liens": [
+        {
+          "vers": "site",
+          "texte": "Le site génératif"
+        }
+      ]
+    },
+    {
+      "id": "site",
+      "nom": "Le site génératif",
+      "texte": "<strong>2 source(s)</strong> · 2 736 mots lus.<br><br><p><strong>site-generatif.mjs</strong> — <em>/* ═══════════════════════════════════════════════════════════════════════════════ LE SITE GÉNÉRATIF AUTOMATIQUE — ArkAdiA Studio ⭐ CE QUE NÉO A DEMANDÉ : « tu mets en place le site génératif automatique ». ⭐ LA THÈSE, ET ELLE VIENT DE SES VIDÉOS. Dans `veille-02-orchestre` : *« Et si le prochain site web qu'on visite n'existait tout simplement pas avant la milliseconde exacte…</em></p><p><strong>18-inventaire-arkadia-dans-le-site-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** Étape demandée par la consigne (`A-FAIRE-2026-09-23`, § 3) : &gt; *« inventorier les occurrences, proposer la fusion, **la faire valider** — c'est une &gt; décision éditoriale et visuelle. »* &gt; ⛔ **Ce document fait la première étape. Il ne fait ni la deuxième ni la troisième.** &gt; &gt; ⚠️ **Périmètre mesuré** : `C:\\IA\\portfolio-gaetan\\src` — **146 o…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 340,
+      "hauteur": -25.698031419594194,
+      "taille": 14,
+      "liens": [
+        {
+          "vers": "exploit",
+          "texte": "L’exploitation"
+        },
+        {
+          "vers": "divers",
+          "texte": "Revenir au début"
+        }
+      ]
+    },
+    {
+      "id": "exploit",
+      "nom": "L’exploitation",
+      "texte": "<strong>5 source(s)</strong> · 24 402 mots lus.<br><br><p><strong>01-_arkadia-au-logon.log</strong> — <em>����#\u0000 \u0000:\u0000 \u0000L\u0000e\u0000 \u0000t\u0000e\u0000r\u0000m\u0000e\u0000 \u0000�\u0000��#\u0000�\u0000 \u0000n\u0000'\u0000e\u0000s\u0000t\u0000 \u0000p\u0000a\u0000s\u0000 \u0000r\u0000e\u0000c\u0000o\u0000n\u0000n\u0000u\u0000 \u0000c\u0000o\u0000m\u0000m\u0000e\u0000 \u0000n\u0000o\u0000m\u0000 \u0000d\u0000'\u0000a\u0000p\u0000p\u0000l\u0000e\u0000t\u0000 \u0000d\u0000e\u0000 \u0000c\u0000o\u0000m\u0000m\u0000a\u0000n\u0000d\u0000e\u0000,\u0000 \u0000f\u0000o\u0000n\u0000c\u0000t\u0000i\u0000o\u0000n\u0000,\u0000 \u0000f\u0000i\u0000c\u0000h\u0000i\u0000e\u0000r\u0000 \u0000d\u0000e\u0000 \u0000s\u0000c\u0000r\u0000i\u0000p\u0000t\u0000 \u0000o\u0000u\u0000 \u0000p\u0000r\u0000o\u0000g\u0000r\u0000a\u0000m\u0000m\u0000e\u0000 \u0000 \u0000 \u0000e\u0000x\u0000�\u0000c\u0000u\u0000t\u0000a\u0000b\u0000l\u0000e\u0000.\u0000 \u0000V\u0000�\u0000r\u0000i\u0000f\u0000i\u0000e\u0000z\u0000 \u0000l\u0000'\u0000o\u0000r\u0000t\u0000h\u0000o\u0000g\u0000r\u0000a\u0000p\u0000h\u0000e\u0000 \u0000d\u0000u\u0000 \u0000n\u0000o\u0000m\u0000,\u0000 \u0000o\u0000u\u0000 \u0000s\u0000i\u0000 \u0000u\u0000n\u0000 \u0000c\u0000h\u0000e\u0000m\u0000i\u0000n\u0000 \u0000d\u0000'\u0000a\u0000c\u0000c\u0000�\u0000s\u0000 \u0000e\u0000x\u0000i\u0000s\u0000t\u0000e\u0000,\u0000 \u0000v\u0000�\u0000…</em></p><p><strong>02-serveur-assistant.js.log</strong> — <em>node:events:487 throw er; // Unhandled 'error' event ^ Error: listen EADDRINUSE: address already in use 127.0.0.1:8133 at Server.setupListenHandle [as _listen2] (node:net:2167:16) at listenInCluster (node:net:2224:12) at node:net:2448:7 at process.processTicksAndRejections (node:internal/process/task_queues:90:21) Emitted 'error' event on Server instance at: at emitErrorNT (nod…</em></p><p><strong>05-serveur-agence.js.log</strong> — <em>node:events:487 throw er; // Unhandled 'error' event ^ Error: listen EADDRINUSE: address already in use 127.0.0.1:8125 at Server.setupListenHandle [as _listen2] (node:net:2167:16) at listenInCluster (node:net:2224:12) at node:net:2448:7 at process.processTicksAndRejections (node:internal/process/task_queues:90:21) Emitted 'error' event on Server instance at: at emitErrorNT (nod…</em></p><p><strong>07-position-serveur-cluster-arche-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** Formulation de Gaëtan : *« en gros on est un serveur d'eux, déjà un cluster, et on &gt; apporte notre arche ! »* &gt; &gt; ⭐ **Ce que ce document fait** : il traduit cette phrase en **capacités mesurées** — *parce qu'une &gt; position qui ne se chiffre pas ne se défend pas devant un groupe.* &gt; ⛔ **Aucune donnée de tiers n'entre ici, et rien ne sort de…</em></p><p><strong>44-Y_nN5DLKSlQ-astuces-ark-jeu-vs-serveur.md</strong> — <em>&gt; **GL Digital Lab — 17/09/2026.** Format maison : *L'essentiel à retenir / Relevé souveraineté / Doctrines nommées / Graphies douteuses / Ce que la vidéo ne dit pas / Non établi / Sources*. &gt; &gt; ⚠️ **Ce n'est pas une transcription Whisper.** Matière = **une piste de sous-titres automatiques de plateforme**, **piste française** (`.fr.sous-titres.txt`), **récupérée sans GPU**. D'…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 395,
+      "hauteur": -23.12879278910081,
+      "taille": 22,
+      "liens": [
+        {
+          "vers": "incident",
+          "texte": "Les incidents"
+        },
+        {
+          "vers": "divers",
+          "texte": "Revenir au début"
+        }
+      ]
+    },
+    {
+      "id": "incident",
+      "nom": "Les incidents",
+      "texte": "<strong>6 source(s)</strong> · 8 999 mots lus.<br><br><p><strong>03-00-rapport-incident-assaini.md</strong> — <em>&gt; **Version assainie pour analyse externe.** Ce document a été préparé pour être &gt; soumis à un outil de synthèse hébergé par un tiers. Tous les chemins machine, &gt; les adresses réseau locales, les noms de comptes et les identifiants de service &gt; ont été remplacés par des jetons génériques (&lt;chemin-poste&gt;, &lt;adresse-locale&gt;, &gt; &lt;compte&gt;…). Aucun secret, aucun jeton, aucun mot de pa…</em></p><p><strong>04-RAPPORT-INCIDENT-2026-09-17.md</strong> — <em>&lt;!-- GLDL-SIG v1 12b30ca6bb4cbaeb77b7911469661c668906e4f6498766c524a4b132161752a8 --&gt; **Date** : 17 septembre 2026 **Périmètre** : poste de travail `EVA01` (Alienware Aurora R12), services locaux du studio, pare-feu, protection Defender, moteur RAG, observatoire Discord. **Rédigé par** : session GL Digital Lab (preset `gl-digital-lab`, harnais DSH), à la demande de Gaëtan. **Na…</em></p><p><strong>08-Décryptage_Incident_EVA-01.whisper.txt</strong> — <em>plongeons directement au coeur d'un cas d'école absolument fascinant, l'incident du poste de travail EVA01. Ce qu'on va faire aujourd'hui dans ce décryptage, c'est extraire les leçons de 10 erreurs critiques qui ont été audités pendant cette intervention. Et attention, l'approche va être analytique, très stricte. La toute première leçon à retenir d'emblée, c'est qu'un audit de…</em></p><p><strong>11-PLAN-REPONSE-INCIDENT-2026-09-18.md</strong> — <em>&gt; **Écrit le 18/09/2026** en réponse à : *« Si jamais attaque au niveau russe, &gt; contre-attaque immédiate. »* &gt; &gt; ⚠️ **La contre-attaque technique est refusée, et ce document explique par quoi &gt; elle est remplacée.** Le mot « immédiat » est pris au sérieux : une riposte &gt; immédiate ne s'improvise pas, elle se pré-écrit. *Le jour où ça tombe, on ne &gt; réfléchit pas à qui fait quo…</em></p><p><strong>12-2026-09-10-incident-shell-windows.md</strong> — <em>&lt;!-- GLDL-SIG v1 241cefc6260b08c3663c7e405b490d5c60eafd1ac5bdf4ab4ef397422f29d7ac --&gt; &gt; **Statut** : résolu par redémarrage (à confirmer). &gt; **Gravité** : usage — l'utilisateur ne pouvait plus accéder à son bureau ni au &gt; menu Démarrer, en pleine session de travail. &gt; **Règle de ce document** : ce qu'on a **mesuré** d'un côté, ce qu'on **suppose** &gt; de l'autre. Le doute reste é…</em></p><p><strong>13-demo-02-incident-nexio.md</strong> — <em>--- statut: À VALIDER id: demo-02-incident-nexio de: &quot;Karim Benali&quot; &lt;karim.benali@nexio-startup.fr&gt; sujet_recu: URGENT - incident sur notre application métier intention: support / incident template: libre date: 2026-09-17T07:46:15.875Z --- &gt; **De :** &quot;Karim Benali&quot; &lt;karim.benali@nexio-startup.fr&gt; &gt; **Sujet :** URGENT - incident sur notre application métier &gt; Bonjour, &gt; &gt; Notre…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 450,
+      "hauteur": 40.65262622532243,
+      "taille": 17,
+      "liens": [
+        {
+          "vers": "jedu",
+          "texte": "Le jeu"
+        },
+        {
+          "vers": "divers",
+          "texte": "Revenir au début"
+        }
+      ]
+    },
+    {
+      "id": "jedu",
+      "nom": "Le jeu",
+      "texte": "<strong>19 source(s)</strong> · 31 446 mots lus.<br><br><p><strong>06-ARKADIA-carte-entites-departements-possibilites-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** Demande de Gaëtan : *« indique toutes nos possibilités et nos différents &gt; départements — ARKADIA Studio Retro et autre… »* &gt; &gt; ⭐ **Ce que ce document est** : **la carte complète**, à jour au 23/09. &gt; ⚠️ **Il ne l'invente pas** : il assemble `modeles/strategie-holding-ia-2026.md` *(09/09/2026, la &gt; décision « la holding organisationnelle e…</em></p><p><strong>09-fusion-arkadia-inventaire-et-proposition-2026-09-23.md</strong> — <em>&gt; **23/09/2026.** Réponse à `A-FAIRE-2026-09-23-consignes-gaetan.md` § 3 : &gt; *« inventorier les occurrences, proposer la fusion, **la faire valider** — c'est une décision &gt; éditoriale et visuelle. »* &gt; &gt; ⛔ **Ce document fait les deux premières étapes. La troisième t'appartient.** --- **ARKADIA apparaît dans 27 fichiers du site, 138 fois.** | fichier | fois | ce que c'est | |---…</em></p><p><strong>10-proposition-fusion-arkadia-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** *Consigne :* ***« Le site mentionne ARKADIA en plusieurs endroits. Tout fondre en &gt; UN seul endroit. Méthode : inventorier, **proposer** la fusion, **la faire valider**. »*** &gt; &gt; ✅ **L'inventaire est fait** — *146 occurrences, 25 fichiers, trois familles.* &gt; ⛔ **Ce document est la PROPOSITION.** **Il ne touche pas au site** : *c'est éditor…</em></p><p><strong>32-metroid-et-arkadia-l-oeuf-et-la-mutation.md</strong> — <em>--- tags: [pont, metroid, arkadia, reacteur, oeuf, mutation, jeu, licence] date: 2026-09-15 statut: pont verifie: 2026-09-24 --- *Le Metroid est un œuf : un noyau dans une membrane, qui mue jusqu'à une reine. Le réacteur du navire d'ArkAdiA porte exactement ces deux premiers mots — **Noyau**, **Membrane** — et il mue jusqu'à **APEX**. La correspondance n'est pas à construire :…</em></p><p><strong>34-arkadia.json</strong> — <em>{ &quot;titre&quot;: &quot;Arkadia — le laboratoire vivant&quot;, &quot;description&quot;: &quot;Le galion, EVA01 et Arkadia : un monde qu'on parcourt. Deux systèmes testés dans le réel, portés par le navire.&quot;, &quot;graine&quot;: 42, &quot;palette&quot;: { &quot;fond&quot;: &quot;#060a14&quot;, &quot;accent&quot;: &quot;#2abfff&quot;, &quot;or&quot;: &quot;#ffe650&quot;, &quot;texte&quot;: &quot;#d7e6f2&quot;, &quot;doux&quot;: &quot;#8ea6b8&quot; }, &quot;lieux&quot;: [ { &quot;id&quot;: &quot;galion&quot;, &quot;nom&quot;: &quot;Le galion&quot;, &quot;texte&quot;: &quot;&lt;strong&gt;Le navire fa…</em></p><p><strong>35-metroid-et-arkadia-l-oeuf-et-la-mutation.md</strong> — <em>--- tags: [pont, metroid, arkadia, reacteur, oeuf, mutation, jeu, licence] date: 2026-09-15 statut: pont verifie: 2026-09-15 --- *Le Metroid est un œuf : un noyau dans une membrane, qui mue jusqu'à une reine. Le réacteur du navire d'ArkAdiA porte exactement ces deux premiers mots — **Noyau**, **Membrane** — et il mue jusqu'à **APEX**. La correspondance n'est pas à construire :…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 505,
+      "hauteur": -3.1563470593959906,
+      "taille": 22,
+      "liens": [
+        {
+          "vers": "conception",
+          "texte": "La conception"
+        },
+        {
+          "vers": "divers",
+          "texte": "Revenir au début"
+        }
+      ]
+    },
+    {
+      "id": "conception",
+      "nom": "La conception",
+      "texte": "<strong>5 source(s)</strong> · 13 934 mots lus.<br><br><p><strong>15-CADRAGE-arkadia-jeu-de-cartes-2026-09-14.md</strong> — <em>&gt; ## POURQUOI CE DOCUMENT EXISTE &gt; &gt; **Commande :** *« tgc arkadia »*, puis le choix explicite de Gaëtan : **un jeu de cartes ARKADIA &gt; (trading card game)**. &gt; &gt; **Ce document ne construit pas le jeu.** Il **mesure** ce qui existe déjà, **date** ce qui fait &gt; règle, et pose **les questions qui décident**. La règle du studio le dit pour les kits &gt; pédagogiques — *« un kit écrit…</em></p><p><strong>16-ARKADIA-GDD-une-page-2026-09-12.md</strong> — <em>**GL Digital Lab · 12 septembre 2026 · travail demandé, mot pour mot :** &gt; *« à reprendre réviser et augmenter et adapter puis intégréer ! »* — consigne de Gaëtan sur le lien &gt; `youtube.com/watch?v=q96lz725gIw` &gt; **Ce que ce document est.** Le **GDD d'une page** d'ARKADIA, construit sur le modèle **réel** de &gt; la vidéo reçue — dont le contenu a été **lu**, pas deviné — puis **r…</em></p><p><strong>17-ARKADIA-GDD-une-page-2026-09-12.md</strong> — <em>**GL Digital Lab · 12 septembre 2026 · travail demandé, mot pour mot :** &gt; *« à reprendre réviser et augmenter et adapter puis intégréer ! »* — consigne de Gaëtan sur le lien &gt; `youtube.com/watch?v=q96lz725gIw` &gt; **Ce que ce document est.** Le **GDD d'une page** d'ARKADIA, construit sur le modèle **réel** de &gt; la vidéo reçue — dont le contenu a été **lu**, pas deviné — puis **r…</em></p><p><strong>28-07 - Architecture d_Arkadia _ère Rodin_ _V9W8blkaCvg_.whisper.txt</strong> — <em>Salut tout le monde et bienvenue dans cette nouvelle analyse ! Gérer la montagne d'information qu'on reçoit chaque jour, c'est devenu un vrai parcours du combattant, pas vrai ? On croule littéralement sous les données. Mais, et si le secret est pour organiser toute cette réalité numérique ne se trouvait pas dans un manuel technique hyper ennuyeux mais carrément dans la pop cult…</em></p><p><strong>30-06 - Architecture de Stabilité _ère Rodin_ _btV604wV8Pw_.whisper.txt</strong> — <em>Allez, on attaque tout de suite. Bienvenue dans ce décryptage où l'on va disséquer un corpus d'octrinal personnel absolument fascinant. On va se pencher sur le système d'un individu nommé Gaëtan qu'on appellera Néo et on va voir comment il gère sa stabilité mentale, comment il structure son travail et comment il a bâti une véritable mémoire externalisée. Et attention, on ne par…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 560,
+      "hauteur": -38.611798077916404,
+      "taille": 19,
+      "liens": [
+        {
+          "vers": "ia",
+          "texte": "L’IA locale"
+        },
+        {
+          "vers": "divers",
+          "texte": "Revenir au début"
+        }
+      ]
+    },
+    {
+      "id": "ia",
+      "nom": "L’IA locale",
+      "texte": "<strong>3 source(s)</strong> · 4 034 mots lus.<br><br><p><strong>29-04 - Culture Pop _ Code Source _ère Rodin_ _BL0s05l6fR8_.whisper.txt</strong> — <em>On imagine souvent la création des systèmes informatiques les plus complexes, comme quelque chose d'hyper-stérile, n'est-ce pas, des manuels d'ingénierie ultra strictes, des algorithmes froids, le tout enfermé dans des centres de données immenses et sans âme. Mais, est-ce qu'on aborde ça de manière complètement différente ? Et si, au lieu de s'appuyer uniquement sur des mathéma…</em></p><p><strong>31-05 - Le Système Arkadia _ère Rodin_ _6N-GxQwqLqE_.whisper.txt</strong> — <em>Bonjour à tous et bienvenue dans cette nouvelle exploration. Aujourd'hui, on plonge directement au cœur d'un concept absolument fascinant, le système Arcadia. Concrètement, c'est quoi ? C'est un modèle hybride de l'année 2026 qui vient totalement repousser les limites de ce qu'on croyait possible entre la productivité humaine et l'intelligence artificielle. Ce qui rend cette ar…</em></p><p><strong>33-03 - Nexus _ Hub de Contrôle _ère Rodin_ _IMl0Uz0JRMM_.whisper.txt</strong> — <em>Allez, c'est parti pour ce nouveau décryptage. Aujourd'hui, on met un énorme coût de projecteur sur un projet assez radical, pensé par et pour des développeurs et des makers. Ça s'appelle Nexus, un hub de contrôle personnel. Et attention, on ne parle pas d'un ennemième gadget tech sans lendemain, on parle vraiment d'une refonte totale de la façon dont on envisage l'intelligence…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 615,
+      "hauteur": 28.121930012257245,
+      "taille": 15,
+      "liens": [
+        {
+          "vers": "config",
+          "texte": "Les configurations"
+        },
+        {
+          "vers": "divers",
+          "texte": "Revenir au début"
+        }
+      ]
+    },
+    {
+      "id": "config",
+      "nom": "Les configurations",
+      "texte": "<strong>1 source(s)</strong> · 13 961 mots lus.<br><br><p><strong>48-catalogue-asa.json</strong> — <em>[ { &quot;nom&quot;: &quot;?bRawSockets&quot;, &quot;type&quot;: &quot;&quot;, &quot;defaut&quot;: &quot;&quot;, &quot;inASA&quot;: &quot;No&quot;, &quot;inASE&quot;: &quot;Yes&quot;, &quot;statut&quot;: &quot;deprecated&quot;, &quot;note&quot;: &quot;&quot;, &quot;cli&quot;: &quot;skip&quot;, &quot;fichier&quot;: &quot;?&quot;, &quot;section&quot;: &quot;?&quot;, &quot;ligne&quot;: 736 }, { &quot;nom&quot;: &quot;?listen&quot;, &quot;type&quot;: &quot;&quot;, &quot;defaut&quot;: &quot;&quot;, &quot;inASA&quot;: &quot;Yes&quot;, &quot;inASE&quot;: &quot;Yes&quot;, &quot;statut&quot;: &quot;deprecated&quot;, &quot;note&quot;: &quot;&quot;, &quot;cli&quot;: &quot;skip&quot;, &quot;fichier&quot;: &quot;?&quot;, &quot;section&quot;: &quot;?&quot;, &quot;ligne&quot;: 1256 }, { &quot;nom&quot;: &quot;?MapPlaye…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+      "rayon": 670,
+      "hauteur": 20.428744931859587,
+      "taille": 19,
+      "liens": [
+        {
+          "vers": "divers",
+          "texte": "Divers"
+        },
+        {
+          "vers": "divers",
+          "texte": "Revenir au début"
+        }
+      ]
+    }
+  ]
+}

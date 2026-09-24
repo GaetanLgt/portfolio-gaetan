@@ -92,10 +92,10 @@ const NAV = `
   @media (prefers-reduced-motion: reduce) { .ark-site-nav a { transition: none; } }
 </style>
 <nav class="ark-site-nav" id="ark-site-nav" aria-label="Navigation du site GL Digital Lab">
+  <a href="/galion">Le navire</a>
   <a href="/services">Offre</a>
-  <a href="/projets">Réalisations</a>
-  <a href="/dossier">Méthode</a>
   <a href="/laboratoire">Preuves</a>
+  <a href="/monde">Le monde</a>
   <a href="/contact" class="ark-site-nav__cta">Parler de votre projet</a>
 </nav>
 `
@@ -134,7 +134,7 @@ if (!vitrine.includes('id="ark-site-nav"')) {
 }
 /* ET ON VÉRIFIE CHAQUE DESTINATION, pas seulement la présence de la barre :
    *c'est l'ajout d'un lien qui avait disparu en silence.* */
-for (const u of ['/services', '/projets', '/dossier', '/laboratoire', '/contact']) {
+for (const u of ['/galion', '/services', '/laboratoire', '/monde', '/contact']) {
   if (!vitrine.includes(`href="${u}"`)) {
     throw new Error(`ASSERTION : la destination ${u} manque dans la navigation`)
   }

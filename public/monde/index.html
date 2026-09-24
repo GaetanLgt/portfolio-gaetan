@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arkadia — le laboratoire, engendré</title>
+<meta name="description" content="74 sources du studio, 8 thèmes, un monde navigable. Engendré par site-generatif.mjs le 2026-09-24.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23060a14'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%232abfff' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='3.4' fill='%23ffe650'/%3E%3C/svg%3E">
+<style>
+  :root{--fond:#060a14;--cyan:#2abfff;--or:#ffe650;--texte:#d7e6f2;--doux:#8ea6b8}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--fond);color:var(--texte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;overflow:hidden}
+  #scene{position:fixed;inset:0;display:block}
+  .voile{position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 45%,transparent 40%,rgba(4,7,14,.82) 100%)}
+  header{position:fixed;top:0;left:0;right:0;padding:14px 18px;z-index:20;
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  header h1{margin:0;font-size:.82rem;letter-spacing:.2em;text-transform:uppercase;
+    font-family:ui-monospace,Consolas,monospace;font-weight:600;color:var(--cyan)}
+  header p{margin:0;font-size:.72rem;letter-spacing:.1em;color:var(--doux);
+    font-family:ui-monospace,Consolas,monospace}
+  nav{position:fixed;bottom:0;left:0;right:0;padding:10px 14px 14px;z-index:20;
+    display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+  nav button{background:rgba(8,12,20,.72);border:1px solid rgba(42,191,255,.22);
+    color:var(--doux);font:500 .68rem/1 ui-monospace,Consolas,monospace;
+    letter-spacing:.1em;text-transform:uppercase;padding:8px 11px;border-radius:3px;
+    cursor:pointer;transition:color .18s,border-color .18s,background .18s}
+  nav button:hover,nav button:focus-visible{color:#fff;border-color:var(--cyan);
+    background:rgba(42,191,255,.14);outline:none}
+  nav button[aria-current="true"]{color:var(--fond);background:var(--cyan);border-color:var(--cyan);font-weight:700}
+  #panneau{position:fixed;left:0;right:0;bottom:64px;z-index:15;padding:0 18px;
+    display:flex;justify-content:center;pointer-events:none}
+  #panneau .carte{max-width:44rem;width:100%;padding:1.1rem 1.3rem;border-radius:.45rem;
+    border:1px solid rgba(42,191,255,.28);background:rgba(6,10,20,.86);
+    backdrop-filter:blur(8px);pointer-events:auto;transition:opacity .35s}
+  #panneau h2{margin:0 0 .5rem;font-size:1.15rem;letter-spacing:-.01em}
+  #panneau .corps{font-size:.93rem;line-height:1.65;color:var(--texte)}
+  #panneau .actes{margin-top:.9rem;display:flex;gap:8px;flex-wrap:wrap}
+  #panneau a{color:var(--cyan);text-decoration:none;font-weight:600;font-size:.9rem}
+  #panneau a:hover,#panneau a:focus-visible{text-decoration:underline}
+  #aide{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:20;
+    font:400 .68rem/1.7 ui-monospace,Consolas,monospace;color:var(--doux);
+    text-align:right;opacity:.75}
+  #aide kbd{color:var(--cyan);font-family:inherit}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  @media (max-width:640px){#aide{display:none}#panneau{bottom:58px;padding:0 10px}
+    nav button{font-size:.6rem;padding:7px 8px}}
+  @media (prefers-reduced-motion:reduce){#panneau .carte{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div class="voile" aria-hidden="true"></div>
+
+<header>
+  <h1>Arkadia — le laboratoire, engendré</h1>
+  <p>8 lieux · graine 42 · ce monde est généré, et il le dit</p>
+</header>
+
+<nav id="navigation" aria-label="Les lieux du monde"></nav>
+
+<div id="panneau" aria-live="polite">
+  <article class="carte" id="carte"></article>
+</div>
+
+<div id="aide" aria-hidden="true">
+  <kbd>←</kbd> <kbd>→</kbd> voyager<br>
+  <kbd>clic</kbd> glisser · tourner<br>
+  <kbd>molette</kbd> approcher
+</div>
+
+<p class="sr" id="annonce" aria-live="polite"></p>
+
+<script src="./three.min.js"></script>
+
+<script>
+"use strict";
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LE MONDE — Arkadia — le laboratoire, engendré
+   ⭐ Ce fichier est PRODUIT. La source est le JSON, pas ce HTML.
+      *Modifier le produit d'une génération, c'est perdre la modification au suivant.*
+   ═══════════════════════════════════════════════════════════════════════════════ */
+var MONDE = [
+  {
+    "id": "divers",
+    "nom": "Divers",
+    "texte": "<strong>3 source(s)</strong> · 3 591 mots lus.<br><br><p><strong>00-LES-30-PLUS-PERTINENTES.md</strong> — <em>&gt; **Question posée** : *Comment concevoir, opérer et faire évoluer un écosystème &gt; communautaire comme un système critique — et qu'est-ce que ça prouve pour une PME ?* &gt; &gt; **Ce dossier** contient **50 sources prises sur la machine**, classées par pertinence &gt; réelle, **les 30 premières en tête**, plus les **prompts** pour mener l'analyse complète. &gt; &gt; **Constitué le 24/09/2026.…</em></p><p><strong>ANALYSE-VIDEOS-2026-09-24.md</strong> — <em>&gt; **Ce que Néo a envoyé** : six vidéos et trois visuels. **Quatre étaient déjà &gt; transcrites** par le script du studio (`audio/veille-transcrire-2026-09-24.py`), &gt; en local, avec `faster-whisper large-v3` — **62 Ko de texte, 10 633 mots**. &gt; &gt; ⭐ **Je ne les ai pas retranscrites.** *Le travail était fait : le refaire aurait &gt; coûté 4 minutes de GPU pour rien.* --- **Le sujet** :…</em></p><p><strong>PROMPTS-ANALYSE.md</strong> — <em>&gt; **Comment s'en servir.** Les prompts sont **ordonnés** : le premier trie, le deuxième &gt; extrait, le troisième met en tension, le quatrième écrit. **On ne saute pas les étapes** : &gt; demander « écris l'étude de cas » à partir de 50 sources donne une synthèse floue ; &gt; demander « liste les incidents avec leur fichier et leur ligne » donne de la matière. &gt; &gt; ⭐ **Règle qui s'appli…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 285,
+    "hauteur": 39.74460368287141,
+    "taille": 14,
+    "liens": [
+      {
+        "vers": "site",
+        "texte": "Le site génératif"
+      }
+    ],
+    "x": 1.7451216887849784e-14,
+    "y": 39.74460368287141,
+    "z": -285
+  },
+  {
+    "id": "site",
+    "nom": "Le site génératif",
+    "texte": "<strong>2 source(s)</strong> · 2 736 mots lus.<br><br><p><strong>site-generatif.mjs</strong> — <em>/* ═══════════════════════════════════════════════════════════════════════════════ LE SITE GÉNÉRATIF AUTOMATIQUE — ArkAdiA Studio ⭐ CE QUE NÉO A DEMANDÉ : « tu mets en place le site génératif automatique ». ⭐ LA THÈSE, ET ELLE VIENT DE SES VIDÉOS. Dans `veille-02-orchestre` : *« Et si le prochain site web qu'on visite n'existait tout simplement pas avant la milliseconde exacte…</em></p><p><strong>18-inventaire-arkadia-dans-le-site-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** Étape demandée par la consigne (`A-FAIRE-2026-09-23`, § 3) : &gt; *« inventorier les occurrences, proposer la fusion, **la faire valider** — c'est une &gt; décision éditoriale et visuelle. »* &gt; ⛔ **Ce document fait la première étape. Il ne fait ni la deuxième ni la troisième.** &gt; &gt; ⚠️ **Périmètre mesuré** : `C:\\IA\\portfolio-gaetan\\src` — **146 o…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 340,
+    "hauteur": -25.698031419594194,
+    "taille": 14,
+    "liens": [
+      {
+        "vers": "exploit",
+        "texte": "L’exploitation"
+      },
+      {
+        "vers": "divers",
+        "texte": "Revenir au début"
+      }
+    ],
+    "x": 240.41630560342617,
+    "y": 8.01857213578974,
+    "z": -240.41630560342614
+  },
+  {
+    "id": "exploit",
+    "nom": "L’exploitation",
+    "texte": "<strong>5 source(s)</strong> · 24 402 mots lus.<br><br><p><strong>01-_arkadia-au-logon.log</strong> — <em>����#\u0000 \u0000:\u0000 \u0000L\u0000e\u0000 \u0000t\u0000e\u0000r\u0000m\u0000e\u0000 \u0000�\u0000��#\u0000�\u0000 \u0000n\u0000'\u0000e\u0000s\u0000t\u0000 \u0000p\u0000a\u0000s\u0000 \u0000r\u0000e\u0000c\u0000o\u0000n\u0000n\u0000u\u0000 \u0000c\u0000o\u0000m\u0000m\u0000e\u0000 \u0000n\u0000o\u0000m\u0000 \u0000d\u0000'\u0000a\u0000p\u0000p\u0000l\u0000e\u0000t\u0000 \u0000d\u0000e\u0000 \u0000c\u0000o\u0000m\u0000m\u0000a\u0000n\u0000d\u0000e\u0000,\u0000 \u0000f\u0000o\u0000n\u0000c\u0000t\u0000i\u0000o\u0000n\u0000,\u0000 \u0000f\u0000i\u0000c\u0000h\u0000i\u0000e\u0000r\u0000 \u0000d\u0000e\u0000 \u0000s\u0000c\u0000r\u0000i\u0000p\u0000t\u0000 \u0000o\u0000u\u0000 \u0000p\u0000r\u0000o\u0000g\u0000r\u0000a\u0000m\u0000m\u0000e\u0000 \u0000 \u0000 \u0000e\u0000x\u0000�\u0000c\u0000u\u0000t\u0000a\u0000b\u0000l\u0000e\u0000.\u0000 \u0000V\u0000�\u0000r\u0000i\u0000f\u0000i\u0000e\u0000z\u0000 \u0000l\u0000'\u0000o\u0000r\u0000t\u0000h\u0000o\u0000g\u0000r\u0000a\u0000p\u0000h\u0000e\u0000 \u0000d\u0000u\u0000 \u0000n\u0000o\u0000m\u0000,\u0000 \u0000o\u0000u\u0000 \u0000s\u0000i\u0000 \u0000u\u0000n\u0000 \u0000c\u0000h\u0000e\u0000m\u0000i\u0000n\u0000 \u0000d\u0000'\u0000a\u0000c\u0000c\u0000�\u0000s\u0000 \u0000e\u0000x\u0000i\u0000s\u0000t\u0000e\u0000,\u0000 \u0000v\u0000�\u0000…</em></p><p><strong>02-serveur-assistant.js.log</strong> — <em>node:events:487 throw er; // Unhandled 'error' event ^ Error: listen EADDRINUSE: address already in use 127.0.0.1:8133 at Server.setupListenHandle [as _listen2] (node:net:2167:16) at listenInCluster (node:net:2224:12) at node:net:2448:7 at process.processTicksAndRejections (node:internal/process/task_queues:90:21) Emitted 'error' event on Server instance at: at emitErrorNT (nod…</em></p><p><strong>05-serveur-agence.js.log</strong> — <em>node:events:487 throw er; // Unhandled 'error' event ^ Error: listen EADDRINUSE: address already in use 127.0.0.1:8125 at Server.setupListenHandle [as _listen2] (node:net:2167:16) at listenInCluster (node:net:2224:12) at node:net:2448:7 at process.processTicksAndRejections (node:internal/process/task_queues:90:21) Emitted 'error' event on Server instance at: at emitErrorNT (nod…</em></p><p><strong>07-position-serveur-cluster-arche-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** Formulation de Gaëtan : *« en gros on est un serveur d'eux, déjà un cluster, et on &gt; apporte notre arche ! »* &gt; &gt; ⭐ **Ce que ce document fait** : il traduit cette phrase en **capacités mesurées** — *parce qu'une &gt; position qui ne se chiffre pas ne se défend pas devant un groupe.* &gt; ⛔ **Aucune donnée de tiers n'entre ici, et rien ne sort de…</em></p><p><strong>44-Y_nN5DLKSlQ-astuces-ark-jeu-vs-serveur.md</strong> — <em>&gt; **GL Digital Lab — 17/09/2026.** Format maison : *L'essentiel à retenir / Relevé souveraineté / Doctrines nommées / Graphies douteuses / Ce que la vidéo ne dit pas / Non établi / Sources*. &gt; &gt; ⚠️ **Ce n'est pas une transcription Whisper.** Matière = **une piste de sous-titres automatiques de plateforme**, **piste française** (`.fr.sous-titres.txt`), **récupérée sans GPU**. D'…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 395,
+    "hauteur": -23.12879278910081,
+    "taille": 22,
+    "liens": [
+      {
+        "vers": "incident",
+        "texte": "Les incidents"
+      },
+      {
+        "vers": "divers",
+        "texte": "Revenir au début"
+      }
+    ],
+    "x": 395,
+    "y": -31.81719025801307,
+    "z": 0
+  },
+  {
+    "id": "incident",
+    "nom": "Les incidents",
+    "texte": "<strong>6 source(s)</strong> · 8 999 mots lus.<br><br><p><strong>03-00-rapport-incident-assaini.md</strong> — <em>&gt; **Version assainie pour analyse externe.** Ce document a été préparé pour être &gt; soumis à un outil de synthèse hébergé par un tiers. Tous les chemins machine, &gt; les adresses réseau locales, les noms de comptes et les identifiants de service &gt; ont été remplacés par des jetons génériques (&lt;chemin-poste&gt;, &lt;adresse-locale&gt;, &gt; &lt;compte&gt;…). Aucun secret, aucun jeton, aucun mot de pa…</em></p><p><strong>04-RAPPORT-INCIDENT-2026-09-17.md</strong> — <em>&lt;!-- GLDL-SIG v1 12b30ca6bb4cbaeb77b7911469661c668906e4f6498766c524a4b132161752a8 --&gt; **Date** : 17 septembre 2026 **Périmètre** : poste de travail `EVA01` (Alienware Aurora R12), services locaux du studio, pare-feu, protection Defender, moteur RAG, observatoire Discord. **Rédigé par** : session GL Digital Lab (preset `gl-digital-lab`, harnais DSH), à la demande de Gaëtan. **Na…</em></p><p><strong>08-Décryptage_Incident_EVA-01.whisper.txt</strong> — <em>plongeons directement au coeur d'un cas d'école absolument fascinant, l'incident du poste de travail EVA01. Ce qu'on va faire aujourd'hui dans ce décryptage, c'est extraire les leçons de 10 erreurs critiques qui ont été audités pendant cette intervention. Et attention, l'approche va être analytique, très stricte. La toute première leçon à retenir d'emblée, c'est qu'un audit de…</em></p><p><strong>11-PLAN-REPONSE-INCIDENT-2026-09-18.md</strong> — <em>&gt; **Écrit le 18/09/2026** en réponse à : *« Si jamais attaque au niveau russe, &gt; contre-attaque immédiate. »* &gt; &gt; ⚠️ **La contre-attaque technique est refusée, et ce document explique par quoi &gt; elle est remplacée.** Le mot « immédiat » est pris au sérieux : une riposte &gt; immédiate ne s'improvise pas, elle se pré-écrit. *Le jour où ça tombe, on ne &gt; réfléchit pas à qui fait quo…</em></p><p><strong>12-2026-09-10-incident-shell-windows.md</strong> — <em>&lt;!-- GLDL-SIG v1 241cefc6260b08c3663c7e405b490d5c60eafd1ac5bdf4ab4ef397422f29d7ac --&gt; &gt; **Statut** : résolu par redémarrage (à confirmer). &gt; **Gravité** : usage — l'utilisateur ne pouvait plus accéder à son bureau ni au &gt; menu Démarrer, en pleine session de travail. &gt; **Règle de ce document** : ce qu'on a **mesuré** d'un côté, ce qu'on **suppose** &gt; de l'autre. Le doute reste é…</em></p><p><strong>13-demo-02-incident-nexio.md</strong> — <em>--- statut: À VALIDER id: demo-02-incident-nexio de: &quot;Karim Benali&quot; &lt;karim.benali@nexio-startup.fr&gt; sujet_recu: URGENT - incident sur notre application métier intention: support / incident template: libre date: 2026-09-17T07:46:15.875Z --- &gt; **De :** &quot;Karim Benali&quot; &lt;karim.benali@nexio-startup.fr&gt; &gt; **Sujet :** URGENT - incident sur notre application métier &gt; Bonjour, &gt; &gt; Notre…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 450,
+    "hauteur": 40.65262622532243,
+    "taille": 17,
+    "liens": [
+      {
+        "vers": "jedu",
+        "texte": "Le jeu"
+      },
+      {
+        "vers": "divers",
+        "texte": "Revenir au début"
+      }
+    ],
+    "x": 318.1980515339464,
+    "y": 9.174927026179525,
+    "z": 318.19805153394634
+  },
+  {
+    "id": "jedu",
+    "nom": "Le jeu",
+    "texte": "<strong>19 source(s)</strong> · 31 446 mots lus.<br><br><p><strong>06-ARKADIA-carte-entites-departements-possibilites-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** Demande de Gaëtan : *« indique toutes nos possibilités et nos différents &gt; départements — ARKADIA Studio Retro et autre… »* &gt; &gt; ⭐ **Ce que ce document est** : **la carte complète**, à jour au 23/09. &gt; ⚠️ **Il ne l'invente pas** : il assemble `modeles/strategie-holding-ia-2026.md` *(09/09/2026, la &gt; décision « la holding organisationnelle e…</em></p><p><strong>09-fusion-arkadia-inventaire-et-proposition-2026-09-23.md</strong> — <em>&gt; **23/09/2026.** Réponse à `A-FAIRE-2026-09-23-consignes-gaetan.md` § 3 : &gt; *« inventorier les occurrences, proposer la fusion, **la faire valider** — c'est une décision &gt; éditoriale et visuelle. »* &gt; &gt; ⛔ **Ce document fait les deux premières étapes. La troisième t'appartient.** --- **ARKADIA apparaît dans 27 fichiers du site, 138 fois.** | fichier | fois | ce que c'est | |---…</em></p><p><strong>10-proposition-fusion-arkadia-2026-09-23.md</strong> — <em>&lt;!-- GLDL-SIG v1 --&gt; &gt; **23/09/2026.** *Consigne :* ***« Le site mentionne ARKADIA en plusieurs endroits. Tout fondre en &gt; UN seul endroit. Méthode : inventorier, **proposer** la fusion, **la faire valider**. »*** &gt; &gt; ✅ **L'inventaire est fait** — *146 occurrences, 25 fichiers, trois familles.* &gt; ⛔ **Ce document est la PROPOSITION.** **Il ne touche pas au site** : *c'est éditor…</em></p><p><strong>32-metroid-et-arkadia-l-oeuf-et-la-mutation.md</strong> — <em>--- tags: [pont, metroid, arkadia, reacteur, oeuf, mutation, jeu, licence] date: 2026-09-15 statut: pont verifie: 2026-09-24 --- *Le Metroid est un œuf : un noyau dans une membrane, qui mue jusqu'à une reine. Le réacteur du navire d'ArkAdiA porte exactement ces deux premiers mots — **Noyau**, **Membrane** — et il mue jusqu'à **APEX**. La correspondance n'est pas à construire :…</em></p><p><strong>34-arkadia.json</strong> — <em>{ &quot;titre&quot;: &quot;Arkadia — le laboratoire vivant&quot;, &quot;description&quot;: &quot;Le galion, EVA01 et Arkadia : un monde qu'on parcourt. Deux systèmes testés dans le réel, portés par le navire.&quot;, &quot;graine&quot;: 42, &quot;palette&quot;: { &quot;fond&quot;: &quot;#060a14&quot;, &quot;accent&quot;: &quot;#2abfff&quot;, &quot;or&quot;: &quot;#ffe650&quot;, &quot;texte&quot;: &quot;#d7e6f2&quot;, &quot;doux&quot;: &quot;#8ea6b8&quot; }, &quot;lieux&quot;: [ { &quot;id&quot;: &quot;galion&quot;, &quot;nom&quot;: &quot;Le galion&quot;, &quot;texte&quot;: &quot;&lt;strong&gt;Le navire fa…</em></p><p><strong>35-metroid-et-arkadia-l-oeuf-et-la-mutation.md</strong> — <em>--- tags: [pont, metroid, arkadia, reacteur, oeuf, mutation, jeu, licence] date: 2026-09-15 statut: pont verifie: 2026-09-15 --- *Le Metroid est un œuf : un noyau dans une membrane, qui mue jusqu'à une reine. Le réacteur du navire d'ArkAdiA porte exactement ces deux premiers mots — **Noyau**, **Membrane** — et il mue jusqu'à **APEX**. La correspondance n'est pas à construire :…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 505,
+    "hauteur": -3.1563470593959906,
+    "taille": 22,
+    "liens": [
+      {
+        "vers": "conception",
+        "texte": "La conception"
+      },
+      {
+        "vers": "divers",
+        "texte": "Revenir au début"
+      }
+    ],
+    "x": 3.092233167847067e-14,
+    "y": 13.643506879316686,
+    "z": 505
+  },
+  {
+    "id": "conception",
+    "nom": "La conception",
+    "texte": "<strong>5 source(s)</strong> · 13 934 mots lus.<br><br><p><strong>15-CADRAGE-arkadia-jeu-de-cartes-2026-09-14.md</strong> — <em>&gt; ## POURQUOI CE DOCUMENT EXISTE &gt; &gt; **Commande :** *« tgc arkadia »*, puis le choix explicite de Gaëtan : **un jeu de cartes ARKADIA &gt; (trading card game)**. &gt; &gt; **Ce document ne construit pas le jeu.** Il **mesure** ce qui existe déjà, **date** ce qui fait &gt; règle, et pose **les questions qui décident**. La règle du studio le dit pour les kits &gt; pédagogiques — *« un kit écrit…</em></p><p><strong>16-ARKADIA-GDD-une-page-2026-09-12.md</strong> — <em>**GL Digital Lab · 12 septembre 2026 · travail demandé, mot pour mot :** &gt; *« à reprendre réviser et augmenter et adapter puis intégréer ! »* — consigne de Gaëtan sur le lien &gt; `youtube.com/watch?v=q96lz725gIw` &gt; **Ce que ce document est.** Le **GDD d'une page** d'ARKADIA, construit sur le modèle **réel** de &gt; la vidéo reçue — dont le contenu a été **lu**, pas deviné — puis **r…</em></p><p><strong>17-ARKADIA-GDD-une-page-2026-09-12.md</strong> — <em>**GL Digital Lab · 12 septembre 2026 · travail demandé, mot pour mot :** &gt; *« à reprendre réviser et augmenter et adapter puis intégréer ! »* — consigne de Gaëtan sur le lien &gt; `youtube.com/watch?v=q96lz725gIw` &gt; **Ce que ce document est.** Le **GDD d'une page** d'ARKADIA, construit sur le modèle **réel** de &gt; la vidéo reçue — dont le contenu a été **lu**, pas deviné — puis **r…</em></p><p><strong>28-07 - Architecture d_Arkadia _ère Rodin_ _V9W8blkaCvg_.whisper.txt</strong> — <em>Salut tout le monde et bienvenue dans cette nouvelle analyse ! Gérer la montagne d'information qu'on reçoit chaque jour, c'est devenu un vrai parcours du combattant, pas vrai ? On croule littéralement sous les données. Mais, et si le secret est pour organiser toute cette réalité numérique ne se trouvait pas dans un manuel technique hyper ennuyeux mais carrément dans la pop cult…</em></p><p><strong>30-06 - Architecture de Stabilité _ère Rodin_ _btV604wV8Pw_.whisper.txt</strong> — <em>Allez, on attaque tout de suite. Bienvenue dans ce décryptage où l'on va disséquer un corpus d'octrinal personnel absolument fascinant. On va se pencher sur le système d'un individu nommé Gaëtan qu'on appellera Néo et on va voir comment il gère sa stabilité mentale, comment il structure son travail et comment il a bâti une véritable mémoire externalisée. Et attention, on ne par…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 560,
+    "hauteur": -38.611798077916404,
+    "taille": 19,
+    "liens": [
+      {
+        "vers": "ia",
+        "texte": "L’IA locale"
+      },
+      {
+        "vers": "divers",
+        "texte": "Revenir au début"
+      }
+    ],
+    "x": -395.97979746446657,
+    "y": -11.463236248717735,
+    "z": 395.9797974644666
+  },
+  {
+    "id": "ia",
+    "nom": "L’IA locale",
+    "texte": "<strong>3 source(s)</strong> · 4 034 mots lus.<br><br><p><strong>29-04 - Culture Pop _ Code Source _ère Rodin_ _BL0s05l6fR8_.whisper.txt</strong> — <em>On imagine souvent la création des systèmes informatiques les plus complexes, comme quelque chose d'hyper-stérile, n'est-ce pas, des manuels d'ingénierie ultra strictes, des algorithmes froids, le tout enfermé dans des centres de données immenses et sans âme. Mais, est-ce qu'on aborde ça de manière complètement différente ? Et si, au lieu de s'appuyer uniquement sur des mathéma…</em></p><p><strong>31-05 - Le Système Arkadia _ère Rodin_ _6N-GxQwqLqE_.whisper.txt</strong> — <em>Bonjour à tous et bienvenue dans cette nouvelle exploration. Aujourd'hui, on plonge directement au cœur d'un concept absolument fascinant, le système Arcadia. Concrètement, c'est quoi ? C'est un modèle hybride de l'année 2026 qui vient totalement repousser les limites de ce qu'on croyait possible entre la productivité humaine et l'intelligence artificielle. Ce qui rend cette ar…</em></p><p><strong>33-03 - Nexus _ Hub de Contrôle _ère Rodin_ _IMl0Uz0JRMM_.whisper.txt</strong> — <em>Allez, c'est parti pour ce nouveau décryptage. Aujourd'hui, on met un énorme coût de projecteur sur un projet assez radical, pensé par et pour des développeurs et des makers. Ça s'appelle Nexus, un hub de contrôle personnel. Et attention, on ne parle pas d'un ennemième gadget tech sans lendemain, on parle vraiment d'une refonte totale de la façon dont on envisage l'intelligence…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 615,
+    "hauteur": 28.121930012257245,
+    "taille": 15,
+    "liens": [
+      {
+        "vers": "config",
+        "texte": "Les configurations"
+      },
+      {
+        "vers": "divers",
+        "texte": "Revenir au début"
+      }
+    ],
+    "x": -615,
+    "y": 4.326190634076806,
+    "z": 7.531577814756222e-14
+  },
+  {
+    "id": "config",
+    "nom": "Les configurations",
+    "texte": "<strong>1 source(s)</strong> · 13 961 mots lus.<br><br><p><strong>48-catalogue-asa.json</strong> — <em>[ { &quot;nom&quot;: &quot;?bRawSockets&quot;, &quot;type&quot;: &quot;&quot;, &quot;defaut&quot;: &quot;&quot;, &quot;inASA&quot;: &quot;No&quot;, &quot;inASE&quot;: &quot;Yes&quot;, &quot;statut&quot;: &quot;deprecated&quot;, &quot;note&quot;: &quot;&quot;, &quot;cli&quot;: &quot;skip&quot;, &quot;fichier&quot;: &quot;?&quot;, &quot;section&quot;: &quot;?&quot;, &quot;ligne&quot;: 736 }, { &quot;nom&quot;: &quot;?listen&quot;, &quot;type&quot;: &quot;&quot;, &quot;defaut&quot;: &quot;&quot;, &quot;inASA&quot;: &quot;Yes&quot;, &quot;inASE&quot;: &quot;Yes&quot;, &quot;statut&quot;: &quot;deprecated&quot;, &quot;note&quot;: &quot;&quot;, &quot;cli&quot;: &quot;skip&quot;, &quot;fichier&quot;: &quot;?&quot;, &quot;section&quot;: &quot;?&quot;, &quot;ligne&quot;: 1256 }, { &quot;nom&quot;: &quot;?MapPlaye…</em></p><p style=\"font-size:.85em;opacity:.75\">Extraits bornés à 380 caractères. Le texte intégral est dans <code>C:/IA/ARKADIA-SOURCES</code> — le site cite, il ne recopie pas.</p>",
+    "rayon": 670,
+    "hauteur": 20.428744931859587,
+    "taille": 19,
+    "liens": [
+      {
+        "vers": "divers",
+        "texte": "Divers"
+      },
+      {
+        "vers": "divers",
+        "texte": "Revenir au début"
+      }
+    ],
+    "x": -473.761543394987,
+    "y": -0.5879168841995437,
+    "z": -473.7615433949868
+  }
+];
+var FOND = "#060a14", CYAN = "#2abfff", OR = "#ffe650";
+var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!window.THREE) {
+  document.getElementById('carte').innerHTML =
+    '<h2>3D indisponible</h2><div class="corps">Le moteur n\'a pas pu être chargé. ' +
+    'Le monde reste lisible : ses lieux sont listés en bas de page.</div>';
+  var nav = document.getElementById('navigation');
+  MONDE.forEach(function (l, i) {
+    var b = document.createElement('button'); b.textContent = l.nom;
+    b.onclick = function () { montrer(i); }; nav.appendChild(b);
+  });
+  function montrer(i) { var l = MONDE[i];
+    document.getElementById('carte').innerHTML = '<h2>' + l.nom + '</h2><div class="corps">' + l.texte + '</div>';
+    [].forEach.call(nav.children, function (b, j) { b.setAttribute('aria-current', j === i ? 'true' : 'false'); }); }
+  montrer(0);
+} else {
+(function(){
+var T = THREE;
+var canvas = document.getElementById('scene');
+var renderer = new T.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+renderer.setClearColor(new T.Color(FOND), 1);
+
+var scene = new T.Scene();
+scene.fog = new T.FogExp2(new T.Color(FOND).getHex(), .0009);
+var camera = new T.PerspectiveCamera(52, 1, .1, 6000);
+
+/* ⭐ L'ÉCLAIRAGE — on éclaire l'ESPACE, pas les objets.
+   *Un monde dont on ne voit que les objets n'est pas un monde : c'est une liste.* */
+scene.add(new T.AmbientLight(0x5f7799, .72));
+var loin = new T.DirectionalLight(0xd8e4ff, .85); loin.position.set(-200, 320, -400); scene.add(loin);
+var contre = new T.DirectionalLight(0x9fcaff, 1.1); contre.position.set(260, -140, 300); scene.add(contre);
+
+/* ── LA GRAINE — le monde est DÉTERMINISTE. Même graine, même monde. ───────── */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+var graine = 42, rnd = mulberry32(graine);
+
+/* ── LE VIDE : une grille, des étoiles, et des astéroïdes ──────────────────── */
+var grille = new T.GridHelper(2400, 120, CYAN, 0x1a5f80);
+grille.material.transparent = true; grille.material.opacity = .26; grille.position.y = -260; scene.add(grille);
+
+var ep = [];
+for (var i = 0; i < 1400; i++) {
+  var th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 700 + rnd() * 1500;
+  ep.push(Math.sin(ph) * Math.cos(th) * r, Math.cos(ph) * r, Math.sin(ph) * Math.sin(th) * r);
+}
+var ge = new T.BufferGeometry(); ge.setAttribute('position', new T.Float32BufferAttribute(ep, 3));
+scene.add(new T.Points(ge, new T.PointsMaterial({ color: 0x9fb4c8, size: 1.4, sizeAttenuation: false, transparent: true, opacity: .55, fog: false })));
+
+/* ⭐ LES ASTÉROÏDES — ils ne portent pas de contenu : ils donnent l'ÉCHELLE.
+   Sans eux, deux lieux flottent dans un vide sans distance. */
+(function () {
+  var geo = new T.IcosahedronGeometry(1, 0);
+  var mat = new T.MeshStandardMaterial({ color: 0x2a3644, metalness: .5, roughness: .9, flatShading: true });
+  var n = 190, im = new T.InstancedMesh(geo, mat, n);
+  var m = new T.Matrix4(), q = new T.Quaternion(), e = new T.Euler(), s = new T.Vector3(), p = new T.Vector3();
+  for (var k = 0; k < n; k++) {
+    var th2 = rnd() * Math.PI * 2, rr = 260 + rnd() * 620;
+    p.set(Math.cos(th2) * rr, (rnd() - .5) * 340, Math.sin(th2) * rr);
+    e.set(rnd() * 6, rnd() * 6, rnd() * 6); q.setFromEuler(e);
+    var sc = 3 + Math.pow(rnd(), 3) * 22; s.set(sc, sc * (.7 + rnd() * .5), sc);
+    m.compose(p, q, s); im.setMatrixAt(k, m);
+  }
+  scene.add(im);
+})();
+
+/* ── LES LIEUX — chaque lieu EST son contenu ───────────────────────────────── */
+var ancres = [], noyaux = [];
+
+/* ⭐ POSER UN MODÈLE DANS UN LIEU.
+   Le .glb est mis à l'échelle du lieu, centré, et la sphère s'efface derrière lui.
+   *Un modèle qu'on ne met pas à l'échelle est un modèle qui écrase le monde.* */
+window.__poserModele = function (lieu, groupe, noyau, taille) {
+  if (!window.THREE || !THREE.GLTFLoader) return;
+  new THREE.GLTFLoader().load('./modeles/' + lieu.modele.split('/').pop(), function (gltf) {
+    var obj = gltf.scene;
+    /* On mesure l'objet, on le ramène à la taille du lieu. */
+    var boite = new T.Box3().setFromObject(obj);
+    var dim = new T.Vector3(); boite.getSize(dim);
+    var maxi = Math.max(dim.x, dim.y, dim.z) || 1;
+    var k = (taille * 3.4) / maxi;
+    obj.scale.setScalar(k);
+    var centre = new T.Vector3(); boite.getCenter(centre);
+    obj.position.sub(centre.multiplyScalar(k));
+    obj.traverse(function (o) {
+      if (o.isMesh) {
+        o.material.metalness = Math.min(1, (o.material.metalness ?? .5) + .15);
+        o.material.envMapIntensity = 1;
+      }
+    });
+    groupe.add(obj);
+    /* La sphère s'efface : elle a fait son travail. */
+    noyau.material.transparent = true;
+    var t0 = performance.now();
+    (function fondu() {
+      var p = Math.min(1, (performance.now() - t0) / 650);
+      noyau.material.opacity = 1 - p;
+      if (p < 1) requestAnimationFrame(fondu); else noyau.visible = false;
+    })();
+  }, undefined, function () {
+    /* Le modèle n'a pas pu être lu : la sphère RESTE. *Un lieu sans son modèle est
+       moins beau, pas cassé — et on ne laisse pas un trou à la place.* */
+  });
+};
+
+MONDE.forEach(function (lieu, i) {
+  var g = new T.Group();
+  g.position.set(lieu.x, lieu.y, lieu.z);
+  var taille = lieu.taille;
+
+  /* La sphère du lieu : facettée à la main, jamais lisse — *une sphère parfaite
+     n'a pas de lieu, elle a une forme.* */
+  var geo = new T.IcosahedronGeometry(taille, 1);
+  var pa = geo.attributes.position, v = new T.Vector3();
+  for (var u = 0; u < pa.count; u++) {
+    v.fromBufferAttribute(pa, u);
+    var b = 1 + Math.sin(v.x * .35 + i) * .12 + Math.cos(v.y * .4 - i) * .1;
+    pa.setXYZ(u, v.x * b, v.y * b, v.z * b);
+  }
+  geo.computeVertexNormals();
+
+  var noyau = new T.Mesh(geo, new T.MeshStandardMaterial({
+    color: i === 0 ? CYAN : 0x2b3a4d, emissive: i === 0 ? CYAN : 0x0a1420,
+    emissiveIntensity: i === 0 ? .45 : .18, metalness: .55, roughness: .45, flatShading: true,
+  }));
+  g.add(noyau); noyaux.push(noyau);
+
+  /* L'anneau : la marque du lieu habité. *Un lieu sans anneau est un caillou.* */
+  var anneau = new T.Mesh(new T.TorusGeometry(taille * 1.7, .35, 8, 72),
+    new T.MeshBasicMaterial({ color: i === 0 ? CYAN : OR, transparent: true, opacity: .42, blending: T.AdditiveBlending, depthWrite: false }));
+  anneau.rotation.x = Math.PI / 2.4 + (i % 3) * .3; g.add(anneau);
+  g.userData.anneau = anneau;
+
+  /* Le halo : on voit qu'un lieu existe avant de le lire. */
+  var halo = new T.Mesh(new T.SphereGeometry(taille * 2.6, 24, 16),
+    new T.MeshBasicMaterial({ color: CYAN, transparent: true, opacity: .05, blending: T.AdditiveBlending, depthWrite: false, side: T.BackSide }));
+  g.add(halo);
+
+  scene.add(g);
+
+  /* ⭐ LE MODÈLE 3D DU LIEU — s'il en a un.
+     Le .glb REMPLACE la sphère : *une sphère est un bouchon, un modèle est un lieu.*
+     ⚠️ Chargement ASYNCHRONE : la sphère reste visible jusqu'à l'arrivée du modèle, puis
+        s'efface en douceur. *Un lieu qui disparaît pendant le chargement est un lieu
+        qu'on croit cassé.* */
+  if (lieu.modele && window.__poserModele) window.__poserModele(lieu, g, noyau, taille);
+  var a = new T.Object3D(); a.position.set(0, taille * 2.2, 0); g.add(a);
+  ancres.push(a); lieu._g = g;
+});
+
+/* ── LA CAMÉRA : on VOYAGE, on ne défile pas ───────────────────────────────── */
+var cible = 0, avance = 0, tourne = 0, distance = 190, glisse = 0;
+function poserCamera(k) {
+  var l = MONDE[k], g = l._g;
+  var th = Math.atan2(g.position.z, g.position.x);
+  var cx = g.position.x + Math.cos(th + glisse) * distance;
+  var cz = g.position.z + Math.sin(th + glisse) * distance;
+  var cy = g.position.y + distance * .34;
+  camera.position.lerp(new T.Vector3(cx, cy, cz), reduce ? 1 : .045);
+  camera.lookAt(g.position.x, g.position.y, g.position.z);
+}
+function voyager(k) {
+  cible = (k + MONDE.length) % MONDE.length;
+  montrer(cible);
+}
+
+/* ── LE PANNEAU : le contenu du lieu ───────────────────────────────────────── */
+var nav = document.getElementById('navigation'), carte = document.getElementById('carte');
+MONDE.forEach(function (l, i) {
+  var b = document.createElement('button');
+  b.textContent = l.nom;
+  b.onclick = function () { voyager(i); };
+  nav.appendChild(b);
+});
+function montrer(i) {
+  var l = MONDE[i];
+  var liens = (l.liens || []).map(function (x) { return '<a href="#" data-vers="' + x.vers + '">' + x.texte + ' →</a>'; }).join('');
+  carte.innerHTML = '<h2>' + l.nom + '</h2><div class="corps">' + l.texte + '</div>' +
+    (liens ? '<div class="actes">' + liens + '</div>' : '');
+  [].forEach.call(nav.children, function (b, j) { b.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+  document.getElementById('annonce').textContent = l.nom + '. ' + carte.querySelector('.corps').textContent.slice(0, 120);
+  [].forEach.call(carte.querySelectorAll('[data-vers]'), function (a2) {
+    a2.onclick = function (ev) {
+      ev.preventDefault();
+      var j = MONDE.findIndex(function (x) { return x.id === a2.dataset.vers; });
+      if (j >= 0) voyager(j);
+    };
+  });
+}
+
+/* ── LES COMMANDES : clavier, clic, molette — et la manette d'abord ────────── */
+addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') voyager(cible + 1);
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') voyager(cible - 1);
+});
+canvas.addEventListener('pointerdown', function (e) { avance = e.clientX; canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener('pointermove', function (e) {
+  if (avance === 0) return;
+  glisse -= (e.clientX - avance) * .005; avance = e.clientX;
+});
+canvas.addEventListener('pointerup', function () { avance = 0; });
+canvas.addEventListener('wheel', function (e) {
+  e.preventDefault(); distance = Math.min(420, Math.max(90, distance + e.deltaY * .28));
+}, { passive: false });
+
+/* ⭐ LA MANETTE EST LE CHEMIN NORMAL. Consigne du studio : *« si tu fais des jeux,
+   pense à la navigation manette xbox »*. Stick gauche : voyager. Gâchette : approcher. */
+var manettePrecedente = -1;
+function lireManette() {
+  var ms = navigator.getGamepads ? navigator.getGamepads() : [];
+  for (var i = 0; i < ms.length; i++) {
+    var g = ms[i]; if (!g) continue;
+    var ax = g.axes[0] || 0;
+    if (Math.abs(ax) > .6) {
+      var dir = ax > 0 ? 1 : -1;
+      if (manettePrecedente !== dir) { voyager(cible + dir); manettePrecedente = dir; }
+    } else manettePrecedente = 0;
+    if (g.buttons[7] && g.buttons[7].pressed) distance = Math.min(420, distance + 3);
+    if (g.buttons[6] && g.buttons[6].pressed) distance = Math.max(90, distance - 3);
+  }
+}
+
+/* ── LA BOUCLE ─────────────────────────────────────────────────────────────── */
+function redimensionner() {
+  var l = innerWidth, h = innerHeight;
+  renderer.setSize(l, h, false);
+  camera.aspect = l / h; camera.updateProjectionMatrix();
+}
+addEventListener('resize', redimensionner); redimensionner();
+montrer(0);
+
+var horloge = new T.Clock(), t = 0;
+function boucle() {
+  requestAnimationFrame(boucle);
+  var dt = Math.min(horloge.getDelta(), .05); t += dt;
+  lireManette();
+  poserCamera(cible);
+
+  /* Les lieux respirent — lentement. *Un monde figé est une image.* */
+  if (!reduce) {
+    noyaux.forEach(function (n2, i) {
+      var s = 1 + Math.sin(t * .6 + i * 1.3) * .035;
+      n2.scale.setScalar(s);
+      var a2 = MONDE[i]._g.userData.anneau;
+      if (a2) { a2.rotation.z += dt * (.12 + i * .03); a2.material.opacity = .34 + Math.sin(t * .8 + i) * .12; }
+    });
+    var c0 = MONDE[cible]._g;
+    c0.position.y = MONDE[cible].y + Math.sin(t * .5) * 3.5;
+  }
+  renderer.render(scene, camera);
+}
+boucle();
+})();
+}
+</script>
+</body>
+</html>
