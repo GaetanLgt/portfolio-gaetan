@@ -407,28 +407,26 @@ async function principal() {
     '--disable-dev-shm-usage',
     '--disable-background-timer-throttling',
     '--disable-renderer-backgrounding',
-    /* ⛔ L'ÉCART LOCAL/CI, ET CE QU'IL DIT — mesuré le 24/09/2026.
+    /* ⛔⛔ SEPT FLAGS AJOUTÉS ICI LE 24/09/2026, PUIS RETIRÉS DANS L'HEURE.
      *
-     *   EVA-01 (16 cœurs)      : **32 pages écrites**
-     *   Coureur GitHub (2 vCPU) : **10 pages écrites**
+     *    `--disable-extensions`, `--disable-background-networking`, `--disable-sync`,
+     *    `--disable-default-apps`, `--mute-audio`, `--no-pings`, et un
+     *    `--disable-features=…` à sept entrées.
      *
-     * ⭐ Même code, même `dist/`, même Chrome 152. **La seule différence est la
-     *   machine.** Ce n'est donc plus la PAGE qui est coupable — c'est la
-     *   CAPACITÉ. Ce site est une application Vue avec Three.js : la seule vue
-     *   du navire pèse 167 Ko de composant, et un coureur à 2 vCPU qui en rend
-     *   trente-deux d'affilée sature.
+     *    MESURE : le run suivant a rendu, en douze secondes,
+     *        « **Chrome ne répond pas sur le port de débogage** »
+     *    — c'est-à-dire que **Chrome ne démarrait plus du tout**. Le run d'avant,
+     *    avec les mêmes correctifs et sans ces sept lignes, écrivait dix pages.
      *
-     * ⇒ Ces flags ne rendent pas Chrome plus rapide : **ils l'empêchent de tenir
-     *   en mémoire ce dont il n'a pas besoin.** Un prérendu ouvre trente-deux
-     *   documents d'affilée ; tout ce qui reste accroché au navigateur (extensions,
-     *   synchronisation, traduction, cache d'historique) s'accumule pour rien. */
-    '--disable-extensions',
-    '--disable-background-networking',
-    '--disable-sync',
-    '--disable-default-apps',
-    '--mute-audio',
-    '--no-pings',
-    '--disable-features=Translate,BackForwardCache,AcceptCHFrame,MediaRouter,OptimizationHints,CalculateNativeWinOcclusion',
+     * ⭐ LA LEÇON EST ÉLÉMENTAIRE ET JE L'AI ENFREINTE : **on ne change qu'une
+     *   chose à la fois.** Ces sept flags n'étaient pas mesurés — ils étaient une
+     *   hypothèse sur la mémoire du coureur, posée en même temps qu'un correctif
+     *   qui, lui, l'était. *Résultat : on ne sait plus lequel des deux a parlé.*
+     *
+     * ⇒ Retirés. Ce qui reste est MESURÉ : le blocage de l'analytique, le `MAP *`
+     *   (10 → 32 pages), le kill du groupe POSIX, la 404 protégée, et le délai
+     *   porté à 45 s — *le seul des changements non mesurés qui ne peut pas
+     *   empêcher un démarrage.* */
     /* ⛔ L'ANALYTIQUE EST BLOQUÉE AU NIVEAU RÉSEAU — ajouté le 23/09/2026.
      *
      * MESURE : le moteur de rendu de Chrome cesse de répondre après la 10ᵉ page
