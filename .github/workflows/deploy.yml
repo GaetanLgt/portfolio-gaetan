@@ -250,6 +250,21 @@ jobs:
           node scripts/generer-etat.mjs
           node scripts/relever-dans-html.mjs
           echo "::endgroup::"
+
+
+          # ⭐⭐⭐ 8/8 — LA VITRINE PREND LA RACINE. DERNIÈRE ÉCRITURE, ET ELLE DOIT L'ÊTRE.
+          # ⛔ MESURE DU 24/09/2026 : ce script était accroché à `npm run build` dans
+          #    `package.json` — et il ne tournait JAMAIS en CI. **Parce que la CI
+          #    n'exécute pas `npm run build`** : elle déroule ses propres étapes 1/7 à
+          #    7/7, une par une. *Un script branché sur une commande que personne ne
+          #    lance n'est pas un script : c'est un vœu.*
+          # ⚠️ ET IL PASSE EN DERNIER, APRÈS le postbuild : `prerendre` écrit
+          #    `dist/index.html` (la route `/`), et `relever-dans-html.mjs` y touche
+          #    ensuite. Poser la vitrine avant ces deux-là serait l'écraser en silence
+          #    — c'est exactement ce qui s'est passé au premier essai.
+          echo "::group::8/8 la vitrine prend la racine"
+          node scripts/poser-vitrine.mjs
+          echo "::endgroup::"
         env:
           NODE_ENV: production
 
