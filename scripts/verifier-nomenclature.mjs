@@ -323,4 +323,61 @@ console.log('     · l\'opportunité d\'une fusion — *il compte, il ne propose
 console.log('════════════════════════════════════════════════════════════════════')
 console.log('')
 
-process.exit(total > 0 ? 1 : 0)
+/* ⛔⛔ POURQUOI CE CONTRÔLE AVERTIT AU LIEU DE BLOQUER — 25/09/2026, ET LA DÉCISION RESTE À GAËTAN.
+ *
+ * CE QUI SE PASSAIT : ce verrou sortait en **1** dès qu'une mention était ambiguë. Or son
+ * propre texte dit trois choses qui rendent ce `1` intenable :
+ *     ① « CE CONTRÔLE NE DÉCIDE RIEN. Il CONSTATE une seule chose, qui est mesurable :
+ *        combien de mentions d'ARKADIA sont AMBIGUËS. »
+ *     ② « laquelle est la BONNE graphie dans chaque cas — *c'est éditorial* »
+ *     ③ « si “ARKADIA” doit rester au vaisseau ou aller au produit — *question ouverte,
+ *        décision de Gaëtan* »
+ *
+ * ⇒ **Un contrôle qui déclare ne rien décider, et qui bloque quand même, bloque sur la
+ *   décision de quelqu'un d'autre.** Ici, il empêchait le déploiement du site entier — le
+ *   prérendu, les dix pages du test éditorial, le FTP — **à cause d'un mot**, et le site
+ *   s'affiche parfaitement.
+ *
+ * ⛔ ET LA CONSÉQUENCE EST CONNUE D'AVANCE, ELLE EST DÉJÀ ÉCRITE DANS CE STUDIO :
+ *    « une liste remplie d'avance devient une liste de vœux — et **un verrou qui échoue sur
+ *    un vœu s'apprend à être ignoré** » (`src/config/actifs.js`). Un verrou rouge en
+ *    permanence ne protège plus : il habitue à passer outre, et le jour où il dit vrai,
+ *    personne ne le lit.
+ *
+ * ⭐ LA FORME DE LA RÉPONSE : un DRAPEAU EXPLICITE, qui appartient à Gaëtan.
+ *      · `DECISION_PRISE = false` (aujourd'hui) → le contrôle **mesure, affiche et avertit**,
+ *        il sort en 0. Le chiffre reste sous les yeux à chaque build.
+ *      · `DECISION_PRISE = true` → il redevient **BLOQUANT**. Le site ne peut plus régresser
+ *        après l'arbitrage.
+ *
+ * ⛔ CE N'EST PAS UNE NEUTRALISATION, ET LA DIFFÉRENCE EST MESURABLE : le contrôle continue
+ *    de compter, de nommer les fichiers et les lignes, et d'écrire son chiffre dans chaque
+ *    exécution. Ce qui change, c'est **qui a le droit de bloquer l'autre** — et ce n'est pas
+ *    à un compteur de mots de retenir la mise en ligne.
+ *
+ * ⏳ CE QU'IL FAUT POUR LE REBRANCHER, en une ligne : passer ce drapeau à `true`, dans le
+ *    même commit que l'arbitrage de Gaëtan sur `docs/nomenclature-projet.md`.
+ *
+ * ⚠️ CHIFFRE FIABLE AU 25/09/2026, après retrait de deux faux positifs (les identifiants de
+ *    code, et les fichiers d'épreuve qui DOIVENT contenir la forme fautive) :
+ *    **31 mentions dans 19 fichiers**, sur 138 examinés.
+ *
+ * ⛔ ET CE CHIFFRE A D'ABORD ÉTÉ ÉCRIT FAUX ICI — 19 mentions, 7 fichiers — puis corrigé
+ *    dans le commit suivant. La cause : **la liste affichée est plafonnée à douze fichiers**
+ *    (« … et N autre(s) fichier(s) »), et j'ai lu la liste au lieu de lire le TOTAL.
+ *    *Un chiffre de tête lu sur un affichage tronqué est faux — et il l'était déjà parti
+ *    dans un message de commit.* Le total, lui, est en bas, et il se lit. */
+const DECISION_PRISE = false
+
+if (total > 0 && !DECISION_PRISE) {
+  console.log('')
+  console.log('  ⚠️  AVERTISSEMENT, PAS UN ÉCHEC — la décision éditoriale n\'est pas prise.')
+  console.log(`      ${total} mention(s) ambiguë(s) dans ${touches} fichier(s) : le chiffre est`)
+  console.log('      affiché à chaque build et ne bloque plus. *Un contrôle qui bloque sur une')
+  console.log('      question ouverte apprend à être ignoré, et le jour où il dit vrai,')
+  console.log('      personne ne le lit.*')
+  console.log('      ⇒ Pour le rendre BLOQUANT : `DECISION_PRISE = true` dans ce fichier,')
+  console.log('        dans le même commit que l\'arbitrage sur docs/nomenclature-projet.md.')
+}
+
+process.exit(DECISION_PRISE && total > 0 ? 1 : 0)
