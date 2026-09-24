@@ -813,11 +813,59 @@ async function principal() {
    *   continue, et le build aboutit.** *Une 404 manquante se rattrape ; un
    *   déploiement perdu, non.* */
   cdp.fige = false   // même raison que pour les routes : le processus navigateur répond encore
-  try {
-    await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
-  } catch (e) {
-    console.error(`  ⛔ 404 NON ÉCRITE : ${e.message}`)
-    console.error('     (le build continue — une 404 ratée ne doit pas tuer 32 routes)')
+  /* ⛔ ET SI LE SERVEUR LOCAL NE RÉPOND PLUS, ON RÉESSAIE — 24/09/2026.
+   *
+   * MESURE : `404.html  ÉCHEC — page 404 non reconnue (titre : 127.0.0.1)`.
+   * ⭐ **« 127.0.0.1 » EST UN TITRE DE PAGE D'ERREUR CHROME**, pas un titre du
+   *   site : c'est l'écran « ce site est inaccessible ». Le serveur que ce script
+   *   garde ouvert ne répondait plus — après trente-deux navigations, et avec
+   *   treize processus Chrome encore vivants sur la machine.
+   *   ⇒ Ce n'est pas la page 404 qui manquait : **c'est la connexion.**
+   *
+   * ⚠️ Et le port, lui, était LIBRE (4178 à 4182 vérifiés) : ce n'est donc pas
+   *    l'`EADDRINUSE` documenté dans `DEPLOY-O2SWITCH.md`. Le serveur avait hoqueté.
+   *
+   * ⇒ Trois tentatives, avec une pause qui laisse le serveur se remettre. *Un
+   *   échec isolé sur la dernière page ne doit pas coûter la 404 de tout le site
+   *   — c'est la seule page que voit un visiteur qui s'est trompé d'adresse.* */
+  let titre404 = ''
+  for (let essai = 1; essai <= 3; essai++) {
+    /* ⛔ ON RELANCE LE SERVEUR LOCAL — et ce n'est pas un pansement, c'est la
+     * ressource qui a lâché. MESURE du 24/09/2026 : **trois navigations d'affilée
+     * rendent le titre « 127.0.0.1 », c'est-à-dire la page d'erreur de Chrome,
+     * « ce site est inaccessible ».** Le port est libre (4178 à 4182 vérifiés),
+     * les trente-deux routes viennent de passer par ce même serveur — **et il ne
+     * répond plus.**
+     *
+     * ⭐ Ce n'est donc ni la page 404, ni le moteur, ni le port : c'est le serveur
+     *   de fichiers que ce script garde ouvert pendant trente-deux navigations,
+     *   avec treize processus Chrome encore vivants à côté.
+     *   ⇒ On le ferme et on en rouvre un, sur le même port. *Rouvrir ce qui a
+     *     lâché coûte moins cher que de deviner pourquoi.*
+     *
+     * ⚠️ Et s'il refuse de se rouvrir, `servir()` lève : c'est le `catch` de
+     *    l'essai qui le dit, et la 404 se signale sans tuer le build. */
+    if (essai > 1) {
+      try { if (serveurLocal) serveurLocal.close() } catch {}
+      await attendre(300)
+      try {
+        serveurLocal = await servir()
+        console.error(`      404, essai ${essai} : serveur local relancé`)
+      } catch (e) {
+        console.error(`      404, essai ${essai} : serveur non relancé — ${e.message}`)
+      }
+      await attendre(300)
+    }
+    try {
+      await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
+    } catch (e) {
+      console.error(`  ⛔ 404, essai ${essai} : ${e.message}`)
+    }
+    await attendre(600)
+    const b = await cdp.evaluer('document.title')
+    titre404 = typeof b === 'string' ? b : ''
+    if (/404|non trouv/i.test(titre404)) break
+    console.error(`      essai ${essai} : titre « ${titre404 || '(aucun)'} » — on retente`)
   }
   // ⚠ MÊME ATTENTE QUE POUR LES ROUTES, ET ELLE COMPTE ENCORE PLUS ICI.
   // La 404 est servie à TOUT visiteur qui se trompe d'adresse. Constaté le 11/09/2026 :
@@ -844,7 +892,34 @@ async function principal() {
     if (etat404 && etat404.coquille && !etat404.loader) break
   }
   const html404brut = await cdp.evaluer('"<!DOCTYPE html>\\n" + document.documentElement.outerHTML')
-  if (typeof html404brut === 'string' && etat404 && /404|non trouv/i.test(etat404.titre)) {
+  /* ⛔ LA 404 SE LISAIT DANS UNE ÉVALUATION, PAS DANS LE HTML — corrigé le 24/09/2026.
+   *
+   * MESURE : `404.html   0   ÉCHEC — page 404 non reconnue (titre : ?)`
+   * ⭐ LE TITRE AFFICHÉ ÉTAIT « ? », c'est-à-dire AUCUN. Et ce n'est pas la page
+   *   qui manquait : c'est l'ÉVALUATION qui n'a pas répondu.
+   *
+   *   La 404 est produite EN DERNIER, après les trente-deux routes. À ce moment
+   *   le moteur de Chrome est fatigué — sur le coureur il a déjà cessé de répondre
+   *   plusieurs fois — et `cdp.evaluer` rend `undefined` au lieu de lever. Alors
+   *   `JSON.parse(undefined)` jette, `etat404` reste `null`, et la condition
+   *   ci-dessous échoue **alors que le HTML de la 404 était déjà dans la main.**
+   *
+   * ⭐ LA CORRECTION NE DEMANDE RIEN DE PLUS : `html404brut` est lu par la même
+   *   évaluation — s'il est arrivé, le titre est DEDANS. On le lit là.
+   *   *On ne demande pas au moteur de nous dire ce que le HTML dit déjà.*
+   *
+   * ⚠️ ET ON GARDE LA PRUDENCE DU 11/09/2026 : la page doit porter un titre de
+   *   404, sinon on n'écrit RIEN. *Le repli SPA servait la coquille de l'accueil
+   *   en HTTP 200 pour /arcade — un doublon de l'accueil aux yeux d'un moteur,
+   *   pas un 404.* La tolérance porte sur la SOURCE du titre, jamais sur son
+   *   contenu : « 127.0.0.1 », qui est une page d'erreur Chrome, ne passe pas. */
+  const titreDansHtml = typeof html404brut === 'string'
+    ? (String(html404brut).match(/<title>([^<]*)<\/title>/i) || [])[1] || ''
+    : ''
+  if (!titre404) titre404 = titreDansHtml
+  const estBien404 = /404|non trouv/i.test(titre404)
+    || !!(etat404 && /404|non trouv/i.test(etat404.titre))
+  if (typeof html404brut === 'string' && estBien404) {
     // Le routeur a posé un canonical sur le chemin de test : sur une page servie
     // à TOUTES les adresses inconnues, il ne désigne rien. On le retire.
     const html404 = HTML_COQUILLE_TAG
@@ -852,9 +927,9 @@ async function principal() {
       : html404brut.replace(/\s*<link rel="canonical"[^>]*>/i, '')
     ecrireAtomique(path.join(DIST, '404.html'), html404)
     ecrits++
-    rapport.push({ route: '404.html', ok: true, titre: etat404.titre, octets: html404.length, ecrit: true })
+    rapport.push({ route: '404.html', ok: true, titre: titre404 || (etat404 && etat404.titre) || '(titre lu dans le HTML)', octets: html404.length, ecrit: true })
   } else {
-    rapport.push({ route: '404.html', ok: false, motif: 'page 404 non reconnue (titre : ' + ((etat404 && etat404.titre) || '?') + ')' })
+    rapport.push({ route: '404.html', ok: false, motif: 'page 404 non reconnue (titre : ' + (titre404 || '?') + ')' })
     echecs++
   }
 

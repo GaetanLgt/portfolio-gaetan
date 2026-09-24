@@ -38,6 +38,28 @@ const MentionsLegales = () => import('@/views/legal/MentionsLegales.vue');
 const Confidentialite = () => import('@/views/legal/Confidentialite.vue');
 const CGV = () => import('@/views/legal/CGV.vue');
 
+// GUIDES — les dix pages du test éditorial instrumenté (24/09/2026).
+// ⭐ UN SEUL COMPOSANT POUR DIX PAGES, ET LES ROUTES SONT ENGENDRÉES PAR LES DONNÉES.
+//    ⛔ Dix blocs de route écrits à la main divergeraient du contenu à la première
+//       correction — c'est la loi « une seule liste, ou elle pourrit ».
+//    ⇒ `src/data/guides.js` porte le CONTENU ; ce fichier en dérive les routes, les
+//      titres et les descriptions. **Ajouter un guide crée sa page.**
+import { GUIDES } from '@/data/guides.js';
+const GuidePage = () => import('@/views/guides/GuidePage.vue');
+const routesGuides = GUIDES.map((g) => ({
+  path: `/guides/${g.slug}`,
+  name: `Guide-${g.slug}`,
+  component: GuidePage,
+  meta: {
+    title: g.title,
+    description: g.description,
+    // ⚠️ Le slug EST la donnée dont le composant a besoin pour se trouver lui-même.
+    //    Le passer par `meta` évite de le relire dans l'URL — donc de dépendre de la
+    //    forme du chemin le jour où on le change.
+    guideSlug: g.slug,
+  },
+}));
+
 // RESOURCES - Ressources et tutoriels
 const TutorielsPage = () => import('@/views/resources/TutorielsPage.vue');
 const ComponentsLibrary = () => import('@/views/resources/components-library/ComponentsLibrary.vue');
@@ -80,6 +102,10 @@ const InvoiceGenerator = () => import(/* webpackChunkName: "apps" */ '@/views/ap
 // ============================================================================
 
 const routes = [
+  // ⭐ LES DIX GUIDES, EN TÊTE — et ce n'est pas cosmétique : la route attrape-tout
+  //    (`/:pathMatch(.*)*`) vit plus bas, et tout ce qu'on place après elle devient
+  //    inatteignable. *Une route morte n'est pas une route : c'est une ligne.*
+  ...routesGuides,
   // -------------------------------------------------------------------------
   // CORE
   // -------------------------------------------------------------------------

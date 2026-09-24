@@ -530,6 +530,25 @@ onUnmounted(() => {
    ⚠️ `hyphens: auto` SEUL NE SUFFIT PAS : la césure suit la LANGUE DE L'ÉLÉMENT.
    Il faut donc aussi le `lang` correct — posé sur <html> par `useLangue.js`.
    *Les deux vont ensemble, ou aucun des deux ne sert.* */
+/* ⛔ LE MAILLON MANQUANT — ajouté le 23/09/2026.
+   ────────────────────────────────────────────────────────────────────────────
+   La chaîne de compression était complète SAUF au premier maillon :
+       .container (flex) > a.nav-logo > .nav-logo__text > .nav-logo__name
+                          ↑ lui n'avait pas de min-width: 0
+   Les enfants du logo l'avaient (`> *`), les petits-enfants aussi, et le nom
+   portait même `overflow-wrap: anywhere`. **Mais un élément flex sans
+   `min-width: 0` refuse de descendre sous sa largeur de contenu** — donc le
+   mot allemand de 39 lettres élargissait `a.nav-logo`, qui élargissait la
+   barre, qui poussait la page. *Mesuré par le banc : +55 px, sur les DIX pages.*
+
+   ⭐ Et le banc avait déjà donné l'adresse, à une session précédente :
+     `router-link-active router-link-exact-active` — **ces deux classes sont
+     celles que Vue Router pose par défaut** sur un lien actif. La session les
+     a lues, en a conclu « ce n'est pas un lien de la navbar », et s'est arrêtée.
+   ⛔ *C'était un lien de la navbar : c'était le LOGO.* **Le nom de la classe ne
+     décrivait pas l'élément — et c'est ce qui a coûté le diagnostic.**
+   ⚠️ **On ne déduit pas ce qu'est un élément de ses classes : on lit son CHEMIN.** */
+a.nav-logo,
 .nav-logo__name,
 .nav-logo__tagline,
 .nav-link,

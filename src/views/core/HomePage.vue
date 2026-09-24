@@ -278,6 +278,7 @@
                vaisseau reconnaissable. Le registre est emprunté, le dessin est
                à nous.
          ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- temps:1 · L'ARRIVÉE — première des quatre temps (contrat lu par scripts/verifier-seuil-landing.mjs : ne pas renommer ce marqueur sans mettre le contrôle à jour). -->
     <section class="nav-arrivee" data-arrivee aria-labelledby="nav-arrivee-titre">
       <!-- LE VIDE. Les étoiles sont posées par une fonction DÉTERMINISTE :
            deux chargements donnent le même ciel. C'est le critère du studio —
@@ -500,6 +501,7 @@
             nulle part. Ici on s'enfonce — et plus on s'enfonce, plus le navire
             est dense.
          ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- temps:2 · LA DESCENTE — le franchissement de coque (contrat lu par scripts/verifier-seuil-landing.mjs). -->
     <section class="nav-descente" data-descente aria-labelledby="nav-descente-titre">
       <div class="nav-descente__membrures" aria-hidden="true">
         <span
@@ -546,6 +548,7 @@
       <BandeRunes mot="MND" :repetitions="10" :taille="17" :opacite="0.5" encadre />
     </div>
 
+    <!-- temps:3 · LES SEPT QUARTIERS — sept DIRECTIONS, pas un menu (contrat lu par scripts/verifier-seuil-landing.mjs). -->
     <section class="nav-quartiers" data-quartiers aria-labelledby="nav-quartiers-titre">
       <div class="container">
         <div class="section-header section-header--center">
@@ -648,6 +651,7 @@
                doit s'appliquer aussi à l'autre, c'est une décision, pas un effet
                de bord — elle est signalée, pas prise ici.
          ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- temps:4 · L'EMBRANCHEMENT — « qui es-tu ? », quatrième et dernier temps (contrat lu par scripts/verifier-seuil-landing.mjs). -->
     <section class="nav-appetence" data-appetence aria-labelledby="nav-appetence-titre">
       <div class="container">
         <div class="section-header">

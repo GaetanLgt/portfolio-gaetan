@@ -3,25 +3,25 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "2f8b766",
-    "sujet": "Mise en place — 14 verrous tenus, et tout ce qui suit est mesure",
-    "date": "2026-09-22T15:22:55+02:00",
+    "court": "e6d98a8",
+    "sujet": "guides : les 10 pages du test editorial, ecrites et verifiees",
+    "date": "2026-09-24T06:16:17+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-22 20:35:22",
-    "horodatage_minute": "2026-09-22 20:35",
-    "horodatage_iso": "2026-09-22T18:35:22.560Z",
+    "horodatage_local": "2026-09-24 06:33:06",
+    "horodatage_minute": "2026-09-24 06:33",
+    "horodatage_iso": "2026-09-24T04:33:06.397Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 189,
+  "pages_prerendues": 187,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 362,
+    "ko_servis": 299.3,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
-    "total": 12,
+    "total": 13,
     "seuil": 14
   },
   "moteurs_ia": {
@@ -63,7 +63,7 @@
       "cle": "contact",
       "nom": "Contact livré au visiteur",
       "script": "scripts/verifier-contact.mjs",
-      "code": 0,
+      "code": 1,
       "motif": null
     }
   ]

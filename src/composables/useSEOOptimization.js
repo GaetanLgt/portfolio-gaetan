@@ -242,6 +242,27 @@ export function useSEOOptimization() {
        ⚠️ Et je ne l'ai pas déplacé dans ce round : `prerendre.js` fait 34 Ko et
          porte 32 routes. *Une retouche précipitée dessus casserait tout le site —
          et il est plus honnête de laisser un emplacement nommé qu'un patch douteux.*
+
+       ⭐⭐ MISE À JOUR DU 23/09/2026 — **CE COMMENTAIRE EST PÉRIMÉ : LE TRAVAIL EST FAIT.**
+       Le déplacement a eu lieu. La génération vit maintenant dans
+       **`scripts/prerendre.js`, lignes 701 à 798**, avec une garde qui n'existait pas ici :
+
+           if (dispo.length < 2) return '';   // une seule langue n'est pas un choix
+
+       Elle n'émet une balise que pour une langue **dont la page existe sur le disque**
+       (`dist/en/index.html`…) — *sinon elle enverrait les moteurs vers des 404, c'est-à-dire
+       qu'elle ferait du mal en croyant réparer.*
+
+       ⇒ **Mesure du 23/09 au soir : `hreflang` = 0 sur les 11 pages de `dist/` — ET C'EST
+       CORRECT.** Aucune traduction n'est écrite : il n'y a aucune alternative à déclarer.
+       *C'est auto-activant : le jour où `dist/en/index.html` existe, la balise apparaît
+       sans qu'on y touche.*
+
+       ⛔ **POURQUOI CETTE MISE À JOUR EXISTE : ce bloc, lu trop vite, fait conclure à un
+       blocage qui n'existe pas.** C'est arrivé — une session a lu « je ne l'ai pas déplacé »
+       et a annoncé que les `hreflang` étaient effacés par le prérendu. *Un commentaire qui
+       décrit un état ancien n'est pas un état.* **On ouvre le fichier qui devrait faire le
+       travail, pas celui qui en parle.**
        ======================================================================= */
     
     // Open Graph Image

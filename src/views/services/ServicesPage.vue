@@ -942,6 +942,37 @@ const steps = [
   color: var(--text-muted);
 }
 
+/* ⛔ LE MAILLON MANQUANT DE LA GRILLE DE TARIFS — ajouté le 23/09/2026.
+   ────────────────────────────────────────────────────────────────────────────
+   MESURÉ PAR LE BANC : `p.pricing-card__price` débordait de **+324 px en allemand**
+   et de **+22 px en français**, et **la page s'élargissait de 254 px** —
+   *la seule vraie barre de défilement horizontale du site.*
+
+   ⭐ ET LA CAUSE EST LA MÊME QUE POUR LA NAVBAR, à un mot près :
+   `.pricing-grid` est une **GRILLE**, et **un élément de grille a `min-width: auto`
+   par défaut — exactement comme un enfant `flex`.** ⇒ *Il refuse de descendre sous
+   la largeur de son contenu, donc le mot long élargit la carte, qui élargit la
+   grille, qui élargit la page.*
+
+   ⚠️ **Et le cas FRANÇAIS compte plus que le cas allemand** : `149€ – 199€ / site
+   audité` débordait de **22 px de sa carte**, sans qu'aucune traduction n'existe.
+   *Le défaut est visible aujourd'hui, en français.* */
+.pricing-card,
+.pricing-card > * {
+  min-width: 0;
+}
+
+.pricing-card__price,
+.pricing-card__title,
+.pricing-card__desc,
+.pricing-card__details {
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  white-space: normal;
+}
+
 .pricing-card__desc {
   font-size: 0.8rem;
   color: var(--text-muted);
