@@ -2,11 +2,7 @@
   "ci": {
     "collect": {
       "staticDistDir": "./dist",
-      "url": [
-        "http://localhost:4173/dossier/",
-        "http://localhost:4173/services/",
-        "http://localhost:4173/galion/"
-      ],
+      "url": ["/dossier/", "/services/", "/galion/"],
       "numberOfRuns": 3
     },
     "assert": {
