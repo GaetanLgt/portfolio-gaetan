@@ -1,0 +1,70 @@
+{
+  "titre": "GL Digital Lab — le laboratoire",
+  "description": "Le laboratoire : EVA01 et Arkadia, deux systèmes testés dans le réel. Un monde qu'on parcourt, pas une page qu'on descend.",
+  "graine": 42,
+  "palette": {
+    "fond": "#060a14",
+    "accent": "#2abfff",
+    "or": "#ffe650",
+    "texte": "#d7e6f2",
+    "doux": "#8ea6b8"
+  },
+  "lieux": [
+    {
+      "id": "leva01",
+      "nom": "EVA01",
+      "texte": "Un assistant IA local, avec mémoire et contrôle humain.<br><br>Il tourne sur un poste — RTX 3080, 10 Go de mémoire vidéo. Aucune requête ne sort. Les notes, les projets et les décisions restent sur le disque.<br><br><strong>L'humain garde le dernier mot</strong> : ce qui est observé, préparé, proposé ou exécuté est décidé, pas subi.",
+      "rayon": 220,
+      "taille": 18,
+      "liens": [
+        { "vers": "larkadia", "texte": "Voir Arkadia" },
+        { "vers": "lelabo", "texte": "Le laboratoire" }
+      ]
+    },
+    {
+      "id": "larkadia",
+      "nom": "Arkadia",
+      "texte": "Un écosystème communautaire, opéré comme un système critique.<br><br>Neuf serveurs depuis 2024. Des utilisateurs réels, des règles, des sauvegardes, des incidents et des évolutions continues.<br><br><strong>L'architecture ne s'arrête pas au déploiement.</strong>",
+      "rayon": 330,
+      "hauteur": 30,
+      "taille": 20,
+      "liens": [
+        { "vers": "lelabo", "texte": "Ce que les deux prouvent" },
+        { "vers": "leva01", "texte": "Revenir à EVA01" }
+      ]
+    },
+    {
+      "id": "lelabo",
+      "nom": "Le laboratoire",
+      "texte": "Deux terrains, un seul métier.<br><br><strong>EVA01</strong> — intelligence locale, mémoire, agents, contrôle humain.<br><strong>Arkadia</strong> — infrastructure, communauté, opérations, résilience.<br><br>Ce n'est pas une promesse universelle : chaque cas porte ses contraintes, ses compromis et ses limites.",
+      "rayon": 265,
+      "hauteur": -45,
+      "taille": 22,
+      "liens": [
+        { "vers": "lespreuves", "texte": "Les preuves" }
+      ]
+    },
+    {
+      "id": "lespreuves",
+      "nom": "Les preuves",
+      "texte": "Sans preuve, une étude de cas reste une histoire.<br><br>Ce qui est mesuré se dit mesuré. Ce qui est projeté se dit projeté. <strong>Et ce qui n'est pas mesuré s'écrit « mesure en cours », avec son protocole.</strong><br><br><em>Une case vide assumée vaut mieux qu'un chiffre plausible.</em>",
+      "rayon": 400,
+      "hauteur": 55,
+      "taille": 16,
+      "liens": [
+        { "vers": "leverrou", "texte": "Le verrou des noms" }
+      ]
+    },
+    {
+      "id": "leverrou",
+      "nom": "Le verrou des noms",
+      "texte": "Deux chiffres circulent dans les documents du studio sans source vérifiée.<br><br><strong>Ils n'apparaissent nulle part.</strong> Ni ici, ni sur le site, ni dans le jeu — tant qu'ils n'auront pas été mesurés.<br><br><em>Un chiffre sans source est une croyance, pas une preuve. Un chiffre sans sujet est un chiffre faux.</em>",
+      "rayon": 480,
+      "hauteur": -20,
+      "taille": 14,
+      "liens": [
+        { "vers": "leva01", "texte": "Retour au départ" }
+      ]
+    }
+  ]
+}
