@@ -219,7 +219,7 @@ class Cdp {
   //   une promesse qui ne pouvait pas se rompre.
   //   **Une boucle bornée d'attentes non bornées reste non bornée.**
   //   Le compteur à 40 donnait l'illusion d'un plafond ; il ne plafonnait rien.
-  envoyer(method, params, delaiMax = 15000) {
+  envoyer(method, params, delaiMax = 45000) {
     // ⭐ UN MOTEUR FIGÉ RESTE FIGÉ — mesuré le 23/09/2026.
     // Sans ce court-circuit, une seule route bloquée coûtait 40 × 15 s = 10 min :
     // on avait remplacé un blocage éternel par une lenteur. Ici, la première
@@ -407,6 +407,28 @@ async function principal() {
     '--disable-dev-shm-usage',
     '--disable-background-timer-throttling',
     '--disable-renderer-backgrounding',
+    /* ⛔ L'ÉCART LOCAL/CI, ET CE QU'IL DIT — mesuré le 24/09/2026.
+     *
+     *   EVA-01 (16 cœurs)      : **32 pages écrites**
+     *   Coureur GitHub (2 vCPU) : **10 pages écrites**
+     *
+     * ⭐ Même code, même `dist/`, même Chrome 152. **La seule différence est la
+     *   machine.** Ce n'est donc plus la PAGE qui est coupable — c'est la
+     *   CAPACITÉ. Ce site est une application Vue avec Three.js : la seule vue
+     *   du navire pèse 167 Ko de composant, et un coureur à 2 vCPU qui en rend
+     *   trente-deux d'affilée sature.
+     *
+     * ⇒ Ces flags ne rendent pas Chrome plus rapide : **ils l'empêchent de tenir
+     *   en mémoire ce dont il n'a pas besoin.** Un prérendu ouvre trente-deux
+     *   documents d'affilée ; tout ce qui reste accroché au navigateur (extensions,
+     *   synchronisation, traduction, cache d'historique) s'accumule pour rien. */
+    '--disable-extensions',
+    '--disable-background-networking',
+    '--disable-sync',
+    '--disable-default-apps',
+    '--mute-audio',
+    '--no-pings',
+    '--disable-features=Translate,BackForwardCache,AcceptCHFrame,MediaRouter,OptimizationHints,CalculateNativeWinOcclusion',
     /* ⛔ L'ANALYTIQUE EST BLOQUÉE AU NIVEAU RÉSEAU — ajouté le 23/09/2026.
      *
      * MESURE : le moteur de rendu de Chrome cesse de répondre après la 10ᵉ page
