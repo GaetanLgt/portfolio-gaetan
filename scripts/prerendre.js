@@ -40,6 +40,53 @@ const RACINE = path.resolve(DIST, '..')
 const PORT = Number(option('port', 4178))
 const DEBUG_PORT = PORT + 1
 const ECRIRE = !args.includes('--titre-seulement')
+// ⭐ `--reprendre` : sauter les pages DÉJÀ écrites ET PROPRES. C'est ce qui rend le
+//    prérendu possible sur une machine dont le moteur fige après N pages — on le
+//    relance, il continue plus loin. *Voir le commentaire de la boucle des routes.*
+const REPRENDRE = args.includes('--reprendre')
+/* ⭐⭐ `--seulement=<motif>` — OUTIL DE MESURE, ajouté le 25/09/2026.
+ *
+ * POURQUOI IL EXISTE : le prérendu fige, et **on ne peut pas mesurer une route
+ * précise** — un passage complet coûte de 20 à 70 minutes, et il faut le refaire
+ * après CHAQUE changement de flag. C'est ce coût qui a fait qu'on a changé sept
+ * flags d'un coup le 24/09 : *quand mesurer coûte une heure, on parie.*
+ *
+ * ⇒ `--seulement=/liens` ne rend QUE les routes qui contiennent le motif, et il
+ *   dit combien il en a retenu. Le comportement par défaut (option absente) est
+ *   INCHANGÉ : toutes les routes. *Ce filtre n'existe que pour rendre un échec
+ *   reproductible en deux minutes au lieu de soixante-dix.*
+ * ⚠️ `--seulement` NE DÉSARME AUCUN CONTRÔLE : les échecs comptent toujours, et
+ *    le code de sortie reste celui de la passe entière. */
+const SEULEMENT = option('seulement', '')
+/* ⭐⭐ `--sauf <chemin>[,<chemin>]` — ÉCARTER UNE ROUTE NOMMÉE, ET LA NOMMER PARTOUT.
+ *
+ * POURQUOI CETTE OPTION EXISTE, ET CE QU'ELLE N'EST PAS.
+ *
+ * ⛔ MESURE DU 25/09/2026 : la route `/apps` FIGE CHROME **à froid, seule, en première
+ *    navigation.** Chrome lancé neuf, une seule URL demandée, aucun cumul :
+ *    `--seulement /apps` → `✎ /apps` puis `Runtime.evaluate sans réponse après 15000 ms`,
+ *    et **125 s de processeur en 100 secondes** — le moteur ne « cesse pas de répondre »,
+ *    il boucle. `dist/apps/index.html` n'a jamais été écrit.
+ *    ⚠️ Et `AppsPage.vue` est INERTE : 7 112 octets, un seul import (`useLangue`), aucun
+ *    canvas, aucun `requestAnimationFrame`, aucun `setInterval`, aucune boucle, aucune
+ *    iframe. *Ce n'est donc pas son contenu — et c'est tout ce qu'on sait à cette heure.*
+ *
+ * ⇒ CE QUE CETTE OPTION FAIT, ET RIEN DE PLUS : elle RETIRE une route de la liste, en la
+ *   nommant à l'écran. Elle ne masque pas, elle ne répare pas, elle ne prétend pas que la
+ *   route est rendue : **elle la sort du prérendu et le dit à chaque passe.**
+ *
+ * ⛔ CE QU'ON Y PERD, ET IL FAUT LE SAVOIR : `/apps` partira en SPA. Un visiteur AVEC
+ *   JavaScript la verra normalement ; **un robot, un aperçu de lien et un visiteur sans
+ *   JavaScript recevront la coquille vide.** *C'est moins bien — c'est mieux que vingt
+ *   routes qui n'arrivent jamais parce qu'une seule bloque la file.*
+ *
+ * ⛔ À RETIRER DÈS QUE `/apps` REND. **Ce n'est pas une correction, c'est un contournement,
+ *   et il est daté.** Le contrôle qui doit le faire retirer : `--sauf` vide et
+ *   `dist/apps/index.html` présent après un `npm run prerendre`.
+ *
+ * ⚠️ La comparaison est EXACTE (`===`), pas un préfixe : écarter `/apps` ne doit pas
+ *   écarter silencieusement les sept pages `/apps/agent/*` qui, elles, n'ont rien fait. */
+const ECARTER = option('sauf', '').split(',').map((s) => s.trim()).filter(Boolean)
 
 /* ── La balise d'ouverture de la COQUILLE SOURCE ──────────────────────────────
    On la lit une fois, dans `index.html` à la racine du projet — PAS dans la
@@ -147,6 +194,35 @@ function servir() {
  * fichier tronqué**. C'est ce qu'on attendait depuis le début.
  */
 function ecrireAtomique(chemin, contenu) {
+  /* ⛔⛔⛔ ON REFUSE D'ÉCRIRE UNE PAGE D'ERREUR CHROME — 24/09/2026.
+   *
+   * MESURE, ET ELLE A COÛTÉ DES JOURS SANS SE VOIR :
+   *     dist/ : 39 pages · **33 sont des pages d'erreur Chrome** · 4 sont du site.
+   *     Et le TITRE de dist/index.html était JUSTE.
+   *
+   * ⭐ LE MÉCANISME, ET IL SE MORD LA QUEUE :
+   *   ① le prérendu de `/` écrit dist/index.html — avec, dedans, l'écran
+   *      « ce site est inaccessible » que Chrome fabrique quand le serveur local
+   *      ne répond pas ;
+   *   ② **le `<head>` est préservé** par la fusion — donc le TITRE reste bon ;
+   *   ③ le fichier pourri RESTE sur le disque ;
+   *   ④ au build suivant, le serveur sert CE FICHIER comme repli SPA, à toute
+   *      route inconnue — **donc la page d'erreur devient la source de tout** ;
+   *   ⑤ et ça se propage, build après build.
+   *
+   * ⛔ **Le titre juste a caché le corps pourri.** C'est un défaut qui ne se plaint
+   *   pas : il écrit un fichier de 51 Ko qui a l'air valide, avec le bon titre.
+   *
+   * ⇒ L'ASSERTION, ET ELLE EST ICI PARCE QUE C'EST LE POINT DE PASSAGE OBLIGÉ :
+   *   **toute écriture de page passe par cette fonction.** *Un contrôle posé dans
+   *   la boucle aurait laissé passer la 404 ; posé ici, il ne laisse rien passer.*
+   *   C'est la loi 4 : le garde-fou vit là où tout doit passer, pas sur un chemin. */
+  if (/interstitial-wrapper|main-frame-error|ERR_CONNECTION|<div id="main-message"/.test(contenu)) {
+    console.error(`⛔ PAGE D'ERREUR CHROME REFUSÉE À L'ÉCRITURE : ${chemin}`);
+    console.error('   Le moteur a rendu un écran « ce site est inaccessible », pas une page du site.');
+    console.error('   On n\'écrase pas un fichier valide avec ça — c\'est ainsi que le défaut se propageait.');
+    throw new Error('page d\'erreur Chrome : écriture refusée');
+  }
   fs.mkdirSync(path.dirname(chemin), { recursive: true })
   const temporaire = chemin + '.' + process.pid + '.tmp'
   fs.writeFileSync(temporaire, contenu, 'utf8')
@@ -219,7 +295,7 @@ class Cdp {
   //   une promesse qui ne pouvait pas se rompre.
   //   **Une boucle bornée d'attentes non bornées reste non bornée.**
   //   Le compteur à 40 donnait l'illusion d'un plafond ; il ne plafonnait rien.
-  envoyer(method, params, delaiMax = 45000) {
+  envoyer(method, params, delaiMax = 15000) {
     // ⭐ UN MOTEUR FIGÉ RESTE FIGÉ — mesuré le 23/09/2026.
     // Sans ce court-circuit, une seule route bloquée coûtait 40 × 15 s = 10 min :
     // on avait remplacé un blocage éternel par une lenteur. Ici, la première
@@ -371,7 +447,20 @@ async function principal() {
       .map((m) => m[1])
       .filter((p) => !p.includes(':') && !p.includes('*'))
   }
-  const routes = [...new Set([...urlsSitemap, ...urlsRouteur])]
+  const routesBrutes = [...new Set([...urlsSitemap, ...urlsRouteur])]
+  /* ⭐ `--sauf` retire des routes de la liste AVANT tout comptage, et le dit. Une route
+   * écartée n'est ni un succès ni un échec : elle n'est pas demandée. Voir l'option en
+   * tête de fichier — c'est un contournement daté, pas une correction. */
+  const routes = routesBrutes.filter((r) => !ECARTER.includes(r))
+  if (ECARTER.length) {
+    const inconnues = ECARTER.filter((e) => !routesBrutes.includes(e))
+    console.log(`  ⛔ --sauf : ${ECARTER.length} route(s) ÉCARTÉE(S) du prérendu — ${ECARTER.join(', ')}`)
+    console.log('     contournement daté du 25/09/2026 : /apps fige Chrome à froid, seule, en')
+    console.log('     première navigation. Dist apps/index.html : absent, donc SPA pour cette page.')
+    console.log('     ⛔ À RETIRER dès que /apps rend : le contrôle est « --sauf vide ET')
+    console.log('        dist/apps/index.html présent après npm run prerendre ».')
+    if (inconnues.length) console.log(`     ⚠️ nommée(s) mais absente(s) de la liste : ${inconnues.join(', ')}`)
+  }
   console.log(`Prérendu — ${urlsSitemap.length} URL(s) au sitemap, ${urlsRouteur.length} route(s) au routeur, ${routes.length} à rendre`)
 
   const serveur = await servir()
@@ -468,8 +557,49 @@ async function principal() {
      *   ⇒ Une page de liens ne peut plus noyer le moteur : ses requêtes
      *     échouent instantanément au lieu d'attendre.
      *   ⚠️ Ce qu'on perd : rien. *Un pré-rendu n'a jamais eu besoin du réseau
-     *      extérieur — il a besoin du `dist/` que ce script sert lui-même.* */
-    '--host-resolver-rules=MAP * 0.0.0.0',
+     *      extérieur — il a besoin du `dist/` que ce script sert lui-même.*
+     *
+     * ⛔⛔ `MAP * 0.0.0.0` A ÉTÉ ESSAYÉ, PUIS RETIRÉ — 24/09/2026.
+     *
+     *    L'intention était bonne : `/liens` déclenche des dizaines de requêtes vers
+     *    des domaines extérieurs, et le moteur s'y noyait. Mapper TOUT le réseau
+     *    extérieur vers nulle part devait régler ça.
+     *
+     * ⭐ CE QUI A ÉTÉ MESURÉ APRÈS : `⛔ PAGE D'ERREUR CHROME — dist/index.html`.
+     *   **Chrome ne pouvait plus joindre `127.0.0.1`, c'est-à-dire le serveur local
+     *   que ce script venait de démarrer.** Le prérendu rendait « ce site est
+     *   inaccessible » sur la PREMIÈRE route.
+     *
+     * ⛔ ET LE RAISONNEMENT ÉTAIT FAUX : j'avais écrit que « les IP littérales ne
+     *    passent pas par le résolveur ». **Une déduction, jamais mesurée.** `MAP *`
+     *    attrape aussi le poste local.
+     *
+     * ⇒ On revient aux TROIS domaines d'analytique — mesurément suffisants, puisque
+     *   le prérendu écrivait 33 pages avec eux — et on ajoute `EXCLUDE 127.0.0.1`
+     *   en ceinture. *Le vrai barrage reste le blocage CDP plus bas : il refuse la
+     *   requête AVANT qu'elle parte, et ne dépend d'aucune résolution.* */
+    /* ⭐⭐ CORRIGÉ LE 25/09/2026 — LA COMBINAISON QUI N'AVAIT JAMAIS ÉTÉ ESSAYÉE.
+     *
+     * MESURE : `/liens` seule (`--seulement=/liens`), Chrome consomme **524 s de CPU en
+     * 8 minutes** et n'écrit rien. Le moteur ne « cesse pas de répondre » : il BOUCLE.
+     *
+     * ⛔ CE QUI S'ÉTAIT PASSÉ LE 24/09 : `MAP * 0.0.0.0` a été essayé SEUL — il a attrapé
+     *    `127.0.0.1`, donc le serveur local, et la première route a rendu une page d'erreur.
+     *    On est revenu à TROIS domaines d'analytique. **Les deux règles n'ont jamais été
+     *    posées ensemble.** *On a conclu « MAP * ne marche pas » alors qu'on avait mesuré
+     *    « MAP * SANS exclusion ne marche pas ». La nuance coûtait vingt-quatre routes.*
+     *
+     * ⭐ L'ORDRE COMPTE, ET C'EST LA MÉCANIQUE DE CHROMIUM : les règles sont évaluées dans
+     *   l'ordre et **la première qui correspond gagne**. `EXCLUDE` doit donc venir AVANT
+     *   `MAP *`, sans quoi `*` attrape le poste local avant qu'on ait pu l'exclure.
+     *   `localhost` ET `127.0.0.1` sont exclus tous les deux : le script navigue vers l'IP
+     *   littérale, mais une redirection ou une ressource peut passer par le nom.
+     *
+     * ⚠️ Ce qu'on perd : rien. Le prérendu sert son propre `dist/` et n'a jamais eu besoin
+     *    du réseau extérieur — ses visites n'existent pas. Ce qu'on gagne : une page de
+     *    liens ne peut plus le noyer. *Le blocage CDP plus bas reste le premier barrage :
+     *    il refuse la requête AVANT qu'elle parte, et ne dépend d'aucune résolution.* */
+    '--host-resolver-rules=EXCLUDE 127.0.0.1,EXCLUDE localhost,MAP * 0.0.0.0',
     `--remote-debugging-port=${DEBUG_PORT}`, `--user-data-dir=${profil}`,
     `http://127.0.0.1:${PORT}/`,
   ], {
@@ -545,9 +675,71 @@ async function principal() {
   // invisible (opacity:0 suite à la transition) qui intercepte les clics.
   const loaderBloquant = []
   let ecrits = 0, echecs = 0
+  /* ⭐⭐ `figements` — CE QU'ON NE COMPTAIT PAS, ET QUI COÛTAIT 70 MINUTES.
+   *
+   * MESURE DU 25/09/2026 : une passe complète avec `--reprendre` a duré **70,6 minutes**
+   * pour **10 pages écrites et 24 échecs**. Le temps ne part pas dans le rendu : il part
+   * dans les 24 routes restantes, qui échouent CHACUNE en ~3 minutes (délai CDP de 15 s
+   * × tentatives, plus le redémarrage du serveur local entre les deux).
+   *
+   * ⭐ LE MOTEUR DE CHROME FIGE APRÈS **10 PAGES ÉCRITES**, et le script le sait — le
+   *   commentaire de la boucle le dit depuis le 23/09. **Ce qu'il ne faisait pas, c'est
+   *   s'arrêter.** Une fois le moteur figé, les 24 routes suivantes ne peuvent pas
+   *   réussir : on frappait à une porte dont on venait de constater qu'elle est murée.
+   *
+   * ⇒ Deux figements consécutifs = on arrête LA PASSE. Ce qui est écrit est écrit et
+   *   propre ; `--reprendre` repart de là avec un Chrome neuf, et la boucle de passes
+   *   (`npm run prerendre`) recommence jusqu'à ce qu'il ne reste rien.
+   *   *Une passe coûte alors ~1 minute au lieu de 70 — et c'est ce qui rend le prérendu
+   *   possible sur le petit coureur du CI, qui n'en tient que dix.* */
+  let figements = 0
 
-  for (const route of routes) {
+  /* ⭐ `--seulement=<motif>` : filtre de MESURE (voir l'option en tête de fichier).
+   * Absent, il ne change rien : `aRendre` vaut `routes` tout entier. */
+  const aRendre = SEULEMENT ? routes.filter((r) => r.includes(SEULEMENT)) : routes
+  if (SEULEMENT) {
+    console.log(`  --seulement « ${SEULEMENT} » : ${aRendre.length} route(s) retenue(s) sur ${routes.length}`)
+    for (const r of aRendre) console.log(`      ${r}`)
+  }
+
+  for (const route of aRendre) {
     const url = `http://127.0.0.1:${PORT}${route}`
+    /* ⭐⭐⭐ LA REPRISE — `--reprendre`. Ajouté le 24/09/2026, et c'est la réponse
+     * à la seule question qui restait : **le moteur fige après N pages.**
+     *
+     * MESURE : `EVA-01 (16 cœurs) → 16 pages puis 38 minutes de silence.` Le
+     * coureur du CI, lui, s'arrête à dix. *Relancer le script ne servait à rien :
+     * il recommençait par le début et re-figeait au même endroit.*
+     *
+     * ⭐ CE QUE ÇA CHANGE, ET POURQUOI C'EST LA BONNE FORME DE LA RÉPONSE :
+     *   on ne demande pas au moteur de tenir plus longtemps — **on ne lui demande
+     *   que ce qu'il peut tenir.** Le prérendu devient une tâche REPRENABLE :
+     *      ① il écrit les pages qu'il peut ;
+     *      ② il s'arrête proprement ;
+     *      ③ on le relance, il saute ce qui est déjà écrit et propre, et il
+     *         continue plus loin. **Trois passes suffisent pour trente-trois pages
+     *         sur une machine qui n'en tient que dix.**
+     *
+     * ⛔ ET ON NE SAUTE QUE CE QUI EST PROPRE : un fichier qui contient une page
+     *    d'erreur Chrome est RÉÉCRIT. *Sauter un fichier pourri parce qu'il existe
+     *    serait exactement le défaut qui a coûté des jours — 33 pages d'erreur
+     *    préservées build après build.*
+     *
+     * ⚠️ Le comportement par défaut NE CHANGE PAS : sans `--reprendre`, on refait
+     *    tout. *Un build complet doit rester complet.* */
+    if (REPRENDRE) {
+      const fichierCible = route === '/'
+        ? path.join(DIST, 'index.html')
+        : path.join(DIST, route.replace(/^\//, ''), 'index.html')
+      if (fs.existsSync(fichierCible)) {
+        const deja = fs.readFileSync(fichierCible, 'utf8')
+        if (!/interstitial-wrapper|main-frame-error/.test(deja)) {
+          ecrits++
+          rapport.push({ route, ok: true, repris: true, motif: 'déjà écrite et propre — sautée' })
+          continue
+        }
+      }
+    }
     /* ⛔ ON DIT CE QU'ON EST EN TRAIN DE FAIRE — 23/09/2026.
        Mesure du 23/09 : le moteur de Chrome se fige après **10 pages écrites**, et
        tout ce qui suit échoue en cascade avec « Page.navigate sans réponse ».
@@ -581,6 +773,18 @@ async function principal() {
       console.error(`     (${ecrits} page(s) écrite(s) avant celle-ci)`)
       rapport.push({ route, ok: false, motif: `CDP : ${e.message}` })
       echecs++
+      figements++
+      if (figements >= 2) {
+        console.error('')
+        console.error(`  ⛔ MOTEUR FIGÉ — deux routes de suite sans réponse.`)
+        console.error(`     ${ecrits} page(s) écrite(s) et conservée(s) ; ${routes.length - ecrits} restante(s).`)
+        console.error('     On ARRÊTE LA PASSE ici : continuer ferait échouer les routes suivantes')
+        console.error('     une par une, ~3 minutes chacune, sans qu\'aucune ne puisse réussir.')
+        console.error('     Relancer : `npm run prerendre` — il reprend par `--reprendre`,')
+        console.error('     saute les pages déjà propres et repart avec un Chrome neuf.')
+        rapport.push({ route: '(fin de passe)', ok: false, motif: `moteur figé après ${ecrits} page(s)` })
+        break
+      }
       continue
     }
     // ── PREMIÈRE ATTENTE : LE CONTENU ─────────────────────────────────────────
@@ -829,6 +1033,28 @@ async function principal() {
    *   échec isolé sur la dernière page ne doit pas coûter la 404 de tout le site
    *   — c'est la seule page que voit un visiteur qui s'est trompé d'adresse.* */
   let titre404 = ''
+  /* ⛔⛔ ET SI C'ÉTAIT LE CACHE DE CHROME ? — 24/09/2026, deuxième passe.
+   *
+   * MESURE QUI MÈNE ICI : le titre restait **« 127.0.0.1 »** — la page d'erreur de
+   * Chrome — **même après avoir relancé le serveur local.** *Rouvrir ce qui a lâché
+   * n'a rien changé : donc ce n'est pas le serveur.*
+   *
+   * ⭐ UNE PAGE D'ERREUR NE SE RÉESSAIE PAS. Chrome a mis en cache son échec de
+   *   connexion sur ce chemin ; il resservira le même écran tant qu'on ne le lui
+   *   demande pas explicitement de ne plus faire confiance à son cache.
+   *   *Et c'est cohérent avec le reste : trente-deux navigations ont eu lieu avant,
+   *   chacune laissant sa trace dans le même profil.*
+   *
+   * ⇒ On désactive le cache du réseau AVANT la première tentative, et on le vide.
+   *   ⚠️ Les deux appels sont dans le même `try` que le reste : si `Network` n'est
+   *     pas disponible, on continue — *une 404 manquante reste préférable à un
+   *     build qui meurt.* */
+  try {
+    await cdp.envoyer('Network.setCacheDisabled', { cacheDisabled: true })
+    await cdp.envoyer('Network.clearBrowserCache')
+  } catch (e) {
+    console.error(`      cache du moteur non vidé — ${e.message}`)
+  }
   for (let essai = 1; essai <= 3; essai++) {
     /* ⛔ ON RELANCE LE SERVEUR LOCAL — et ce n'est pas un pansement, c'est la
      * ressource qui a lâché. MESURE du 24/09/2026 : **trois navigations d'affilée
@@ -1135,41 +1361,105 @@ async function principal() {
   console.log(`${ECRIRE ? 'fichiers écrits' : 'mode rapport'} : ${ecrits}${echecs ? ` · échecs : ${echecs}` : ''}`)
   console.log(`propreté : ${commentairesRetires} commentaire(s) de travail retiré(s), ${octetsRetires} octets rendus au visiteur`)
   console.log('           (les ancres de fragment Vue, vides, sont conservées : l\'hydratation en dépend)')
-  /* ⛔ CE QU'ON PERD EN LISANT CETTE LIGNE — et il faut le savoir avant.
+  /* ⭐⭐⭐ LE PANSEMENT DU 23/09 DEVIENT UN CONTRAT — 25/09/2026.
    *
-   * AVANT : `if (echecs) process.exitCode = 1`
-   *   Le moindre échec sortait le script en 1, donc le build s'arrêtait, donc la CI
-   *   était rouge.
+   * ⛔ CE QUI A CHANGÉ, ET C'EST UNE MESURE, PAS UNE OPINION.
+   *    Le pansement disait : « le prérendu SORT EN 0 malgré tout », parce qu'un échec
+   *    faisait une CI rouge qui empêchait tout déploiement. **Le remède était pire que
+   *    le mal : la CI est devenue verte sur un prérendu INCOMPLET** — et c'est exactement
+   *    pourquoi `gldigitallab.fr/guides` répond 404 alors que le dépôt les contient.
    *
-   * ⚠️ MESURE DU 23/09/2026, sur un `dist/` VIDÉ POUR COMPTER HONNÊTEMENT :
-   *   8 pages écrites sur 32. Le moteur de rendu de Chrome cesse de répondre après
-   *   la 8ᵉ — et **les 24 suivantes échouent en cascade, à cause d'UNE SEULE cause.**
-   *   Le script comptait donc 24 échecs qui ne sont pas 24 problèmes.
-   *   ⭐ *Un échec répété n'est pas un échec multiplié.*
+   * ⭐ CE QUI REND LE VRAI CORRECTIF POSSIBLE : la boucle de passes (`npm run prerendre`).
+   *    Le moteur de Chrome fige après dix pages — on ne le répare pas, **on repart**. Une
+   *    passe incomplète n'est plus un échec : c'est une ÉTAPE. Ce script dit donc
+   *    honnêtement où il en est, et la boucle s'occupe du reste.
    *
-   * ⇒ CE QUI RESTE BLOQUANT, ET DOIT LE RESTER :
-   *     · ZÉRO page écrite → code 1. *Là, le prérendu n'a rien fait : c'est un échec.*
-   *     · les pannes préalables — sitemap absent, Chrome introuvable, CDP muet —
-   *       restent des `process.exit(1)` plus haut dans ce fichier, inchangées.
+   * ⇒ LES TROIS CODES, ET ILS SONT DISTINCTS :
+   *     · 0 — toutes les routes sont écrites. *Fini.*
+   *     · 1 — RIEN n'a été écrit : le prérendu n'a pas fait son travail. *Échec réel.*
+   *     · 2 — des routes restent. *Ce n'est PAS un échec : c'est « reprends-moi ».*
+   *       La boucle relance avec `--reprendre`, qui saute les pages propres et repart
+   *       avec un Chrome neuf. Elle s'arrête sur 0, et sur 1 elle abandonne.
    *
-   * ⛔ CE QU'ON PERD, ET C'EST RÉEL : le site partira avec 8 pages statiques au lieu
-   *    de 32. **Un visiteur SANS JavaScript verra 8 pages, et un squelette sur les
-   *    24 autres.** *C'est moins bien — et c'est mieux qu'une CI rouge qui empêche
-   *    tout déploiement depuis vingt-quatre heures.*
+   * ⚠️ CE QUI N'A PAS CHANGÉ : les pannes préalables — sitemap absent, Chrome
+   *    introuvable, CDP muet — restent des `process.exit(1)` plus haut, intacts.
    *
-   * ⛔ À RETIRER DÈS QUE LA CAUSE EST TROUVÉE. **Ce n'est pas une correction, c'est
-   *    un pansement, et il est daté.** *Le contrôle qui doit le faire retirer :
-   *    `dist/` doit compter 32 pages après un `npm run build`.* */
-  if (echecs && ecrits === 0) process.exitCode = 1
-  if (echecs && ecrits > 0) {
+   * ⛔ ET LE CONTRÔLE RESTE CELUI DU PANSEMENT, mot pour mot : **`dist/` doit compter
+   *    toutes les routes après `npm run prerendre`.** Il est maintenant vérifiable
+   *    automatiquement, puisqu'un code 2 ne peut plus se faire passer pour un succès. */
+  /* ⛔ CORRIGÉ LE 25/09/2026, MOINS D'UNE HEURE APRÈS L'AVOIR ÉCRIT — ET LA MESURE EST NETTE.
+   *
+   * J'avais écrit : `const restantes = routes.length - ecrits`.
+   * La première passe a affiché : « 33 route(s) sur 43 restent à écrire » — alors qu'elle
+   * venait d'écrire ses 10 pages **et d'en SAUTER 23 déjà propres** (`--reprendre`).
+   * ⭐ Les routes sautées ne passent pas par `ecrits++` : le compte ne pouvait donc JAMAIS
+   *   atteindre zéro, et la boucle aurait brûlé ses dix passes pour finir sur un échec faux.
+   *   *Un prérendu complet déclaré incomplet : le défaut symétrique de celui d'hier.*
+   *
+   * ⇒ ON NE COMPTE PLUS : ON MESURE. Une route est faite si son HTML existe dans `dist/`
+   *   et qu'il ne contient pas une page d'erreur Chrome — **exactement le critère de
+   *   `--reprendre`**, pour que les deux ne puissent pas diverger. *Un compteur qui compte
+   *   autre chose que ce qu'on croit est pire qu'aucun compteur.* */
+  const pageEcrite = (route) => {
+    const f = route === '/'
+      ? path.join(DIST, 'index.html')
+      : path.join(DIST, route.replace(/^\//, ''), 'index.html')
+    if (!fs.existsSync(f)) return false
+    try {
+      return !/interstitial-wrapper|main-frame-error|ERR_CONNECTION/.test(fs.readFileSync(f, 'utf8'))
+    } catch { return false }
+  }
+  const restantes = routes.filter((r) => !pageEcrite(r)).length
+  if (echecs && ecrits === 0) {
+    process.exitCode = 1
+  } else if (restantes > 0) {
     console.log('')
-    console.log(`  ⚠️ ${echecs} route(s) non écrite(s) — le prérendu SORT EN 0 malgré tout.`)
-    console.log("     *Ces échecs viennent d'une cause unique : le moteur de rendu cesse de")
-    console.log("      répondre après un certain nombre de pages. Les compter séparément")
-    console.log("      ferait croire à 24 problèmes là où il n'y en a qu'un.*")
-    console.log('     ⛔ PANSEMENT DATÉ DU 23/09/2026 — à retirer quand la cause sera trouvée.')
-    console.log('     ⭐ Le contrôle : `dist/` doit compter 32 pages.')
+    console.log(`  ⚠️ ${restantes} route(s) sur ${routes.length} restent à écrire — code 2 (« reprends-moi »).`)
+    console.log('     Ce n\'est pas un échec : le moteur de Chrome fige après un certain nombre')
+    console.log('     de pages, et ces échecs viennent tous de cette cause unique.')
+    console.log('     ⭐ `npm run prerendre` relance la passe autant de fois qu\'il faut,')
+    console.log('        avec `--reprendre` : un Chrome neuf repart de là où celui-ci s\'est arrêté.')
+    if (!REPRENDRE) {
+      console.log('     ⛔ SANS `--reprendre`, une passe seule ne peut pas finir : c\'est la')
+      console.log('        boucle qui complète le prérendu, pas cette invocation.')
+    }
+    process.exitCode = 2
+  } else if (echecs) {
+    console.log('')
+    console.log(`  ⚠️ ${echecs} route(s) ont échoué en route, mais les ${ecrits} route(s) attendues`)
+    console.log('     sont écrites : la passe est complète, on sort en 0.')
   }
 }
 
-principal().catch((e) => { console.error('prérendu interrompu :', e && e.stack ? e.stack : e); process.exit(1) })
+/* ⭐⭐⭐ LA SORTIE — AJOUTÉE LE 25/09/2026, ET C'ÉTAIT LA PIÈCE MANQUANTE DE LA BOUCLE.
+ *
+ * ⛔ MESURE : la boucle de passes a lancé la passe 1, qui a écrit ses 10 pages, imprimé son
+ *    rapport et posé son code de sortie… **puis n'est jamais sortie.** Le journal s'arrête
+ *    à 11:17:33 et ne bouge plus ; le processus `node` reste vivant ; la boucle, qui attend
+ *    l'événement `exit` de son enfant, attend toujours. **Le prérendu était fini et il ne
+ *    le savait pas.**
+ *
+ * ⭐ LA CAUSE, ET ELLE EST MÉCANIQUE : `process.exitCode` N'ARRÊTE PAS UN PROCESSUS. Il dit
+ *   seulement quel code rendre *quand la boucle d'événements se videra*. Or ce script laisse
+ *   DEUX choses ouvertes : le serveur HTTP local et Chrome. Rien ne les ferme en sortie
+ *   normale — `toutNettoyer()` n'était appelé QUE sur SIGINT, SIGTERM et les sorties d'erreur.
+ *
+ * ⇒ C'EST AUSSI L'EXPLICATION DES SIX CHROME ZOMBIES RETROUVÉS CE MATIN : trois d'entre eux
+ *   avaient consommé 7 113 s, 5 455 s et 5 430 s de CPU — **près de cinq heures de
+ *   processeur** — parce que chaque passe laissait son navigateur tourner après avoir fini.
+ *   *Un script qui a fait son travail mais ne se termine pas n'est pas un script fini :
+ *   c'est un script qui occupe la machine.*
+ *
+ * ⇒ ON SORT EXPLICITEMENT : on nettoie, PUIS on sort avec le code voulu. L'ordre compte —
+ *   sortir d'abord laisserait Chrome et le serveur orphelins, ce qui est exactement le
+ *   défaut qu'on vient de nommer. */
+principal()
+  .then(() => {
+    toutNettoyer()
+    process.exit(process.exitCode ?? 0)
+  })
+  .catch((e) => {
+    console.error('prérendu interrompu :', e && e.stack ? e.stack : e)
+    toutNettoyer()
+    process.exit(1)
+  })

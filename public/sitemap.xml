@@ -60,15 +60,6 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <!-- REMPLACE /parcours (10/09/2026) : la page a été renommée, l'ancienne adresse rendait un 404 alors qu'elle était déclarée. -->
-    <!-- ⛔ /carte-holistique retiree le 23/09/2026 : une URL qui reste dans le
-         sitemap est une page qu'on demande aux moteurs d'indexer alors qu'elle
-         n'existe plus. -->
-    <lastmod>2026-09-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://gldigitallab.fr/voyageo-pro</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -195,5 +186,82 @@
     <lastmod>2026-09-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <!-- Les dix réponses (hub du test éditorial, 24/09/2026) — prix, délais, méthode : ce qu'un client demande avant d'acheter, écrit une fois et publié. Déclaré parce qu'il REND une page réelle. Priorité 0.8 : c'est une porte d'entrée commerciale, pas une pièce d'atelier. Famille de limites : aucune franchise ni marque de tiers, aucun visuel d'un autre, aucun chiffre non mesuré — les prix cités sont publics et hors taxes, les délais sont des fourchettes annoncées dès le premier échange. -->
+    <loc>https://gldigitallab.fr/guides</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <!-- Combien coûte un site internet pour une PME ? -->
+    <loc>https://gldigitallab.fr/guides/prix-site-web-pme</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Héberger son site et ses données en France, concrètement -->
+    <loc>https://gldigitallab.fr/guides/heberger-ses-donnees-en-france</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Un audit de site web : ce qu'il contient, combien de temps ça prend -->
+    <loc>https://gldigitallab.fr/guides/audit-site-web</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Site sur mesure ou WordPress : comment choisir -->
+    <loc>https://gldigitallab.fr/guides/sur-mesure-ou-wordpress</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Une application métier sur mesure : quand ça vaut le coup -->
+    <loc>https://gldigitallab.fr/guides/application-metier-sur-mesure</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Faire tourner une IA en local dans une entreprise -->
+    <loc>https://gldigitallab.fr/guides/ia-locale-entreprise</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Confier ses données à une IA : qu'est-ce qui sort de l'entreprise ? -->
+    <loc>https://gldigitallab.fr/guides/ce-qui-sort-dune-ia</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Qui possède le code d'un site : l'agence ou le client ? -->
+    <loc>https://gldigitallab.fr/guides/a-qui-appartient-le-code</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Trouver une agence web dans la Somme, près d'Amiens -->
+    <loc>https://gldigitallab.fr/guides/agence-web-somme</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <!-- Combien de temps pour refaire un site, du premier appel à la mise en ligne -->
+    <loc>https://gldigitallab.fr/guides/delai-refaire-un-site</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

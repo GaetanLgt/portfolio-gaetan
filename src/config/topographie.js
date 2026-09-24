@@ -52,6 +52,10 @@
  * @property {string} [note]      pourquoi cette page est là. Recopiée en commentaire.
  */
 
+// ⭐ LA LISTE DES DIX PAGES DU TEST ÉDITORIAL EST IMPORTÉE, PAS RECOPIÉE.
+// Voir le bloc « LES DIX RÉPONSES » à la fin de `TOPOGRAPHIE` : c'est là que l'import sert.
+import { GUIDES } from '../data/guides.js';
+
 export const TOPOGRAPHIE = [
   // ═══ LE PONT SUPÉRIEUR — les cinq compartiments que la navigation montre ═══════════
   {
@@ -292,6 +296,44 @@ export const TOPOGRAPHIE = [
       note: "L'armure (ajoutée le 19/09/2026) : le projet de jeu du studio montré EN COURS DE ROUTE — une planche de conception originale, six lois de forme écrites après la réception d'une œuvre décrite et NON reprise, une variante qui en est l'inverse ligne par ligne, l'état réel de ce qui est fait et de ce qui ne l'est pas, et une rubrique « ce que cette page ne garantit pas » qui dit les trois manques. Déclarée parce qu'elle REND une page réelle — c'est la règle de ce fichier — et parce qu'un projet qu'on ne peut pas trouver n'est pas montré : il est caché. Priorité 0.6 : c'est une pièce d'atelier et de méthode, pas une porte commerciale, et rien n'y est vendu. Famille de limites : AUCUN NOM DE FRANCHISE, de marque, de personnage protégé ni d'artiste — l'œuvre de tiers qui a servi de point de départ est décrite par sa FORME et jamais nommée ; aucune image d'un autre (la seule image de la page est la planche produite par le studio, réduite de 1 076 519 à 43 564 octets pour tenir le verrou de poids) ; aucun nom de fichier, aucun chemin local, aucun nom d'outil ni de modèle. Aucune date de sortie, aucun moteur, aucun modèle économique : ils ne sont pas décidés, et une valeur par défaut serait une invention.",
     },
   },
+
+  // ═══ LES DIX RÉPONSES — le test éditorial du 24/09/2026 ═══════════════════════════
+  //
+  // ⛔ CE BLOC EXISTE PARCE QUE DIX PAGES ÉTAIENT DEVENUES INTROUVABLES PAR LE BUILD.
+  //
+  // Mesuré le 25/09/2026 : les dix pages étaient écrites (`src/data/guides.js`), routées
+  // (`src/router/index.js`), liées depuis le pied de page de tout le site — et **absentes du
+  // sitemap** (27 `<loc>`, zéro `/guides`), donc **jamais prérendues** : `dist/guides/`
+  // n'existait pas. Le prérendu tire ses routes de `dist/sitemap.xml` ∪ les `path:`
+  // LITTÉRAUX de `src/router/index.js` ; or ces dix routes sont écrites
+  // `GUIDES.map((g) => ({ path: '/guides/' + g.slug }))` — une chaîne CONSTRUITE, que la
+  // regex `path:\s*'([^']+)'` ne peut pas énumérer. *Un fichier juste, une liste muette.*
+  //
+  // ⭐ LA CORRECTION N'ÉCRIT AUCUN SLUG ICI. Elle importe `GUIDES` : la liste des pages et
+  // leur déclaration au plan du site redeviennent UNE SEULE LISTE. Un onzième guide ajouté
+  // dans `src/data/guides.js` entre au sitemap sans que personne n'y pense — c'est la leçon
+  // de `/soute` (13/09), qui avait déjà coûté un oubli de sitemap.
+  //
+  // ⚠️ Ces dix pages n'ont PAS de `compartiment` : elles ne sont pas des zones de la carte
+  // du navire, comme les pages légales et l'atelier des agents. Le contrôle
+  // `verifier-topographie.mjs` ne les concerne donc pas — et c'est voulu.
+  {
+    chemin: '/guides',
+    declaration: {
+      lastmod: '2026-09-24', changefreq: 'monthly', priority: '0.8',
+      note: "Les dix réponses (hub du test éditorial, 24/09/2026) — prix, délais, méthode : ce qu'un client demande avant d'acheter, écrit une fois et publié. Déclaré parce qu'il REND une page réelle. Priorité 0.8 : c'est une porte d'entrée commerciale, pas une pièce d'atelier. Famille de limites : aucune franchise ni marque de tiers, aucun visuel d'un autre, aucun chiffre non mesuré — les prix cités sont publics et hors taxes, les délais sont des fourchettes annoncées dès le premier échange.",
+    },
+  },
+  ...GUIDES.map((g) => ({
+    chemin: `/guides/${g.slug}`,
+    declaration: {
+      // ⚠️ `lastmod` EST LA DATE DE RÉDACTION RÉELLE (24/09/2026), pas celle du build.
+      lastmod: '2026-09-24', changefreq: 'yearly', priority: '0.7',
+      // La question du guide est recopiée en commentaire : elle dit POURQUOI la page existe,
+      // en une phrase, sans qu'on ait à rouvrir `guides.js` pour le comprendre.
+      note: g.question,
+    },
+  })),
 ];
 
 /** Les compartiments de la carte du navire, dérivés du manifeste. */

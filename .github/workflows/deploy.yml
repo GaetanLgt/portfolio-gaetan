@@ -182,6 +182,35 @@ jobs:
           "$CHROME" --version
           echo "CHROME_PATH=$CHROME" >> "$GITHUB_ENV"
 
+      - name: 🈯 La porte des langues — elle REFUSE une traduction incomplète
+        # ⭐ AJOUTÉE LE 23/09/2026, ET C'EST LA DEMANDE DU CHANTIER : « la porte de build
+        # qui REFUSE une traduction incomplète ».
+        #
+        # ⛔ POURQUOI ELLE MANQUAIT, ET CE QUI A CHANGÉ. `package.json` portait ce constat,
+        # mot pour mot : « LA PORTE DE LANGUES N'EST PAS DANS LE BUILD » — parce qu'elle
+        # n'avait jamais été éprouvée dans la chaîne, et parce qu'un cas l'aurait bloquée
+        # à tort : quand `langues.js` ne se charge pas, elle sortait en **2**, EN DEHORS
+        # du mode `--porte`. *Un `langues.js` illisible aurait donc arrêté la construction
+        # du site pour une raison qui n'est PAS un défaut de traduction.*
+        #
+        # ⭐ CE QUI A ÉTÉ FAIT AVANT DE LA BRANCHER, ET DANS CET ORDRE :
+        #   ① le cas « je ne peux pas lire la liste des langues » **ne bloque plus** en mode
+        #      `--porte` — et il le DIT à voix haute (`scripts/verifier-langues.mjs`) ;
+        #   ② la porte a été **éprouvée sur quatre cas** : langues.js illisible avec et sans
+        #      `--porte`, `de.js` incomplet, `de.js` complet. Résultat mesuré : **0 · 2 · 1 · 0**.
+        #      *Elle sait donc dire NON sur un vrai défaut, et OUI quand tout va bien.*
+        #
+        # ⚠️ ET CE QU'ELLE REFUSE, EN CLAIR : une clé **manquante**, **vide**, ou **en trop**
+        # dans une langue active. *Une clé absente qui retombe sur le français donne une page
+        # qui a l'air terminée — elle ment à la relecture, c'est-à-dire trop tard.*
+        # ⚠️ Une langue **non commencée** ne bloque PAS : *c'est un chantier, et une langue
+        # qui n'existe pas ne peut pas être en retard.*
+        run: |
+          set -euo pipefail
+          echo "::group::0/8 langues — la porte i18n"
+          node scripts/verifier-langues.mjs --porte
+          echo "::endgroup::"
+
       - name: 🔨 Build production
         # ⛔ LE BUILD EST DÉCOUPÉ EN ÉTAPES NOMMÉES, ET CE N'EST PAS COSMÉTIQUE.
         # Mesure du 22/09/2026 : `npm run build` a échoué en CI, et GitHub n'a pu
@@ -213,8 +242,8 @@ jobs:
           npx vite build
           echo "::endgroup::"
 
-          echo "::group::6/7 prerendre — prerendre.js"
-          node scripts/prerendre.js
+          echo "::group::6/7 prerendre — prerendre-boucle.mjs (passes reprises)"
+          node scripts/prerendre-boucle.mjs
           echo "::endgroup::"
 
           echo "::group::7/7 postbuild — generer-etat.mjs + relever-dans-html.mjs"
