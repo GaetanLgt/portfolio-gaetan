@@ -3,25 +3,25 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "e6d98a8",
-    "sujet": "guides : les 10 pages du test editorial, ecrites et verifiees",
-    "date": "2026-09-24T06:16:17+02:00",
+    "court": "50860f4",
+    "sujet": "guides : la porte d'entree et le lien de pied de page — le maillage est fait",
+    "date": "2026-09-24T07:32:19+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 06:33:06",
-    "horodatage_minute": "2026-09-24 06:33",
-    "horodatage_iso": "2026-09-24T04:33:06.397Z",
+    "horodatage_local": "2026-09-24 11:45:59",
+    "horodatage_minute": "2026-09-24 11:45",
+    "horodatage_iso": "2026-09-24T09:45:59.904Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 187,
+  "pages_prerendues": 199,
   "page_la_plus_lourde": {
-    "chemin": "/",
-    "ko_servis": 299.3,
+    "chemin": "/arkadia/",
+    "ko_servis": 351.8,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
-    "total": 13,
+    "total": 11,
     "seuil": 14
   },
   "moteurs_ia": {

@@ -66,6 +66,26 @@ async function languesAttendues() {
   } catch (e) {
     console.error('⛔ impossible de lire src/config/langues.js : ' + e.message);
     console.error('   ⚠️ Sans la liste des langues attendues, cette porte ne peut RIEN conclure.');
+    /* ⛔⛔ CORRIGÉ LE 23/09/2026 — CE `exit(2)` IGNORAIT LE MODE PORTE, ET C'ÉTAIT ÉCRIT.
+       ────────────────────────────────────────────────────────────────────────────────
+       `--porte` rabaisse « je ne peux pas conclure » (3) pour ne pas bloquer la
+       construction : *on ne refuse pas un build parce qu'on ne sait pas juger.*
+       ⛔ Mais ce chemin-ci sortait en **2**, **en dehors** de ce mécanisme.
+       Conséquence mesurée : un `langues.js` illisible — **une faute de frappe, un
+       import cassé, un fichier déplacé** — aurait **arrêté la construction du site**
+       pour une raison qui n'est **pas** un défaut de traduction.
+       ⭐ *Une porte qui bloque sur « je ne sais pas lire » interdit de construire tant
+       qu'on n'a pas réparé ce qu'elle ne sait pas lire.*
+       ⚠️ Et `package.json` l'avait noté mot pour mot : « elle sort en 2 quand elle ne
+       peut pas charger `langues.js` — un cas que le mode --porte ne rattrape pas ».
+       ⇒ **C'est ce cas-là qui est rattrapé ici, et il l'est exprès.** */
+    if (PORTE) {
+      console.error('');
+      console.error('   ⇒ MODE PORTE : « je ne peux pas lire la liste des langues » NE BLOQUE PAS.');
+      console.error('     ⚠️ ET IL FAUT LE DIRE : sur ce build, les traductions N\'ONT PAS ÉTÉ VÉRIFIÉES.');
+      console.error('     *Un build qui passe sans avoir vérifié n\'est pas un build vérifié.*');
+      process.exit(0);
+    }
     process.exit(2);
   }
 }

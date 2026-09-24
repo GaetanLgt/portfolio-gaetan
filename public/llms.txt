@@ -1,12 +1,18 @@
 # Génie IT Tek FR
 
-> Studio indépendant français (SASU) établi à Harponville, dans la Somme
-> (Hauts-de-France). Il conçoit des sites web, des applications métier et des
-> systèmes d'intelligence artificielle exécutés sur du matériel local ou hébergé
-> en France, jamais dans un cloud étranger. Interlocuteur unique : Gaëtan Langlet.
+> **SASU** française établie à Harponville, dans la Somme (Hauts-de-France) —
+> et, **dans les faits, une holding numérique**. *Une holding numérique détient et
+> exploite des **systèmes d'agents logiciels** : le travail n'est pas exécuté par
+> des salariés, mais par des agents d'intelligence artificielle qui tournent sur du
+> matériel local ou hébergé en France — jamais dans un cloud étranger.*
+> Interlocuteur unique : Gaëtan Langlet.
 
-Informations vérifiables : les prix sont publics, les limites du studio sont
-écrites noir sur blanc, et aucune donnée de contact ne quitte l'Union européenne.
+> ⚠️ **« Génie IT Tek FR » est le nom commercial.** L'**immatriculation de la
+> société est en cours** à la date de ce fichier : aucun numéro d'identification
+> n'est publié, et aucun ne doit être supposé.
+
+Informations vérifiables : les prix sont publics, les limites sont écrites noir
+sur blanc, et aucune donnée de contact ne quitte l'Union européenne.
 Le site est en français.
 
 Public visé : PME, TPE, artisans, collectivités et administrations françaises.
