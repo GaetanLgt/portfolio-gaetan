@@ -385,12 +385,18 @@ stage.appendChild(renderer.domElement);
 var running=true;
 renderer.domElement.addEventListener("webglcontextlost",function(e){e.preventDefault();running=false;noGL();loopChrome();});
 
-var scene=new T.Scene();scene.fog=new T.FogExp2(0x080b14,.0065);
+var scene=new T.Scene();scene.fog=new T.FogExp2(0x0c1220,.0052);
 var camera=new T.PerspectiveCamera(46,1,.1,900);
 var CYAN=new T.Color(0x2abfff);
-scene.add(new T.AmbientLight(0x3a4a66,.35));
-var sunLight=new T.DirectionalLight(0xc8d8ff,.55);
-var backLight=new T.DirectionalLight(0x7fb8ff,.9);backLight.position.set(-20,25,-80);scene.add(backLight);sunLight.position.set(-60,30,-200);scene.add(sunLight);
+scene.add(new T.AmbientLight(0x5f7799,.72));
+var sunLight=new T.DirectionalLight(0xd8e4ff,.85);
+var backLight=new T.DirectionalLight(0x9fcaff,1.15);backLight.position.set(-20,25,-80);scene.add(backLight);sunLight.position.set(-60,30,-200);scene.add(sunLight);
+/* ⭐ LUMIÈRE D'APPOINT — demande de Néo, 24/09/2026 : « éclaircis l'espace ambiant ».
+   Rasante, froide, placée sous et derrière le navire : elle détache la coque du vide
+   sans l'éclairer de face. Le navire garde ses propres feux — c'est le vide qui cesse
+   d'être un trou. */
+var appointAmbiance=new T.DirectionalLight(0xa8c4e8,.42);
+appointAmbiance.position.set(10,-40,-60);scene.add(appointAmbiance);
 
 /* ⭐ LA VOILE — grande, déchirée, ajourée. Taillée dans le vide.
    Le canon du 15/09 disait qu'il n'y en avait pas. Néo les a redemandées le 24/09,
