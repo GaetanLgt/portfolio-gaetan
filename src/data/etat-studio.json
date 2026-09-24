@@ -3,15 +3,15 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "91f6e88",
-    "sujet": "etude de cas Arkadia : ce qui est mesure, et ce qui ne l est pas",
-    "date": "2026-09-24T16:06:43+02:00",
+    "court": "81a1e64",
+    "sujet": "retirer le 99,8 % de partout ou il affirme : il n a aucune source",
+    "date": "2026-09-24T16:11:19+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 16:11:13",
-    "horodatage_minute": "2026-09-24 16:11",
-    "horodatage_iso": "2026-09-24T14:11:13.684Z",
+    "horodatage_local": "2026-09-24 16:13:38",
+    "horodatage_minute": "2026-09-24 16:13",
+    "horodatage_iso": "2026-09-24T14:13:38.852Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 203,
