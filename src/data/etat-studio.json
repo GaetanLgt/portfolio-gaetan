@@ -3,25 +3,25 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "50860f4",
-    "sujet": "guides : la porte d'entree et le lien de pied de page — le maillage est fait",
-    "date": "2026-09-24T07:32:19+02:00",
+    "court": "06918f9",
+    "sujet": "jauge INTÉGRITÉ : « non mesuré » n'est pas « zéro tenu »",
+    "date": "2026-09-24T13:59:39+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 11:45:59",
-    "horodatage_minute": "2026-09-24 11:45",
-    "horodatage_iso": "2026-09-24T09:45:59.904Z",
+    "horodatage_local": "2026-09-24 14:16:01",
+    "horodatage_minute": "2026-09-24 14:16",
+    "horodatage_iso": "2026-09-24T12:16:01.280Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 199,
+  "pages_prerendues": 200,
   "page_la_plus_lourde": {
-    "chemin": "/arkadia/",
-    "ko_servis": 351.8,
+    "chemin": "/",
+    "ko_servis": 253.3,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
-    "total": 11,
+    "total": 7,
     "seuil": 14
   },
   "moteurs_ia": {
@@ -63,7 +63,7 @@
       "cle": "contact",
       "nom": "Contact livré au visiteur",
       "script": "scripts/verifier-contact.mjs",
-      "code": 1,
+      "code": 0,
       "motif": null
     }
   ]
