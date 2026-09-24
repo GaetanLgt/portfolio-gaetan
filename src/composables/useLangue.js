@@ -113,6 +113,13 @@ async function charger(code) {
  * @param {string} cle - la clé de traduction
  * @returns {string}
  */
+/* ⭐ L'ACCUMULATION VIT HORS DU SYSTÈME RÉACTIF — 25/09/2026, et c'est le correctif.
+ * Un `Set` ordinaire, pas une `ref` : y lire et y écrire ne crée aucune dépendance et
+ * n'invalide aucun rendu. La `ref` `manquantes` reste, pour l'affichage et le diagnostic ;
+ * elle est publiée depuis `t()`, une seule fois par clé nouvelle, hors du rendu.
+ * *Une donnée de diagnostic n'a rien à faire dans le cycle de rendu du gabarit.* */
+const _manquantes = new Set();
+
 function t(cle) {
   const code = langueActive.value;
   const paquet = textes.value[code];
@@ -120,7 +127,51 @@ function t(cle) {
 
   if (v !== undefined && v !== null) return v;
 
-  manquantes.value = new Set(manquantes.value).add(code + ':' + cle);
+  /* ⛔⛔ LA BOUCLE QUI FIGEAIT CHROME — TROUVÉE ET CORRIGÉE LE 25/09/2026.
+   *
+   * CE QUI ÉTAIT ÉCRIT ICI :
+   *     manquantes.value = new Set(manquantes.value).add(code + ':' + cle);
+   *
+   * ⭐ POURQUOI C'ÉTAIT UNE BOUCLE INFINIE, ET PAS SEULEMENT UNE MALADRESSE :
+   *   ① `manquantes` est une `ref` — écrire `.value` DÉCLENCHE la réactivité de Vue ;
+   *   ② `t()` est appelé **DANS LE RENDU**, depuis le gabarit (`{{ t('apps.badge') }}`) ;
+   *   ③ **écrire une `ref` pendant un rendu invalide ce rendu** : Vue le replanifie ;
+   *   ④ le rendu suivant rappelle `t()`, qui réécrit `.value` — nouvelle référence,
+   *      donc toujours considérée comme un changement ;
+   *   ⑤ … et cela ne s'arrête jamais. *Le navigateur ne « cesse pas de répondre » :
+   *      il tourne à 100 % d'un cœur, indéfiniment.*
+   *
+   * ⛔ MESURE — et c'est elle qui a coûté deux jours :
+   *   · `/apps` FIGE Chrome **à froid, seule, en première navigation** : 125 s de CPU en
+   *     100 s, `dist/apps/index.html` jamais écrit. Reproductible trois fois.
+   *   · `/` rend en **2,1 s**, `/services` rend — **le serveur leur envoie pourtant le
+   *     MÊME fichier** (repli SPA, 14 150 octets). *La différence n'est pas le fichier :
+   *     c'est la route, donc le composant.*
+   *   · ⭐ Et `/apps` est la SEULE page du site à appeler `t()` — c'est la « tranche
+   *     verticale » de l'i18n, écrite exprès pour être la première. **La seule page qui
+   *     utilise le mécanisme est la seule qui boucle.** C'était cela, la signature.
+   *
+   * ⚠️ ET ELLE NE SE VOYAIT PAS EN DÉVELOPPEMENT : en `DEV`, la ligne suivante lève une
+   *    erreur, donc la boucle s'interrompt d'elle-même. **En production, elle rend
+   *    simplement `[cle]` et continue de tourner.** *Le défaut n'existait que dans
+   *    l'artefact livré — et le prérendu ne travaille que sur celui-là.*
+   *
+   * ⇒ LE CORRECTIF, ET SA RÈGLE : **une accumulation qui sert au diagnostic ne doit pas
+   *    vivre dans le système réactif.** On accumule dans un `Set` ordinaire — lire et
+   *    écrire dedans ne crée ni ne déclenche aucune dépendance — et on ne publie la `ref`
+   *    que lorsqu'une clé est **réellement nouvelle**, hors du rendu.
+   *    *Conséquence mesurable : le rendu ne peut plus s'invalider lui-même, et il n'y a
+   *    plus rien à boucler.*
+   *
+   * ⚠️ Ce qu'on ne change PAS : le comportement visible. La clé absente rend toujours
+   *    `[cle]`, `manquantes` continue de lister tout ce qui manque, et `DEV` lève
+   *    toujours l'erreur. *Seule la manière de compter change.* */
+  const marque = code + ':' + cle;
+  if (!_manquantes.has(marque)) {
+    _manquantes.add(marque);
+    // Publication DIFFÉRÉE : on sort du cycle de rendu en cours avant de toucher la `ref`.
+    queueMicrotask(() => { manquantes.value = new Set(_manquantes); });
+  }
   if (import.meta.env.DEV) {
     throw new Error(
       `[i18n] clé « ${cle} » absente en « ${code} ». ` +
