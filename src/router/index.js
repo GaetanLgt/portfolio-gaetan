@@ -46,19 +46,27 @@ const CGV = () => import('@/views/legal/CGV.vue');
 //      titres et les descriptions. **Ajouter un guide crée sa page.**
 import { GUIDES } from '@/data/guides.js';
 const GuidePage = () => import('@/views/guides/GuidePage.vue');
-const routesGuides = GUIDES.map((g) => ({
-  path: `/guides/${g.slug}`,
-  name: `Guide-${g.slug}`,
-  component: GuidePage,
-  meta: {
-    title: g.title,
-    description: g.description,
-    // ⚠️ Le slug EST la donnée dont le composant a besoin pour se trouver lui-même.
-    //    Le passer par `meta` évite de le relire dans l'URL — donc de dépendre de la
-    //    forme du chemin le jour où on le change.
-    guideSlug: g.slug,
-  },
-}));
+const GuidesIndex = () => import('@/views/guides/GuidesIndex.vue');
+const routesGuides = [
+  // ⭐ LA PORTE D'ENTRÉE. Elle est accrochée au PIED DE PAGE, donc présente sur les
+  //    trente-deux pages du site — c'est ce qui fait d'elle un relais et pas un fil.
+  { path: '/guides', name: 'GuidesIndex', component: GuidesIndex,
+    meta: { title: 'Dix questions, dix réponses courtes | Génie IT Tek FR',
+            description: "Prix d'un site, hébergement en France, audit, IA locale, délai, propriété du code : dix réponses de 40 à 90 mots, avec les prix publics hors taxes." } },
+  ...GUIDES.map((g) => ({
+    path: `/guides/${g.slug}`,
+    name: `Guide-${g.slug}`,
+    component: GuidePage,
+    meta: {
+      title: g.title,
+      description: g.description,
+      // ⚠️ Le slug EST la donnée dont le composant a besoin pour se trouver lui-même.
+      //    Le passer par `meta` évite de le relire dans l'URL — donc de dépendre de la
+      //    forme du chemin le jour où on le change.
+      guideSlug: g.slug,
+    },
+  })),
+];
 
 // RESOURCES - Ressources et tutoriels
 const TutorielsPage = () => import('@/views/resources/TutorielsPage.vue');

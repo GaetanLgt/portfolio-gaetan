@@ -125,6 +125,13 @@
                  AVANT qu'il soit fini — un projet qu'on ne peut pas trouver n'est pas
                  montré, il est caché. -->
             <router-link to="/armure">L'armure (le projet de jeu, en cours)</router-link>
+            <!-- ⭐ LE RELAIS DES DIX RÉPONSES — ajouté le 24/09/2026.
+                 Ce lien est dans le PIED DE PAGE, donc sur les trente-deux pages du
+                 site : c'est le point de maillage le plus fort qui existe ici.
+                 ⛔ Le protocole du test éditorial interdit de se contenter d'un lien
+                    depuis la page parente — le studio a mesuré que DOUZE pages du site
+                    n'ont qu'un seul lien entrant, et que ce sont les moins explorées. -->
+            <router-link to="/guides">Les dix réponses (prix, délais, méthode)</router-link>
             <router-link to="/mentions-legales">Mentions légales</router-link>
             <router-link to="/confidentialite">Confidentialité</router-link>
             <router-link to="/cgv">CGV</router-link>
