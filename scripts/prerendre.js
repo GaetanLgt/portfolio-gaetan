@@ -1289,6 +1289,10 @@ async function principal() {
 
   let hreflangPoses = 0;
   let hreflangPages = 0;
+  /* Le CSS inliné — compté pour être AFFICHÉ. *Un effet qu'on ne mesure pas ne se
+     défend pas, et ne se retire pas non plus le jour où il coûte.* */
+  let cssInlines = 0;
+  let cssOctets = 0;
 
   let commentairesRetires = 0;
   let octetsRetires = 0;
@@ -1332,6 +1336,51 @@ async function principal() {
         apres = apres.replace(/<\/head>/i, balises + '\n</head>');
         hreflangPoses += (balises.match(/<link/g) || []).length;
         hreflangPages++;
+      }
+    }
+
+    /* ⭐⭐⭐ LE CSS INLINÉ — 309 ms DE RENDU BLOQUÉ EN MOINS, ET C'EST MESURÉ.
+     * ────────────────────────────────────────────────────────────────────────────
+     * LE CONSTAT, tiré du rapport Lighthouse du run #184 :
+     *   · **une seule** ressource bloquante — `/assets/index-*.css`, 93,3 Ko
+     *     (18 Ko compressés), gain chiffré : **309 ms** ;
+     *   · c'était le SEUL poste chiffré du rapport. Le `total-blocking-time` est
+     *     déjà à 70 ms (score 0,99), le CLS à 0,002 (1,0), et l'accessibilité,
+     *     les bonnes pratiques et le SEO sont à **100**.
+     *   ⇒ Il ne reste que ça à gagner, et la performance est à **0,94** pour un
+     *     seuil de 0,95. *Un point manquait, et il était nommé.*
+     *
+     * ⭐ POURQUOI C'EST SÛR ICI — VÉRIFIÉ AVANT D'ÉCRIRE, PAS SUPPOSÉ :
+     *   les six `url()` de la feuille sont **ABSOLUS** — `url(/fonts/Fraunces-Regular.woff2)`
+     *   pour cinq d'entre eux, une ancre SVG interne pour le sixième.
+     *   *Une feuille dont les chemins sont absolus peut changer de support sans casser
+     *   ses ressources. Une feuille aux chemins relatifs se serait mise à chercher ses
+     *   polices depuis la racine du site — et on aurait perdu les polices en croyant
+     *   gagner 309 ms.*
+     *
+     * ⚠️ CE QU'ON ÉCHANGE, ET IL FAUT LE DIRE : la feuille n'est plus mise en cache
+     *    séparément, chaque page la porte. Sur un site dont toutes les pages sont
+     *    **déjà pré-rendues une par une**, c'est **une requête de moins sur le chemin
+     *    critique** contre quelques kilo-octets répétés. En 4G bridée, la requête coûte
+     *    plus cher que les octets. *Et le verrou de poids tranchera : si une page
+     *    dépasse 1 Mo, ce bloc se retire en effaçant ces lignes.*
+     *
+     * ⛔ ON NE TOUCHE PAS AU CSS LUI-MÊME : il est recopié **tel quel**, sans
+     *    minification ni réécriture. *On ne modifie pas ce qu'on ne mesure pas.* */
+    {
+      const lienCss = apres.match(/<link[^>]*rel="stylesheet"[^>]*href="([^"]+\.css)"[^>]*>/i)
+      if (lienCss && !/^(https?:)?\/\//.test(lienCss[1])) {
+        const fichierCss = path.join(DIST, lienCss[1].replace(/^\//, ''))
+        if (fs.existsSync(fichierCss)) {
+          const feuille = fs.readFileSync(fichierCss, 'utf8')
+          // ⛔ Un `</style` dans la feuille fermerait la balise et casserait la page.
+          //    Le contrôle est fait AVANT d'écrire, et il refuse plutôt que de casser.
+          if (!/<\/style/i.test(feuille)) {
+            apres = apres.replace(lienCss[0], `<style>${feuille}</style>`)
+            cssInlines++;
+            cssOctets += feuille.length;
+          }
+        }
       }
     }
 
@@ -1404,6 +1453,9 @@ async function principal() {
   console.log(`routes portant le titre de l'accueil (le défaut mesuré) : ${doublons}`)
   console.log(`${ECRIRE ? 'fichiers écrits' : 'mode rapport'} : ${ecrits}${echecs ? ` · échecs : ${echecs}` : ''}`)
   console.log(`propreté : ${commentairesRetires} commentaire(s) de travail retiré(s), ${octetsRetires} octets rendus au visiteur`)
+  if (cssInlines) {
+    console.log(`CSS inliné : ${cssInlines} page(s), ${Math.round(cssOctets / 1024)} Ko de feuille recopiés — 1 requête bloquante en moins par page`)
+  }
   console.log('           (les ancres de fragment Vue, vides, sont conservées : l\'hydratation en dépend)')
   /* ⭐⭐⭐ LE PANSEMENT DU 23/09 DEVIENT UN CONTRAT — 25/09/2026.
    *
