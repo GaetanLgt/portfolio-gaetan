@@ -23,7 +23,7 @@ env:
   # protocole de débogage et a besoin du WebSocket global, absent de Node 20.
   # Le build ÉCHOUE si une URL du sitemap rend une page 404 — c'est voulu :
   # le déploiement ne doit pas partir avec un plan de site faux.
-  NODE_VERSION: '22'
+  NODE_VERSION: '24'
 
 jobs:
   # ═══════════════════════════════════════════════════════════════════════════
@@ -35,10 +35,10 @@ jobs:
     
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -112,10 +112,10 @@ jobs:
     
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🟢 Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -310,7 +310,7 @@ jobs:
         run: node scripts/auditer-tout.mjs
 
       - name: 📤 Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
@@ -361,10 +361,10 @@ jobs:
 
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 📥 Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
@@ -412,7 +412,7 @@ jobs:
     
     steps:
       - name: 📥 Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
