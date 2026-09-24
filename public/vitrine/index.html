@@ -380,7 +380,7 @@ var SEED=42,rnd=mulberry32(SEED);
 var T=THREE,stage=document.getElementById("ark-stage"),small=innerWidth<900,renderer;
 try{renderer=new T.WebGLRenderer({antialias:!small,powerPreference:"high-performance"});}catch(e){noGL();loopChrome();return;}
 renderer.setPixelRatio(Math.min(devicePixelRatio||1,small?1.5:2));
-renderer.setClearColor(0x080b14,1);
+renderer.setClearColor(0x060a14,1);
 stage.appendChild(renderer.domElement);
 var running=true;
 renderer.domElement.addEventListener("webglcontextlost",function(e){e.preventDefault();running=false;noGL();loopChrome();});
@@ -724,7 +724,38 @@ anchors.oracle=new T.Object3D();anchors.oracle.position.set(0,1.2,0);oracle.add(
   var sg=new T.BufferGeometry();sg.setAttribute("position",new T.Float32BufferAttribute(sp,3));
   scene.add(new T.Points(sg,new T.PointsMaterial({color:0x9fb4c8,size:1.2,sizeAttenuation:false,transparent:true,opacity:.6,fog:false})));
   // la grille cyber, très bas
-  var grid=new T.GridHelper(900,90,0x1a5f80,0x0f2a3d);grid.position.y=-40;grid.material.transparent=true;grid.material.opacity=.35;scene.add(grid);
+  /* ⭐ LA GRILLE CYBER — elle existait, elle ne se voyait pas (opacité 0,35, teinte
+   sombre). *Une grille invisible ne structure rien : elle décore.* On la relève. */
+var grid=new T.GridHelper(900,90,0x2abfff,0x1a5f80);grid.position.y=-40;
+grid.material.transparent=true;grid.material.opacity=.62;scene.add(grid);
+
+/* ⭐ LES COLONNES DE CODE — la trame « cyber/matrix », EN CYAN.
+   ⛔ PAS DE VERT : il est sorti du canon le 15/09/2026, et un verrou le refuse.
+   *Le cyber du studio est cyan — 0x2abfff, la même couleur que la coque.*
+   Six colonnes, très espacées, qui tombent lentement : elles ne racontent rien, elles
+   donnent une échelle au vide. Sans elles, le vide est un fond ; avec elles, c'est un
+   espace qu'on traverse. */
+var colonnesDeCode=(function(){
+  var GLYPHES="01ARKADIA<>{}[]/\\|=+*#·";
+  var c=document.createElement("canvas");c.width=64;c.height=512;var x=c.getContext("2d");
+  x.fillStyle="#000";x.fillRect(0,0,64,512);
+  x.font="600 40px ui-monospace,Consolas,monospace";x.textAlign="center";
+  for(var i=0;i<13;i++){
+    var a=1-i/13;                        // la tête est vive, la queue s'éteint
+    x.fillStyle="rgba(42,191,255,"+(a*a).toFixed(3)+")";
+    x.fillText(GLYPHES[Math.floor(rnd()*GLYPHES.length)],32,i*40+34);
+  }
+  var tex=new T.CanvasTexture(c);tex.wrapT=T.RepeatWrapping;
+  var groupe=new T.Group();groupe.position.y=-190;
+  for(var k=0;k<6;k++){
+    var m=new T.Mesh(new T.PlaneGeometry(26,210),
+      new T.MeshBasicMaterial({map:tex,transparent:true,opacity:.34,
+        blending:T.AdditiveBlending,depthWrite:false,side:T.DoubleSide,fog:false}));
+    m.position.set(-320+k*128,0,-260+rnd()*180);
+    m.rotation.y=.18;m.userData.vitesse=.06+rnd()*.09;
+    groupe.add(m);
+  }
+  scene.add(groupe);return groupe;})();
 })();
 
 
@@ -878,6 +909,12 @@ function frame(){
   /* yeux : flamme d'or */
   eyes.forEach(function(e,k){var f=reduce?1:.8+Math.random()*.35;e.scale.set(.9*f,(1.9+(reduce?0:Math.sin(t*9+k*2)*.3))*f,1);e.material.opacity=reduce?.95:.75+Math.random()*.25;});
   if(eyeLight)eyeLight.intensity=reduce?1.6:1.2+Math.random()*.8;
+
+  /* ⭐ La trame tombe. Lente : elle doit se voir sans qu'on la regarde. */
+  if(!reduce){colonnesDeCode.children.forEach(function(col){
+    col.position.y-=col.userData.vitesse;
+    if(col.position.y<-260)col.position.y=260;
+  });}
 
   renderer.render(scene,camera);
   drawHud(p);updateChrome(p);

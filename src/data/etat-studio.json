@@ -3,21 +3,21 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "5f13f58",
-    "sujet": "lighthouse : une page de contenu, pas les pages 3D",
-    "date": "2026-09-24T15:43:35+02:00",
+    "court": "13951a2",
+    "sujet": "vitrine : l espace ambiant eclairci",
+    "date": "2026-09-24T15:45:12+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 15:45:10",
-    "horodatage_minute": "2026-09-24 15:45",
-    "horodatage_iso": "2026-09-24T13:45:10.062Z",
+    "horodatage_local": "2026-09-24 15:46:47",
+    "horodatage_minute": "2026-09-24 15:46",
+    "horodatage_iso": "2026-09-24T13:46:47.246Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 202,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 260.6,
+    "ko_servis": 261.3,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
