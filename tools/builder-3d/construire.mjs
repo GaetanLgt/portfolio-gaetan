@@ -29,8 +29,8 @@
       node construire.mjs mondes/exemple.json sortie/
    ═══════════════════════════════════════════════════════════════════════════════ */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, statSync } from 'node:fs'
-import { join, dirname, resolve } from 'node:path'
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync, statSync, readdirSync } from 'node:fs'
+import { join, dirname, basename, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ICI = dirname(fileURLToPath(import.meta.url))
@@ -51,6 +51,47 @@ const CANDIDATS_THREE = [
   'C:/IA/portfolio-gaetan/public/vendor/three.min.js',
 ]
 const THREE_LOCAL = CANDIDATS_THREE.find(function (p) { return existsSync(p) })
+
+/* ⭐ OÙ SONT LES MODÈLES 3D — ET POURQUOI ON LES CHERCHE.
+   ⛔ Néo a DÉJÀ ses modèles : galion.glb (10 Mo), chasseur_demo.glb (13,8 Mo),
+      unite3d-dou.glb, creature.glb, douze avatars MND.
+      **Il ne manque pas d'assets : il manquait que le builder sache les lire.**
+   ⛔ ET CE N'EST PAS UN JOB GPU. Lancer ComfyUI pour un fichier qu'on a déjà, c'est
+      payer deux fois. *On charge, on ne régénère pas.*
+   ⭐ Les racines sont CHERCHÉES, jamais écrites en dur — même leçon que three.js :
+      *un chemin qui dépend de l'endroit d'où on regarde casse au premier déménagement.* */
+const RACINES_MODELES = [
+  'C:/IA/arkadia-outils/forge-ia/demo-three/assets',
+  'C:/IA/ArkAdiA/assets',
+  join(ICI, '..', '..', 'assets'),
+  join(ICI, 'assets'),
+]
+const CANDIDATS_LOADER = [
+  'C:/IA/arkadia-outils/forge-ia/demo-three/vendor/GLTFLoader/GLTFLoader.js',
+  'C:/IA/gl-digital-lab/forge-ia/demo-three/vendor/GLTFLoader/GLTFLoader.js',
+  join(ICI, 'GLTFLoader.js'),
+]
+const LOADER_GLTF = CANDIDATS_LOADER.find(function (p) { return existsSync(p) })
+
+/** Trouve un modèle par son nom : à la racine, puis un niveau sous la racine. */
+function trouverModele(nom) {
+  for (const r of RACINES_MODELES) {
+    const p = join(r, nom)
+    if (existsSync(p)) return p
+  }
+  for (const r of RACINES_MODELES) {
+    if (!existsSync(r)) continue
+    try {
+      for (const f of readdirSync(r, { withFileTypes: true })) {
+        if (f.isDirectory()) {
+          const p = join(r, f.name, nom)
+          if (existsSync(p)) return p
+        }
+      }
+    } catch { /* racine illisible : on passe */ }
+  }
+  return null
+}
 if (!THREE_LOCAL) {
   console.error('  ATTENTION : three.min.js est introuvable. Emplacements essayes :')
   CANDIDATS_THREE.forEach(function (p) { console.error('     ' + p) })
@@ -90,6 +131,24 @@ for (const [i, l] of (monde.lieux || []).entries()) {
 for (const lien of monde.entree?.liens || []) {
   if (!ids.has(lien.vers)) erreurs.push(`l’entrée pointe vers « ${lien.vers} », qui n’existe pas`)
 }
+/* ⭐ ON RÉSOUT LES MODÈLES MAINTENANT, PAS À L'ÉCRAN.
+   Un `modele` introuvable produirait un lieu vide — et **ça ne se verrait qu'une fois le
+   site livré**. Même famille de défaut que le lien mort, même traitement : on refuse. */
+const modelesTrouves = new Map()
+for (const l of (monde.lieux || [])) {
+  if (!l.modele) continue
+  const trouve = trouverModele(basename(l.modele))
+  if (!trouve) {
+    erreurs.push(`« ${l.id} » demande le modèle « ${l.modele} », introuvable. Racines essayées : ${RACINES_MODELES.join(' · ')}`)
+  } else {
+    modelesTrouves.set(l.id, trouve)
+  }
+}
+if (modelesTrouves.size > 0 && !LOADER_GLTF) {
+  erreurs.push('des modèles sont demandés mais GLTFLoader.js est introuvable — aucune des pistes ne répond')
+}
+const aDesModeles = modelesTrouves.size > 0
+
 if (erreurs.length) {
   console.error('  ⛔ MONDE INCOHÉRENT — rien n’a été écrit :')
   for (const e of erreurs) console.error('     · ' + e)
@@ -204,6 +263,7 @@ const html = `<!doctype html>
 <p class="sr" id="annonce" aria-live="polite"></p>
 
 <script src="./three.min.js"></script>
+${aDesModeles ? '<script src="./GLTFLoader.js"></script>' : ''}
 <script>
 "use strict";
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -281,6 +341,43 @@ scene.add(new T.Points(ge, new T.PointsMaterial({ color: 0x9fb4c8, size: 1.4, si
 
 /* ── LES LIEUX — chaque lieu EST son contenu ───────────────────────────────── */
 var ancres = [], noyaux = [];
+
+/* ⭐ POSER UN MODÈLE DANS UN LIEU.
+   Le .glb est mis à l'échelle du lieu, centré, et la sphère s'efface derrière lui.
+   *Un modèle qu'on ne met pas à l'échelle est un modèle qui écrase le monde.* */
+window.__poserModele = function (lieu, groupe, noyau, taille) {
+  if (!window.THREE || !THREE.GLTFLoader) return;
+  new THREE.GLTFLoader().load('./modeles/' + lieu.modele.split('/').pop(), function (gltf) {
+    var obj = gltf.scene;
+    /* On mesure l'objet, on le ramène à la taille du lieu. */
+    var boite = new T.Box3().setFromObject(obj);
+    var dim = new T.Vector3(); boite.getSize(dim);
+    var maxi = Math.max(dim.x, dim.y, dim.z) || 1;
+    var k = (taille * 3.4) / maxi;
+    obj.scale.setScalar(k);
+    var centre = new T.Vector3(); boite.getCenter(centre);
+    obj.position.sub(centre.multiplyScalar(k));
+    obj.traverse(function (o) {
+      if (o.isMesh) {
+        o.material.metalness = Math.min(1, (o.material.metalness ?? .5) + .15);
+        o.material.envMapIntensity = 1;
+      }
+    });
+    groupe.add(obj);
+    /* La sphère s'efface : elle a fait son travail. */
+    noyau.material.transparent = true;
+    var t0 = performance.now();
+    (function fondu() {
+      var p = Math.min(1, (performance.now() - t0) / 650);
+      noyau.material.opacity = 1 - p;
+      if (p < 1) requestAnimationFrame(fondu); else noyau.visible = false;
+    })();
+  }, undefined, function () {
+    /* Le modèle n'a pas pu être lu : la sphère RESTE. *Un lieu sans son modèle est
+       moins beau, pas cassé — et on ne laisse pas un trou à la place.* */
+  });
+};
+
 MONDE.forEach(function (lieu, i) {
   var g = new T.Group();
   g.position.set(lieu.x, lieu.y, lieu.z);
@@ -315,6 +412,13 @@ MONDE.forEach(function (lieu, i) {
   g.add(halo);
 
   scene.add(g);
+
+  /* ⭐ LE MODÈLE 3D DU LIEU — s'il en a un.
+     Le .glb REMPLACE la sphère : *une sphère est un bouchon, un modèle est un lieu.*
+     ⚠️ Chargement ASYNCHRONE : la sphère reste visible jusqu'à l'arrivée du modèle, puis
+        s'efface en douceur. *Un lieu qui disparaît pendant le chargement est un lieu
+        qu'on croit cassé.* */
+  if (lieu.modele && window.__poserModele) window.__poserModele(lieu, g, noyau, taille);
   var a = new T.Object3D(); a.position.set(0, taille * 2.2, 0); g.add(a);
   ancres.push(a); lieu._g = g;
 });
@@ -435,6 +539,23 @@ function echapper(s) {
 /* ── 6. L'ÉCRITURE ──────────────────────────────────────────────────────────── */
 mkdirSync(SORTIE, { recursive: true })
 writeFileSync(join(SORTIE, 'index.html'), html, 'utf8')
+
+/* ⭐ LES MODÈLES ET LEUR CHARGEUR — copiés SEULEMENT s'ils servent.
+   *Un monde de texte ne doit pas peser 111 Ko de loader inutile.* */
+let loaderCopie = false
+const modelesCopies = []
+if (aDesModeles) {
+  mkdirSync(join(SORTIE, 'modeles'), { recursive: true })
+  for (const [, chemin] of modelesTrouves) {
+    const nom = basename(chemin)
+    copyFileSync(chemin, join(SORTIE, 'modeles', nom))
+    modelesCopies.push(nom)
+  }
+  if (LOADER_GLTF) {
+    copyFileSync(LOADER_GLTF, join(SORTIE, 'GLTFLoader.js'))
+    loaderCopie = true
+  }
+}
 
 /* ⭐ three.js EST RECOPIÉ, PAS LIÉ. Le CSP du studio interdit tout CDN, et un site
    qui dépend d'un domaine tiers ne s'exécute pas sur un site qui interdit les

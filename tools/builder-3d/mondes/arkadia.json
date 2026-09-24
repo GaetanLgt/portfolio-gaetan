@@ -1,0 +1,99 @@
+{
+  "titre": "Arkadia — le laboratoire vivant",
+  "description": "Le galion, EVA01 et Arkadia : un monde qu'on parcourt. Deux systèmes testés dans le réel, portés par le navire.",
+  "graine": 42,
+  "palette": { "fond": "#060a14", "accent": "#2abfff", "or": "#ffe650", "texte": "#d7e6f2", "doux": "#8ea6b8" },
+  "lieux": [
+    {
+      "id": "galion",
+      "nom": "Le galion",
+      "texte": "<strong>Le navire fantôme.</strong><br><br>Coque de métal — pas de bois, pas de cordages, pas de mer. Le vide.<br><br><em>Un galion qui navigue dans le vide, c'est déjà un fantôme.</em>",
+      "modele": "galion.glb",
+      "rayon": 300,
+      "taille": 26,
+      "liens": [
+        { "vers": "eva01", "texte": "EVA01" },
+        { "vers": "arkadia", "texte": "Arkadia" }
+      ]
+    },
+    {
+      "id": "eva01",
+      "nom": "EVA01",
+      "texte": "<strong>Un assistant IA local, avec mémoire et contrôle humain.</strong><br><br>Une question simple : que se passe-t-il quand les notes, les documents et les décisions d'une organisation deviennent la matière première d'un service qu'elle ne contrôle pas ?<br><br>EVA01 teste une autre réponse — une IA opérée localement, avec une mémoire maîtrisée, des rôles limités, et une intervention humaine obligatoire sur toute action sensible.",
+      "modele": "unite3d-dou.glb",
+      "rayon": 230,
+      "hauteur": 45,
+      "taille": 16,
+      "liens": [
+        { "vers": "contraintes", "texte": "Les contraintes réelles" }
+      ]
+    },
+    {
+      "id": "contraintes",
+      "nom": "Les contraintes",
+      "texte": "C'est ici que le projet cesse d'être un concept.<br><br>· Exécution <strong>locale</strong> — aucune requête ne sort pour un cas traité sur place<br>· <strong>RTX 3080, 10 Go</strong> de mémoire vidéo : la contrainte dure<br>· Modèles de l'ordre de <strong>7 milliards</strong> de paramètres, servis par Ollama<br>· <strong>Identité ≠ mémoire ≠ connaissances</strong> — trois espaces séparés<br>· Autonomie graduée <strong>N0 → N4</strong>, par impact de l'action",
+      "rayon": 340,
+      "hauteur": 10,
+      "taille": 14,
+      "liens": [
+        { "vers": "decisions", "texte": "Les quatre décisions" }
+      ]
+    },
+    {
+      "id": "decisions",
+      "nom": "Les décisions",
+      "texte": "Un choix technique ne vaut que par ce qu'il coûte.<br><br><strong>① IA locale d'abord</strong> — maîtrise des données, contre une qualité variable et un stack à entretenir.<br><strong>② Mémoire séparée de l'identité</strong> — plus exigeant, mais auditable.<br><strong>③ Autonomie graduée N0 → N4</strong> — plus de règles, et l'utilisateur décide.<br><br><strong>④ Aucune autonomie légitime par défaut.</strong> Une action à effet humain, financier, légal, réputationnel ou irréversible exige une autorisation identifiable.",
+      "rayon": 280,
+      "hauteur": -65,
+      "taille": 17,
+      "liens": [
+        { "vers": "limites", "texte": "Ce qu'elle ne fait pas" }
+      ]
+    },
+    {
+      "id": "limites",
+      "nom": "Les limites",
+      "texte": "<strong>Ce qu'EVA01 ne fait pas, volontairement.</strong><br><br>Elle ne garantit pas qu'une réponse soit exacte. Elle ne décide pas à la place d'une personne. Elle n'accède pas à tous les outils sans autorisation. Elle ne remplace pas une politique de sécurité. Elle ne rend pas une donnée sensible inoffensive par magie.<br><br><em>Cette section est une signature : presque personne n'ose l'écrire.</em>",
+      "rayon": 420,
+      "hauteur": 60,
+      "taille": 13,
+      "liens": [
+        { "vers": "mesures", "texte": "Les mesures" }
+      ]
+    },
+    {
+      "id": "mesures",
+      "nom": "Les mesures",
+      "texte": "Aucun chiffre de performance n'est avancé sans protocole.<br><br>Sources documentaires reliées · part de réponses portant une source · temps de réponse par modèle · mémoire vidéo occupée · actions bloquées en attente de validation.<br><br><strong>« Mesure en cours — protocole publié. »</strong><br><br><em>Une case vide assumée vaut mieux qu'un chiffre plausible.</em>",
+      "rayon": 470,
+      "hauteur": -25,
+      "taille": 12,
+      "liens": [
+        { "vers": "arkadia", "texte": "Passer à Arkadia" }
+      ]
+    },
+    {
+      "id": "arkadia",
+      "nom": "Arkadia",
+      "texte": "<strong>Un écosystème communautaire, opéré comme un système critique.</strong><br><br>Neuf serveurs depuis 2024. Un environnement vivant : des utilisateurs qui se connectent, créent, échangent, contestent, signalent — et attendent une expérience cohérente.<br><br>Des sauvegardes, des restaurations, des droits, de la modération, des incidents et des évolutions continues.<br><br><strong>L'architecture ne s'arrête pas au déploiement.</strong>",
+      "modele": "unite3d-watashi.glb",
+      "rayon": 560,
+      "hauteur": 35,
+      "taille": 18,
+      "liens": [
+        { "vers": "transposition", "texte": "Ce que ça vaut pour une PME" }
+      ]
+    },
+    {
+      "id": "transposition",
+      "nom": "La transposition",
+      "texte": "<strong>Ce que ces deux terrains apportent à une PME ou une collectivité.</strong><br><br>· Un système utile s'administre à <strong>plus d'une personne</strong><br>· Une sauvegarde non testée est une <strong>hypothèse</strong>, pas une garantie<br>· La disponibilité est aussi une affaire de <strong>communication</strong><br>· Les règles simples réduisent plus de support que les outils complexes<br>· L'automatisation doit réduire les erreurs <strong>sans rendre l'opération illisible</strong><br>· Toute architecture doit prévoir la reprise, l'export et l'évolution",
+      "rayon": 640,
+      "hauteur": -50,
+      "taille": 15,
+      "liens": [
+        { "vers": "galion", "texte": "Revenir au galion" }
+      ]
+    }
+  ]
+}
