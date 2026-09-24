@@ -255,14 +255,35 @@ function toutNettoyer() {
    *
    * ⇒ Sur Windows, on tue l'ARBRE : `taskkill /T /F /PID`. Le `/T` fait tout le
    *   travail — c'est précisément « et ses enfants ».
-   *   On garde `kill()` en second recours, si `taskkill` n'est pas là. */
+   *   On garde `kill()` en second recours, si `taskkill` n'est pas là.
+   *
+   * ⛔⛔ ET CE SECOND RECOURS ÉTAIT LE SEUL QUI S'EXÉCUTE EN CI — 24/09/2026.
+   *
+   *   **`taskkill` n'existe pas sous Linux.** Le coureur GitHub Actions est sous
+   *   Ubuntu : `spawnSync('taskkill', …)` échouait, on tombait sur `kill('SIGKILL')`
+   *   — **qui tue le parent et laisse les enfants**, exactement ce que le
+   *   paragraphe ci-dessus décrit comme insuffisant.
+   *
+   *   ⭐ Le garde-fou couvrait Windows. **La porte était Linux.** *Le défaut
+   *     corrigé la veille ne pouvait pas fonctionner sur le seul chemin où il
+   *     servait — c'est la loi 4, et elle coûte un déploiement par jour.*
+   *
+   * ⇒ Sous POSIX, Chrome est lancé `detached` : il est **chef de son groupe de
+   *   processus**. `process.kill(-pid)` tue alors le groupe ENTIER — parent,
+   *   moteurs de rendu, GPU et service — d'un seul appel. */
   try {
     if (chromeProc && chromeProc.pid && !chromeProc.killed) {
-      const r = spawnSync(
-        'taskkill', ['/T', '/F', '/PID', String(chromeProc.pid)],
-        { stdio: 'ignore', windowsHide: true }
-      )
-      if (!r || r.status !== 0) chromeProc.kill('SIGKILL')
+      if (process.platform === 'win32') {
+        const r = spawnSync(
+          'taskkill', ['/T', '/F', '/PID', String(chromeProc.pid)],
+          { stdio: 'ignore', windowsHide: true }
+        )
+        if (!r || r.status !== 0) chromeProc.kill('SIGKILL')
+      } else {
+        // POSIX : le signe moins désigne le GROUPE, pas le processus.
+        try { process.kill(-chromeProc.pid, 'SIGKILL') }
+        catch { chromeProc.kill('SIGKILL') }
+      }
     }
   } catch {
     try { if (chromeProc && !chromeProc.killed) chromeProc.kill('SIGKILL') } catch {}
@@ -323,6 +344,32 @@ async function principal() {
   if (!chrome) { console.error('Chrome introuvable (définir CHROME_PATH)'); process.exit(1) }
   const proc = spawn(chrome, [
     '--headless=new', '--disable-gpu', '--no-sandbox', '--no-first-run', '--no-default-browser-check',
+    /* ⛔ LE FLAG QUI MANQUAIT — 24/09/2026.
+     *
+     * MESURE : le workflow `main` échouait à CHAQUE fois depuis le 23/09 13:25,
+     * toujours au même endroit — « CDP Page.navigate sans réponse après 15000 ms »
+     * puis « moteur figé », **après ~10 pages rendues sur 32**.
+     *
+     * ⭐ ET CE N'EST PAS LE MOTEUR DE RENDU, C'EST CHROME ENTIER : `Page.navigate`
+     *   est traité par le processus NAVIGATEUR (le code le dit lui-même plus bas) —
+     *   s'il ne répond plus, c'est que tout le processus est bloqué.
+     *
+     * ⛔ LA CAUSE, ET ELLE EST DOCUMENTÉE PARTOUT : dans un conteneur — et un
+     *   coureur GitHub Actions en est un — **`/dev/shm` fait 64 Mo par défaut**.
+     *   Chrome s'en sert largement ; quand il est plein, il ne plante pas, il
+     *   **se fige**. C'est le symptôme exact, à la page près.
+     *
+     * ⇒ `--disable-dev-shm-usage` fait écrire les fichiers partagés dans `/tmp`.
+     *   Les deux suivants empêchent Chrome de mettre en veille un onglet non
+     *   visible — ce qui, ici, est TOUJOURS le cas : il n'y a pas d'écran.
+     *
+     * ⚠️ Ces trois flags sont INERTES sur un poste de travail (EVA-01 a de la
+     *    mémoire et un `/dev/shm` dimensionné) : ils ne changent rien au pré-rendu
+     *    local, et ils réparent celui du CI. *Un correctif qui ne se paie que sur
+     *    le chemin cassé.* */
+    '--disable-dev-shm-usage',
+    '--disable-background-timer-throttling',
+    '--disable-renderer-backgrounding',
     /* ⛔ L'ANALYTIQUE EST BLOQUÉE AU NIVEAU RÉSEAU — ajouté le 23/09/2026.
      *
      * MESURE : le moteur de rendu de Chrome cesse de répondre après la 10ᵉ page
@@ -347,7 +394,16 @@ async function principal() {
     '--host-resolver-rules=MAP analytics.gldigitallab.fr 0.0.0.0,MAP www.google-analytics.com 0.0.0.0,MAP googletagmanager.com 0.0.0.0',
     `--remote-debugging-port=${DEBUG_PORT}`, `--user-data-dir=${profil}`,
     `http://127.0.0.1:${PORT}/`,
-  ], { stdio: 'ignore' })
+  ], {
+    stdio: 'ignore',
+    /* ⭐ `detached` SOUS POSIX — ajouté le 24/09/2026, et il n'est pas décoratif :
+     * sans lui, Chrome n'est PAS chef de son groupe de processus, et
+     * `process.kill(-pid)` dans `toutNettoyer` ne trouve aucun groupe à tuer.
+     * **Les deux corrections vont ensemble ou ne servent à rien.**
+     * ⚠️ Sous Windows il reste à `false` : `taskkill /T` fait déjà le travail, et
+     *    un processus détaché y complique la terminaison. */
+    detached: process.platform !== 'win32',
+  })
   chromeProc = proc   // ⭐ exposé au nettoyage global : SANS ÇA, Chrome survit à l'échec
 
   let cdp = null
@@ -625,7 +681,32 @@ async function principal() {
      repli SPA renvoyait la coquille de l'accueil en HTTP 200 pour /arcade, /cv…
      — un doublon de l'accueil aux yeux d'un moteur, pas un 404. */
   const cheminIntrouvable = '/__page-introuvable__'
-  await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
+  /* ⛔ LA 404 N'ÉTAIT PAS PROTÉGÉE — corrigé le 24/09/2026.
+   *
+   * C'est écrit noir sur blanc une centaine de lignes plus haut, et ça n'avait
+   * jamais été corrigé : « le script meurt sur le `Page.navigate` du 404 qui
+   * n'est pas protégé ».
+   *
+   * ⭐ CE QUE ÇA COÛTAIT, MESURÉ : les routes ratées sont signalées et sautées
+   *   (`continue`) — **elles ne tuent jamais le build**. La 404, elle, levait :
+   *   `prérendu interrompu : Error: CDP Page.navigate : moteur figé`, **exit 1**,
+   *   et **le déploiement n'avait pas lieu**.
+   *   ⇒ Une page ratée sur trente-deux faisait perdre les trente-et-une autres.
+   *
+   * ⭐ C'EST LA LOI 4 DE L'ATELIER, à la lettre : *« un garde-fou qui ne couvre
+   *   qu'un chemin est une porte »*. Le garde couvrait 34 routes et laissait
+   *   passer la 35ᵉ — celle qui n'existe pas.
+   *
+   * ⇒ Le repli fait ce que le reste du script fait déjà : **on nomme, on
+   *   continue, et le build aboutit.** *Une 404 manquante se rattrape ; un
+   *   déploiement perdu, non.* */
+  cdp.fige = false   // même raison que pour les routes : le processus navigateur répond encore
+  try {
+    await cdp.envoyer('Page.navigate', { url: `http://127.0.0.1:${PORT}${cheminIntrouvable}` })
+  } catch (e) {
+    console.error(`  ⛔ 404 NON ÉCRITE : ${e.message}`)
+    console.error('     (le build continue — une 404 ratée ne doit pas tuer 32 routes)')
+  }
   // ⚠ MÊME ATTENTE QUE POUR LES ROUTES, ET ELLE COMPTE ENCORE PLUS ICI.
   // La 404 est servie à TOUT visiteur qui se trompe d'adresse. Constaté le 11/09/2026 :
   // cette page était la SEULE des 24 fichiers livrés à conserver encore un Loader, parce
