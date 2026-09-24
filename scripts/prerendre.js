@@ -44,7 +44,7 @@ const ECRIRE = !args.includes('--titre-seulement')
 //    prérendu possible sur une machine dont le moteur fige après N pages — on le
 //    relance, il continue plus loin. *Voir le commentaire de la boucle des routes.*
 const REPRENDRE = args.includes('--reprendre')
-/* ⭐⭐ `--seulement=<motif>` — OUTIL DE MESURE, ajouté le 25/09/2026.
+/* ⭐⭐ `--seulement=<motif>` — OUTIL DE MESURE, ajouté le 24/09/2026.
  *
  * POURQUOI IL EXISTE : le prérendu fige, et **on ne peut pas mesurer une route
  * précise** — un passage complet coûte de 20 à 70 minutes, et il faut le refaire
@@ -62,7 +62,7 @@ const SEULEMENT = option('seulement', '')
  *
  * POURQUOI CETTE OPTION EXISTE, ET CE QU'ELLE N'EST PAS.
  *
- * ⛔ MESURE DU 25/09/2026 : la route `/apps` FIGE CHROME **à froid, seule, en première
+ * ⛔ MESURE DU 24/09/2026 : la route `/apps` FIGE CHROME **à froid, seule, en première
  *    navigation.** Chrome lancé neuf, une seule URL demandée, aucun cumul :
  *    `--seulement /apps` → `✎ /apps` puis `Runtime.evaluate sans réponse après 15000 ms`,
  *    et **125 s de processeur en 100 secondes** — le moteur ne « cesse pas de répondre »,
@@ -455,7 +455,7 @@ async function principal() {
   if (ECARTER.length) {
     const inconnues = ECARTER.filter((e) => !routesBrutes.includes(e))
     console.log(`  ⛔ --sauf : ${ECARTER.length} route(s) ÉCARTÉE(S) du prérendu — ${ECARTER.join(', ')}`)
-    console.log('     contournement daté du 25/09/2026 : /apps fige Chrome à froid, seule, en')
+    console.log('     contournement daté du 24/09/2026 : /apps fige Chrome à froid, seule, en')
     console.log('     première navigation. Dist apps/index.html : absent, donc SPA pour cette page.')
     console.log('     ⛔ À RETIRER dès que /apps rend : le contrôle est « --sauf vide ET')
     console.log('        dist/apps/index.html présent après npm run prerendre ».')
@@ -578,7 +578,7 @@ async function principal() {
      *   le prérendu écrivait 33 pages avec eux — et on ajoute `EXCLUDE 127.0.0.1`
      *   en ceinture. *Le vrai barrage reste le blocage CDP plus bas : il refuse la
      *   requête AVANT qu'elle parte, et ne dépend d'aucune résolution.* */
-    /* ⭐⭐ CORRIGÉ LE 25/09/2026 — LA COMBINAISON QUI N'AVAIT JAMAIS ÉTÉ ESSAYÉE.
+    /* ⭐⭐ CORRIGÉ LE 24/09/2026 — LA COMBINAISON QUI N'AVAIT JAMAIS ÉTÉ ESSAYÉE.
      *
      * MESURE : `/liens` seule (`--seulement=/liens`), Chrome consomme **524 s de CPU en
      * 8 minutes** et n'écrit rien. Le moteur ne « cesse pas de répondre » : il BOUCLE.
@@ -677,7 +677,7 @@ async function principal() {
   let ecrits = 0, echecs = 0
   /* ⭐⭐ `figements` — CE QU'ON NE COMPTAIT PAS, ET QUI COÛTAIT 70 MINUTES.
    *
-   * MESURE DU 25/09/2026 : une passe complète avec `--reprendre` a duré **70,6 minutes**
+   * MESURE DU 24/09/2026 : une passe complète avec `--reprendre` a duré **70,6 minutes**
    * pour **10 pages écrites et 24 échecs**. Le temps ne part pas dans le rendu : il part
    * dans les 24 routes restantes, qui échouent CHACUNE en ~3 minutes (délai CDP de 15 s
    * × tentatives, plus le redémarrage du serveur local entre les deux).
@@ -733,7 +733,7 @@ async function principal() {
         : path.join(DIST, route.replace(/^\//, ''), 'index.html')
       if (fs.existsSync(fichierCible)) {
         const deja = fs.readFileSync(fichierCible, 'utf8')
-        /* ⛔⛔ LA COQUILLE N'EST PAS UNE PAGE PRÉ-RENDUE — 25/09/2026.
+        /* ⛔⛔ LA COQUILLE N'EST PAS UNE PAGE PRÉ-RENDUE — 24/09/2026.
          *
          * MESURE, et c'est elle qui a coûté la page d'accueil :
          *   · `dist/index.html` : **14 150 octets** — c'est la coquille écrite par `vite build`.
@@ -1457,7 +1457,7 @@ async function principal() {
     console.log(`CSS inliné : ${cssInlines} page(s), ${Math.round(cssOctets / 1024)} Ko de feuille recopiés — 1 requête bloquante en moins par page`)
   }
   console.log('           (les ancres de fragment Vue, vides, sont conservées : l\'hydratation en dépend)')
-  /* ⭐⭐⭐ LE PANSEMENT DU 23/09 DEVIENT UN CONTRAT — 25/09/2026.
+  /* ⭐⭐⭐ LE PANSEMENT DU 23/09 DEVIENT UN CONTRAT — 24/09/2026.
    *
    * ⛔ CE QUI A CHANGÉ, ET C'EST UNE MESURE, PAS UNE OPINION.
    *    Le pansement disait : « le prérendu SORT EN 0 malgré tout », parce qu'un échec
@@ -1483,7 +1483,7 @@ async function principal() {
    * ⛔ ET LE CONTRÔLE RESTE CELUI DU PANSEMENT, mot pour mot : **`dist/` doit compter
    *    toutes les routes après `npm run prerendre`.** Il est maintenant vérifiable
    *    automatiquement, puisqu'un code 2 ne peut plus se faire passer pour un succès. */
-  /* ⛔ CORRIGÉ LE 25/09/2026, MOINS D'UNE HEURE APRÈS L'AVOIR ÉCRIT — ET LA MESURE EST NETTE.
+  /* ⛔ CORRIGÉ LE 24/09/2026, MOINS D'UNE HEURE APRÈS L'AVOIR ÉCRIT — ET LA MESURE EST NETTE.
    *
    * J'avais écrit : `const restantes = routes.length - ecrits`.
    * La première passe a affiché : « 33 route(s) sur 43 restent à écrire » — alors qu'elle
@@ -1527,7 +1527,7 @@ async function principal() {
   }
 }
 
-/* ⭐⭐⭐ LA SORTIE — AJOUTÉE LE 25/09/2026, ET C'ÉTAIT LA PIÈCE MANQUANTE DE LA BOUCLE.
+/* ⭐⭐⭐ LA SORTIE — AJOUTÉE LE 24/09/2026, ET C'ÉTAIT LA PIÈCE MANQUANTE DE LA BOUCLE.
  *
  * ⛔ MESURE : la boucle de passes a lancé la passe 1, qui a écrit ses 10 pages, imprimé son
  *    rapport et posé son code de sortie… **puis n'est jamais sortie.** Le journal s'arrête

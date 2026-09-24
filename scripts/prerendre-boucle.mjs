@@ -1,9 +1,9 @@
 // ============================================================
-// prerendre-boucle.mjs — GL Digital Lab — 25/09/2026
+// prerendre-boucle.mjs — GL Digital Lab — 24/09/2026
 //
 // POURQUOI CE FICHIER EXISTE
 //
-// ⛔ MESURÉ LE 25/09/2026 : le prérendu écrit **10 pages, puis le moteur de rendu de
+// ⛔ MESURÉ LE 24/09/2026 : le prérendu écrit **10 pages, puis le moteur de rendu de
 // Chrome fige**. Les 24 routes suivantes échouent alors une par une, ~3 minutes chacune
 // (délai CDP de 15 s × tentatives, plus le redémarrage du serveur local entre les deux) :
 // une passe complète a duré **70,6 minutes pour 10 pages écrites**.
@@ -61,7 +61,7 @@ while (passe < MAX && code === 2) {
     // `stdio: 'inherit'` : la sortie de la passe va directement à l'écran, sans être
     // tamponnée. *Un `Select-Object -Last` en bout de chaîne a déjà rendu un lot de
     // transcriptions invisible pendant des heures : on ne tamponne pas un travail long.*
-    // ⭐⭐ `--sauf /apps` A ÉTÉ POSÉ PUIS RETIRÉ LE MÊME JOUR — 25/09/2026. Il n'y en a plus.
+    // ⭐⭐ `--sauf /apps` A ÉTÉ POSÉ PUIS RETIRÉ LE MÊME JOUR — 24/09/2026. Il n'y en a plus.
     //
     // ⛔ CE QU'ON CROYAIT : `/apps` figeait Chrome (125 s de CPU en 100 s, première
     //    navigation, page jamais écrite). On l'avait donc écartée du prérendu, avec la
