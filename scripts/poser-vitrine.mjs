@@ -148,9 +148,25 @@ const controles = [
   ['le moteur 3D est la', vitrine.includes('/vendor/three.min.js')],
   ['aucun CDN', !vitrine.includes('jsdelivr') && !vitrine.includes('fonts.googleapis')],
   ['les huit actes', (vitrine.match(/data-act="\d+"/g) || []).length === 8],
-  ['l\'axiome du capitaine', vitrine.includes('On ne combat pas le Mal')],
+  /* ⛔⛔ CES DEUX ASSERTIONS ONT BLOQUÉ LE DÉPLOIEMENT, ET IL FAUT LE DIRE ICI.
+     Elles défendaient le canon d'avant :
+       · « on ne COMBAT pas le Mal : on le JOUE » ;
+       · « AUCUNE VOILE » — la coque est de métal, « il n'a pas de voiles, il a le vide ».
+     Néo a demandé **l'inverse des deux**, explicitement, le 24/09/2026 au soir.
+     Ce script refusait donc d'écrire, et **le site gardait l'ancienne version** —
+     pendant que le travail semblait ne pas passer. *Le même défaut était dans
+     `preparer-vitrine.mjs` : deux garde-fous défendaient une règle périmée, et l'un
+     des deux a suffi à tout bloquer.*
+     ⇒ Retournées le 24/09/2026, à la demande de Néo. **Ce qui reste défendu, c'est ce
+       qui n'a PAS changé** — et le reste de cette liste le dit. */
+  ['l\'axiome est celui demandé', vitrine.includes('On ne joue pas le Mal : on le combat, en le sachant')],
+  ['l\'ancien axiome ne revient pas', !vitrine.includes('On ne combat pas le Mal : on le joue')],
   ['aucun vert', !/37ff9a|5dff8a|3dff7a/.test(vitrine)],
-  ['aucune voile', !vitrine.includes('sailMat')],
+  /* ⭐ Les voiles sont désormais EXIGÉES, pas interdites : six, toutes grandes. */
+  ['les six voiles sont là', vitrine.includes('function sailMat(')],
+  ['quatre de vitesse, deux de manoeuvre', vitrine.includes("'vitesse'") && vitrine.includes("'manoeuvre'")],
+  ['le pavillon porte le crane', vitrine.includes('La bo') && vitrine.includes('os crois')],
+  ['le Leviathan est devant', /levi\.position\.set\([^)]*7\d\d\)/.test(vitrine)],
   ['le kraken', vitrine.includes('kraken')],
   ['Oracle en violet', vitrine.includes('0x9b5cff')],
   ['Yggdrasil', vitrine.includes('Yggdrasil')],

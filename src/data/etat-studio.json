@@ -3,21 +3,21 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "e1031c1",
-    "sujet": "vitrine : la navigation du site, posee par le generateur",
-    "date": "2026-09-24T15:00:53+02:00",
+    "court": "b7d50be",
+    "sujet": "lighthouse : URLs relatives, parce que le port est dynamique",
+    "date": "2026-09-24T15:21:50+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 15:13:30",
-    "horodatage_minute": "2026-09-24 15:13",
-    "horodatage_iso": "2026-09-24T13:13:30.086Z",
+    "horodatage_local": "2026-09-24 15:35:37",
+    "horodatage_minute": "2026-09-24 15:35",
+    "horodatage_iso": "2026-09-24T13:35:37.522Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 202,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 259.1,
+    "ko_servis": 260.4,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
