@@ -1562,7 +1562,32 @@ const VERROUS = {
   signature: (etatDuStudio && Array.isArray(etatDuStudio.verrous)) ? etatDuStudio.verrous : [],
 };
 
-const signatureTenus = VERROUS.signature.filter((v) => v.code === 0).length;
+const signatureTenus = VERROUS.signature.filter((v) => typeof v.code === 'number' && v.code === 0).length;
+/* ⛔⛔ « NON MESURÉ » N'EST PAS « ZÉRO TENU » — corrigé le 24/09/2026, sur une mesure
+ *     faite dans le navigateur de Néo.
+ *
+ * CE QUI ÉTAIT ÉCRIT ICI : `filter((v) => v.code === 0).length`
+ * ⭐ CE QUE LA PAGE AFFICHAIT ALORS : « INTÉGRITÉ 0 / 5 verrous tenus », barre à 0 % —
+ *    **alors que les cinq verrous étaient TENUS** (le relevé du dépôt porte cinq codes
+ *    de sortie à 0).
+ *
+ * ⛔ LA CAUSE EST MÉCANIQUE, ET LE SCRIPT AVAIT RAISON. Le workflow lance
+ *    `generer-etat.mjs` en PREBUILD — donc AVANT `vite build`, quand `dist/` n'existe
+ *    pas encore. Le script refuse alors de mesurer et écrit `code: null`, motif
+ *    « dist/ absent ». **C'est honnête.** Mais `null === 0` est faux : un verrou NON
+ *    MESURÉ était compté comme un verrou NON TENU. Cinq fois. Et le pré-rendu figeait
+ *    ce `0 / 5` dans le HTML — le postbuild remesure bien `5 / 5`, mais **trop tard :
+ *    la jauge n'est pas dans une zone marquée, elle garde la valeur du pré-rendu.**
+ *
+ * ⭐ LA RÈGLE DU STUDIO S'APPLIQUE ICI MOT POUR MOT : « une mesure manquante se dit
+ *    `null` — **non mesuré** ». Une page qui écrit « 0 / 5 tenus » quand elle n'a rien
+ *    pu mesurer n'est pas pessimiste : **elle est fausse**. Et c'est le pire des deux,
+ *    parce qu'un chiffre faux qui a l'air d'un aveu passe pour de la rigueur.
+ *
+ * ⇒ On sépare les deux cas : un code de sortie NUMÉRIQUE est une mesure, le reste n'en
+ *   est pas une. Et quand rien n'est mesuré, la page LE DIT au lieu de compter des
+ *   zéros — voir `signatureMesuree`, utilisé par la jauge. */
+const signatureMesuree = VERROUS.signature.some((v) => typeof v.code === 'number');
 
 /* ── LES TROIS JAUGES ─────────────────────────────────────────────────────────
  * ⭐ FAIM · AUTONOMIE · INTÉGRITÉ — ce sont LES TROIS NOMBRES DU JEU, et ils
@@ -1590,9 +1615,9 @@ const JAUGE_AUTONOMIE = {
 };
 
 const JAUGE_INTEGRITE = {
-  valeur: `${signatureTenus} / ${VERROUS.signature.length}`,
-  unite: 'verrous tenus, nommés par le relevé',
-  part: VERROUS.signature.length > 0 ? Math.round((signatureTenus / VERROUS.signature.length) * 100) : 0,
+  valeur: signatureMesuree ? `${signatureTenus} / ${VERROUS.signature.length}` : 'non mesuré',
+  unite: signatureMesuree ? 'verrous tenus, nommés par le relevé' : 'les verrous n’ont pas pu être exécutés',
+  part: (signatureMesuree && VERROUS.signature.length > 0) ? Math.round((signatureTenus / VERROUS.signature.length) * 100) : 0,
   quoi: `Chaque verrou cité ici est nommé par le relevé du build et porte son code de sortie. Le compte TOTAL n'est pas écrit dans cette page : il est énuméré à chaque build en lisant le dossier des scripts — et il a changé aujourd'hui même, pendant que cette page s'écrivait.`,
   source: `relevé du ${QUAND} · ${VERROUS.signature.map((v) => (v.script || '').split('/').pop()).filter(Boolean).join(' · ')}`,
 };
