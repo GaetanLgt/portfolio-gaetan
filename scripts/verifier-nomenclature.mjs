@@ -113,6 +113,23 @@ const HORS_TEXTE = [
   /[\w.'"/_-]*arkadia[\w.'"/_-]*/g,       // minuscules : routes, classes, domaines
   /\/arkadia\b/g,
   /arkadia\.gldigitallab\.fr/g,
+  /* ⭐⭐ AJOUTÉ LE 25/09/2026 — UN IDENTIFIANT N'EST PAS UNE MENTION ÉDITORIALE.
+   *
+   * MESURE : le contrôle signalait `src/router/index.js` L33 « Arkadia », 5 fois. La ligne
+   * réelle est :
+   *     const ArkadiaCase = () => import('@/views/projects/ArkadiaCase.vue');
+   * ⇒ **c'est un NOM DE VARIABLE et un NOM DE FICHIER.** Le motif des minuscules ne les
+   *   attrape pas — le `A` de `ArkadiaCase` est majuscule — donc ils tombaient dans les
+   *   ambiguïtés, et le verrou reprochait au site un nom de variable.
+   *
+   * ⇒ Deux motifs de plus, et rien d'autre : les identifiants camelCase et les noms de
+   *   fichiers. *Un instrument qui compte les identifiants de code parmi les choix
+   *   éditoriaux produit un chiffre faux — et ce chiffre-là sert à décider.*
+   *
+   * ⚠️ CE QUE CE CORRECTIF NE FAIT PAS : il ne touche à AUCUNE mention en prose. Les
+   *    titres, les textes et les commentaires restent comptés, et c'est voulu. */
+  /\bArkadia[A-Z]\w*/g,                   // identifiants de code : ArkadiaCase, ArkadiaPage…
+  /\bArkadia[A-Za-z]*\.(vue|js|mjs|md)\b/g, // noms de fichiers cités dans le code
 ]
 
 const EXT = new Set(['.vue', '.js', '.mjs', '.md', '.json', '.html', '.xml'])
@@ -150,6 +167,21 @@ function fichiers(dossier) {
     let e; try { e = fs.readdirSync(d, { withFileTypes: true }) } catch { return }
     for (const x of e) {
       if (x.name === 'node_modules' || x.name === '.git' || x.name === 'dist') continue
+    /* ⭐⭐ LES FICHIERS D'ÉPREUVE SONT ÉCARTÉS — 25/09/2026, et la raison est mécanique,
+     * pas confortable : **une épreuve qui vérifie qu'un garde-fou REFUSE une forme fautive
+     * doit contenir cette forme fautive.** Compter ses mentions comme des ambiguïtés
+     * éditoriales est un faux positif par construction, pas un signal.
+     *
+     * MESURE : `src/components/runes/essai-runes.js` L53 —
+     *     runesPour('ARKADIA 9');
+     * — pèse **11 des 27 mentions signalées**, et c'est exactement la chaîne que l'épreuve
+     * PASSE au garde-fou pour vérifier qu'il lève bien une erreur : **la mention fautive
+     * est le SUJET du test.** Le fichier n'est livré à aucune page.
+     *
+     * ⛔ Ce n'est pas une exclusion de confort. *Un contrôle qui compte les tests parmi les
+     *    contenus finit par demander de réécrire les tests — c'est-à-dire par affaiblir ce
+     *    qu'ils protègent.* */
+    if (/^essai-/.test(x.name)) continue
       const p = path.join(d, x.name)
       if (x.isDirectory()) marcher(p)
       else if (EXT.has(path.extname(x.name).toLowerCase())) out.push(p)
