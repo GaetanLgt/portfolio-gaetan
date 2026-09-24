@@ -95,7 +95,7 @@ const NAV = `
   <a href="/services">Offre</a>
   <a href="/projets">Réalisations</a>
   <a href="/dossier">Méthode</a>
-  <a href="/galion">Le navire</a>
+  <a href="/laboratoire">Preuves</a>
   <a href="/contact" class="ark-site-nav__cta">Parler de votre projet</a>
 </nav>
 `
@@ -106,15 +106,38 @@ const ANCRE_FIN = '</body>'
 if (!vitrine.includes(ANCRE_FIN)) {
   throw new Error('ASSERTION : </body> introuvable — impossible de poser la navigation sans casser la page')
 }
-if (!vitrine.includes('ark-site-nav')) {
-  // Le style va dans <head>, la barre juste apres <body> — l'ordre du document compte.
-  vitrine = vitrine.replace('</head>', NAV.split('<nav')[0] + '</head>')
-  vitrine = vitrine.replace(ANCRE_FIN, NAV.slice(NAV.indexOf('<nav')) + '\n' + ANCRE_FIN)
+/* ⛔ CE BLOC A ÉTÉ UN PIÈGE, ET IL A ÉTÉ RETIRÉ. La première version ne posait la
+   navigation que SI ELLE ÉTAIT ABSENTE — donc quand j'ai ajouté `/laboratoire` au
+   menu, la source portait déjà l'ancienne barre et **le script ne la remplaçait
+   pas** : le `dist` sortait avec quatre liens sur cinq, en silence.
+   ⭐ *Un contrôle qui ne s'exécute qu'au premier passage ne contrôle rien : il
+     installe.*
+   ⚠️ ET LA TENTATIVE DE REMPLACEMENT A ÉTÉ ABANDONNÉE : retirer l'ancienne barre
+   puis reposer la neuve demandait de découper le document à deux endroits, et la
+   découpe cassait le style. **On ne découpe pas un HTML à la chaîne quand on peut
+   le régénérer depuis sa source.** ⇒ `public/vitrine/index.html` se régénère par
+   `preparer-vitrine.mjs` (depuis `web/index.html`), et ce script y pose la barre. */
+if (vitrine.includes('id="ark-site-nav"')) {
+  throw new Error(
+    'ASSERTION : la barre est DÉJÀ dans la source de la vitrine — régénère-la ' +
+      '(node C:/IA/tmp/preparer-vitrine.mjs) avant de reposer, sinon c\'est l\'ancienne qui reste.',
+  )
 }
+// Le style va dans <head>, la barre juste avant </body> — l'ordre du document compte.
+vitrine = vitrine.replace('</head>', NAV.split('<nav')[0] + '</head>')
+vitrine = vitrine.replace(ANCRE_FIN, NAV.slice(NAV.indexOf('<nav')) + '\n' + ANCRE_FIN)
+
 /* ⛔ L'ASSERTION QUI MANQUAIT : on VÉRIFIE que le bloc est bien dans le résultat.
    Sans elle, un `replace()` qui ne trouve rien passe pour un succès. */
 if (!vitrine.includes('id="ark-site-nav"')) {
   throw new Error('ASSERTION : la navigation n\'est PAS dans le resultat — le remplacement a echoue en silence')
+}
+/* ET ON VÉRIFIE CHAQUE DESTINATION, pas seulement la présence de la barre :
+   *c'est l'ajout d'un lien qui avait disparu en silence.* */
+for (const u of ['/services', '/projets', '/dossier', '/laboratoire', '/contact']) {
+  if (!vitrine.includes(`href="${u}"`)) {
+    throw new Error(`ASSERTION : la destination ${u} manque dans la navigation`)
+  }
 }
 if (!vitrine.includes('ark-site-nav-style')) {
   throw new Error('ASSERTION : le style de la navigation n\'est PAS dans le resultat')

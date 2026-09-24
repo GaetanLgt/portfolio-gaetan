@@ -453,6 +453,32 @@ const routes = [
   // PROJECTS (Case Studies)
   // -------------------------------------------------------------------------
   {
+    /* ⭐ EVA01 ET LE LABORATOIRE — ajoutés le 24/09/2026.
+       ⚠️ COMPOSANT PAR `import()` DYNAMIQUE, et pas par un import en tête : c'est la
+       forme qui ne demande AUCUNE ligne d'import, donc celle qui ne peut pas casser
+       le module en laissant un nom non défini. *Trois tentatives ont échoué ici, deux
+       fois sur une ancre mal visée, une fois sur un import introuvable — on prend la
+       forme qui rend le défaut impossible.* */
+    path: '/eva01',
+    name: 'Eva01',
+    component: () => import('../views/core/Eva01Page.vue'),
+    meta: {
+      title: 'EVA01 — assistant IA local, mémoire et contrôle humain',
+      description:
+        "Étude de cas : une IA locale gouvernée, mémoire séparée de l'identité, niveaux d'autorisation N0 à N4, validation humaine sur toute action sensible.",
+    },
+  },
+  {
+    path: '/laboratoire',
+    name: 'Laboratoire',
+    component: () => import('../views/core/LaboratoirePage.vue'),
+    meta: {
+      title: 'Le laboratoire — des systèmes testés dans le réel',
+      description:
+        "EVA01 et Arkadia : deux terrains qui se répondent, et ce qu'ils apportent à une PME — données sous contrôle, système reprenable, exploitation maîtrisée.",
+    },
+  },
+  {
     path: '/arkadia',
     name: 'ArkadiaCase',
     component: ArkadiaCase,

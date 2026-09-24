@@ -3,25 +3,25 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "06918f9",
-    "sujet": "jauge INTÉGRITÉ : « non mesuré » n'est pas « zéro tenu »",
-    "date": "2026-09-24T13:59:39+02:00",
+    "court": "e1031c1",
+    "sujet": "vitrine : la navigation du site, posee par le generateur",
+    "date": "2026-09-24T15:00:53+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 14:16:01",
-    "horodatage_minute": "2026-09-24 14:16",
-    "horodatage_iso": "2026-09-24T12:16:01.280Z",
+    "horodatage_local": "2026-09-24 15:13:30",
+    "horodatage_minute": "2026-09-24 15:13",
+    "horodatage_iso": "2026-09-24T13:13:30.086Z",
     "fuseau": "Europe/Paris"
   },
-  "pages_prerendues": 200,
+  "pages_prerendues": 202,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 253.3,
+    "ko_servis": 259.1,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {
-    "total": 7,
+    "total": 10,
     "seuil": 14
   },
   "moteurs_ia": {
