@@ -44,6 +44,19 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- ⭐ LE RELEVÉ DE VEILLE — première page de ce genre, 25/09/2026.
+       Elle est produite par `outils-pilotage/veille-generer-articles.mjs`, sur décision de
+       Gaëtan : *« on passe par le générateur de telle manière à ce qu'il fasse des articles
+       préformatés et on les publie. »*
+       ⚠️ UNE URL PAR DATE : le générateur devra tenir ce fichier à jour lui-même, sinon la
+          liste se périmera comme l'ancien plan de site — *38 URLs dont 37 en 404.* -->
+  <url>
+    <loc>https://gldigitallab.fr/veille/2026-09-25.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+
   <!-- ⛔ CE QUI N'EST PAS ICI, ET POURQUOI — pour que personne ne « complète » à l'aveugle :
 
        · `contact.php` — la page porte `<meta name="robots" content="noindex,follow">`.
