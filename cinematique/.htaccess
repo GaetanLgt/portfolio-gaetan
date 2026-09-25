@@ -69,5 +69,16 @@ ErrorDocument 404 /404.html
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
+# ── ⛔ NE PAS LISTER LE CONTENU DES DOSSIERS ────────────────────────────────
+# Mesuré le 26/09/2026, après la remise en place de ce fichier : `https://gldigitallab.fr/img/`
+# répondait **200** avec le titre « Index of /img » — le serveur **affichait la liste des
+# fichiers** à qui demandait le dossier. Idem pour `/css/`, `/src/`, `/modeles/`.
+#
+# ⚠️ Un dossier listé, c'est le plan du site offert : les noms de fichiers disent ce qui
+# existe, à quel endroit, et dans quel ordre — y compris ce qu'aucune page ne montre.
+# ⛔ Et ça ne se voit pas depuis le site : il faut demander un dossier à la main pour le
+# découvrir. *Un défaut qu'aucun lien ne mène est un défaut que personne ne signale.*
+Options -Indexes
+
 # ── Le fichier servi par défaut dans un dossier ─────────────────────────────
 DirectoryIndex index.html
