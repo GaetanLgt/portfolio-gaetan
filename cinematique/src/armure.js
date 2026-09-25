@@ -21,7 +21,12 @@ export function construireArmure(THREE, g) {
   const bosseler = (geo, amp) => { // chaque armure est unique : la graine déplace les sommets
     const p = geo.attributes.position;
     for (let i = 0; i < p.count; i++) p.setXYZ(i, p.getX(i) * (1 + g.entre(-amp, amp)), p.getY(i) * (1 + g.entre(-amp, amp)), p.getZ(i) * (1 + g.entre(-amp, amp)));
-    geo = geo.toNonIndexed(); geo.computeVertexNormals(); return geo;
+    // ⚠️ `toNonIndexed()` sur une géométrie DÉJÀ non indexée fait râler three.js
+    //    (« BufferGeometry is already non-indexed ») et fabrique une copie inutile :
+    //    plusieurs de nos primitives sortent non indexées de leur constructeur.
+    //    On ne convertit donc que ce qui est réellement indexé.
+    if (geo.index) geo = geo.toNonIndexed();
+    geo.computeVertexNormals(); return geo;
   };
   const plaque = (geo, mat = metal, amp = 0.04) => { const m = new THREE.Mesh(bosseler(geo, amp), mat); m.add(new THREE.LineSegments(new THREE.EdgesGeometry(m.geometry, 25), argent)); return m; };
   const paire = (fabrique, ecart) => { const gr = new THREE.Group(); for (const s of [-1, 1]) { const m = fabrique(); m.position.x = s * ecart; gr.add(m); } return gr; };
