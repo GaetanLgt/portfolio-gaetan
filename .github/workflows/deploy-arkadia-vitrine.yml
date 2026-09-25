@@ -1,0 +1,49 @@
+name: 🎬 Déployer la vitrine ArkAdiA (arkadia.gldigitallab.fr)
+
+# POURQUOI CE WORKFLOW VIT ICI ET PAS DANS LE DÉPÔT ArkAdiA
+# ---------------------------------------------------------
+# Le dépôt `GaetanLgt/ArkAdiA` porte un workflow de déploiement qui échoue à chaque push,
+# depuis le 24/09, avec un message juste : **il n'a aucun secret FTP**. Or un secret GitHub
+# appartient à UN seul dépôt — il ne suit pas le code.
+#
+# Deux issues étaient possibles : poser trois secrets de plus dans ArkAdiA, ou ne rien
+# déployer. Il y en a une troisième, meilleure : **ce dépôt-ci porte déjà les trois
+# secrets**, et il déploie déjà en FTP pour `cinematique/`. On ajoute un frère, on ne
+# recopie pas un secret.
+#   *Un secret qui existe déjà n'a pas besoin d'être dupliqué pour être utilisé.*
+
+on:
+  push:
+    branches: [main]
+    paths: ['arkadia-vitrine/**', '.github/workflows/deploy-arkadia-vitrine.yml']
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔑 Les secrets FTP sont-ils posés ?
+        run: |
+          manquants=""
+          [ -z "${{ secrets.FTP_SERVER }}" ]   && manquants="$manquants FTP_SERVER"
+          [ -z "${{ secrets.FTP_USERNAME }}" ] && manquants="$manquants FTP_USERNAME"
+          [ -z "${{ secrets.FTP_PASSWORD }}" ] && manquants="$manquants FTP_PASSWORD"
+          if [ -n "$manquants" ]; then
+            echo "⛔ SECRET(S) ABSENT(S) :$manquants"
+            exit 1
+          fi
+          echo "✅ les trois secrets sont posés."
+
+      - name: 🚀 Envoi FTP vers /arkadia.gldigitallab.fr/
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./arkadia-vitrine/
+          server-dir: /arkadia.gldigitallab.fr/
+          # ⚠️ JAMAIS `true` : un nettoyage complet effacerait tout ce que le serveur porte
+          # et que ce dépôt ne connaît pas.
+          dangerous-clean-slate: false
