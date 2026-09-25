@@ -1,0 +1,27 @@
+# robots.txt — gldigitallab.fr
+# Créé le 25/09/2026. Il n'en existait AUCUN — mesuré : /robots.txt rendait 404.
+#
+# ⭐ POURQUOI CE FICHIER ARRIVE SI TARD, ET CE QU'IL A COÛTÉ DE NE PAS AVOIR.
+#    Le 25/09/2026, le plan de site en ligne (`sitemap.xml`) a été testé URL par URL :
+#    **38 URLs déclarées, 37 en 404.** Une seule rendait une page. Les moteurs recevaient
+#    donc un plan qui les envoyait presque partout dans le vide.
+#    Et le fichier le disait lui-même, en commentaire, depuis le 10/09 :
+#      « Un plan de site qui envoie les moteurs sur des 404 leur apprend à s'en méfier :
+#        c'est pire que pas de plan de site. »
+#    ⭐ La règle était donc ÉCRITE. Elle n'était plus APPLIQUÉE — parce que le site a changé
+#      de nature (une application en routes est devenue un site de fichiers) et que personne
+#      n'a retesté le plan de site après ce basculement.
+#      *Un contrôle qui a raison un jour ne reste pas juste : il faut le refaire tourner.*
+
+User-agent: *
+Allow: /
+
+# ⛔ Rien à cacher ici : ce site n'a ni espace d'administration, ni zone membre, ni contenu
+#    privé. On ne « désindexe » donc rien par principe — *une interdiction qu'on ne sait pas
+#    justifier finit par être retirée par quelqu'un qui ne la comprend pas non plus.*
+#
+# ⚠️ La page de contact est en `noindex` DANS son propre HTML (`contact.php`) : une page de
+#    formulaire n'a rien à faire dans un moteur, et elle le dit elle-même. C'est là que ça se
+#    décide, pas ici — une règle de robot se contourne, une balise se respecte.
+
+Sitemap: https://gldigitallab.fr/sitemap.xml

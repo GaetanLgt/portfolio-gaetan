@@ -43,6 +43,21 @@ ErrorDocument 404 /404.html
   # recherche traitent comme deux contenus distincts.
   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+  # ── Deux adresses de l'ANCIEN site qui ont un équivalent, et un seul ──────
+  # Mesure du 25/09/2026 : le plan de site déclarait 38 URLs, dont 37 rendaient 404.
+  # La cause n'est pas une faute de frappe — c'est que **le site a changé de nature**.
+  # Une application à routes (Vue) est devenue un site de fichiers : `/mentions-legales`
+  # n'existe plus, c'est `/mentions-legales.html` qui existe.
+  # ⛔ ET ON NE REDIRIGE QUE CES DEUX-LÀ. Les trente-cinq autres (`/services`, `/projets`,
+  #    `/apps/…`, `/guides/…`) ne sont PAS redirigées vers l'accueil : elles renvoient 404,
+  #    et c'est la vérité — *ces pages n'existent plus.*
+  #    ⭐ Rediriger tout un ancien plan de site vers la racine est un bricolage : on dit aux
+  #      moteurs « tout a déménagé ici » alors qu'on ne sait pas ce qu'ils avaient indexé.
+  #      **Un 404 honnête vaut mieux qu'un 301 qui ment.** Ces deux-là sont différentes :
+  #      la page EXISTE toujours, sous un autre nom, et l'ancien nom y mène.
+  RewriteRule ^mentions-legales/?$ /mentions-legales.html [R=301,L]
+  RewriteRule ^confidentialite/?$ /confidentialite.html [R=301,L]
 </IfModule>
 
 # ── Les types MIME que l'hébergeur ne devine pas ────────────────────────────
