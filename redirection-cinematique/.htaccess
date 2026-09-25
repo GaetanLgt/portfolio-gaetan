@@ -1,0 +1,39 @@
+# ============================================================================
+# REDIRECTION DE L'ANCIENNE ADRESSE /cinematique/ VERS LA RACINE
+# GL Digital Lab · 26/09/2026
+#
+# ⭐ POURQUOI CE FICHIER EXISTE.
+# Le site cinématique a d'abord été publié dans un sous-dossier, `/cinematique/`.
+# Il occupe désormais la RACINE du domaine (décision de Gaëtan). Mais le dossier
+# d'origine est resté en place : ses fichiers répondent toujours 200.
+#
+# ⚠️ ET IL EST MORT, MESURÉ LE 26/09/2026 : son `main.js` cite encore les modules
+#    `.mjs` que l'hébergeur sert SANS Content-Type — ceux que Chrome refuse. Un
+#    visiteur qui tombait sur cette adresse voyait donc un site inerte, sans
+#    la moindre erreur à l'écran. C'est exactement le défaut qui a coûté la
+#    journée du 26/09 ; le laisser accessible, c'est le laisser se reproduire.
+#
+# ⇒ ON NE SUPPRIME RIEN. On redirige. Les fichiers restent sur le serveur, et
+#   cette règle ne fait que renvoyer ailleurs — la décision est réversible en
+#   retirant ce seul fichier.
+#
+# ⚠️ CE FICHIER VIT DANS LE SOUS-DOSSIER, à `/public_html/cinematique/`. Il ne
+#   touche donc PAS au `.htaccess` de la racine, qui porte les règles de
+#   sécurité et de HTTPS du domaine.
+# ============================================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Toute adresse sous /cinematique/ renvoie vers l'équivalent à la racine.
+  #   /cinematique/          →  /
+  #   /cinematique/index.html →  /index.html
+  #   /cinematique/css/…      →  /css/…
+  RewriteRule ^(.*)$ /$1 [R=301,L]
+</IfModule>
+
+# Si la réécriture n'est pas disponible, on renvoie au moins vers l'accueil,
+# plutôt que de laisser servir une page morte.
+<IfModule !mod_rewrite.c>
+  RedirectMatch 301 ^/cinematique(/.*)?$ /
+</IfModule>

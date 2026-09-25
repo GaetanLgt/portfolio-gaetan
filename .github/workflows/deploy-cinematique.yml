@@ -44,6 +44,7 @@ on:
     branches: [main]
     paths:
       - 'cinematique/**'
+      - 'redirection-cinematique/**'
       - '.github/workflows/deploy-cinematique.yml'
   workflow_dispatch:
 
@@ -80,6 +81,16 @@ jobs:
           server-dir: /public_html/
           dangerous-clean-slate: false
 
+      - name: 🚚 Rediriger l'ancienne adresse /cinematique/ vers la racine
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./redirection-cinematique/
+          server-dir: /public_html/cinematique/
+          dangerous-clean-slate: false
+
       - name: ✅ Vérifier ce qui est en ligne
         run: |
           sleep 10
@@ -96,4 +107,7 @@ jobs:
           echo "$titre" | grep -q 'GL Digital Lab' || {
             echo "⚠️ Le titre ne porte pas la signature attendue — vérifier à la main."
           }
+          # Et l'ancienne adresse doit REDIRIGER, plus servir la page morte.
+          code2=$(curl -s -o /dev/null -w "%{http_code}" https://gldigitallab.fr/cinematique/)
+          echo "https://gldigitallab.fr/cinematique/ → HTTP $code2 (301 attendu)"
           echo "✅ La racine répond."
