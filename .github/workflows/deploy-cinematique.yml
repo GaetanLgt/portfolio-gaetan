@@ -1,5 +1,5 @@
 # ============================================================================
-# Déploiement du site cinématique ArkAdiA — gldigitallab.fr/cinematique/
+# Déploiement du site cinématique ArkAdiA — RACINE de gldigitallab.fr
 #
 # ⭐ POURQUOI CE FICHIER EXISTE, ET POURQUOI IL EST SÉPARÉ.
 #
@@ -16,11 +16,23 @@
 #    ⇒ Un livrable statique dans une chaîne de build, c'est 23 Mio ajoutés au
 #      prérendu — qui charge chaque page dans Chrome — pour zéro bénéfice.
 #
-# ⭐ CE QU'IL FAIT, ET CE QU'IL NE TOUCHE PAS :
-#    · il ne passe pas par Vite, donc il ne peut pas casser le build du site ;
-#    · `dangerous-clean-slate: false` — il n'efface RIEN sur le serveur ;
-#    · il ne publie que `cinematique/`, jamais la racine du domaine ;
-#    · `gldigitallab.fr` reste servi par `deploy.yml`, inchangé.
+# ⭐ DÉCISION DE GAËTAN, 26/09/2026 : LE SITE CINÉMATIQUE PREND LA RACINE.
+#    « https://gldigitallab.fr/cinematique/ <= non, à la base du site ! »
+#    ⇒ `server-dir: /public_html/`, la racine du domaine.
+#
+# ⚠️ CE QUE ÇA IMPLIQUE, ET QUI A ÉTÉ TRAITÉ — les deux allaient se marcher dessus :
+#    1. Le pipeline du site précédent se déclenchait à chaque push sur `main` et
+#       réécrivait `index.html`. Il est passé en déclenchement MANUEL : sans ça,
+#       il aurait repris l'accueil au premier push suivant, en silence.
+#       Rien n'est supprimé pour autant — il reste lançable à la main.
+#    2. Le précédent site installait un service worker sur tout le domaine. S'il
+#       en restait un, les visiteurs déjà venus verraient l'ANCIENNE page servie
+#       par leur cache, sans qu'aucune erreur n'apparaisse. `cinematique/sw.js`
+#       le remplace et se désinscrit une fois, chez chaque visiteur.
+#
+# ⚠️ `dangerous-clean-slate: false` : cet envoi ÉCRASE les fichiers de même nom
+#    et NE SUPPRIME RIEN d'autre. Les autres fichiers du site précédent restent
+#    sur le serveur — on n'efface pas, on remplace l'accueil.
 #
 # ⚠️ LES TROIS SECRETS SONT CEUX DU DÉPÔT, DÉJÀ EN PLACE :
 #    FTP_SERVER · FTP_USERNAME · FTP_PASSWORD (posés le 07/01/2026).
@@ -37,7 +49,7 @@ on:
 
 jobs:
   cinematique:
-    name: 📤 Cinématique → gldigitallab.fr/cinematique/
+    name: 📤 Cinématique → gldigitallab.fr
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout
@@ -53,26 +65,35 @@ jobs:
           echo "fichiers           : $(find cinematique -type f | wc -l)"
           echo "poids              : $(du -sh cinematique | cut -f1)"
           echo ""
-          echo "Chemins absolus dans le HTML (doit valoir 0) :"
+          echo "Chemins absolus dans le HTML (doit valoir 0 — le site doit marcher à la racine comme en sous-dossier) :"
           grep -o 'src="/[^"]*"' cinematique/index.html | wc -l
+          echo "Service worker de desinscription present :"
+          test -f cinematique/sw.js && echo "  oui" || echo "  NON — le cache de l'ancien site pourrait survivre"
 
-      - name: 🚀 Envoi FTP
+      - name: 🚀 Envoi FTP vers la RACINE
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./cinematique/
-          server-dir: /public_html/cinematique/
+          server-dir: /public_html/
           dangerous-clean-slate: false
 
       - name: ✅ Vérifier ce qui est en ligne
         run: |
           sleep 10
-          code=$(curl -s -o /dev/null -w "%{http_code}" -L https://gldigitallab.fr/cinematique/)
-          echo "https://gldigitallab.fr/cinematique/ → HTTP $code"
+          code=$(curl -s -o /dev/null -w "%{http_code}" -L https://gldigitallab.fr/)
+          echo "https://gldigitallab.fr/ → HTTP $code"
           if [ "$code" != "200" ]; then
-            echo "⛔ L'adresse ne répond pas 200 après l'envoi."
+            echo "⛔ La racine ne répond pas 200 après l'envoi."
             exit 1
           fi
-          echo "✅ Le site cinématique est en ligne."
+          # Le titre est la seule preuve simple que c'est BIEN le site cinématique
+          # qui répond, et pas l'ancien resté en place.
+          titre=$(curl -s -L https://gldigitallab.fr/ | grep -o '<title>[^<]*</title>' | head -1)
+          echo "titre servi : $titre"
+          echo "$titre" | grep -q 'GL Digital Lab' || {
+            echo "⚠️ Le titre ne porte pas la signature attendue — vérifier à la main."
+          }
+          echo "✅ La racine répond."

@@ -12,8 +12,13 @@
 name: 🚀 CI/CD Pipeline
 
 on:
-  push:
-    branches: [main]
+  # ⛔ LE DÉCLENCHEMENT AUTOMATIQUE SUR PUSH A ÉTÉ RETIRÉ LE 26/09/2026, ET C'EST VOULU.
+  # Le site cinématique occupe désormais la RACINE de gldigitallab.fr. Si ce pipeline se
+  # relançait à chaque push sur main, il réécrirait `index.html` à la racine et reprendrait
+  # l'accueil — sans erreur, sans trace, et personne ne s'en apercevrait avant qu'un
+  # visiteur ne le signale.
+  # ⇒ Il reste disponible À LA MAIN : onglet Actions → « CI/CD Pipeline » → Run workflow.
+  #   Rien n'est supprimé, rien n'est perdu, il suffit de le demander.
   pull_request:
     branches: [main]
   workflow_dispatch:
