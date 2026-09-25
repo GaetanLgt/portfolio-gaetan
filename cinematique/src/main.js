@@ -103,7 +103,16 @@ if (boutonSon && !REDUIT) {
 
 // ---------- utilitaires ----------
 const charger = (src) => new Promise((ok) => { const i = new Image(); i.decoding = 'async'; i.onload = () => ok(i); i.onerror = () => ok(null); i.src = src; });
-function taille() { const r = Math.min(devicePixelRatio || 1, 2); fond.width = innerWidth * r; fond.height = innerHeight * r; }
+// ⭐ PLAFONNÉ À 1,5 LE 26/09/2026 — MÊME VALEUR QUE LA 3D (ligne 182), ET MESURÉ AVANT DE CHANGER.
+//    À 2, le canvas de fond faisait QUATRE FOIS le travail d'effacement et de repeinture d'un
+//    canvas à 1,5, pour un détail que personne ne voit : la 3D, elle, était déjà plafonnée à 1,5
+//    depuis l'audit mobile. Deux résolutions différentes dans le même cadre, c'était une
+//    incohérence, pas un choix.
+//    ⚠️ `dernierFond = ''` N'EST PAS DÉCORATIF : changer `canvas.width` VIDE le canvas. Sans cette
+//       invalidation, la mémoïsation d'`image()` croirait le fond encore dessiné et le laisserait
+//       BLANC après un redimensionnement. *Un cache qu'on ne vide pas au bon moment est un écran
+//       vide qui se croit à jour.*
+function taille() { const r = Math.min(devicePixelRatio || 1, 1.5); fond.width = innerWidth * r; fond.height = innerHeight * r; dernierFond = ''; }
 function dessinerCouverture(img, decalY = 0) {
   if (!img) return;
   const s = Math.max(fond.width / img.width, fond.height / img.height) * 1.04;
@@ -128,10 +137,11 @@ const images = new Array(N_IMAGES).fill(null);
 //    sont devenues UNE — celle de sa nouvelle vidéo — et le fond des actes 1 à 3 est le même
 //    que l'ouverture. Ce qui double la charge ne se voit pas ; ce qui la divise se mesure.
 const nom = (i) => `ouverture/o${String(i + 1).padStart(4, '0')}.webp`;
+let charges = 0; // combien d'images de la séquence sont arrivées — sert de clé à la mémoïsation
 async function prechargerSequence() {
   // d'abord 1 image sur 8 (le défilement est tout de suite fluide), puis le reste
   const ordre = [...Array(N_IMAGES).keys()].sort((a, b) => (a % 8) - (b % 8) || a - b);
-  for (const i of ordre) images[i] = await charger(nom(i));
+  for (const i of ordre) { images[i] = await charger(nom(i)); if (images[i]) charges++; }
 }
 function imageProche(i) {
   for (let d = 0; d < N_IMAGES; d++) { if (images[i - d]) return images[i - d]; if (images[i + d]) return images[i + d]; }
@@ -381,23 +391,47 @@ function facades() {
 
 // ---------- boucle ----------
 let enAttente = false;
+let dernierFond = '';     // ce qui est DESSINÉ sur le canvas de fond — la clé de la mémoïsation d'`image()`
+let trame = 0;            // l'identifiant de la boucle 3D : 0 quand elle est ARRÊTÉE
+let troisDemande = false; // la 3D n'est demandée qu'une fois, et seulement quand elle approche
 let armure3D = null; // renseigné par preparer3D si la 3D est disponible
 function image() {
   enAttente = false;
   const a = acteCourant();
-  ctx.fillStyle = CANON.fond; ctx.fillRect(0, 0, fond.width, fond.height);
-  if (REDUIT) { dessinerCouverture(cles[['K1', 'K2', 'K3', 'K3', 'K5', 'K5', 'K4', 'K4'][a - 1]] || cles.K1); return; }
-  if (a === 1) {
-    // ⭐ L'OUVERTURE SE DESSINE AU TEMPS — l'indice avance dans `jouerOuverture`, 15 fois par
-    //    seconde, et cette fonction ne fait plus que le dessiner. Une seule surface, un seul
-    //    préchargement, aucune mise en page touchée.
-    dessinerCouverture(imageProche(indiceOuverture) || cles.K1);
-  } else if (a <= 3) {
-    const p = progressionDans(1, 3), i = Math.round(p * (N_IMAGES - 1));
-    dessinerCouverture(imageProche(i) || cles.K1);
-  } else if (!trois) dessinerCouverture(a === 5 ? (cles.K5 || cles.K4) : cles.K4, progressionDans(4, 8));
-  else if (a === 5 && cles.K5) dessinerCouverture(cles.K5, progressionDans(5, 5));
-  rev.style.opacity = a === 1 && !REDUIT ? '1' : '0';
+  // ⭐ ON NE REDESSINE QUE SUR CHANGEMENT RÉEL — 26/09/2026, ET C'EST LA CORRECTION DE FOND.
+  //    `image()` était appelée 60 fois par seconde, y compris par la boucle 3D, alors que la
+  //    séquence est à 15 images par seconde : on effaçait et on repeignait tout le canvas
+  //    quarante-cinq fois par seconde pour rien. `quoi` porte EXACTEMENT ce qui décide du dessin,
+  //    et rien de plus — c'est ce qui évite les deux pièges : trop peu (l'image ne se met plus à
+  //    jour) et trop (on ne gagne rien).
+  //    ⚠️ LA 3D N'EST PAS DANS LA CLÉ, ET C'EST VOLONTAIRE : `trois.rendre` a sa PROPRE horloge
+  //       (`performance.now()` — le navire flotte, l'armure tourne, ORACLE bat) et sa caméra est
+  //       amortie (`tLisse`). Sauter `rendre` pour gagner une image FIGERAIT la scène. Le fond est
+  //       mémoïsé, la 3D ne l'est pas.
+  let quoi;
+  if (REDUIT) quoi = 'reduit|' + a;
+  else if (a === 1) quoi = 'ouverture|' + indiceOuverture + '|' + charges;
+  else if (a <= 3) quoi = 'sequence|' + Math.round(progressionDans(1, 3) * (N_IMAGES - 1)) + '|' + charges;
+  else if (!trois) quoi = 'sans3d|' + a + '|' + Math.round(progressionDans(4, 8) * 60);
+  else if (a === 5 && cles.K5) quoi = 'k5|' + Math.round(progressionDans(5, 5) * 60);
+  else quoi = 'plat|' + a;
+  if (quoi !== dernierFond) {
+    dernierFond = quoi;
+    ctx.fillStyle = CANON.fond; ctx.fillRect(0, 0, fond.width, fond.height);
+    if (REDUIT) dessinerCouverture(cles[['K1', 'K2', 'K3', 'K3', 'K5', 'K5', 'K4', 'K4'][a - 1]] || cles.K1);
+    else if (a === 1) {
+      // ⭐ L'OUVERTURE SE DESSINE AU TEMPS — l'indice avance dans `jouerOuverture`, 15 fois par
+      //    seconde, et cette fonction ne fait plus que le dessiner. Une seule surface, un seul
+      //    préchargement, aucune mise en page touchée.
+      dessinerCouverture(imageProche(indiceOuverture) || cles.K1);
+    } else if (a <= 3) {
+      const p = progressionDans(1, 3), i = Math.round(p * (N_IMAGES - 1));
+      dessinerCouverture(imageProche(i) || cles.K1);
+    } else if (!trois) dessinerCouverture(a === 5 ? (cles.K5 || cles.K4) : cles.K4, progressionDans(4, 8));
+    else if (a === 5 && cles.K5) dessinerCouverture(cles.K5, progressionDans(5, 5));
+  }
+  if (REDUIT) return; // en mode réduit il n'y a ni révélation au curseur ni 3D
+  rev.style.opacity = a === 1 ? '1' : '0';
   if (trois) {
     const entree = Math.min(1, Math.max(0, (scrollY + innerHeight - actes[3].offsetTop) / innerHeight)); // fondu d'une hauteur d'écran avant l'acte 4
     const montre = entree > 0 && !(a === 5 && cles.K5);
@@ -405,7 +439,41 @@ function image() {
     if (montre) trois.rendre(progressionDans(4, 8));
   }
 }
-const demander = () => { if (!enAttente) { enAttente = true; requestAnimationFrame(image); } };
+// ⭐ LA BOUCLE NE TOURNE PLUS À VIDE — 26/09/2026. Elle démarrait avec `preparer3D()`, donc AVANT
+//    que la 3D existe à l'écran, et demandait une image soixante fois par seconde pour ne rien
+//    faire avant l'acte 3. Un `requestAnimationFrame` qui ne dessine rien empêche quand même le
+//    navigateur de se reposer, et il tournait du premier pixel jusqu'à l'acte 3.
+//    ⇒ Elle DÉMARRE à l'approche de l'acte 3, et elle S'ARRÊTE toute seule dès qu'elle n'a plus
+//      rien à animer (retour en arrière, mode réduit). Aucun drapeau à éteindre à la main : la
+//      condition de sortie est la même que la condition d'entrée, c'est ce qui évite la boucle
+//      qu'on croit arrêtée.
+function boucle3D() {
+  trame = 0;
+  if (!trois || REDUIT || acteCourant() < 3) { demander(); return; }
+  image();
+  trame = requestAnimationFrame(boucle3D);
+}
+const demander = () => {
+  const a = acteCourant();
+  // ① le visiteur DÉFILE vers l'acte 3 : c'est le bon moment pour commencer à charger le navire.
+  if (a >= 2) demander3D();
+  // À partir de l'acte 3, c'est la boucle qui pilote le dessin : la caméra dépend du défilement,
+  // donc l'image doit être refaite à chaque image — et `image()` ne refait le fond que s'il a
+  // changé. Avant l'acte 3, un seul dessin suffit : on ne réveille pas la boucle pour rien.
+  if (trois && !REDUIT && a >= 3) { if (!trame) trame = requestAnimationFrame(boucle3D); return; }
+  if (!enAttente) { enAttente = true; requestAnimationFrame(image); }
+};
+// ⭐ LA 3D ARRIVE QUAND ELLE APPROCHE — ET PLUS AU DÉMARRAGE (26/09/2026). MESURÉ AVANT : le
+//    navigateur téléchargeait 13,5 Mio de modèle avant d'afficher quoi que ce soit, alors que le
+//    navire n'apparaît qu'à l'acte 4. Les trois textures PNG représentaient 12,9 Mio de ces 13,5.
+//    ⇒ `demander3D()` est appelé ① quand le visiteur approche de l'acte 3 (il défile), et
+//      ② une fois la séquence entièrement préchargée, au repos — le premier écran est alors déjà
+//      peint, et le visiteur ne paie plus le modèle avant de voir quelque chose.
+function demander3D() {
+  if (troisDemande || REDUIT) return;
+  troisDemande = true;
+  preparer3D().then(() => demander());
+}
 
 preparerTextes();
 preparerArmure();
@@ -420,7 +488,17 @@ await chargerCles(); demander();
 // ⚠️ AVANT le `if (!REDUIT)` ci-dessous, et c'est le point : en mode réduit il faut POUVOIR
 // REVENIR. Un interrupteur branché à l'intérieur du bloc laisserait le visiteur coincé.
 preparerInterrupteurAnimations();
-if (!REDUIT) { prechargerSequence().then(demander); preparer3D().then(() => { demander(); if (trois) (function anime() { if (acteCourant() >= 3) image(); requestAnimationFrame(anime); })(); }); }
+// ⭐ LE PREMIER ÉCRAN D'ABORD, LA 3D ENSUITE — 26/09/2026. Cette ligne appelait `preparer3D()` au
+//    démarrage : le navigateur téléchargeait le modèle du navire (13,5 Mio) et construisait le
+//    contexte WebGL AVANT que le visiteur ait vu quoi que ce soit. Le navire n'apparaît qu'à
+//    l'acte 4. ⇒ `demander3D()` est désormais appelé ① au défilement vers l'acte 3 (dans
+//    `demander`), ② ici, une fois la séquence entièrement préchargée et le premier écran peint.
+if (!REDUIT) prechargerSequence().then(() => {
+  demander();
+  // ② le filet : la séquence est au complet, l'écran d'ouverture tourne — on prépare la 3D au repos.
+  const auRepos = window.requestIdleCallback ? (f) => requestIdleCallback(f, { timeout: 4000 }) : (f) => setTimeout(f, 3000);
+  auRepos(() => demander3D());
+});
 
 // ---------- texte dynamique : apparitions, titres lettre à lettre, lore en frappe, boucle qui tourne ----------
 document.documentElement.classList.add('js');
