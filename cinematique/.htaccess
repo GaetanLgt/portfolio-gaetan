@@ -1,0 +1,73 @@
+# ============================================================================
+# .htaccess de gldigitallab.fr — RACINE DU DOMAINE
+# Rétabli le 26/09/2026, après avoir constaté qu'il était ABSENT du serveur.
+#
+# ⭐ POURQUOI CE FICHIER EXISTE, ET CE QU'IL A FALLU POUR LE SAVOIR.
+#
+# Le dépôt en portait un (8,9 Ko, 190 lignes). Il n'était **pas appliqué** — et ça ne se
+# voyait nulle part : le site répondait 200, tout semblait normal.
+#
+# ⇒ On l'a su en testant DEUX DE SES AUTRES RÈGLES, pas en le relisant :
+#     · `https://www.gldigitallab.fr/` devait répondre 301 → il répondait **200**
+#     · `https://gldigitallab.fr/img/` (dossier sans index) devait être refusé → il répondait **200**
+#   *Deux règles indépendantes qui ne s'appliquent pas : le fichier n'est pas là. On ne déduit
+#   pas l'absence d'un fichier en le lisant — on la déduit en constatant que ses effets manquent.*
+#
+# ⚠️ ET LA CAUSE EST CONNUE, C'EST LA MÊME QUE CELLE DES FAVICONS ET DU `robots.txt` :
+#   la synchronisation FTP d'un déploiement précédent retire les fichiers qu'elle avait déposés
+#   quand ils disparaissent de la source. `dangerous-clean-slate: false` empêche d'effacer
+#   l'inconnu — **pas** de reprendre ce qu'on avait soi-même posé.
+#
+# ⛔ CE FICHIER EST VOLONTAIREMENT MINIMAL, ET CE N'EST PAS DE LA PARESSE.
+#   Un `.htaccess` fautif met TOUT le domaine en erreur 500 — pas une page, pas un dossier :
+#   le site entier. On ne recopie donc pas les 190 lignes du fichier précédent, écrites pour une
+#   autre application. On écrit ici ce dont CE site a besoin, et on vérifie chaque règle APRÈS
+#   l'avoir publiée.
+#   ⇒ Si une règle doit être ajoutée plus tard, elle s'ajoute **seule**, et on la mesure.
+# ============================================================================
+
+# ── La page d'erreur, celle qui manquait ────────────────────────────────────
+# Sans cette ligne, et sans le fichier, Apache sert sa propre page : 9 octets, un doctype
+# HTML 4.01, un titre « 404 Not Found », en anglais, sans un seul lien — mesuré le 26/09/2026.
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # ── HTTPS d'abord : une seule adresse fait autorité ──────────────────────
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # ── `www` renvoie vers le domaine nu ─────────────────────────────────────
+  # Les deux répondaient 200 : le même site servi sous deux adresses, que les moteurs de
+  # recherche traitent comme deux contenus distincts.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+</IfModule>
+
+# ── Les types MIME que l'hébergeur ne devine pas ────────────────────────────
+# ⚠️ `AddType` pour `.mjs` : LiteSpeed l'ignore pour cette extension — c'est mesuré, et c'est
+# pourquoi le site sert ses modules en `.js`. La ligne reste pour les autres serveurs, elle ne
+# nuit pas ici.
+<IfModule mod_mime.c>
+  AddType text/javascript .mjs
+  AddType text/javascript .js
+  AddType text/css .css
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType model/gltf-binary .glb
+  AddType audio/mpeg .mp3
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
+# ── Ce qu'on demande au navigateur de ne pas faire ──────────────────────────
+<IfModule mod_headers.c>
+  # Ne jamais deviner le type d'un fichier d'après son contenu : un fichier texte qui se
+  # déclare image ne doit pas être exécuté.
+  Header set X-Content-Type-Options "nosniff"
+  # Ne pas transmettre l'adresse complète des pages visitées à un site tiers.
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ── Le fichier servi par défaut dans un dossier ─────────────────────────────
+DirectoryIndex index.html
