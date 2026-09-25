@@ -1,74 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ============================================================================
-     Plan de site — gldigitallab.fr
-     REFAIT le 25/09/2026, après une mesure : le plan précédent déclarait
-     **38 URLs, dont 37 rendaient 404.** Une seule menait à une page réelle.
-
-     ⭐ ET LE FICHIER AVAIT DÉJÀ LA RÈGLE, ÉCRITE DEDANS DEPUIS LE 10/09/2026 :
-       « Un plan de site qui envoie les moteurs sur des 404 leur apprend à s'en
-         méfier : c'est pire que pas de plan de site. »
-       « Règle désormais : une URL n'entre ici que si elle REND une page réelle. »
-     ⛔ LA RÈGLE ÉTAIT JUSTE. ELLE N'ÉTAIT PLUS APPLIQUÉE — et personne ne l'a vu
-       parce que le site a changé de nature sous ses pieds : une application à
-       routes (Vue) est devenue un site de fichiers (`index.html`,
-       `mentions-legales.html`). `/mentions-legales` n'existe plus ; c'est
-       `/mentions-legales.html` qui existe. Les anciennes URLs se sont mises à
-       rendre 404 **une par une, sans bruit**.
-     ⭐ *Un contrôle qui a raison un jour ne reste pas juste : il faut le refaire
-       tourner. Le fichier portait sa propre mise en garde et n'a pas été relu.*
-
-     MÉTHODE DE CETTE FOIS — et elle est refaisable :
-       chaque URL ci-dessous a été OUVERTE et son code HTTP relevé, une par une.
-       3 URLs déclarées, 3 rendent 200.
-     ============================================================================ -->
+<!-- Plan de site — ENGENDRÉ par outils-pilotage/veille-generer-articles.mjs le 2026-09-25.
+     ⛔ Ne pas compléter à la main : il est reconstruit à chaque génération, à partir des
+        fichiers qui EXISTENT. *Un plan qu'on complète à la main finit par déclarer des
+        pages mortes — l'ancien en avait 37 sur 38.* -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://gldigitallab.fr/</loc>
-    <lastmod>2026-09-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://gldigitallab.fr/mentions-legales.html</loc>
-    <lastmod>2026-09-25</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://gldigitallab.fr/confidentialite.html</loc>
-    <lastmod>2026-09-25</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <!-- ⭐ LE RELEVÉ DE VEILLE — première page de ce genre, 25/09/2026.
-       Elle est produite par `outils-pilotage/veille-generer-articles.mjs`, sur décision de
-       Gaëtan : *« on passe par le générateur de telle manière à ce qu'il fasse des articles
-       préformatés et on les publie. »*
-       ⚠️ UNE URL PAR DATE : le générateur devra tenir ce fichier à jour lui-même, sinon la
-          liste se périmera comme l'ancien plan de site — *38 URLs dont 37 en 404.* -->
-  <url>
-    <loc>https://gldigitallab.fr/veille/2026-09-25.html</loc>
-    <lastmod>2026-09-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <!-- ⛔ CE QUI N'EST PAS ICI, ET POURQUOI — pour que personne ne « complète » à l'aveugle :
-
-       · `contact.php` — la page porte `<meta name="robots" content="noindex,follow">`.
-         Une page de formulaire n'a rien à faire dans un moteur, et elle le dit elle-même.
-         *L'ajouter ici contredirait la page : deux endroits qui disent le contraire, c'est
-         un endroit de trop.*
-
-       · `404.html` — une page d'erreur ne se déclare pas.
-
-       · les URLS DE L'ANCIEN SITE (`/services`, `/projets`, `/apps/…`, `/guides/…`) — elles
-         ne rendent plus rien. Si l'une doit revenir un jour, elle reviendra **le jour où elle
-         rend une page**, pas avant. *Une route qu'on déclare « pour plus tard » est une
-         promesse qu'on fait aux moteurs sans pouvoir la tenir.* -->
-
+  <url><loc>https://gldigitallab.fr/</loc><lastmod>2026-09-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://gldigitallab.fr/veille/</loc><lastmod>2026-09-25</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://gldigitallab.fr/veille/2026-09-25.html</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://gldigitallab.fr/mentions-legales.html</loc><lastmod>2026-09-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://gldigitallab.fr/confidentialite.html</loc><lastmod>2026-09-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 </urlset>
