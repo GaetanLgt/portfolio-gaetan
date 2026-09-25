@@ -1,0 +1,78 @@
+# ============================================================================
+# Déploiement du site cinématique ArkAdiA — gldigitallab.fr/cinematique/
+#
+# ⭐ POURQUOI CE FICHIER EXISTE, ET POURQUOI IL EST SÉPARÉ.
+#
+# Le site cinématique est un site STATIQUE de 23,5 Mio : une séquence d'ouverture
+# de 118 images, deux modèles 3D, un moteur en modules ES. Il n'a rien à
+# construire — il EST le livrable.
+#
+# ⛔ IL A D'ABORD ÉTÉ DÉPOSÉ DANS `public/`, pour profiter du build Vite et du
+#    déploiement existant. C'était une erreur, et elle est mesurée : le build a
+#    échoué au postbuild, `scripts/relever-dans-html.mjs` n'a pas trouvé les 11
+#    zones `data-etat` de `dist/etat-du-studio/index.html`, et `Deploy Production`
+#    a été SAUTÉ. Conséquence : rien n'est parti pour le site cinématique, et le
+#    site du studio n'a pas été mis à jour non plus.
+#    ⇒ Un livrable statique dans une chaîne de build, c'est 23 Mio ajoutés au
+#      prérendu — qui charge chaque page dans Chrome — pour zéro bénéfice.
+#
+# ⭐ CE QU'IL FAIT, ET CE QU'IL NE TOUCHE PAS :
+#    · il ne passe pas par Vite, donc il ne peut pas casser le build du site ;
+#    · `dangerous-clean-slate: false` — il n'efface RIEN sur le serveur ;
+#    · il ne publie que `cinematique/`, jamais la racine du domaine ;
+#    · `gldigitallab.fr` reste servi par `deploy.yml`, inchangé.
+#
+# ⚠️ LES TROIS SECRETS SONT CEUX DU DÉPÔT, DÉJÀ EN PLACE :
+#    FTP_SERVER · FTP_USERNAME · FTP_PASSWORD (posés le 07/01/2026).
+# ============================================================================
+name: 🎬 Site cinématique
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cinematique/**'
+      - '.github/workflows/deploy-cinematique.yml'
+  workflow_dispatch:
+
+jobs:
+  cinematique:
+    name: 📤 Cinématique → gldigitallab.fr/cinematique/
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔎 Ce qu'on s'apprête à publier
+        run: |
+          if [ ! -f cinematique/index.html ]; then
+            echo "⛔ cinematique/index.html est absent : rien à publier."
+            exit 1
+          fi
+          echo "index.html présent : $(wc -c < cinematique/index.html) octets"
+          echo "fichiers           : $(find cinematique -type f | wc -l)"
+          echo "poids              : $(du -sh cinematique | cut -f1)"
+          echo ""
+          echo "Chemins absolus dans le HTML (doit valoir 0) :"
+          grep -o 'src="/[^"]*"' cinematique/index.html | wc -l
+
+      - name: 🚀 Envoi FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./cinematique/
+          server-dir: /public_html/cinematique/
+          dangerous-clean-slate: false
+
+      - name: ✅ Vérifier ce qui est en ligne
+        run: |
+          sleep 10
+          code=$(curl -s -o /dev/null -w "%{http_code}" -L https://gldigitallab.fr/cinematique/)
+          echo "https://gldigitallab.fr/cinematique/ → HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "⛔ L'adresse ne répond pas 200 après l'envoi."
+            exit 1
+          fi
+          echo "✅ Le site cinématique est en ligne."
