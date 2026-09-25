@@ -1,0 +1,63 @@
+# GL Digital Lab — Génie IT Tek FR
+
+> Studio indépendant à Harponville (Somme, 80560), en France. Développement web,
+> applications métier et intelligence artificielle locale pour PME et collectivités.
+> Les données traitées restent chez le client. Aucun traceur sur ce site.
+
+Ce fichier est écrit pour les agents et les moteurs qui lisent un site sans le voir.
+Il dit ce que le studio fait, où c'est, et où aller pour le vérifier.
+
+## Ce que le studio fait
+
+- **Développement web** — sites vitrines et sites métier, servis en statique, sans dépendance
+  à un service tiers.
+- **Applications métier** — outils internes sur mesure : devis, suivi, prises de rendez-vous.
+- **Intelligence artificielle locale** — modèles exécutés sur les machines du client, pas
+  dans un service distant. Aucun document client n'est envoyé à un tiers.
+
+## Où c'est
+
+- **Éditeur** : Gaëtan Langlet — GL Digital Lab (Génie IT Tek FR)
+- **Lieu** : Harponville, Somme (80560), France. Droit français.
+- **Hébergement** : o2switch, Clermont-Ferrand, France.
+- **Contact** : gtn.langlet+lab@gmail.com
+- **Forme juridique** : studio en cours d'immatriculation. Ses références légales seront
+  publiées dès qu'elles seront prononcées.
+
+## Les pages du site
+
+- [Accueil](https://gldigitallab.fr/) — la présentation en huit actes
+- [Relevés de veille](https://gldigitallab.fr/veille/) — ce que les sources suivies publient,
+  avec les liens vers leurs auteurs
+- [Écrire au studio](https://gldigitallab.fr/contact.php) — formulaire, traité par le site
+  lui-même, sans service tiers
+- [Mentions légales](https://gldigitallab.fr/mentions-legales.html)
+- [Confidentialité](https://gldigitallab.fr/confidentialite.html)
+
+## Ce qui se vérifie, et comment
+
+Ces chiffres sont mesurés, datés, et refaisables :
+
+- **0 requête** vers un service externe au chargement. Ouvrez la console du navigateur,
+  onglet Réseau, rechargez : tout vient de ce domaine.
+- **0 traceur**, **0 cookie** déposé avant toute action du visiteur.
+- **12,7 Mio** pour le site entier, séquence d'ouverture et modèles 3D compris.
+- **0,5 s** de chargement, **60** images par seconde en défilement.
+
+## Ce que le studio ne fait pas
+
+- Aucun traceur publicitaire, aucun service tiers chargé en arrière-plan.
+- Aucun chiffre non mesuré, aucun témoignage inventé, aucun client fictif.
+- Aucun outil de surveillance, de ciblage ou d'inspection automatisée — ni pour un client,
+  ni pour lui-même.
+- Aucune reproduction de contenu protégé : les relevés de veille citent un titre et un lien,
+  jamais le texte de l'auteur, qui reste chez son éditeur.
+
+## Le site est statique, et c'est délibéré
+
+Il n'y a ni base de données ni service applicatif derrière ces pages. Le site est un ensemble
+de fichiers servis tels quels. C'est ce qui permet d'affirmer « 0 requête externe » sans
+nuance : il n'y a rien à charger ailleurs, parce que rien n'est appelé ailleurs.
+
+Le seul point d'entrée dynamique est `contact.php`, qui traite le formulaire **sur ce
+serveur** et envoie le message par courriel. Il ne conserve rien sur le disque.
