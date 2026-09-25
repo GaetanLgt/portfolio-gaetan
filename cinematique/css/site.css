@@ -47,7 +47,7 @@ body{margin:0;background:var(--fond);color:var(--texte);font:17px/1.6 system-ui,
 .barre a{color:var(--texte);text-decoration:none}.barre nav a{margin-left:1rem;color:var(--doux)}.barre nav a:hover{color:var(--cyan)}
 h1,h2,h3{font-family:var(--titre);font-weight:600;line-height:1.15;margin:.4em 0}
 h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3rem);color:var(--cyan)}h3{font-size:1.25rem;color:var(--texte)}
-.sous{font-size:1.4rem;color:var(--cyan)}.axiome{font-style:italic;color:var(--doux)}
+.sous{font-size:1.4rem;color:var(--cyan)}.axiome{font-style:italic;color:var(--doux);font-size:.9rem}
 .indice{font-family:var(--mono);font-size:.8rem;color:var(--doux);animation:pulse 2.4s infinite}
 @keyframes pulse{50%{opacity:.35}}
 .boucle,.pile,.route,.parcours{counter-reset:n;list-style:none;padding-left:.8rem}
