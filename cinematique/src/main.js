@@ -522,8 +522,20 @@ function preparerTextes() {
     p.querySelectorAll(':scope > p, :scope > h3, :scope > ul > li, :scope > ol > li, :scope > div').forEach((e) => { e.classList.add('revele'); e.style.setProperty('--i', i++); });
     p.querySelectorAll('.lore').forEach((e) => e.classList.add('frappe'));
   });
-  const vu = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.25 });
-  document.querySelectorAll('.acte').forEach((a) => vu.observe(a));
+  // ⭐ LE DÉCLENCHEMENT DOIT RESTER ATTEIGNABLE — corrigé le 26/09/2026, sur une mesure.
+  //    ⛔ IL VALAIT `{ threshold: 0.25 }` POUR TOUS LES ACTES. Or 25 % d'un acte plus haut que
+  //    quatre écrans ne peuvent JAMAIS être visibles. Mesuré en mobile 390×844 : l'acte 8 fait
+  //    3 581 px, donc il demandait 895 px visibles dans un écran de 844 — inatteignable. Le
+  //    contenu de l'acte restait à `opacity:0` : ni les pôles, ni les badges, ni le contact.
+  //    ⚠️ Le défaut n'était PAS visible avant les visuels du 26/09 — l'acte 8 faisait 3 027 px,
+  //    son déclenchement à 757 px passait. C'est l'ajout de 554 px (deux visuels empilés en
+  //    mobile) qui l'a franchi, et c'est pour ça qu'il se corrige ici plutôt que de retirer les
+  //    images : *un déclenchement qu'aucune taille d'écran ne peut atteindre est une porte
+  //    fermée, pas un effet.*
+  //    ⇒ Le déclenchement est calculé PAR ACTE et plafonné à 90 % de ce que l'écran peut montrer.
+  //    ⚠️ Les actes courts ne changent pas de comportement : le `min` leur rend 0,25.
+  const observateur = (el) => new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: Math.min(0.25, (innerHeight * 0.9) / Math.max(el.offsetHeight, 1)) });
+  document.querySelectorAll('.acte').forEach((a) => observateur(a).observe(a));
   // la boucle : Produire → Observer → Mesurer → Corriger, une étape allumée à la fois
   const etapes = [...document.querySelectorAll('.boucle li')]; let k = 0;
   if (!REDUIT && etapes.length) setInterval(() => { etapes.forEach((e, j) => e.classList.toggle('actif', j === k)); k = (k + 1) % etapes.length; }, 1100);

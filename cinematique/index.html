@@ -31,7 +31,17 @@
 
 <header class="barre">
   <a class="marque" href="#acte-1"><span class="hex">GL</span> GL Digital Lab</a>
-  <nav aria-label="Actes"><button id="btn-secteurs" type="button" class="lien-nav" aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button><a href="#acte-4">Couches</a><a href="#acte-6">Doctrine</a><a href="#acte-7">Limites</a><a href="#acte-8">Contact</a></nav>
+  <!-- ⛔ LES LIBELLÉS DE LA BARRE ONT ÉTÉ CORRIGÉS LE 26/09/2026, ET C'ÉTAIT UN VRAI DÉFAUT.
+       « Couches » menait à l'acte 4, qui s'appelle « L'Offre » ; « Doctrine » menait à l'acte 6,
+       qui s'appelle « Démonstrateur & Vidéos ». Aucun des deux mots n'existe dans la page : ils
+       venaient d'une organisation antérieure, et un visiteur qui cliquait arrivait ailleurs que
+       là où le mot promettait. ⭐ Les actes 2, 3 et 5 n'avaient AUCUN lien : « L'Entrée &
+       Confidentialité », « Le Laboratoire (EVA-01 & ArkAdiA) » et « Méthode & Validation »
+       étaient inatteignables au clic — alors que le laboratoire et la méthode sont ce que le
+       studio vend. Les sept libellés reprennent maintenant les mots des titres.
+       ⚠️ La barre a été MESURÉE avant d'être chargée (1920×1080 : 639 px pour les sept liens,
+       contre 359 px pour les quatre anciens) : voir le point de bascule dans `css/site.css`. -->
+  <nav aria-label="Actes"><button id="btn-secteurs" type="button" class="lien-nav" aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button><a href="#acte-2">L'Entrée</a><a href="#acte-3">Laboratoire</a><a href="#acte-4">L'Offre</a><a href="#acte-5">Méthode</a><a href="#acte-6">Démonstrateur</a><a href="#acte-7">Limites</a><a href="#acte-8">Contact</a></nav>
   <!-- ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. L'audit externe a raison : la
        préférence SYSTÈME ne suffit pas, elle est un réglage de POSTE. Il est dans l'en-tête
        parce que celui-ci est fixe : un contrôle d'accessibilité qu'on ne trouve qu'en bas de
@@ -148,6 +158,28 @@
   </ul>
   <h3>Les modules</h3>
   <p class="modules">Core · Data · AI · OS · Shield · Network <em>(plus tard)</em></p>
+  <!-- ⭐ LES VISUELS SONT ARRIVÉS ICI LE 26/09/2026, ET ILS MANQUAIENT VRAIMENT.
+       L'inventaire du studio l'a mesuré : le site tenait ses huit actes avec SIX visuels hors
+       ouverture, et les actes 6, 7 et 8 n'en avaient aucun. Cet acte s'appelle « Démonstrateur
+       & Vidéos » et ne montrait rien : six garanties en texte et six modules sur une ligne.
+       ⚠️ D'OÙ VIENNENT CES IMAGES, ET C'EST VÉRIFIABLE : les trois images d'ambiance
+       (`capitaine-samourai`, `papillons-bleus`, `anneau-cristal`) sont des images de l'ANCIENNE
+       séquence, archivées le 26/09 dans `sources/archives-2026-09-26/ancien-public-sequence/`
+       (240 images, 1920×1080, déjà en WebP). Elles ne reviennent PAS dans les actes 1 à 3, où
+       elles feraient doublon avec l'ouverture : elles servent là où il n'y avait rien.
+       ⭐ Elles sont conformes sans retouche : 1920×1080 (16:9 exact), et de 16 à 90 Ko.
+       ⚠️ Elles ont été regardées une par une avant d'être retenues, et leurs bandes haute et
+       basse ont été relues en pleine largeur : aucun filigrane de générateur. -->
+  <h3>Le démonstrateur en images</h3>
+  <!-- ⚠️ PLEINE LARGEUR, PAS EN GRILLE — mesuré à l'écran le 26/09/2026. Les deux images ont
+       d'abord été posées dans la `ul.grille` de cet acte : le navigateur les a rendues à
+       252×142 px, soit 13 % de leur taille, dans un panneau de 680 px. On y voyait une
+       silhouette bleue, pas un visuel. Elles prennent maintenant la largeur du panneau
+       (598×336 px sur 1920), comme celle de l'acte 7. -->
+  <img class="visuel" src="img/capitaine-samourai.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Le capitaine, manteau sombre et lunettes bleues, entouré d'éclairs bleus sous la pluie.">
+  <p>Le capitaine — samouraï hors du navire, capitaine à bord.</p>
+  <img class="visuel" src="img/papillons-bleus.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Des papillons bleus lumineux tournent dans une spirale sombre.">
+  <p>Les papillons — le motif qui traverse la séquence d'ouverture, de bout en bout.</p>
 </div>
 </section>
 
@@ -160,6 +192,13 @@
     <li>Les solutions IA proposées privilégient l'exécution locale. Tout recours à un modèle ou à un service externe est identifié dans le périmètre du projet.</li>
     <li>Les demandes de contact sont conservées 3 ans à compter du dernier échange initié par la personne, sauf obligation légale ou relation contractuelle justifiant une durée différente.</li>
   </ul>
+  <!-- ⭐ UN VISUEL DANS L'ACTE DES LIMITES — ajouté le 26/09/2026, et il dit quelque chose.
+       Un anneau de cristal, seul, posé dans l'obscurité : ni réseau, ni constellation, un objet
+       et rien d'autre. C'est exactement ce que le bloc ci-dessous annonce — « un seul
+       interlocuteur », « une seule machine de calcul », « pas de haute disponibilité ». Le
+       troisième visuel de la séquence archivée (16 600 o, 1920×1080, WebP).
+       ⚠️ Aucun filigrane (bandes haute et basse relues en pleine largeur). -->
+  <img class="visuel" src="img/anneau-cristal.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Un anneau de cristal cyan, posé seul dans l'obscurité.">
   <div class="limites" role="note">
     <h3>Ce que nous ne sommes pas (encore)</h3>
     <ul><li>Studio en cours d'immatriculation.</li><li>Un seul interlocuteur.</li><li>Une seule machine de calcul.</li><li>Pas de haute disponibilité.</li><li>Aucun chiffre non mesuré.</li></ul>
@@ -171,6 +210,23 @@
 <div class="panneau panneau-large">
   <h2>Contact &amp; Cadrage</h2>
   <p class="lore">Un galion de métal dans le vide et l'obscurité ; sa seule lumière est la sienne. À la proue, un kraken à tête de mort : ses deux yeux d'or voient pour le navire. Six grandes voiles. Au pavillon, os croisés et crâne, en or. Devant, au loin, le Léviathan ; plus loin encore, Yggdrasil.</p>
+  <!-- ⭐ LE NAVIRE ARRIVE EN IMAGE DANS L'ACTE QUI LE DÉCRIT — ajouté le 26/09/2026.
+       Le paragraphe ci-dessus décrit le navire ; l'acte, lui, ne le montrait nulle part (il
+       portait une façade vidéo, pas un plan du navire). Ces deux plans viennent des visuels
+       du studio (`C:\IA\ArkAdiA\visuels\`, 24,3 Mio de PNG jamais entrés dans le site) :
+       la salle d'ORACLE et le crâne de métal.
+       ⚠️ ILS ONT ÉTÉ RECADRÉS, PAS ÉTIRÉS : la source est en 1344×768 (ratio 1,75), le site
+       impose le 16:9 (tolérance 0,02). Recadrage centré à 1344×756 — 6 px coupés en haut et
+       6 en bas — puis WebP. Mesuré après conversion : 1344×756, ratio 1,7778.
+       ⚠️ Les PNG « à marque » du même dossier portent un filigrane (`xo0-Neo-0ox`, en bas à
+       droite) : ce sont les versions SANS marque qui ont été prises, et leur contrôle de
+       coins a été refait après conversion — aucun filigrane.
+       ⛔ Aucun autre visuel du galion n'a été retenu : sur les quinze, la plupart montrent un
+       voilier de bois à gréement complet, sur une mer — trois choses que le canon interdit. -->
+  <ul class="grille">
+    <li><img class="visuel" src="img/oracle-salle.webp" width="1344" height="756" loading="lazy" decoding="async" alt="Une structure de métal suspendue au centre d'une salle circulaire, vue d'en dessous, sous des hublots."><strong>ORACLE</strong> La salle du réacteur, vue d'en dessous : la seule lumière du navire est la sienne.</li>
+    <li><img class="visuel" src="img/crane-metal.webp" width="1344" height="756" loading="lazy" decoding="async" alt="Un crâne de métal, au centre d'un couloir sombre du navire."><strong>Le crâne</strong> De métal, comme la coque.</li>
+  </ul>
   <ol class="route"><li>Un nœud local <em>(aujourd'hui)</em></li><li>Premiers clients pilotes</li><li>Plusieurs nœuds</li><li>Réseau</li></ol>
   <!-- ⭐ L'OFFRE A ÉTÉ RETIRÉE D'ICI LE 26/09/2026 : elle est dans l'acte 4, sous son titre
        « L'Offre ». La laisser ici la répétait mot pour mot deux actes plus loin. -->

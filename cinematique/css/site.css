@@ -56,6 +56,17 @@ h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3
 .pile strong,.grille strong{color:#fff}
 .grille{list-style:none;padding:.6rem .8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.6rem 1.2rem}
 .grille strong{display:block;color:var(--cyan)}
+/* ⭐ LES VISUELS D'ACTES — ajoutés le 26/09/2026, avec les images des actes 6, 7 et 8.
+   ⚠️ POURQUOI UNE RÈGLE EST NÉCESSAIRE, ET CE N'EST PAS DU CONFORT : une `<img>` de 1920 px
+   posée dans un `.panneau` de 680 px n'est pas « grande », elle est ÉCRASÉE — le navigateur
+   la dessine à sa taille naturelle et déborde la page. Le site avait déjà exactement cette
+   règle pour sa façade vidéo (`.facade img`, trois lignes plus haut) : ici c'est la même,
+   sans le `max-width`. 16:9 imposé, `object-fit:cover`, jamais étirée : la source est déjà
+   au ratio, le recadrage se fait AVANT (voir les visuels de l'acte 8).
+   ⭐ `.panneau>.visuel` : l'anneau de l'acte 7 est seul dans son panneau, il lui faut l'air
+   que les `li` de la grille apportent d'eux-mêmes. */
+.visuel{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.panneau>.visuel{margin:1.2rem 0 0}
 .limites{border:1px solid #ff6b6b55;border-left:3px solid #ff6b6b;border-radius:10px;padding:.4rem 1rem;margin-top:1.2rem;background:#ff6b6b0d}
 .limites h3{color:#ff9d9d}
 .facade{display:block;position:relative;width:100%;max-width:40rem;padding:0;border:1px solid #2abfff55;background:var(--fond2);color:var(--texte);cursor:pointer;font:inherit}
@@ -91,6 +102,19 @@ a{color:var(--cyan)}
    ⇒ On ne masque plus que les LIENS (la navigation par ancres, que les repères de
    progression remplacent déjà sur mobile). Le bouton reste. */
 @media (max-width:600px){body{font-size:16px}.barre nav a{display:none}}
+/* ⭐ LE POINT DE BASCULE DES LIENS DE LA BARRE SUIT LA MESURE — 26/09/2026, quand les sept actes
+   y sont entrés. ⚠️ La règle ci-dessus ne masquait les liens qu'en dessous de 600 px ; c'était
+   juste tant qu'il y en avait quatre. Mesuré au navigateur (1920×1080 puis en rétrécissant) :
+   les sept liens demandent 639 px, la marque 151, l'interrupteur d'animations 157, plus 64 px
+   de padding et 48 px de marges ⇒ il faut ~1060 px pour que RIEN ne soit comprimé.
+   ⛔ EN DESSOUS, CE N'EST PAS LE TEXTE QUI RÉTRÉCIT : `flex-shrink` écrase la MARQUE du studio
+   (mesuré : 147/151 px à 1024, 86/151 à 900, 52/151 à 800) — le nom du studio se casse sur
+   deux lignes pendant que les liens restent lisibles. *Un nom de studio illisible est pire
+   qu'un lien absent* : le lien a le bouton « Expertises » et les huit repères pour lui.
+   ⚠️ Le point de bascule est posé à 1100 px, la valeur la plus proche au-dessus de la mesure.
+   ⛔ Le bouton « Expertises » et l'interrupteur d'animations ne sont PAS touchés : la règle
+   ne vise que les `<a>` du nav. */
+@media (max-width:1100px){.barre nav a{display:none}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.indice{animation:none}#revelation{display:none}}
 
 
