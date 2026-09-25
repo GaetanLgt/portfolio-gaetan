@@ -340,3 +340,43 @@ main{position:relative;z-index:10}
 @keyframes oracle-monte{from{opacity:0;transform:translateY(6%)}to{opacity:1;transform:translateY(0)}}
 .territoire-deploye .armure-runes i.ok{color:#e2d2ff;text-shadow:0 0 12px #9b5cff}
 @media (prefers-reduced-motion:reduce){.territoire-deploye::after{animation:none}}
+
+/* ══════════════════════════════════════════════════════════════════════════════════════════
+   LE FORMULAIRE DE CONTACT — ajouté le 25/09/2026 (priorité 1 de l'audit 360°).
+   Il vit sur `contact.php`, une page LÉGÈRE : ni séquence d'ouverture, ni modèle 3D. *Le
+   visiteur qui a décidé d'écrire ne doit pas retélécharger douze mégaoctets pour le faire.*
+   ⭐ Et il fonctionne SANS JavaScript : c'est du HTML ordinaire, il n'attend rien du script.
+   ⚠️ Les champs obligatoires sont marqués par `required` ET par une étoile — l'astérisque seule
+      ne dit rien à un lecteur d'écran, donc elle porte `aria-hidden` et l'obligation est portée
+      par l'attribut. *Un symbole n'est pas une information accessible.*
+   ══════════════════════════════════════════════════════════════════════════════════════════ */
+.page-simple{background:var(--fond);color:var(--texte)}
+.page-simple .acte{max-width:46rem;margin:0 auto}
+.formulaire{margin:1.5rem 0}
+.champ{margin:1rem 0}
+.champ label{display:block;margin-bottom:.3rem;color:var(--texte);font-size:.95rem}
+.champ input[type=text],.champ input[type=email],.champ textarea{
+  width:100%;padding:.7rem .8rem;border-radius:8px;border:1px solid #2abfff44;
+  background:#0d111f;color:var(--texte);font:inherit;font-size:1rem}
+.champ textarea{resize:vertical;min-height:9rem;line-height:1.5}
+.champ input:focus-visible,.champ textarea:focus-visible,.champ-coche input:focus-visible{
+  outline:2px solid var(--cyan);outline-offset:2px;border-color:var(--cyan)}
+.obligatoire{color:#ff9d9d}
+.facultatif{color:var(--doux);font-weight:400;font-size:.85rem}
+.champ-coche{display:flex;gap:.6rem;align-items:flex-start}
+.champ-coche label{margin-bottom:0}
+.champ-coche input{width:1.1rem;height:1.1rem;margin-top:.25rem;flex:none}
+/* ⛔ LE PIÈGE À ROBOTS. Caché par POSITIONNEMENT, jamais par `display:none` ni `hidden` :
+   beaucoup de robots ignorent ce qui n'est pas affiché, mais remplissent ce qui est hors écran.
+   Et il est hors du parcours clavier (`tabindex="-1"` dans le HTML) pour ne piéger personne
+   qui navigue au clavier — *un piège qui attrape un visiteur n'est pas un piège, c'est un bug.* */
+.piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.champ-envoi{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center;margin-top:1.4rem}
+.form-trace{color:var(--doux);font-size:.8rem;font-style:italic}
+.form-message{border-radius:10px;padding:.8rem 1rem;margin:1.2rem 0}
+.form-message p{margin:.3rem 0}
+.form-message-ok{border:1px solid #2ce39b55;border-left:3px solid #2ce39b;background:#2ce39b0d}
+.form-message-ko{border:1px solid #ff6b6b55;border-left:3px solid #ff6b6b;background:#ff6b6b0d}
+.form-repli{margin-top:2.5rem;border-top:1px solid #2abfff33;padding-top:1.2rem}
+.form-repli h2{font-size:1.15rem}
+@media (max-width:600px){.page-simple .acte{padding:1.6rem 1rem}.champ-envoi{flex-direction:column;align-items:stretch}}

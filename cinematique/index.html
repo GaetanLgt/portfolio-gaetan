@@ -324,6 +324,17 @@
       <span>Voir la chaîne — rien n'est chargé depuis YouTube avant ce clic</span>
     </button>
   </div>
+  <!-- ⭐ PRIORITÉ 1 DE L'AUDIT 360° — LE FORMULAIRE. Ajouté le 25/09/2026.
+       L'audit reproche au site « un CTA uniquement mailto ». C'était exact : un lien `mailto:`
+       n'ouvre rien sur un poste sans logiciel de messagerie configuré — et ce visiteur-là
+       n'avait aucun moyen d'écrire.
+       ⛔ ET PAS DE SERVICE TIERS. L'audit proposait « Formulaire/Calendly » : la seconde moitié
+         est refusée par la règle du studio — aucune donnée client ne part chez un tiers.
+         Le formulaire est un fichier du site, `contact.php`, hébergé et traité ici.
+       ⭐ ON AJOUTE, ON NE REMPLACE PAS. Le lien `mailto:` et l'adresse en clair restent juste en
+         dessous : *un formulaire qui casse le seul chemin qui marchait est un recul, pas une
+         amélioration.* Et les deux mènent au même endroit. -->
+  <p class="cta-formulaire"><a class="bouton-action" href="contact.php">Remplir le formulaire →</a></p>
   <!-- ⛔ ADRESSE EN CLAIR — ajoutée le 25/09/2026. L'audit externe le relève à juste titre :
        un lien mailto ne sert à RIEN sur un poste sans logiciel de messagerie configuré. Sans
        l'adresse visible, ce visiteur-là n'a aucun moyen d'écrire — il ne peut même pas la copier. -->
