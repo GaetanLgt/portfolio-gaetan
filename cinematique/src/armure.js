@@ -1,4 +1,4 @@
-// armure.mjs — « L'Armure du Capitaine » : 6 pièces low poly générées par la graine, 6 easter eggs pour les trouver.
+// armure.js — « L'Armure du Capitaine » : 6 pièces low poly générées par la graine, 6 easter eggs pour les trouver.
 // Canon : noir (la matière) · argent (l'acier, arêtes) · cyan (la structure, liserés) · violet = ORACLE (le vivant, le cœur).
 // Pas d'or : il est réservé aux yeux du kraken et au pavillon. Aucune franchise : c'est l'armure de Néo, le capitaine.
 

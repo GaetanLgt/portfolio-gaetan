@@ -1,4 +1,4 @@
-// kraken.mjs — LA FIGURE DE PROUE : un kraken à tête de mort, en primitives.
+// kraken.js — LA FIGURE DE PROUE : un kraken à tête de mort, en primitives.
 //
 // ⭐ POURQUOI CE FICHIER EXISTE, ET CE QU'IL A COÛTÉ.
 // La canon de Néo (22/09/2026) dit : « la figure de proue est UN KRAKEN À TÊTE DE MORT — le
@@ -10,7 +10,7 @@
 //    proue masquée « tête de kraken » → une bête, pas un crâne ; proue masquée « crâne » →
 //    forme pâle mal raccordée. `RealVisXL` est un modèle photographique : il ne connaît pas
 //    notre canon, et il rend une mer dès qu'on prononce « navire ».
-//    ⇒ Un kraken à tête de mort se MODÉLISE. C'est ce que fait ce fichier, comme `armure.mjs`
+//    ⇒ Un kraken à tête de mort se MODÉLISE. C'est ce que fait ce fichier, comme `armure.js`
 //      fait l'armure — la même méthode, celle qui ne dépend d'aucun modèle.
 //
 // ⚠️ Aucune image, aucune texture, aucune dépendance : des géométries three.js et deux

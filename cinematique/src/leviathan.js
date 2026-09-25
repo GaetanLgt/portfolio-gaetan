@@ -1,4 +1,4 @@
-// leviathan.mjs — LE LÉVIATHAN, modélisé en primitives.
+// leviathan.js — LE LÉVIATHAN, modélisé en primitives.
 //
 // ⭐ POURQUOI ICI ET PAS AILLEURS. Le canon (brief v2 §2) dit : « Léviathan devant la proue et
 // au loin ». Dans `main.js` il n'était qu'**une sphère de 26 unités** — un placeholder, pas une

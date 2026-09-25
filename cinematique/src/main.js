@@ -1,14 +1,14 @@
 // main.js — GL Digital Lab · site cinématique · 25/09/2026
 // Actes 1-3 : séquence d'images pilotée au défilement. Actes 4-8 : scène 3D (navire, Yggdrasil).
 // Tout l'aléatoire vient de la graine (graine.json → 42). Aucun tirage hors graine. Aucun CDN.
-import { creerGraine, CANON, nuance } from './graine.mjs';
-import { PIECES, construireArmure, brancherOeufs, armureTrouvee, oublierArmure } from './armure.mjs';
+import { creerGraine, CANON, nuance } from './graine.js';
+import { PIECES, construireArmure, brancherOeufs, armureTrouvee, oublierArmure } from './armure.js';
 // ⭐ LE LÉVIATHAN — même méthode : modélisé, pas généré. Il n'était qu'une SPHÈRE de 26 unités
 //    (« Léviathan devant la proue et au loin » au canon, et un placeholder dans le code).
-import { construireLeviathan } from './leviathan.mjs';
+import { construireLeviathan } from './leviathan.js';
 // ⭐ LE TIROIR DES PÔLES D'EXPERTISE — ajouté le 26/09/2026, proposé par Gaëtan. Il vit dans son
 //    propre module : il ne dépend de rien, et il se retire en supprimant cette ligne.
-import { preparerSecteurs } from './secteurs.mjs';
+import { preparerSecteurs } from './secteurs.js';
 
 const G = creerGraine(42);
 // ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. La préférence SYSTÈME ne suffit pas :
@@ -255,7 +255,7 @@ async function preparer3D() {
     //    ⚠️ SIGNALÉ, PARCE QUE ÇA CONTREDIT L'ÉCRIT : le canon du 22/09/2026 dit « la figure de
     //    proue est UN KRAKEN À TÊTE DE MORT ». Sans elle, **le navire n'a plus de figure de
     //    proue** — ce n'est pas un retour à l'état d'avant, c'est un état qui n'a jamais existé.
-    //    ⇒ `public/src/kraken.mjs` reste sur le disque, intact et non importé : il sera là le
+    //    ⇒ `public/src/kraken.js` reste sur le disque, intact et non importé : il sera là le
     //      jour où la décision reviendra, ou quand le modèle sera meilleur (mâchoire et dents
     //      lisibles, tentacules moins « araignée » — c'est écrit dans la note du 26/09).
   }
@@ -366,7 +366,7 @@ function facades() {
     //    filet est le lien externe posé sous la vidéo — pas un gestionnaire d'erreur qui
     //    n'arriverait jamais.
     // ⚠️ LE SECOURS POINTE VERS LA CHAÎNE, PAS VERS /watch — et ce n'est pas un détail :
-    //    la règle du contrôle (tests/controle.mjs:55) n'autorise que `youtube-nocookie.com` et
+    //    la règle du contrôle (tests/controle.js:55) n'autorise que `youtube-nocookie.com` et
     //    `youtube.com/@`. Une première version pointait vers `youtube.com/watch` : le verrou l'a
     //    REFUSÉE, à juste titre, et il avait raison de le faire. Et l'audit demandait bien
     //    « un lien externe alternatif vers la CHAÎNE » — c'est ce que porte `data-chaine`.
@@ -414,7 +414,7 @@ addEventListener('resize', () => { taille(); demander(); });
 addEventListener('scroll', demander, { passive: true });
 facades();
 preparerRevelation();
-// ⭐ le tiroir des pôles d'expertise (secteurs.mjs) — il s'installe en dernier, quand le DOM est là
+// ⭐ le tiroir des pôles d'expertise (secteurs.js) — il s'installe en dernier, quand le DOM est là
 preparerSecteurs();
 await chargerCles(); demander();
 // ⚠️ AVANT le `if (!REDUIT)` ci-dessous, et c'est le point : en mode réduit il faut POUVOIR

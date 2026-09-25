@@ -1,4 +1,4 @@
-// graine.mjs — GL Digital Lab · site cinématique · 25/09/2026
+// graine.js — GL Digital Lab · site cinématique · 25/09/2026
 // UNE graine décide de tout ce qui est aléatoire dans le site, et seulement de ça.
 // Même graine => même site, octet pour octet. Aucune dépendance. Node et navigateur.
 

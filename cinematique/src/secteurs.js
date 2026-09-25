@@ -1,11 +1,11 @@
-// secteurs.mjs — LE TIROIR DES PÔLES D'EXPERTISE (proposé par Gaëtan, 26/09/2026).
+// secteurs.js — LE TIROIR DES PÔLES D'EXPERTISE (proposé par Gaëtan, 26/09/2026).
 //
 // Pourquoi un fichier à part : le tiroir ne dépend d'aucun autre module, et un module séparé
 // se lit, se teste et se retire seul. `main.js` l'importe en une ligne.
 //
 // ⛔ CE QUI A ÉTÉ CORRIGÉ AVANT L'INTÉGRATION, ET POURQUOI :
 //    · le mot interdit du studio, dans la carte IA : il est dans la liste noire du contrôle
-//      (`tests/controle.mjs`) et la page aurait ÉCHOUÉ. Remplacé par « locaux » — le mot juste,
+//      (`tests/controle.js`) et la page aurait ÉCHOUÉ. Remplacé par « locaux » — le mot juste,
 //      et celui qui est vrai. ⚠️ Il a fallu le retirer DEUX fois : de la carte, puis d'ICI, parce
 //      que ce commentaire le réécrivait pour l'expliquer. *Un commentaire fait partie du fichier.*
 //    · `role="dialog"` + `aria-modal="true"` SANS PIÈGE DE FOCUS est une demi-accessibilité :
