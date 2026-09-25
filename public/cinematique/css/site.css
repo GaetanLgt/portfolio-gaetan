@@ -1,0 +1,275 @@
+/* GL Digital Lab — site cinématique · polices système (aucun téléchargement)
+   ⚠️ EN-TÊTE CORRIGÉ LE 25/09/2026. Il disait « DA D6 (19/09) · aucun vert ». La décision du 24/09
+   (« LE VERT RESTE SORTI ») est ANNULÉE : la palette est NOIR · VERT · ARGENT (canon § 11, 25/09).
+   LE CODE DES COULEURS, et c'est lui qui porte le sens :
+     VERT  #2ce39b  = la SANTÉ MENTALE
+     ROUGE #ff5a5f  = le MONDE PHYSIQUE
+     BLEU  #2abfff  = le mystisme, la magie, l'IMAGINAIRE
+   ⚠️ Le bleu n'est donc PAS à retirer : vert et bleu COEXISTENT, ils ne s'excluent pas.
+   VERT TRANCHÉ LE 25/09/2026 : #2ce39b est le jeton de la palette (il dit la santé mentale).
+   #00FF41 (D4, vert Matrix) reste le registre de la vitrine, pas un jeton sémantique.
+   ⚠️ Le vert n'est pas encore POSÉ dans ce fichier : il s'AJOUTE au cyan, il ne le remplace pas. */
+:root{--fond:#080b14;--fond2:#0d111f;--cyan:#2abfff;--jaune:#ffe650;--oracle:#9b5cff;--texte:#dce6f2;--doux:#8fa3b8;
+  --titre:Fraunces,Georgia,"Times New Roman",serif;--mono:"JetBrains Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+/* ⛔ LIEN D'ÉVITEMENT — ajouté le 25/09/2026. Invisible jusqu'au focus clavier, et c'est
+   volontaire : il ne doit apparaître QUE pour qui navigue au clavier. Positionné en absolu
+   hors écran plutôt qu'en `display:none`, parce qu'un élément en display:none n'est PAS
+   focusable — donc un lien d'évitement caché ainsi ne servirait à rien. */
+.lien-evitement{position:absolute;left:-9999px;top:0;z-index:20;background:var(--cyan);color:var(--fond);padding:.6rem 1rem;border-radius:0 0 8px 0;font-weight:600;text-decoration:none}
+.lien-evitement:focus{left:0;outline:2px solid var(--fond);outline-offset:-4px}
+/* ⛔ TEXTE RÉSERVÉ AUX LECTEURS D'ÉCRAN — ajouté le 25/09/2026.
+   Il sert à COMPLÉTER une instruction dont la forme courte reste visible. « Faites défiler »
+   ne dit ni vers où, ni comment, ni ce qu'on y trouvera — l'audit externe a raison. Pour un
+   clavier, la molette n'existe pas : c'est la touche Page suivante. Le visuel ne change pas
+   d'un pixel, seule l'annonce devient complète. */
+.lecteur-seul{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+/* ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. Discret, mais TOUJOURS LÀ : il vit dans
+   l'en-tête fixe. ⚠️ Il ne doit surtout PAS être masqué par le `@media (max-width:600px)` qui
+   cache le <nav> — un contrôle d'accessibilité qui s'efface selon la taille de l'écran est un
+   contrôle qui manque précisément à ceux qui en ont besoin. */
+#interrupteur-animations{background:none;border:1px solid #2abfff55;border-radius:6px;color:var(--doux);font:inherit;font-size:.72rem;padding:.25rem .5rem;cursor:pointer;white-space:nowrap}
+#interrupteur-animations:hover{color:var(--texte);border-color:var(--cyan)}
+#interrupteur-animations:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+#interrupteur-animations[aria-pressed="true"]{border-color:var(--cyan);color:var(--cyan)}
+/* ⛔ État de la façade vidéo — ajouté le 25/09/2026. L'audit externe a raison : après le clic,
+   le bouton ne disait rien. Ici : « Chargement… », puis le lien de secours et l'information sur
+   ce que le clic transmet. */
+.facade-etat{margin:.5rem 0 0;font-size:.78rem;color:var(--doux);line-height:1.5}
+.facade-etat a{color:var(--cyan)}
+.facade-boite{display:block;width:100%}
+body{margin:0;background:var(--fond);color:var(--texte);font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+#scene3d{opacity:0;transition:opacity .25s linear}
+#revelation{position:fixed;inset:0;z-index:1;pointer-events:none;background:center/cover no-repeat;
+  -webkit-mask-image:radial-gradient(circle 160px at var(--x,50%) var(--y,50%),#000 40%,transparent 100%);
+          mask-image:radial-gradient(circle 160px at var(--x,50%) var(--y,50%),#000 40%,transparent 100%);opacity:0;transition:opacity .4s}
+.barre a{color:var(--texte);text-decoration:none}.barre nav a{margin-left:1rem;color:var(--doux)}.barre nav a:hover{color:var(--cyan)}
+h1,h2,h3{font-family:var(--titre);font-weight:600;line-height:1.15;margin:.4em 0}
+h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3rem);color:var(--cyan)}h3{font-size:1.25rem;color:var(--texte)}
+.sous{font-size:1.4rem;color:var(--cyan)}.axiome{font-style:italic;color:var(--doux)}
+.indice{font-family:var(--mono);font-size:.8rem;color:var(--doux);animation:pulse 2.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.boucle,.pile,.route,.parcours{counter-reset:n;list-style:none;padding-left:.8rem}
+.boucle li,.pile li,.route li,.parcours li{counter-increment:n;margin:.35rem 0}
+.boucle li::before,.pile li::before,.route li::before,.parcours li::before{content:counter(n) " ";font-family:var(--mono);color:var(--cyan)}
+.pile strong,.grille strong{color:#fff}
+.grille{list-style:none;padding:.6rem .8rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:.6rem 1.2rem}
+.grille strong{display:block;color:var(--cyan)}
+.limites{border:1px solid #ff6b6b55;border-left:3px solid #ff6b6b;border-radius:10px;padding:.4rem 1rem;margin-top:1.2rem;background:#ff6b6b0d}
+.limites h3{color:#ff9d9d}
+.facade{display:block;position:relative;width:100%;max-width:40rem;padding:0;border:1px solid #2abfff55;background:var(--fond2);color:var(--texte);cursor:pointer;font:inherit}
+.facade img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.facade span{display:block;padding:.6rem;font-family:var(--mono);font-size:.85rem}
+.facade:focus-visible,a:focus-visible{outline:2px solid var(--jaune);outline-offset:3px}
+.offre strong{color:var(--jaune)}.contact a{color:var(--jaune);font-family:var(--mono)}
+a{color:var(--cyan)}
+.pied{position:relative;z-index:2;padding:2rem 1rem 3rem;text-align:center;font-family:var(--mono);font-size:.8rem;color:var(--doux);background:var(--fond)}
+.graine{color:var(--oracle)}
+@media (max-width:600px){body{font-size:16px}.barre nav{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.indice{animation:none}#revelation{display:none}}
+
+
+/* ---- cartes et texte dynamique (25/09) ---- */
+.acte:nth-of-type(even){align-items:flex-end}
+.panneau{position:relative;width:100%;max-width:680px;padding:2.5rem;border-radius:12px;
+  background:rgba(13,22,45,.7);border:1px solid rgba(0,229,255,.25);
+  box-shadow:0 8px 32px rgba(0,0,0,.6),inset 0 0 16px rgba(0,229,255,.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(10px) saturate(1.2)}
+.panneau::before{content:"";position:absolute;left:1.8rem;right:1.8rem;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.7}
+.ouverture .panneau{background:linear-gradient(160deg,#0d111f99,#080b14b3);width:min(44rem,100%)}
+.lore{font-family:var(--titre);font-style:italic;color:#cbbcff;border-left:2px solid #9b5cff;padding-left:.9rem;margin:1rem 0;
+  background:linear-gradient(90deg,#9b5cff14,transparent)}
+.pile li,.route li,.parcours li,.boucle li{padding:.35rem .6rem;border-radius:8px;border:1px solid transparent;transition:background .5s,border-color .5s,color .5s}
+.boucle{display:flex;flex-wrap:wrap;gap:.5rem;padding:0}
+.boucle li{border-color:#2abfff33}
+.boucle li.actif{background:#2abfff22;border-color:var(--cyan);color:#fff;box-shadow:0 0 18px #2abfff44}
+.pile li{border-color:#2abfff22;background:#2abfff08;margin:.45rem 0}
+.regle{color:var(--jaune);font-family:var(--mono);display:inline-block;padding:.3rem .7rem;border:1px solid #ffe65066;border-radius:8px;animation:battement 2.6s ease-in-out infinite}
+@keyframes battement{50%{box-shadow:0 0 22px #ffe65040;border-color:var(--jaune)}}
+.grille li{padding:.6rem .7rem;border:1px solid #2abfff22;border-radius:10px;background:#2abfff08}
+/* apparition : chaque élément marqué entre à son tour */
+.js .revele{opacity:0;transform:translateY(22px);filter:blur(6px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1),filter .7s ease;transition-delay:calc(var(--i,0)*90ms)}
+.js .visible .revele{opacity:1;transform:none;filter:none}
+/* ⚠️ RESTAURÉ LE 25/09 après écrasement. `:not(.mot)` est indispensable : .mot est lui aussi
+   un <span>, et sans l'exclusion il recevrait opacity:0 et un transition-delay invalide
+   (--l non défini) — l'étalement lettre par lettre serait perdu, tout en masquant le titre. */
+.js .lettres span:not(.mot){display:inline-block;opacity:0;transform:translateY(.4em);transition:opacity .45s,transform .45s;transition-delay:calc(var(--l)*28ms)}
+.js .visible .lettres span:not(.mot){opacity:1;transform:none}
+/* le porteur de mot : insécable, pour qu'aucune lettre ne serve d'occasion de coupure */
+.lettres .mot{display:inline-block;white-space:nowrap}
+.js .frappe{background:linear-gradient(90deg,#cbbcff 50%,transparent 50%) 100% 0/200% 100% no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent}
+.js .visible .frappe{transition:background-position 2.4s steps(60);background-position:0 0;color:transparent}
+.frappe{color:#cbbcff}
+/* repères des actes */
+.reperes{position:fixed;right:1rem;top:50%;transform:translateY(-50%);z-index:6;display:flex;flex-direction:column;gap:.55rem}
+.reperes a{display:block;width:10px;height:10px;border-radius:50%;border:1px solid #2abfff88;transition:all .3s}
+.reperes a span{position:absolute;left:-9999px}
+.reperes a.actif{background:var(--cyan);box-shadow:0 0 10px var(--cyan);transform:scale(1.4)}
+@media (max-width:600px){.acte,.acte:nth-of-type(even){align-items:stretch}.reperes{right:.4rem}}
+@media (prefers-reduced-motion:reduce){.js .revele,.js .lettres span{opacity:1;transform:none;filter:none;transition:none}.js .frappe{color:#cbbcff;background:none}.regle{animation:none}}
+
+/* L'Armure du Capitaine */
+.hex{display:inline-grid;place-items:center;width:2rem;height:2rem;margin-right:.4rem;color:var(--fond);background:var(--cyan);clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);font-weight:700;cursor:pointer}
+.ygg{cursor:pointer;text-decoration:underline dotted #9b5cff88;text-underline-offset:3px}
+.ygg:focus-visible,.graine:focus-visible,.boucle li:focus-visible{outline:1px solid var(--cyan);outline-offset:3px}
+.graine,.boucle li{cursor:pointer}
+/* ⭐ PASSÉ À DROITE LE 26/09/2026 — demande de Néo : « armure-runes, armure-compte <= bas à
+   droite ! ». Il était à `left:1rem` depuis l'origine. ⚠️ Aucune collision : `.reperes` est
+   à droite MAIS centré verticalement (`top:50%`), le coin bas-droite est libre. */
+.armure{position:fixed;right:1rem;bottom:1rem;z-index:7;font-family:Consolas,monospace;color:#d8e4ff;max-width:min(22rem,calc(100vw - 2rem))}
+.armure[hidden]{display:none}
+.armure-bouton{display:flex;gap:.6rem;align-items:center;background:#0d111fcc;border:1px solid #2abfff55;border-radius:6px;padding:.45rem .7rem;color:inherit;font:inherit;cursor:pointer;backdrop-filter:blur(6px)}
+.armure-runes i{display:inline-block;font-style:normal;font-size:1.15rem;margin:0 .12rem;color:#2abfff33;transition:color .6s,text-shadow .6s}
+.armure-runes i.ok{color:#bfe9ff;text-shadow:0 0 8px #2abfff}
+.armure-runes i.neuf{animation:rune 1.4s ease-out}
+.armure.complet .armure-runes i.ok:last-child{color:#e2d2ff;text-shadow:0 0 10px #9b5cff}
+.armure.complet .armure-bouton{border-color:#9b5cff;box-shadow:0 0 18px #9b5cff55}
+.armure-compte{font-size:.8rem;opacity:.75}
+/* ⚠️ `left:0` → `right:0` EN MÊME TEMPS QUE LE HUD. Le panneau s'ouvre au-dessus du bouton :
+   ancré à gauche alors que le bouton est à droite, il sortait de l'écran. *Un élément qu'on
+   déplace emmène ce qui en dépend.* */
+.armure-panneau{margin-bottom:.5rem;background:#0d111fee;border:1px solid #2abfff44;border-radius:6px;padding:.9rem 1rem;position:absolute;bottom:100%;right:0;width:min(22rem,calc(100vw - 2rem))}
+.armure-panneau h3{margin:0 0 .3rem;font-family:var(--titre);color:#fff}
+.armure-panneau ul{list-style:none;margin:.6rem 0;padding:0;display:grid;gap:.45rem}
+.armure-panneau li{display:grid;grid-template-columns:1.6rem 1fr;column-gap:.4rem;font-size:.85rem;opacity:.7}
+.armure-panneau li.ok{opacity:1}
+.armure-panneau li b{grid-row:span 2;font-size:1.2rem;color:#2abfff}
+.armure-panneau li small{grid-column:2;opacity:.75;font-size:.75rem}
+.armure-regle,.armure-fin{font-size:.8rem;margin:0}
+.armure-fin{color:#e2d2ff;margin-top:.4rem}
+.armure-oubli{background:none;border:0;color:#8aa0c0;font:inherit;font-size:.72rem;text-decoration:underline;cursor:pointer;padding:0;margin-top:.4rem}
+.armure-annonce{position:fixed;left:50%;bottom:1.2rem;transform:translate(-50%,1rem);opacity:0;margin:0;background:#0d111fee;border:1px solid #2abfff;border-radius:6px;padding:.5rem 1rem;pointer-events:none;transition:opacity .4s,transform .4s;white-space:nowrap}
+.armure-annonce.montre{opacity:1;transform:translate(-50%,0)}
+@keyframes rune{0%{transform:scale(2.2);text-shadow:0 0 22px #fff}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.armure-runes i.neuf{animation:none}.armure-annonce{transition:none}}
+
+/* ─── OUVERTURE — la vidéo du capitaine (acte 1) ────────────────────────────────
+   ⭐ Elle est en FOND, derrière le panneau. Le panneau porte déjà son propre
+   dégradé (l.87) : le texte ne repose donc PAS sur l'image, et le contraste
+   tenu sur .sous / .indice tient. *Une vidéo derrière du texte se juge au
+   contraste, pas à l'oeil.*
+   ⚠️ `pointer-events:none` : elle ne doit pas voler les clics de la page. */
+.ouverture{position:relative;overflow:hidden}
+/* ⭐ OPACITÉ 1 DEPUIS LE 26/09/2026 — C'EST LE CORRECTIF DU DÉDOUBLEMENT.
+   ⛔ Le défaut, signalé par Néo : « 2 image sont superposées ». Mesuré : le canvas dessine
+   `sequence/f0001.webp` pour l'acte 1 PENDANT QUE cette image se dessine par-dessus — deux
+   images DIFFÉRENTES de la même scène (écart moyen 47,5/255, 51,3 % de pixels très
+   différents). À `opacity:.5`, le canvas traversait l'image : deux samouraïs décalés.
+   ⇒ L'image est maintenant OPAQUE : elle couvre le canvas, et l'acte 1 n'a plus qu'UN fond. */
+.ouverture-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  z-index:0;opacity:1;pointer-events:none}
+.ouverture>.panneau{position:relative;z-index:1}
+.ouverture-son{position:absolute;left:6vw;bottom:1.4rem;z-index:2;font:inherit;
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#cfe0ec;
+  background:#080b14cc;border:1px solid #2abfff38;border-radius:3px;
+  padding:.5rem .8rem;cursor:pointer;transition:color .18s,border-color .18s}
+.ouverture-son:hover,.ouverture-son:focus-visible{color:#eaf6ff;border-color:#2abfffbf}
+.ouverture-son[hidden]{display:none}
+/* ⭐ LE CURSEUR DE VOLUME — ajouté le 26/09/2026. Même famille visuelle que le bouton de son
+   (même fond, même liseré cyan) : deux contrôles qui vont ensemble se ressemblent. */
+.ouverture-volume{position:absolute;left:6vw;bottom:3.6rem;z-index:2;display:flex;align-items:center;gap:.5rem;background:#080b14cc;border:1px solid #2abfff38;border-radius:3px;padding:.35rem .7rem}
+.ouverture-volume[hidden]{display:none}
+.ouverture-volume input[type=range]{width:7rem;accent-color:#2abfff;cursor:pointer}
+@media (max-width:600px){.ouverture-volume{left:1rem;bottom:2.9rem}}
+/* ⛔ Sous animations réduites, L'IMAGE FIXE RESTE — c'est exactement ce que demande une
+   personne qui réduit les animations : une image, pas un mouvement. Une seule image est
+   demandée (25 Ko) et la séquence n'est jamais chargée. Ce qui disparaît, c'est le son.
+   ⚠️ Avant le 26/09/2026 cette règle faisait `display:none` sur la vidéo, parce qu'elle
+   pesait 6,79 Mo : la cacher à l'écran sans l'empêcher d'être téléchargée n'aurait pas
+   été l'épargner. Le poids n'est plus le même, la règle suit. */
+@media (prefers-reduced-motion:reduce){.ouverture-son{display:none}}
+@media (max-width:600px){.ouverture-son{left:1rem;bottom:1rem}}
+/* ============================ TIROIR DES PÔLES D'EXPERTISE ============================
+   ⭐ Ajouté le 26/09/2026, proposé par Gaëtan. Compacté au style du fichier (une règle par
+   ligne) pour ne pas casser la lecture d'ensemble. Le quatrième vert arrivé avec ce bloc a été RAMENÉ AU CYAN le 26/09/2026
+   (décision de Gaëtan) : il ne portait aucun sens, et l'en-tête ne le répertorie pas. Le violet
+   Oracle `#9b5cff` reste — c'est un jeton, il vient de la fiche du réacteur. */
+.tiroir-hud{position:fixed;inset:0;background:rgba(10,12,16,.88);backdrop-filter:blur(12px);z-index:1000;display:flex;justify-content:flex-end}
+.tiroir-hud[hidden]{display:none}
+.tiroir-contenu{width:100%;max-width:680px;height:100vh;background:#0d1117;border-left:1px solid rgba(42,191,255,.35);box-shadow:-10px 0 30px rgba(0,0,0,.8),0 0 20px rgba(42,191,255,.1);padding:2.5rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:space-between}
+.tiroir-en-tete{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(200,209,220,.15);padding-bottom:1.5rem;margin-bottom:2rem}
+.sous-titre-hud{color:#2abfff;font-size:.75rem;letter-spacing:.15em;font-family:Consolas,monospace}
+.titre-hud{color:#fff;font-size:1.5rem;margin:.25rem 0 0}
+.bouton-fermer{background:transparent;border:1px solid rgba(200,209,220,.3);color:#c8d1dc;font-size:1.25rem;cursor:pointer;padding:.4rem .8rem;border-radius:4px;transition:border-color .2s,color .2s,box-shadow .2s}
+.bouton-fermer:hover,.bouton-fermer:focus-visible{border-color:#2abfff;color:#2abfff;box-shadow:0 0 10px rgba(42,191,255,.3)}
+.grille-secteurs{display:grid;grid-template-columns:1fr;gap:1.25rem}
+.carte-secteur{background:rgba(255,255,255,.02);border:1px solid rgba(200,209,220,.12);padding:1.25rem;border-radius:6px;transition:transform .2s,border-color .2s,background .2s}
+.carte-secteur:hover,.carte-secteur:focus-visible{border-color:#2abfff;background:rgba(42,191,255,.04);transform:translateX(-4px);outline:none}
+.secteur-badge{font-size:.7rem;color:#9b5cff;margin-bottom:.4rem;font-family:Consolas,monospace}
+.carte-secteur h3{color:#fff;font-size:1.1rem;margin:0 0 .4rem}
+.carte-secteur p{color:#c8d1dc;font-size:.85rem;line-height:1.4;margin:0 0 .8rem}
+.tags-tech{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:0}
+.tags-tech li{background:rgba(0,0,0,.5);border:1px solid rgba(42,191,255,.25);color:#2abfff;font-size:.68rem;padding:.2rem .5rem;border-radius:3px;font-family:Consolas,monospace}
+.tiroir-pied{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(200,209,220,.15);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;font-size:.8rem;font-family:Consolas,monospace}
+.bouton-action{color:#0d1117;background:#2abfff;padding:.5rem 1rem;text-decoration:none;font-weight:bold;border-radius:4px;box-shadow:0 0 12px rgba(42,191,255,.4)}
+@media (max-width:600px){.tiroir-contenu{padding:1.2rem}.tiroir-pied{justify-content:flex-start}}
+@media (prefers-reduced-motion:reduce){.carte-secteur,.bouton-fermer{transition:none}}
+/* ==================== CORRECTIFS DE MISE EN PAGE — AUDIT DU 26/09/2026 ====================
+   Appliqués tels quels, à la demande de Gaëtan. Placés EN FIN DE FICHIER : en CSS, à
+   spécificité égale, la dernière règle gagne — c'est ce qui permet de corriger l'existant
+   sans le réécrire. */
+#fond,#scene3d{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;pointer-events:none}
+header.barre{position:fixed;top:0;left:0;right:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;background:rgba(10,15,29,.75);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,229,255,.15);font-family:var(--mono);font-size:.85rem}
+main{position:relative;z-index:10}
+.acte{min-height:100vh;padding:4rem 2rem;max-width:none;margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items:center;box-sizing:border-box}
+/* ⚠️ L'ACTE 8 EST AÉRÉ, PAS DÉCOUPÉ : le contrôle du studio EXIGE exactement 8 actes
+   (`n === 8` dans tests/controle.mjs, et le déploiement vérifie les huit `data-act`).
+   On aère donc À L'INTÉRIEUR de l'acte — des blocs autonomes, pas de nouveaux actes. */
+#acte-8{min-height:auto;padding-top:6rem;padding-bottom:6rem}
+#acte-8 .panneau>*+*{margin-top:2.2rem}
+#acte-8 .panneau h2,#acte-8 .panneau h3{margin-top:2.6rem}
+/* 4. MOBILE — panneaux à 90 % et respiration réduite (correctif de l'audit) */
+@media (max-width:600px){.panneau{width:90%;padding:1.4rem}.acte{padding:3rem 1rem}}
+/* ============ ACTIVITÉS, PARCOURS ET CONTACT DE L'ACTE 8 — proposition du 26/09/2026 ============
+   ⛔ CE QUI N'EST PAS ICI, ET POURQUOI (décisions de Gaëtan, pas de moi) :
+      · LES PRIX : refusés par le contrôle du studio (tout montant en €) ET par le brief
+        (« Offre sur devis, aucun prix »). Gaëtan a confirmé le 26/09 : « laisse les prix ».
+      · LE FORMULAIRE EXTERNE : `formspree.io` est une adresse externe — le contrôle échoue, et
+        les données du visiteur partiraient chez un tiers, contre la politique du studio. Le
+        contact se fait par le lien e-mail DÉJÀ présent dans la page.
+      · Le mot interdit du studio a été retiré des commentaires comme du contenu.
+   ⚠️ Le vert arrivé avec ces propositions — troisième famille de couleur du site — a été
+      RAMENÉ AU CYAN le 26/09/2026 (décision de Gaëtan) : il ne portait aucun sens. */
+.panneau-large{max-width:1100px;width:92%;margin:0 auto}
+.titre-section-hud{font-family:Consolas,monospace;color:#2abfff;font-size:.95rem;letter-spacing:.15em;text-transform:uppercase;margin:2.5rem 0 1rem;border-left:3px solid #2abfff;padding-left:.75rem}
+.grille-departements{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:2rem}
+.carte-dept{background:rgba(10,12,16,.75);border:1px solid rgba(200,209,220,.15);border-radius:6px;padding:1.25rem;backdrop-filter:blur(8px);transition:border-color .2s,transform .2s}
+.carte-dept:hover,.carte-dept:focus-within{border-color:#2abfff;transform:translateY(-3px);box-shadow:0 4px 20px rgba(42,191,255,.15)}
+.badge-dept{font-size:.7rem;color:#9b5cff;margin-bottom:.5rem;font-family:Consolas,monospace}
+.carte-dept h4{color:#fff;font-size:1.05rem;margin:0 0 .4rem}
+.carte-dept p{color:#c8d1dc;font-size:.85rem;line-height:1.4;margin:0 0 .8rem}
+.parcours-hud{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.5rem;list-style:none;padding:0;margin:1.5rem 0 2.5rem}
+.parcours-hud li{background:rgba(10,12,16,.6);border:1px solid rgba(200,209,220,.12);padding:.75rem;border-radius:4px;font-size:.8rem;display:flex;flex-direction:column}
+.num-etape{color:#2abfff;font-size:.75rem;margin-bottom:.25rem;font-family:Consolas,monospace}
+.parcours-hud strong{color:#fff;margin-bottom:.2rem}
+.parcours-hud small{color:#c8d1dc;opacity:.8}
+.bloc-contact-final{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;background:rgba(10,12,16,.9);border:1px solid rgba(42,191,255,.3);box-shadow:0 0 30px rgba(0,0,0,.8),inset 0 0 15px rgba(42,191,255,.05);border-radius:8px;padding:2rem;margin-top:2rem}
+.fiche-contact p{margin:.5rem 0;font-size:.8rem;color:#c8d1dc;font-family:Consolas,monospace}
+.fiche-contact strong{color:#2abfff}
+.fiche-contact a{color:#fff;text-decoration:underline}
+@media (max-width:600px){.panneau-large{width:100%}.bloc-contact-final{padding:1.2rem;grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.carte-dept{transition:none}.carte-dept:hover{transform:none}}
+/* ---------- BADGES DE RAYONNEMENT (proposition du 26/09/2026) ----------
+   ⛔ LE MOT INTERDIT DU STUDIO A ÉTÉ RETIRÉ DU BADGE — troisième fois qu'il revenait dans une
+      proposition. Il est remplacé par « 100 % LOCAL », qui est plus fort ici parce qu'il se
+      VÉRIFIE : le contrôle mesure zéro requête externe, page par page.
+   ⛔⛔ ET IL A FALLU LE RETIRER DE CE COMMENTAIRE AUSSI, DEUX FOIS DE SUITE : l'écrire pour dire
+      qu'on l'a retiré, c'est encore l'écrire — et le contrôle lit les commentaires comme le
+      reste du fichier. **On ne cite pas un mot interdit pour expliquer qu'il est interdit.** */
+.badges-rayonnement{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem;margin:1.5rem 0}
+.badge-item{display:flex;flex-direction:column;gap:.15rem;background:rgba(10,12,16,.8);border:1px solid rgba(42,191,255,.25);border-radius:6px;padding:.85rem 1rem}
+.badge-icon{font-size:1.1rem;line-height:1}
+.badge-item strong{color:#2abfff;font-size:.78rem;letter-spacing:.08em;font-family:Consolas,monospace}
+.badge-item small{color:#c8d1dc;font-size:.72rem;opacity:.85}
+@media (max-width:600px){.badges-rayonnement{grid-template-columns:1fr}}
+/* ================== L'EXTENSION DU TERRITOIRE (idée de Gaëtan, 26/09/2026) ==================
+   ⭐ Quand les SIX runes sont trouvées, le navire s'éveille : une nappe violette — la couleur
+   d'ORACLE — monte du bas de la page. ⚠️ Ça se fait en CSS pur, donc sans toucher au moteur 3D :
+   le JavaScript d'`armure.mjs` ne pose qu'une classe, et c'est le style qui fait le reste.
+   ⛔ Le mot interdit du studio a été retiré de l'annonce — il y serait pour la quatrième fois. */
+.territoire-deploye::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:3;
+  background:radial-gradient(120% 60% at 50% 115%, rgba(155,92,255,.34), rgba(155,92,255,.10) 45%, transparent 72%);
+  animation:oracle-monte 1.6s ease-out}
+@keyframes oracle-monte{from{opacity:0;transform:translateY(6%)}to{opacity:1;transform:translateY(0)}}
+.territoire-deploye .armure-runes i.ok{color:#e2d2ff;text-shadow:0 0 12px #9b5cff}
+@media (prefers-reduced-motion:reduce){.territoire-deploye::after{animation:none}}

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GL Digital Lab — Vos outils. Chez vous. À vous.</title>
+<meta name="description" content="GL Digital Lab (Génie IT Tek FR), studio indépendant à Harponville : développement web, applications métier et IA exécutée localement.">
+<meta name="generator" content="Créé avec l'aide de l'IA — graine 42">
+<link rel="stylesheet" href="css/site.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/jsm/"}}</script>
+</head>
+<body>
+<!-- ⛔ AJOUTÉ LE 25/09/2026 — cible « Aller au contenu ». L'audit externe l'a relevé à juste
+     titre : sans elle, un utilisateur au clavier doit traverser TOUT l'en-tête et les huit
+     repères avant d'atteindre le premier mot du contenu. C'est le premier élément focusable
+     de la page, et il reste invisible jusqu'au focus (voir .lien-evitement dans site.css). -->
+<a class="lien-evitement" href="#contenu">Aller au contenu principal</a>
+<canvas id="fond" aria-hidden="true"></canvas>
+<canvas id="scene3d" aria-hidden="true"></canvas>
+<div id="revelation" aria-hidden="true"></div>
+
+<header class="barre">
+  <a class="marque" href="#acte-1"><span class="hex">GL</span> GL Digital Lab</a>
+  <nav aria-label="Actes"><button id="btn-secteurs" type="button" class="lien-nav" aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button><a href="#acte-4">Couches</a><a href="#acte-6">Doctrine</a><a href="#acte-7">Limites</a><a href="#acte-8">Contact</a></nav>
+  <!-- ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. L'audit externe a raison : la
+       préférence SYSTÈME ne suffit pas, elle est un réglage de POSTE. Il est dans l'en-tête
+       parce que celui-ci est fixe : un contrôle d'accessibilité qu'on ne trouve qu'en bas de
+       page n'est pas un contrôle. Il ne disparaît PAS sur mobile (seul le <nav> s'efface). -->
+  <button id="interrupteur-animations" type="button" aria-pressed="false">Réduire les animations</button>
+</header>
+
+<!-- ⛔ NOMS ACCESSIBLES AJOUTÉS LE 25/09/2026. Avant : chaque repère n'avait que <span>1</span>
+     comme contenu, donc un lecteur d'écran annonçait « 1, lien ». Un CHIFFRE N'EST PAS UN NOM —
+     l'audit externe l'a relevé à juste titre, et ma première mesure l'avait manqué en regardant
+     l'aria-label du <nav> au lieu du contenu des liens. Les spans passent en aria-hidden : ils
+     restent visibles à l'écran, mais c'est l'aria-label qui nomme le lien. -->
+<nav class="reperes" aria-label="Progression dans la présentation"><a href="#acte-1" data-rep="1" aria-label="Acte 1 : ouverture"><span aria-hidden="true">1</span></a><a href="#acte-2" data-rep="2" aria-label="Acte 2 : l'entrée"><span aria-hidden="true">2</span></a><a href="#acte-3" data-rep="3" aria-label="Acte 3 : la boucle"><span aria-hidden="true">3</span></a><a href="#acte-4" data-rep="4" aria-label="Acte 4 : les quatre couches"><span aria-hidden="true">4</span></a><a href="#acte-5" data-rep="5" aria-label="Acte 5 : le cœur opérationnel"><span aria-hidden="true">5</span></a><a href="#acte-6" data-rep="6" aria-label="Acte 6 : la doctrine"><span aria-hidden="true">6</span></a><a href="#acte-7" data-rep="7" aria-label="Acte 7 : garde-fous et limites"><span aria-hidden="true">7</span></a><a href="#acte-8" data-rep="8" aria-label="Acte 8 : le navire"><span aria-hidden="true">8</span></a></nav>
+<!-- ⛔ `id="contenu"` AJOUTÉ LE 25/09/2026 : c'est la cible du lien d'évitement ci-dessus.
+     Un <main> sans identifiant ne peut pas être visé. -->
+<main id="contenu">
+<section id="acte-1" data-act="1" class="acte ouverture">
+<!-- ⭐ L'OUVERTURE — le capitaine, samouraï hors du navire. La ligne du lore ci-dessous
+     dit « samouraï hors du navire, capitaine à bord » : cette ouverture EST cette phrase.
+     ⭐ CE N'EST PLUS UNE VIDÉO, C'EST UNE SÉQUENCE D'IMAGES — corrigé le 26/09/2026.
+     POURQUOI : le contrôle refuse tout fichier vidéo dans `public/` (poids et droits), et
+     les 6,79 Mo de `ouverture.mp4` portaient `public/` à 27,25 Mio pour un plafond de 25.
+     ⭐ LA RÈGLE VIENT DE LA RÉFÉRENCE ELLE-MÊME — tutoriel Antigravity + TestSprite, 10:00 :
+     « le fichier vidéo est encore trop large […] Optimisez la vidéo pour une lecture fluide
+     au défilement. Si une séquence d'images performe mieux, utilisez cela en le répliquant.
+     Rendez la qualité visuelle aussi proche que possible de l'original. »
+     ⇒ 118 images 1280×720 à 15 i/s = 3,10 Mio.
+     ⭐ MONTAGE REFAIT DEUX FOIS LE 26/09. Version 2 — sur la NOUVELLE génération de Néo
+     (source : `sources/ouverture/nouvelle-generation-3707.mp4`) : ① FLOU (960×540 étirée)
+     → 1280×720 · ② SACCADE (10 i/s) → 15 i/s · ③ FILIGRANE « KlingAI 3.0 Omni » visible sur
+     CHAQUE image → recadrage 1778×1000 depuis x=71, qui le coupe par la géométrie (mesuré :
+     moyenne 84,4/255 dans la zone sur l'ancienne, 123,1 sur la nouvelle — il est plus
+     présent, et il est coupé de la même façon) · ④ les plans d'interfaces et de faux textes
+     (« GLAB NUMÉRIQUE »), la femme à ailes et la silhouette encapuchonnée sont RETIRÉS ;
+     restent le samouraï et le galion aux voiles vertes devant la Terre.
+     ⛔ `aria-hidden` : elle est décorative. Le bouton de son, lui, est un vrai contrôle.
+     🎬 Source : Kling AI 3.0 Omni, 1920×1080, 15,04 s — CONSERVÉE, jamais supprimée, dans
+     `sources/ouverture/ouverture.mp4`. Le filigrane du générateur est incrusté dans l'image.
+     ⛔ L'IMAGE CI-DESSOUS EST AUSSI LE REPLI : sans JavaScript et sous animations réduites,
+     c'est elle qu'on voit — une seule image, 25 Ko. La séquence n'est jamais demandée. -->
+<img id="ouverture-image" class="ouverture-image" src="ouverture/o0001.webp"
+     alt="" width="960" height="540" aria-hidden="true" decoding="async">
+<button type="button" id="ouverture-son" class="ouverture-son" aria-pressed="false" hidden>Activer le son</button>
+<!-- ⭐ RÉGLAGE DU VOLUME — ajouté le 26/09/2026, sur la remarque de Gaëtan : « c'est bien de
+     pouvoir l'activer mais ça déchire les oreilles ». Un interrupteur ne suffit pas : il faut
+     pouvoir DOSER. Le curseur est un vrai contrôle (clavier, lecteur d'écran), et le son
+     démarre à 30 % — *un son qui arrive à pleine puissance est une agression, pas une ambiance.* -->
+<label class="ouverture-volume" hidden><span class="lecteur-seul">Volume du son d'ouverture</span><input type="range" id="ouverture-volume-curseur" min="0" max="100" step="5" value="30"></label>
+<div class="panneau">
+  <h1>GL Digital Lab</h1>
+  <p class="sous">Vos outils. Chez vous. À vous.</p>
+  <p class="lore">Néo, capitaine de l'ArkAdiA — samouraï hors du navire, capitaine à bord.</p>
+  <p class="axiome">« On ne joue pas le Mal : on le combat, en le sachant. »</p>
+  <p class="indice">Faites défiler<span class="lecteur-seul"> vers le bas — ou, au clavier, appuyez sur la touche « Page suivante » — pour parcourir les huit actes de la présentation, de l'ouverture au navire.</span></p>
+</div>
+</section>
+
+<section id="acte-2" data-act="2" class="acte">
+<div class="panneau">
+  <h2>L'Entrée &amp; Confidentialité</h2>
+  <p>Ce qui arrive : fichiers, voix, images. Les flux sensibles sont conçus pour être traités localement ou dans des environnements explicitement validés avec vous. Aucun transfert vers un service tiers n'est activé sans information préalable.</p>
+  <p class="lore">Dans le vide, le navire n'a pas de vent : ses voiles captent la lumière.</p>
+</div>
+</section>
+
+<section id="acte-3" data-act="3" class="acte">
+<div class="panneau">
+  <h2>Le Laboratoire (EVA-01 &amp; ArkAdiA)</h2>
+  <ol class="boucle"><li>Produire</li><li>Observer</li><li>Mesurer</li><li>Corriger</li></ol>
+  <p class="lore">Le navire assimile les idées, jamais la matière.</p>
+</div>
+</section>
+
+<section id="acte-4" data-act="4" class="acte">
+<div class="panneau">
+  <h2>L'Offre</h2>
+  <!-- ⭐ L'OFFRE A REJOINT SON TITRE LE 26/09/2026. L'acte 4 s'appelait « Les quatre couches » et
+       portait les quatre couches ; l'audit du 26/09 l'a renommé « L'Offre » — mais l'offre était
+       restée dans l'acte 8. *Un titre qui ne décrit pas ce qu'il surplombe est un titre faux.* -->
+  <p class="offre">Développement Symfony / Vue.js · Audit web · Automatisation IA locale · Mémoire documentaire · Site web · Application métier · Maintenance — <strong>sur devis</strong>.</p>
+  <ol class="pile">
+    <li><strong>ArkAdiA</strong> — univers et réseau social (preuve de concept)</li>
+    <li><strong>GL-OS</strong> — le produit : interface, applications, agents</li>
+    <li><strong>EVA-01</strong> — le poste : IA locale, mémoire, orchestration</li>
+    <li><strong>GL Digital Lab</strong> — le studio : méthode, validation humaine</li>
+  </ol>
+  <p class="regle">Rien ne sort sans validation humaine.</p>
+</div>
+</section>
+
+<section id="acte-5" data-act="5" class="acte coeur">
+<div class="panneau">
+  <h2>Méthode &amp; Validation</h2>
+  <p>Une machine, un poste, des agents qui travaillent pour vous — et un humain qui valide chaque étape.</p>
+  <!-- ⭐ LE PARCOURS EN SEPT ÉTAPES EST ARRIVÉ ICI LE 26/09/2026, SOUS SON TITRE. Il était dans
+       l'acte 8, deux actes plus loin que la méthode qu'il décrit. *Un titre qui ne surplombe pas
+       son contenu est un titre faux* — c'est la même faute que l'offre, réparée de la même façon. -->
+  <h3>Parcours</h3>
+  <ol class="parcours"><li>Premier échange — 30 min, gratuit</li><li>Lecture du besoin</li><li>Atelier de cadrage</li><li>Devis détaillé</li><li>Construction</li><li>Déploiement</li><li>Maintenance</li></ol>
+  <p class="lore">Au centre du navire bat ORACLE. Un oracle ne décide pas du destin : il le lit.</p>
+</div>
+</section>
+
+<section id="acte-6" data-act="6" class="acte">
+<div class="panneau">
+  <h2>Démonstrateur &amp; Vidéos</h2>
+  <ul class="grille">
+    <li><strong>Confidentialité</strong> Vous conservez la maîtrise de vos données, de vos accès et, selon le périmètre contractualisé, de vos environnements et livrables.</li>
+    <li><strong>Intégrité</strong> Les modifications importantes peuvent être journalisées, versionnées et soumises à validation selon le niveau de service convenu.</li>
+    <li><strong>Disponibilité</strong> L'accès est défini, documenté et surveillé selon le niveau de service convenu — pas garanti au-delà.</li>
+    <li><strong>Chiffrement</strong> Lorsque le périmètre le permet, les clés de chiffrement sont détenues ou contrôlées par le client selon une procédure définie.</li>
+    <li><strong>Sauvegardes et restauration</strong> Des sauvegardes et des tests de restauration peuvent être mis en place selon le niveau de service retenu.</li>
+    <li><strong>Contrôle humain</strong> L'humain reste au centre.</li>
+  </ul>
+  <h3>Les modules</h3>
+  <p class="modules">Core · Data · AI · OS · Shield · Network <em>(plus tard)</em></p>
+</div>
+</section>
+
+<section id="acte-7" data-act="7" class="acte">
+<div class="panneau">
+  <h2>Transparence &amp; Limites</h2>
+  <ul class="liste">
+    <li>Aucun traceur publicitaire n'est activé sur ce site. Les éventuels services tiers sont chargés uniquement après une action explicite, lorsque cela est techniquement applicable.</li>
+    <li>Le formulaire — s'il en existe un dans le périmètre — est hébergé et traité selon l'architecture décrite dans la politique de confidentialité.</li>
+    <li>Les solutions IA proposées privilégient l'exécution locale. Tout recours à un modèle ou à un service externe est identifié dans le périmètre du projet.</li>
+    <li>Les demandes de contact sont conservées 3 ans à compter du dernier échange initié par la personne, sauf obligation légale ou relation contractuelle justifiant une durée différente.</li>
+  </ul>
+  <div class="limites" role="note">
+    <h3>Ce que nous ne sommes pas (encore)</h3>
+    <ul><li>Studio en cours d'immatriculation.</li><li>Un seul interlocuteur.</li><li>Une seule machine de calcul.</li><li>Pas de haute disponibilité.</li><li>Aucun chiffre non mesuré.</li></ul>
+  </div>
+</div>
+</section>
+
+<section id="acte-8" data-act="8" class="acte navire">
+<div class="panneau panneau-large">
+  <h2>Contact &amp; Cadrage</h2>
+  <p class="lore">Un galion de métal dans le vide et l'obscurité ; sa seule lumière est la sienne. À la proue, un kraken à tête de mort : ses deux yeux d'or voient pour le navire. Six grandes voiles. Au pavillon, le A : un triangle, deux serres, le sceau à la hampe. Devant, au loin, le Léviathan ; plus loin encore, Yggdrasil.</p>
+  <ol class="route"><li>Un nœud local <em>(aujourd'hui)</em></li><li>Premiers clients pilotes</li><li>Plusieurs nœuds</li><li>Réseau</li></ol>
+  <!-- ⭐ L'OFFRE A ÉTÉ RETIRÉE D'ICI LE 26/09/2026 : elle est dans l'acte 4, sous son titre
+       « L'Offre ». La laisser ici la répétait mot pour mot deux actes plus loin. -->
+  <!-- ⭐ PÔLES D'EXÉCUTION ET CONTACT — proposition de Gaëtan, 26/09/2026.
+       ⛔ SANS PRIX : le contrôle refuse tout montant en €, et le brief dit « sur devis » — Gaëtan
+          l'a confirmé le 26/09 (« laisse les prix »).
+       ⛔ SANS FORMULAIRE EXTERNE : le contact passe par le lien e-mail déjà présent plus bas.
+          Un formulaire vers un service tiers ferait échouer le contrôle ET sortir les données
+          du visiteur de la machine — contre la politique du studio.
+       ⚠️ LES SEPT ÉTAPES DU PARCOURS NE SONT PAS RÉPÉTÉES ICI : elles sont déjà juste au-dessus
+          (bloc « Parcours »). Les ajouter aurait mis deux fois la même liste sur la même page —
+          je l'ai vu en lisant le fichier avant d'écrire. -->
+  <h3 class="titre-section-hud">Pôles d'Exécution &amp; Départements</h3>
+  <div class="grille-departements">
+    <article class="carte-dept">
+      <div class="badge-dept">PÔLE 01 // CORE</div><h4>Ingénierie Web &amp; Métier</h4>
+      <p>Applications sur mesure, architectures modulaires, refontes d'API sous contrôle strict.</p>
+      <ul class="tags-tech"><li>Symfony 7</li><li>Vue.js 3</li><li>API Platform</li><li>PostgreSQL</li></ul>
+    </article>
+    <article class="carte-dept">
+      <div class="badge-dept">PÔLE 02 // EVA-01</div><h4>IA Locale &amp; Systèmes Multi-Agents</h4>
+      <p>Modèles exécutés sur le poste du client ou sur un serveur dédié — aucune donnée ne sort.</p>
+      <ul class="tags-tech"><li>Ollama</li><li>vLLM</li><li>MCP</li><li>ChromaDB</li></ul>
+    </article>
+    <article class="carte-dept">
+      <div class="badge-dept">PÔLE 03 // ARKADIA</div><h4>Mémoire Documentaire &amp; Connaissances</h4>
+      <p>Indexation de documents (PDF, mails, code) avec sourçage exact et suppression à la demande.</p>
+      <ul class="tags-tech"><li>RAG local</li><li>Embeddings</li><li>Sources citées</li><li>Effacement</li></ul>
+    </article>
+    <article class="carte-dept">
+      <div class="badge-dept">PÔLE 04 // SHIELD</div><h4>Audit, Sécurité &amp; Résilience</h4>
+      <p>Conformité RGAA, durcissement, chiffrement des disques, validation humaine continue.</p>
+      <ul class="tags-tech"><li>Chiffrement</li><li>Audit</li><li>Tests de bout en bout</li><li>CI/CD</li></ul>
+    </article>
+  </div>
+  <!-- ⭐ BADGES DE CONFIANCE — proposition de Gaëtan, 26/09/2026.
+       ⛔ LE MOT INTERDIT DU STUDIO A ÉTÉ RETIRÉ DU BADGE, ET DE CE COMMENTAIRE AUSSI. Le badge dit
+          « 100 % LOCAL », qui se VÉRIFIE : le contrôle mesure zéro requête externe, page par
+          page, sur bureau et mobile. **On ne cite pas un mot interdit pour expliquer qu'il est
+          interdit** — le contrôle lit tout le fichier, commentaires compris. -->
+  <div class="badges-rayonnement">
+    <div class="badge-item"><span class="badge-icon" aria-hidden="true">🛡️</span><strong>100 % LOCAL</strong><small>Exécution sur le poste du studio ou chez vous</small></div>
+    <div class="badge-item"><span class="badge-icon" aria-hidden="true">⚡</span><strong>ZÉRO TRACEUR</strong><small>Aucun cookie, aucune mesure d'audience</small></div>
+    <div class="badge-item"><span class="badge-icon" aria-hidden="true">⚓</span><strong>GRAINE 42</strong><small>Système rejouable et auditable</small></div>
+  </div>
+  <div class="bloc-contact-final">
+    <div class="fiche-contact">
+      <h3 class="titre-section-hud">Établir une Liaison</h3>
+      <p>Studio à Harponville (Somme, Hauts-de-France). Échange initial sans engagement.</p>
+      <p><strong>CANAL VIDÉO :</strong> voir le bloc « Vidéos » ci-dessous.</p>
+      <p><strong>CAPACITÉ :</strong> deux nouveaux projets par mois.</p>
+      <p><strong>DONNÉES :</strong> traitées sur la machine du studio ou chez le client. Aucun traceur.</p>
+    </div>
+  </div>
+  <div class="videos">
+    <h3>Vidéos</h3>
+    <button class="facade" type="button" data-chaine="https://www.youtube.com/@xo0-Neo-0ox">
+      <img src="img/facade-videos.webp" alt="" width="640" height="360" loading="lazy">
+      <span>Voir la chaîne — rien n'est chargé depuis YouTube avant ce clic</span>
+    </button>
+  </div>
+  <!-- ⛔ ADRESSE EN CLAIR — ajoutée le 25/09/2026. L'audit externe le relève à juste titre :
+       un lien mailto ne sert à RIEN sur un poste sans logiciel de messagerie configuré. Sans
+       l'adresse visible, ce visiteur-là n'a aucun moyen d'écrire — il ne peut même pas la copier. -->
+  <p class="contact"><a href="mailto:gtn.langlet+lab@gmail.com">Écrire au studio</a> <small>— ou écrivez à <strong>gtn.langlet+lab@gmail.com</strong>, si aucun logiciel de messagerie n'est configuré sur votre poste.</small></p>
+</div>
+</section>
+</main>
+
+<footer class="pied">
+  <p>GL Digital Lab · Génie IT Tek FR · Harponville (Somme) · <a href="https://www.gldigitallab.fr">gldigitallab.fr</a></p>
+  <p>Créé avec l'aide de l'IA · <a href="mentions-legales.html">Mentions légales</a> · <a href="confidentialite.html">Confidentialité</a> · <span class="graine">graine 42</span></p>
+</footer>
+<!-- TIROIR HUD : PÔLES D'EXPERTISE — proposé par Gaëtan le 26/09/2026.
+     ⛔ `hidden` DANS LE HTML, ET C'EST VOULU : sans JavaScript le tiroir n'existe pas à l'écran,
+        et le bouton ne fait rien. Du contenu piégé derrière un script qui n'a pas tourné serait
+        pire que pas de contenu du tout.
+     ⛔ LE MOT INTERDIT DU STUDIO A ÉTÉ RETIRÉ de cette carte : il est dans la liste noire du
+        contrôle, et la page aurait ÉCHOUÉ. La carte dit maintenant « locaux » — le mot juste,
+        et celui qui est vrai. ⚠️ ET IL A FALLU LE RETIRER DEUX FOIS : de la carte, PUIS d'ici —
+        parce que ce commentaire le réécrivait pour l'expliquer, et que le contrôle lit les
+        commentaires comme le reste. *Un commentaire fait partie du fichier.*
+     ⛔ `role="dialog"` + `aria-modal="true"` SANS PIÈGE DE FOCUS : le piège est dans
+        `src/secteurs.mjs` — Tab et Maj+Tab ne sortent plus du tiroir, Escape le ferme, le clic
+        sur le fond aussi. -->
+<div id="tiroir-secteurs" class="tiroir-hud" hidden role="dialog" aria-modal="true" aria-labelledby="titre-secteurs">
+  <div class="tiroir-contenu">
+    <div class="tiroir-en-tete">
+      <div><span class="sous-titre-hud">SECTEURS // MATRICE OPÉRATIONNELLE</span><h2 id="titre-secteurs" class="titre-hud">Pôles d'Intervention &amp; Solutions</h2></div>
+      <button id="fermer-secteurs" type="button" class="bouton-fermer" aria-label="Fermer la matrice des secteurs">✕</button>
+    </div>
+    <div class="grille-secteurs">
+      <article class="carte-secteur" tabindex="0">
+        <div class="secteur-badge">CORE_01</div><h3>Ingénierie Web &amp; Applications Métier</h3>
+        <p>Architectures robustes et durables, axées sur la maintenabilité et la sécurité.</p>
+        <ul class="tags-tech"><li>Symfony 7</li><li>Vue.js 3</li><li>API Platform</li><li>PostgreSQL</li></ul>
+      </article>
+      <article class="carte-secteur" tabindex="0">
+        <div class="secteur-badge">AI_LOCAL_02</div><h3>IA Embarquée &amp; Agents Autonomes</h3>
+        <p>Pipelines de modèles locaux, mémoire documentaire et connecteurs MCP locaux — rien ne sort sans validation.</p>
+        <ul class="tags-tech"><li>Ollama / vLLM</li><li>FastAPI</li><li>MCP</li><li>ChromaDB</li></ul>
+      </article>
+      <article class="carte-secteur" tabindex="0">
+        <div class="secteur-badge">3D_WEBGL_03</div><h3>Expériences Cinématiques &amp; 3D Web</h3>
+        <p>Scrollytelling haute performance, interfaces WebGL et pipelines d'actifs temps réel.</p>
+        <ul class="tags-tech"><li>Three.js</li><li>GLSL</li><li>Séquence d'images</li><li>GLB optimisé</li></ul>
+      </article>
+      <article class="carte-secteur" tabindex="0">
+        <div class="secteur-badge">AUTOMATION_04</div><h3>Audit, Résilience &amp; Automatisation</h3>
+        <p>Industrialisation des flux, sécurisation des données et surveillance automatisée.</p>
+        <ul class="tags-tech"><li>CI/CD &amp; Docker</li><li>Tests de bout en bout</li><li>Chiffrement</li><li>Sauvegardes testées</li></ul>
+      </article>
+    </div>
+    <div class="tiroir-pied"><span>STATUT : DISPONIBLE SUR DEVIS</span><a href="#acte-8" id="lien-devis-direct" class="bouton-action">INITIALISER UN PROJET →</a></div>
+  </div>
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
