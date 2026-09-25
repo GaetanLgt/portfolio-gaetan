@@ -48,6 +48,12 @@ body{margin:0;background:var(--fond);color:var(--texte);font:17px/1.6 system-ui,
 h1,h2,h3{font-family:var(--titre);font-weight:600;line-height:1.15;margin:.4em 0}
 h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3rem);color:var(--cyan)}h3{font-size:1.25rem;color:var(--texte)}
 .sous{font-size:1.4rem;color:var(--cyan)}.axiome{font-style:italic;color:var(--doux);font-size:.9rem}
+/* ⭐ AJOUTÉS LE 25/09/2026 — audit 360° du site. Le hero disait une ambiance, pas un métier.
+   `.metier` répond à la seule question que le visiteur se pose en trois secondes : « est-ce
+   que c'est pour moi ? ». `.cta-hero` met l'action AVANT les huit actes, au lieu de la laisser
+   au bout d'un défilement que beaucoup ne feront pas. */
+.metier{font-size:1.05rem;color:var(--texte);font-weight:600;margin:.35rem 0 .2rem}
+.cta-hero{margin:1.1rem 0 .4rem}
 .indice{font-family:var(--mono);font-size:.8rem;color:var(--doux);animation:pulse 2.4s infinite}
 @keyframes pulse{50%{opacity:.35}}
 .boucle,.pile,.route,.parcours{counter-reset:n;list-style:none;padding-left:.8rem}
