@@ -75,6 +75,19 @@ h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3
 .panneau>.visuel{margin:1.2rem 0 0}
 .limites{border:1px solid #ff6b6b55;border-left:3px solid #ff6b6b;border-radius:10px;padding:.4rem 1rem;margin-top:1.2rem;background:#ff6b6b0d}
 .limites h3{color:#ff9d9d}
+/* ⭐ PREUVES MESURÉES — ajouté le 25/09/2026 (priorité 4 de l'audit 360°).
+   Le bloc `.limites` juste au-dessus est ROSÉ parce qu'il dit ce qui manque. Celui-ci est CYAN
+   — la couleur de la structure sur ce site — parce qu'il dit ce qui tient. *Deux blocs voisins
+   qui disent des choses opposées ne doivent pas se ressembler : la couleur porte le sens avant
+   que la phrase soit lue.* */
+.preuves{border:1px solid #2abfff55;border-left:3px solid #2abfff;border-radius:10px;padding:.4rem 1rem;margin-top:1rem;background:#2abfff0d}
+.preuves h3{color:#8fdcff}
+.preuves ul{list-style:none;padding-left:0;margin:.6rem 0}
+.preuves li{margin:.6rem 0;padding-left:1.1rem;position:relative}
+.preuves li::before{content:"▪";position:absolute;left:0;color:var(--cyan)}
+.preuves strong{color:#fff}
+.comment-verifier{display:block;color:var(--doux);font-size:.82rem;font-style:italic;margin-top:.15rem}
+.preuves-note{color:var(--doux);font-size:.85rem;font-style:italic;margin-top:.9rem;border-top:1px solid #2abfff33;padding-top:.7rem}
 .facade{display:block;position:relative;width:100%;max-width:40rem;padding:0;border:1px solid #2abfff55;background:var(--fond2);color:var(--texte);cursor:pointer;font:inherit}
 .facade img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
 .facade span{display:block;padding:.6rem;font-family:var(--mono);font-size:.85rem}
