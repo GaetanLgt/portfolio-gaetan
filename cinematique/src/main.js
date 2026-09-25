@@ -9,6 +9,9 @@ import { construireLeviathan } from './leviathan.js';
 // ⭐ LE TIROIR DES PÔLES D'EXPERTISE — ajouté le 26/09/2026, proposé par Gaëtan. Il vit dans son
 //    propre module : il ne dépend de rien, et il se retire en supprimant cette ligne.
 import { preparerSecteurs } from './secteurs.js';
+// ⭐ LE BOUTON « COPIER L'ADRESSE » — ajouté le 26/09/2026 (audit externe, code reformulé). Même
+//    règle que le tiroir : un module à part, qui ne dépend de rien et se retire en une ligne.
+import { preparerCopieAdresse } from './copier-adresse.js';
 
 const G = creerGraine(42);
 // ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. La préférence SYSTÈME ne suffit pas :
@@ -484,6 +487,8 @@ facades();
 preparerRevelation();
 // ⭐ le tiroir des pôles d'expertise (secteurs.js) — il s'installe en dernier, quand le DOM est là
 preparerSecteurs();
+// ⭐ et le bouton « copier l'adresse » de l'acte 8, sur le même principe d'installation tardive
+preparerCopieAdresse();
 await chargerCles(); demander();
 // ⚠️ AVANT le `if (!REDUIT)` ci-dessous, et c'est le point : en mode réduit il faut POUVOIR
 // REVENIR. Un interrupteur branché à l'intérieur du bloc laisserait le visiteur coincé.

@@ -235,7 +235,15 @@
   <!-- ⛔ ADRESSE EN CLAIR — ajoutée le 25/09/2026. L'audit externe le relève à juste titre :
        un lien mailto ne sert à RIEN sur un poste sans logiciel de messagerie configuré. Sans
        l'adresse visible, ce visiteur-là n'a aucun moyen d'écrire — il ne peut même pas la copier. -->
-  <p class="contact"><a href="mailto:gtn.langlet+lab@gmail.com?subject=Prise%20de%20contact%20%E2%80%94%20GL%20Digital%20Lab">Écrire au studio</a> <small>— ou écrivez à <strong>gtn.langlet+lab@gmail.com</strong>, si aucun logiciel de messagerie n'est configuré sur votre poste.</small></p>
+  <!-- ⭐ BOUTON « COPIER L'ADRESSE » — ajouté le 26/09/2026 sur le même constat, mais PAS avec le
+       code proposé par l'audit : celui-ci DÉTOURNAIT le lien mailto (le visiteur qui veut écrire
+       se faisait copier l'adresse à la place), changeait son libellé (« Écrire au studio »
+       disparaissait — un lien doit se comprendre hors contexte, WCAG 2.4.4), et réécrivait
+       l'adresse en dur alors qu'elle est DÉJÀ dans la page deux lignes plus bas.
+       Ici : un BOUTON distinct, à côté du lien, qui ne remplace rien. Il reste `hidden` et c'est
+       le module qui le révèle — même règle que le tiroir : pas de contenu piégé derrière un
+       script qui n'a pas tourné, et pas de bouton qui copie du vide sans presse-papiers. -->
+  <p class="contact"><a href="mailto:gtn.langlet+lab@gmail.com?subject=Prise%20de%20contact%20%E2%80%94%20GL%20Digital%20Lab">Écrire au studio</a> <button type="button" id="copier-adresse" class="copier-adresse" aria-label="Copier l'adresse e-mail du studio" hidden>Copier l'adresse</button> <span id="copie-etat" class="copie-etat" role="status" aria-live="polite"></span> <small>— ou écrivez à <strong>gtn.langlet+lab@gmail.com</strong>, si aucun logiciel de messagerie n'est configuré sur votre poste.</small></p>
 </div>
 </section>
 </main>

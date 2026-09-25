@@ -63,10 +63,34 @@ h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3
 .facade span{display:block;padding:.6rem;font-family:var(--mono);font-size:.85rem}
 .facade:focus-visible,a:focus-visible{outline:2px solid var(--jaune);outline-offset:3px}
 .offre strong{color:var(--jaune)}.contact a{color:var(--jaune);font-family:var(--mono)}
+/* ---- BOUTON « COPIER L'ADRESSE » (audit externe du 26/09/2026, reformulé) ----
+   ⛔ PAS DE VERT ICI, ET CE N'EST PAS UN DÉTAIL DE GOÛT : dans la palette du studio le vert dit
+   la SANTÉ MENTALE. Un bouton utilitaire n'a rien à y prendre. C'est le CYAN du site.
+   ⚠️ `.copier-adresse[hidden]` est écrit pour la même raison que `.tiroir-hud[hidden]` : une
+   déclaration `display` d'auteur écrase le `display:none` que `hidden` pose par défaut.
+   ⚠️ La confirmation est éphémère, ANNONCÉE (`aria-live="polite"`, dans le HTML) et elle ne
+   touche JAMAIS au libellé du bouton : un message qui remplace le nom d'un contrôle le rend
+   muet pour la suite. */
+.copier-adresse{margin-left:.5rem;padding:.25rem .6rem;border:1px solid #2abfff55;border-radius:6px;background:none;color:var(--cyan);font-family:var(--mono);font-size:.75rem;cursor:pointer}
+.copier-adresse[hidden]{display:none}
+.copier-adresse:hover{border-color:var(--cyan);color:var(--texte)}
+.copier-adresse:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.copie-etat{color:var(--cyan);font-family:var(--mono);font-size:.75rem}
 a{color:var(--cyan)}
 .pied{position:relative;z-index:2;padding:2rem 1rem 3rem;text-align:center;font-family:var(--mono);font-size:.8rem;color:var(--doux);background:var(--fond)}
 .graine{color:var(--oracle)}
-@media (max-width:600px){body{font-size:16px}.barre nav{display:none}}
+/* ⛔ CORRIGÉ LE 26/09/2026 — LE BOUTON DES PÔLES ÉTAIT INATTEIGNABLE SUR TÉLÉPHONE.
+   La règle disait `.barre nav{display:none}` : tout le <nav> disparaissait en dessous de
+   600 px, y compris le bouton « Expertises » qui ouvre le tiroir des pôles. Mesuré à
+   390×844 : aucune boîte, aucun autre déclencheur dans la page — la fonctionnalité
+   n'existait tout simplement pas sur mobile.
+   ⭐ C'est EXACTEMENT le défaut que ce fichier dénonce douze lignes plus haut, à propos de
+   l'interrupteur d'animations : « un contrôle d'accessibilité qui s'efface selon la taille
+   de l'écran est un contrôle qui manque précisément à ceux qui en ont besoin ». La règle
+   était écrite ; elle n'avait pas été appliquée au contrôle ajouté après elle.
+   ⇒ On ne masque plus que les LIENS (la navigation par ancres, que les repères de
+   progression remplacent déjà sur mobile). Le bouton reste. */
+@media (max-width:600px){body{font-size:16px}.barre nav a{display:none}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.indice{animation:none}#revelation{display:none}}
 
 
