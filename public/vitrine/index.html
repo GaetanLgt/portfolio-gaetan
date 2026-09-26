@@ -196,6 +196,33 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
       --f-runes: 'Segoe UI Historic', 'Noto Sans Runic', 'Noto Sans', system-ui, sans-serif;
     }
   </style>
+<!-- ⭐ LES BALISES DE PARTAGE — ajoutées le 26/09/2026.
+     ⛔ CE QUI MANQUAIT, MESURÉ : la vitrine est posée à la RACINE de gldigitallab.fr
+        (via `scripts/poser-vitrine.mjs`), et elle ne portait AUCUNE balise og: ni
+        twitter: — alors que le `index.html` qu'elle remplace en portait onze.
+        Résultat constaté après déploiement : 183 084 octets en ligne, `og:` = 0.
+        *Un site qui change de visage sans emporter ses métadonnées perd sa carte de
+        visite en silence : personne ne le voit, et tout le monde s'en sert.*
+     ⭐ ET UNE DETTE EST SOLDÉE. `arkadia-vitrine/index.html` nommait cette absence
+        depuis le 25/09 — « DETTE OUVERTE : il n'y a PAS d'og:image ». `og-navire.jpg`
+        existe, il répond 200 à la racine (1200x630, 42 990 octets), et il convient
+        aux deux vitrines : c'est le galion. -->
+<meta property="og:title" content="ArkAdiA — le navire de GL Digital Lab">
+<meta property="og:description" content="Un galion fantôme de métal, dans le vide. Oracle a faim, la graine décide, et le joueur n'est pas le héros. Huit actes, une scène 3D construite par le code.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="GL Digital Lab">
+<meta property="og:url" content="https://gldigitallab.fr/">
+<meta property="og:image" content="https://gldigitallab.fr/og-navire.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Le galion fantôme ARKADIA : une coque de métal dans le vide, éclairée par les traînées de la scène 3D.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ArkAdiA — le navire de GL Digital Lab">
+<meta name="twitter:description" content="Un galion fantôme de métal, dans le vide. Le joueur n'est pas le héros.">
+<meta name="twitter:image" content="https://gldigitallab.fr/og-navire.jpg">
+<meta name="twitter:image:alt" content="Le galion fantôme ARKADIA, dans le vide.">
+<link rel="canonical" href="https://gldigitallab.fr/">
 </head>
 <body>
 <div class="ark-stage" id="ark-stage" aria-hidden="true"></div>
