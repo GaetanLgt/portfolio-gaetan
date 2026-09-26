@@ -48,15 +48,11 @@
          ajoutait un second à l'intérieur. La classe porte la mise en page, pas la sémantique. -->
     <div class="lib-content">
       <div class="container">
-<<<<<<< Updated upstream
-        <h2 class="lib-sous-titre">Composants disponibles</h2>
-=======
         <!-- Titre de niveau 2 : sans lui la hiérarchie saute de h1 (en-tête de
              page) à h3 (titre de carte). Masqué visuellement pour ne rien
              changer à la maquette ; lu par les lecteurs d'écran et compté par
              l'audit d'accessibilité. -->
         <h2 class="sr-only">Composants disponibles</h2>
->>>>>>> Stashed changes
         <TransitionGroup name="grid" tag="div" class="components-grid">
           <article 
             v-for="comp in filteredComponents" 
