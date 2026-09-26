@@ -458,6 +458,41 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: /public_html/
+          # ⛔⛔ DEUX EXCLUSIONS, ET ELLES RÉPARENT UNE PANNE MESURÉE LE 26/09/2026.
+          #
+          # ⚠️ CE QUI SE PASSAIT. `cinematique` déploie `./cinematique/` vers
+          #    `/public_html/` — **la racine du domaine**. Et cette étape-ci déployait
+          #    `./dist/`, dont `index.html` **est la vitrine ArkAdiA**, vers **la même
+          #    racine**. ⇒ **Deux pipelines écrivaient au même endroit, et le dernier
+          #    passé gagnait.**
+          #
+          #    Le commentaire de `deploy-cinematique.yml` l'avait écrit noir sur blanc :
+          #      « Le pipeline du site précédent se déclenchait à chaque push sur `main`
+          #        et il aurait repris l'accueil au premier push suivant, en silence. »
+          #    ⭐ *La panne était NOMMÉE dans le code. Il suffisait de le lire.*
+          #
+          # ⭐ CE QUI S'EST PASSÉ LE 26/09, dans l'ordre : le site cinématique a été
+          #    redéployé, il a repris la racine… puis ce pipeline-ci a terminé derrière
+          #    et **la vitrine ArkAdiA a repris la racine**. Mesure : 185 337 octets,
+          #    titre « ArkAdiA », au lieu de « GL Digital Lab — Vos outils. ».
+          #
+          # ⇒ TROIS CHOSES NE SONT PAS DÉPLOYÉES ICI, ET CHACUNE A SA RAISON :
+          #     · `/index.html`   — la racine appartient au site cinématique.
+          #                         ⭐ La vitrine ArkAdiA a SON adresse : arkadia.gldigitallab.fr,
+          #                           servie par `deploy-arkadia-vitrine.yml`. *Un objet à sa
+          #                           place n'a pas besoin d'en prendre une autre.*
+          #     · `/cinematique/` — ce dossier sert la REDIRECTION de l'ancienne adresse
+          #                         vers la racine (déployée par `deploy-cinematique.yml`).
+          #                         ⛔ `dist/` en porte une copie qui l'écrasait : `/cinematique/`
+          #                           servait 185 337 octets de vitrine au lieu de rediriger.
+          #
+          # ⚠️ TOUT LE RESTE PASSE : `/dossier`, `/demos/`, `/univers/`, `/plan/`,
+          #    `/components`, `/le-pont/`, `/monde/`, `/TARDIS/`… — les 48 pages du
+          #    studio restent à leurs adresses. **On n'enlève pas le site : on lui retire
+          #    une porte qu'il n'aurait pas dû ouvrir.**
+          exclude: |
+            /index.html
+            /cinematique/**
           dangerous-clean-slate: false
 
       # ⚠ `.htaccess` : DEUX barrières l'empêchaient d'arriver sur le serveur
