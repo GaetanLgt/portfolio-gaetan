@@ -274,11 +274,11 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
     <div class="act-inner">
       <div class="eyebrow">III <span>/ Le navire</span></div>
       <h2>Un galion fantôme, <em>de métal, dans le vide</em></h2>
-      <p>Aucune voile : des haubans d'acier et pas de mer. À la proue, <strong>un kraken à tête de mort</strong> — le crâne <em>est</em> la tête de la bête, les tentacules en naissent, et ses deux yeux brûlent d'une <strong>flamme d'or</strong>. À la hampe, le pavillon porte le <strong>A</strong> : un triangle, deux serres, et le sceau qui le signe.</p>
+      <p>Six voiles, toutes grandes : quatre de vitesse à l'avant, deux de manœuvre à l'arrière. Des haubans d'acier et pas de mer. À la proue, <strong>un kraken à tête de mort</strong> — le crâne <em>est</em> la tête de la bête, les tentacules en naissent, et ses deux yeux brûlent d'une <strong>flamme d'or</strong>. À la hampe, le pavillon porte le <strong>A</strong> : un triangle, deux serres, et le sceau qui le signe.</p>
       <p>Le navire vit dans une obscurité permanente. <strong>Sa seule lumière est la sienne.</strong></p>
       <dl class="specs">
         <div><dt>Coque</dt><dd>Métal</dd></div>
-        <div><dt>Mâts</dt><dd>Acier, sans voile</dd></div>
+        <div><dt>Mâts</dt><dd>Acier, six grandes voiles</dd></div>
         <div><dt>Figure de proue</dt><dd>Kraken à tête de mort</dd></div>
         <div><dt>Sauts vers la Terre</dt><dd>12</dd></div>
       </dl>
@@ -352,7 +352,7 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
       <div class="cap-text">
       <div class="eyebrow">VIII <span>/ Le capitaine</span></div>
       <h2>Tu n'es pas <em>le héros</em></h2>
-      <p>Le joueur est le capitaine du navire fantôme. On ne joue pas le Mal : on le combat, en le sachant. Des marins qui savent qu'ils ne rentreront pas, et qui tiennent la barre quand même.</p>
+      <p>Le joueur est le capitaine du navire fantôme. On ne combat pas le Mal : on le joue, en le sachant. Des marins qui savent qu'ils ne rentreront pas, et qui tiennent la barre quand même.</p>
       <div class="runes">ᚨᚱᚲᚨᛞᛁᚨ<small>ARKADIA · 7 runes · une rune note un son</small></div>
       <div class="cta-row">
         <a class="btn" href="https://gldigitallab.fr" target="_blank" rel="noopener">GL Digital Lab ↗</a>
@@ -585,7 +585,7 @@ function edges(mesh,thr){var e=new T.LineSegments(new T.EdgesGeometry(mesh.geome
   // hublots : la seule lumière est la sienne
   var winMat=new T.MeshBasicMaterial({color:0xffc857});
   for(var k=0;k<7;k++){[-1,1].forEach(function(s){var wdw=new T.Mesh(new T.CircleGeometry(.17,16),winMat);wdw.position.set(s*3.72,3.0,-15.2+k*.85);wdw.rotation.y=s*Math.PI/2;ship.add(wdw);});}
-  // mâts d'acier, sans voile ni cordage
+  // mâts d'acier, six grandes voiles, pas de cordage
   [[0,9,-10],[0,11.5,-6],[0,13,-2],[0,13,6.6],[0,11,10.2],[0,8.5,13.6]].forEach(function(m){var mast=new T.Mesh(new T.CylinderGeometry(.18,.3,m[1],8),steelMat);mast.position.set(m[0],1.6+m[1]/2,m[2]);ship.add(mast);
     var yard=new T.Mesh(new T.CylinderGeometry(.1,.1,m[1]*.55,6),steelMat);yard.rotation.z=Math.PI/2;yard.position.set(0,1.6+m[1]*.78,m[2]);ship.add(yard);
     /* ⭐ LA VOILE DU MÂT — TOUTES GRANDES.

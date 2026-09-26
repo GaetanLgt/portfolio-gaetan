@@ -159,8 +159,8 @@ const controles = [
      des deux a suffi à tout bloquer.*
      ⇒ Retournées le 24/09/2026, à la demande de Néo. **Ce qui reste défendu, c'est ce
        qui n'a PAS changé** — et le reste de cette liste le dit. */
-  ['l\'axiome est celui demandé', vitrine.includes('On ne joue pas le Mal : on le combat, en le sachant')],
-  ['l\'ancien axiome ne revient pas', !vitrine.includes('On ne combat pas le Mal : on le joue')],
+  ['l\'axiome est celui demandé', vitrine.includes('On ne combat pas le Mal : on le joue, en le sachant')],
+  ['l\'ancien axiome ne revient pas', !vitrine.includes('On ne joue pas le Mal : on le combat')],
   ['aucun vert', !/37ff9a|5dff8a|3dff7a/.test(vitrine)],
   /* ⭐ Les voiles sont désormais EXIGÉES, pas interdites : six, toutes grandes. */
   ['les six voiles sont là', vitrine.includes('function sailMat(')],

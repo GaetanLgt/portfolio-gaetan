@@ -750,7 +750,7 @@
               <strong>propulsion</strong>, le <strong>lest</strong>, la <strong>cale</strong>,
               l'<strong>équipage</strong>, la <strong>vigie</strong>. C'est le vocabulaire de
               la marine, et c'est aussi celui d'une machine qui se surveille —
-              <em>la même chose, dite autrement.</em> Il n'a pas de voiles : il a le vide.
+              <em>la même chose, dite autrement.</em> Il a six voiles, toutes grandes, et le vide à la place de la mer.
               Et l'œil de proue s'allume.
             </p>
           </div>
