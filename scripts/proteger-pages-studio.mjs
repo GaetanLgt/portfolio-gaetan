@@ -134,8 +134,19 @@ if (aProteger.some((x) => x.nom === 'index.html')) {
 dire("  ✅ ASSERTION 2 : index.html n'est PAS protege — la cinematique garde la racine.");
 
 // ─── Le bloc YAML ─────────────────────────────────────────────────────────────
+//
+// ⛔ 12 ESPACES, PAS 10 — et ce n'est pas une coquetterie d'indentation.
+//    Le contenu d'un bloc littéral `|` doit être indenté PLUS que sa clé. Écrit à
+//    10 espaces, il se retrouvait au même niveau que `exclude:` — et YAML lisait
+//    `404.html` comme une NOUVELLE CLÉ.
+//    ⭐ Mesure : `ScannerError: while scanning a simple key … line 103, column 11`,
+//      et le run **36223085030 est mort en 0 seconde**, avant toute étape. GitHub
+//      affichait seulement « This run likely failed because of a workflow file issue. »
+//    ⭐ Et le script, lui, avait annoncé « ecrit et relu a l'identique ». *C'était
+//      vrai — et le fichier était faux.* Relire ne prouve pas : ça rassure.
+//    ⇒ Le contrôle qui manquait est ajouté plus bas, et il porte sur l'INDENTATION.
 const lignesExclude = aProteger
-  .map((x) => `          ${x.nom}${x.dossier ? '/**' : ''}`)
+  .map((x) => `            ${x.nom}${x.dossier ? '/**' : ''}`)
   .join('\n');
 
 const bloc = `          # ⛔⛔ PROTECTION DES PAGES DU STUDIO — AJOUTEE LE 26/09/2026 APRES UNE PANNE.
@@ -175,11 +186,15 @@ if (yml.includes('PROTECTION DES PAGES DU STUDIO')) {
   // On retire l'ancien bloc, de son commentaire a la fin de sa liste d'exclusion.
   const debut = yml.indexOf('          # ⛔⛔ PROTECTION DES PAGES DU STUDIO');
   if (debut !== -1) {
-    const marqueur = '          exclude: |\n';
-    const dEx = yml.indexOf(marqueur, debut);
+    // ⚠️ ET LE MÊME PIÈGE SE REFAISAIT ICI : le fichier est en **CRLF**, donc
+    //    `indexOf('          exclude: |\n')` ne matche PAS — l'ancien bloc n'était pas
+    //    retiré, et on en insérait un SECOND. *On cherche par MOTIF, jamais par chaîne
+    //    exacte dans un fichier dont on ne maîtrise pas les fins de ligne.*
+    const dEx = yml.slice(debut).search(/^ {10}exclude: \|\r?$/m);
     if (dEx !== -1) {
-      const apres = yml.indexOf('          dangerous-clean-slate', dEx);
-      const fin = apres !== -1 ? apres : dEx + marqueur.length;
+      const dExAbs = debut + dEx;
+      const apres = yml.slice(dExAbs).search(/^ {10}dangerous-clean-slate/m);
+      const fin = apres !== -1 ? dExAbs + apres : dExAbs + 1;
       yml = yml.slice(0, debut) + yml.slice(fin);
     }
   }
@@ -217,6 +232,33 @@ if (echecs > 0) { dire(`  ⛔ ${echecs} echec(s) — RIEN N'A ETE ECRIT`); proce
 writeFileSync(WORKFLOW, nouveau, 'utf8');
 const relu = readFileSync(WORKFLOW, 'utf8');
 if (relu !== nouveau) { dire('  ⛔ le fichier relu differe de ce qui a ete ecrit'); process.exit(1); }
+
+// ⛔⛔ L'ASSERTION QUI MANQUAIT : CE QUI EST ÉCRIT DOIT ÊTRE UN YAML VALIDE.
+//
+// ⭐ *« relu à l'identique » ne veut pas dire « correct ».* On a su écrire un fichier
+//    invalide, et le relire ne l'a pas démenti — c'est la CI qui l'a démenti, en
+//    **0 seconde**, avec pour tout message « a workflow file issue ».
+// ⇒ Ce contrôle-ci est structurel : il vérifie l'indentation du bloc littéral, qui est
+//   exactement ce qui avait cassé. *Deux écritures successives ont échoué ici pour la
+//   même raison — un contrôle qui regarde ce qu'on a fait au lieu de regarder ce que
+//   ça donne.*
+const lignesFichier = relu.split(/\r?\n/);
+const iEx = lignesFichier.findIndex((l) => l.trim() === 'exclude: |');
+if (iEx === -1) {
+  dire("  ⛔ le bloc `exclude: |` est introuvable dans le fichier ecrit"); process.exit(1);
+}
+const indCle = lignesFichier[iEx].length - lignesFichier[iEx].trimStart().length;
+const suivante = lignesFichier[iEx + 1] || '';
+const indSuiv = suivante.length - suivante.trimStart().length;
+if (!(indSuiv > indCle)) {
+  dire('');
+  dire(`  ⛔ YAML INVALIDE : la 1re entree d'exclusion est a ${indSuiv} espaces,`);
+  dire(`     et la cle \`exclude:\` a ${indCle}. Le contenu d'un bloc litteral doit etre`);
+  dire('     indente PLUS que sa cle — sinon YAML lit la 1re entree comme une cle.');
+  dire('     Le workflow serait refuse par GitHub, comme le run 36223085030.');
+  process.exit(1);
+}
+dire(`  ✅ YAML verifie : le bloc est a ${indSuiv} espaces, la cle \`exclude:\` a ${indCle}.`);
 dire('');
 dire(`  ✅ deploy-cinematique.yml protege ${aProteger.length} entrees, ecrit et relu a l'identique.`);
 
