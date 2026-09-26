@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les démos — GL Digital Lab</title>
+<meta name="description" content="Les démonstrations du studio, visitables maintenant : un suivi de conformité, un site d'événement, un galion fantôme en 3D, une salle de pont. Aucune maquette.">
+<meta property="og:title" content="Les démos — GL Digital Lab">
+<meta property="og:description" content="Ce que le studio a réellement construit, et où le voir. Tout se visite, rien n'est une maquette.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GL Digital Lab">
+<meta property="og:url" content="https://gldigitallab.fr/demos">
+<meta property="og:image" content="https://gldigitallab.fr/og-navire.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="canonical" href="https://gldigitallab.fr/demos">
+<style>
+  :root{
+    --noir:#080b14; --panneau:#0b0f14; --bord:#2b3a4a;
+    --vert:#2ce39b; --bleu:#2abfff; --rouge:#ff5a5f;
+    --argent:#9fb3c8; --texte:#e6edf3;
+    --mono:ui-monospace,'JetBrains Mono',Consolas,monospace;
+    --runes:'Segoe UI Historic','Noto Sans Runic',system-ui,sans-serif;
+    --f-titre:'Fraunces','Iowan Old Style',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--noir);color:var(--texte);
+       font:15px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+       background-image:radial-gradient(70% 55% at 70% 20%,#10213a,transparent 70%)}
+  .enveloppe{max-width:54rem;margin:0 auto;padding:56px 22px 96px}
+  .grave{font-family:var(--runes);font-size:26px;letter-spacing:.3em;color:var(--bleu);
+         text-shadow:0 0 18px rgba(42,191,255,.45);margin:0 0 10px}
+  h1{font:400 30px/1.2 var(--f-titre);margin:0 0 8px}
+  .sous{color:var(--argent);margin:0 0 14px;max-width:44rem}
+  .regle{font:500 11px/1.5 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+         color:var(--vert);border-left:2px solid var(--vert);padding-left:12px;margin:0 0 44px}
+  h2.etage{font:500 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+           color:var(--argent);margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid #16212c}
+  .grille{display:grid;gap:14px;margin:0 0 46px}
+  .carte{border:1px solid var(--bord);border-radius:12px;background:var(--panneau);padding:20px 22px}
+  .carte h3{font-size:17px;margin:0 0 8px;font-weight:600}
+  .carte p{margin:0 0 12px;color:var(--argent);font-size:14px}
+  .carte p b{color:var(--texte);font-weight:600}
+  .prouve{font-size:13px;border-left:2px solid var(--bleu);padding-left:12px;margin:0 0 14px;color:var(--argent)}
+  .prouve span{display:block;color:var(--bleu);font:500 10px/1 var(--mono);letter-spacing:.16em;
+               text-transform:uppercase;margin-bottom:4px}
+  .voir{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+        padding:10px 16px;border-radius:6px;border:1px solid #35506b;background:#16212c;
+        color:var(--texte);text-decoration:none}
+  .voir:hover{border-color:var(--vert);color:var(--vert)}
+  .voir:focus-visible{outline:2px solid var(--vert);outline-offset:2px}
+  footer{margin-top:56px;padding-top:22px;border-top:1px solid #16212c;color:var(--argent);font-size:13px}
+  footer a{color:var(--bleu)}
+  @media (min-width:46rem){ .grille{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<div class="enveloppe">
+
+  <p class="grave">ᚨᚱᚲᚨᛞᛁᚨ</p>
+  <h1>Les démos</h1>
+  <p class="sous">Ce que le studio a construit, visitable maintenant. <b>Aucune capture, aucune maquette</b> :
+     chaque carte ci-dessous ouvre une page qui existe et qui tourne.</p>
+  <p class="regle">Ce qu'on peut montrer, on le montre. Ce qu'on ne peut pas encore, on ne le promet pas.</p>
+
+  <h2 class="etage">Des applications, en ligne</h2>
+  <div class="grille">
+
+    <article class="carte">
+      <h3>Suivi de conformité et d'échéances</h3>
+      <p>Un tableau de bord qui rassemble des obligations réglementaires et leurs dates, avec un état
+         lisible d'un coup d'œil. <b>Une application métier, pas une démonstration technique.</b></p>
+      <div class="prouve"><span>Ce que ça démontre</span>
+        Une application qui remplace un tableur : les données sont structurées, l'échéance est calculée,
+        et l'écran dit quoi faire avant que ce soit en retard.</div>
+      <a class="voir" href="/demo-conformite/">Ouvrir la démo</a>
+    </article>
+
+    <article class="carte">
+      <h3>Site d'événement — Festival Pop Culture, Metz</h3>
+      <p>Un site de festival : programme, dates, lieux, informations pratiques.
+         <b>Monté et livrable en quelques jours</b>, pas en quelques semaines.</p>
+      <div class="prouve"><span>Ce que ça démontre</span>
+        Un site vitrine d'événement qui tient sur un téléphone, se charge vite, et que l'organisateur
+        peut faire vivre sans développeur.</div>
+      <a class="voir" href="/demo-festival-metz/">Ouvrir la démo</a>
+    </article>
+
+  </div>
+
+  <h2 class="etage">Des pièces techniques, visitables</h2>
+  <div class="grille">
+
+    <article class="carte">
+      <h3>ARKADIA — la salle du pont</h3>
+      <p>Une scène en <b>trois dimensions temps réel</b>, dans une page, sans plugin et sans rien à
+         installer. On tourne autour du navire à la souris ou à la manette.</p>
+      <div class="prouve"><span>Ce que ça démontre</span>
+        De la 3D livrée dans un navigateur, <b>construite par le code</b> plutôt que chargée depuis un
+        fichier lourd — et qui reste fluide sur une machine ordinaire.</div>
+      <a class="voir" href="/le-pont/">Entrer dans la salle</a>
+    </article>
+
+    <article class="carte">
+      <h3>Arkadia — le laboratoire</h3>
+      <p>Un monde généré, avec <b>sa graine affichée</b> : la même graine redonne le même monde.
+         C'est la règle du studio — <b>un monde qui se génère s'annonce généré</b>.</p>
+      <div class="prouve"><span>Ce que ça démontre</span>
+        Une génération <b>reproductible</b> : on peut rejouer la mesure, la comparer, la contester.
+        *Un résultat qu'on ne peut pas refaire n'est pas un résultat.*</div>
+      <a class="voir" href="/monde/">Visiter le laboratoire</a>
+    </article>
+
+  </div>
+
+  <h2 class="etage">Ce qui n'est pas ici, et pourquoi</h2>
+  <div class="carte">
+    <p>Le studio fait aussi <b>tourner un réseau de modèles d'IA chez lui</b> — un assistant vocal,
+       un moteur de recherche sur ses propres documents, un moissonneur qui lit ses écrans et range
+       tout sur son disque. <b>Ces outils ne sont pas en ligne, et c'est volontaire</b> : ils lisent
+       la machine, ils n'ont rien à faire sur un serveur.</p>
+    <p style="margin:0">Démonstration sur demande.</p>
+  </div>
+
+  <footer>
+    <p>GL Digital Lab · Génie IT Tek FR — Harponville, Somme.<br>
+       <a href="https://gldigitallab.fr/">gldigitallab.fr</a> · <a href="mailto:contact@gldigitallab.fr">contact@gldigitallab.fr</a></p>
+  </footer>
+
+</div>
+</body>
+</html>
