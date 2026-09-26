@@ -450,6 +450,52 @@ jobs:
           name: dist
           path: dist/
 
+      # ⛔⛔ LA GARANTIE QUI NE DÉPEND D'AUCUN GLOB — ajoutée le 26/09/2026.
+      #
+      # ⚠️ LA PANNE, ET ELLE A ÉTÉ MESURÉE DEUX FOIS. Le 26/09, la racine de
+      #    `gldigitallab.fr` a servi la vitrine ArkAdiA (185 337 octets, titre « ArkAdiA »)
+      #    alors qu'elle appartient au site cinématique (38 399 octets, titre « GL Digital
+      #    Lab — Vos outils. »). Le pipeline studio était pourtant censé EXCLURE
+      #    `index.html` du déploiement.
+      #
+      # ⚠️ ET ON NE TRANCHE PAS LA CAUSE PAR LE GLOB. Deux syntaxes ont été essayées —
+      #    `/index.html` puis `index.html`. La correction de syntaxe est faite (et
+      #    `scripts/proteger-pages-studio.mjs` REFUSE désormais d'écrire si une exclusion
+      #    garde son slash initial), **mais elle ne prouve rien** : le comportement de
+      #    `SamKirkland/FTP-Deploy-Action` sur ses exclusions est une propriété d'un outil
+      #    TIERS, et on ne bâtit pas une garantie sur la syntaxe d'un outil qu'on ne teste
+      #    pas ici. *Une exclusion qu'on n'a pas vue mordre est une exclusion qu'on espère.*
+      #
+      # ⇒ LA GARANTIE EST DONC AILLEURS, ET ELLE EST TRIVIALE : **on retire le fichier
+      #   avant l'envoi.** Un fichier absent de `local-dir` ne peut pas être envoyé, quelle
+      #   que soit la façon dont l'action lit ses motifs. *On ne convainc pas l'outil :
+      #   on lui enlève la matière.*
+      #
+      # ⚠️ ET CE N'EST PAS COSMÉTIQUE : la vitrine ArkAdiA a SON adresse
+      #    (arkadia.gldigitallab.fr). *Un objet à sa place n'a pas besoin d'en prendre une autre.*
+      #
+      # ⛔ CE QUE CETTE ÉTAPE NE FAIT PAS : elle ne touche ni aux 48 pages du studio, ni
+      #    au `.htaccess`, ni aux assets. Un seul fichier, nommé, retiré d'un dossier
+      #    d'artefact CI — jamais du dépôt.
+      - name: ⛔ Retirer index.html du dossier publié — la racine n'est PAS au studio
+        run: |
+          set -euo pipefail
+          if [ -f dist/index.html ]; then
+            echo "dist/index.html présent : $(wc -c < dist/index.html) octets"
+            grep -o '<title>[^<]*</title>' dist/index.html | head -1 || true
+            rm -f dist/index.html
+          else
+            echo "dist/index.html absent — rien à retirer."
+          fi
+          # ⭐ L'ASSERTION : on relit le DISQUE, on ne se fie pas à la commande qu'on vient
+          #    de lancer. *Un remplacement sans assertion est un remplacement à l'aveugle*
+          #    — loi 2 de l'atelier, payée trois fois en une nuit.
+          if [ -e dist/index.html ]; then
+            echo "::error::dist/index.html est TOUJOURS là après suppression — on n'envoie pas."
+            exit 1
+          fi
+          echo "✅ dist/index.html retiré : ce pipeline ne peut plus reprendre la racine."
+
       - name: 🚀 Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -490,9 +536,13 @@ jobs:
           #    `/components`, `/le-pont/`, `/monde/`, `/TARDIS/`… — les 48 pages du
           #    studio restent à leurs adresses. **On n'enlève pas le site : on lui retire
           #    une porte qu'il n'aurait pas dû ouvrir.**
+          # ⚠️ CHEMINS RELATIFS A local-dir, SANS SLASH INITIAL — corrige le 26/09/2026.
+          #    La premiere version ecrivait `/index.html`. Elle n'a PAS matche : la preuve
+          #    est que la racine a resservi la vitrine ArkAdiA apres le run 36218713139.
+          #    *Une exclusion qui ne mord pas est une exclusion qui n'existe pas.*
           exclude: |
-            /index.html
-            /cinematique/**
+            index.html
+            cinematique/**
           dangerous-clean-slate: false
 
       # ⚠ `.htaccess` : DEUX barrières l'empêchaient d'arriver sur le serveur
