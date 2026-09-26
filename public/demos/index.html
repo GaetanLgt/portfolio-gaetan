@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Les démos — GL Digital Lab</title>
-<meta name="description" content="Les démonstrations du studio, visitables maintenant : un suivi de conformité, un site d'événement, un galion fantôme en 3D, une station de production décrite honnêtement, un poste reconstruit par script. Aucune maquette.">
+<meta name="description" content="10 démonstrations du studio, visitables maintenant — aucune capture, aucune maquette. Chaque adresse répond.">
 <meta property="og:title" content="Les démos — GL Digital Lab">
 <meta property="og:description" content="Ce que le studio a réellement construit, et où le voir. Tout se visite, rien n'est une maquette.">
 <meta property="og:type" content="website">
@@ -14,11 +14,12 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <link rel="canonical" href="https://gldigitallab.fr/demos">
+<!-- ⚠️ PAGE GÉNÉRÉE — ne pas modifier à la main. Source : donnees/demos.json
+     Régénérer : node forge-ia/generer-page-demos.mjs --ecrire -->
 <style>
   :root{
     --noir:#080b14; --panneau:#0b0f14; --bord:#2b3a4a;
-    --vert:#2ce39b; --bleu:#2abfff; --rouge:#ff5a5f;
-    --argent:#9fb3c8; --texte:#e6edf3;
+    --vert:#2ce39b; --bleu:#2abfff; --argent:#9fb3c8; --texte:#e6edf3;
     --mono:ui-monospace,'JetBrains Mono',Consolas,monospace;
     --runes:'Segoe UI Historic','Noto Sans Runic',system-ui,sans-serif;
     --f-titre:'Fraunces','Iowan Old Style',Georgia,serif;
@@ -44,6 +45,7 @@
   .prouve{font-size:13px;border-left:2px solid var(--bleu);padding-left:12px;margin:0 0 14px;color:var(--argent)}
   .prouve span{display:block;color:var(--bleu);font:500 10px/1 var(--mono);letter-spacing:.16em;
                text-transform:uppercase;margin-bottom:4px}
+  .preuve{font:500 11px/1.4 var(--mono);color:var(--vert);margin:8px 0 0}
   .voir{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
         padding:10px 16px;border-radius:6px;border:1px solid #35506b;background:#16212c;
         color:var(--texte);text-decoration:none}
@@ -55,6 +57,7 @@
   .etat.en-ligne{color:var(--vert);border-color:rgba(44,227,155,.45)}
   .etat.sur-le-poste{color:var(--bleu);border-color:rgba(42,191,255,.45)}
   .voir.inactif{border-color:#243036;background:#0f151a;color:var(--argent);cursor:default}
+  code{font-family:var(--mono);font-size:12px;color:var(--bleu)}
   footer{margin-top:56px;padding-top:22px;border-top:1px solid #16212c;color:var(--argent);font-size:13px}
   footer a{color:var(--bleu)}
   @media (min-width:46rem){ .grille{grid-template-columns:1fr 1fr} }
@@ -71,128 +74,101 @@
 
   <h2 class="etage">Des applications, en ligne</h2>
   <div class="grille">
-
     <article class="carte">
-      <h3>Suivi de conformité et d'échéances</h3>
-      <p>Un tableau de bord qui rassemble des obligations réglementaires et leurs dates, avec un état
-         lisible d'un coup d'œil. <b>Une application métier, pas une démonstration technique.</b></p>
+      <h3>Suivi de conformité et d'échéances<span class="etat en-ligne">en ligne</span></h3>
+      <p>Un tableau de bord qui rassemble des obligations réglementaires et leurs dates, avec un état lisible d'un coup d'œil. <b>Une application métier, pas une démonstration technique.</b></p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Une application qui remplace un tableur : les données sont structurées, l'échéance est calculée,
-        et l'écran dit quoi faire avant que ce soit en retard.</div>
+        Une application qui remplace un tableur : les données sont structurées, l'échéance est calculée, et l'écran dit quoi faire avant que ce soit en retard.</div>
       <a class="voir" href="/demo-conformite/">Ouvrir la démo</a>
     </article>
 
     <article class="carte">
-      <h3>Site d'événement — Festival Pop Culture, Metz</h3>
-      <p>Un site de festival : programme, dates, lieux, informations pratiques.
-         <b>Monté et livrable en quelques jours</b>, pas en quelques semaines.</p>
+      <h3>Site d'événement — Festival Pop Culture, Metz<span class="etat en-ligne">en ligne</span></h3>
+      <p>Un site de festival : programme, dates, lieux, informations pratiques. <b>Monté et livrable en quelques jours</b>, pas en quelques semaines.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Un site vitrine d'événement qui tient sur un téléphone, se charge vite, et que l'organisateur
-        peut faire vivre sans développeur.</div>
+        Un site vitrine d'événement qui tient sur un téléphone, se charge vite, et que l'organisateur peut faire vivre sans développeur.</div>
       <a class="voir" href="/demo-festival-metz/">Ouvrir la démo</a>
     </article>
-
   </div>
 
   <h2 class="etage">Des pièces techniques, visitables</h2>
   <div class="grille">
-
     <article class="carte">
-      <h3>ARKADIA — la salle du pont</h3>
-      <p>Une scène en <b>trois dimensions temps réel</b>, dans une page, sans plugin et sans rien à
-         installer. On tourne autour du navire à la souris ou à la manette.</p>
+      <h3>ARKADIA — la salle du pont<span class="etat en-ligne">en ligne</span></h3>
+      <p>Une scène en <b>trois dimensions temps réel</b>, dans une page, sans plugin et sans rien à installer. On tourne autour du navire à la souris ou à la manette.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        De la 3D livrée dans un navigateur, <b>construite par le code</b> plutôt que chargée depuis un
-        fichier lourd — et qui reste fluide sur une machine ordinaire.</div>
+        De la 3D livrée dans un navigateur, <b>construite par le code</b> plutôt que chargée depuis un fichier lourd — et qui reste fluide sur une machine ordinaire.</div>
       <a class="voir" href="/le-pont/">Entrer dans la salle</a>
     </article>
 
     <article class="carte">
-      <h3>Arkadia — le laboratoire</h3>
-      <p>Un monde généré, avec <b>sa graine affichée</b> : la même graine redonne le même monde.
-         C'est la règle du studio — <b>un monde qui se génère s'annonce généré</b>.</p>
+      <h3>Arkadia — le laboratoire<span class="etat en-ligne">en ligne</span></h3>
+      <p>Un monde généré, avec <b>sa graine affichée</b> : la même graine redonne le même monde. C'est la règle du studio — <b>un monde qui se génère s'annonce généré</b>.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Une génération <b>reproductible</b> : on peut rejouer la mesure, la comparer, la contester.
-        *Un résultat qu'on ne peut pas refaire n'est pas un résultat.*</div>
+        Une génération <b>reproductible</b> : on peut rejouer la mesure, la comparer, la contester. *Un résultat qu'on ne peut pas refaire n'est pas un résultat.*</div>
       <a class="voir" href="/monde/">Visiter le laboratoire</a>
     </article>
 
     <article class="carte">
       <h3>EVA-01 — le poste de production<span class="etat en-ligne">en ligne</span></h3>
-      <p>La machine sur laquelle le studio travaille : <b>i7-11700KF, 64 Go de RAM</b>, et une
-         <b>RTX 3080 de 10 Go</b>. C'est elle qui produit les images, les maillages et les voix.</p>
+      <p>La machine sur laquelle le studio travaille : <b>i7-11700KF, 64 Go de RAM</b>, et une <b>RTX 3080 de 10 Go</b>. C'est elle qui produit les images, les maillages et les voix.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Une station de production <b>décrite honnêtement</b> : pas une fiche technique décorative, mais
-        la <b>VRAM réelle</b> posée comme limite de travail — et l'inventaire de ce qui tourne
-        <b>sans dépendre d'un service tiers</b>.</div>
+        Une station de production <b>décrite honnêtement</b> : pas une fiche technique décorative, mais la <b>VRAM réelle</b> posée comme limite de travail — et l'inventaire de ce qui tourne <b>sans dépendre d'un service tiers</b>.
+      <p class="preuve">la page /eva01 répond 200 (128 226 o) · ComfyUI répond sur 8188</p></div>
       <a class="voir" href="/eva01">Voir le poste</a>
     </article>
 
     <article class="carte">
       <h3>La clef du navire<span class="etat sur-le-poste">sur le poste</span></h3>
-      <p>Une <b>clé USB</b> qui ouvre le navire quand on la branche, et un <b>portail</b> qui n'ouvre
-         que ce qui répond vraiment. Écrit en <b>Symfony 8.1 et Vue 3</b>, avec une API en lecture seule.</p>
+      <p>Une <b>clé USB</b> qui ouvre le navire quand on la branche, et un <b>portail</b> qui n'ouvre que ce qui répond vraiment. Écrit en <b>Symfony 8.1 et Vue 3</b>, avec une API en lecture seule.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Un service qui <b>s'adapte à la machine</b> où il tourne : sur le poste de production, cinq
-        portes s'ouvrent ; ailleurs, seulement celles qui répondent — et il le <b>dit</b> au lieu
-        d'échouer. Mesuré : la branche « hors production » a été <b>éprouvée</b>, pas supposée.</div>
+        Un service qui <b>s'adapte à la machine</b> où il tourne : sur le poste de production, cinq portes s'ouvrent ; ailleurs, seulement celles qui répondent — et il le <b>dit</b> au lieu d'échouer. Mesuré : la branche « hors production » a été <b>éprouvée</b>, pas supposée.
+      <p class="preuve">8 contrôles verts sur eprouver-support.php · la branche « hors production » rend false</p></div>
       <span class="voir inactif">Poste local — 127.0.0.1:8190</span>
     </article>
-
   </div>
 
   <h2 class="etage">Ce qui tourne chez le studio, et pourquoi ce n'est pas en ligne</h2>
   <div class="grille">
-
     <article class="carte">
-      <h3>GL-OS — la distribution du poste<span class="etat sur-le-poste">v3.2.1</span></h3>
-      <p>Le poste <b>reconstruit par script</b>, en trois couches : le matériel, le socle libre
-         (Windows 11 Pro et WSL2 Ubuntu 26.04), et <b>ce que le studio écrit</b>. Un profil s'installe,
-         un état se mesure, une dérive de versions se détecte.</p>
+      <h3>GL-OS — la distribution du poste<span class="etat sur-le-poste">sur le poste — v3.2.1</span></h3>
+      <p>Le poste <b>reconstruit par script</b>, en trois couches : le matériel, le socle libre (Windows 11 Pro et WSL2 Ubuntu 26.04), et <b>ce que le studio écrit</b>. Un profil s'installe, un état se mesure, une dérive de versions se détecte.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Un poste qui <b>se rejoue</b> au lieu de se retenir de mémoire — et un contrôle de sécurité qui
-        <b>mesure dix points et n'en applique aucun</b> : <i>une mesure n'est pas une décision</i>.</div>
+        Un poste qui <b>se rejoue</b> au lieu de se retenir de mémoire — et un contrôle de sécurité qui <b>mesure dix points et n'en applique aucun</b> : <i>une mesure n'est pas une décision</i>.
+      <p class="preuve">VERSION.json porte la version 3.2.1, datée du 13/09/2026 · osiris écoute sur 8138</p></div>
       <span class="voir inactif">Poste local — 127.0.0.1:8138</span>
     </article>
 
     <article class="carte">
       <h3>Le moissonneur social<span class="etat sur-le-poste">sur le poste</span></h3>
-      <p>Deux <b>userscripts</b> qui lisent ce que le navigateur affiche — les publications, les carnets,
-         les sources — et les rangent <b>sur le disque</b>, sans qu'<b>un octet ne sorte</b> de la machine.</p>
+      <p>Deux <b>userscripts</b> qui lisent ce que le navigateur affiche — les publications, les carnets, les sources — et les rangent <b>sur le disque</b>, sans qu'<b>un octet ne sorte</b> de la machine.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Une collecte qui <b>traverse une session authentifiée</b> sans jamais manipuler un mot de passe.
-        Mesuré : <b>131 captures sur 122 carnets</b>, dont un carnet oublié de 392 blocs que personne
-        ne savait avoir.</div>
+        Une collecte qui <b>traverse une session authentifiée</b> sans jamais manipuler un mot de passe. Mesuré : <b>131 captures sur 122 carnets</b>, dont un carnet oublié de 392 blocs que personne ne savait avoir.
+      <p class="preuve">131 captures sur 122 carnets</p></div>
       <span class="voir inactif">Poste local — 127.0.0.1:8136</span>
     </article>
 
     <article class="carte">
       <h3>Le portail de connaissance<span class="etat sur-le-poste">sur le poste</span></h3>
-      <p>Un <b>RAG local</b> sur les notes du studio, servi par <b>Ollama</b> — un modèle de langage qui
-         tourne <b>chez soi</b>, sans compte, sans quota, sans qu'une phrase ne quitte le réseau.</p>
+      <p>Un <b>RAG local</b> sur les notes du studio, servi par <b>Ollama</b> — un modèle de langage qui tourne <b>chez soi</b>, sans compte, sans quota, sans qu'une phrase ne quitte le réseau.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        <b>« Vos données restent les vôtres »</b> n'est pas un slogan : c'est une architecture. Le salon
-        IA locale du studio tourne sur <b>127.0.0.1</b>.</div>
+        <b>« Vos données restent les vôtres »</b> n'est pas un slogan : c'est une architecture. Le salon IA locale du studio tourne sur <b>127.0.0.1</b>.
+      <p class="preuve">http://127.0.0.1:8080/ répond 200 en 11 246 o</p></div>
       <span class="voir inactif">Poste local — 127.0.0.1:8080</span>
     </article>
 
     <article class="carte">
       <h3>Samus — la voix<span class="etat sur-le-poste">sur le poste</span></h3>
-      <p>Une <b>oreille</b> qui transcrit, une <b>voix</b> qui parle (piper, MIT, hors ligne), et un
-         <b>cerveau</b> Ollama — le tout sur le poste, sans service tiers.</p>
+      <p>Une <b>oreille</b> qui transcrit, une <b>voix</b> qui parle (piper, MIT, hors ligne), et un <b>cerveau</b> Ollama — le tout sur le poste, sans service tiers.</p>
       <div class="prouve"><span>Ce que ça démontre</span>
-        Un assistant vocal <b>entièrement local</b> : la parole est transcrite sur la machine, et la
-        réponse est prononcée sur la machine. Rien ne part.</div>
+        Un assistant vocal <b>entièrement local</b> : la parole est transcrite sur la machine, et la réponse est prononcée sur la machine. Rien ne part. Et <code>dire()</code> n'est exposée sur <b>aucune route</b> : <i>un serveur qui fait parler la machine de son propriétaire s'empare de cette machine.</i>
+      <p class="preuve">/api/voix/etat : « joignable » : true</p></div>
       <span class="voir inactif">Poste local — 127.0.0.1:8150</span>
     </article>
-
   </div>
 
   <div class="carte">
-    <p><b>Ces quatre derniers ne sont pas en ligne, et c'est volontaire</b> : ils lisent la machine où
-       ils tournent, ils n'ont rien à faire sur un serveur. <b>Démonstration sur demande.</b></p>
-    <p style="margin:0">Et une démonstration qu'on ne peut pas voir se démontre autrement : le service
-       de la clef rend <b>l'état réel, maintenant</b>, en JSON.</p>
+    <p style="margin:0"><b>Ces quatre derniers ne sont pas en ligne, et c'est volontaire</b> : ils lisent la machine où ils tournent, ils n'ont rien à faire sur un serveur. <b>Démonstration sur demande.</b></p>
   </div>
 
   <footer>
