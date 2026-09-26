@@ -4,19 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ArkAdiA</title>
-<!-- ⭐ RÉSEAUX SOCIAUX — AJOUTÉ LE 25/09/2026.
+<!-- ⭐ RÉSEAUX SOCIAUX — AJOUTÉ LE 25/09/2026. URL CANONIQUE POSÉE LE MÊME JOUR AU SOIR.
      L'audit a relevé que la page n'avait NI carte de partage NI description sociale :
      le lien circulait nu, sans titre riche ni image. Un lien qui n'annonce rien ne se
      clique pas.
-     ⚠️ L'URL canonique et l'image de partage ne sont pas posées ici, et c'est VOLONTAIRE :
-        cette page n'est PAS celle que deploy-vitrine.yml publie (local-dir: ./docker/pont/
-        vers /arkadia.gldigitallab.fr/). Tant que l'emplacement de ce fichier n'est pas
-        tranché, écrire une adresse serait l'inventer. Décision de Gaëtan, pas effet de bord. -->
+
+     ⛔ CORRIGÉ LE 25/09/2026 (18 h) — LE COMMENTAIRE QUI VIVAIT ICI ÉTAIT FAUX.
+        Il affirmait que « cette page n'est PAS celle que deploy-vitrine.yml publie
+        (local-dir: ./docker/pont/) », et il en tirait une abstention : ne pas écrire
+        d'adresse. Il était arrivé là par COPIE depuis le dépôt ArkAdiA. Trois mesures
+        faites le 25/09 à 18 h le démentent :
+          · il n'existe AUCUN `deploy-vitrine.yml` dans ce dépôt — les workflows sont
+            release, security, deploy, deploy-cinematique, deploy-arkadia-vitrine ;
+          · il n'existe AUCUN dossier `docker/` dans ce dépôt ;
+          · `deploy-arkadia-vitrine.yml` publie PRÉCISÉMENT `./arkadia-vitrine/` vers
+            `/arkadia.gldigitallab.fr/`. Cette page EST donc la page publiée, et la
+            question d'emplacement que le commentaire disait « non tranchée » l'était
+            depuis le matin.
+        ⇒ L'URL ci-dessous est MESURÉE, pas inventée : c'est le `server-dir` du workflow.
+        *Un commentaire qui justifie une abstention doit mourir le jour où l'abstention
+        n'a plus lieu d'être — sinon il fait refuser un travail qui est permis.*
+
+     ⚠️ DETTE OUVERTE, ET ELLE EST NOMMÉE : il n'y a PAS d'`og:image`. Le studio n'a pas
+        d'image de partage pour cette page, et en écrire une adresse serait l'inventer.
+        Tant qu'elle manque, la carte s'affiche sans visuel. À faire quand l'image existera. -->
 <meta property="og:title" content="ArkAdiA">
 <meta property="og:description" content="Un galion fantôme de métal, dans le vide. Oracle a faim, la graine décide, et le joueur n'est pas le héros. Huit actes, une scène 3D construite par le code.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:site_name" content="ArkAdiA">
+<meta property="og:url" content="https://arkadia.gldigitallab.fr/">
+<link rel="canonical" href="https://arkadia.gldigitallab.fr/">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArkAdiA">
 <meta name="twitter:description" content="Un galion fantôme de métal, dans le vide. Le joueur n'est pas le héros.">
@@ -55,7 +73,7 @@ html.ark-nogl body{background:radial-gradient(70% 55% at 70% 35%,#10213a,var(--p
 
 .ark-top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;
   padding:calc(env(safe-area-inset-top,0px) + 18px) clamp(16px,4vw,48px) 18px;font:500 11px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
-.ark-top .rune{font:400 15px/1 var(--f-rune);letter-spacing:.3em;color:var(--accent);text-transform:none}
+.ark-top .rune{font:400 15px/1 var(--f-rune);letter-spacing:.3em;color:var(--accent);text-transform:none;text-shadow:0 0 14px rgba(42,191,255,.45)}
 .ark-acts{display:flex;gap:6px}
 .ark-acts a{display:block;width:26px;height:3px;background:var(--line);transition:background .3s}
 .ark-acts a.on{background:var(--accent)}
@@ -122,7 +140,19 @@ blockquote{margin:0;padding-left:18px;border-left:1px solid var(--silver);font:i
 .portrait{position:relative;margin:0;border:1px solid var(--line);width:100%;max-width:100%;aspect-ratio:560/655;overflow:hidden;background:#0a1020}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .portrait figcaption{position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(transparent,rgba(8,11,20,.95));font:500 10px/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(safe-area-inset-bottom,0px) + 90px);font:400 11px/1.7 var(--f-mono);letter-spacing:.08em;color:var(--ink-soft);border-top:1px solid var(--line);background:rgba(8,11,20,.9)}
+footer{position:relative;z-index:4;padding:44px clamp(16px,6vw,96px) calc(env(safe-area-inset-bottom,0px) + 90px);font:400 11px/1.7 var(--f-mono);letter-spacing:.08em;color:var(--ink-soft);border-top:1px solid var(--line);background:rgba(8,11,20,.9);text-align:center}
+
+/* ⭐⭐ LA FRISE RUNIQUE DE PIED — 25/09/2026. Elle répond à la bande du header : en haut le
+   mot gravé, petit et net ; en bas le même mot en filigrane, puis les cinq runes du métier.
+   ⚠️ AUCUNE RUNE N'EST FABRIQUÉE ICI. Les sept du mot gravé sont celles du header, les cinq
+   du métier sont celles de l'acte VIII. *Une rune mal écrite produit un glitch* — on
+   réemploie donc ce qui est déjà vérifié dans la page, on ne compose rien. */
+.ark-frise{font:400 clamp(2.2rem,7vw,4.6rem)/1 var(--f-rune);letter-spacing:.34em;color:var(--accent);opacity:.17;margin:0 0 24px;user-select:none;pointer-events:none}
+.ark-signes{display:flex;flex-wrap:wrap;gap:12px 26px;justify-content:center;list-style:none;margin:0 0 32px;padding:0}
+.ark-signes li{display:flex;align-items:baseline;gap:8px;font:400 10px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+.ark-signes .r{font:400 17px/1 var(--f-rune);letter-spacing:0;color:var(--accent);text-transform:none}
+.ark-marque{margin:28px 0 0;font:500 10px/1 var(--f-mono);letter-spacing:.42em;color:var(--silver);opacity:.5}
+.ark-marque::before,.ark-marque::after{content:"—";margin:0 12px;opacity:.5}
 
 @media (max-width:900px){
   .act-cap .act-inner{grid-template-columns:minmax(0,1fr);row-gap:22px}
@@ -148,6 +178,35 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
       RÉGÉNÉRÉ depuis cette source à chaque build. Des balises posées dans le généré
       disparaissent au suivant. *Ce qui doit survivre à une régénération s'écrit dans
       la source, jamais dans le produit de la régénération.* */
+/* ⭐ LE SOMMAIRE MOBILE — ajouté le 25/09/2026.
+   ⛔ CE QUI MANQUAIT, MESURÉ : la page est un récit à huit actes, et sous 900 px
+      `.ark-acts` passait à `display:none`. Or `.ark-acts` n'est PAS un menu — ce sont
+      huit barres de 26×3 px qui s'allument au défilement. Donc sur un téléphone, il
+      n'existait AUCUN moyen de sauter à un acte. Gaëtan : « en mobile nav à chier ».
+   ⇒ On ajoute le sommaire qui manquait, et on NE TOUCHE PAS aux barres : elles disent
+      où on en est, pas où on va. *Deux choses différentes, deux éléments différents.* */
+.ark-burger{display:none}
+@media (max-width:900px){
+  /* 44×44 px : la cible tactile minimale. En dessous, un pouce rate le bouton. */
+  .ark-burger{display:flex;flex-direction:column;justify-content:center;gap:5px;
+    width:44px;height:44px;padding:0 10px;margin:-10px -10px -10px 0;
+    background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .ark-burger span{display:block;height:2px;background:var(--ink);transition:transform .3s,opacity .3s}
+  .ark-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .ark-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .ark-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .ark-burger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+}
+.ark-som{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,11,20,.96);backdrop-filter:blur(8px);
+  padding:calc(env(safe-area-inset-top,0px) + 16px) 24px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.ark-som[hidden]{display:none}
+.ark-som nav{display:grid;gap:0;width:100%;max-width:22rem}
+.ark-som a{display:block;padding:15px 4px;border-bottom:1px solid var(--line);color:var(--ink);
+  font:500 13px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+.ark-som a:last-child{border-bottom:0}
+.ark-som a:hover,.ark-som a:active{color:var(--accent)}
+.ark-som a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -172,6 +231,12 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
     <a href="#bestiaire" aria-label="VII — Le bestiaire"></a>
     <a href="#capitaine" aria-label="VIII — Le capitaine"></a>
   </nav>
+  <!-- Le sommaire mobile. `aria-expanded` porte l'état, sinon un lecteur d'écran
+       annonce un bouton dont il ignore s'il a ouvert quelque chose. -->
+  <button class="ark-burger" id="ark-burger" type="button"
+          aria-label="Ouvrir le sommaire" aria-expanded="false" aria-controls="ark-som">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
 <main>
@@ -308,8 +373,36 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
 </main>
 
 <footer>
+  <!-- ⭐⭐ FRISE RUNIQUE DE PIED — ajoutée le 25/09/2026, avec la marque de l'auteur.
+       ⚠️ LES RUNES SONT RÉEMPLOYÉES, JAMAIS COMPOSÉES : les sept du mot gravé sont celles
+       du header (canon § 21 — « Mot gravé : ARKADIA, 7 runes, 23 traits », et « une rune
+       note un son, pas une lettre »), les cinq du métier sont celles de l'acte VIII.
+       *Une rune mal écrite produit un glitch* : on ne fabrique pas une rune ici.
+
+       ⛔ ET LE MOT GRAVÉ RESTE ARKADIA — LE « R » DE RAMMSTEIN N'EST PAS GRAVÉ ICI.
+       Décision de Gaëtan, 25/09/2026 : le R est une ORIGINE (le R de Rammstein), et
+       ARKARDIA est la graphie du TITRE — « BanKAÏ : Sogai no ARKARDIA ». Le canon § 21
+       dit que le MOT GRAVÉ est ARKADIA, à 7 runes. Graver ARKARDIA ici serait prendre
+       une décision qui n'a pas été donnée. -->
+
+  <div class="ark-frise" role="img" aria-label="ARKADIA en Elder Futhark — le mot gravé, sept runes">ᚨᚱᚲᚨᛞᛁᚨ</div>
+
+  <ul class="ark-signes">
+    <li><span class="r" aria-hidden="true">ᚨ</span>Contenu</li>
+    <li><span class="r" aria-hidden="true">ᚱ</span>SEO</li>
+    <li><span class="r" aria-hidden="true">ᚦ</span>Assets</li>
+    <li><span class="r" aria-hidden="true">ᚲ</span>Code</li>
+    <li><span class="r" aria-hidden="true">ᛗ</span>Admin</li>
+  </ul>
+
   ArkAdiA · ArkAdiA Studio × GL Digital Lab · Harponville, Somme · 2026<br>
   Scène 3D construite par le code, aucun asset externe. Ce monde est généré, et il le dit.
+
+  <!-- ✍️ LA MARQUE DE L'AUTEUR — canon § 14 : « xo0 Neo 0ox », donnée par Gaëtan. Elle se
+       pose APRÈS la génération, jamais par le modèle : les négatifs d'image interdisent
+       `signature, watermark, text` exprès — sinon le modèle dessine la sienne, et il y en
+       aurait deux. Ici elle est discrète, en pied, et ne se lit que si on descend. -->
+  <p class="ark-marque" aria-label="Marque de l'auteur : xo0 Neo 0ox">xo0&nbsp;Neo&nbsp;0ox</p>
 </footer>
 
 <button class="ark-sound" id="ark-sound" type="button" aria-pressed="false"><span class="pulse" aria-hidden="true"></span><span id="ark-sound-label">Écouter la coque</span></button>
@@ -940,6 +1033,40 @@ function drawHud(p){
   });
 }
 frame();
+})();
+</script>
+
+<!-- ⭐ LE SOMMAIRE — ajouté le 25/09/2026. Trois sorties : le bouton, la touche
+     Échap, et un clic sur un lien (qui referme avant de sauter à l'ancre).
+     Il vit APRÈS le script de la scène : s'il échoue, le récit reste lisible. -->
+<div class="ark-som" id="ark-som" hidden>
+  <nav aria-label="Les huit actes">
+    <a href="#graine">I — La graine</a>
+    <a href="#vide">II — Le Vide</a>
+    <a href="#navire">III — Le navire</a>
+    <a href="#oracle">IV — Oracle</a>
+    <a href="#boucle">V — La boucle</a>
+    <a href="#memoire">VI — La mémoire</a>
+    <a href="#bestiaire">VII — Le bestiaire</a>
+    <a href="#capitaine">VIII — Le capitaine</a>
+  </nav>
+</div>
+<script>
+(function(){
+  var b=document.getElementById('ark-burger'), s=document.getElementById('ark-som');
+  if(!b||!s) return;
+  function poser(v){
+    b.setAttribute('aria-expanded',v?'true':'false');
+    b.setAttribute('aria-label',v?'Fermer le sommaire':'Ouvrir le sommaire');
+    s.hidden=!v;
+  }
+  b.addEventListener('click',function(){ poser(b.getAttribute('aria-expanded')!=='true'); });
+  s.addEventListener('click',function(e){
+    if(e.target.tagName==='A'||e.target===s) poser(false);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&b.getAttribute('aria-expanded')==='true'){ poser(false); b.focus(); }
+  });
 })();
 </script>
 

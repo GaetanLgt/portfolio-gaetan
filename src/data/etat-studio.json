@@ -3,21 +3,21 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "3de3bd9",
-    "sujet": "REPARATION : trois fichiers aplatig par un remplacement trop large",
-    "date": "2026-09-24T16:13:47+02:00",
+    "court": "7eade80",
+    "sujet": "Vitrine ArkAdiA : deploiement depuis le depot qui porte deja les secrets",
+    "date": "2026-09-25T17:58:09+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-24 16:58:59",
-    "horodatage_minute": "2026-09-24 16:58",
-    "horodatage_iso": "2026-09-24T14:58:59.249Z",
+    "horodatage_local": "2026-09-26 03:14:56",
+    "horodatage_minute": "2026-09-26 03:14",
+    "horodatage_iso": "2026-09-26T01:14:56.688Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 204,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 261.3,
+    "ko_servis": 261.4,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {

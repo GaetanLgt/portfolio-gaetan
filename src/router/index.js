@@ -143,7 +143,7 @@ const routes = [
       // et par le JSON-LD, mais ni par le <title> servi ni par le titre de route — trois
       // formulations coexistaient pour une même page. Le nom du studio ne change pas
       // (D12) : c'est la baseline qui reprend sa place ici.
-      title: 'Architecture Numérique Souveraine',
+      title: 'Vos outils. Chez vous. À vous.',
       description: 'Sites web, applications métier et agents d\'IA exécutés sur notre propre machine, dans la Somme. Vos données restent dans la cale. Audit 48 h, réponse sous 24 h.'
     }
   },
@@ -424,7 +424,7 @@ const routes = [
     component: ServicesPage,
     meta: { 
       title: 'Services | Audit, sites, applications, IA locale',
-      description: 'Audit web 48h, sites sur-mesure, applications métier et IA locale pour PME. Vos outils, chez vous : hébergement souverain, code à vous, l\'humain décide.'
+      description: 'Audit web 48h, sites sur-mesure, applications métier et IA locale pour PME. Vos outils, chez vous : hébergement en France, code à vous, l\'humain décide.'
     }
   },
   {

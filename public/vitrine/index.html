@@ -132,6 +132,39 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
       RÉGÉNÉRÉ depuis cette source à chaque build. Des balises posées dans le généré
       disparaissent au suivant. *Ce qui doit survivre à une régénération s'écrit dans
       la source, jamais dans le produit de la régénération.* */
+/* ⭐ LE SOMMAIRE MOBILE — ajouté le 25/09/2026, à la demande de Gaëtan (« les deux »).
+   ⛔ CE QUI MANQUAIT, MESURÉ : la page est un récit à huit actes, et sous 900 px
+      `.ark-acts` passe à `display:none`. Or `.ark-acts` n'est PAS un menu — ce sont
+      huit barres de 26×3 px qui s'allument au défilement. Donc sur un téléphone, il
+      n'existait AUCUN moyen de sauter à un acte.
+   ⇒ On ajoute le sommaire qui manquait, et on NE TOUCHE PAS aux barres : elles disent
+      où on en est, pas où on va. *Deux choses différentes, deux éléments différents.*
+   ⚠️ CE FICHIER EST CELUI QUI EST POSÉ À LA RACINE DE gldigitallab.fr (via
+      `scripts/poser-vitrine.mjs`). Il n'est PAS régénéré depuis `arkadia-vitrine/`,
+      malgré ce qu'un commentaire de ce dernier affirme. *Deux fichiers, deux sites,
+      deux historiques git — les traiter comme un seul a déjà coûté un écrasement.* */
+.ark-burger{display:none}
+@media (max-width:900px){
+  /* 44×44 px : la cible tactile minimale. En dessous, un pouce rate le bouton. */
+  .ark-burger{display:flex;flex-direction:column;justify-content:center;gap:5px;
+    width:44px;height:44px;padding:0 10px;margin:-10px -10px -10px 0;
+    background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .ark-burger span{display:block;height:2px;background:var(--ink);transition:transform .3s,opacity .3s}
+  .ark-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .ark-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .ark-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .ark-burger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+}
+.ark-som{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,11,20,.96);backdrop-filter:blur(8px);
+  padding:calc(env(safe-area-inset-top,0px) + 16px) 24px calc(env(safe-area-inset-bottom,0px) + 16px)}
+.ark-som[hidden]{display:none}
+.ark-som nav{display:grid;gap:0;width:100%;max-width:22rem}
+.ark-som a{display:block;padding:15px 4px;border-bottom:1px solid var(--line);color:var(--ink);
+  font:500 13px/1.2 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;text-decoration:none}
+.ark-som a:last-child{border-bottom:0}
+.ark-som a:hover,.ark-som a:active{color:var(--accent)}
+.ark-som a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -181,6 +214,12 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
     <a href="#bestiaire" aria-label="VII — Le bestiaire"></a>
     <a href="#capitaine" aria-label="VIII — Le capitaine"></a>
   </nav>
+  <!-- Le sommaire mobile. `aria-expanded` porte l'état, sinon un lecteur d'écran
+       annonce un bouton dont il ignore s'il a ouvert quelque chose. -->
+  <button class="ark-burger" id="ark-burger" type="button"
+          aria-label="Ouvrir le sommaire" aria-expanded="false" aria-controls="ark-som">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
 <main>
@@ -935,6 +974,40 @@ function drawHud(p){
   });
 }
 frame();
+})();
+</script>
+
+<!-- ⭐ LE SOMMAIRE — ajouté le 25/09/2026. Trois sorties : le bouton, la touche
+     Échap, et un clic sur un lien (qui referme avant de sauter à l'ancre).
+     Il vit APRÈS le script de la scène : s'il échoue, le récit reste lisible. -->
+<div class="ark-som" id="ark-som" hidden>
+  <nav aria-label="Les huit actes">
+    <a href="#graine">I — La graine</a>
+    <a href="#vide">II — Le Vide</a>
+    <a href="#navire">III — Le navire</a>
+    <a href="#oracle">IV — Oracle</a>
+    <a href="#boucle">V — La boucle</a>
+    <a href="#memoire">VI — La mémoire</a>
+    <a href="#bestiaire">VII — Le bestiaire</a>
+    <a href="#capitaine">VIII — Le capitaine</a>
+  </nav>
+</div>
+<script>
+(function(){
+  var b=document.getElementById('ark-burger'), s=document.getElementById('ark-som');
+  if(!b||!s) return;
+  function poser(v){
+    b.setAttribute('aria-expanded',v?'true':'false');
+    b.setAttribute('aria-label',v?'Fermer le sommaire':'Ouvrir le sommaire');
+    s.hidden=!v;
+  }
+  b.addEventListener('click',function(){ poser(b.getAttribute('aria-expanded')!=='true'); });
+  s.addEventListener('click',function(e){
+    if(e.target.tagName==='A'||e.target===s) poser(false);
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&b.getAttribute('aria-expanded')==='true'){ poser(false); b.focus(); }
+  });
 })();
 </script>
 

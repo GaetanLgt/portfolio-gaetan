@@ -25,7 +25,7 @@ export const GUIDES = [
     bloc: "Un site web sur mesure démarre à 2 500 € HT et se livre en 4 à 6 semaines. Une application métier démarre à 8 000 € HT, après un atelier de cadrage. L'ensemble des prix est public et hors taxes : ils sont écrits dans le dossier professionnel du studio, pas donnés au téléphone. Un projet qui sort de ces fourchettes se dit au premier échange, pas à la livraison.",
     sections: [
       { titre: 'Ce qui fait varier le prix', texte: "Le nombre de gabarits distincts, la présence d'un espace client, la reprise ou non d'un contenu existant, et le niveau de finition. Le prix de départ suppose un site vitrine : il ne comprend ni catalogue, ni paiement, ni application métier." },
-      { titre: 'Ce qui est compris', texte: "La conception, le développement, l'hébergement souverain, la mise en ligne et la remise du code source. Vous repartez avec le code, pas avec une location." },
+      { titre: 'Ce qui est compris', texte: "La conception, le développement, l'hébergement en France, la mise en ligne et la remise du code source. Vous repartez avec le code, pas avec une location." },
       { titre: "Ce qui ne l'est pas", texte: "La production des contenus — textes, photographies, vidéos. Elle peut être accompagnée, mais elle n'est pas incluse, et le studio le dit avant de commencer." },
       { titre: 'Comment obtenir une fourchette', texte: "Vous envoyez votre demande, vous recevez sous 24 heures une première lecture : ce qui est faisable, ce qui ne l'est pas, et une fourchette de prix ajustée à votre cas." },
     ],
@@ -40,7 +40,7 @@ export const GUIDES = [
       { titre: 'Où tourne quoi', texte: "Le développement, les modèles d'IA, les documents de travail et les tests tournent sur la machine du studio. Seul le résultat publié part vers l'hébergeur." },
       { titre: 'Ce qui reste en local', texte: "Vos documents, vos données, vos échanges et vos fichiers de travail. Ils ne sont transmis à aucun fournisseur d'IA, français ou étranger." },
       { titre: 'Ce qui est publié', texte: "Uniquement ce que vous décidez de rendre public : les pages du site, et rien d'autre. Le reste ne quitte pas la machine." },
-      { titre: 'La limite, dite franchement', texte: "« Français » ne veut pas dire « infaillible ». L'hébergeur est un tiers, et il est nommé dans le dossier professionnel. Un hébergement souverain réduit les dépendances, il ne les supprime pas." },
+      { titre: 'La limite, dite franchement', texte: "« Français » ne veut pas dire « infaillible ». L'hébergeur est un tiers, et il est nommé dans le dossier professionnel. Un hébergement en France réduit les dépendances, il ne les supprime pas." },
     ],
   },
   {
