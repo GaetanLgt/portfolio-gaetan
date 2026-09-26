@@ -801,7 +801,11 @@ grid.material.transparent=true;grid.material.opacity=.62;scene.add(grid);
    Six colonnes, très espacées, qui tombent lentement : elles ne racontent rien, elles
    donnent une échelle au vide. Sans elles, le vide est un fond ; avec elles, c'est un
    espace qu'on traverse. */
-var colonnesDeCode=(function(){
+// ⛔ CORRIGÉ LE 26/09/2026 — LE `var` ICI ENFERMAIT LA VARIABLE DANS UNE IIFE.
+//    Même défaut que `arkadia-vitrine/index.html`, mesuré le même jour :
+//    `ReferenceError: colonnesDeCode is not defined`, une fois par image, à l'usage.
+//    ⇒ `window.` place l'objet là où `frame()` le trouve, quelle que soit la portée.
+window.colonnesDeCode=(function(){
   var GLYPHES="01ARKADIA<>{}[]/\\|=+*#·";
   var c=document.createElement("canvas");c.width=64;c.height=512;var x=c.getContext("2d");
   x.fillStyle="#000";x.fillRect(0,0,64,512);
@@ -977,7 +981,7 @@ function frame(){
   if(eyeLight)eyeLight.intensity=reduce?1.6:1.2+Math.random()*.8;
 
   /* ⭐ La trame tombe. Lente : elle doit se voir sans qu'on la regarde. */
-  if(!reduce){colonnesDeCode.children.forEach(function(col){
+  if(!reduce){window.colonnesDeCode.children.forEach(function(col){
     col.position.y-=col.userData.vitesse;
     if(col.position.y<-260)col.position.y=260;
   });}

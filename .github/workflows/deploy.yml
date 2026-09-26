@@ -540,9 +540,25 @@ jobs:
           #    La premiere version ecrivait `/index.html`. Elle n'a PAS matche : la preuve
           #    est que la racine a resservi la vitrine ArkAdiA apres le run 36218713139.
           #    *Une exclusion qui ne mord pas est une exclusion qui n'existe pas.*
+          # ⛔⛔ ET DEUX EXCLUSIONS DE PLUS, AJOUTÉES LE 26/09/2026 — LA RÉCIPROQUE EXACTE.
+          #
+          #    ⚠️ CE QU'ON A VU VENIR CETTE FOIS, AU LIEU DE LE PAYER. Le 26/09, protéger
+          #       `vendor/**` du côté cinématique avait CASSÉ `three.module.min.js` et
+          #       `jsm/*` — quatre fichiers en 404, mesurés en ligne. La cause est la même
+          #       des deux côtés : **l'action FTP supprime en distant tout ce qui n'est pas
+          #       dans `local-dir`.**
+          #
+          #    ⇒ Ce pipeline-ci déploie `./dist/`, et `dist/vendor/` ne contient QUE
+          #      `three.min.js` (608 087 o). **Sans ces deux lignes, il supprimerait les
+          #      quatre fichiers de la cinématique qu'il vient de falloir remonter.**
+          #
+          #    ⭐ Les deux pipelines se protègent l'un l'autre, chacun nommant ce qui ne lui
+          #      appartient pas. *Une protection qui ne regarde qu'un sens est une porte.*
           exclude: |
             index.html
             cinematique/**
+            vendor/three.module.min.js
+            vendor/jsm/**
           dangerous-clean-slate: false
 
       # ⚠ `.htaccess` : DEUX barrières l'empêchaient d'arriver sur le serveur
