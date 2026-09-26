@@ -427,7 +427,20 @@ jobs:
     name: 🚀 Deploy Production
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    # ⭐ CORRIGÉ LE 26/09/2026 : `workflow_dispatch` AJOUTÉ À LA CONDITION.
+    # ⛔ LA PANNE, MESURÉE : le run 36208577476, lancé à la main depuis l'onglet
+    #    Actions, a rendu « 🚀 Deploy Production · skipped · in 0s ». Le site en ligne
+    #    servait donc toujours l'ancienne version — 37 926 octets, identiques avant et
+    #    après le run, et aucune erreur nulle part.
+    # ⚠️ ET LE PIRE : ce même fichier DÉCRIVAIT DÉJÀ cette panne, quarante lignes plus
+    #    bas — « 🚀 Deploy Production : skipped ← le site n'a PAS été mis à jour ».
+    #    *Une panne décrite dans un commentaire et non corrigée reste une panne : elle
+    #    instruit celui qui la lit et laisse passer celui qui ne la lit pas.*
+    # ⇒ Le déclenchement automatique sur push RESTE RETIRÉ — c'est la décision du 26/09,
+    #   et elle est bonne : il réécrirait la racine à chaque push. Mais un déclenchement
+    #   MANUEL doit pouvoir déployer, sinon l'onglet Actions propose un bouton qui ne
+    #   fait rien. *Un bouton qui ne fait rien est pire qu'un bouton absent.*
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     environment: production
     
     steps:
