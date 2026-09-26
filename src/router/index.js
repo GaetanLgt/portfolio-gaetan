@@ -679,6 +679,31 @@ const routes = [
     }
   },
 
+  // ---------------------------------------------------------------------------
+  // ⭐ QUATRE REDIRECTIONS — DÉCISION D-10 DE NÉO, 26/09/2026 AU SOIR
+  //
+  // Ces quatre chemins étaient PROPOSÉS PAR UN AUDIT, pas demandés par Gaëtan :
+  // `A-LIRE-AU-REVEIL.md` l. 179 les décrit lui-même comme « proposés par l'audit du site »,
+  // et la colonne « de qui » dit « un agent, après accord ». **L'accord n'a jamais été donné.**
+  //
+  // ⛔ ET LE STUDIO N'A PAS CRÉÉ LES PAGES : mesuré le 26/09, leur contenu n'est défini nulle
+  //    part (0 citation dans le site) et elles **recouvrent six pages qui existent déjà**.
+  //    *Les créer aurait produit le doublon que les vidéos du même soir dénoncent.*
+  //
+  // ⭐ LA DÉCISION EST DONC **(b) — REDIRIGER VERS CE QUI EXISTE**, et pas fabriquer des pages
+  //   fantômes. Chaque cible est MESURÉE : les six destinations ci-dessous sont déclarées plus
+  //   haut dans ce fichier.
+  //
+  // ⚠️ PLACÉES AVANT L'ATTRAPE-TOUT, ET C'EST OBLIGATOIRE : `/:pathMatch(.*)*` vit juste en
+  //    dessous, et *tout ce qu'on place après elle devient inatteignable* — c'est écrit plus
+  //    haut dans ce fichier, et c'est la raison pour laquelle les dix guides sont en tête.
+  //    **Une route morte n'est pas une route : c'est une ligne.**
+  // ---------------------------------------------------------------------------
+  { path: '/architecture', redirect: '/components' },
+  { path: '/ia', redirect: '/guides/ia-locale-entreprise' },
+  { path: '/automatisation', redirect: '/services' },
+  { path: '/lab', redirect: '/laboratoire' },
+
   // -------------------------------------------------------------------------
   // 404 - Catch all (DOIT ÊTRE EN DERNIER)
   // -------------------------------------------------------------------------
