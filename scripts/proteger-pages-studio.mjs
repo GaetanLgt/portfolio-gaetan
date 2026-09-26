@@ -198,6 +198,37 @@ for (const e of readdirSync(CINEMATIQUE, { withFileTypes: true })) {
   }
 }
 
+// ⛔⛔ ET `index.html` EST RETIRÉ DE LA LISTE COTE STUDIO. C'est le MÊME DÉFAUT QUE CE
+//     MATIN, ET IL A ÉTÉ REPAYÉ — par ce script, qui l'a réintroduit tout seul.
+//
+//     ⭐ La chronologie, parce qu'elle est instructive :
+//       · ce matin, `exclude: index.html` (sans slash) **bloquait l'envoi de TOUTES les
+//         pages** — `/vitrine/` ne se mettait plus à jour. Retiré à la main.
+//       · ce soir, le script **dérive** la liste de `cinematique/`, y trouve
+//         `cinematique/index.html`, et le remet — **avec la même absence de slash.**
+//       · résultat mesuré : `/dossier/index.html` → **404**, `/dossier` → **403**.
+//         **Les 48 pages du studio sont tombées une seconde fois.**
+//
+//     ⭐ LE MÉCANISME, ET IL FAUT LE RETENIR : `index.html`, **sans slash initial**, ne
+//       désigne pas « le index.html de la racine ». Il désigne **tout fichier de ce nom**.
+//       ⇒ une exclusion qui protège UNE page en casse **quarante-huit**.
+//
+//     ⇒ ET ELLE EST INUTILE : `dist/index.html` est **retiré du dossier avant l'envoi**
+//       par l'étape nommée dans `deploy.yml`, **avec une assertion qui relit le disque**.
+//       *On ne garde pas deux protections pour la même chose quand l'une des deux mord
+//       à côté.*
+//
+//     ⛔ L'ASSERTION QUI EMPÊCHE LE RETOUR — c'est elle qui manquait, et sans elle le
+//       prochain passage du script le remettrait encore.
+const SANS_INDEX_COTE_STUDIO = aProtegerCoteStudio.filter((x) => x.nom !== 'index.html');
+if (SANS_INDEX_COTE_STUDIO.length !== aProtegerCoteStudio.length) {
+  dire('');
+  dire('  ⚠️  `index.html` retire de la liste cote studio : sans slash il bloque TOUS les');
+  dire('      index.html, donc les 48 pages. Le fichier est deja retire avant l\'envoi.');
+}
+aProtegerCoteStudio.length = 0;
+aProtegerCoteStudio.push(...SANS_INDEX_COTE_STUDIO);
+
 dire('');
 dire(`  ce qui cede a la cinematique (${CEDENT_A_LA_CINEMATIQUE.size}) : ${[...CEDENT_A_LA_CINEMATIQUE].join(', ')}`);
 dire(`  dist/ porte ${listerFichiersRelatifs(DIST).length} fichiers`);

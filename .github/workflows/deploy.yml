@@ -585,7 +585,6 @@ jobs:
             favicon.ico
             favicon.svg
             img/**
-            index.html
             llms.txt
             mentions-legales.html
             modeles/arkadia-navire.glb
