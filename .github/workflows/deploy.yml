@@ -554,8 +554,29 @@ jobs:
           #
           #    ⭐ Les deux pipelines se protègent l'un l'autre, chacun nommant ce qui ne lui
           #      appartient pas. *Une protection qui ne regarde qu'un sens est une porte.*
+          # ⛔⛔ `index.html` A ÉTÉ RETIRÉ DE CETTE LISTE LE 26/09/2026. IL N'AURAIT PAS DÛ Y ÊTRE.
+          #
+          #    ⚠️ LA MESURE QUI L'A FAIT SORTIR : après le déploiement de 06 h 39 (run
+          #       36224396702, succès), `https://gldigitallab.fr/vitrine/` servait TOUJOURS
+          #       la version fautive — `var colonnesDeCode`, **512 ReferenceError en 9
+          #       secondes** — alors que la correction était dans le dépôt depuis 06 h 38.
+          #
+          #    ⛔ ET LA CAUSE EST CETTE LIGNE. Une exclusion écrite `index.html`, **sans
+          #       slash initial**, ne désigne pas « le index.html de la racine » : elle
+          #       désigne **tout fichier de ce nom**. ⇒ *elle a bloqué l'envoi de
+          #       `vitrine/index.html`, et de tous les autres.*
+          #
+          #    ⭐ LA LEÇON EST LA MÊME QUE POUR `vendor`, PAYÉE LE MATIN MÊME : **une
+          #      exclusion trop large ne protège pas mieux — elle casse ce qu'elle ne
+          #      visait pas.** *En élargissant le motif pour qu'il morde, on a élargi sa
+          #      portée. Les deux allaient ensemble, et il fallait voir les deux.*
+          #
+          #    ⇒ ET ELLE EST DEVENUE INUTILE : `dist/index.html` est **retiré du dossier
+          #      avant l'envoi**, par l'étape nommée plus haut — **avec une assertion qui
+          #      relit le disque**. Un fichier absent de `local-dir` ne peut pas être
+          #      envoyé. *On ne garde pas deux protections pour la même chose quand l'une
+          #      des deux mord à côté.*
           exclude: |
-            index.html
             cinematique/**
             vendor/three.module.min.js
             vendor/jsm/**
