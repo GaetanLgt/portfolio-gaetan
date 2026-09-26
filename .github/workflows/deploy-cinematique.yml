@@ -140,7 +140,10 @@ jobs:
             llms.txt
             logos/**
             mentions-legales/**
-            modeles/**
+            modeles/boutique-boreal/catalogue/index.html
+            modeles/boutique-boreal/commande/index.html
+            modeles/boutique-boreal/index.html
+            modeles/boutique-boreal/panier/index.html
             models/**
             monde/**
             offline.html
@@ -160,7 +163,7 @@ jobs:
             sw.js
             TARDIS/**
             univers/**
-            vendor/**
+            vendor/three.min.js
             vitrine/**
             voyageo-pro/**
             world/**

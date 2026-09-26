@@ -88,6 +88,36 @@ const CEDENT_A_LA_CINEMATIQUE = new Set([
   'index.html',
 ]);
 
+// ─── ⭐ LA PROTECTION DESCEND AU FICHIER QUAND LE DOSSIER EST PARTAGÉ ──────────
+//
+// ⛔⛔ MESURÉ LE 26/09/2026, APRÈS LE DÉPLOIEMENT : protéger `vendor/**` a SAUVÉ le
+//    `three.min.js` du studio (608 Ko, servi en 200 à `/vendor/three.min.js`) **et a
+//    CASSÉ la cinématique** — `/vendor/three.module.min.js` et `/vendor/jsm/*/…`
+//    répondent **404**, parce qu'exclus, ils ne sont jamais montés.
+//
+//    ⭐ Les deux sites ont un `vendor/` **et ils n'y mettent PAS les mêmes fichiers** :
+//         studio      : three.min.js          (608 087 o, build classique)
+//         cinématique : three.module.min.js   (678 491 o, ESM) + jsm/{loaders,utils,environments}
+//    ⇒ *Ce n'était pas une collision de noms : c'était un DOSSIER partagé par deux
+//      propriétaires. Protéger le dossier entier protégeait au-delà de ce qui risquait
+//      d'être supprimé — et bloquait ce qui devait passer.*
+//
+//    ⇒ LA RÈGLE : **quand un dossier de `dist/` porte le même nom qu'un dossier de la
+//      cinématique, on ne protège plus le dossier : on énumère SES FICHIERS.** Le fichier
+//      du studio est préservé, et les autres passent.
+const nomsCoteCinematique = new Set(readdirSync(CINEMATIQUE));
+
+function listerFichiersRelatifs(dir, prefixe = '') {
+  const out = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.name.startsWith('.')) continue;
+    const rel = prefixe ? `${prefixe}/${e.name}` : e.name;
+    if (e.isDirectory()) out.push(...listerFichiersRelatifs(join(dir, e.name), rel));
+    else out.push(rel);
+  }
+  return out;
+}
+
 // ─── Tout le reste de dist/ appartient au studio ──────────────────────────────
 const entrees = readdirSync(DIST);
 const aProteger = [];
@@ -97,6 +127,15 @@ for (const e of entrees) {
   if (e.startsWith('.')) continue;      // les fichiers cachés : l'action les ignore déjà
   const complet = join(DIST, e);
   const estDossier = statSync(complet).isDirectory();
+
+  // ⭐ Le cas `vendor` : même nom des deux côtés, contenus différents. On descend.
+  if (estDossier && nomsCoteCinematique.has(e)) {
+    for (const rel of listerFichiersRelatifs(complet, e)) {
+      aProteger.push({ nom: rel, dossier: false });
+    }
+    continue;
+  }
+
   aProteger.push({ nom: e, dossier: estDossier });
 }
 
@@ -109,8 +148,10 @@ dire('  --- la liste, derivee du disque, pas d\'un souvenir ---');
 for (const x of aProteger) dire(`      ${x.dossier ? '[D]' : '[F]'} ${x.nom}`);
 
 // ⛔ L'ASSERTION : les pages qu'on a vues en 404 doivent être dans la liste.
+//    ⚠️ Et depuis le 26/09, une entrée peut être couverte **par fichier** (`vendor/three.min.js`)
+//    et non plus par dossier (`vendor/**`) : le test accepte donc les deux formes.
 const obligatoires = ['dossier', 'demos', 'univers', 'plan', 'components', 'le-pont', 'monde', 'vendor', 'api'];
-const manquantes = obligatoires.filter((o) => !aProteger.some((x) => x.nom === o));
+const manquantes = obligatoires.filter((o) => !aProteger.some((x) => x.nom === o || x.nom.startsWith(o + '/')));
 if (manquantes.length > 0) {
   dire('');
   dire(`  ⛔ ECHEC D'ASSERTION : ${manquantes.length} entree(s) que l'on SAIT en 404 ne sont pas`);
@@ -220,9 +261,19 @@ if (ESSAI) {
 }
 
 // ⛔ ASSERTION avant écriture : le bloc est là, et les pages protégées y sont.
+//    ⚠️ TROIS FORMES ACCEPTÉES DEPUIS LE 26/09, et c'est l'assertion elle-même qui l'a exigé :
+//       `dossier/**`  ·  `dossier`  ·  `dossier/fichier` (le cas `vendor`).
+//    ⭐ Elle a REFUSÉ d'écrire quand `vendor/**` est devenu `vendor/three.min.js` — *un
+//       garde-fou qui n'accepte qu'une écriture connue refuse aussi les corrections.*
+//    ⇒ On élargit la forme, **jamais l'exigence** : l'entrée doit être protégée, d'une
+//      manière ou d'une autre.
 if (!nouveau.includes('PROTECTION DES PAGES DU STUDIO')) { dire('  ⛔ le bloc n\'a pas ete insere'); echecs++; }
 for (const o of obligatoires) {
-  if (!nouveau.includes(`          ${o}/**`) && !nouveau.includes(`          ${o}\n`)) {
+  const protege =
+    nouveau.includes(`            ${o}/**`) ||
+    nouveau.includes(`            ${o}\n`) ||
+    nouveau.includes(`            ${o}/`);
+  if (!protege) {
     dire(`  ⛔ ${o} absent du bloc ecrit`);
     echecs++;
   }
