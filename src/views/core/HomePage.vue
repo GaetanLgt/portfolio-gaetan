@@ -42,7 +42,6 @@
              <ScrollScene v-if="unitesPretes" accent="#10B981" :anneaux="36" :ecart="2.4" />
     -->
 
-
     <!-- DÉCOR DE FOND — le tunnel, généré sur la carte graphique puis étalonné à la
          charte. Le composant gère seul le mode sobre et la discrétion nécessaire
          pour ne pas manger le contraste du texte. Provenance et mesures dans
@@ -128,24 +127,18 @@
           <div class="hero__grid">
             <!-- HERO peint par HTML/CSS, jamais animé au reveal (audit) -->
             <div class="hero__content">
-                <!-- Status Badge -->
+                <!-- ⭐ LE KICKER — CE QU'ON FAIT, EN PREMIER ÉCRAN (26/09/2026).
+                     La question à laquelle il répond, dans l'ordre : QUI on aide →
+                     QUEL problème on règle → CE QU'ON CONSTRUIT → POURQUOI nous.
+                     Le texte qui reste ensuite suit exactement cette phrase.
+                     ⛔ Aucun chiffre n'est ajouté ici : celui qui subsiste plus bas
+                     était déjà publié, et il porte sa provenance. -->
                 <div class="status-badge">
                   <span class="status-badge__dot"></span>
-                  <TextScramble text="Un seul navire · IA locale · Harponville, Somme" :scramble-on-mount="true" />
+                  <TextScramble text="ARCHITECTURE NUMÉRIQUE × IA × AUTOMATISATION" :scramble-on-mount="true" />
                 </div>
                 
-                <!-- CE QUE NOUS VENDONS — EN PREMIER ÉCRAN (10/09/2026).
-                     Constat après relecture : le hero racontait un univers mais
-                     ne disait ni ce qu'on vend, ni pour qui, ni à quel prix. Un
-                     dirigeant de PME arrivait sur un vaisseau et repartait sans
-                     savoir si c'était pour lui. La direction artistique reste,
-                     mais l'offre passe devant le récit.
-                     Aucun chiffre inventé : ce sont les prix publics du studio. -->
-                <p class="hero__offre">
-                  <strong>Sites web</strong> · <strong>Applications métier</strong> ·
-                  <strong>IA locale</strong> — pour PME et collectivités.
-                  À partir de <strong>1 500 € HT</strong>.
-                </p>
+                
 
                 <!-- Main Title — message éditorial fort
                      DA D4 : glitch Matrix Resurrections sur la seule ligne accentuée
@@ -153,9 +146,9 @@
                      n'est jamais décalé — la lisibilité commerciale est préservée.
                      prefers-reduced-motion annule les clones dans GlitchText.vue). -->
                 <h1 id="hero-title" class="hero__title">
-                  La machine travaille.<br>
+                  Des systèmes numériques<br>
                   <span class="text-gradient neon-text">
-                    <GlitchText text="Vous décidez." always-active intensity="light" />
+                    <GlitchText text="conçus pour durer." always-active intensity="light" />
                   </span>
                 </h1>
                 
@@ -164,11 +157,24 @@
                      vérifiable : les agents tournent bien sur une machine
                      identifiée, en France. -->
                 <p class="hero__subtitle">
-                  Nos agents — rédaction, code, audit, visuels — ne tournent pas dans
-                  un <strong>cloud que vous ne pouvez pas nommer</strong> : ils
-                  travaillent sur notre propre navire, à Harponville. Vos documents
-                  restent dans la cale. En 48 h, nous rendons visible ce qui freine
-                  votre système.
+                  J’aide les PME et les collectivités à <strong>concevoir</strong>,
+                  <strong>moderniser</strong> et <strong>automatiser</strong> leurs outils
+                  numériques — du site web aux systèmes d’IA et aux workflows métier.
+                  Tout tourne sur un seul atelier identifié, à Harponville dans la Somme :
+                  <strong>vos données restent chez vous, sous droit français</strong>.
+                  En 48 h, je rends visible ce qui freine votre système.
+                </p>
+
+                <!-- ⭐ CE QU'ON VEND — ET IL A CHANGÉ DE PLACE LE 26/09/2026.
+                     Il était AVANT le titre : le visiteur lisait une gamme avant
+                     de lire la promesse. Il passe APRÈS le titre et le sous-titre,
+                     en ligne de qualification (qui, à partir de combien).
+                     ⛔ Les technologies ont disparu de cette ligne : « Symfony »,
+                     « Vue » et « Docker » sont des MOYENS, pas une proposition.
+                     Elles reviennent plus bas, en détail, section 03. -->
+                <p class="hero__offre">
+                  PME · collectivités · indépendants — à partir de <strong>1 500 € HT</strong>.
+                  <span class="hero__offre-note">Détail des prix sur <router-link to="/dossier">le dossier</router-link>.</span>
                 </p>
 
                 <!-- LE TUYAU VERT (13/09/2026) — le compartiment scellé du cadrage
@@ -198,11 +204,20 @@
                     <span class="pavillon__etoffe"><span class="pavillon__sceau"></span></span>
                   </span>
                   <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large btn-glow" :strength="40" :text-strength="50">
-                    Commencer par voir clair
+                    Construire mon projet
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                     </svg>
                   </MagneticButton>
+
+                  <!-- ⭐ LE SECOND CHEMIN, AJOUTÉ LE 26/09/2026. « Voir les réalisations »
+                       est le chemin de celui qui ne veut pas encore parler à quelqu’un :
+                       il veut d’abord vérifier. Les deux boutons sont donc de NATURE
+                       différente — l’un engage une conversation, l’autre ouvre un dossier.
+                       La page /projets porte la grille complète PROBLÈME vers RÉSULTAT. -->
+                  <router-link to="/projets" class="btn-outline btn-large hero__cta-secondaire">
+                    Voir les réalisations
+                  </router-link>
                 </div>
                 
                 <!-- Chemins selon le visiteur (principe 7) -->
@@ -248,6 +263,159 @@
         </div>
       </section>
     </SpotlightContainer>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         ⭐ LE BANDEAU DE REGISTRES — « juste sous le hero » (26/09/2026).
+         Cinq mots, aucun chiffre, aucune technologie : c’est le PÉRIMÈTRE du
+         studio, pas sa boîte à outils. « Symfony » ne dit rien à un dirigeant ;
+         « automatisation » lui dit ce qu’il peut demander.
+         ⛔ role="group" et aria-label : une suite de mots isolés n’est pas une
+         phrase — un lecteur d’écran doit savoir ce qu’il lit là.
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <div class="registres" role="group" aria-label="Nos registres d’intervention">
+      <div class="container registres__liste">
+        <span class="registres__item">WEB</span>
+        <span class="registres__sep" aria-hidden="true">·</span>
+        <span class="registres__item">IA</span>
+        <span class="registres__sep" aria-hidden="true">·</span>
+        <span class="registres__item">AUTOMATISATION</span>
+        <span class="registres__sep" aria-hidden="true">·</span>
+        <span class="registres__item">ARCHITECTURE</span>
+        <span class="registres__sep" aria-hidden="true">·</span>
+        <span class="registres__item">SOUVERAINETÉ</span>
+      </div>
+    </div>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         ⭐ 02 · LES PROBLÈMES — AJOUTÉE LE 26/09/2026.
+
+         ⛔ CE QUE CETTE SECTION CORRIGE, ET C’EST LE DÉFAUT CENTRAL : la page
+            passait du hero à « Vous n’ouvrez pas un site. Vous accostez. » Le
+            visiteur qui décide en cinq secondes recevait une invitation à visiter
+            un navire AVANT qu’on lui ait dit ce qui n’allait pas chez lui.
+            Un prospect ne se reconnaît pas dans un univers : il se reconnaît dans
+            son propre problème.
+
+         ⛔ AUCUN CHIFFRE ICI, ET CE N’EST PAS UN OUBLI : aucun coût horaire, aucun
+            pourcentage de temps perdu, aucune moyenne de secteur. Ces nombres
+            circulent partout sur les sites d’agences et AUCUN n’est mesuré sur les
+            clients de ce studio. Un chiffre sans source finit dans un devis.
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="parcours" aria-labelledby="problemes-titre">
+      <div class="container">
+        <div class="section-header">
+          <span class="mono-tag" aria-hidden="true">/// 02 · CE QUI VOUS RALENTIT</span>
+          <h2 id="problemes-titre">Le problème n’est presque jamais « le site »</h2>
+          <p class="section-header__desc">
+            Un dirigeant qui appelle ne dit pas « je veux du Vue 3 ». Il dit
+            <em>on perd du temps</em>, <em>on ne sait plus où sont les données</em>,
+            <em>on a peur de casser</em>. Voilà les quatre situations qui reviennent,
+            et ce qu’elles ont en commun : aucune ne se règle en changeant de
+            technologie.
+          </p>
+        </div>
+
+        <ul class="parcours__grille">
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Vos outils ne se parlent pas</h3>
+            <p class="parcours__carte-texte">
+              Le devis vit dans un tableur, la facture dans un logiciel, la relance
+              dans votre tête. Chaque transfert à la main est une occasion de perdre
+              une information — et personne ne sait laquelle a été perdue.
+            </p>
+          </li>
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Vous refaites à la main ce qu’une machine sait faire</h3>
+            <p class="parcours__carte-texte">
+              Ressaisir, recopier, relancer, recompiler des rapports. Ce ne sont pas
+              des tâches : ce sont des <strong>boucles</strong>. Une boucle se décrit,
+              se teste, et se confie à une machine — sous contrôle.
+            </p>
+          </li>
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Vous ne savez pas ce que vous possédez</h3>
+            <p class="parcours__carte-texte">
+              Hébergement, dépendances, accès, sauvegardes. Le jour où quelqu’un
+              part ou où un service s’arrête, on découvre qu’on ne sait pas ce qui
+              tient quoi — ni combien de temps on peut tenir sans.
+            </p>
+          </li>
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Vous n’osez pas changer, parce que tout tient ensemble</h3>
+            <p class="parcours__carte-texte">
+              Refaire de zéro coûte cher et fait peur. Alors on ajoute une béquille
+              par-dessus l’autre, et le système devient trop fragile pour qu’on ose
+              encore le toucher.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         ⭐ 03 · LES SOLUTIONS — QUATRE VERBES, AJOUTÉE LE 26/09/2026.
+
+         ⛔ LA CONSIGNE ÉTAIT EXPLICITE : arrêter de vendre des technologies.
+            Symfony, Vue et Docker ne sont pas une proposition commerciale, ce sont
+            des moyens. Les quatre verbes portent donc l’offre ; la liste des outils
+            est en dessous, en petits caractères, et présentée pour ce qu’elle est :
+            des CHOIX vérifiables, pas un argument.
+
+         ⛔ LE SLOGAN « La machine travaille. Vous décidez. » ÉTAIT DANS LE TITRE h1.
+            Il n’est pas perdu : il est ici, à la fin de la section qui explique
+            POURQUOI c’est vrai. Un slogan placé avant sa démonstration ne se lit
+            pas, il se survole.
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="parcours parcours--alt" aria-labelledby="solutions-titre">
+      <div class="container">
+        <div class="section-header">
+          <span class="mono-tag" aria-hidden="true">/// 03 · CE QU’ON CONSTRUIT</span>
+          <h2 id="solutions-titre">Quatre verbes avant les technologies</h2>
+          <p class="section-header__desc">
+            Ce que fait le studio, en quatre mots. Les outils viennent après — et
+            ils changent quand il faut : c’est le propre d’un système bien conçu.
+          </p>
+        </div>
+
+        <ul class="parcours__grille parcours__grille--verbes">
+          <li class="verbe">
+            <span class="verbe__mot">CONCEVOIR</span>
+            <p class="verbe__texte">
+              Architecture et applications métier. Le site, l’outil interne, la base
+              de données, et les règles qui vont avec.
+            </p>
+          </li>
+          <li class="verbe">
+            <span class="verbe__mot">AUTOMATISER</span>
+            <p class="verbe__texte">
+              Workflows, IA et suppression des tâches répétitives. Ce qui se répète
+              se décrit ; ce qui se décrit peut être confié à une machine.
+            </p>
+          </li>
+          <li class="verbe">
+            <span class="verbe__mot">MODERNISER</span>
+            <p class="verbe__texte">
+              Refonte de systèmes existants sans repartir inutilement de zéro.
+              On garde ce qui tient, on remplace ce qui bloque.
+            </p>
+          </li>
+          <li class="verbe">
+            <span class="verbe__mot">MAÎTRISER</span>
+            <p class="verbe__texte">
+              Données, hébergement, dépendances et infrastructure. Savoir où c’est,
+              qui y accède, et ce qui se passe si ça s’arrête.
+            </p>
+          </li>
+        </ul>
+
+        <p class="parcours__outils">
+          <strong>Les moyens, en détail</strong> — Symfony, Vue 3, PostgreSQL, Docker,
+          n8n, RAG, agents d’IA locaux, MCP. Ce sont des <em>choix</em>, écrits ici pour
+          que vous puissiez les vérifier, pas pour vous convaincre.
+          <router-link to="/projets">La grille de preuves</router-link> dit lequel a
+          servi à quoi.
+        </p>
+
+        <p class="parcours__slogan">La machine travaille. <strong>Vous décidez.</strong></p>
+      </div>
+    </section>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════
@@ -403,7 +571,7 @@
       </div>
 
       <div class="container nav-arrivee__texte">
-        <span class="mono-tag" aria-hidden="true">/// · L’ARRIVÉE</span>
+        <span class="mono-tag" aria-hidden="true">/// · LE REGARD 1/4 — L’ARRIVÉE</span>
         <h2 id="nav-arrivee-titre" class="nav-arrivee__titre">
           Vous n’ouvrez pas un site.<br>
           <span class="text-gradient">Vous accostez.</span>
@@ -512,7 +680,7 @@
         ></span>
       </div>
       <div class="container nav-descente__texte">
-        <span class="mono-tag" aria-hidden="true">/// · LA DESCENTE</span>
+        <span class="mono-tag" aria-hidden="true">/// · LE REGARD 2/4 — LA DESCENTE</span>
         <h2 id="nav-descente-titre">
           On ne change pas de page.<br>
           <span class="text-gradient">On franchit la coque.</span>
@@ -552,7 +720,7 @@
     <section class="nav-quartiers" data-quartiers aria-labelledby="nav-quartiers-titre">
       <div class="container">
         <div class="section-header section-header--center">
-          <span class="mono-tag" aria-hidden="true">/// · LES SEPT QUARTIERS</span>
+          <span class="mono-tag" aria-hidden="true">/// · LE REGARD 3/4 — LES SEPT QUARTIERS</span>
           <h2 id="nav-quartiers-titre">Le navire est le plan</h2>
           <p class="section-header__desc">
             Sept compartiments, sept directions. On ne clique pas un menu : <strong>on
@@ -655,7 +823,7 @@
     <section class="nav-appetence" data-appetence aria-labelledby="nav-appetence-titre">
       <div class="container">
         <div class="section-header">
-          <span class="mono-tag" aria-hidden="true">/// · L’EMBRANCHEMENT</span>
+          <span class="mono-tag" aria-hidden="true">/// · LE REGARD 4/4 — L’EMBRANCHEMENT</span>
           <h2 id="nav-appetence-titre">
             Le navire ne demande pas ce que vous voulez.<br>
             <span class="text-gradient">Il demande qui vous êtes.</span>
@@ -740,7 +908,7 @@
                  (la 3D) se suivaient, et le VISUEL SIMULÉ passait avant le MODÈLE RÉEL :
                  le visiteur voyait d'abord la version faible. Il n'en reste qu'une, et
                  c'est la 3D qui ouvre — les deux textes sont repris MOT POUR MOT. -->
-            <span class="mono-tag" aria-hidden="true">/// LE VAISSEAU · LE NAVIRE</span>
+            <span class="mono-tag" aria-hidden="true">/// 04 · LE LAB — LE VAISSEAU</span>
             <h2 id="vaisseau-title">ARKADIA <span class="text-gradient">SS00999</span></h2>
             <p class="section-header__desc">
               Un seul navire, et il est réel : tous les agents qui travaillent pour vous
@@ -963,7 +1131,7 @@
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// · LE JEU</span>
+            <span class="mono-tag" aria-hidden="true">/// LE LAB · LE JEU</span>
             <h2 id="jeu-title">Montez à bord</h2>
             <p class="section-header__desc">
               Le navire n'est pas qu'une fiche technique — il se joue. Une salle et sa cale,
@@ -998,13 +1166,108 @@
 
       </div>
     </section>
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         ⭐ 05 · LES RÉALISATIONS COMME PREUVES — AJOUTÉE LE 26/09/2026.
+
+         ⛔ LE DÉFAUT CORRIGÉ : une galerie de captures ne prouve rien. Chaque
+            projet est donc présenté par ce qu’il RÈGLE, la CONTRAINTE qu’il
+            subissait, la SOLUTION retenue, et ce qui a été AUTOMATISÉ. La grille
+            complète est sur la page /projets.
+
+         ⛔ LE SEUL CHIFFRE AFFICHÉ EST SOURCÉ, ET IL EST RÉGÉNÉRÉ. Il vient du
+            relevé écrit par scripts/generer-etat.mjs, à chaque npm run build
+            (prebuild ET postbuild). Il ne peut donc pas vieillir en silence.
+            Mesure indisponible, la valeur vaut null, et la phrase s’affiche SANS
+            nombre plutôt qu’avec un zéro faux.
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="parcours" aria-labelledby="realisations-titre">
+      <div class="container">
+        <div class="section-header">
+          <span class="mono-tag" aria-hidden="true">/// 05 · LES RÉALISATIONS</span>
+          <h2 id="realisations-titre">Des preuves, pas une galerie</h2>
+          <p class="section-header__desc">
+            Un écran ne prouve rien : n’importe qui peut montrer une interface.
+            Ce qui se vérifie, c’est <strong>ce qui a été réglé, sous quelles
+            contraintes, et ce qui tourne sans intervention</strong>.
+          </p>
+        </div>
+
+        <div class="preuves">
+          <article class="preuve">
+            <header class="preuve__entete">
+              <h3 class="preuve__titre">ARKADIA — le site que vous lisez</h3>
+              <span class="preuve__tag">en production</span>
+            </header>
+            <dl class="preuve__grille">
+              <dt>Problème</dt>
+              <dd>Un studio qui vend de l’architecture doit pouvoir montrer la sienne — sans équipe, sans budget, et sans dépendre d’un service qu’il ne maîtrise pas.</dd>
+              <dt>Contrainte</dt>
+              <dd>Hébergement statique en FTP, une seule machine, aucune donnée de visiteur envoyée à un service externe.</dd>
+              <dt>Solution</dt>
+              <dd>Vue 3 et Vite, chaque page prérendue en HTML, les données séparées du moteur, et une graine rejouable pour que le monde se reconstruise à l’identique.</dd>
+              <dt>Automatisé</dt>
+              <dd>La chaîne de construction — langues, sitemap, prérendu, relevé — et la publication du relevé lui-même.
+                <span v-if="pagesPrerendues" class="preuve__chiffre">{{ pagesPrerendues }} pages construites au dernier relevé</span>
+                <span v-else class="preuve__chiffre preuve__chiffre--absent">Compte de pages : à mesurer</span>
+                <span class="preuve__source">source : src/data/etat-studio.json, écrit par scripts/generer-etat.mjs</span>
+              </dd>
+            </dl>
+            <router-link class="preuve__lien" to="/etat-du-studio">Voir le relevé du studio</router-link>
+          </article>
+
+          <article class="preuve">
+            <header class="preuve__entete">
+              <h3 class="preuve__titre">Le Modèle Boutique Boréal</h3>
+              <span class="preuve__tag">gabarit livrable</span>
+            </header>
+            <dl class="preuve__grille">
+              <dt>Problème</dt>
+              <dd>Ouvrir une boutique en ligne coûte cher au départ, et les solutions toutes faites imposent leurs règles — y compris celles qu’on ne veut pas.</dd>
+              <dt>Contrainte</dt>
+              <dd>Aucune dépendance à une plateforme marchande, et des règles de catalogue et de panier vérifiables autrement qu’à l’œil.</dd>
+              <dt>Solution</dt>
+              <dd>Une tranche verticale complète — vitrine, catalogue, fiche produit, panier, commande — où le calcul reste séparé de l’affichage.</dd>
+              <dt>Automatisé</dt>
+              <dd>Les règles du panier et du catalogue sont des fonctions pures, exécutées hors interface : ce qui se règle se teste, et ce qui se teste ne casse pas en silence.
+                <span class="preuve__source">source : src/components/modeles/reglesPanier.js et reglesCatalogue.js</span>
+              </dd>
+            </dl>
+            <router-link class="preuve__lien" to="/modeles/boutique-boreal">Ouvrir le gabarit</router-link>
+          </article>
+
+          <article class="preuve">
+            <header class="preuve__entete">
+              <h3 class="preuve__titre">Voyagéo Pro</h3>
+              <span class="preuve__tag preuve__tag--demo">démonstration</span>
+            </header>
+            <dl class="preuve__grille">
+              <dt>Problème</dt>
+              <dd>Passer d’un suivi éparpillé entre plusieurs fichiers à une plateforme unique, sans perdre le métier au passage.</dd>
+              <dt>Contrainte</dt>
+              <dd><strong>Démonstration assumée</strong> : le client, les chiffres et le témoignage sont des exemples. Ce projet montre une méthode ; il ne se présente pas comme une référence client.</dd>
+              <dt>Solution</dt>
+              <dd>Devis, catalogue fournisseurs, facturation et relances réunis dans une seule application, avec les automatisations décrites plutôt que promises.</dd>
+              <dt>Automatisé</dt>
+              <dd>Les relances J+3, J+7 et J+14 sont écrites comme des règles, pas comme une intention.
+                <span class="preuve__source">source : src/views/services/ProjectsPage.vue</span>
+              </dd>
+            </dl>
+            <router-link class="preuve__lien" to="/voyageo-pro">Voir le cas complet</router-link>
+          </article>
+        </div>
+
+        <p class="preuves__suite">
+          <router-link to="/projets" class="btn-outline">Voir les réalisations en détail</router-link>
+        </p>
+      </div>
+    </section>
 
     <!-- MÉTHODE : fonctionnement du studio, présenté de façon pragmatique (2026-09) -->
     <section class="method" aria-labelledby="method-title">
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
-            <span class="mono-tag" aria-hidden="true">/// 03 · LA MÉTHODE</span>
+            <span class="mono-tag" aria-hidden="true">/// 06 · LA MÉTHODE</span>
             <h2 id="method-title">Comment travaille le studio</h2>
             <p class="section-header__desc">
               <!-- ⚠️ « (SASU) » RETIRÉ LE 19/09/2026 — LA SOCIÉTÉ N'EST PAS IMMATRICULÉE.
@@ -1080,7 +1343,7 @@
     <section class="nav-agent" data-agent aria-labelledby="nav-agent-titre">
       <div class="container">
         <div class="section-header">
-          <span class="mono-tag" aria-hidden="true">/// · L’AGENT DU BORD</span>
+          <span class="mono-tag" aria-hidden="true">/// 07 · LES PREUVES</span>
           <h2 id="nav-agent-titre">Une voix qui lit les mesures du studio</h2>
           <p class="section-header__desc">
             Le studio ne se raconte pas : <strong>il se mesure</strong>, et il a un agent
@@ -1132,12 +1395,83 @@
       </div>
     </section>
 
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         ⭐ 08 · À PROPOS — AJOUTÉE LE 26/09/2026.
+
+         ⛔ LA PAGE N’EN AVAIT AUCUNE, ET C’ÉTAIT LE TROU LE PLUS COÛTEUX APRÈS
+            LE HERO : la question « pourquoi vous ? » restait sans réponse
+            nominative. Un prospect qui ne sait pas QUI il appelle n’appelle pas.
+
+         ⛔ LA LOCALISATION EST CELLE DU DÉPÔT, PAS CELLE QU’ON CROIT SAVOIR.
+            Harponville (80560), Somme — mesuré dans MentionsLegales.vue,
+            Confidentialite.vue, DossierPage.vue et le pied de page.
+            « Amiens » n’apparaît dans ce dépôt QUE comme juridiction compétente
+            (CGV, mentions légales) et comme valeur d’exemple d’un outil interne.
+            Écrire « basé à Amiens » aurait été un chiffre sans sujet, donc faux.
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <section class="parcours parcours--alt" aria-labelledby="apropos-titre">
+      <div class="container">
+        <div class="section-header">
+          <span class="mono-tag" aria-hidden="true">/// 08 · À PROPOS</span>
+          <h2 id="apropos-titre">Un seul atelier, et il est nommé</h2>
+          <p class="section-header__desc">
+            GL Digital Lab est le studio de <strong>Gaëtan Langlet</strong>, développeur
+            full-stack, installé à <strong>Harponville, dans la Somme</strong>
+            (Hauts-de-France). Pas d’agence intermédiaire, pas de sous-traitance,
+            pas de ferme de serveurs louée.
+          </p>
+        </div>
+
+        <ul class="parcours__grille">
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Un seul interlocuteur</h3>
+            <p class="parcours__carte-texte">
+              Du premier échange à la mise en service, la même personne conçoit,
+              écrit et surveille le système. Rien ne se perd entre un avant-vente
+              et un exécutant.
+            </p>
+          </li>
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Ce qui se passe chez vous reste chez vous</h3>
+            <p class="parcours__carte-texte">
+              Les outils d’IA du studio tournent sur une machine identifiée, en
+              France, sous droit français — pas dans un service qu’on ne peut pas
+              nommer. Vos documents ne servent pas à entraîner un modèle.
+            </p>
+          </li>
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Ce que le studio s’interdit est écrit</h3>
+            <p class="parcours__carte-texte">
+              Les limites ne sont pas une promesse orale : elles sont publiées, et
+              elles engagent. Un studio qui ne dit pas ce qu’il refuse ne dit rien
+              de ce qu’il fera.
+              <router-link to="/ce-que-nous-nous-imposons">Lire les limites</router-link>
+            </p>
+          </li>
+          <li class="parcours__carte">
+            <h3 class="parcours__carte-titre">Si votre besoin n’est pas de son ressort</h3>
+            <p class="parcours__carte-texte">
+              Il le dit. Un projet mené sans compétence coûte plus cher qu’un projet
+              refusé — pour vous comme pour celui qui l’aurait mené de travers.
+            </p>
+          </li>
+        </ul>
+
+        <p class="parcours__outils">
+          Les chiffres du studio — poids des pages, requêtes, verrous de qualité,
+          relevés horodatés — sont publiés sur
+          <router-link to="/etat-du-studio">l’état du studio</router-link>.
+        </p>
+      </div>
+    </section>
     <!-- CTA FINAL -->
     <section class="cta-final" aria-labelledby="cta-title">
       <div class="container">
         <ScrollReveal animation="zoom">
           <SpotlightContainer :size="400" color="var(--primary)" :opacity="0.15">
             <div class="cta-final__box glass">
+              <span class="mono-tag" aria-hidden="true">/// 09 · CONTACT</span>
               <h2 id="cta-title">Qu'est-ce qu'on fait avancer&nbsp;?</h2>
               <p>Dites-moi ce qui vous ralentit. Je réponds sous 24 h, avec une première estimation gratuite et sans engagement — et si votre besoin n'est pas de notre ressort, je vous le dis aussi.</p>
               <MagneticButton tag="router-link" to="/contact" class="btn-primary btn-large" :strength="35" :text-strength="45">
@@ -1216,6 +1550,15 @@ import { computed } from 'vue';
 // DANS le HTML livré et lisibles sans JavaScript. C'est le même fichier que celui
 // que lit `/etat-du-studio` : une seule source, ou elle pourrit.
 import etatDuStudio from '@/data/etat-studio.json';
+
+// ⭐ LE SEUL CHIFFRE AFFICHÉ PAR LA SECTION 05 DES RÉALISATIONS, ET IL EST SOURCÉ.
+// Il vient du relevé écrit par scripts/generer-etat.mjs, régénéré à chaque
+// npm run build (prebuild ET postbuild) : il ne peut donc pas vieillir en silence.
+// Mesure indisponible, la valeur vaut null, et la phrase s’affiche SANS nombre
+// plutôt qu’avec un zéro faux. Un chiffre écrit à la main devient faux sans le dire.
+const pagesPrerendues = typeof etatDuStudio?.pages_prerendues === 'number'
+  ? etatDuStudio.pages_prerendues
+  : null;
 // LES RUNES — les seuls mots autorisés sont dans `src/data/runes.js`
 // (`MOTS = ['ARKADIA', 'MND']`). Le composant lève si une lettre manque.
 import BandeRunes from '@/components/runes/BandeRunes.vue';
@@ -3982,4 +4325,275 @@ html {
   .nav-jauge__valeur { font-size: 1.6rem; }
   .nav-descente { padding: var(--space-lg) 0; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PARCOURS DE LA PAGE D’ACCUEIL — 26/09/2026.
+   Bandeau de registres, sections 02, 03, 05 et 08.
+
+   ⛔ LA PALETTE N’EST PAS RÉINVENTÉE. Tout est branché sur les jetons déjà
+      déclarés dans src/assets/styles/variables.css (direction artistique D6 du
+      19/09/2026 : bleu-noir MND, cyan et jaune). Aucune valeur de couleur
+      nouvelle n’est introduite ici. « NOIR · VERT · ARGENT » n’est pas la palette
+      de ce dépôt : l’imposer aurait repeint six semaines de direction artistique
+      validée. Le point est signalé, pas tranché.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.registres {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: rgba(13, 17, 31, 0.72);
+}
+
+.registres__liste {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.85rem;
+  padding: 0.85rem 1rem;
+}
+
+.registres__item {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+}
+
+.registres__sep {
+  color: var(--accent);
+}
+
+.parcours {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-lg) 0;
+}
+
+.parcours--alt {
+  background: rgba(13, 17, 31, 0.55);
+}
+
+.parcours__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.parcours__carte {
+  padding: 1.25rem 1.25rem 1.15rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: rgba(8, 11, 20, 0.66);
+}
+
+.parcours__carte-titre {
+  margin: 0 0 0.6rem;
+  font-size: 1.06rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.parcours__carte-texte {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.parcours__carte-texte a {
+  color: var(--accent-ink);
+}
+
+.parcours__grille--verbes {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.verbe {
+  padding: 1.15rem 1.2rem;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  background: rgba(8, 11, 20, 0.6);
+}
+
+.verbe__mot {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+}
+
+.verbe__texte {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.parcours__outils {
+  margin: 2rem 0 0;
+  padding: 1rem 1.15rem;
+  border: 1px dashed var(--rule-strong);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.parcours__outils a {
+  color: var(--accent-ink);
+}
+
+.parcours__slogan {
+  margin: 1.75rem 0 0;
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.parcours__slogan strong {
+  color: var(--action);
+}
+
+/* 05 : les preuves */
+
+.preuves {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.preuve {
+  display: flex;
+  flex-direction: column;
+  padding: 1.3rem 1.25rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: rgba(8, 11, 20, 0.66);
+}
+
+.preuve__entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.preuve__titre {
+  margin: 0;
+  font-size: 1.08rem;
+  color: var(--ink);
+}
+
+.preuve__tag {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.preuve__tag--demo {
+  border-color: var(--action);
+  color: var(--action);
+}
+
+.preuve__grille {
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.preuve__grille dt {
+  margin-top: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.preuve__grille dt:first-of-type {
+  margin-top: 0;
+}
+
+.preuve__grille dd {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.preuve__chiffre {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+.preuve__chiffre--absent {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.preuve__source {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+.preuve__lien {
+  margin-top: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-ink);
+}
+
+.preuves__suite {
+  margin: 2rem 0 0;
+  text-align: center;
+}
+
+.hero__cta-secondaire {
+  margin-left: 0.75rem;
+}
+
+.hero__offre-note {
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+  .hero__cta-secondaire {
+    margin: 0.75rem 0 0;
+  }
+
+  .parcours {
+    padding: var(--space-md) 0;
+  }
+
+  .preuve__grille dd {
+    font-size: 0.88rem;
+  }
+}
+
+/* ⛔ prefers-reduced-motion : ces blocs n’animent rien — aucun transform,
+   aucune transition. Il n’y a donc rien à couper ici, et c’est délibéré :
+   une animation décorative de plus aurait exigé une coupure de plus dans un
+   fichier qui en compte déjà plusieurs, dispersées. */
+
 </style>

@@ -702,7 +702,7 @@ onMounted(async () => {
 }
 
 .etat__etat--tenu {
-  color: var(--accent);
+  color: var(--sens-mental);   /* VERT DU CANON (25/09) : un verrou tenu est un etat de sante MESURE. Le cyan disait l'accent ; le vert dit ce que l'etat VEUT DIRE. */
 }
 
 .etat__verrou-quand {

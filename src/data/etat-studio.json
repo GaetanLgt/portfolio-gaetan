@@ -3,21 +3,21 @@
   "_note": "Relevé réel du build, écrit par scripts/generer-etat.mjs. Ce n'est pas du temps réel : c'est une mesure datée. Une mesure indisponible vaut null, jamais zéro.",
   "_source": "scripts/generer-etat.mjs",
   "commit": {
-    "court": "0561332",
-    "sujet": "/demos : la page est desormais GENEREe depuis une source unique",
-    "date": "2026-09-26T05:39:29+02:00",
+    "court": "ba3cf37",
+    "sujet": "Les 48 pages tombaient une SECONDE fois — mon propre script avait reintroduit le defaut",
+    "date": "2026-09-26T09:20:02+02:00",
     "arbre_modifie": true
   },
   "build": {
-    "horodatage_local": "2026-09-26 06:16:03",
-    "horodatage_minute": "2026-09-26 06:16",
-    "horodatage_iso": "2026-09-26T04:16:03.222Z",
+    "horodatage_local": "2026-09-26 19:01:55",
+    "horodatage_minute": "2026-09-26 19:01",
+    "horodatage_iso": "2026-09-26T17:01:55.343Z",
     "fuseau": "Europe/Paris"
   },
   "pages_prerendues": 207,
   "page_la_plus_lourde": {
     "chemin": "/",
-    "ko_servis": 263.7,
+    "ko_servis": 264.7,
     "seuil_ko": 1024
   },
   "requetes_premier_chargement": {

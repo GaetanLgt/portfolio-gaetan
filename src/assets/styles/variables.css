@@ -12,11 +12,29 @@
      #2abfff ×10 · #0d111f ×7 · #12172a ×2. Et les trois visuels MND reçus le
      même jour la confirment : kanji cyan et ambre sur un bleu-noir.
 
-     ⚠️ CE QUI CHANGE VRAIMENT : LE VERT S'EN VA.
-     Depuis le 10/09 (D4), l'accent du studio est le vert code Matrix #00FF41.
-     La nouvelle palette n'en contient AUCUN — elle a un cyan (#2abfff) et un
-     jaune dominant (#ffe650). Ce n'est donc pas un ajustement : c'est un
-     changement d'identité, et il est assumé.
+     ⛔ CE BLOC A PORTE « LE VERT S'EN VA » — C'EST ANNULE DEPUIS LE 25/09/2026.
+     La ligne vivait dans la section HISTORIQUE du canon (§ 11 bis), et elle a ete
+     recopiee ici comme si elle etait la regle. Mesure du 26/09/2026 : le canon
+     porte, § 11, l. 211 : « LA PALETTE DU JEU — NOIR · VERT · ARGENT », corrige
+     le 25/09 — la decision du 24/09 est ANNULEE, et reclassee en historique.
+
+     ⭐ LE CODE DES COULEURS — enonce par Neo le 25/09/2026, et c'est lui qui donne
+     son fondement a la palette : LES COULEURS NE SONT PAS DES TEINTES, CE SONT DES
+     PHRASES.
+         VERT  = la santé mentale
+         ROUGE = le monde physique
+         BLEU  = le mysticisme, la magie, l'imaginaire
+     ⇒ Le bleu n'est PAS a retirer : c'est le VERT qui manquait. Les deux registres
+       coexistent — un navire mystique garde son bleu, le vert s'y ajoute.
+
+     ⚠️ ET LE JETON DU VERT EST `#2ce39b` — pas `#00FF41`.
+         #2ce39b  156°, saturation 76,5 % — une emeraude. C'est LE vert de la palette.
+         #00FF41  saturation 100 % — il n'est PAS un jeton semantique : c'est la DA
+                  Matrix de la vitrine (decision D4 du 10/09), un autre objet.
+     « On n'invente AUCUNE teinte » : le vert se choisit dans le fonds, il ne se fabrique pas.
+
+     ⚠️ CE QUE CA NE TRANCHE PAS : l'OR. Il n'est ni rehabilite ni supprime, mais il n'est
+     plus un jeton de la palette. A trancher par Neo.
 
      CINQUIÈME BASCULE EN ONZE JOURS — et c'est précisément pourquoi ce fichier
      isole tout dans ce bloc : 08/09 D1 clair · 10/09 D4 Matrix · 10/09 retour D1 ·
@@ -59,6 +77,27 @@
   --accent: #2abfff;     /* titres, liens, point MND — « sacré », reste rare */
   --accent-ink: #7AD6FF; /* état survol */
   --accent-inv: #2abfff; /* sections sur fond encre : même valeur */
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     LE CODE DES COULEURS — canon § 11, enonce par Neo le 25/09/2026.
+     « Les couleurs ne sont pas des teintes, ce sont des phrases. »
+
+     ⛔ UN JETON DECLARE N'EST PAS UN JETON POSE.
+     On le pose LA OU LE PROPOS EST LA SANTE MENTALE — jamais pour decorer un bouton.
+     Ce bloc DECLARE les trois registres pour que le site puisse les employer au bon
+     endroit. Il ne les repand pas sur les composants.
+     ═══════════════════════════════════════════════════════════════════════ */
+  --sens-mental: #2ce39b;    /* VERT  — la sante mentale. 156°, sat 76,5 % : une emeraude,
+                                assez calme pour dire un etat, assez vive pour etre un signal */
+  --sens-physique: #ff5a5f;  /* ROUGE — le monde physique : la coque, les degats, l'integrite */
+  --sens-mystique: #2abfff;  /* BLEU  — le mysticisme, la magie, l'imaginaire. Meme valeur que
+                                --accent : le bleu n'etait pas a retirer */
+
+  /* ── L'ARGENT — l'acier du canon (« tentacule de FER »), § 11 bis l. 345 ──
+     Il porte le metal : la coque, les armes, le kraken. */
+  --argent: #B9C4C9;
+  --argent-fonce: #8496AD;
+
 
   /* ── Néons secondaires ── */
   --neon-magenta: #FF2D95;  /* ponctuations — INCHANGÉ : la nouvelle palette n'a

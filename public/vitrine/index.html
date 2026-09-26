@@ -195,7 +195,27 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
       --f-mono:  'JetBrains Mono', ui-monospace, Consolas, monospace;
       --f-runes: 'Segoe UI Historic', 'Noto Sans Runic', 'Noto Sans', system-ui, sans-serif;
     }
-  </style>
+  
+  /* ── LA PASSERELLE VERS L'OFFRE — ajoutee le 26/09/2026 ──────────────────────────
+     Mesure qui l'a rendue necessaire : la racine portait 4 259 caracteres de recit et
+     AUCUN mot du metier. Un prospect arrivait, lisait une fiction, et n'avait aucun
+     chemin vers une offre. *La vitrine n'etait pas un probleme : c'etait une porte
+     qui n'ouvrait nulle part.*
+     Ces styles ne consomment que des jetons deja presents dans la page. */
+  .ark-offre{margin:2.2rem 0 1.4rem;max-width:62ch}
+  .ark-offre-quoi{font-size:1.02rem;line-height:1.65;color:var(--ink-soft,#a9b8cc);margin:0 0 1.15rem}
+  .ark-offre-quoi strong{color:var(--ink,#eaf0f7);font-weight:600}
+  .ark-offre-quoi em{display:block;margin-top:.4rem;font-style:normal;
+                     color:var(--accent,#2abfff);font-size:.94rem;letter-spacing:.01em}
+  .ark-offre-liens{display:flex;flex-wrap:wrap;gap:.7rem;align-items:center;margin:0}
+  .ark-offre-suite{color:var(--ink-faint,#8496ad);font-size:.88rem;text-decoration:none;
+                   border-bottom:1px solid transparent;padding-bottom:1px}
+  .ark-offre-suite:hover{color:var(--accent,#2abfff);border-bottom-color:currentColor}
+  @media (max-width:640px){
+    .ark-offre-liens{flex-direction:column;align-items:stretch}
+    .ark-offre-liens .btn{text-align:center}
+  }
+</style>
 <!-- ⭐ LES BALISES DE PARTAGE — ajoutées le 26/09/2026.
      ⛔ CE QUI MANQUAIT, MESURÉ : la vitrine est posée à la RACINE de gldigitallab.fr
         (via `scripts/poser-vitrine.mjs`), et elle ne portait AUCUNE balise og: ni
@@ -255,7 +275,20 @@ footer{position:relative;z-index:4;padding:40px clamp(16px,6vw,96px) calc(env(sa
       <div class="eyebrow">I <span>/ La graine</span></div>
       <h1>Ark<span class="k">A</span>di<span class="k">A</span><span class="sub">la graine d'Yggdrasil</span></h1>
       <p class="lede">Un navire damné dans un espace cyber. Il perd la mémoire à mesure qu'il regarde, et il va plus vite quand on le voit.</p>
-      <div class="hint">Graine 42 · faites défiler pour appareiller</div>
+      
+      <div class="ark-offre">
+        <p class="ark-offre-quoi">
+          <strong>GL Digital Lab</strong> — studio de développement web, d'applications métier
+          et d'intelligence artificielle locale. Harponville, Somme.
+          <em>Des systèmes numériques conçus pour durer.</em>
+        </p>
+        <p class="ark-offre-liens">
+          <a class="btn" href="/projets">Voir les réalisations et leurs preuves</a>
+          <a class="btn ghost" href="/contact">Construire mon projet</a>
+          <a class="ark-offre-suite" href="/dossier">Le studio en détail →</a>
+        </p>
+      </div>
+<div class="hint">Graine 42 · faites défiler pour appareiller</div>
     </div>
   </section>
 
@@ -1020,7 +1053,9 @@ frame();
     <a href="#boucle">V — La boucle</a>
     <a href="#memoire">VI — La mémoire</a>
     <a href="#bestiaire">VII — Le bestiaire</a>
-    <a href="#capitaine">VIII — Le capitaine</a>
+          <a href="#capitaine">VIII — Le capitaine</a>
+      <a href="/projets">— Hors du récit : les réalisations →</a>
+
   </nav>
 </div>
 <script>

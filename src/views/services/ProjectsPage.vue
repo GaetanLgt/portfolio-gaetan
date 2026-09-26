@@ -6,16 +6,22 @@
         <div class="projects-hero__content">
           <div class="status-badge">
             <span class="status-badge__dot"></span>
-            <span class="status-badge__text">PORTFOLIO TECHNIQUE</span>
+            <span class="status-badge__text">DES PREUVES, PAS UNE GALERIE</span>
           </div>
           
           <h1 class="projects-hero__title">
-            <span class="text-gradient">Projets</span> & Réalisations
+            <span class="text-gradient">Réalisations</span> &amp; preuves
           </h1>
-          
+
+          <!-- ⭐ RÉÉCRIT LE 26/09/2026. La page s’annonçait par ses technologies
+               (« applications Symfony, interfaces Vue 3 ») : c’est une liste de
+               moyens, pas une promesse. Elle annonce maintenant ce que le lecteur
+               va pouvoir VÉRIFIER. -->
           <p class="projects-hero__desc">
-            Une sélection de réalisations professionnelles : applications Symfony,
-            interfaces Vue 3, automatisations n8n et infrastructure souveraine.
+            Chaque projet est présenté par <strong>ce qu’il règle</strong>, la
+            <strong>contrainte</strong> qu’il subissait, l’<strong>architecture</strong>
+            retenue, et <strong>ce qui tourne sans intervention</strong>.
+            Les technologies arrivent après : elles disent comment, pas pourquoi.
           </p>
           
           <!-- Stats -->
@@ -28,9 +34,13 @@
               <span class="projects-stat__value">{{ uniqueTechs.length }}</span>
               <span class="projects-stat__label">Technologies</span>
             </div>
+            <!-- ⛔ « 5+ Années XP » RETIRÉ LE 26/09/2026 : le nombre était écrit
+                 à la main et AUCUNE source du dépôt ne le produit. Ce n’est pas
+                 une pudeur : un chiffre non sourcé dans un portfolio finit cité
+                 dans un devis. Remplacé par un COMPTE, calculé à l’affichage. -->
             <div class="projects-stat">
-              <span class="projects-stat__value">5+</span>
-              <span class="projects-stat__label">Années XP</span>
+              <span class="projects-stat__value">{{ projetsAvecCas.length }}</span>
+              <span class="projects-stat__label">Cas d’étude publiés</span>
             </div>
           </div>
         </div>
@@ -71,7 +81,12 @@
             v-for="project in filteredProjects" 
             :key="project.id"
             class="project-card glass"
+            role="button"
+            tabindex="0"
+            :aria-label="'Voir la preuve du projet ' + project.name"
             @click="openProject(project)"
+            @keydown.enter.prevent="openProject(project)"
+            @keydown.space.prevent="openProject(project)"
           >
             <!-- Header -->
             <div class="project-card__header">
@@ -89,7 +104,15 @@
                    titre des cartes est le niveau juste sous le titre de page : ce
                    sont des h2. Le style ne bouge pas, il passe par la classe. -->
               <h2 class="project-card__title">{{ project.name }}</h2>
-              <p class="project-card__desc">{{ project.shortDesc }}</p>
+              <!-- ⭐ LA CARTE OUVRE SUR LE PROBLÈME, PAS SUR LA GAMME.
+                   Le résumé commercial (shortDesc) passe dans la fiche :
+                   en vitrine, ce qui accroche un dirigeant, c’est la
+                   situation qu’il reconnaît, pas la liste des outils. -->
+              <p class="project-card__desc">{{ project.preuve.probleme }}</p>
+              <p v-if="project.preuve.automatise" class="project-card__auto">
+                <span class="project-card__auto-tag">Automatisé</span>
+                {{ project.preuve.automatise.split('.')[0] }}.
+              </p>
             </div>
             
             <!-- Tech Stack -->
@@ -109,7 +132,7 @@
             <!-- Footer -->
             <div class="project-card__footer">
               <span class="project-card__date">{{ project.year }}</span>
-              <span class="project-card__action">Voir détails →</span>
+              <span class="project-card__action">Voir la preuve →</span>
             </div>
           </article>
         </TransitionGroup>
@@ -119,24 +142,105 @@
     <!-- PROJECT MODAL -->
     <Teleport to="body">
       <Transition name="modal">
+        <!-- ⛔ ACCESSIBILITÉ, AJOUTÉE LE 26/09/2026 : la fiche s’ouvrait sans
+             rôle de dialogue, sans nom accessible, et ne se fermait qu’à la
+             souris (Échap ne faisait rien). Les trois sont corrigés ici. -->
         <div 
           v-if="selectedProject" 
           class="project-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-modal-titre"
           @click.self="closeProject"
         >
           <div class="project-modal__content glass">
-            <button @click="closeProject" class="project-modal__close">✕</button>
+            <button @click="closeProject" class="project-modal__close" aria-label="Fermer la fiche du projet">✕</button>
             
             <div class="project-modal__header">
               <span class="project-modal__icon">{{ selectedProject.icon }}</span>
               <div>
-                <h2 class="project-modal__title">{{ selectedProject.name }}</h2>
+                <h2 id="project-modal-titre" class="project-modal__title">{{ selectedProject.name }}</h2>
                 <span class="project-modal__category">{{ getCategoryName(selectedProject.category) }} • {{ selectedProject.year }}</span>
               </div>
             </div>
             
             <p class="project-modal__desc">{{ selectedProject.fullDesc }}</p>
-            
+
+            <!-- ⭐ LA GRILLE DE PREUVE — 26/09/2026. L’ordre est celui demandé,
+                 et il n’est pas décoratif : il commence par le problème du
+                 lecteur et finit par ce qui ne demande plus personne. -->
+            <div class="preuve-etapes">
+              <div class="preuve-etape">
+                <h3>Problème</h3>
+                <p>{{ selectedProject.preuve.probleme }}</p>
+              </div>
+              <div class="preuve-etape">
+                <h3>Contrainte</h3>
+                <p>{{ selectedProject.preuve.contrainte }}</p>
+              </div>
+              <div class="preuve-etape">
+                <h3>Architecture</h3>
+                <p>{{ selectedProject.preuve.architecture }}</p>
+              </div>
+              <div class="preuve-etape">
+                <h3>Technologies</h3>
+                <div class="project-modal__tags">
+                  <span v-for="tech in selectedProject.stack" :key="tech" class="tech-tag tech-tag--large">
+                    {{ tech }}
+                  </span>
+                </div>
+                <p class="preuve-etape__note">
+                  Ce sont des moyens. Ils sont écrits ici pour être vérifiés, pas
+                  pour convaincre.
+                </p>
+              </div>
+              <div class="preuve-etape">
+                <h3>Solution</h3>
+                <p>{{ selectedProject.preuve.solution }}</p>
+              </div>
+              <div class="preuve-etape">
+                <h3>Résultat</h3>
+                <p v-if="selectedProject.preuve.resultat">{{ selectedProject.preuve.resultat }}</p>
+                <p v-else class="preuve-etape__absent">
+                  <strong>Non mesuré.</strong> Aucun relevé exploitable n’existe pour
+                  ce projet, donc aucun chiffre n’est affiché. Un résultat inventé
+                  vaut moins qu’un résultat absent : le second se voit.
+                </p>
+              </div>
+              <!-- ⭐ LE RELEVÉ RÉEL, LÀ OÙ IL EXISTE. Les trois valeurs sont LUES
+                   dans src/data/etat-studio.json, écrit par scripts/generer-etat.mjs
+                   à chaque npm run build. Elles ne peuvent pas vieillir en silence. -->
+              <div v-if="selectedProject.id === 'gldigitallab' && mesuresBuild" class="preuve-etape preuve-etape--releve">
+                <h3>Relevé du dernier build</h3>
+                <ul class="preuve-releve">
+                  <li v-if="mesuresBuild.pages !== null">
+                    <strong>{{ mesuresBuild.pages }}</strong> pages prérendues
+                  </li>
+                  <li v-if="mesuresBuild.poids !== null">
+                    Page d’accueil servie : <strong>{{ mesuresBuild.poids }} Ko</strong>
+                    <span v-if="mesuresBuild.seuilPoids"> (plafond fixé à {{ mesuresBuild.seuilPoids }} Ko)</span>
+                  </li>
+                  <li v-if="mesuresBuild.requetes !== null">
+                    <strong>{{ mesuresBuild.requetes }}</strong> requêtes au premier chargement
+                    <span v-if="mesuresBuild.seuilRequetes"> (plafond fixé à {{ mesuresBuild.seuilRequetes }})</span>
+                  </li>
+                </ul>
+                <p class="preuve-etape__note">
+                  Source : <code>src/data/etat-studio.json</code>, écrit par
+                  <code>scripts/generer-etat.mjs</code>. Ces valeurs sont régénérées
+                  à chaque build — elles ne sont pas recopiées à la main.
+                </p>
+              </div>
+              <div class="preuve-etape">
+                <h3>Ce qui a été automatisé</h3>
+                <p v-if="selectedProject.preuve.automatise">{{ selectedProject.preuve.automatise }}</p>
+                <p v-else class="preuve-etape__absent">
+                  Rien n’a été automatisé sur ce projet, et c’est dit plutôt que
+                  comblé : toutes les actions y sont manuelles.
+                </p>
+              </div>
+            </div>
+
             <!-- Features -->
             <div v-if="selectedProject.features" class="project-modal__features">
               <h3>Fonctionnalités clés</h3>
@@ -145,16 +249,6 @@
                   {{ feature }}
                 </li>
               </ul>
-            </div>
-            
-            <!-- Stack -->
-            <div class="project-modal__stack">
-              <h3>Stack technique</h3>
-              <div class="project-modal__tags">
-                <span v-for="tech in selectedProject.stack" :key="tech" class="tech-tag tech-tag--large">
-                  {{ tech }}
-                </span>
-              </div>
             </div>
             
             <!-- Learnings -->
@@ -218,7 +312,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+
+// ⭐ LE RELEVÉ DU BUILD, IMPORTÉ — PAS RECOPIÉ. Écrit par scripts/generer-etat.mjs
+// à chaque npm run build (prebuild ET postbuild) : il ne peut donc pas vieillir
+// en silence. Une mesure indisponible vaut null, jamais zéro.
+import etatDuStudio from '@/data/etat-studio.json';
 
 // Categories
 const categories = [
@@ -233,6 +332,18 @@ const categories = [
 const projects = ref([
   {
     id: 'voyageopro',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Passer d’un suivi éparpillé entre plusieurs fichiers à une plateforme unique, sans perdre le métier au passage.",
+      contrainte: "Démonstration assumée : le client, les chiffres et le témoignage sont des exemples. Et l’outil devait remplacer des fichiers de suivi sans imposer de ressaisie.",
+      architecture: "Application Symfony 7 et Vue 3, données PostgreSQL, cache Redis, services conteneurisés, et l’automatisation déportée dans n8n plutôt que dans l’interface.",
+      solution: "Devis, catalogue fournisseurs, facturation et relances réunis dans une seule application, avec les automatisations décrites plutôt que promises.",
+      resultat: null,
+      automatise: "Les relances J+3, J+7 et J+14 sont écrites comme des règles, pas comme une intention. Les workflows vivent dans n8n : ils se relisent et se rejouent sans toucher au code de l’application."
+    },
     name: 'VoyageoPro',
     icon: '✈️',
     category: 'fullstack',
@@ -256,6 +367,18 @@ const projects = ref([
   },
   {
     id: 'arkadia',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Faire tenir ensemble une communauté de joueurs et une infrastructure de serveurs, quand les deux se pilotent à la main.",
+      contrainte: "Les serveurs sont loués chez un hébergeur dont l’API est la seule prise disponible, et la communauté vit sur Discord — deux systèmes qui ne se parlent pas nativement.",
+      architecture: "L’API de l’hébergeur est interrogée par un service Node, les événements se propagent vers Discord, les données d’état vivent dans PostgreSQL, et l’ensemble tourne en conteneurs.",
+      solution: "Un cluster piloté par API, un bot Discord qui porte l’économie et la modération, et un tableau de bord d’administration unique.",
+      resultat: null,
+      automatise: "La gestion des serveurs, la modération et les événements communautaires passent par des workflows : on ne redémarre plus un serveur à la main, et une règle de modération s’applique de la même façon à trois heures du matin."
+    },
     name: 'ARKADIA FRANCE',
     icon: '🦖',
     category: 'gaming',
@@ -278,6 +401,18 @@ const projects = ref([
   },
   {
     id: 'myloc',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Gérer des biens, des locataires et des contrats dans des documents séparés, où chaque mise à jour manuelle est une occasion d’erreur.",
+      contrainte: "La pile était imposée : Symfony 5.4 et PHP 7.4 — donc pas de bibliothèque récente, et une sécurité à écrire soi-même.",
+      architecture: "Architecture MVC classique, relations Doctrine entre biens, locataires et contrats, formulaires sécurisés et rendu côté serveur.",
+      solution: "Une plateforme de gestion locative avec CRUD complet, tableaux de bord, notifications et export des documents.",
+      resultat: null,
+      automatise: "Les exports de documents et les notifications sont générés par l’application : le contrat ne se retape plus, il se produit."
+    },
     name: 'MyLoc',
     icon: '🏠',
     category: 'symfony',
@@ -300,6 +435,18 @@ const projects = ref([
   },
   {
     id: 'agents',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Faire tourner des automatisations métier sans envoyer les données de l’entreprise chez un fournisseur de cloud.",
+      contrainte: "Tout doit rester sur une seule machine, en local : moteur d’orchestration, base vectorielle et modèles de langue compris.",
+      architecture: "n8n pour l’orchestration, conteneurs Docker pour l’isolement, ChromaDB pour la recherche documentaire, PostgreSQL pour l’état, Discord pour la surface d’usage.",
+      solution: "Une pile d’automatisation souveraine : bot communautaire, surveillance des serveurs, base de connaissances interrogeable et chaîne de production de contenu.",
+      resultat: null,
+      automatise: "La surveillance et les alertes, l’indexation de la documentation et l’onboarding client : ce qui demandait une personne disponible tourne désormais sans elle."
+    },
     name: 'Workflows & Automatisations',
     icon: '🔄',
     category: 'fullstack',
@@ -322,6 +469,18 @@ const projects = ref([
   },
   {
     id: 'mevnstack',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Recommencer chaque projet full-stack JavaScript par les mêmes fondations : authentification, structure, état, appels réseau.",
+      contrainte: "Aucune dépendance à un cadriciel d’entreprise : la pile devait rester lisible par un seul développeur.",
+      architecture: "Séparation stricte client et serveur, API REST, authentification par jeton, état centralisé côté client.",
+      solution: "Un squelette de démarrage : authentification, API, structure de fichiers et rechargement à chaud.",
+      resultat: null,
+      automatise: "Le rechargement en développement et la génération de la structure : le premier jour d’un projet ne se passe plus à recopier le projet précédent."
+    },
     name: 'MEVN Stack',
     icon: '🔥',
     category: 'fullstack',
@@ -344,6 +503,18 @@ const projects = ref([
   },
   {
     id: 'ouvreboites',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Un site associatif doit pouvoir être mis à jour par des bénévoles, pas par un développeur.",
+      contrainte: "Travail en agence, sur WordPress imposé, avec une séparation nette entre contenu et présentation.",
+      architecture: "WordPress et Timber : les gabarits sont écrits en Twig, la logique reste côté PHP, les contenus sont saisis dans l’administration.",
+      solution: "Un thème sur mesure avec des champs de saisie adaptés au contenu réel de l’association.",
+      resultat: null,
+      automatise: null
+    },
     name: 'Ouvre-Boîtes',
     icon: '🥫',
     category: 'wordpress',
@@ -366,6 +537,18 @@ const projects = ref([
   },
   {
     id: 'chalets',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Présenter une offre haut de gamme et permettre une demande de réservation sans friction.",
+      contrainte: "Projet de formation : le périmètre et les outils étaient fixés, la qualité de rendu était l’objectif.",
+      architecture: "WordPress avec constructeur de pages, galeries optimisées et formulaire de réservation relié à la messagerie.",
+      solution: "Un site vitrine orienté conversion, avec des galeries immersives et un parcours de réservation court.",
+      resultat: "Projet de formation — aucune mise en production, donc aucun résultat exploitable à citer.",
+      automatise: null
+    },
     name: 'Chalets & Caviar',
     icon: '🏔️',
     category: 'wordpress',
@@ -388,6 +571,18 @@ const projects = ref([
   },
   {
     id: 'symfonycms',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Comprendre ce qu’un système de gestion de contenu fait réellement, en le construisant plutôt qu’en le configurant.",
+      contrainte: "Développement depuis une base vide : pas de paquet existant, tout est écrit à la main.",
+      architecture: "Symfony avec Doctrine, gabarits Twig, authentification et rôles, gestion des médias.",
+      solution: "Un CMS léger : articles, catégories, utilisateurs, envoi d’images et bases de référencement.",
+      resultat: null,
+      automatise: "Les opérations de création, lecture, mise à jour et suppression sont générées par Doctrine : la base ne se modifie pas à la main."
+    },
     name: 'SymfonyCMS',
     icon: '📰',
     category: 'symfony',
@@ -410,6 +605,18 @@ const projects = ref([
   },
   {
     id: 'gldigitallab',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Un studio qui vend de l’architecture doit pouvoir montrer la sienne — sans équipe, sans budget publicitaire, et sans dépendre d’un service qu’il ne maîtrise pas.",
+      contrainte: "Hébergement statique en FTP, une seule machine, et aucune donnée de visiteur envoyée à un service externe.",
+      architecture: "Vue 3 et Vite, chaque page prérendue en HTML, les données séparées du moteur, une graine rejouable, et un relevé de mesures publié automatiquement.",
+      solution: "Le site que vous lisez : contenu séparé du moteur, pages statiques, contrôles automatiques avant publication.",
+      resultat: null,
+      automatise: "La chaîne de construction complète — vérification des traductions, sitemap, prérendu des pages, puis écriture du relevé de mesures dans le HTML livré."
+    },
     name: 'Génie IT Tek FR',
     icon: '💎',
     category: 'vue',
@@ -432,6 +639,18 @@ const projects = ref([
   },
   {
     id: 'memory-jeu',
+    // ⭐ LA PREUVE — ajoutée le 26/09/2026. Un écran ne prouve rien ; une
+    // contrainte, une décision d’architecture et une source, si.
+    // « resultat: null » n’est PAS un oubli : cela veut dire qu’aucune mesure
+    // n’existe pour ce projet, et l’interface l’écrit au lieu d’inventer.
+    preuve: {
+      probleme: "Construire un jeu complet à deux, avec un vrai serveur derrière, et des données de jeu qui doivent pouvoir changer sans redéploiement.",
+      contrainte: "Travail en binôme : le découpage du travail et la lisibilité du code comptaient autant que le résultat.",
+      architecture: "Symfony avec authentification et profils utilisateurs, données de jeu chargées depuis une interface de programmation publique, conteneurisation Docker.",
+      solution: "Un jeu de mémoire jouable, avec comptes, progression et cartes chargées dynamiquement.",
+      resultat: null,
+      automatise: "Le chargement des cartes passe par l’interface de programmation : le contenu du jeu se met à jour sans toucher au code."
+    },
     name: 'Memory — jeu de mémoire',
     icon: '🎴',
     category: 'symfony',
@@ -476,6 +695,26 @@ const uniqueTechs = computed(() => {
   return Array.from(techs);
 });
 
+// ⭐ LES COMPTES SONT CALCULÉS, JAMAIS ÉCRITS. Un chiffre écrit à la main dans
+// une page devient faux le jour où la liste change, sans rien dire. Ceux-ci ne
+// peuvent pas mentir : ils comptent la liste qui les affiche.
+const projetsAvecCas = computed(() => projects.value.filter(p => p.casestudy));
+
+// Le relevé du build : trois mesures, chacune gardant son plafond quand il existe.
+// Un plafond sans valeur mesurée ne s’affiche pas — on ne montre pas un seuil vide.
+const mesuresBuild = computed(() => {
+  const b = etatDuStudio || {};
+  const lourde = b.page_la_plus_lourde || {};
+  const req = b.requetes_premier_chargement || {};
+  return {
+    pages: typeof b.pages_prerendues === 'number' ? b.pages_prerendues : null,
+    poids: typeof lourde.ko_servis === 'number' ? lourde.ko_servis : null,
+    seuilPoids: typeof lourde.seuil_ko === 'number' ? lourde.seuil_ko : null,
+    requetes: typeof req.total === 'number' ? req.total : null,
+    seuilRequetes: typeof req.seuil === 'number' ? req.seuil : null,
+  };
+});
+
 // Methods
 function getCountByCategory(categoryId) {
   return projects.value.filter(p => p.category === categoryId).length;
@@ -495,6 +734,24 @@ function closeProject() {
   selectedProject.value = null;
   document.body.style.overflow = '';
 }
+
+// ⛔ ÉCHAP FERME LA FICHE. Sans cela, la fiche était un piège : le visiteur
+// au clavier ne pouvait en sortir qu’en tabulant jusqu’au bout de l’écran,
+// et le `body` restait figé en `overflow: hidden` si l’onglet changeait.
+// L’écouteur est posé au montage et RETIRÉ au démontage — un écouteur
+// global qu’on oublie de retirer est une fuite qui ne dit pas son nom.
+function surTouche(e) {
+  if (e.key === 'Escape' && selectedProject.value) closeProject();
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', surTouche);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', surTouche);
+  document.body.style.overflow = '';
+});
 </script>
 
 <style scoped>
@@ -1025,4 +1282,97 @@ function closeProject() {
     text-align: center;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA GRILLE DE PREUVE — 26/09/2026. Ajoutée en fin de bloc, jamais répartie
+   dans l’existant. Les couleurs viennent des jetons déjà déclarés dans
+   src/assets/styles/variables.css : aucune valeur nouvelle n’est introduite.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.project-card__auto {
+  margin: 0.5rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.project-card__auto-tag {
+  display: inline-block;
+  margin-right: 0.4rem;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--border-hover);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary-light);
+}
+
+.project-card[role="button"]:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.preuve-etapes {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.25rem 0 1.5rem;
+}
+
+.preuve-etape {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.preuve-etape h3 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary-light);
+}
+
+.preuve-etape p {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.preuve-etape__note {
+  margin-top: 0.55rem !important;
+  font-size: 0.78rem !important;
+}
+
+.preuve-etape__absent {
+  font-style: italic;
+}
+
+.preuve-etape--releve {
+  border-left-color: var(--action);
+}
+
+.preuve-etape--releve h3 {
+  color: var(--action);
+}
+
+.preuve-releve {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .preuve-etape {
+    padding: 0.8rem 0.85rem;
+  }
+}
+
 </style>

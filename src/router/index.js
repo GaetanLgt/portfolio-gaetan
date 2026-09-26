@@ -432,8 +432,13 @@ const routes = [
     name: 'ProjectsPage',
     component: ProjectsPage,
     meta: { 
-      title: 'Projets & Réalisations',
-      description: 'Portfolio de projets Symfony, Vue.js, WordPress et gaming. Découvrez mes réalisations techniques et créatives.'
+      // ⭐ RÉÉCRIT LE 26/09/2026. L'ancienne description annonçait des technologies
+      // (« Symfony, Vue.js, WordPress, gaming ») : c'est la liste des MOYENS, et
+      // c'est exactement ce qu'un visiteur ne choisit pas. Elle dit maintenant ce
+      // qu'il va pouvoir vérifier. Le titre suit le h1 réécrit le même jour —
+      // un titre d'onglet qui contredit son titre de page est un défaut visible.
+      title: 'Réalisations & preuves',
+      description: 'Des projets présentés par ce qu\'ils règlent : problème, contrainte, architecture, solution, résultat, et ce qui a été automatisé. Les technologies arrivent après.'
     }
   },
 
