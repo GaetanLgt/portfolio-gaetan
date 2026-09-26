@@ -128,29 +128,49 @@ function listerFichiersRelatifs(dir, prefixe = '') {
 //      passer le reste : `llms.txt`, `robots.txt`, `sitemap.xml`, `sw.js`, `favicon.*`,
 //      `404.html` — **tous présents des deux côtés, tous donnés au studio** — alors que
 //      la racine appartient à la cinématique.
-//   ③ Et surtout : `deploy.yml` a **supprimé** `css/`, `src/`, `img/`, `cles/`,
-//      `ouverture/`, `veille/`, `modeles/*.glb` — les dossiers que la cinématique
-//      possède et que `dist/` ne porte pas.
+//   ③ Passer à une liste de **346 FICHIERS** a fait **DISPARAÎTRE LES 48 PAGES DU STUDIO** :
+//      `/dossier/`, `/services/`, `/vitrine/`, `/galion/`, `/soute/` en **404**.
+//      ⭐ *L'action FTP ne supprime pas seulement les fichiers absents : elle supprime
+//        les DOSSIERS distants dont plus aucun fichier n'est suivi.* En excluant chaque
+//        fichier un par un, on a vidé les dossiers — et le serveur les a retirés.
 //
-//   ⭐ LA PREUVE, ET ELLE EST ÉLÉGANTE : après les deux passages de `deploy.yml`, les
-//     SEULS fichiers de la cinématique encore servis étaient
-//     `vendor/three.module.min.js` et `vendor/jsm/**` — **exactement les deux chemins
-//     qui avaient été exclus côté studio**. ⇒ *Tout ce qui est exclu survit ; tout le
-//     reste est supprimé. Le mécanisme était donc bien celui-là, et il est démontré
-//     par ce qui a tenu.*
+//   ⭐ LA PREUVE DU MÉCANISME, ET ELLE EST ÉLÉGANTE : après les passages de `deploy.yml`,
+//     les SEULS fichiers de la cinématique encore servis étaient exactement les deux
+//     chemins exclus côté studio. *Tout ce qui est exclu survit ; le reste tombe.*
 //
-//   ⇒ LA RÈGLE, ET ELLE NE SOUFFRE PLUS D'EXCEPTION : **on compare les CHEMINS, pas les
-//     noms.** Un fichier de `dist/` dont le chemin existe aussi dans `cinematique/`
-//     **appartient à la cinématique** — sa racine est la sienne. Tous les autres
-//     appartiennent au studio.
-//     *Ni dossier entier, ni nom : le chemin. C'est la seule unité qui ne déborde pas.*
+//   ⇒ LA RÈGLE, DÉFINITIVE, ET ELLE VAUT DANS LES DEUX SENS :
+//     · un FICHIER                          → son nom ;
+//     · un DOSSIER que l'autre site ne porte PAS → `dossier/**`  ← ⭐ **le `/` `*` `*`**
+//                                                  *c'est lui qui empêche le dossier
+//                                                  d'être supprimé ; sans lui, on protège
+//                                                  les fichiers et on perd le dossier.*
+//     · un DOSSIER PARTAGÉ                  → on descend aux fichiers.
 const fichiersCinematique = new Set(listerFichiersRelatifs(CINEMATIQUE));
+const entreesCinematique = new Set(readdirSync(CINEMATIQUE));
 
 const aProteger = [];
-for (const rel of listerFichiersRelatifs(DIST)) {
-  if (rel === '.ftp-deploy-sync-state.json') continue;
-  if (fichiersCinematique.has(rel)) continue;   // la cinématique le possède
-  aProteger.push({ nom: rel, dossier: false });
+for (const e of readdirSync(DIST, { withFileTypes: true })) {
+  if (e.name.startsWith('.')) continue;
+  if (e.name === '.ftp-deploy-sync-state.json') continue;
+
+  if (!e.isDirectory()) {
+    if (fichiersCinematique.has(e.name)) continue;   // la cinématique le possède
+    aProteger.push({ nom: e.name, dossier: false });
+    continue;
+  }
+
+  // Un dossier que la cinématique ne porte pas du tout : on protège LE DOSSIER.
+  if (!entreesCinematique.has(e.name)) {
+    aProteger.push({ nom: e.name, dossier: true });
+    continue;
+  }
+
+  // Un dossier PARTAGÉ (les deux sites y mettent quelque chose) : on descend aux
+  // fichiers, parce que protéger le dossier entier bloquerait les fichiers de l'autre.
+  for (const rel of listerFichiersRelatifs(join(DIST, e.name), e.name)) {
+    if (fichiersCinematique.has(rel)) continue;
+    aProteger.push({ nom: rel, dossier: false });
+  }
 }
 
 // ─── ⭐ ET LA RÉCIPROQUE : CE QUE `deploy.yml` N'A PAS LE DROIT DE SUPPRIMER ─────
