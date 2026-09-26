@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ArkAdiA — l'univers</title>
+<meta name="description" content="Entrer dans ArkAdiA : le galion fantôme, les huit actes, le réacteur Oracle, le bestiaire, la mémoire. Un univers de survie spatiale où le joueur n'est pas le héros.">
+<meta property="og:title" content="ArkAdiA — l'univers">
+<meta property="og:description" content="Le galion fantôme, les huit actes, Oracle et le bestiaire. On ne combat pas le Mal : on le joue, en le sachant.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ArkAdiA">
+<meta property="og:url" content="https://gldigitallab.fr/univers">
+<meta property="og:image" content="https://gldigitallab.fr/og-navire.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Le galion fantôme ARKADIA : une coque de métal dans le vide.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gldigitallab.fr/og-navire.jpg">
+<link rel="canonical" href="https://gldigitallab.fr/univers">
+<style>
+  :root{
+    --noir:#080b14; --panneau:#0b0f14; --bord:#2b3a4a;
+    --vert:#2ce39b; --bleu:#2abfff; --rouge:#ff5a5f;
+    --argent:#9fb3c8; --texte:#e6edf3;
+    --mono:ui-monospace,'JetBrains Mono',Consolas,monospace;
+    --runes:'Segoe UI Historic','Noto Sans Runic',system-ui,sans-serif;
+    --f-titre:'Fraunces','Iowan Old Style',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--noir);color:var(--texte);
+       font:15px/1.65 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .ciel{position:fixed;inset:0;z-index:0;pointer-events:none;
+        background:radial-gradient(90% 60% at 50% -10%,#132741,transparent 65%)}
+  .enveloppe{position:relative;z-index:1;max-width:56rem;margin:0 auto;padding:64px 22px 100px}
+
+  .seuil{text-align:center;margin:0 0 72px}
+  .grave{font-family:var(--runes);font-size:38px;letter-spacing:.34em;color:var(--bleu);
+         text-shadow:0 0 26px rgba(42,191,255,.5);margin:0 0 18px}
+  h1{font:400 34px/1.15 var(--f-titre);margin:0 0 12px}
+  .seuil p{color:var(--argent);max-width:38rem;margin:0 auto 26px}
+  .entre{display:inline-block;font:500 12px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+         padding:14px 24px;border-radius:8px;border:1px solid var(--bleu);
+         color:var(--bleu);text-decoration:none;background:rgba(42,191,255,.07)}
+  .entre:hover{background:rgba(42,191,255,.16)}
+  .entre:focus-visible{outline:2px solid var(--bleu);outline-offset:3px}
+
+  h2.etage{font:500 11px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;
+           color:var(--argent);margin:0 0 6px}
+  .chapeau{color:var(--argent);font-size:14px;margin:0 0 22px;max-width:44rem}
+
+  ol.actes{list-style:none;counter-reset:a;padding:0;margin:0 0 64px;display:grid;gap:2px}
+  ol.actes li{counter-increment:a}
+  ol.actes a{display:flex;gap:18px;align-items:baseline;padding:16px 4px;
+             border-bottom:1px solid #16212c;text-decoration:none;color:var(--texte)}
+  ol.actes a:hover{background:rgba(42,191,255,.05)}
+  ol.actes a:hover b{color:var(--bleu)}
+  ol.actes a:focus-visible{outline:2px solid var(--bleu);outline-offset:-2px}
+  ol.actes a::before{content:counter(a,upper-roman);font:500 11px/1 var(--mono);
+                     color:var(--bleu);letter-spacing:.14em;flex:0 0 2.6rem}
+  ol.actes b{font-weight:600;font-size:16px;flex:0 0 auto;transition:color .2s}
+  ol.actes span{color:var(--argent);font-size:14px}
+  @media (max-width:34rem){ ol.actes a{flex-wrap:wrap;gap:6px} ol.actes span{flex:1 0 100%} }
+
+  .grille{display:grid;gap:14px;margin:0 0 64px}
+  @media (min-width:46rem){ .grille{grid-template-columns:1fr 1fr} }
+  .carte{border:1px solid var(--bord);border-radius:12px;background:var(--panneau);padding:20px 22px}
+  .carte h3{margin:0 0 8px;font-size:16px;font-weight:600}
+  .carte p{margin:0 0 12px;color:var(--argent);font-size:14px}
+  .carte p b{color:var(--texte)}
+  .carte a{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+           color:var(--bleu);text-decoration:none;border-bottom:1px solid rgba(42,191,255,.35)}
+  .carte a:hover{border-bottom-color:var(--bleu)}
+
+  .oracle{border:1px solid rgba(44,227,155,.3);border-radius:12px;background:rgba(44,227,155,.04);
+          padding:24px 26px;margin:0 0 64px}
+  .oracle h3{margin:0 0 10px;font-size:17px;font-weight:600;color:var(--vert)}
+  .oracle p{color:var(--argent);margin:0 0 16px}
+  .oracle p b{color:var(--texte)}
+  .stades{display:flex;gap:10px;flex-wrap:wrap;list-style:none;padding:0;margin:0}
+  .stades li{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+             padding:9px 14px;border-radius:6px;border:1px solid rgba(44,227,155,.35);color:var(--vert)}
+  .stades li::after{content:'→';margin-left:10px;opacity:.5}
+  .stades li:last-child::after{content:''}
+
+  footer{margin-top:64px;padding-top:24px;border-top:1px solid #16212c;color:var(--argent);font-size:13px}
+  footer a{color:var(--bleu)}
+</style>
+</head>
+<body>
+<div class="ciel"></div>
+<div class="enveloppe">
+
+  <header class="seuil">
+    <p class="grave">ᚨᚱᚲᚨᛞᛁᚨ</p>
+    <h1>ArkAdiA</h1>
+    <p>Un galion fantôme de métal, dans le vide. Le réacteur a faim, la graine décide —
+       et <b>le joueur n'est pas le héros</b>. <em>On ne combat pas le Mal : on le joue, en le sachant.</em></p>
+    <a class="entre" href="https://arkadia.gldigitallab.fr/">Entrer dans le navire</a>
+  </header>
+
+  <h2 class="etage">Les huit actes</h2>
+  <p class="chapeau">Le récit se traverse d'un seul geste — du défilement, ou le sommaire. Chaque acte
+     est une pièce du navire, et chacune répond à celle d'avant.</p>
+  <ol class="actes">
+    <li><a href="https://arkadia.gldigitallab.fr/#graine"><b>La graine</b><span>Ce qui commence, et qui ne se choisit pas.</span></a></li>
+    <li><a href="https://arkadia.gldigitallab.fr/#vide"><b>Le Vide</b><span>Le premier biome. Il n'y a rien à combattre : le vide est la menace.</span></a></li>
+    <li><a href="https://arkadia.gldigitallab.fr/#navire"><b>Le navire</b><span>Une coque de métal, six grandes voiles, et une figure de proue qui regarde.</span></a></li>
+    <li><a href="https://arkadia.gldigitallab.fr/#oracle"><b>Oracle</b><span>Le réacteur. Un organisme vivant qui avance en mangeant.</span></a></li>
+    <li><a href="https://arkadia.gldigitallab.fr/#boucle"><b>La boucle</b><span>Faim, autonomie, intégrité. Trois nombres, et aucun verdict.</span></a></li>
+    <li><a href="https://arkadia.gldigitallab.fr/#memoire"><b>La mémoire</b><span>Ce que le navire garde de ce qu'il a pris.</span></a></li>
+    <li><a href="https://arkadia.gldigitallab.fr/#bestiaire"><b>Le bestiaire</b><span>Ce qu'on rencontre, et ce qu'on devient en le rencontrant.</span></a></li>
+    <li><a href="https://arkadia.gldigitallab.fr/#capitaine"><b>Le capitaine</b><span>La seule vraie décision : nourrir, ou non.</span></a></li>
+  </ol>
+
+  <div class="oracle">
+    <h3>Oracle — le réacteur</h3>
+    <p>Un <b>organisme vivant</b> qui se nourrit d'énergie et fait avancer le navire <b>en le mangeant</b>.
+       Un oracle ne décide pas du destin, <b>il le lit</b> : le navire prend, Oracle digère, et
+       <b>annonce ce qu'il est devenu</b>.</p>
+    <ul class="stades">
+      <li>Noyau</li><li>Membrane</li><li>Vaste</li><li>Apex</li>
+    </ul>
+  </div>
+
+  <h2 class="etage">Les pièces, visitables</h2>
+  <p class="chapeau">Ce qui se visite maintenant. Rien n'est une maquette.</p>
+  <div class="grille">
+    <article class="carte">
+      <h3>La salle du pont</h3>
+      <p>Le navire en <b>trois dimensions temps réel</b>, dans une page. On tourne autour à la souris,
+         ou à la manette.</p>
+      <a href="/le-pont/">Entrer</a>
+    </article>
+    <article class="carte">
+      <h3>Le laboratoire engendré</h3>
+      <p>Un monde généré, <b>sa graine affichée</b>. La même graine redonne le même monde — on peut
+         rejouer et contester.</p>
+      <a href="/monde/">Visiter</a>
+    </article>
+    <article class="carte">
+      <h3>Le mot gravé</h3>
+      <p>Sept runes, vingt-trois traits. <b>Une rune note un son, pas une lettre</b> : une rune mal
+         écrite ne dit pas un mot faux, elle produit un glitch.</p>
+      <a href="https://arkadia.gldigitallab.fr/">Le voir à l'entrée</a>
+    </article>
+    <article class="carte">
+      <h3>Le dossier de conception</h3>
+      <p>Le travail derrière : les mécaniques, les créatures, les biomes, et ce qui a été
+         <b>essayé puis écarté</b>. Une note qui périme est datée, jamais effacée.</p>
+      <a href="/TARDIS/JoF/metroid/">Ouvrir le dossier</a>
+    </article>
+  </div>
+
+  <footer>
+    <p>ArkAdiA — un univers de <b>GL Digital Lab</b> · Génie IT Tek FR, Harponville, Somme.<br>
+       <a href="https://gldigitallab.fr/">Le studio</a> ·
+       <a href="/demos/">Les démos</a> ·
+       <a href="https://arkadia.gldigitallab.fr/">Le navire</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

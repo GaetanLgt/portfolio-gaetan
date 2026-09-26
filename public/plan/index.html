@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le plan — GL Digital Lab, dans l'ordre</title>
+<meta name="description" content="Le plan du site comme un livret de solution : le parcours, ce qu'on trouve à chaque étape, et les pièces qui ne sont pas dans le plan officiel.">
+<meta property="og:title" content="Le plan — GL Digital Lab, dans l'ordre">
+<meta property="og:description" content="Où aller, dans quel ordre, et ce qu'on y trouve. Plus les pièces qui ne figurent dans aucun plan officiel.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GL Digital Lab">
+<meta property="og:url" content="https://gldigitallab.fr/plan">
+<meta property="og:image" content="https://gldigitallab.fr/og-navire.jpg">
+<link rel="canonical" href="https://gldigitallab.fr/plan">
+<style>
+  :root{
+    --noir:#080b14; --panneau:#0b0f14; --bord:#2b3a4a;
+    --vert:#2ce39b; --bleu:#2abfff; --rouge:#ff5a5f;
+    --argent:#9fb3c8; --texte:#e6edf3;
+    --mono:ui-monospace,'JetBrains Mono',Consolas,monospace;
+    --runes:'Segoe UI Historic','Noto Sans Runic',system-ui,sans-serif;
+    --f-titre:'Fraunces','Iowan Old Style',Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--noir);color:var(--texte);
+       font:15px/1.62 system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .enveloppe{max-width:56rem;margin:0 auto;padding:56px 22px 100px}
+  .grave{font-family:var(--runes);font-size:24px;letter-spacing:.3em;color:var(--bleu);
+         text-shadow:0 0 18px rgba(42,191,255,.45);margin:0 0 10px}
+  h1{font:400 30px/1.2 var(--f-titre);margin:0 0 10px}
+  .sous{color:var(--argent);margin:0 0 8px;max-width:46rem}
+  .mode{font:500 11px/1.6 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+        color:var(--vert);border-left:2px solid var(--vert);padding-left:12px;margin:18px 0 46px}
+
+  h2{font:500 11px/1 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--argent);
+     margin:0 0 6px;padding-bottom:10px;border-bottom:1px solid #16212c}
+  .pourquoi{color:var(--argent);font-size:14px;margin:12px 0 22px;max-width:46rem}
+
+  /* ── Le parcours : numéroté comme un livret ─────────────────────────────── */
+  ol.etapes{list-style:none;counter-reset:e;padding:0;margin:0 0 56px}
+  ol.etapes li{counter-increment:e;position:relative;padding:18px 0 18px 62px;border-bottom:1px solid #16212c}
+  ol.etapes li::before{content:counter(e,decimal-leading-zero);position:absolute;left:0;top:18px;
+    font:500 13px/1 var(--mono);color:var(--bleu);letter-spacing:.08em}
+  ol.etapes h3{margin:0 0 6px;font-size:16px;font-weight:600}
+  ol.etapes h3 a{color:var(--texte);text-decoration:none;border-bottom:1px solid rgba(42,191,255,.3)}
+  ol.etapes h3 a:hover{color:var(--bleu);border-bottom-color:var(--bleu)}
+  ol.etapes p{margin:0;color:var(--argent);font-size:14px}
+  ol.etapes p b{color:var(--texte)}
+  .trouve{display:block;margin-top:8px;font-size:13px;color:var(--argent)}
+  .trouve em{color:var(--vert);font-style:normal;font:500 10px/1 var(--mono);letter-spacing:.16em;
+             text-transform:uppercase;margin-right:8px}
+
+  /* ── Les pièces hors plan ───────────────────────────────────────────────── */
+  .secret{border:1px solid rgba(255,90,95,.28);border-radius:12px;background:rgba(255,90,95,.035);
+          padding:22px 24px;margin:0 0 56px}
+  .secret h3{margin:0 0 12px;font-size:16px;font-weight:600;color:var(--rouge)}
+  .secret ul{list-style:none;padding:0;margin:0}
+  .secret li{padding:11px 0;border-bottom:1px solid rgba(255,90,95,.14)}
+  .secret li:last-child{border-bottom:0}
+  .secret a{color:var(--texte);text-decoration:none;font-weight:600;
+            border-bottom:1px solid rgba(255,90,95,.35)}
+  .secret a:hover{color:var(--rouge)}
+  .secret span{display:block;color:var(--argent);font-size:13px;margin-top:3px}
+
+  footer{margin-top:56px;padding-top:22px;border-top:1px solid #16212c;color:var(--argent);font-size:13px}
+  footer a{color:var(--bleu)}
+</style>
+</head>
+<body>
+<div class="enveloppe">
+
+  <p class="grave">ᚨᚱᚲᚨᛞᛁᚨ</p>
+  <h1>Le plan, dans l'ordre</h1>
+  <p class="sous">Un plan de site ordinaire liste des adresses. Celui-ci dit <b>par où commencer, ce qu'on
+     trouve à chaque étape, et où aller ensuite</b> — comme un livret de solution.</p>
+  <p class="mode">Deux parcours · cinq étapes pour un visiteur · quatre pour un client · et les pièces qui ne figurent dans aucun plan officiel</p>
+
+  <h2>Parcours 1 — Vous ne connaissez pas le studio</h2>
+  <p class="pourquoi">Cinq étapes, dans cet ordre. Chacune répond à la question laissée par la précédente.</p>
+  <ol class="etapes">
+    <li>
+      <h3><a href="https://gldigitallab.fr/">Le seuil</a></h3>
+      <p>On arrive sur le navire. <b>Une scène qui tourne autour de vous</b>, et quatre couches posées
+         côte à côte : le jeu, le produit, le poste, le studio.</p>
+      <span class="trouve"><em>à retenir</em> Ce n'est pas un site vitrine : c'est une démonstration.</span>
+    </li>
+    <li>
+      <h3><a href="/demos/">Les démos</a></h3>
+      <p>Ce qui existe et se visite. <b>Aucune maquette, aucune capture</b> — chaque carte ouvre une
+         page qui tourne.</p>
+      <span class="trouve"><em>à retenir</em> Deux applications métier et deux pièces techniques.</span>
+    </li>
+    <li>
+      <h3><a href="/univers/">L'univers</a></h3>
+      <p>Le jeu, en entier : les <b>huit actes</b>, le réacteur <b>Oracle</b> et ses quatre stades,
+         et le parcours à travers le navire.</p>
+      <span class="trouve"><em>à retenir</em> Un galion fantôme de métal, dans le vide. Six grandes voiles.</span>
+    </li>
+    <li>
+      <h3><a href="/dossier/">Le dossier</a></h3>
+      <p>La porte d'entrée commerciale : ce que le studio fait, pour qui, et <b>à quel prix</b>.</p>
+      <span class="trouve"><em>à retenir</em> Un premier échange de trente minutes, gratuit.</span>
+    </li>
+    <li>
+      <h3><a href="/etat-du-studio/">L'état du studio</a></h3>
+      <p>Le relevé, <b>mesuré et daté</b> : les pages, le poids, le nombre de requêtes, et les verrous
+         de qualité. <b>Y compris ce qui n'est pas mesuré.</b></p>
+      <span class="trouve"><em>à retenir</em> Un studio qui publie ses propres chiffres, et qui écrit
+        « non mesuré » quand il ne sait pas.</span>
+    </li>
+  </ol>
+
+  <h2>Parcours 2 — Vous voulez travailler avec le studio</h2>
+  <p class="pourquoi">Quatre étapes. La dernière n'est pas une page : c'est une conversation.</p>
+  <ol class="etapes">
+    <li><h3><a href="/dossier/">Le dossier professionnel</a></h3>
+      <p>L'offre, la méthode, les limites <b>dites franchement</b>.</p></li>
+    <li><h3><a href="/demos/">Les démos</a></h3>
+      <p>Ce qu'on sait faire, <b>en tournant</b> — pas en capture d'écran.</p></li>
+    <li><h3><a href="/etat-du-studio/">L'état du studio</a></h3>
+      <p>La preuve que les chiffres annoncés sont <b>mesurés</b>, et comment ils le sont.</p></li>
+    <li><h3><a href="/contact/">Le contact</a></h3>
+      <p>Un premier échange de trente minutes, gratuit — <b>et sans engagement</b>.</p></li>
+  </ol>
+
+  <h2>Les pièces qui ne sont dans aucun plan officiel</h2>
+  <p class="pourquoi">⚠️ Ces pages existent et sont servies. Elles sont <b>délibérément absentes du plan
+     officiel et des moteurs de recherche</b> — un fichier du dépôt l'écrit : <em>« c'est un choix,
+     pas un oubli »</em>. On ne peut y arriver que par un lien direct.</p>
+  <div class="secret">
+    <h3>Ce qui est là, et que personne ne trouve</h3>
+    <ul>
+      <li>
+        <a href="/demo-conformite/">Le suivi de conformité</a>
+        <span>Une application métier qui remplace un tableur réglementaire.</span>
+      </li>
+      <li>
+        <a href="/demo-festival-metz/">Le site du festival</a>
+        <span>Un site d'événement, monté et livrable en quelques jours.</span>
+      </li>
+      <li>
+        <a href="/le-pont/">La salle du pont</a>
+        <span>ARKADIA en trois dimensions, dans une page, sans rien à installer.</span>
+      </li>
+      <li>
+        <a href="/monde/">Le laboratoire engendré</a>
+        <span>Un monde généré, sa graine affichée. La même graine redonne le même monde.</span>
+      </li>
+      <li>
+        <a href="/TARDIS/JoF/metroid/">Le dossier de conception</a>
+        <span>141 pages : les mécaniques, les créatures, les biomes — et ce qui a été essayé puis écarté.</span>
+      </li>
+    </ul>
+  </div>
+
+  <footer>
+    <p><b>GL Digital Lab</b> · Génie IT Tek FR — Harponville, Somme.<br>
+       <a href="https://gldigitallab.fr/">Le studio</a> ·
+       <a href="/demos/">Les démos</a> ·
+       <a href="/univers/">L'univers</a> ·
+       <a href="/sitemap">Le plan officiel</a> ·
+       <a href="/contact/">Le contact</a></p>
+    <p style="margin-bottom:0">⚠️ Le plan officiel sert les moteurs de recherche. <b>Celui-ci sert les
+       humains</b> — et il ne cache pas ce que l'autre tait.</p>
+  </footer>
+
+</div>
+</body>
+</html>
