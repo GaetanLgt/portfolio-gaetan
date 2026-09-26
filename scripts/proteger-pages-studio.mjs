@@ -118,31 +118,72 @@ function listerFichiersRelatifs(dir, prefixe = '') {
   return out;
 }
 
-// ─── Tout le reste de dist/ appartient au studio ──────────────────────────────
-const entrees = readdirSync(DIST);
+// ─── LA RÈGLE, SIMPLIFIÉE LE 26/09/2026 — COMPARAISON PAR CHEMIN, PAS PAR NOM ───
+//
+// ⛔⛔ CE QU'ON A PAYÉ POUR Y ARRIVER, DANS L'ORDRE, LE MÊME JOUR :
+//
+//   ① Protéger `vendor/**` EN BLOC a cassé la cinématique — `three.module.min.js` et
+//      `jsm/*` en 404. *Un dossier partagé, deux propriétaires.*
+//   ② La correction « descendre au fichier en cas de collision de DOSSIER » a laissé
+//      passer le reste : `llms.txt`, `robots.txt`, `sitemap.xml`, `sw.js`, `favicon.*`,
+//      `404.html` — **tous présents des deux côtés, tous donnés au studio** — alors que
+//      la racine appartient à la cinématique.
+//   ③ Et surtout : `deploy.yml` a **supprimé** `css/`, `src/`, `img/`, `cles/`,
+//      `ouverture/`, `veille/`, `modeles/*.glb` — les dossiers que la cinématique
+//      possède et que `dist/` ne porte pas.
+//
+//   ⭐ LA PREUVE, ET ELLE EST ÉLÉGANTE : après les deux passages de `deploy.yml`, les
+//     SEULS fichiers de la cinématique encore servis étaient
+//     `vendor/three.module.min.js` et `vendor/jsm/**` — **exactement les deux chemins
+//     qui avaient été exclus côté studio**. ⇒ *Tout ce qui est exclu survit ; tout le
+//     reste est supprimé. Le mécanisme était donc bien celui-là, et il est démontré
+//     par ce qui a tenu.*
+//
+//   ⇒ LA RÈGLE, ET ELLE NE SOUFFRE PLUS D'EXCEPTION : **on compare les CHEMINS, pas les
+//     noms.** Un fichier de `dist/` dont le chemin existe aussi dans `cinematique/`
+//     **appartient à la cinématique** — sa racine est la sienne. Tous les autres
+//     appartiennent au studio.
+//     *Ni dossier entier, ni nom : le chemin. C'est la seule unité qui ne déborde pas.*
+const fichiersCinematique = new Set(listerFichiersRelatifs(CINEMATIQUE));
+
 const aProteger = [];
-for (const e of entrees) {
-  if (CEDENT_A_LA_CINEMATIQUE.has(e)) continue;   // nommé, pas deviné
-  if (e === '.ftp-deploy-sync-state.json') continue;
-  if (e.startsWith('.')) continue;      // les fichiers cachés : l'action les ignore déjà
-  const complet = join(DIST, e);
-  const estDossier = statSync(complet).isDirectory();
+for (const rel of listerFichiersRelatifs(DIST)) {
+  if (rel === '.ftp-deploy-sync-state.json') continue;
+  if (fichiersCinematique.has(rel)) continue;   // la cinématique le possède
+  aProteger.push({ nom: rel, dossier: false });
+}
 
-  // ⭐ Le cas `vendor` : même nom des deux côtés, contenus différents. On descend.
-  if (estDossier && nomsCoteCinematique.has(e)) {
-    for (const rel of listerFichiersRelatifs(complet, e)) {
-      aProteger.push({ nom: rel, dossier: false });
-    }
-    continue;
+// ─── ⭐ ET LA RÉCIPROQUE : CE QUE `deploy.yml` N'A PAS LE DROIT DE SUPPRIMER ─────
+//
+// Elle manquait, et c'est elle qui cassait la cinématique. `deploy.yml` déploie
+// `./dist/` vers la racine avec la même action : **il supprime en distant tout ce qui
+// n'est pas dans `dist/`.** ⇒ sans cette liste, il efface le site cinématique à chaque
+// passage.
+//
+// ⭐ DÉRIVÉE DU DISQUE, comme l'autre — ET AVEC LA MÊME RÈGLE À LA LETTRE :
+//   · un fichier seul → son nom ;
+//   · un dossier que `dist/` NE PORTE PAS → `dossier/**` (il est propre à la cinématique) ;
+//   · un dossier PARTAGÉ → **on descend aux fichiers**. *Sinon on exclut au-delà de ce
+//     qu'on protège — et `vendor/**` aurait empêché le studio d'envoyer son `three.min.js`.*
+//     ⚠️ Ce défaut-là a été écrit, puis vu, dans la même minute. *La règle était déjà
+//     écrite pour l'autre sens : il fallait la lire dans les deux.*
+const entreesDist = new Set(readdirSync(DIST));
+const aProtegerCoteStudio = [];
+for (const e of readdirSync(CINEMATIQUE, { withFileTypes: true })) {
+  if (e.name.startsWith('.')) continue;         // `.htaccess` : envoyé par une étape dédiée
+  if (!e.isDirectory()) { aProtegerCoteStudio.push({ nom: e.name, dossier: false }); continue; }
+  if (!entreesDist.has(e.name)) { aProtegerCoteStudio.push({ nom: e.name, dossier: true }); continue; }
+  for (const rel of listerFichiersRelatifs(join(CINEMATIQUE, e.name), e.name)) {
+    aProtegerCoteStudio.push({ nom: rel, dossier: false });
   }
-
-  aProteger.push({ nom: e, dossier: estDossier });
 }
 
 dire('');
 dire(`  ce qui cede a la cinematique (${CEDENT_A_LA_CINEMATIQUE.size}) : ${[...CEDENT_A_LA_CINEMATIQUE].join(', ')}`);
-dire(`  dist/ porte ${entrees.length} entrees`);
-dire(`  A PROTEGER : ${aProteger.length} entrees`);
+dire(`  dist/ porte ${listerFichiersRelatifs(DIST).length} fichiers`);
+dire(`  dist/ et cinematique/ ont ${fichiersCinematique.size} fichiers en commun (donnes a la cinematique)`);
+dire(`  A PROTEGER cote cinematique : ${aProteger.length} fichier(s)`);
+dire(`  A PROTEGER cote studio      : ${aProtegerCoteStudio.length} entree(s)`);
 dire('');
 dire('  --- la liste, derivee du disque, pas d\'un souvenir ---');
 for (const x of aProteger) dire(`      ${x.dossier ? '[D]' : '[F]'} ${x.nom}`);
@@ -321,44 +362,56 @@ dire(`  ✅ deploy-cinematique.yml protege ${aProteger.length} entrees, ecrit et
 //    ete envoye malgre l'exclusion.
 if (existsSync(WORKFLOW_DEPLOY)) {
   let d = readFileSync(WORKFLOW_DEPLOY, 'utf8');
+  const EOL = d.includes('\r\n') ? '\r\n' : '\n';
 
-  // ⛔⛔ DEUXIÈME ÉCHEC, PAYÉ DANS LA MINUTE QUI A SUIVI LE PREMIER.
-  //
-  // La version précédente écrivait :
-  //     d = d.replace('            /index.html\n', '            index.html\n')
-  // **Le fichier est en CRLF.** Donc `\n` ne matche jamais, le `replace` ne fait rien,
-  // et la branche `else` annonçait **« rien a corriger (deja en chemins relatifs) »**.
-  // ⭐ *Un remplacement qui échoue en silence, et qui se présente comme un succès.*
-  //    C'est le défaut du script qui affichait « 0 échec », dans un autre fichier.
-  // ⇒ On matche donc `\r?\n`, ET ON VÉRIFIE LE RÉSULTAT au lieu de le supposer.
+  // ⭐ LA LISTE EST DÉRIVÉE DU DISQUE, ELLE NE S'ÉCRIT PLUS À LA MAIN.
+  const lignes = aProtegerCoteStudio
+    .map((x) => `            ${x.nom}${x.dossier ? '/**' : ''}`)
+    .join(EOL);
+
+  // On remplace UNIQUEMENT les lignes de la liste — les commentaires au-dessus restent,
+  // *parce que c'est eux qui expliquent pourquoi elle existe.*
   const avant = d;
-  d = d.replace(/^ {12}\/index\.html\r?\n/m, '            index.html\n');
-  d = d.replace(/^ {12}\/cinematique\/\*\*\r?\n/m, '            cinematique/**\n');
+  d = d.replace(/(^ {10}exclude: \|[^\r\n]*\r?\n)(?: {12}[^\r\n]*\r?\n)*/m, (m, tete) => tete + lignes + EOL);
 
-  // ⭐ L'ASSERTION, ET C'EST ELLE QUI MANQUAIT : après correction, AUCUNE ligne
-  //    d'exclusion ne doit plus commencer par « / ». On relit le texte, on ne se
-  //    contente pas de constater qu'on a appelé `replace`.
-  const restes = (d.match(/^ {12}\/[^\r\n]*/gm) || []);
-  if (restes.length > 0) {
+  if (d === avant) {
     dire('');
-    dire(`  ⛔ ECHEC : deploy.yml porte encore ${restes.length} exclusion(s) a slash initial :`);
-    for (const r of restes) dire(`       ${r.trim()}`);
-    dire("     L'action attend des chemins RELATIFS a local-dir. Une exclusion qui ne");
-    dire('     mord pas est une exclusion qui n\'existe pas.');
+    dire("  ⛔ ECHEC : le bloc `exclude: |` de deploy.yml n'a pas ete trouve ni remplace.");
+    dire("     On refuse d'ecrire un fichier dont on n'a pas su changer la liste.");
     process.exit(1);
   }
 
-  if (d !== avant) {
-    const avecNote = d.replace(
-      '          exclude: |',
-      `          # ⚠️ CHEMINS RELATIFS A local-dir, SANS SLASH INITIAL — corrige le 26/09/2026.\n          #    La premiere version ecrivait \`/index.html\`. Elle n'a PAS matche : la preuve\n          #    est que la racine a resservi la vitrine ArkAdiA apres le run 36218713139.\n          #    *Une exclusion qui ne mord pas est une exclusion qui n'existe pas.*\n          exclude: |`
-    );
-    writeFileSync(WORKFLOW_DEPLOY, avecNote, 'utf8');
-    const r2 = readFileSync(WORKFLOW_DEPLOY, 'utf8');
-    if (r2 !== avecNote) { dire('  ⛔ deploy.yml : le fichier relu differe'); process.exit(1); }
-    dire('  ✅ deploy.yml : les deux exclusions sont passees en chemins relatifs.');
-  } else {
-    dire('  ⚠️  deploy.yml : rien a corriger (deja en chemins relatifs).');
+  // ⛔ L'ASSERTION, ET ELLE MORD DANS LES DEUX SENS :
+  //    chaque entrée de la cinématique doit être présente, ET aucune exclusion ne doit
+  //    garder son slash initial (l'action attend des chemins relatifs à `local-dir`).
+  for (const x of aProtegerCoteStudio) {
+    if (!d.includes(`            ${x.nom}${x.dossier ? '/**' : ''}`)) {
+      dire(`  ⛔ ${x.nom} absent de la liste ecrite dans deploy.yml`);
+      process.exit(1);
+    }
   }
+  if (/^ {12}\/[^\r\n]*/m.test(d)) {
+    dire('  ⛔ deploy.yml porte encore une exclusion a slash initial');
+    process.exit(1);
+  }
+
+  // Et l'indentation, comme pour l'autre workflow : le contenu d'un bloc littéral YAML
+  // doit être indenté PLUS que sa clé.
+  const lf = d.split(/\r?\n/);
+  const iEx = lf.findIndex((l) => l.trim() === 'exclude: |');
+  if (iEx === -1) { dire('  ⛔ YAML : bloc `exclude: |` introuvable'); process.exit(1); }
+  const indCle = lf[iEx].length - lf[iEx].trimStart().length;
+  const suivante = lf[iEx + 1] || '';
+  const indSuiv = suivante.length - suivante.trimStart().length;
+  if (!(indSuiv > indCle)) {
+    dire(`  ⛔ YAML : bloc exclude a ${indSuiv} espaces sous une cle a ${indCle}`);
+    process.exit(1);
+  }
+
+  writeFileSync(WORKFLOW_DEPLOY, d, 'utf8');
+  const r2 = readFileSync(WORKFLOW_DEPLOY, 'utf8');
+  if (r2 !== d) { dire('  ⛔ deploy.yml : le fichier relu differe de ce qui a ete ecrit'); process.exit(1); }
+  dire(`  ✅ deploy.yml protege ${aProtegerCoteStudio.length} entree(s) de la cinematique, liste derivee du disque.`);
+  dire(`     ${aProtegerCoteStudio.slice(0, 8).map((x) => x.nom + (x.dossier ? '/**' : '')).join(' · ')} · …`);
 }
 dire('='.repeat(78));

@@ -577,9 +577,31 @@ jobs:
           #      envoyé. *On ne garde pas deux protections pour la même chose quand l'une
           #      des deux mord à côté.*
           exclude: |
-            cinematique/**
+            404.html
+            cles/**
+            confidentialite.html
+            contact.php
+            css/**
+            favicon.ico
+            favicon.svg
+            img/**
+            index.html
+            llms.txt
+            mentions-legales.html
+            modeles/arkadia-navire.glb
+            modeles/yggdrasil.glb
+            ouverture/**
+            ouverture-son.mp3
+            robots.txt
+            sequence/**
+            sitemap.xml
+            src/**
+            sw.js
+            veille/**
+            vendor/jsm/environments/RoomEnvironment.js
+            vendor/jsm/loaders/GLTFLoader.js
+            vendor/jsm/utils/BufferGeometryUtils.js
             vendor/three.module.min.js
-            vendor/jsm/**
           dangerous-clean-slate: false
 
       # ⚠ `.htaccess` : DEUX barrières l'empêchaient d'arriver sur le serveur
