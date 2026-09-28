@@ -234,26 +234,30 @@
         <li><a href="/formation/">Formation</a></li>
         <li><a href="/veille/">Veille</a></li>
         <li><a href="https://controle.gldigitallab.fr/">Point de contrôle</a></li>
-        <!-- ⭐ LA QUATRIÈME ENTRÉE, AJOUTÉE LE 29/09/2026 — ET ELLE CHANGE LA NATURE DU GROUPE.
-             ⛔ CE QUI A ÉTÉ MESURÉ : `controle.gldigitallab.fr` répond **200**, sert une page
-                réelle (2 336 octets, cloisonnement v3, 8 302 signaux reçus) — et **aucun lien
-                du site n'y menait.** *Une surface adossée au site à laquelle le site ne mène
-                pas n'est pas adossée : elle est à côté.*
-             ⚠️ LES TROIS AUTRES SONT DES PAGES ; CELLE-CI EST UN SERVICE VIVANT. Les unes
-                racontent, celle-ci **mesure en direct**. C'est la première du groupe à prouver
-                quelque chose à l'instant où on la regarde, et c'est précisément ce que le
-                studio met en avant ailleurs (« zéro requête externe » se vérifie page par page).
-             ⛔ CE QU'ELLE PUBLIE ET CE QU'ELLE NE PUBLIE PAS — vérifié en la lisant : que des
-                valeurs calculées par le serveur. **Aucun nom de client, aucun identifiant de
-                machine, aucun profil matériel** — c'est écrit dans son propre pied de page, et
-                le cloisonnement v3 est là pour ça. Donc : publiable, et sans risque pour un
-                visiteur.
-             ⛔ `target="_blank"` N'EST PAS POSÉ : une nouvelle fenêtre volée à un visiteur est
-                une mauvaise manière, et le site n'en ouvre aucune ailleurs. On reste cohérent.
-             ---
-             ⚠️ LES TROIS SEULES PAGES PUBLIÉES AU 28/09/2026, vérifiées en 200.
-             ⛔ On n'annonce pas ici ce qui n'existe pas : *un lien mort est pire que pas de
-             lien* — la leçon payée trois fois ce soir (ressources/, ecole/, formation/). -->
+        <!-- ⭐ LA QUATRIÈME ENTRÉE — ajoutée le 28/09/2026. `controle.gldigitallab.fr`
+             répond 200 et sert une page réelle (2 336 octets, cloisonnement v3, 8 302
+             signaux reçus) — et **aucun lien du site n'y menait**. *Une surface adossée
+             au site à laquelle le site ne mène pas n'est pas adossée : elle est à côté.*
+             ⚠️ Les trois premières sont des PAGES ; celle-ci est un SERVICE VIVANT : elles
+                racontent, elle mesure en direct. Elle ne publie que des valeurs calculées
+                par le serveur — aucun nom de client, aucun identifiant de machine.
+             ⛔ `target="_blank"` n'est pas posé : le site n'en ouvre aucune. -->
+        <li><a href="/urgence-cyber/">Urgence cyber</a></li>
+        <!-- ⭐ LA CINQUIÈME ENTRÉE — ajoutée le 28/09/2026, et elle n'est pas comme les autres.
+             ⛔ CE QUE LE STUDIO AVAIT : `/.well-known/security.txt` dit à qui signaler une
+                faille **chez nous**. Il ne disait **nulle part** où aller quand on est
+                victime. *Un site qui vend de l'audit et qui ne sait pas orienter une
+                victime dit quelque chose de gênant — et ce n'est pas ce qu'il veut dire.*
+             ⭐ ELLE EST LA SEULE ENTRÉE DE CE GROUPE QUI NE PARLE PAS DU STUDIO. Les quatre
+                autres racontent ce qu'on a produit ; celle-ci **rend service à celui qui
+                lit**, y compris s'il n'est jamais client. C'est la règle de publication
+                appliquée pour elle-même : utile à quelqu'un d'extérieur ? Oui.
+             ⚠️ ELLE EST EN DERNIER, ET C'EST VOULU : un menu qui commence par « urgence »
+                dit quelque chose sur l'état d'esprit de celui qui l'a écrit. Le lien est
+                aussi dans le pied de page, donc atteignable par deux chemins.
+             ⛔ ELLE NE CONTIENT AUCUN NUMÉRO NON VÉRIFIÉ — les blancs sont déclarés dans la
+                page elle-même. *Une page d'urgence qui cache ses blancs est une page qu'on
+                ne peut pas corriger.* -->
       </ul>
     </div>
   </nav>
@@ -735,6 +739,11 @@ interdit la mise en ligne **des œuvres** — il n'y en a aucune.
 ⚠️ `formation` et `ecole` sont **libres** dans la liste d'exclusion — vérifié avant. -->
 <p><a href="analyses/">Les analyses</a> — ce qu'on a mesuré, avec les sources et les blancs déclarés.</p>
 <p><a href="formation/">La formation</a> — un dossier pédagogique libre, et le chantier ouvert d'une formation à l'IA.</p>
+<!-- ⭐ LE SECOND CHEMIN VERS L'URGENCE CYBER — ajouté le 28/09/2026.
+     ⚠️ Elle est dans le menu de l'écosystème ET ici, et c'est volontaire : une page
+        d'urgence qu'on ne trouve que dans un menu déroulant n'est pas une page d'urgence.
+        *Le pied de page est ce qu'on lit quand on cherche, pas quand on navigue.* -->
+<p><a href="urgence-cyber/">Urgence cyber</a> — qui appeler en cas d'incident, selon qui vous êtes. Numéros et sites officiels, vérifiés.</p>
 </footer>
 <!-- TIROIR HUD : PÔLES D'EXPERTISE — proposé par Gaëtan le 26/09/2026.
      ⛔ `hidden` DANS LE HTML, ET C'EST VOULU : sans JavaScript le tiroir n'existe pas à l'écran,
