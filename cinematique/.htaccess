@@ -58,6 +58,44 @@ ErrorDocument 404 /404.html
   #      la page EXISTE toujours, sous un autre nom, et l'ancien nom y mène.
   RewriteRule ^mentions-legales/?$ /mentions-legales.html [R=301,L]
   RewriteRule ^confidentialite/?$ /confidentialite.html [R=301,L]
+
+  # ══════════════════════════════════════════════════════════════════════════
+  # ⛔⛔ /monde/ EST FERMÉ — décision du 28/09/2026
+  # ══════════════════════════════════════════════════════════════════════════
+  #
+  # CE QUE CETTE PAGE PUBLIAIT, MESURÉ :
+  #   `https://gldigitallab.fr/monde/` répondait 200, pesait 37 479 caractères, et
+  #   **ne portait aucun `noindex`**. Elle publiait **30 documents internes** :
+  #     · `03-00-rapport-incident-assaini.md` et `04-RAPPORT-INCIDENT-2026-09-17.md`
+  #     · `11-PLAN-REPONSE-INCIDENT-2026-09-18.md`
+  #     · `08-Décryptage_Incident_EVA-01.whisper.txt` — **porte le nom de la machine**
+  #     · `13-demo-02-incident-nexio.md` — **porte le nom d'un client**
+  #     · `01-_arkadia-au-logon.log`, `02-serveur-assistant.js.log`, `05-serveur-agence.js.log`
+  #     · et 22 autres documents de cadrage
+  #
+  # ⭐ POURQUOI 410 ET PAS 404, ET POURQUOI ON NE SUPPRIME PAS LE FICHIER :
+  #
+  #   ① **410 Gone** dit « cette ressource a existé et ne reviendra pas » — c'est la
+  #      seule réponse qui demande explicitement la **désindexation**. Un 404 dit « pas
+  #      trouvé », ce qui est plus faible et laisse la page dans l'index plus longtemps.
+  #      ⛔ Et elle avait été en ligne **plusieurs jours sans `noindex`** : la désindexer
+  #      est le vrai travail.
+  #
+  #   ② **ON NE SUPPRIME PAS LE FICHIER, ET C'EST DÉLIBÉRÉ.** Aucune sauvegarde de cette
+  #      page n'est connue sur le serveur. *On ne supprime pas ce qu'on ne peut pas
+  #      restaurer.* La règle ferme l'accès ; le fichier reste, inerte.
+  #      ⇒ Le jour où la décision change, on retire ces trois lignes. **Réversible.**
+  #
+  #   ③ ⛔ CE QUE ÇA NE PROTÈGE PAS, ET IL FAUT LE SAVOIR : le contenu a été **public
+  #      pendant des jours**. Il peut être dans le cache d'un moteur, d'un proxy, ou
+  #      avoir été copié. *Fermer une porte n'efface pas les traces de ce qui est sorti.*
+  #
+  # ⚠️ LA RÈGLE COUVRE LES TROIS ADRESSES mesurées le 28/09/2026 :
+  #      `/monde/` (200), `/monde` (301), `/monde/index.html` (200).
+  #    ⇒ `^monde(/.*)?$` les attrape toutes les trois, et **rien d'autre** — `^monde`
+  #      est ancré : `/monde-autre-chose/` n'est PAS touché.
+  RewriteRule ^monde(/.*)?$ - [G,L]
+
 </IfModule>
 
 # ── Les types MIME que l'hébergeur ne devine pas ────────────────────────────
