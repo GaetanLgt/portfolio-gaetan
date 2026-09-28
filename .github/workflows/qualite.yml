@@ -1,0 +1,164 @@
+# =============================================================================
+# QUALITÉ — LES CONTRÔLES QUE CE DÉPÔT N'AVAIT PAS
+# Créé le 29/09/2026.
+#
+# ⛔ POURQUOI CE FICHIER EXISTE, ET CE QU'IL A COÛTÉ DE NE PAS L'AVOIR.
+#
+#    Le studio a un hook `pre-commit` qui fait bien son travail — il a mordu
+#    trois fois cette semaine, dont une fois sur moi. Mais il vit dans
+#    `gl-digital-lab`, et il ne voit **jamais** un commit de CE dépôt :
+#      « portfolio-gaetan est un dépôt SÉPARÉ […] aucun hook, core.hooksPath vide. »
+#
+#    ⭐ *Un garde-fou qui ne couvre qu'un chemin est une porte.* — loi 4 du studio.
+#
+#    Mesure du 29/09/2026, sur les trois dépôts :
+#      247 .ps1 · 208 avec BOM · 38 sans · **13 À RISQUE**
+#      dont TROIS ici : install.ps1, conteneur/comparer-dist.ps1,
+#      **infrastructure/deploy.ps1** — 16 471 octets, un script qui DÉPLOIE.
+#    Ils sont corrigés. **Ce workflow est là pour que ça ne revienne pas.**
+#
+# ── POURQUOI UN WORKFLOW SÉPARÉ, ET PAS UN BLOC DANS LE DÉPLOIEMENT ─────────
+#
+#    ⚠️ `deploy-cinematique.yml` PUBLIE. Y ajouter un contrôle bloquant
+#      reviendrait à dire : *un BOM manquant empêche la mise en ligne du site.*
+#      Ce n'est pas faux — c'est disproportionné, et ça mélange deux métiers.
+#    ⭐ Et surtout : ce workflow-ci couvre **tout le dépôt**, pas seulement
+#      `cinematique/`. Un `.ps1` à la racine ne regarde pas le site, et il doit
+#      quand même être contrôlé.
+#
+# ── CE QU'IL CONTRÔLE, ET RIEN D'AUTRE ──────────────────────────────────────
+#
+#    ① LE BOM DES .ps1 — *le défaut mesuré treize fois ce jour-là.*
+#       PowerShell 5.1 lit un .ps1 sans BOM comme de l'ANSI : un accent devient
+#       du charabia, et un script de déploiement qui lit de travers ne s'arrête
+#       pas toujours — **il fait autre chose.**
+#
+#    ② LES COMMENTAIRES HTML ÉQUILIBRÉS — *un défaut que J'AI créé, et qui a
+#       vécu en production.* J'avais fermé un commentaire avec `*/` au lieu de
+#       `-->`. Un commentaire HTML non fermé **avale tout ce qui suit** jusqu'au
+#       prochain `-->` : **856 caractères avaient disparu, dont le bouton
+#       principal du site.** Aucun contrôle ne pouvait le voir : ils cherchent
+#       des motifs interdits, pas la validité de la structure.
+#
+#    ③ LE POIDS DES FICHIERS VERSIONNÉS — *7,4 Go de .git sur l'autre dépôt,
+#       dont 3,2 Go de vidéos entrées par un `git add` de dossier.*
+#
+#    ⛔ CE QU'IL NE FAIT PAS : il ne remplace aucun jugement. Il ne dit pas
+#      qu'une page est publiable — seulement qu'elle n'a pas trois défauts
+#      mécaniques et mesurables.
+# =============================================================================
+
+name: 🔍 Qualité
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  controle:
+    name: Contrôles mécaniques du dépôt
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      # ── ① LE BOM DES .ps1 ──────────────────────────────────────────────
+      # ⚠️ Le test est écrit en shell pur, volontairement : une dépendance de
+      #    plus dans un contrôle de qualité est une panne de plus.
+      - name: "① BOM UTF-8 des scripts PowerShell"
+        run: |
+          echo "Un .ps1 sans BOM est lu en ANSI par PowerShell 5.1."
+          echo "S'il contient du non-ASCII, ses accents deviennent du charabia."
+          echo ""
+          risques=0
+          total=0
+          while IFS= read -r f; do
+            total=$((total+1))
+            # Les trois premiers octets valent-ils EF BB BF ?
+            bom=$(head -c 3 "$f" | od -An -tx1 | tr -d ' \n')
+            if [ "$bom" != "efbbbf" ]; then
+              # Sans BOM : le fichier contient-il du non-ASCII ?
+              if LC_ALL=C grep -qP '[\x80-\xFF]' "$f" 2>/dev/null; then
+                echo "  ⛔ $f — sans BOM ET avec du non-ASCII"
+                risques=$((risques+1))
+              fi
+            fi
+          done < <(find . -name '*.ps1' -not -path './.git/*' -not -path '*/node_modules/*')
+
+          echo ""
+          echo "  $total fichier(s) .ps1 analysé(s), $risques à risque."
+          if [ "$risques" -gt 0 ]; then
+            echo ""
+            echo "⛔ ÉCHEC — ces scripts seront mal lus par le Planificateur de tâches."
+            echo "   Remède : ajouter les trois octets EF BB BF en tête de chaque fichier."
+            echo "   Outil côté studio : pwsh -File infrastructure/scripts/auditer-bom.ps1 -Corriger"
+            exit 1
+          fi
+          echo "✅ Tous les .ps1 portent leur BOM, ou n'ont pas de non-ASCII."
+
+      # ── ② LES COMMENTAIRES HTML ÉQUILIBRÉS ─────────────────────────────
+      - name: "② Commentaires HTML équilibrés"
+        run: |
+          echo "Un commentaire HTML non fermé avale le contenu jusqu'au prochain -->."
+          echo "C'est arrivé : 856 caractères masqués, dont le bouton principal du site."
+          echo ""
+          echecs=0
+          while IFS= read -r f; do
+            ouv=$(grep -o '<!--' "$f" | wc -l | tr -d ' ')
+            fer=$(grep -o '\-\->' "$f" | wc -l | tr -d ' ')
+            if [ "$ouv" != "$fer" ]; then
+              echo "  ⛔ $f — $ouv ouverts, $fer fermés"
+              echecs=$((echecs+1))
+            fi
+          done < <(find . -name '*.html' -not -path './.git/*' -not -path '*/node_modules/*')
+
+          echo ""
+          if [ "$echecs" -gt 0 ]; then
+            echo "⛔ ÉCHEC — $echecs fichier(s) avec des commentaires déséquilibrés."
+            echo "   Un commentaire fermé par */ au lieu de --> est le cas le plus courant."
+            exit 1
+          fi
+          echo "✅ Tous les commentaires HTML sont équilibrés."
+
+      # ── ③ LE POIDS DES FICHIERS VERSIONNÉS ─────────────────────────────
+      - name: "③ Poids des fichiers versionnés"
+        run: |
+          echo "Seuil : 20 Mo. Au-delà, un dépôt devient difficile à cloner et à pousser."
+          echo ""
+          gros=0
+          while IFS= read -r f; do
+            if [ -f "$f" ]; then
+              taille=$(stat -c %s "$f" 2>/dev/null || stat -f %z "$f")
+              if [ "$taille" -gt 20971520 ]; then
+                echo "  ⛔ $((taille/1048576)) Mo  $f"
+                gros=$((gros+1))
+              fi
+            fi
+          done < <(git ls-files)
+
+          echo ""
+          if [ "$gros" -gt 0 ]; then
+            echo "⛔ ÉCHEC — $gros fichier(s) au-dessus de 20 Mo."
+            echo "   Mesure du 26/09/2026 : 13 vidéos (~700 Mo) sont entrées par un"
+            echo "   'git add' de dossier. Le push a expiré par chance ; les objets sont restés."
+            exit 1
+          fi
+          echo "✅ Aucun fichier versionné au-dessus de 20 Mo."
+
+      # ── LE RÉCAPITULATIF — pour qu'un humain sache quoi lire ───────────
+      - name: "📋 Ce que ce contrôle ne voit pas"
+        if: always()
+        run: |
+          echo "════════════════════════════════════════════════════════════"
+          echo "CE QUE CE WORKFLOW NE CONTRÔLE PAS — et il faut le savoir :"
+          echo ""
+          echo "  · si une page est PUBLIABLE (utile, vérifiable, engage le studio)"
+          echo "  · si un chiffre affiché est SOURCÉ"
+          echo "  · si une promesse est TENABLE"
+          echo "  · si un lien MÈNE quelque part"
+          echo ""
+          echo "Les trois premiers sont humains. Le quatrième est mécanisable —"
+          echo "il n'est pas fait ici, et c'est écrit pour qu'on ne le croie pas fait."
+          echo "════════════════════════════════════════════════════════════"
