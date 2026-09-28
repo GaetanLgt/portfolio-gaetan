@@ -72,8 +72,40 @@
   // ── ③ FERMER APRÈS AVOIR CHOISI UNE DESTINATION ────────────────────────────
   // ⚠️ Sans ça, le menu reste ouvert par-dessus la section qu'on vient de rejoindre :
   //    le visiteur clique, la page défile, et il ne voit rien d'autre que le menu.
+  //
+  // ⛔⛔ CORRIGÉ LE 28/09/2026 — « ÇA NE SE REFERME PAS ». Gaëtan l'a constaté à l'usage.
+  //    La première version ne fermait QUE sur un clic de `<a>` :
+  //        if (e.target.closest('a')) fermer(false);
+  //    ⇒ cliquer sur un TITRE de groupe, sur une marge, ou dans le vide du panneau
+  //      ne fermait rien. Le menu occupant presque tout l'écran, la zone morte était
+  //      énorme — et c'est exactement là qu'un doigt se pose.
+  //
+  //    ⛔ ET IL Y AVAIT PIRE, EN DESKTOP : `.menu` est en `flex-wrap:wrap`. Juste
+  //      au-dessus de 1101 px, le menu passe sur DEUX lignes et **recouvre le début
+  //      de la page** — sur laquelle on ne peut plus cliquer, puisque `aria-expanded`
+  //      reste à `true` et que le voile reste posé.
+  //      *Un panneau qui ne se referme pas est pire qu'un panneau qui ne s'ouvre pas :
+  //      le premier enferme le visiteur.*
+  //
+  //    ⇒ On ferme sur TOUT clic dans le panneau qui n'est pas un contrôle actif.
+  //      Un lien : on ferme. Un bouton (les pôles) : on laisse faire, il ouvre son
+  //      propre tiroir. Le reste : on ferme.
   menu.addEventListener('click', (e) => {
-    if (e.target.closest('a')) fermer(false);
+    const cible = e.target;
+    if (cible.closest('a')) { fermer(false); return; }
+    if (cible.closest('button')) return;   // « Expertises » garde la main
+    fermer(false);                          // titre de groupe, marge, vide du panneau
+  });
+
+  // ⭐ CEINTURE ET BRETELLES — le clic DANS la page referme aussi.
+  //    Le voile couvre déjà la page sous le menu, mais il n'existe qu'en dessous de
+  //    1101 px (`@media max-width` ne le cache pas, c'est `hidden` qui le gère).
+  //    On écoute donc au niveau du document, et on ignore ce qui vient du menu
+  //    lui-même — sinon l'ouverture se refermerait dans le même clic.
+  document.addEventListener('click', (e) => {
+    if (!estOuvert()) return;
+    if (menu.contains(e.target) || bouton.contains(e.target)) return;
+    fermer(false);
   });
 
   // ── LE CLAVIER ─────────────────────────────────────────────────────────────
