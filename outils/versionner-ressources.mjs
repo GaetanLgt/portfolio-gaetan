@@ -22,9 +22,27 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { fileURLToPath } from 'node:url';
 
-const C = 'C:/IA/portfolio-gaetan/cinematique';
+// ⛔⛔ CORRIGÉ LE 28/09/2026 — LE CHEMIN ÉTAIT CELUI DE MA MACHINE, PAS CELUI DU DÉPÔT.
+//    J'avais écrit `<racine>/cinematique`, en dur. Sur GitHub Actions,
+//    le dépôt est déployé dans `/home/runner/work/portfolio-gaetan/portfolio-gaetan`.
+//    ⇒ `ENOENT: no such file or directory, scandir '<racine>/cinematique'`
+//      et le DÉPLOIEMENT A ÉCHOUÉ. Le site est resté sur la version précédente.
+//    ⭐ *Un outil qui tourne ailleurs que sur la machine qui l'a vu naître ne connaît
+//      pas le chemin de cette machine. Le seul chemin qu'il puisse connaître est
+//      celui du fichier lui-même.*
+//    ⇒ La racine se DÉDUIT de l'emplacement du script : `outils/` → la racine du dépôt.
+//      Ça marche sur la machine de Gaëtan ET sur le runner, sans variable à poser.
+const ICI = path.dirname(fileURLToPath(import.meta.url));
+const C = path.resolve(ICI, '..', 'cinematique');
+if (!fs.existsSync(C)) {
+  console.error('⛔ cinematique/ introuvable depuis ' + C);
+  console.error('   (le script a été déplacé ? il doit vivre dans <racine>/outils/)');
+  process.exit(2);
+}
 const SIMULER = process.argv.includes('--simuler');
+console.log('  racine : ' + C);
 
 const sha8 = (abs) => crypto.createHash('sha256').update(fs.readFileSync(abs)).digest('hex').slice(0, 8);
 
