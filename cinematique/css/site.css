@@ -235,12 +235,37 @@ a{color:var(--cyan)}
    *Deux navigations séparées, ce serait deux vérités sur le même objet.* */
 @media (min-width:1101px){
   .btn-menu{display:none}
-  .menu{position:static;max-height:none;overflow:visible;display:flex;align-items:center;
-    gap:1.1rem;background:none;backdrop-filter:none;border:0;transition:none}
+  /* ⛔ CORRIGÉ LE 28/09/2026 — LE MENU S'EMPILAIT AU CENTRE DE L'ÉCRAN.
+     Mesuré sur les captures de Gaëtan, prises à ~1870 px : les quatre groupes
+     formaient une COLONNE verticale au milieu de la page, avec leurs puces, et
+     passaient par-dessus le titre « GL Digital Lab ».
+
+     LA CAUSE, ET ELLE EST DE MOI :
+       · mes quatre groupes (`.menu-titre` + `.menu-liste`) sont des ENFANTS de `.menu` ;
+       · en desktop je cachais les titres et passais `.menu-liste` en `flex` ;
+       · ⛔ mais je n'ai JAMAIS posé `flex-direction:row` sur `.menu` — les quatre
+         `<ul>` restaient donc des BLOCS empilés dans un conteneur flex.
+     ⭐ Et `list-style` n'était retiré qu'en mobile : les puces revenaient en desktop.
+
+     ⛔ POURQUOI JE NE L'AI PAS VU AVANT DE PUBLIER — et c'est la vraie leçon :
+       j'ai « vérifié » à 320, 360, 390, 414, 900, 1100 et 1440 px, et mes captures
+       paraissaient bonnes. Mais Chrome headless refuse une fenêtre sous ~500 px et
+       `--window-size` ne déclenche pas toujours le `@media` attendu.
+       ⇒ *Une capture n'est pas une mesure si l'instrument ne fait pas ce qu'on croit.*
+       Le seul contrôle qui aurait attrapé ça : ouvrir la page sur un VRAI écran.
+
+     ⚠️ LA CORRECTION NE TOUCHE PAS LE MOBILE : tout est dans ce `@media min-width`,
+        et le menu vertical en dessous de 1101 px reste exactement ce qu'il était. */
+  .menu{position:static;max-height:none;overflow:visible;display:flex;flex-direction:row;
+    align-items:center;justify-content:flex-end;flex-wrap:wrap;
+    gap:0 1.1rem;background:none;backdrop-filter:none;border:0;transition:none}
+  /* Les quatre <ul> redeviennent des segments ALIGNÉS, et sans puces. */
   .menu-titre{display:none}
-  .menu-liste{display:flex;gap:1.1rem;padding:0}
+  .menu-liste{display:flex;flex-direction:row;align-items:center;gap:1.1rem;
+    padding:0;margin:0;list-style:none}
+  .menu-liste li{display:inline;list-style:none}
   .menu-liste a,.menu-liste .lien-nav{display:inline;padding:0;border-left:0;width:auto;
-    color:var(--doux);font-size:.85rem}
+    color:var(--doux);font-size:.85rem;background:none}
   .menu-liste a:hover,.menu-liste .lien-nav:hover{background:none;border-left:0;color:var(--cyan)}
   .menu-liste a[aria-current="page"]{color:var(--cyan);background:none;border-left:0;font-weight:600}
 }
