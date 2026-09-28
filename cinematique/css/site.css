@@ -873,3 +873,52 @@ main{position:relative;z-index:10}
   .videos{margin-top:1.2rem}
   .videos h3{font-size:.95rem}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LE BLOC « PREUVE DE MARCHÉ » — acte 6, ajouté le 28/09/2026.
+
+   ⭐ POURQUOI CE BLOC EXISTE : l'acte 6 listait six garanties (confidentialité,
+   intégrité, disponibilité, chiffrement, sauvegardes, contrôle humain) sans dire
+   POURQUOI ce sont celles-là. **Une liste de vertus n'est pas un argument.**
+   Les chiffres SAP × Oxford Economics 2026 disent, eux, ce que les entreprises
+   n'ont pas — et c'est exactement ce que ces six points couvrent.
+
+   ⛔ AUCUN VERT, AUCUN OR (canon du 25/09 et sort de l'or non tranché).
+   ⚠️ Le bloc réutilise les jetons déjà présents : `--cyan`, `--doux`, `--texte`,
+     et le même fond teinté que `.souverainete` et `.limites`. *Trois blocs qui
+     disent la même chose doivent se ressembler.* */
+
+.preuve-marche{margin:0 0 1.4rem;padding:1rem 1.1rem;border-radius:10px;
+  background:rgba(42,191,255,.05);border-left:3px solid var(--cyan)}
+.preuve-marche h3{margin:0 0 .7rem;font-size:1rem;color:var(--cyan)}
+
+/* ⚠️ On garde la grille existante mais on resserre : ces cinq chiffres sont des
+   DONNÉES, pas des garanties. Ils doivent se lire vite. */
+.preuve-marche .grille{gap:.6rem}
+.preuve-marche .grille li{font-size:.86rem;line-height:1.55;padding:.6rem .7rem}
+/* ⚠️ LE CHIFFRE EST LE SUJET : il passe devant, en cyan, et plus gros que son texte.
+   *Un chiffre noyé dans une phrase ne se retient pas.* */
+.preuve-marche .grille strong{display:block;font-family:var(--mono);font-size:1.15rem;
+  color:var(--cyan);margin-bottom:.2rem}
+.preuve-marche .grille em{color:var(--texte);font-style:italic}
+/* La source, en petit : présente et lisible, mais pas au premier plan. */
+.preuve-marche .src{display:block;margin-top:.3rem;font-size:.7rem;color:var(--doux);
+  font-family:var(--mono);letter-spacing:.02em}
+
+.conclusion-marche{margin:.9rem 0 0;font-size:.9rem;line-height:1.65;color:var(--texte)}
+.conclusion-marche strong{color:#fff}
+.conclusion-marche i{color:var(--doux)}
+
+/* ---- LA SOURCE EXTERNE, EN PIED D'ACTE ---- */
+/* ⭐ Elle est VISIBLE, pas cachée en petit gris : *c'est elle qui distingue un chiffre
+   d'une affirmation.* */
+.source-externe{margin:1rem 0 0;padding-top:.7rem;border-top:1px solid #ffffff12;
+  font-size:.78rem;color:var(--doux);line-height:1.6}
+.source-externe i{color:var(--texte)}
+.source-externe strong{color:var(--cyan);font-weight:600}
+
+@media (max-width:600px){
+  .preuve-marche{padding:.85rem .9rem}
+  .preuve-marche .grille strong{font-size:1.05rem}
+  .preuve-marche .grille li{font-size:.83rem}
+}
