@@ -152,6 +152,39 @@ jobs:
         run: |
           node outils/generer-sitemap.mjs --verifier
 
+      # ⛔⛔ LA PORTE DU CACHE — AJOUTÉE LE 28/09/2026, APRÈS UN DÉFAUT PAYÉ.
+      #    Les feuilles de style étaient appelées avec `?v=20260928` : une DATE ÉCRITE
+      #    À LA MAIN, dans 14 pages. Elle ne changeait pas quand le fichier changeait.
+      #    ⭐ Conséquence RÉELLE, vécue : après avoir corrigé la mise en page du hero, ma
+      #      capture était IDENTIQUE à la précédente — même empreinte SHA256. Le navigateur
+      #      servait l'ancien CSS. *Le correctif était bon ; c'est ce que je regardais
+      #      qui était périmé.*
+      #    ⇒ Ce pas recalcule le sha256 de chaque ressource et réécrit le `?v=`.
+      #      Il tourne AVANT l'envoi, donc ce qui part en ligne porte l'empreinte du
+      #      contenu réellement envoyé.
+      #    ⚠️ Et il `git diff --exit-code` APRÈS : si un `?v=` a changé, c'est qu'un
+      #      ressource a été modifiée sans que sa version soit mise à jour dans le dépôt.
+      #      On ne bloque pas la publication pour ça — on le SIGNALE, parce que bloquer
+      #      ferait échouer un déploiement pour un détail cosmétique. Mais le journal le dit.
+      - name: 🔖 Cache — les versions sont-elles les empreintes du contenu ?
+        run: |
+          echo "Avant réécriture :"
+          git diff --stat -- cinematique/ | tail -3 || true
+          node outils/versionner-ressources.mjs
+          echo ""
+          echo "Après réécriture :"
+          if git diff --quiet -- cinematique/; then
+            echo "✅ Aucune version n'avait dérivé."
+          else
+            echo "⚠️  Des versions ont été corrigées AU MOMENT DU DÉPLOIEMENT."
+            echo "    Cela veut dire qu'une ressource a changé sans que sa version"
+            echo "    soit recalculée dans le dépôt. Le site publié est CORRECT"
+            echo "    (l'empreinte est celle du contenu envoyé), mais le dépôt, lui,"
+            echo "    portait une version périmée. Relancer l'outil après un changement"
+            echo "    de CSS :  node outils/versionner-ressources.mjs"
+            git diff --stat -- cinematique/ | tail -5
+          fi
+
       - name: 🚀 Envoi FTP vers la RACINE
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
