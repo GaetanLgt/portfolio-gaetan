@@ -741,13 +741,75 @@ interdit la mise en ligne **des œuvres** — il n'y en a aucune.
     <div class="tiroir-pied"><span>STATUT : DISPONIBLE SUR DEVIS</span><a href="#acte-8" id="lien-devis-direct" class="bouton-action">INITIALISER UN PROJET →</a></div>
   </div>
 </div>
-<script type="module" src="src/main.js"></script>
-<!-- ⭐ LA NAVIGATION — chargée APRÈS le module, et volontairement SÉPARÉE de lui.
-     `main.js` porte la séquence d'images, la 3D, l'armure et la révélation au curseur :
-     **une navigation ne doit dépendre d'aucune de ces choses.** Si le module échoue —
-     WebGL absent, image manquante, `IntersectionObserver` refusé — le menu doit continuer
-     de fonctionner. C'est la seule raison d'être de ce fichier séparé.
-     ⚠️ `defer` : il n'exporte rien, n'importe rien, et s'exécute après le DOM. -->
+<!-- ⛔⛔ LE MODULE `main.js` A ÉTÉ RETIRÉ LE 29/09/2026 — ET C'EST UN CORRECTIF, PAS UN NETTOYAGE.
+     ⚠️ CE QUI S'EST PASSÉ, MESURÉ DANS LA CONSOLE DU NAVIGATEUR :
+        Uncaught TypeError: can't access property "offsetTop", actes[3] is undefined
+          → src/main.js:439, appelé par `demander()` → **l'erreur se répétait 10 fois**.
+        `main.js` L30 fait `[...document.querySelectorAll('[data-act]')]`. Mesure :
+          `[data-act]` : 0 · `.acte` : 0 · `.facade` : 0 · `h1,h2` : 0 — **la structure
+          que ce module pilote a disparu avec l'ancienne page d'accueil.**
+        ⇒ Ce n'était pas un plantage isolé : **une boucle d'erreurs, chez chaque visiteur.**
+
+     ⭐ POURQUOI C'EST LE BON GESTE, ET PAS UNE PERTE. La trame est un DOCUMENT
+        statique — son propre CSS le dit. `main.js` portait la séquence d'ouverture,
+        la 3D et la révélation au curseur : **des choses de l'ANCIENNE page.**
+        Et le studio avait écrit la règle ici même :
+          *« une navigation ne doit dépendre d'aucune de ces choses. Si le module
+            échoue — WebGL absent, image manquante, IntersectionObserver refusé —
+            le menu doit continuer de fonctionner. »*
+        ⇒ C'est exactement la situation prévue. Le menu continue, et il fonctionne :
+          tous ses éléments sont présents (mesuré), et `navigation.js` écarte les
+          liens morts avec `.filter((p) => p.section)`.
+
+     ⚠️ CE QU'IL RESTE À FAIRE, ET QUI N'EST PAS FAIT ICI : la nav « repères » pointe
+        vers `#acte-1` … `#acte-8`, **huit ancres qui n'existent pas**. Et le pied de
+        page (`.tiroir-pied`, `.tags-tech`, `.bouton-action`) vient encore de l'ancienne
+        structure. *La trame a remplacé le corps et gardé la tête et les pieds : c'est
+        un hybride, et il se voit.* — signalé, non corrigé. -->
+
+<!-- ⭐ LE PIED DE LA TRAME — AJOUTÉ LE 29/09/2026, DEMANDE DE GAËTAN : « header et footer à modifier ».
+     ⚠️ CE QUI N'ALLAIT PAS, ET C'EST MESURÉ : la page n'avait **AUCUN `<footer>`**.
+        Elle avait un `div.tiroir-pied` (le pied du tiroir des secteurs, autre chose) et
+        rien d'autre. `manifeste.css` déclare `.mf-log` — « pied de page en ligne de
+        journal technique » — et **aucun élément ne l'utilisait**.
+     ⭐ ET LA LIGNE DE JOURNAL PORTE DES VALEURS VRAIES, PAS DÉCORATIVES. C'est le CSS
+        de la trame lui-même qui l'exige : *« la trame est une esthétique ; les chiffres
+        sont une responsabilité »* — il refuse les `UNIT_74` et les hash inventés du
+        PowerPoint d'origine.
+     ⚠️ LES CHIFFRES CI-DESSOUS SONT DATÉS, ET C'EST CE QUI LES REND HONNÊTES : ils
+        étaient vrais au 29/09/2026. Un relevé daté ne devient pas faux — il devient
+        périmé, et la date le dit. *Un chiffre sans date, lui, devient faux sans le dire.* -->
+<footer class="mf-log">
+  <p><strong>GL DIGITAL LAB</strong> — Génie IT TeK FR · conception, déploiement et maintenance
+     de solutions web et d'IA locale. <em>Sites, applications métier, RAG documentaire,
+     agents — sur une infrastructure contrôlée.</em></p>
+  <p><a href="/mentions-legales/">Mentions légales</a> ·
+     <a href="/confidentialite/">Confidentialité</a> ·
+     <a href="/cgv/">CGV</a> ·
+     <a href="/ce-que-nous-nous-imposons/">Ce que nous nous imposons</a> ·
+     <a href="/plan/">Le plan</a> ·
+     <a href="/sitemap/">Plan du site</a></p>
+  <p>RELEVÉ DU 29/09/2026 // SURFACES APPELÉES UNE PAR UNE : 35 //
+     FERMÉES DEPUIS : 4 (dont 3 pour un nom qui n'est pas à nous) // AUCUN NOM DE CLIENT,
+     AUCUN IDENTIFIANT DE MACHINE.</p>
+</footer>
+
+<!-- ⭐ LE TIROIR DES SECTEURS A SON PROPRE CHARGEMENT DEPUIS LE 29/09/2026.
+     ⚠️ POURQUOI : `preparerSecteurs()` n'était appelée QUE par `main.js` (L11 et L489).
+     En retirant `main.js` — qui pilotait une structure disparue — le bouton « Expertises »
+     a cessé d'ouvrir quoi que ce soit. **Le défaut a été trouvé en le cherchant, pas
+     après coup.**
+     ⭐ `secteurs.js` est AUTONOME, et c'est mesuré : 3 482 octets, **aucun `import`,
+     aucune dépendance à `three`**. Il ne fait que lire quatre identifiants du DOM.
+     ⇒ Le charger seul coûte 3,5 ko au lieu des 45 ko de `main.js`, **et il rend au
+        bouton exactement ce que le retrait lui avait pris.**
+     ⚠️ Si `secteurs.js` devient un jour dépendant d'autre chose, ce chargement cessera
+        de fonctionner — et rien ne le signalera. *C'est la limite de ce montage, écrite
+        ici pour qu'on ne la découvre pas en production.* -->
+<script type="module">
+  import { preparerSecteurs } from './src/secteurs.js';
+  preparerSecteurs();
+</script>
 <script defer src="src/navigation.js"></script>
 </body>
 </html>
