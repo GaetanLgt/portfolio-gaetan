@@ -291,7 +291,31 @@ a{color:var(--cyan)}
 
   /* Le groupe : un bloc de référence, pour que son panneau se pose DESSOUS. */
   .menu-groupe{position:relative}
-  .menu-bouton{padding:.4rem .6rem;border-left:0;font-size:.85rem;color:var(--doux);
+  /* ⛔⛔ CORRIGÉ LE 28/09/2026, APRÈS UNE MESURE QUI A ENFIN DIT LA VÉRITÉ.
+     ⭐ CE QUE CHROME CALCULAIT, ET QUE MES CAPTURES N'ONT JAMAIS MONTRÉ :
+          menu.width   = 121 px
+          bouton.width =  27 px
+     **Chaque bouton faisait 27 pixels de large.** « Ce que vous cherchez » ne tient pas
+     dans 27 px : le texte DÉBORDE, et les navigateurs ne le rattrapent pas de la même
+     façon — Chrome tasse, Firefox ÉTALE EN COLONNE. C'est le menu empilé que Gaëtan
+     voyait, et il était là depuis le début.
+
+     LA CAUSE, ET ELLE EST LA MÊME QUE POUR TOUS LES AUTRES DÉFAUTS DE CETTE BARRE :
+       j'avais écrit `.menu-bouton{… width:100% …}` pour le MOBILE — où le bouton doit
+       occuper toute la largeur de l'accordéon — et **je ne l'ai JAMAIS annulé en desktop.**
+       ⇒ `width:auto` ici, et le bouton reprend la largeur de son texte.
+     ⚠️ ET `white-space:nowrap` : sans lui, un bouton peut se couper au milieu d'un mot,
+        ce qui reproduirait le défaut autrement.
+
+     ⛔ ET LA LEÇON, PARCE QU'ELLE A COÛTÉ TROIS ALLERS-RETOURS :
+       j'ai « vérifié » cette barre à sept largeurs, en Chrome, avec des bancs d'iframes.
+       **Les captures montraient une barre correcte.** Elles étaient fausses :
+       `--window-size` ne donnait pas la largeur demandée, et le banc rognait le résultat.
+       ⇒ *Une capture n'est pas une mesure si l'instrument ne fait pas ce qu'on croit.*
+       Ce qui l'a révélé : demander à Chrome **les valeurs qu'il CALCULE** (getComputedStyle)
+       au lieu de regarder une image. Et demander à Gaëtan **quel navigateur il utilise** —
+       question que je n'avais posée qu'après trois échecs. */
+  .menu-bouton{width:auto;padding:.4rem .6rem;border-left:0;font-size:.85rem;color:var(--doux);
     white-space:nowrap;border-radius:6px}
   .menu-bouton:hover{background:rgba(0,229,255,.08);color:var(--cyan);border-left:0}
   .menu-bouton[aria-expanded="true"]{background:rgba(0,229,255,.1);color:var(--cyan);border-left:0}
