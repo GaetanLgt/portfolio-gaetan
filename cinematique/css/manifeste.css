@@ -373,3 +373,67 @@ body.trame-manifeste {
   .mf-section { break-inside: avoid; }
   .mf-chevron { clip-path: none; border: 1px solid #000; }
 }
+
+/* ---- FLUIDITE DE NAVIGATION — ajoute le 29/09/2026 -------------------------
+   CAHIER DES CHARGES DE GAETAN : « pour que la navigation soit ultra fluide ».
+   MESURE AVANT : scroll-behavior 0, scroll-margin-top 0, prefers-reduced-motion 0.
+   Les trois manquaient dans cette feuille.
+
+   POURQUOI scroll-margin-top N EST PAS UN DETAIL : l en-tete est FIXE. Sans cette
+   regle, cliquer une ancre amene la section SOUS la barre — le titre est cache, et
+   l utilisateur croit que le lien n a pas marche.
+   *Un lien qui fonctionne et qu on croit casse coute plus cher qu un lien mort.*
+
+   ET prefers-reduced-motion N EST PAS UNE OPTION : le defilement doux est agreable,
+   et il est penible pour qui y est sensible. */
+:root { --mf-hauteur-entete: 76px; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+section[id], main[id] {
+  scroll-margin-top: calc(var(--mf-hauteur-entete) + 24px);
+}
+
+/* LE FOCUS DOIT SE VOIR. site.css en porte 21 regles, mais elles visent SES
+   composants. La trame a les siens : elle doit les avoir aussi, sinon la
+   navigation au clavier devient invisible sur la partie la plus recente du site. */
+.manifeste a:focus-visible,
+.manifeste button:focus-visible,
+header a:focus-visible,
+header button:focus-visible,
+footer a:focus-visible {
+  outline: 3px solid var(--mf-vert);
+  outline-offset: 4px;
+}
+
+/* ---- LA SOUS-NAVIGATION PAR ANCRES ---------------------------------------- */
+.page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  justify-content: center;
+  padding: 14px 18px;
+  margin: 0;
+  border-top: 2px solid var(--mf-trait);
+  border-bottom: 2px solid var(--mf-trait);
+  font-size: .85rem;
+}
+.page-nav a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.page-nav a:hover,
+.page-nav a:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+/* ---- LE CTA DE LA NAVBAR — visuellement distinct, sans etre agressif ------- */
+header .cta-nav {
+  margin-left: 8px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}

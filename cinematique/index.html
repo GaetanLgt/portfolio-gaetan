@@ -80,7 +80,7 @@
      titre : sans elle, un utilisateur au clavier doit traverser TOUT l'en-tête et les huit
      repères avant d'atteindre le premier mot du contenu. C'est le premier élément focusable
      de la page, et il reste invisible jusqu'au focus (voir .lien-evitement dans site.css). -->
-<a class="lien-evitement" href="#contenu">Aller au contenu principal</a>
+<a class="lien-evitement" href="#main-content">Aller au contenu principal</a>
 <canvas id="fond" aria-hidden="true"></canvas>
 <canvas id="scene3d" aria-hidden="true"></canvas>
 <div id="revelation" aria-hidden="true"></div>
@@ -262,7 +262,14 @@
                 ne peut pas corriger.* -->
       </ul>
     </div>
-  </nav>
+    <!-- LE CTA DANS LA NAVBAR — ajoute le 29/09/2026, cahier des charges de Gaetan :
+         « Reserver un diagnostic de 30 minutes » doit etre dans la navbar, dans le hero,
+         apres les offres, en bas de page ET dans le footer — et ce doit etre la SEULE
+         formule employee. *La repetition reduit l effort de decision.*
+         MESURE AVANT : ce CTA existait dans le hero seulement. Il manquait ici.
+         Il est HORS des groupes : ce n est pas une destination, c est l action.
+         *Un bouton range dans un menu n est plus un bouton, c est une entree.* -->
+    <a class="mf-bouton cta-nav" href="/contact/">Reserver un diagnostic</a>  </nav>
 
   <!-- ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. L'audit externe a raison : la
        préférence SYSTÈME ne suffit pas, elle est un réglage de POSTE. Il est dans l'en-tête
@@ -289,7 +296,7 @@
      restent visibles à l'écran, mais c'est l'aria-label qui nomme le lien. -->
 <!-- ⛔ `id="contenu"` AJOUTÉ LE 25/09/2026 : c'est la cible du lien d'évitement ci-dessus.
      Un <main> sans identifiant ne peut pas être visé. -->
-<main id="contenu" class="manifeste">
+<main id="main-content" class="manifeste">
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ① LA COUVERTURE — le type A de la trame.
@@ -352,6 +359,21 @@
            vérifiable. **Il a changé de voisin, pas de sens.** -->
     <p><strong>Recherche documentaire locale — 4 épreuves sur 4, le 28/09/2026.</strong></p>
     <p class="mf-tampon">Mesuré</p>
+  <!-- LA SOUS-NAVIGATION PAR ANCRES — ajoutee le 29/09/2026, cahier des charges :
+       « La landing doit proposer une navigation par ancres, mais uniquement pour les
+       grandes sections. » Les sept sections portaient deja leur identifiant : il ne
+       manquait que la barre qui les relie.
+       aria-label EXPLICITE : la page a maintenant DEUX zones de navigation, et deux
+       zones sans nom sont deux zones qu un lecteur d ecran ne distingue pas.
+       LES LIBELLES SONT DESCRIPTIFS — pas de « ici » ni de « en savoir plus ». -->
+  <nav class="page-nav" aria-label="Navigation dans cette page">
+    <a href="#ce-quon-fait">Vos besoins</a>
+    <a href="#prix">Solutions</a>
+    <a href="#methode">Methode</a>
+    <a href="#capacites">Ce qui est prouve</a>
+    <a href="#ecosysteme">Tout l ecosysteme</a>
+    <a href="#contact">Contact</a>
+  </nav>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════
