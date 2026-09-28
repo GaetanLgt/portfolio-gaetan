@@ -96,6 +96,41 @@ ErrorDocument 404 /404.html
   #      est ancré : `/monde-autre-chose/` n'est PAS touché.
   RewriteRule ^monde(/.*)?$ - [G,L]
 
+  # ⛔⛔ TROIS AUTRES SURFACES FERMÉES — DÉCISION DE GAËTAN, 29/09/2026.
+  #
+  # ⭐ POURQUOI, ET CE N'EST PAS LA MÊME RAISON QUE /monde/.
+  #    `/monde/` fuyait des documents INTERNES : une fuite de confidentialité.
+  #    Ces trois-ci ne fuient rien d'interne : **elles publient le nom de quelqu'un
+  #    d'autre.** Le garde-fou du studio (`vault-agence/licences-refusees.md`) interdit
+  #    nommément deux franchises de jeu vidéo comme asset — *ni nom, ni silhouette,
+  #    ni design.* Or leur titre SERVI les porte, en 200, indexables.
+  #
+  #    Mesure du 29/09/2026, sur la page réellement en ligne :
+  #      · `/Arche/`        titre : « Arche — les scènes du vault <franchise> »
+  #      · `/arkadia/`      titre : « Case Study ARKADIA France (<jeu tiers>) »
+  #      · `/arkadia-labo/` titre : « Arkadia — exploiter un écosystème »
+  #    ⚠️ Les deux noms sont délibérément ABSENTS de ce fichier, et ce n'est pas un
+  #       oubli : *recopier une valeur interdite dans un fichier versionné, c'est
+  #       l'ajouter au dépôt.* Le détail nommé vit dans `outils/surfaces-publiques.json`,
+  #       clé `surfacesAProbleme`, qui n'est pas publié.
+  #
+  # ⛔ CE N'EST PAS UNE SUPPRESSION, ET C'EST VOULU : la règle ferme l'accès, les
+  #    fichiers restent sur le serveur, inertes. *On ne supprime pas ce qu'on ne peut
+  #    pas restaurer.* ⇒ Le jour où la décision change, on retire ces trois lignes.
+  #
+  # ⚠️ CE QUE ÇA NE PROTÈGE PAS : ces pages ont été **publiques pendant des jours**.
+  #    Elles peuvent être dans le cache d'un moteur ou d'un proxy. *Fermer une porte
+  #    n'efface pas les traces de ce qui est sorti.*
+  #
+  # ⚠️ `^arkadia(/.*)?$` N'ATTRAPE PAS `/arkadia-labo/` : le `$` l'en empêche, car
+  #    après `arkadia` vient `-labo`, qui ne correspond ni à la fin ni à `/…`.
+  #    Les deux motifs sont donc distincts, et leur ordre n'a pas d'importance.
+  # ⚠️ `^Arche` porte une MAJUSCULE, et c'est mesuré : l'URL vivante est `/Arche/`.
+  #    Apache distingue la casse — la règle aussi.
+  RewriteRule ^Arche(/.*)?$        - [G,L]
+  RewriteRule ^arkadia(/.*)?$      - [G,L]
+  RewriteRule ^arkadia-labo(/.*)?$ - [G,L]
+
 </IfModule>
 
 # ── Les types MIME que l'hébergeur ne devine pas ────────────────────────────
