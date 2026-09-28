@@ -1,0 +1,32 @@
+# security.txt — gldigitallab.fr
+# Ajouté le 28/09/2026.
+#
+# ⭐ POURQUOI CE FICHIER EXISTE, ET POURQUOI SON ABSENCE ÉTAIT UN DÉFAUT.
+#
+# Mesuré le 28/09/2026 : `https://gldigitallab.fr/.well-known/security.txt` rendait **404**.
+# Or le studio **vend de l'audit de sécurité**. Un site qui propose de trouver des failles
+# chez les autres, et qui n'offre aucun moyen déclaré de lui signaler les siennes, dit
+# quelque chose de gênant — *et ce n'est pas ce qu'il veut dire.*
+#
+# Ce fichier est une convention (RFC 9116, 2022). Il n'a pas force de loi : il dit
+# simplement **à qui écrire, comment, et sous quel délai**. C'est un engagement public.
+#
+# ⚠️ CE QU'IL N'EST PAS : une promesse de récompense. Le studio n'a pas de programme
+# de bug bounty, et ce fichier ne doit pas le laisser croire. La ligne `Policy` dit
+# exactement ce qui est offert — rien d'autre.
+
+Contact: mailto:gtn.langlet+lab@gmail.com
+Expires: 2027-09-28T00:00:00.000Z
+Preferred-Languages: fr, en
+Canonical: https://gldigitallab.fr/.well-known/security.txt
+Policy: https://gldigitallab.fr/confidentialite.html
+
+# ⛔ CE QUE LE STUDIO DEMANDE — et c'est la seule chose demandée.
+#
+# Signalez la faille. N'exploitez pas au-delà du strict nécessaire pour la démontrer,
+# n'accédez à aucune donnée qui ne vous appartient pas, et ne dégradez rien.
+# Un signalement qui prouve la faille sans sortir de données est un signalement réussi.
+#
+# ⛔ ET CE QUE LE STUDIO NE FERA PAS : il ne signalera lui-même aucune faille trouvée
+# par ce canal. `AGENTS.md` § 7 : « on ne sort pas de l'écosystème pour attaquer ».
+# Ce fichier est une porte d'entrée, pas une porte de sortie.
