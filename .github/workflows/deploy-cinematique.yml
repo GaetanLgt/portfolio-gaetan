@@ -191,4 +191,57 @@ jobs:
           # Et l'ancienne adresse doit REDIRIGER, plus servir la page morte.
           code2=$(curl -s -o /dev/null -w "%{http_code}" https://gldigitallab.fr/cinematique/)
           echo "https://gldigitallab.fr/cinematique/ → HTTP $code2 (301 attendu)"
+          # ⛔⛔ LA VÉRIFICATION QUI MANQUAIT — AJOUTÉE LE 28/09/2026 APRÈS UN DÉFAUT MESURÉ.
+          #
+          # ⭐ CE QUI S'EST PASSÉ, ET C'EST LE DÉFAUT QUE CE BLOC RÉPARE :
+          #    le commit `ba22939` a publié une page `ressources/` et un PDF de **327 Ko**.
+          #    Le workflow a rendu **`success` sur TOUTES ses étapes** — y compris celle-ci.
+          #    ⛔ **Et le PDF rendait 404, la page rendait 403.**
+          #
+          #    ⭐ LA CAUSE, ET ELLE EST ÉCRITE DANS LES TROIS LIGNES DU DESSUS :
+          #      ce contrôle vérifie la **page d'accueil** — qui répondait 200 **avant**
+          #      le déploiement et répondra 200 **après**, quoi qu'il arrive.
+          #      ⇒ *Un contrôle qui vérifie ce qui était déjà vert ne vérifie rien.*
+          #      **Il ne testait AUCUN des fichiers envoyés.**
+          #
+          # ⇒ ⭐ ON VÉRIFIE MAINTENANT **CE QUI VIENT D'ÊTRE ENVOYÉ**, pas ce qui marchait déjà.
+          #    ⚠️ La liste est écrite ici, et c'est imparfait : *une liste écrite à la main
+          #      oubliera un jour* — c'est le défaut payé six fois sur `indexer-agence.js`.
+          #      Mais **elle porte sa raison**, et un fichier oublié ici se voit tout de suite.
+          echo ""
+          echo "── Vérification des fichiers publiés ──"
+          echec=0
+          for f in \
+            "ressources/" \
+            "ressources/DOSSIER-PEDAGOGIQUE-MANGA-PRIMAIRE.pdf" \
+            "ressources/DOSSIER-PEDAGOGIQUE-MANGA-PRIMAIRE.md" \
+            "veille/" \
+            "llms.txt" \
+            ".well-known/security.txt"
+          do
+            # ⚠️ `-L` suivi des redirections ; on veut le code FINAL.
+            fc=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 30 "https://gldigitallab.fr/$f")
+            if [ "$fc" = "200" ]; then
+              echo "  ✅ HTTP $fc  /$f"
+            else
+              # ⚠️ On RÉESSAIE une fois, plus tard : le FTP peut être encore en train d'écrire.
+              sleep 20
+              fc=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 30 "https://gldigitallab.fr/$f")
+              if [ "$fc" = "200" ]; then
+                echo "  ✅ HTTP $fc  /$f  (au second essai — le FTP a mis du temps)"
+              else
+                echo "  ⛔ HTTP $fc  /$f  — CE FICHIER N'EST PAS EN LIGNE"
+                echec=1
+              fi
+            fi
+          done
+          if [ "$echec" = "1" ]; then
+            echo ""
+            echo "⛔⛔ AU MOINS UN FICHIER ENVOYÉ N'EST PAS ACCESSIBLE."
+            echo "    ⇒ L'envoi FTP a été TENTÉ, mais il n'a pas abouti pour tout."
+            echo "    ⇒ *Le succès de l'étape d'envoi ne prouve pas la livraison.*"
+            echo "    Regarder le journal de l'étape 🚀, puis relancer si le transfert a échoué."
+            exit 1
+          fi
+          echo "✅ Tous les fichiers vérifiés répondent 200."
           echo "✅ La racine répond."
