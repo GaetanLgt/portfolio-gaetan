@@ -85,13 +85,89 @@
        studio vend. Les sept libellés reprennent maintenant les mots des titres.
        ⚠️ La barre a été MESURÉE avant d'être chargée (1920×1080 : 639 px pour les sept liens,
        contre 359 px pour les quatre anciens) : voir le point de bascule dans `css/site.css`. -->
-  <nav aria-label="Actes"><button id="btn-secteurs" type="button" class="lien-nav" aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button><a href="#acte-2">L'Entrée</a><a href="#acte-3">Laboratoire</a><a href="#acte-4">L'Offre</a><a href="#acte-5">Méthode</a><a href="#acte-6">Démonstrateur</a><a href="#acte-7">Limites</a><a href="#acte-8">Contact</a></nav>
+  <!-- ⭐ LA NAVIGATION A ÉTÉ REFONDUE LE 28/09/2026. Ce qui suit remplace le `<nav>` du 26/09
+       et ses deux règles CSS qui masquaient les liens (`max-width:1100px` et `600px`).
+
+       ⛔ LE DÉFAUT QUI A DÉCLENCHÉ CETTE REFONTE, ET IL ÉTAIT MESURÉ :
+          en dessous de 1100 px, `.barre nav a{display:none}` effaçait les SEPT liens, et
+          **rien n'apparaissait à la place** — ni bouton, ni tiroir, ni menu. Le studio avait
+          déjà écrit la règle qui condamne ce motif (« un contrôle d'accessibilité qui s'efface
+          selon la taille de l'écran est un contrôle qui manque précisément à ceux qui en ont
+          besoin »), et il s'appliquait à l'interrupteur d'animations — mais pas à la navigation.
+          ⭐ Un site dont 60 % des visites sont mobiles et dont la navigation disparaît sur
+          mobile n'a pas une navigation : il a une navigation d'ordinateur.
+
+       CE QUI CHANGE, ET POURQUOI CHAQUE PIÈCE EXISTE :
+         ① **Un vrai menu mobile** — un bouton, un panneau, et les mêmes sept destinations.
+            Il n'y a donc plus AUCUNE largeur où la navigation est absente.
+         ② **Les groupes** — sept liens à plat se lisent mal ; trois groupes disent l'histoire :
+            ce que vous cherchez · ce que je fais · ce qui me contraint.
+         ③ **L'acte courant est marqué** (`aria-current="page"`), ce que le CSS n'avait pas.
+         ④ **Le bouton « Expertises » reste** — il ouvre le tiroir des pôles, il est hors groupe.
+
+       ⛔ CE QUI N'EST PAS TOUCHÉ, ET IL FAUT LE DIRE : les huit repères de progression
+          (`nav.reperes`) restent tels quels — ils sont le seul moyen de situer où l'on est sur
+          cette page, et ils marchaient. L'interrupteur d'animations reste aussi : il est un
+          contrôle d'accessibilité, pas un élément de navigation.
+       ⛔ AUCUN VERT ICI. Le canon du 25/09 est explicite : **le vert dit la santé mentale**,
+          et « un jeton déclaré n'est pas un jeton posé — on le pose là où le propos est la santé
+          mentale, jamais pour décorer un bouton ». La barre reste donc cyan/argent, comme avant. -->
+  <button id="btn-menu" class="btn-menu" type="button"
+          aria-expanded="false" aria-controls="menu-principal"
+          aria-label="Ouvrir le menu">
+    <span class="btn-menu-barres" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+
+  <nav id="menu-principal" class="menu" aria-label="Navigation principale">
+    <!-- ① CE QUE VOUS CHERCHEZ -->
+    <p class="menu-titre" id="menu-g1">Ce que vous cherchez</p>
+    <ul class="menu-liste" aria-labelledby="menu-g1">
+      <li><a href="#acte-2">L'Entrée</a></li>
+      <li><a href="#acte-4">L'Offre</a></li>
+      <li><a href="#acte-8">Contact</a></li>
+    </ul>
+
+    <!-- ② CE QUE JE FAIS -->
+    <p class="menu-titre" id="menu-g2">Ce que je fais</p>
+    <ul class="menu-liste" aria-labelledby="menu-g2">
+      <li><a href="#acte-3">Laboratoire</a></li>
+      <li><a href="#acte-5">Méthode</a></li>
+      <li><a href="#acte-6">Démonstrateur</a></li>
+    </ul>
+
+    <!-- ③ CE QUI ME CONTRAINT — et ce groupe est un argument, pas un aveu.
+         Les limites sont publiées : un cabinet de sûreté qui cache ses limites n'en a pas. -->
+    <p class="menu-titre" id="menu-g3">Ce qui me contraint</p>
+    <ul class="menu-liste" aria-labelledby="menu-g3">
+      <li><a href="#acte-7">Limites</a></li>
+    </ul>
+
+    <!-- ④ LE TIROIR DES PÔLES — hors groupe : ce n'est pas une destination, c'est un filtre. -->
+    <p class="menu-titre" id="menu-g4">Explorer</p>
+    <ul class="menu-liste" aria-labelledby="menu-g4">
+      <li><button id="btn-secteurs" type="button" class="lien-nav"
+                  aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button></li>
+      <li><a href="/veille/">Relevés de veille</a></li>
+    </ul>
+  </nav>
+
   <!-- ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. L'audit externe a raison : la
        préférence SYSTÈME ne suffit pas, elle est un réglage de POSTE. Il est dans l'en-tête
        parce que celui-ci est fixe : un contrôle d'accessibilité qu'on ne trouve qu'en bas de
-       page n'est pas un contrôle. Il ne disparaît PAS sur mobile (seul le <nav> s'efface). -->
-  <button id="interrupteur-animations" type="button" aria-pressed="false">Réduire les animations</button>
+       page n'est pas un contrôle. Il ne disparaît PAS sur mobile.
+       ⚠️ AJUSTÉ LE 28/09/2026 : il débordait à droite en dessous de 600 px (`Réduire les…`),
+       parce que `white-space:nowrap` l'empêchait de se replier et que le hamburger venait
+       d'entrer dans la même barre. ⇒ un `<span>` porte le mot long, masqué sous 600 px.
+       ⭐ ET LE `aria-label` RESTE COMPLET DANS TOUS LES CAS : un lecteur d'écran entend
+       toujours « Réduire les animations », quelle que soit la largeur. *Ce qui est lu ne
+       rétrécit pas avec l'écran.* -->
+  <button id="interrupteur-animations" type="button" aria-pressed="false"
+          aria-label="Réduire les animations">Réduire<span class="mot-long"> les animations</span></button>
 </header>
+
+<!-- ⭐ LE VOILE DU MENU — il ferme le menu au clic, et il est `aria-hidden` parce qu'il n'a
+     aucun sens pour un lecteur d'écran : c'est une zone de clic, pas un contenu. -->
+<div id="voile-menu" class="voile-menu" hidden aria-hidden="true"></div>
 
 <!-- ⛔ NOMS ACCESSIBLES AJOUTÉS LE 25/09/2026. Avant : chaque repère n'avait que <span>1</span>
      comme contenu, donc un lecteur d'écran annonçait « 1, lien ». Un CHIFFRE N'EST PAS UN NOM —
@@ -437,6 +513,16 @@
      ⛔ `role="dialog"` + `aria-modal="true"` SANS PIÈGE DE FOCUS : le piège est dans
         `src/secteurs.mjs` — Tab et Maj+Tab ne sortent plus du tiroir, Escape le ferme, le clic
         sur le fond aussi. -->
+<!-- ⭐ LA NAVIGATION EST SÉPARÉE DU RESTE DEPUIS LE 28/09/2026, ET CE N'EST PAS UN GOÛT.
+     `src/main.js` est chargé en `type="module"` et fait 44 981 octets : il porte la séquence
+     d'images, la 3D, l'armure, la révélation au curseur. **Une navigation ne doit dépendre
+     de rien de tout ça** — si le module principal échoue (WebGL absent, image manquante,
+     `IntersectionObserver` refusé), le menu doit continuer de fonctionner.
+     ⚠️ `defer` et non `type="module"` : ce fichier n'exporte rien et n'importe rien, il
+     s'exécute après le DOM, et il ne bloque pas le rendu.
+     ⛔ Et il est chargé EN DERNIER : `main.js` appelle `preparerSecteurs()` qui a besoin du
+     `<div id="tiroir-secteurs">` — le charger avant ne casserait rien, mais le lire avant
+     qu'il existe, si. L'ordre est donc : le contenu, puis le module, puis la navigation. -->
 <div id="tiroir-secteurs" class="tiroir-hud" hidden role="dialog" aria-modal="true" aria-labelledby="titre-secteurs">
   <div class="tiroir-contenu">
     <div class="tiroir-en-tete">
@@ -469,5 +555,12 @@
   </div>
 </div>
 <script type="module" src="src/main.js"></script>
+<!-- ⭐ LA NAVIGATION — chargée APRÈS le module, et volontairement SÉPARÉE de lui.
+     `main.js` porte la séquence d'images, la 3D, l'armure et la révélation au curseur :
+     **une navigation ne doit dépendre d'aucune de ces choses.** Si le module échoue —
+     WebGL absent, image manquante, `IntersectionObserver` refusé — le menu doit continuer
+     de fonctionner. C'est la seule raison d'être de ce fichier séparé.
+     ⚠️ `defer` : il n'exporte rien, n'importe rien, et s'exécute après le DOM. -->
+<script defer src="src/navigation.js"></script>
 </body>
 </html>

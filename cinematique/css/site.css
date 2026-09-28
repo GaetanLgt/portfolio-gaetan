@@ -44,7 +44,11 @@ body{margin:0;background:var(--fond);color:var(--texte);font:17px/1.6 system-ui,
 #revelation{position:fixed;inset:0;z-index:1;pointer-events:none;background:center/cover no-repeat;
   -webkit-mask-image:radial-gradient(circle 160px at var(--x,50%) var(--y,50%),#000 40%,transparent 100%);
           mask-image:radial-gradient(circle 160px at var(--x,50%) var(--y,50%),#000 40%,transparent 100%);opacity:0;transition:opacity .4s}
-.barre a{color:var(--texte);text-decoration:none}.barre nav a{margin-left:1rem;color:var(--doux)}.barre nav a:hover{color:var(--cyan)}
+.barre a{color:var(--texte);text-decoration:none}
+/* ⚠️ RETIRÉE LE 28/09/2026 : `.barre nav a{margin-left:1rem;color:var(--doux)}` et son `:hover`.
+   Elles visaient les `<a>` de l'ANCIEN `<nav>` de la barre, qui n'existe plus — le menu porte
+   maintenant `.menu-liste`. Les garder aurait été deux règles mortes qui semblent vivantes :
+   *une règle qu'on ne sait plus justifier finit par être réactivée par erreur.* */
 h1,h2,h3{font-family:var(--titre);font-weight:600;line-height:1.15;margin:.4em 0}
 h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3rem);color:var(--cyan)}h3{font-size:1.25rem;color:var(--texte)}
 .sous{font-size:1.4rem;color:var(--cyan)}.axiome{font-style:italic;color:var(--doux);font-size:.9rem}
@@ -109,31 +113,137 @@ h1{font-size:clamp(2.4rem,7vw,5rem);color:#fff}h2{font-size:clamp(1.8rem,4.5vw,3
 a{color:var(--cyan)}
 .pied{position:relative;z-index:2;padding:2rem 1rem 3rem;text-align:center;font-family:var(--mono);font-size:.8rem;color:var(--doux);background:var(--fond)}
 .graine{color:var(--oracle)}
-/* ⛔ CORRIGÉ LE 26/09/2026 — LE BOUTON DES PÔLES ÉTAIT INATTEIGNABLE SUR TÉLÉPHONE.
-   La règle disait `.barre nav{display:none}` : tout le <nav> disparaissait en dessous de
-   600 px, y compris le bouton « Expertises » qui ouvre le tiroir des pôles. Mesuré à
-   390×844 : aucune boîte, aucun autre déclencheur dans la page — la fonctionnalité
-   n'existait tout simplement pas sur mobile.
-   ⭐ C'est EXACTEMENT le défaut que ce fichier dénonce douze lignes plus haut, à propos de
-   l'interrupteur d'animations : « un contrôle d'accessibilité qui s'efface selon la taille
-   de l'écran est un contrôle qui manque précisément à ceux qui en ont besoin ». La règle
-   était écrite ; elle n'avait pas été appliquée au contrôle ajouté après elle.
-   ⇒ On ne masque plus que les LIENS (la navigation par ancres, que les repères de
-   progression remplacent déjà sur mobile). Le bouton reste. */
-@media (max-width:600px){body{font-size:16px}.barre nav a{display:none}}
-/* ⭐ LE POINT DE BASCULE DES LIENS DE LA BARRE SUIT LA MESURE — 26/09/2026, quand les sept actes
-   y sont entrés. ⚠️ La règle ci-dessus ne masquait les liens qu'en dessous de 600 px ; c'était
-   juste tant qu'il y en avait quatre. Mesuré au navigateur (1920×1080 puis en rétrécissant) :
-   les sept liens demandent 639 px, la marque 151, l'interrupteur d'animations 157, plus 64 px
-   de padding et 48 px de marges ⇒ il faut ~1060 px pour que RIEN ne soit comprimé.
-   ⛔ EN DESSOUS, CE N'EST PAS LE TEXTE QUI RÉTRÉCIT : `flex-shrink` écrase la MARQUE du studio
-   (mesuré : 147/151 px à 1024, 86/151 à 900, 52/151 à 800) — le nom du studio se casse sur
-   deux lignes pendant que les liens restent lisibles. *Un nom de studio illisible est pire
-   qu'un lien absent* : le lien a le bouton « Expertises » et les huit repères pour lui.
-   ⚠️ Le point de bascule est posé à 1100 px, la valeur la plus proche au-dessus de la mesure.
-   ⛔ Le bouton « Expertises » et l'interrupteur d'animations ne sont PAS touchés : la règle
-   ne vise que les `<a>` du nav. */
-@media (max-width:1100px){.barre nav a{display:none}}
+/* ⛔⛔ CORRIGÉ LE 26/09/2026, PUIS **REFAIT ENTIÈREMENT LE 28/09/2026**.
+
+   HISTORIQUE, ET IL COMPTE — les deux règles ci-dessous masquaient les liens :
+     · `@media (max-width:600px){.barre nav a{display:none}}`  (26/09)
+     · `@media (max-width:1100px){.barre nav a{display:none}}` (26/09)
+   ⭐ Elles ont été retirées, PAS commentées : *une règle qu'on garde « au cas où » finit par
+   être réactivée par quelqu'un qui ne sait plus pourquoi elle était là.*
+
+   ⛔ LE DÉFAUT QU'ELLES PORTAIENT : en dessous de 1100 px, les sept liens s'effaçaient et
+   **rien ne les remplaçait**. Mesuré le 28/09 sur la copie de production : à 900 px et à
+   390 px, aucune boîte, aucun déclencheur — **la navigation n'existait plus**. Le studio
+   avait pourtant écrit la règle qui condamne ce motif, à propos de l'interrupteur
+   d'animations : « un contrôle d'accessibilité qui s'efface selon la taille de l'écran est
+   un contrôle qui manque précisément à ceux qui en ont besoin ». *Elle n'avait pas été
+   appliquée à la navigation elle-même.*
+
+   ⇒ CE QUI LA REMPLACE : un vrai menu, avec un bouton qui existe à TOUTES les largeurs.
+     Il n'y a plus aucune largeur d'écran où l'on ne peut pas naviguer. */
+
+/* ---- LE MENU (refonte du 28/09/2026) ---- */
+
+/* Le bouton hamburger — il n'est visible QUE quand la barre ne peut pas porter les liens.
+   ⚠️ Le seuil est mesuré, pas choisi : les sept liens demandent 639 px, la marque 151,
+   l'interrupteur 157, plus 64 px de padding et les marges ⇒ ~1060 px pour que rien ne soit
+   comprimé. On place le basculement à 1100 px, la valeur ronde au-dessus de la mesure.
+   ⛔ EN DESSOUS, ON NE RÉTRÉCIT PAS LE TEXTE : `flex-shrink` écrasait la MARQUE (mesuré :
+   147/151 px à 1024, 86/151 à 900, 52/151 à 800) — le nom du studio se cassait sur deux lignes.
+   *Un nom de studio illisible est pire qu'un lien absent.* */
+.btn-menu{display:none;align-items:center;justify-content:center;width:44px;height:38px;
+  padding:0;cursor:pointer;background:transparent;border:1px solid rgba(0,229,255,.3);
+  border-radius:8px;color:var(--texte)}
+.btn-menu:hover{border-color:var(--cyan);background:rgba(0,229,255,.08)}
+.btn-menu:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.btn-menu-barres{display:block;width:20px}
+.btn-menu-barres i{display:block;height:2px;margin:4px 0;background:var(--cyan);border-radius:2px;
+  transition:transform .25s ease,opacity .25s ease}
+/* L'état ouvert : les trois barres deviennent une croix. Le bouton DIT ce qu'il fait. */
+.btn-menu[aria-expanded="true"] .btn-menu-barres i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.btn-menu[aria-expanded="true"] .btn-menu-barres i:nth-child(2){opacity:0}
+.btn-menu[aria-expanded="true"] .btn-menu-barres i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* Le panneau du menu — une feuille qui descend de la barre.
+   ⚠️ `max-height` plutôt que `height` : le contenu peut grandir sans qu'on retouche la règle.
+   ⚠️ Et `overflow:auto` : sur un écran court, un menu qui dépasse est un menu qui cache
+   ses derniers éléments — donc un menu qui ment. */
+.menu{position:fixed;top:var(--hauteur-barre,70px);left:0;right:0;z-index:99;
+  max-height:0;overflow:hidden;transition:max-height .3s ease;
+  background:rgba(10,15,29,.97);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(0,229,255,.18);font-family:var(--mono)}
+.menu.ouvert{max-height:calc(100vh - var(--hauteur-barre,70px));overflow:auto}
+.menu-titre{margin:0;padding:1rem 1.5rem .35rem;font-size:.72rem;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.42)}
+.menu-liste{margin:0;padding:0 0 .5rem;list-style:none}
+.menu-liste a,.menu-liste .lien-nav{display:block;padding:.85rem 1.5rem;
+  color:var(--texte);text-decoration:none;font-size:.95rem;
+  border-left:2px solid transparent;background:none;border-top:0;border-right:0;border-bottom:0;
+  width:100%;text-align:left;font-family:inherit;cursor:pointer}
+.menu-liste a:hover,.menu-liste .lien-nav:hover{background:rgba(0,229,255,.08);color:var(--cyan);
+  border-left-color:var(--cyan)}
+.menu-liste a:focus-visible,.menu-liste .lien-nav:focus-visible{outline:2px solid var(--cyan);
+  outline-offset:-2px;border-left-color:var(--cyan)}
+/* ⭐ L'ACTE COURANT EST MARQUÉ — ce que le CSS du 26/09 ne faisait pas. Le repère visuel est
+   doublé d'`aria-current="page"`, posé par le script : *une couleur seule ne dit rien à un
+   lecteur d'écran, et elle ne dit rien à qui ne distingue pas le cyan.* */
+.menu-liste a[aria-current="page"]{color:var(--cyan);border-left-color:var(--cyan);
+  background:rgba(0,229,255,.06);font-weight:600}
+
+/* Le voile : ferme au clic, et assombrit ce qu'il recouvre. */
+.voile-menu{position:fixed;inset:0;z-index:98;background:rgba(2,6,15,.55);
+  backdrop-filter:blur(2px);border:0}
+.voile-menu[hidden]{display:none}
+
+@media (max-width:1100px){
+  /* ⛔ CE QUI A CHANGÉ LE 28/09 : on ne masque PLUS les liens — on masque la version
+     « barre » du menu, et on affiche le bouton. La navigation existe donc toujours. */
+  .btn-menu{display:flex}
+  .menu{display:block}
+  /* ⛔ ET LE BOUTON D'ANIMATIONS SE RÉTRÉCIT, PARCE QU'IL DÉBORDAIT.
+     Mesuré sur la capture à 390 px du 28/09/2026 : « Réduire les animations » se coupait
+     à droite (`Réduire les…`) — le bouton ne tenait plus dans la barre dès que le
+     hamburger y est entré. `white-space:nowrap` l'empêchait de revenir à la ligne, donc
+     il sortait de l'écran au lieu de se replier.
+     ⭐ ON NE LE SUPPRIME PAS ET ON NE LE RÉDUIT PAS À UNE ICÔNE : c'est un contrôle
+     d'accessibilité, et un contrôle muet (une icône sans mot) est exactement ce que le
+     studio s'interdit ailleurs. **Il perd des mots, pas son sens.**
+     ⇒ Sous 600 px, il dit « Animations » ; au-dessus, il redit la phrase entière.
+     ⚠️ Le mot reste dans `aria-label` dans les deux cas : *ce qui est lu ne rétrécit pas
+     avec l'écran.* */
+  #interrupteur-animations{font-size:.68rem;padding:.25rem .45rem}
+}
+@media (max-width:600px){
+  #interrupteur-animations{font-size:.66rem;padding:.22rem .4rem;max-width:38vw}
+  /* ⭐ LE MOT LONG S'EFFACE, LE CONTRÔLE RESTE. Sous 600 px le bouton dit « Réduire »,
+     au-dessus il redit « Réduire les animations ». Le `aria-label` du HTML porte la phrase
+     entière dans les deux cas — *on retire des mots à l'œil, jamais au lecteur d'écran.*
+     ⚠️ MESURÉ SUR UN VRAI 390 px ET UN VRAI 360 px (banc d'iframes, 28/09/2026) : le bouton
+     tient entier aux deux largeurs. La phrase entière y tenait d'ailleurs aussi — c'est le
+     rognage de ma première capture qui m'avait fait croire le contraire. */
+  #interrupteur-animations .mot-long{display:none}
+
+  /* ⛔ LA MARQUE SE PROTÈGE DU `flex-shrink` — MESURÉ LE 28/09 À 320 px.
+     Le défaut est CELUI DU 26/09, et il n'avait pas été corrigé : le studio avait écrit
+     que « flex-shrink écrase la MARQUE (147/151 px à 1024, 86/151 à 900, 52/151 à 800) —
+     le nom du studio se casse sur deux lignes ». Le 28/09, à 320 px avec le hamburger en
+     plus, il se casse sur TROIS.
+     ⭐ La règle qui manquait est `flex-shrink: 0` : la marque ne rétrécit plus, elle garde
+     sa largeur, et c'est la barre qui s'organise autour.
+     ⚠️ Et sous 380 px, la marque perd son NOM GRAPHIQUE (le « GL » dans l'hexagone) : le
+     mot suffit, et le laisser ferait déborder. *Un nom de studio lisible est le minimum ;
+     un logo qu'on rogne ne dit plus rien.* */
+  .barre .marque{flex-shrink:0}
+}
+@media (max-width:380px){
+  .barre .marque .hex{display:none}
+  header.barre{padding:1rem 1rem;gap:.5rem}
+}
+
+/* Au-dessus du seuil : le menu redevient une barre horizontale, à plat, dans l'en-tête.
+   ⚠️ Le MÊME balisage sert aux deux : un seul jeu de liens à maintenir, une seule vérité.
+   *Deux navigations séparées, ce serait deux vérités sur le même objet.* */
+@media (min-width:1101px){
+  .btn-menu{display:none}
+  .menu{position:static;max-height:none;overflow:visible;display:flex;align-items:center;
+    gap:1.1rem;background:none;backdrop-filter:none;border:0;transition:none}
+  .menu-titre{display:none}
+  .menu-liste{display:flex;gap:1.1rem;padding:0}
+  .menu-liste a,.menu-liste .lien-nav{display:inline;padding:0;border-left:0;width:auto;
+    color:var(--doux);font-size:.85rem}
+  .menu-liste a:hover,.menu-liste .lien-nav:hover{background:none;border-left:0;color:var(--cyan)}
+  .menu-liste a[aria-current="page"]{color:var(--cyan);background:none;border-left:0;font-weight:600}
+}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.indice{animation:none}#revelation{display:none}}
 
 
