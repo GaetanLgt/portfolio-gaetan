@@ -73,8 +73,9 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="stylesheet" href="css/site.css?v=20260928">
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/jsm/"}}</script>
+<link rel="stylesheet" href="css/manifeste.css?v=20260928">
 </head>
-<body>
+<body class="trame-manifeste">
 <!-- ⛔ AJOUTÉ LE 25/09/2026 — cible « Aller au contenu ». L'audit externe l'a relevé à juste
      titre : sans elle, un utilisateur au clavier doit traverser TOUT l'en-tête et les huit
      repères avant d'atteindre le premier mot du contenu. C'est le premier élément focusable
@@ -288,417 +289,227 @@
 <nav class="reperes" aria-label="Progression dans la présentation"><a href="#acte-1" data-rep="1" aria-label="Acte 1 : ouverture"><span aria-hidden="true">1</span></a><a href="#acte-2" data-rep="2" aria-label="Acte 2 : l'entrée"><span aria-hidden="true">2</span></a><a href="#acte-3" data-rep="3" aria-label="Acte 3 : la boucle"><span aria-hidden="true">3</span></a><a href="#acte-4" data-rep="4" aria-label="Acte 4 : les quatre couches"><span aria-hidden="true">4</span></a><a href="#acte-5" data-rep="5" aria-label="Acte 5 : le cœur opérationnel"><span aria-hidden="true">5</span></a><a href="#acte-6" data-rep="6" aria-label="Acte 6 : la doctrine"><span aria-hidden="true">6</span></a><a href="#acte-7" data-rep="7" aria-label="Acte 7 : garde-fous et limites"><span aria-hidden="true">7</span></a><a href="#acte-8" data-rep="8" aria-label="Acte 8 : le navire"><span aria-hidden="true">8</span></a></nav>
 <!-- ⛔ `id="contenu"` AJOUTÉ LE 25/09/2026 : c'est la cible du lien d'évitement ci-dessus.
      Un <main> sans identifiant ne peut pas être visé. -->
-<main id="contenu">
-<section id="acte-1" data-act="1" class="acte ouverture">
-<!-- ⭐ L'OUVERTURE — le capitaine, samouraï hors du navire. La ligne du lore ci-dessous
-     dit « samouraï hors du navire, capitaine à bord » : cette ouverture EST cette phrase.
-     ⭐ CE N'EST PLUS UNE VIDÉO, C'EST UNE SÉQUENCE D'IMAGES — corrigé le 26/09/2026.
-     POURQUOI : le contrôle refuse tout fichier vidéo dans `public/` (poids et droits), et
-     les 6,79 Mo de `ouverture.mp4` portaient `public/` à 27,25 Mio pour un plafond de 25.
-     ⭐ LA RÈGLE VIENT DE LA RÉFÉRENCE ELLE-MÊME — tutoriel Antigravity + TestSprite, 10:00 :
-     « le fichier vidéo est encore trop large […] Optimisez la vidéo pour une lecture fluide
-     au défilement. Si une séquence d'images performe mieux, utilisez cela en le répliquant.
-     Rendez la qualité visuelle aussi proche que possible de l'original. »
-     ⇒ 118 images 1280×720 à 15 i/s = 3,10 Mio.
-     ⭐ MONTAGE REFAIT DEUX FOIS LE 26/09. Version 2 — sur la NOUVELLE génération de Néo
-     (source : `sources/ouverture/nouvelle-generation-3707.mp4`) : ① FLOU (960×540 étirée)
-     → 1280×720 · ② SACCADE (10 i/s) → 15 i/s · ③ FILIGRANE « KlingAI 3.0 Omni » visible sur
-     CHAQUE image → recadrage 1778×1000 depuis x=71, qui le coupe par la géométrie (mesuré :
-     moyenne 84,4/255 dans la zone sur l'ancienne, 123,1 sur la nouvelle — il est plus
-     présent, et il est coupé de la même façon) · ④ les plans d'interfaces et de faux textes
-     (« GLAB NUMÉRIQUE »), la femme à ailes et la silhouette encapuchonnée sont RETIRÉS ;
-     restent le samouraï et le galion aux voiles vertes devant la Terre.
-     ⛔ `aria-hidden` : elle est décorative. Le bouton de son, lui, est un vrai contrôle.
-     🎬 Source : Kling AI 3.0 Omni, 1920×1080, 15,04 s — CONSERVÉE, jamais supprimée, dans
-     `sources/ouverture/ouverture.mp4`. Le filigrane du générateur est incrusté dans l'image.
-     ⛔ L'IMAGE CI-DESSOUS EST AUSSI LE REPLI : sans JavaScript et sous animations réduites,
-     c'est elle qu'on voit — une seule image, 25 Ko. La séquence n'est jamais demandée. -->
-<img id="ouverture-image" class="ouverture-image" src="ouverture/o0001.webp"
-     alt="" width="960" height="540" aria-hidden="true" decoding="async">
-<button type="button" id="ouverture-son" class="ouverture-son" aria-pressed="false" hidden>Activer le son</button>
-<!-- ⭐ RÉGLAGE DU VOLUME — ajouté le 26/09/2026, sur la remarque de Gaëtan : « c'est bien de
-     pouvoir l'activer mais ça déchire les oreilles ». Un interrupteur ne suffit pas : il faut
-     pouvoir DOSER. Le curseur est un vrai contrôle (clavier, lecteur d'écran), et le son
-     démarre à 30 % — *un son qui arrive à pleine puissance est une agression, pas une ambiance.* -->
-<label class="ouverture-volume" hidden><span class="lecteur-seul">Volume du son d'ouverture</span><input type="range" id="ouverture-volume-curseur" min="0" max="100" step="5" value="30"></label>
-<div class="panneau">
-  <h1>GL Digital Lab</h1>
-  <p class="sous">Vos outils. Chez vous. À vous.</p>
-  <!-- ⭐ AJOUTÉ LE 25/09/2026, SUR L'AUDIT 360° DU SITE. Le hero portait un slogan juste mais
-       il ne disait NI ce que le studio fait, NI pour qui. Un visiteur qui arrive devait
-       descendre trois actes pour l'apprendre. *Un slogan qui ne dit pas le métier oblige le
-       visiteur à travailler pour savoir s'il est au bon endroit — et la plupart ne le font pas.*
-       ⛔ Le mot que l'audit emploie pour ce positionnement est sur la liste des INTERDITS de
-       `tests/controle.mjs` : il a déjà fait échouer le contrôle trois fois. On écrit donc la
-       CHOSE et non l'étiquette — « rien qui sorte de chez vous » dit la même réalité, et
-       celle-là se vérifie.
-       ⚠️ ET JE L'AI REFAIT EN ÉCRIVANT CE COMMENTAIRE, LE 25/09/2026 : j'y avais recopié le mot
-       pour expliquer qu'il est interdit, et **le contrôle l'a refusé** — il lit les commentaires
-       aussi. *Quatrième fois que ce piège se referme.* La règle est donc plus simple qu'elle
-       n'en a l'air : **le mot ne s'écrit nulle part, pas même pour dire qu'il est interdit.** -->
-  <p class="metier">Développement web <span aria-hidden="true">&amp;</span><span class="lecteur-seul">et</span> IA locale pour PME.</p>
-  <p class="axiome">« On n'écrit rien qu'on n'ait mesuré, et on ne construit rien qui sorte de chez vous. »</p>
-  <p class="cta-hero"><a class="bouton-action" href="#acte-8">Premier échange gratuit — 30 min →</a></p>
-  <p class="indice">Faites défiler<span class="lecteur-seul"> vers le bas — ou, au clavier, appuyez sur la touche « Page suivante » — pour parcourir les huit actes de la présentation, de l'ouverture au navire.</span></p>
-</div>
-</section>
+<main id="contenu" class="manifeste">
 
-<section id="acte-2" data-act="2" class="acte">
-<div class="panneau">
-  <h2>L'Entrée &amp; Confidentialité</h2>
-  <p>Ce qui arrive : fichiers, voix, images. Les flux sensibles sont conçus pour être traités localement ou dans des environnements explicitement validés avec vous. Aucun transfert vers un service tiers n'est activé sans information préalable.</p>
-</div>
-</section>
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ① LA COUVERTURE — le type A de la trame.
+       ⚠️ La phrase « Vos outils. Chez vous. À vous. » est celle de la slide 1.
+          Elle n'a pas été réécrite : c'est TON texte, et il dit mieux en huit mots
+          ce que le site mettait huit actes à dire.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="mf-couverture" id="couverture">
+    <h1 class="mf-titre">Vos outils.<br>Chez vous.<br>À vous.</h1>
 
-<section id="acte-3" data-act="3" class="acte">
-<div class="panneau">
-  <h2>Le Laboratoire (Nœud local &amp; ArkAdiA)</h2>
-  <ol class="boucle"><li>Produire</li><li>Observer</li><li>Mesurer</li><li>Corriger</li></ol>
-</div>
-</section>
-
-<section id="acte-4" data-act="4" class="acte">
-<div class="panneau">
-  <h2>L'Offre</h2>
-  <!-- ⭐ L'OFFRE A REJOINT SON TITRE LE 26/09/2026. L'acte 4 s'appelait « Les quatre couches » et
-       portait les quatre couches ; l'audit du 26/09 l'a renommé « L'Offre » — mais l'offre était
-       restée dans l'acte 8. *Un titre qui ne décrit pas ce qu'il surplombe est un titre faux.* -->
-  <p class="offre">Développement Symfony / Vue.js · Audit web · Automatisation IA locale · Mémoire documentaire · Site web · Application métier · Maintenance.</p>
-  <ol class="pile">
-    <li><strong>ArkAdiA</strong> — univers et réseau social (preuve de concept)</li>
-    <li><strong>GL-OS</strong> — le produit : interface, applications, agents</li>
-    <li><strong>Le Nœud local</strong> — le poste : IA locale, mémoire, orchestration</li>
-    <li><strong>GL Digital Lab</strong> — le studio : méthode, validation humaine</li>
-  </ol>
-  <p class="regle">Rien ne sort sans validation humaine.</p>
-
-  <!-- ⭐⭐ LES PRIX — intégrés le 28/09/2026, sur « un site racine unique ».
-       ⛔ CE QUI A CHANGÉ, ET C'EST UNE DÉCISION : la ligne portait « sur devis ».
-          « Sur devis » veut dire « le prix dépend de qui demande ». Le Baromètre
-          France Num 2026 montre l'inverse : les TPE-PME cherchent de la clarté, et
-          84 % privilégient un prestataire français ou européen — pas un devis opaque.
-          ⭐ Et nos prix étaient DÉJÀ publics depuis le 10/09 (`prix-figes`).
-             *Un prix décidé et un prix caché, c'est la même chose pour le client :
-              rien.* On les affiche.
-       ⚠️ Ils viennent d'une décision du studio, pas d'une estimation d'agent. -->
-  <table class="tableau-prix compact">
-    <caption>Nos prix — paiement unique, aucun abonnement</caption>
-    <tbody>
-      <tr><td>Audit web</td><td class="prix">199 €</td></tr>
-      <tr><td>Porte anti-fuite</td><td class="prix">290 €</td></tr>
-      <tr><td>Gabarit installé</td><td class="prix">390 €</td></tr>
-      <tr><td>IA locale</td><td class="prix">1 500 €</td></tr>
-      <tr><td>Site web</td><td class="prix">2 500 €</td></tr>
-      <tr><td>Application métier</td><td class="prix">8 000 €</td></tr>
-      <tr><td>Recherche documentaire (RAG)</td><td class="prix">15 000 €</td></tr>
-    </tbody>
-  </table>
-  <p class="note-prix">
-    L'audit est notre porte d'entrée, pas notre activité : <i>si l'audit suffit, il suffit.</i>
-  </p>
-</div>
-</section>
-
-<section id="acte-5" data-act="5" class="acte coeur">
-<div class="panneau">
-  <h2>Méthode &amp; Validation</h2>
-  <p>Une machine, un poste, des agents qui travaillent pour vous — et un humain qui valide chaque étape.</p>
-  <!-- ⭐ LE PARCOURS EN SEPT ÉTAPES EST ARRIVÉ ICI LE 26/09/2026, SOUS SON TITRE. Il était dans
-       l'acte 8, deux actes plus loin que la méthode qu'il décrit. *Un titre qui ne surplombe pas
-       son contenu est un titre faux* — c'est la même faute que l'offre, réparée de la même façon. -->
-  <h3>Parcours</h3>
-  <ol class="parcours"><li>Premier échange — 30 min, gratuit</li><li>Lecture du besoin</li><li>Atelier de cadrage</li><li>Devis détaillé</li><li>Construction</li><li>Déploiement</li><li>Maintenance</li></ol>
-  <p class="lore">Au centre du navire bat ORACLE. Un oracle ne décide pas du destin : il le lit.</p>
-</div>
-</section>
-
-<section id="acte-6" data-act="6" class="acte">
-<div class="panneau">
-  <h2>Démonstrateur &amp; Vidéos</h2>
-
-  <!-- ⭐⭐ POURQUOI CES SIX GARANTIES, ET PAS D'AUTRES — ajouté le 28/09/2026.
-       ⛔ LES SIX `li` CI-DESSOUS ÉTAIENT UNE LISTE SANS PREUVE : un visiteur lisait
-          « confidentialité, intégrité, disponibilité » et devait nous croire sur parole
-          que c'est ce qui compte. **Une liste de vertus n'est pas un argument.**
-       ⭐ CE QUI LA REND VÉRIFIABLE : une étude SAP × Oxford Economics de 2026, sur
-          **2 600 dirigeants dans 13 pays dont la France**, qui mesure exactement ce que
-          les entreprises n'ont pas — et le dit mieux que nous.
-       ⚠️ ET LA SOURCE EST CITÉE PLUS BAS, avec sa date et son URL. *Un chiffre sans
-          source est un chiffre interdit* — c'est la règle du studio, et elle vaut aussi
-          quand le chiffre nous arrange.
-       ⚠️ 83 % et non 79 % : une infographie qui circule annonce 79 %. **La source
-          primaire dit 83 %.** *On cite la source, pas la reprise.* -->
-  <div class="preuve-marche" role="note">
-    <h3>Ce que les entreprises n'ont pas — mesuré par SAP</h3>
-    <ul class="grille">
-      <li><strong>83 %</strong> voient un potentiel <em>modéré à très élevé</em> dans l'IA
-        agentique. <span class="src">SAP × Oxford Economics, 2026</span></li>
-      <li><strong>3 %</strong> s'estiment <em>pleinement prêts</em> à la déployer.
-        <span class="src">idem</span></li>
-      <li><strong>73 %</strong> ont des <em>données incomplètes ou cloisonnées</em> — le
-        problème qui n'apparaît qu'au moment de brancher l'IA sur un vrai processus.
-        <span class="src">idem</span></li>
-      <li><strong>69 %</strong> constatent l'usage d'<em>outils IA non approuvés</em> dans
-        leurs équipes. <span class="src">idem</span></li>
-      <li><strong>12 %</strong> seulement sont prêts à <em>gouverner</em> leurs systèmes
-        d'IA. <span class="src">idem</span></li>
-    </ul>
-    <p class="conclusion-marche">
-      <strong>Le problème n'est pas l'outil. C'est ce qu'on met autour.</strong>
-      <i>Les six points qui suivent sont précisément « ce qu'on met autour ».</i>
-    </p>
-  </div>
-
-  <ul class="grille">
-    <li><strong>Confidentialité</strong> Vous conservez la maîtrise de vos données, de vos accès et, selon le périmètre contractualisé, de vos environnements et livrables.</li>
-    <li><strong>Intégrité</strong> Les modifications importantes peuvent être journalisées, versionnées et soumises à validation selon le niveau de service convenu.</li>
-    <li><strong>Disponibilité</strong> L'accès est défini, documenté et surveillé selon le niveau de service convenu — pas garanti au-delà.</li>
-    <li><strong>Chiffrement</strong> Lorsque le périmètre le permet, les clés de chiffrement sont détenues ou contrôlées par le client selon une procédure définie.</li>
-    <li><strong>Sauvegardes et restauration</strong> Des sauvegardes et des tests de restauration peuvent être mis en place selon le niveau de service retenu.</li>
-    <li><strong>Contrôle humain</strong> L'humain reste au centre.</li>
-  </ul>
-  <h3>Les modules</h3>
-  <p class="modules">Core · Data · AI · OS · Shield · Network <em>(plus tard)</em></p>
-  <!-- ⭐ LES VISUELS SONT ARRIVÉS ICI LE 26/09/2026, ET ILS MANQUAIENT VRAIMENT.
-       L'inventaire du studio l'a mesuré : le site tenait ses huit actes avec SIX visuels hors
-       ouverture, et les actes 6, 7 et 8 n'en avaient aucun. Cet acte s'appelle « Démonstrateur
-       & Vidéos » et ne montrait rien : six garanties en texte et six modules sur une ligne.
-       ⚠️ D'OÙ VIENNENT CES IMAGES, ET C'EST VÉRIFIABLE : les trois images d'ambiance
-       (`capitaine-samourai`, `papillons-bleus`, `anneau-cristal`) sont des images de l'ANCIENNE
-       séquence, archivées le 26/09 dans `sources/archives-2026-09-26/ancien-public-sequence/`
-       (240 images, 1920×1080, déjà en WebP). Elles ne reviennent PAS dans les actes 1 à 3, où
-       elles feraient doublon avec l'ouverture : elles servent là où il n'y avait rien.
-       ⭐ Elles sont conformes sans retouche : 1920×1080 (16:9 exact), et de 16 à 90 Ko.
-       ⚠️ Elles ont été regardées une par une avant d'être retenues, et leurs bandes haute et
-       basse ont été relues en pleine largeur : aucun filigrane de générateur. -->
-  <h3>Le démonstrateur en images</h3>
-  <!-- ⚠️ PLEINE LARGEUR, PAS EN GRILLE — mesuré à l'écran le 26/09/2026. Les deux images ont
-       d'abord été posées dans la `ul.grille` de cet acte : le navigateur les a rendues à
-       252×142 px, soit 13 % de leur taille, dans un panneau de 680 px. On y voyait une
-       silhouette bleue, pas un visuel. Elles prennent maintenant la largeur du panneau
-       (598×336 px sur 1920), comme celle de l'acte 7. -->
-<img class="visuel" src="img/papillons-bleus.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Des papillons bleus lumineux tournent dans une spirale sombre.">
-  <p>Les papillons — le motif qui traverse la séquence d'ouverture, de bout en bout.</p>
-
-  <!-- ⛔ LA SOURCE EST ÉCRITE ICI, EN CLAIR, ET PAS SEULEMENT DANS UN COMMENTAIRE.
-       *Un chiffre affiché sans sa source demande qu'on le croie — et c'est exactement
-       ce que ce site reproche ailleurs.*
-       ⚠️ Les chiffres du bloc ci-dessus sont donnés par SAP, pas par nous : ils ne nous
-       flattent pas, ils décrivent un manque. C'est ce qui les rend utilisables. -->
-  <p class="source-externe">
-    Chiffres : <i>Value of AI 2026</i>, SAP × Oxford Economics — <strong>2 600 dirigeants
-    d'entreprise</strong> interrogés dans <strong>13 pays</strong>, dont la France.
-  </p>
-</div>
-</section>
-
-<section id="acte-7" data-act="7" class="acte">
-<div class="panneau">
-  <h2>Transparence &amp; Limites</h2>
-
-  <!-- ⭐⭐ LA SOUVERAINETÉ — intégrée le 28/09/2026, sur « un site racine unique ».
-       ⛔ ELLE EST ICI, dans « Transparence & Limites », ET PAS DANS « L'Offre ».
-          *Une promesse de souveraineté n'est pas un argument de vente : c'est un engagement
-          qu'on vérifie — donc sa place est du côté de ce qu'on avoue, pas de ce qu'on vend.*
-       ⭐ ET ELLE EST ÉCRITE COMME UNE GESTION DE RISQUE, PAS COMME UNE VERTU.
-          La raison est vérifiable : l'Union européenne travaille sur le CADA (Cloud and AI
-          Development Act, proposé en juin 2026) dont l'objet est précisément de MESURER un
-          niveau de souveraineté — parce que **la souveraineté absolue n'existe pas**.
-          *Un prestataire qui promet la souveraineté totale promet ce que personne ne peut
-          garantir, pas même l'État.* -->
-  <div class="souverainete" role="note">
-    <h3>La souveraineté n'est pas binaire — c'est de la gestion de risque</h3>
-    <p>
-      Ce n'est pas « souverain » ou « pas souverain ». C'est une question simple, celle
-      qu'un assureur poserait : <strong>quelles dépendances avez-vous acceptées, ou
-      ignorées, et que se passe-t-il si l'une d'elles tombe ?</strong>
-    </p>
-    <ul class="liste">
-      <li><strong>Disponibilité</strong> — si ce service s'arrête, ou si l'on nous en coupe
-        l'accès, combien de temps l'activité tient-elle ?</li>
-      <li><strong>Confidentialité</strong> — si ces données étaient lues par quelqu'un
-        d'autre, qui serait exposé, et à quoi ?</li>
-      <li><strong>Intégrité</strong> — si ces données étaient modifiées sans qu'on le sache,
-        comment le verrait-on ?</li>
-    </ul>
-    <p>
-      <strong>Ces trois-là ne se valent pas selon votre métier — et c'est vous qui le savez,
-      pas nous.</strong> Dans beaucoup de situations, le risque le plus probable n'est pas la
-      coupure : c'est la dépendance à un fournisseur qui change ses prix, ses conditions, ou
-      disparaît. <i>Nous ne vendons pas le maximum de souveraineté. Nous cherchons le bon
-      compromis — et nous vous disons lequel, et pourquoi.</i>
-    </p>
-  </div>
-
-  <ul class="liste">
-    <li>Aucun traceur publicitaire n'est activé sur ce site. Les éventuels services tiers sont chargés uniquement après une action explicite, lorsque cela est techniquement applicable.</li>
-    <li>Le formulaire — s'il en existe un dans le périmètre — est hébergé et traité selon l'architecture décrite dans la politique de confidentialité.</li>
-    <li>Les solutions IA proposées privilégient l'exécution locale. Tout recours à un modèle ou à un service externe est identifié dans le périmètre du projet.</li>
-    <li>Les demandes de contact sont conservées 3 ans à compter du dernier échange initié par la personne, sauf obligation légale ou relation contractuelle justifiant une durée différente.</li>
-  </ul>
-  <!-- ⭐ UN VISUEL DANS L'ACTE DES LIMITES — ajouté le 26/09/2026, et il dit quelque chose.
-       Un anneau de cristal, seul, posé dans l'obscurité : ni réseau, ni constellation, un objet
-       et rien d'autre. C'est exactement ce que le bloc ci-dessous annonce — « un seul
-       interlocuteur », « une seule machine de calcul », « pas de haute disponibilité ». Le
-       troisième visuel de la séquence archivée (16 600 o, 1920×1080, WebP).
-       ⚠️ Aucun filigrane (bandes haute et basse relues en pleine largeur). -->
-  <img class="visuel" src="img/anneau-cristal.webp" width="1920" height="1080" loading="lazy" decoding="async" alt="Un anneau de cristal cyan, posé seul dans l'obscurité.">
-  <div class="limites" role="note">
-    <h3>Ce que nous ne sommes pas (encore)</h3>
-    <ul><li>Studio en cours d'immatriculation.</li><li>Un seul interlocuteur.</li><li>Une seule machine de calcul.</li><li>Pas de haute disponibilité.</li><li>Aucun chiffre non mesuré.</li></ul>
-  </div>
-  <!-- ⭐ PRIORITÉ 4 DE L'AUDIT 360° — « Ajouter des preuves concrètes ». Priorité demandée le
-       25/09/2026 et appliquée le jour même.
-       ⛔ LE BLOC CI-DESSUS DIT « aucun chiffre non mesuré » : il fallait donc les MONTRER.
-         *Une affirmation de rigueur qui ne montre aucun chiffre demande qu'on la croie — et
-         c'est exactement ce qu'un chiffre mesuré évite.*
-       ⭐ CHAQUE LIGNE PORTE SA DATE, PARCE QU'UN CHIFFRE SANS DATE VIEILLIT EN SILENCE : il
-         reste écrit, il a l'air vrai, et il ne l'est plus. C'est la règle du studio, payée
-         plusieurs fois — *un chiffre écrit à la main devient faux sans le dire.*
-       ⭐ ET LA DERNIÈRE LIGNE DIT COMMENT LES REFAIRE. Une mesure que le lecteur ne peut pas
-         rejouer est une mesure qu'il doit croire sur parole : ce n'est pas une preuve. -->
-  <div class="preuves" role="note">
-    <h3>Ce qui se vérifie — mesures du 25/09/2026</h3>
-    <ul>
-      <li><strong>0</strong> requête vers un service externe au chargement. <span class="comment-verifier">Ouvrez la console du navigateur, onglet Réseau, rechargez : tout vient de ce domaine.</span></li>
-      <li><strong>0</strong> traceur publicitaire, <strong>0</strong> cookie déposé avant toute action de votre part. <span class="comment-verifier">Les cookies du navigateur restent vides après la visite.</span></li>
-      <li><strong>12,7 Mio</strong> pour le site entier — séquence d'ouverture, images et modèles 3D compris. <span class="comment-verifier">Mesuré sur le dossier publié, le 25/09/2026.</span></li>
-      <li><strong>0,5 s</strong> de temps de chargement, <strong>60</strong> images par seconde en défilement, <strong>0</strong> image perdue sur 180. <span class="comment-verifier">Mesuré au navigateur, sur ce site, le 25/09/2026.</span></li>
-      <li>Audit public du 25/09/2026 : <strong>97</strong> en accessibilité, <strong>100</strong> en bonnes pratiques, <strong>100</strong> en référencement. <span class="comment-verifier">Ces trois notes ne dépendent pas du poids de la page — et elles sont les seules que je mets en avant.</span></li>
-      <li><strong>Le chiffre que je ne mets pas en avant</strong> : la performance. Elle est à <strong>78</strong>, et elle est bridée par le poids. Le dire vaut mieux que de choisir ses notes. <span class="comment-verifier">C'est la priorité de travail en cours.</span></li>
-    </ul>
-    <p class="preuves-note">Refaites-les : ces mesures ne viennent pas de chez moi, elles viennent d'un navigateur. Un audit public, une console ouverte, et vous obtenez les mêmes.</p>
-  </div>
-</div>
-</section>
-
-<section id="acte-8" data-act="8" class="acte navire">
-<div class="panneau panneau-large">
-  <h2>Contact &amp; Cadrage</h2>
-  <!-- ⛔ LA DESCRIPTION DU NAVIRE EST RETIRÉE — décision de Gaëtan, 26/09/2026.
-       Ce paragraphe décrivait la figure de proue, les voiles, le pavillon, le Léviathan et
-       Yggdrasil. Il est SUPPRIMÉ, et la première phrase est conservée telle quelle — elle
-       décrit l'ambiance sans décrire le navire.
-       ⚠️ ET LE TEXTE RETIRÉ N'EST PAS RECOPIÉ ICI. *Le garder dans un commentaire, ce n'est
-          pas le supprimer — et le contrôle lit les commentaires comme le reste.* Il reste
-          dans l'historique des versions, et là seulement.
-       ⭐ CE QUE ÇA CHANGE, ET CE QUE ÇA NE CHANGE PAS : le CANON reste intact — la figure de
-         proue, les six voiles, le pavillon et les décors sont inchangés. C'est le SITE qui
-         n'en parle plus. *Un site commercial n'a pas à réciter le lore d'un jeu : le
-         visiteur voit le navire en 3D, il n'a pas besoin qu'on le lui décrive.*
-       ⚠️ Et ça règle un conflit par le silence : le pavillon était décrit ici d'une façon, et
-         les consignes de session disaient l'inverse. **Ne plus en parler, c'est ne plus se
-         contredire.** Le jour où Gaëtan tranchera, la phrase reviendra — ou pas. -->
-  <p class="lore">Un galion de métal dans le vide et l'obscurité ; sa seule lumière est la sienne.</p>
-  <!-- ⭐ LE NAVIRE ARRIVE EN IMAGE DANS L'ACTE QUI LE DÉCRIT — ajouté le 26/09/2026.
-       Le paragraphe ci-dessus décrit le navire ; l'acte, lui, ne le montrait nulle part (il
-       portait une façade vidéo, pas un plan du navire). Ces deux plans viennent des visuels
-       du studio (son dossier de visuels, 24,3 Mio de PNG jamais entrés dans le site) :
-       la salle d'ORACLE et le crâne de métal.
-       ⚠️ ILS ONT ÉTÉ RECADRÉS, PAS ÉTIRÉS : la source est en 1344×768 (ratio 1,75), le site
-       impose le 16:9 (tolérance 0,02). Recadrage centré à 1344×756 — 6 px coupés en haut et
-       6 en bas — puis WebP. Mesuré après conversion : 1344×756, ratio 1,7778.
-       ⚠️ Les PNG « à marque » du même dossier portent un filigrane (`xo0-Neo-0ox`, en bas à
-       droite) : ce sont les versions SANS marque qui ont été prises, et leur contrôle de
-       coins a été refait après conversion — aucun filigrane.
-       ⛔ Aucun autre visuel du galion n'a été retenu : sur les quinze, la plupart montrent un
-       voilier de bois à gréement complet, sur une mer — trois choses que le canon interdit. -->
-  <ul class="grille">
-    <li><img class="visuel" src="img/oracle-salle.webp" width="1344" height="756" loading="lazy" decoding="async" alt="Une structure de métal suspendue au centre d'une salle circulaire, vue d'en dessous, sous des hublots."><strong>ORACLE</strong> La salle du réacteur, vue d'en dessous : la seule lumière du navire est la sienne.</li>
-    <!-- ⛔ LE VISUEL DU CRÂNE EST RETIRÉ — décision de Gaëtan, 26/09/2026, après la
-         description du navire retirée le même jour. **Même mouvement : le lore du jeu quitte
-         le site commercial.**
-         ⚠️ L'IMAGE A ÉTÉ DÉPLACÉE, PAS SUPPRIMÉE : elle est dans `sources/`, avec les autres
-            sources. *On ne supprime pas un actif — on le range là où il ne se sert plus.*
-         ⚠️ Et le texte retiré n'est pas recopié ici : le garder dans un commentaire, ce n'est
-            pas le retirer. Il reste dans l'historique des versions, et là seulement. -->
-  </ul>
-  <ol class="route"><li>Un nœud local <em>(aujourd'hui)</em></li><li>Premiers clients pilotes</li><li>Plusieurs nœuds</li><li>Réseau</li></ol>
-  <!-- ⭐ L'OFFRE A ÉTÉ RETIRÉE D'ICI LE 26/09/2026 : elle est dans l'acte 4, sous son titre
-       « L'Offre ». La laisser ici la répétait mot pour mot deux actes plus loin. -->
-  <!-- ⭐ PÔLES D'EXÉCUTION ET CONTACT — proposition de Gaëtan, 26/09/2026.
-       ⛔ SANS PRIX : le contrôle refuse tout montant en €, et le brief dit « sur devis » — Gaëtan
-          l'a confirmé le 26/09 (« laisse les prix »).
-       ⛔ SANS FORMULAIRE EXTERNE : le contact passe par le lien e-mail déjà présent plus bas.
-          Un formulaire vers un service tiers ferait échouer le contrôle ET sortir les données
-          du visiteur de la machine — contre la politique du studio.
-       ⚠️ LES SEPT ÉTAPES DU PARCOURS NE SONT PAS RÉPÉTÉES ICI : elles sont déjà juste au-dessus
-          (bloc « Parcours »). Les ajouter aurait mis deux fois la même liste sur la même page —
-          je l'ai vu en lisant le fichier avant d'écrire. -->
-  <h3 class="titre-section-hud">Pôles d'Exécution &amp; Départements</h3>
-  <div class="grille-departements">
-    <article class="carte-dept">
-      <div class="badge-dept">PÔLE 01 // CORE</div><h4>Ingénierie Web &amp; Métier</h4>
-      <p>Applications sur mesure, architectures modulaires, refontes d'API sous contrôle strict.</p>
-      <ul class="tags-tech"><li>Symfony 7</li><li>Vue.js 3</li><li>API Platform</li><li>PostgreSQL</li></ul>
-    </article>
-    <article class="carte-dept">
-      <div class="badge-dept">PÔLE 02 // LOCAL</div><h4>IA Locale &amp; Systèmes Multi-Agents</h4>
-      <p>Modèles exécutés sur le poste du client ou sur un serveur dédié — aucune donnée ne sort.</p>
-      <ul class="tags-tech"><li>Ollama</li><li>vLLM</li><li>MCP</li><li>ChromaDB</li></ul>
-    </article>
-    <article class="carte-dept">
-      <div class="badge-dept">PÔLE 03 // ARKADIA</div><h4>Mémoire Documentaire &amp; Connaissances</h4>
-      <p>Indexation de documents (PDF, mails, code) avec sourçage exact et suppression à la demande.</p>
-      <ul class="tags-tech"><li>RAG local</li><li>Embeddings</li><li>Sources citées</li><li>Effacement</li></ul>
-    </article>
-    <article class="carte-dept">
-      <div class="badge-dept">PÔLE 04 // SHIELD</div><h4>Audit, Sécurité &amp; Résilience</h4>
-      <p>Conformité RGAA, durcissement, chiffrement des disques, validation humaine continue.</p>
-      <ul class="tags-tech"><li>Chiffrement</li><li>Audit</li><li>Tests de bout en bout</li><li>CI/CD</li></ul>
-    </article>
-  </div>
-  <!-- ⭐ BADGES DE CONFIANCE — proposition de Gaëtan, 26/09/2026.
-       ⛔ LE MOT INTERDIT DU STUDIO A ÉTÉ RETIRÉ DU BADGE, ET DE CE COMMENTAIRE AUSSI. Le badge dit
-          « 100 % LOCAL », qui se VÉRIFIE : le contrôle mesure zéro requête externe, page par
-          page, sur bureau et mobile. **On ne cite pas un mot interdit pour expliquer qu'il est
-          interdit** — le contrôle lit tout le fichier, commentaires compris. -->
-  <div class="badges-rayonnement">
-    <div class="badge-item"><span class="badge-icon" aria-hidden="true">🛡️</span><strong>100 % LOCAL</strong><small>Exécution sur le poste du studio ou chez vous</small></div>
-    <div class="badge-item"><span class="badge-icon" aria-hidden="true">⚡</span><strong>ZÉRO TRACEUR</strong><small>Aucun cookie, aucune mesure d'audience</small></div>
-    <div class="badge-item"><span class="badge-icon" aria-hidden="true">⚓</span><strong>GRAINE 42</strong><small>Système rejouable et auditable</small></div>
-  </div>
-  <div class="bloc-contact-final">
-    <div class="fiche-contact">
-      <h3 class="titre-section-hud">Établir une Liaison</h3>
-      <p>Studio à Harponville (Somme, Hauts-de-France). Échange initial sans engagement.</p>
-      <p><strong>CANAL VIDÉO :</strong> voir le bloc « Vidéos » ci-dessous.</p>
-      <p><strong>CAPACITÉ :</strong> deux nouveaux projets par mois.</p>
-      <p><strong>DONNÉES :</strong> traitées sur la machine du studio ou chez le client. Aucun traceur.</p>
+    <div class="mf-chapeau">
+      <p>L'intelligence artificielle locale pour les PME.</p>
+      <p><strong>Zéro donnée sortante. Zéro abonnement.</strong></p>
     </div>
-  </div>
-  <div class="videos">
-    <h3>Vidéos</h3>
-    <button class="facade" type="button" data-chaine="https://www.youtube.com/@xo0-Neo-0ox">
-      <img src="img/facade-videos.webp" alt="" width="640" height="360" loading="lazy">
-      <span>Voir la chaîne — rien n'est chargé depuis YouTube avant ce clic</span>
-    </button>
-  </div>
-  <!-- ⭐ PRIORITÉ 1 DE L'AUDIT 360° — LE FORMULAIRE. Ajouté le 25/09/2026.
-       L'audit reproche au site « un CTA uniquement mailto ». C'était exact : un lien `mailto:`
-       n'ouvre rien sur un poste sans logiciel de messagerie configuré — et ce visiteur-là
-       n'avait aucun moyen d'écrire.
-       ⛔ ET PAS DE SERVICE TIERS. L'audit proposait « Formulaire/Calendly » : la seconde moitié
-         est refusée par la règle du studio — aucune donnée client ne part chez un tiers.
-         Le formulaire est un fichier du site, `contact.php`, hébergé et traité ici.
-       ⭐ ON AJOUTE, ON NE REMPLACE PAS. Le lien `mailto:` et l'adresse en clair restent juste en
-         dessous : *un formulaire qui casse le seul chemin qui marchait est un recul, pas une
-         amélioration.* Et les deux mènent au même endroit. -->
-  <p class="cta-formulaire"><a class="bouton-action" href="contact.php">Remplir le formulaire →</a></p>
-  <!-- ⛔ ADRESSE EN CLAIR — ajoutée le 25/09/2026. L'audit externe le relève à juste titre :
-       un lien mailto ne sert à RIEN sur un poste sans logiciel de messagerie configuré. Sans
-       l'adresse visible, ce visiteur-là n'a aucun moyen d'écrire — il ne peut même pas la copier. -->
-  <!-- ⭐ BOUTON « COPIER L'ADRESSE » — ajouté le 26/09/2026 sur le même constat, mais PAS avec le
-       code proposé par l'audit : celui-ci DÉTOURNAIT le lien mailto (le visiteur qui veut écrire
-       se faisait copier l'adresse à la place), changeait son libellé (« Écrire au studio »
-       disparaissait — un lien doit se comprendre hors contexte, WCAG 2.4.4), et réécrivait
-       l'adresse en dur alors qu'elle est DÉJÀ dans la page deux lignes plus bas.
-       Ici : un BOUTON distinct, à côté du lien, qui ne remplace rien. Il reste `hidden` et c'est
-       le module qui le révèle — même règle que le tiroir : pas de contenu piégé derrière un
-       script qui n'a pas tourné, et pas de bouton qui copie du vide sans presse-papiers. -->
-  <p class="contact"><a href="mailto:gtn.langlet+lab@gmail.com?subject=Prise%20de%20contact%20%E2%80%94%20GL%20Digital%20Lab">Écrire au studio</a> <button type="button" id="copier-adresse" class="copier-adresse" aria-label="Copier l'adresse e-mail du studio" hidden>Copier l'adresse</button> <span id="copie-etat" class="copie-etat" role="status" aria-live="polite"></span> <small>— ou écrivez à <strong>gtn.langlet+lab@gmail.com</strong>, si aucun logiciel de messagerie n'est configuré sur votre poste.</small></p>
-</div>
-</section>
+
+    <!-- ⛔ LE TAMPON NE SE POSE PAS PAR DÉCORATION. Il dit que la phrase au-dessus a
+         été MESURÉE, et elle l'a été : l'indexation et la recherche tournent en local
+         sur le poste, sans service tiers (épreuves du 28/09/2026). *Un tampon
+         « mesuré » posé sur une promesse serait un mensonge avec un sceau officiel.* -->
+    <p class="mf-tampon">Mesuré</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ② CE QU'ON FAIT — les quatre pôles, repris de l'acte 8 du récit.
+       ⚠️ Ils étaient dans la page de contact. Ici ils sont là où on les cherche.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="mf-section" id="ce-quon-fait">
+    <p class="mf-etiquette">Ce qu'on fait</p>
+    <h2 class="mf-titre-section">Quatre pôles, un seul poste de travail.</h2>
+
+    <div class="mf-grille">
+      <div class="mf-boite">
+        <span class="mf-boite-titre">Pôle 01 — CORE · Ingénierie web &amp; métier</span>
+        <p>Applications sur mesure, architectures modulaires, refontes d'API sous contrôle strict.</p>
+        <p><small>Symfony 7 · Vue.js 3 · API Platform · PostgreSQL</small></p>
+      </div>
+      <div class="mf-boite">
+        <span class="mf-boite-titre">Pôle 02 — LOCAL · IA locale &amp; agents</span>
+        <p>Modèles exécutés sur votre poste ou sur un serveur dédié — <strong>aucune donnée ne sort</strong>.</p>
+        <p><small>Ollama · vLLM · MCP · ChromaDB</small></p>
+      </div>
+      <div class="mf-boite">
+        <span class="mf-boite-titre">Pôle 03 — ARKADIA · Mémoire documentaire</span>
+        <p>Indexation de vos documents (PDF, mails, code) avec sourçage exact et suppression à la demande.</p>
+        <p><small>RAG local · Embeddings · Sources citées · Effacement</small></p>
+      </div>
+      <div class="mf-boite">
+        <span class="mf-boite-titre">Pôle 04 — SHIELD · Audit, sécurité, résilience</span>
+        <p>Conformité RGAA, durcissement, chiffrement des disques, validation humaine continue.</p>
+        <p><small>Chiffrement · Audit · Tests de bout en bout · CI/CD</small></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ③ LES PRIX — repris tels quels de l'acte 4.
+       ⛔ LE TABLEAU N'A PAS ÉTÉ RETOUCHÉ : les montants sont une décision du studio
+          (prix figés le 10/09/2026, affichés le 28/09). *Un agent ne réécrit pas un prix.*
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="mf-section" id="prix">
+    <p class="mf-etiquette">Les prix</p>
+    <h2 class="mf-titre-section">Paiement unique. Aucun abonnement.</h2>
+
+    <table class="mf-mesures">
+      <thead>
+        <tr><th scope="col">Prestation</th><th scope="col">Prix</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Audit web</td><td class="mf-fait">199 €</td></tr>
+        <tr><td>Porte anti-fuite</td><td class="mf-fait">290 €</td></tr>
+        <tr><td>Gabarit installé</td><td class="mf-fait">390 €</td></tr>
+        <tr><td>IA locale</td><td class="mf-fait">1 500 €</td></tr>
+        <tr><td>Site web</td><td class="mf-fait">2 500 €</td></tr>
+        <tr><td>Application métier</td><td class="mf-fait">8 000 €</td></tr>
+        <tr><td>Recherche documentaire (RAG)</td><td class="mf-fait">15 000 €</td></tr>
+      </tbody>
+    </table>
+
+    <p><em>L'audit est notre porte d'entrée, pas notre activité : si l'audit suffit, il suffit.</em></p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ④ COMMENT ON TRAVAILLE — le type C de la trame : trois chevrons.
+       ⚠️ Les trois chevrons sont ceux de la slide 14 (« Vous auditez, nous
+          équipons ») ; les sept étapes du parcours restent en dessous, en clair.
+          *Le chevron dit l'entrée en relation ; le parcours dit l'exécution. Ce
+          n'est pas la même chose, et les confondre ferait un parcours en trois pas.*
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="mf-section" id="methode">
+    <p class="mf-etiquette">Comment on travaille</p>
+    <h2 class="mf-titre-section">« Vous auditez, nous équipons. »</h2>
+
+    <div class="mf-chevrons">
+      <div class="mf-chevron">
+        <span class="mf-num">1. Démonstration</span>
+        <p>Une heure. Vous voyez le système tourner, vous posez vos questions. <strong>Aucun engagement.</strong></p>
+      </div>
+      <div class="mf-chevron">
+        <span class="mf-num">2. Cas réel</span>
+        <p>Vous désignez un cas type. Nous évaluons la faisabilité et le coût ensemble, devant vos données.</p>
+      </div>
+      <div class="mf-chevron">
+        <span class="mf-num">3. L'accord</span>
+        <p>Définition du périmètre, du partage, et clause de non-démarchage. Appelé aussi « Le Pacte ».</p>
+      </div>
+    </div>
+
+    <h3>Le parcours en sept étapes</h3>
+    <ol>
+      <li>Premier échange — 30 min, gratuit</li>
+      <li>Lecture du besoin</li>
+      <li>Atelier de cadrage</li>
+      <li>Devis détaillé</li>
+      <li>Construction</li>
+      <li>Déploiement</li>
+      <li>Maintenance</li>
+    </ol>
+
+    <p><strong>Rien ne sort sans validation humaine.</strong> Une machine, un poste, des agents —
+    et un humain qui valide chaque étape.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ⑤ CE QU'ON MESURE — la section qui justifie le tampon [MESURÉ].
+       ⛔ CHAQUE LIGNE PORTE SA DATE, ET C'EST LA RÈGLE DU STUDIO : *un chiffre sans
+          sujet est un chiffre faux*, et un chiffre sans date devient faux sans le dire.
+       ⛔ ET LA LIGNE EN DÉFAUT EST ÉCRITE AUSSI. Une page de capacités qui n'affiche
+          que les vertes n'est pas une preuve, c'est une publicité.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="mf-section" id="capacites">
+    <p class="mf-etiquette">Ce qu'on mesure</p>
+    <h2 class="mf-titre-section">Nos capacités, avec leur date de mesure.</h2>
+
+    <table class="mf-mesures">
+      <thead>
+        <tr><th scope="col">Capacité</th><th scope="col">Mesure</th><th scope="col">Le</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Recherche documentaire locale</td><td class="mf-fait">4 épreuves sur 4</td><td>28/09/2026</td></tr>
+        <tr><td>Modèles exécutés en local</td><td class="mf-fait">12 modèles, 42,6 Go</td><td>28/09/2026</td></tr>
+        <tr><td>Assistance vocale locale</td><td class="mf-fait">réponse en ~11 s</td><td>28/09/2026</td></tr>
+        <tr><td>Transcription audio</td><td class="mf-fait">999 segments, 8 410 mots</td><td>28/09/2026</td></tr>
+        <tr><td>Bancs d'épreuve du studio</td><td class="mf-fait">5 sur 5 passent</td><td>28/09/2026</td></tr>
+        <tr><td>Pages publiées et vérifiées</td><td class="mf-fait">8 URL servies</td><td>28/09/2026</td></tr>
+        <tr><td>Génération d'images</td><td class="mf-attente">hors service</td><td>28/09/2026</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note">⚠️ La dernière ligne est celle qui compte : une capacité en panne est
+    écrite comme les autres. <em>Une page de capacités qui n'affiche que les vertes n'est pas
+    une preuve, c'est une publicité.</em></p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ⑥ L'ÉCOSYSTÈME — la porte.
+       ⚠️ Les mêmes cinq entrées que le menu, avec ce qu'on y trouve. *Un lien seul
+          ne dit pas ce qu'il y a derrière ; celui qui cherche ne clique pas au hasard.*
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="mf-section" id="ecosysteme">
+    <p class="mf-etiquette">L'écosystème</p>
+    <h2 class="mf-titre-section">Ce qui est publié, et à quoi ça sert.</h2>
+
+    <div class="mf-grille">
+      <div class="mf-boite">
+        <span class="mf-boite-titre"><a href="/analyses/">Analyses</a></span>
+        <p>Ce qu'on a mesuré, avec les sources datées et <strong>les blancs déclarés</strong>.</p>
+      </div>
+      <div class="mf-boite">
+        <span class="mf-boite-titre"><a href="/formation/">Formation</a></span>
+        <p>Un dossier pédagogique libre, et le chantier d'une formation à l'IA. <strong>Non certifiant.</strong></p>
+      </div>
+      <div class="mf-boite">
+        <span class="mf-boite-titre"><a href="/veille/">Veille</a></span>
+        <p>Ce que les sources suivies publient, <strong>avec le lien vers leurs auteurs</strong>.</p>
+      </div>
+      <div class="mf-boite">
+        <span class="mf-boite-titre"><a href="/urgence-cyber/">Urgence cyber</a></span>
+        <p>Qui appeler en cas d'incident, selon qui vous êtes. Numéros officiels vérifiés.</p>
+      </div>
+      <div class="mf-boite">
+        <span class="mf-boite-titre"><a href="https://controle.gldigitallab.fr/">Point de contrôle</a></span>
+        <p>Le tableau de bord servi 24/7. <strong>Aucun nom de client, aucun identifiant de machine.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       ⑦ LE CONTACT
+       ══════════════════════════════════════════════════════════════════════ -->
+  <section class="mf-section" id="contact">
+    <p class="mf-etiquette">Prendre contact</p>
+    <h2 class="mf-titre-section">Premier échange — 30 minutes, gratuit.</h2>
+
+    <p>Vous exposez votre situation, on vous dit ce qui est faisable et ce qui ne l'est pas.
+    <strong>Si l'audit suffit, il suffit.</strong></p>
+
+    <p>
+      <a class="mf-bouton" href="mailto:gtn.langlet+lab@gmail.com?subject=Premier%20%C3%A9change%20%E2%80%94%2030%20min">Écrire au studio</a>
+      <button type="button" id="copier-adresse" hidden>Copier l'adresse</button>
+      <span id="copie-etat" class="copie-etat" aria-live="polite"></span>
+    </p>
+
+    <p class="note">GL Digital Lab — Génie IT Tek FR · Harponville (80560), Somme, France.
+    Studio en cours d'immatriculation : ses références légales seront publiées dès qu'elle sera prononcée.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       LE PIED DE JOURNAL — la forme de la trame, les valeurs VRAIES.
+       ⛔ LA TRAME PORTAIT `OPERATOR: UNIT_74`, `LAT: 48.9566 N`, un `HASH` décoratif.
+          Ces valeurs sont INVENTÉES. *Un chiffre sans sujet est un chiffre faux* —
+          et un faux chiffre technique est le plus crédible des mensonges, parce que
+          personne ne le vérifie.
+       ⇒ On garde la ligne, on y met des grandeurs qu'on peut défendre, et on DATE.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <p class="mf-log">
+    SYSTEM.MANIFESTE.LOG // DOCUMENT&nbsp;: gldigitallab.fr/ // STATUT&nbsp;: MANIFESTE DE CAPACITÉ
+    // RÉVISION&nbsp;: 2026-09-28 // CAPACITÉS MESURÉES&nbsp;: 6 SUR 7 // DERNIÈRE MESURE&nbsp;: 2026-09-28
+    // END OF FILE
+  </p>
+
 </main>
 
 <footer class="pied">

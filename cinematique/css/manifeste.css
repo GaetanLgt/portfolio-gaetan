@@ -1,0 +1,293 @@
+/* ============================================================================
+   manifeste.css — LA TRAME « INDUSTRIAL SOVEREIGN AI »
+   GL Digital Lab — 28/09/2026
+
+   ══════════════════════════════════════════════════════════════════════════
+   D'OÙ VIENT CE FICHIER
+   ══════════════════════════════════════════════════════════════════════════
+   Gaëtan a envoyé un PowerPoint (`Industrial_Sovereign_AI.pptx`, 14 slides) et
+   demandé que le site soit refait « par rapport à la nouvelle trame ». Ce fichier
+   implémente cette trame.
+
+   ⚠️ LES SLIDES SONT DES IMAGES : le PDF ne contenait **aucune police, 0 caractère**,
+      et les 14 `.txt` extraits font **5 octets** chacun. La trame a donc été lue
+      **à l'œil**, sur les images — pas devinée. C'est écrit ici parce que c'est une
+      limite : *ce qui a été lu sur une image n'a pas la précision d'un code source.*
+
+   ══════════════════════════════════════════════════════════════════════════
+   CE QUE LA TRAME EST
+   ══════════════════════════════════════════════════════════════════════════
+   Un **document technique**, pas une page marketing :
+     · fond papier clair avec une grille de tracé très pâle ;
+     · repères d'angle (croix de registration) aux quatre coins ;
+     · titre en capitales condensées, très grand, presque noir ;
+     · encadré monospace sous le titre, avec des ergots d'angle ;
+     · étiquettes ENTRE CROCHETS — `[ CE QU'ON FAIT ]` ;
+     · boîtes à bord franc, coins marqués d'un trait ;
+     · tampon vert incliné `[MESURÉ]` quand un chiffre est prouvé ;
+     · flèches-chevrons pour les étapes ;
+     · pied de page en ligne de journal technique.
+
+   ⛔⛔ CE QUE JE N'AI PAS REPRIS DE LA TRAME, ET POURQUOI — c'est le point important.
+      Le pied des slides porte :
+          SYSTEM.DIAGNOSTIC.LOG // OPERATOR: UNIT_74 // LOCATION: SECURE_FACILITY_B
+          // LAT: 48.9566 N / LON: 2.3522 E // ENCRYPTION: AES-256 // HASH: 9b6d001b…
+      **Ces valeurs sont décoratives : elles sont inventées.** `UNIT_74` n'existe pas,
+      la position est celle de Paris, le hash est un motif.
+      ⭐ Le studio a une règle là-dessus, et elle est dure : **un chiffre sans sujet est
+         un chiffre faux**, et *une projection porte son régime ou n'existe pas*.
+      ⇒ On garde **la forme** du log et on y met des valeurs **vraies et vérifiables**.
+        *La trame est une esthétique ; les chiffres sont une responsabilité.*
+
+   ⚠️ ET LES POLICES : la trame utilise une grotesque condensée et un monospace qui ne
+      sont PAS embarqués dans le site (aucun fichier dans `cinematique/fonts/`). On
+      assemble donc des piles **système** — aucune requête réseau, aucun téléchargement,
+      aucune licence à vérifier. *Cohérent avec la promesse « zéro requête externe ».*
+
+   ⚠️ PORTÉE : tout est sous `.manifeste`. Ce fichier ne touche pas `site.css`, et les
+      autres pages du site ne changent pas. *Une refonte qui déborde sur ce qu'on n'a pas
+      demandé de refaire n'est pas une refonte, c'est une régression.*
+   ============================================================================ */
+
+.manifeste {
+  /* ---- LES JETONS DE LA TRAME ---- */
+  --mf-papier:   #efede7;   /* le fond papier, légèrement chaud */
+  --mf-papier-2: #e7e4dd;   /* les zones encadrées */
+  --mf-encre:    #14140f;   /* presque noir, jamais pur */
+  --mf-trait:    #14140f;   /* les bords francs */
+  --mf-grille:   #cfcbc0;   /* la grille de tracé, très pâle */
+  --mf-vert:     #2f7d5a;   /* le vert du tampon et des chiffres prouvés */
+  --mf-rouge:    #c4006b;   /* l'avertissement de la slide 5 */
+  --mf-gris:     #6b6a62;   /* le texte secondaire */
+
+  --mf-titre: "Arial Narrow", "Liberation Sans Narrow", "Franklin Gothic Medium",
+              "Helvetica Neue", Arial, sans-serif;
+  --mf-mono:  "JetBrains Mono", Consolas, "Courier New", monospace;
+
+  background-color: var(--mf-papier);
+  color: var(--mf-encre);
+  font-family: var(--mf-mono);
+  font-size: 15px;
+  line-height: 1.55;
+  /* la grille de tracé : deux pas, 28 px et 140 px */
+  background-image:
+    linear-gradient(var(--mf-grille) 1px, transparent 1px),
+    linear-gradient(90deg, var(--mf-grille) 1px, transparent 1px),
+    linear-gradient(color-mix(in srgb, var(--mf-grille) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--mf-grille) 45%, transparent) 1px, transparent 1px);
+  background-size: 140px 140px, 140px 140px, 28px 28px, 28px 28px;
+  background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+}
+
+/* ---- LE CORPS DE LA PAGE, QUAND ELLE PORTE LA TRAME ---------------------
+   ⚠️ `site.css` pose un fond sombre sur `body` (le thème spatial). La trame est un
+   document CLAIR : sans cette règle, on aurait un en-tête sombre, un corps papier et
+   un pied sombre — trois thèmes sur une page.
+   ⛔ La règle est portée par une CLASSE posée sur `<body>`, et non par `body` tout
+   court : *les autres pages du site ne changent pas.* */
+body.trame-manifeste {
+  background-color: #efede7;
+  background-image: none;
+  color: #14140f;
+  padding-top: 0;
+}
+
+/* ---- LES REPÈRES D'ANGLE -------------------------------------------------
+   La trame pose une croix fine aux quatre coins de chaque slide. On la pose sur
+   le bloc, pas sur chaque section : *un repère qui se répète partout cesse d'être
+   un repère.* */
+.manifeste { position: relative; }
+.manifeste::before,
+.manifeste::after {
+  content: "";
+  position: absolute;
+  left: 14px; right: 14px;
+  height: 14px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--mf-gris) 0 0), linear-gradient(var(--mf-gris) 0 0),
+    linear-gradient(var(--mf-gris) 0 0), linear-gradient(var(--mf-gris) 0 0);
+  background-size: 14px 1px, 1px 14px, 14px 1px, 1px 14px;
+  background-repeat: no-repeat;
+  background-position: 0 0, 0 0, 100% 0, 100% 0;
+}
+.manifeste::before { top: 14px; }
+.manifeste::after  { bottom: 14px; }
+
+/* ---- LA COUVERTURE ------------------------------------------------------- */
+.mf-couverture { padding: 72px 44px 52px; text-align: center; }
+
+.mf-titre {
+  font-family: var(--mf-titre);
+  font-weight: 700;
+  font-stretch: condensed;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  line-height: .92;
+  font-size: clamp(2.2rem, 7.2vw, 5.6rem);
+  margin: 0 0 26px;
+  color: var(--mf-encre);
+}
+
+/* l'encadré monospace : bord franc + ergots d'angle sur les quatre coins */
+.mf-chapeau {
+  display: inline-block;
+  position: relative;
+  border: 1px solid var(--mf-trait);
+  background: color-mix(in srgb, var(--mf-papier) 82%, #fff);
+  padding: 14px 26px;
+  font-size: .95rem;
+  max-width: 34rem;
+  text-align: center;
+}
+.mf-chapeau::before, .mf-chapeau::after {
+  content: "";
+  position: absolute;
+  width: 7px; height: 7px;
+  border: 1px solid var(--mf-trait);
+}
+.mf-chapeau::before { top: -4px; left: -4px; border-right: 0; border-bottom: 0; }
+.mf-chapeau::after  { bottom: -4px; right: -4px; border-left: 0; border-top: 0; }
+.mf-chapeau p { margin: 0; }
+.mf-chapeau p + p { margin-top: .35rem; }
+
+/* ---- LE TAMPON [MESURÉ] --------------------------------------------------
+   ⚠️ Incliné, creux, vert. Il ne se pose QUE sur un chiffre réellement mesuré —
+      c'est le sens du mot. *Un tampon « mesuré » sur une estimation serait un
+      mensonge avec un sceau officiel.* */
+.mf-tampon {
+  display: inline-block;
+  transform: rotate(-7deg);
+  border: 4px solid var(--mf-vert);
+  color: var(--mf-vert);
+  font-family: var(--mf-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: .18em .55em;
+  font-size: clamp(1.1rem, 2.6vw, 1.9rem);
+  margin: 30px 0 6px;
+}
+
+/* ---- LES SECTIONS -------------------------------------------------------- */
+.mf-section { padding: 40px 44px; border-top: 1px solid var(--mf-trait); }
+
+/* l'étiquette entre crochets : `[ CE QU'ON FAIT ]` */
+.mf-etiquette {
+  font-family: var(--mf-mono);
+  font-size: .82rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mf-gris);
+  margin: 0 0 20px;
+}
+.mf-etiquette::before { content: "[ "; color: var(--mf-encre); }
+.mf-etiquette::after  { content: " ]"; color: var(--mf-encre); }
+
+.mf-section h2.mf-titre-section {
+  font-family: var(--mf-titre);
+  font-stretch: condensed;
+  text-transform: none;
+  font-size: clamp(1.35rem, 3.2vw, 2.1rem);
+  line-height: 1.15;
+  margin: 0 0 22px;
+  font-weight: 700;
+}
+
+/* ---- LES BOÎTES ---------------------------------------------------------- */
+.mf-boite {
+  border: 2px solid var(--mf-trait);
+  background: color-mix(in srgb, var(--mf-papier-2) 70%, transparent);
+  padding: 16px 18px;
+  position: relative;
+}
+.mf-boite + .mf-boite { margin-top: 14px; }
+.mf-boite > .mf-boite-titre {
+  display: block;
+  font-weight: 700;
+  margin-bottom: .45rem;
+  font-size: .95rem;
+}
+.mf-boite p { margin: 0; }
+.mf-boite p + p { margin-top: .5rem; }
+
+/* la grille de boîtes : deux colonnes sur écran large */
+.mf-grille { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); }
+.mf-grille .mf-boite + .mf-boite { margin-top: 0; }
+
+/* ---- LES CHEVRONS --------------------------------------------------------
+   Les trois étapes de la slide 14 : des flèches accolées. Faites en `clip-path`,
+   donc sans image, sans police et sans dépendance. */
+.mf-chevrons { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.mf-chevron {
+  position: relative;
+  background: var(--mf-papier-2);
+  border: 2px solid var(--mf-trait);
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%, 22px 50%);
+  padding: 20px 30px 20px 40px;
+  min-height: 132px;
+}
+.mf-chevron:first-child { clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%); }
+.mf-chevron > .mf-num { font-weight: 700; font-family: var(--mf-titre); font-stretch: condensed;
+  text-transform: uppercase; font-size: 1.15rem; display: block; margin-bottom: .5rem; }
+.mf-chevron p { margin: 0; font-size: .9rem; }
+
+/* ---- LES MESURES --------------------------------------------------------
+   Le tableau des capacités. Les valeurs prouvées portent le vert. */
+.mf-mesures { width: 100%; border-collapse: collapse; font-size: .9rem; }
+.mf-mesures th, .mf-mesures td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--mf-grille); }
+.mf-mesures th { font-family: var(--mf-mono); font-size: .76rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--mf-gris); border-bottom: 1px solid var(--mf-trait); }
+.mf-mesures td.mf-fait { color: var(--mf-vert); font-weight: 700; }
+.mf-mesures td.mf-attente { color: var(--mf-rouge); }
+
+/* ---- LE PIED DE JOURNAL --------------------------------------------------
+   ⛔ Les valeurs sont VRAIES. Voir le commentaire en tête de fichier. */
+.mf-log {
+  border-top: 2px solid var(--mf-trait);
+  padding: 14px 44px;
+  font-size: .76rem;
+  letter-spacing: .04em;
+  color: var(--mf-gris);
+  text-transform: uppercase;
+  word-break: break-word;
+}
+
+/* ---- LES LIENS ----------------------------------------------------------- */
+.manifeste a { color: var(--mf-encre); text-decoration: underline; text-underline-offset: 3px; }
+.manifeste a:hover { color: var(--mf-vert); }
+.manifeste a.mf-bouton {
+  display: inline-block;
+  border: 2px solid var(--mf-trait);
+  background: var(--mf-encre);
+  color: var(--mf-papier);
+  text-decoration: none;
+  padding: .6rem 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  font-size: .85rem;
+}
+.manifeste a.mf-bouton:hover { background: var(--mf-vert); border-color: var(--mf-vert); color: #fff; }
+
+/* ---- MOBILE --------------------------------------------------------------
+   ⚠️ Les marges de 44 px sont celles du document imprimé. Sur un téléphone, elles
+   mangent la largeur : on les resserre. *Une trame lue sur écran n'est pas une
+   trame lue sur papier.* */
+@media (max-width: 640px) {
+  .mf-couverture { padding: 48px 18px 34px; }
+  .mf-section    { padding: 30px 18px; }
+  .mf-log        { padding: 12px 18px; }
+  .mf-chevron    { clip-path: none; padding: 16px 18px; min-height: 0; border-left-width: 8px; }
+  .mf-chevron:first-child { clip-path: none; }
+  .manifeste::before, .manifeste::after { display: none; }
+}
+
+/* ---- IMPRESSION ----------------------------------------------------------
+   La trame est un DOCUMENT. Elle doit s'imprimer proprement — c'est même la
+   raison pour laquelle Gaëtan l'a choisie : *on l'accroche au mur.* */
+@media print {
+  .manifeste { background: #fff; background-image: none; }
+  .mf-section { break-inside: avoid; }
+  .mf-chevron { clip-path: none; border: 1px solid #000; }
+}
