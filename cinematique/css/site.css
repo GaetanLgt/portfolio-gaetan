@@ -650,3 +650,192 @@ main{position:relative;z-index:10}
 .form-repli{margin-top:2.5rem;border-top:1px solid #2abfff33;padding-top:1.2rem}
 .form-repli h2{font-size:1.15rem}
 @media (max-width:600px){.page-simple .acte{padding:1.6rem 1rem}.champ-envoi{flex-direction:column;align-items:stretch}}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LA PAGE « SOUVERAINETÉ ET PRIX » — ajouté le 28/09/2026.
+
+   ⭐ POURQUOI CES RÈGLES SONT ICI ET PAS DANS LA PAGE : le site a UNE feuille de style.
+   Une page qui porte son propre CSS est une page qui divergera — *et le canon de palette
+   ne tient que s'il est écrit une fois.*
+
+   ⛔ AUCUN JETON VERT ICI. Le canon du 25/09 est explicite : **le vert dit la santé
+   mentale**, et « un jeton déclaré n'est pas un jeton posé — on le pose là où le propos
+   est la santé mentale, jamais pour décorer un bouton ». Cette page parle d'argent et de
+   machines : elle reste en cyan / argent / noir.
+   ⛔ AUCUN JETON OR NON PLUS : le sort de l'or n'est pas tranché au canon (yeux de la
+   proue, pavillon). *On ne pose pas une couleur non tranchée sur un site public.*
+   ⛔ AUCUN `-OMBRE` NI GRADIENT INVENTÉ : on réutilise les valeurs déjà présentes dans
+   ce fichier (`#2abfff33`, `#dce6f2`, etc.) pour que la page appartienne au même site.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ---- LE SOUS-TITRE DE PAGE ---- */
+.sous-titre{color:var(--doux);font-size:1.05rem;line-height:1.6;margin:.4rem 0 2rem;
+  max-width:62ch}
+
+/* ---- L'ENCADRÉ : une information qu'on veut voir, sans crier ---- */
+/* ⚠️ Le liseré cyan à gauche, pas un fond coloré : *un encadré qui remplit tout devient
+   une alerte, et ce n'en est pas une.* */
+.encadre{border-left:3px solid var(--cyan);background:rgba(42,191,255,.06);
+  padding:1rem 1.2rem;border-radius:0 8px 8px 0;margin:1.6rem 0;line-height:1.65}
+.encadre b{color:var(--texte)}
+.encadre i{color:var(--doux)}
+
+/* ---- LES TABLEAUX DE PRIX ---- */
+/* ⚠️ `border-collapse` et des bordures basses : un tableau de prix lisible au pouce.
+   ⚠️ Et un conteneur qui défile horizontalement sur mobile — *un tableau qui déborde de
+   l'écran cache ses dernières colonnes, donc il ment par omission.* */
+.tableau-prix{width:100%;border-collapse:collapse;margin:1.4rem 0 2rem;font-size:.9rem}
+.tableau-prix th{text-align:left;padding:.7rem .8rem;color:var(--cyan);
+  border-bottom:1px solid #2abfff33;font-weight:600;white-space:nowrap}
+.tableau-prix td{padding:.7rem .8rem;border-bottom:1px solid #ffffff12;vertical-align:top;
+  color:var(--texte);line-height:1.5}
+.tableau-prix tr:last-child td{border-bottom:0}
+.tableau-prix tbody tr:hover td{background:rgba(42,191,255,.04)}
+/* Le prix : la seule colonne qui doit sauter aux yeux. */
+.tableau-prix td.prix{font-family:var(--mono);font-weight:700;color:var(--cyan);
+  font-size:1rem;white-space:nowrap}
+.tableau-prix i{color:var(--doux);font-style:italic}
+
+/* ---- LES BOUTONS ---- */
+.actions{display:flex;gap:.8rem;flex-wrap:wrap;margin:1.6rem 0 2.4rem}
+/* ⚠️ Le bouton secondaire EXISTE pour qu'il y ait un choix : *deux boutons identiques ne
+   sont pas deux options, c'est un bouton avec un doublon.* */
+.bouton-secondaire{display:inline-block;padding:.7rem 1.3rem;border-radius:8px;
+  border:1px solid #2abfff33;color:var(--doux);text-decoration:none;
+  font-family:var(--mono);font-size:.85rem;transition:border-color .2s,color .2s}
+.bouton-secondaire:hover{border-color:var(--cyan);color:var(--texte)}
+.bouton-secondaire:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+/* ---- LA LISTE DES SOURCES ---- */
+/* ⭐ ELLE N'EST PAS DÉCORATIVE : c'est ce qui distingue un prix d'une invention.
+   Elle est donc lisible, pas en tout petit gris. */
+.sources{font-size:.85rem;color:var(--doux);line-height:1.7;padding-left:1.2rem}
+.sources li{margin-bottom:.5rem}
+.sources b{color:var(--texte)}
+.sources a{color:var(--cyan)}
+
+/* ---- LE RETOUR EN BAS DE PAGE ---- */
+.pied-page{margin-top:2.5rem;padding-top:1.2rem;border-top:1px solid #ffffff12;
+  font-family:var(--mono);font-size:.82rem;color:var(--doux)}
+.pied-page a{color:var(--cyan)}
+
+/* ---- LES PETITS ÉCRANS ---- */
+/* ⚠️ Sur mobile, le tableau des PRIX ne doit pas se couper : on autorise le défilement
+   horizontal PLUTÔT que de cacher une colonne. *Un tableau rogné est un tableau faux.* */
+@media (max-width:600px){
+  .tableau-prix{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .sous-titre{font-size:.98rem}
+  .actions{flex-direction:column;align-items:stretch}
+  .actions a{text-align:center}
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LA PAGE DOCUMENT — correction du 28/09/2026, APRÈS AVOIR REGARDÉ LE RENDU.
+
+   ⛔ CE QUE LA CAPTURE A MONTRÉ, ET QU'AUCUNE MESURE N'AVAIT DIT :
+      le titre faisait ~100 px de haut (`h1{font-size:clamp(2.4rem,7vw,5rem)}` — 7 % de
+      la largeur d'écran), et le contenu n'occupait que ~500 px sur 1440, centré
+      verticalement dans une colonne étroite avec de grands vides à gauche et à droite.
+
+   ⭐ LA CAUSE, ET ELLE EST UNE LEÇON DE CONCEPTION :
+      **la cinématique est une SÉQUENCE** — un acte par écran, des titres plein écran,
+      `min-height:100vh` et `justify-content:center`. C'est juste pour elle.
+      **Un document est une LECTURE** — il se lit en défilant, la largeur est au service
+      du texte, et un titre n'a pas à occuper un dixième de l'écran.
+      ⇒ *Ces deux choses ont des règles opposées, et les hériter de l'une pour l'autre
+        produit une page qui ne ressemble à rien.*
+
+   ⛔ CE QUE JE NE FAIS PAS : je ne touche PAS aux règles générales (`h1`, `.acte`).
+      Elles servent les huit actes, et les modifier casserait la page d'accueil.
+      ⇒ Tout est scopé `.page-simple`, donc **la cinématique ne bouge pas d'un pixel.**
+
+   ⚠️ ET LA LEÇON DE MÉTHODE : ces règles n'auraient jamais dû être nécessaires. **J'ai
+      écrit le HTML avant de regarder le rendu.** *Le studio a payé cette erreur quatre fois
+      aujourd'hui, et elle est payée une cinquième ici.*
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ---- LA COLONNE DE LECTURE ----
+   ⚠️ 46rem est conservé pour la LARGEUR (une ligne trop longue se lit mal — la mesure
+   typographique est d'environ 65-75 caractères), mais on AJOUTE de l'air sur les côtés
+   et on retire le centrage vertical : un document commence en haut. */
+.page-simple .acte{min-height:auto;justify-content:flex-start;align-items:stretch;
+  max-width:52rem;padding:5.5rem 1.4rem 4rem}
+
+/* ---- LES TITRES ----
+   ⛔ LE `clamp(...7vw...)` DE LA CINÉMATIQUE EST NEUTRALISÉ ICI.
+      À 1440 px il donnait 100 px de haut : lisible sur un écran de séquence, absurde
+      pour un titre de document. On borne à une taille de lecture. */
+.page-simple h1{font-size:clamp(1.9rem,3.4vw,2.9rem);line-height:1.2;margin:0 0 .6rem}
+.page-simple h2{font-size:clamp(1.25rem,2vw,1.6rem);line-height:1.3;color:var(--cyan);
+  margin:2.6rem 0 .8rem}
+/* ⚠️ Le premier h2 ne doit pas coller au sous-titre : on lui rend la marge du haut. */
+.page-simple h2:first-of-type{margin-top:2rem}
+
+/* ---- LE TEXTE COURANT ----
+   ⚠️ `line-height` plus aéré que sur la cinématique : un paragraphe de document se lit,
+   un paragraphe de séquence se survole. */
+.page-simple p{line-height:1.75;margin:0 0 1.1rem;font-size:1rem}
+.page-simple ul{line-height:1.7;margin:0 0 1.2rem;padding-left:1.3rem}
+.page-simple li{margin-bottom:.55rem}
+.page-simple a{color:var(--cyan)}
+
+/* ---- LES PETITS ÉCRANS ---- */
+@media (max-width:600px){
+  .page-simple .acte{padding:4.5rem 1rem 3rem}
+  /* ⚠️ `3.4vw` donnerait 11 px sur un téléphone : le plancher du clamp (1.9rem) prend
+     le relais, et c'est voulu — *un titre illisible sur mobile n'est pas un titre.* */
+  .page-simple h1{font-size:1.75rem}
+  .page-simple h2{font-size:1.2rem;margin-top:2rem}
+  .page-simple p{font-size:.96rem;line-height:1.7}
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LES PRIX ET LA SOUVERAINETÉ DANS LES ACTES — 28/09/2026, « un site racine unique ».
+
+   ⛔ CES RÈGLES SONT DANS LES PANNEAUX DE LA CINÉMATIQUE, PAS SUR UNE PAGE À PART.
+      Le `.panneau` a une largeur de 680 px et un fond translucide : un tableau large y
+      déborderait. Les tailles sont donc calibrées pour LUI, pas pour une page de lecture.
+   ⛔ ET AUCUN VERT : le canon du 25/09 réserve le vert à la santé mentale.
+      Aucun or non plus — son sort n'est pas tranché (yeux de la proue, pavillon).
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ---- LE TABLEAU DES PRIX, VERSION COMPACTE (deux colonnes) ---- */
+/* ⚠️ `width:auto` et non 100 % : sur 680 px de panneau, un tableau pleine largeur
+   laisserait un vide énorme entre le libellé et le prix. */
+.tableau-prix.compact{width:100%;border-collapse:collapse;margin:1.2rem 0 .6rem;
+  font-size:.88rem}
+.tableau-prix.compact caption{caption-side:top;text-align:left;color:var(--doux);
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.04em;padding-bottom:.5rem}
+.tableau-prix.compact td{padding:.42rem .2rem;border-bottom:1px solid #ffffff10;
+  color:var(--texte)}
+.tableau-prix.compact td.prix{text-align:right;font-family:var(--mono);font-weight:700;
+  color:var(--cyan);white-space:nowrap;padding-left:1rem}
+.tableau-prix.compact tr:last-child td{border-bottom:0}
+.tableau-prix.compact tbody tr:hover td{background:rgba(42,191,255,.05)}
+
+.note-prix{margin:.7rem 0 0;font-size:.85rem;color:var(--doux);line-height:1.6}
+.note-prix i{color:var(--texte);font-style:italic}
+
+/* ---- LE BLOC SOUVERAINETÉ ---- */
+/* ⭐ Même famille visuelle que `.limites` et `.preuves`, qui existent déjà dans cet acte :
+   *trois blocs qui disent la même chose doivent se ressembler, sinon le visiteur croit
+   qu'ils parlent de choses différentes.* */
+.souverainete{margin:1.4rem 0 1.6rem;padding:1rem 1.1rem;border-radius:10px;
+  background:rgba(42,191,255,.05);border-left:3px solid var(--cyan)}
+.souverainete h3{margin:0 0 .6rem;font-size:1rem;color:var(--cyan);
+  font-family:var(--font,inherit)}
+.souverainete p{margin:0 0 .8rem;font-size:.9rem;line-height:1.7;color:var(--texte)}
+.souverainete p:last-child{margin-bottom:0}
+.souverainete ul{margin:.2rem 0 .9rem;padding-left:1.1rem}
+.souverainete li{font-size:.88rem;line-height:1.6;margin-bottom:.4rem;color:var(--texte)}
+.souverainete strong{color:#fff}
+.souverainete i{color:var(--doux)}
+
+/* ⚠️ DANS UN PANNEAU DE 680 px, le bloc souveraineté doit rester lisible au pouce :
+   on resserre un peu sur les petits écrans plutôt que de laisser déborder. */
+@media (max-width:600px){
+  .souverainete{padding:.85rem .9rem}
+  .souverainete p,.souverainete li{font-size:.85rem}
+  .tableau-prix.compact{font-size:.84rem}
+}
