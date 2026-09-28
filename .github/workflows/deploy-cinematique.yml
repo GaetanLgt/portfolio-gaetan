@@ -46,6 +46,17 @@ on:
       - 'cinematique/**'
       - 'redirection-cinematique/**'
       - '.github/workflows/deploy-cinematique.yml'
+      # ⛔⛔ `outils/**` AJOUTÉ LE 28/09/2026 — LE WORKFLOW NE SURVEILLAIT PAS SES PROPRES OUTILS.
+      #    ⚠️ MESURE : le déploiement exécute QUATRE outils de `outils/` —
+      #      `verifier-publication.mjs`, `generer-sitemap.mjs`, `versionner-ressources.mjs`,
+      #      et le contrôle de surface. Les corriger ne déclenchait RIEN.
+      #    ⭐ Le cas s'est produit : j'ai corrigé `versionner-ressources.mjs` (un chemin
+      #      machine en dur qui faisait ÉCHOUER le déploiement), je l'ai poussé —
+      #      et **aucun redéploiement n'est parti**. Le site est resté sur la version
+      #      cassée, et seul le workflow `Qualité` a tourné, vert.
+      #    ⇒ *Un outil que le déploiement exécute fait partie du déploiement. S'il n'est
+      #      pas dans le filtre, on peut le réparer sans que rien ne se répare.*
+      - 'outils/**'
   workflow_dispatch:
 
 jobs:

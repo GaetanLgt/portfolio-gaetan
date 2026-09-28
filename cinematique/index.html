@@ -338,8 +338,20 @@
          l'oracle est la plus neutre — une salle technique, pas un personnage.
          ⛔ Aucune requête externe : l'image est sur le serveur. -->
     <div class="mf-hero-visuel">
-      <img src="/img/oracle-salle.webp" width="1024" height="640" loading="eager"
-           alt="Salle technique du studio : le poste de travail qui exécute les modèles locaux.">
+      <!-- LE VISUEL DU HERO — GENERE LE 28/09/2026 PAR LE STUDIO (ComfyUI, RealVisXL V5,
+           graine 20260928). Il remplace l'image d'ArkAdiA qui etait sombre au point
+           d'etre illisible sur le fond nuit.
+           LE SUJET EST LE BON : un poste de travail, ecrans allumes, eclairage VERT
+           EMERAUDE — la couleur du canon (noir, vert, argent). Aucun texte lisible,
+           aucun logo, aucune personne : rien a retoucher, rien a defendre.
+           DEUX TAILLES : 700 px a l'affichage, 1400 px pour les ecrans a double densite.
+           24 Ko + 65 Ko au lieu d'un PNG de 1370 Ko.
+           GRAINE ET MODELE SONT NOTES : l'image est reproductible. -->
+      <img src="/img/poste-de-travail.webp"
+           srcset="/img/poste-de-travail.webp 700w, /img/poste-de-travail@2x.webp 1400w"
+           sizes="(max-width: 900px) 100vw, 46vw"
+           width="700" height="526" loading="eager" decoding="async"
+           alt="Poste de travail du studio : trois écrans allumés, éclairage vert.">
       <p class="mf-hero-legende"><strong>Recherche documentaire locale — 4 épreuves sur 4, le 28/09/2026.</strong></p>
       <p class="mf-tampon">Mesuré</p>
     </div>

@@ -699,13 +699,11 @@ header .cta-nav {
   object-fit: cover;
   object-position: center;
   border: 1px solid var(--mf-trait);
-  /* ⛔ L'IMAGE EST SOMBRE — TROISIÈME DÉFAUT. `oracle-salle.webp` est une photo très
-     sombre : sur le fond nuit de la trame, elle se confond avec la page et on ne
-     distingue RIEN. ⇒ On la traite pour qu'elle se LISE.
-     ⭐ *Un visuel qu'on ne lit pas n'est pas un visuel, c'est une tache.*
-     ⚠️ C'est un pansement, pas une solution : le vrai correctif est un visuel
-        commercial, que le studio n'a pas encore. */
-  filter: brightness(1.2) contrast(1.08) saturate(.9);
+  /* LE FILTRE D'ECLAIRCISSEMENT A ETE RETIRE LE 28/09/2026 — IL N'A PLUS DE RAISON.
+     Il compensait une photo trop sombre pour le fond nuit. Le visuel du hero est
+     maintenant poste-de-travail.webp, genere pour ce fond et deja lisible.
+     Un pansement qu'on garde apres la guerison n'est plus un pansement, c'est une
+     deformation — le laisser aurait delave une image correcte. */
 }
 .mf-hero-legende { margin: 12px 0 0; font-size: .85rem; }
 .mf-hero-visuel .mf-tampon { display: inline-block; margin-top: 10px; }
