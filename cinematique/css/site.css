@@ -160,7 +160,7 @@ a{color:var(--cyan)}
    ses derniers éléments — donc un menu qui ment. */
 .menu{position:fixed;top:var(--hauteur-barre,70px);left:0;right:0;z-index:99;
   max-height:0;overflow:hidden;transition:max-height .3s ease;
-  background:rgba(10,15,29,.97);backdrop-filter:blur(14px);
+  background:rgba(10,15,29,.97);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(0,229,255,.18);font-family:var(--mono)}
 .menu.ouvert{max-height:calc(100vh - var(--hauteur-barre,70px));overflow:auto}
 /* ⛔ SIX RÈGLES RETIRÉES LE 28/09/2026 — elles visaient `.menu-titre` et `.menu-liste`,
@@ -217,7 +217,7 @@ a{color:var(--cyan)}
 
 /* Le voile : ferme au clic, et assombrit ce qu'il recouvre. */
 .voile-menu{position:fixed;inset:0;z-index:98;background:rgba(2,6,15,.55);
-  backdrop-filter:blur(2px);border:0}
+  -webkit-backdrop-filter:blur(2px);border:0}
 .voile-menu[hidden]{display:none}
 
 @media (max-width:1100px){
@@ -287,7 +287,7 @@ a{color:var(--cyan)}
            Le seul contrôle qui l'a attrapé : l'œil de Gaëtan sur un VRAI écran. */
   .menu{position:static;max-height:none;overflow:visible;display:flex;flex-direction:row;
     align-items:center;justify-content:flex-end;gap:0 .3rem;
-    background:none;backdrop-filter:none;border:0;transition:none}
+    background:none;-webkit-backdrop-filter:none;border:0;transition:none}
 
   /* Le groupe : un bloc de référence, pour que son panneau se pose DESSOUS. */
   .menu-groupe{position:relative}
@@ -317,6 +317,50 @@ a{color:var(--cyan)}
        question que je n'avais posée qu'après trois échecs. */
   .menu-bouton{width:auto;padding:.4rem .6rem;border-left:0;font-size:.85rem;color:var(--doux);
     white-space:nowrap;border-radius:6px}
+
+  /* ⛔⛔ CORRECTION SAFARI / WEBKIT — 28/09/2026.
+     Gaëtan : « fonctionne pas sur Safari » — iPhone, Mac, et peut-être une version ancienne.
+     ⚠️ ET LE SYMPTÔME N'EST PAS L'EMPILEMENT (corrigé plus haut) : c'est autre chose, et
+        je n'ai pas pu l'observer — **aucun Safari n'existe sur cette machine, et aucun
+        émulateur WebKit non plus.** Je pose donc ce qui est MÉCANIQUE, pas ce que je devine.
+
+     ⭐ CE QUE WEBKIT EXIGE VRAIMENT, ET QUI MANQUAIT ICI :
+
+     ① `backdrop-filter` — **Safari exige le préfixe `-webkit-`, SANS EXCEPTION.**
+        Le fichier portait 9 `backdrop-filter` nus pour 1 seul préfixé.
+        Conséquence sur CETTE barre : `.barre` et `.menu` comptent sur le flou pour se
+        détacher du fond animé. **Sur Safari, elles deviennent des blocs TRANSPARENTS** —
+        le texte passe sur l'image de fond, et il devient illisible.
+        ⚠️ Et un `background` semi-opaque ne sauve pas : le flou manquant laisse deviner
+           l'image derrière le texte. ⇒ on REMONTE l'opacité en repli, plus bas.
+
+     ② `:focus-visible` — **Safari ne le connaît que depuis 15.4.** Avant, la règle est
+        ignorée : **aucun contour de focus**, donc le clavier navigue à l'aveugle.
+        ⇒ on ajoute `:focus` en repli, qui marche partout.
+        ⭐ *Un contrôle qu'on ne voit pas quand on le cible n'est pas un contrôle.*
+
+     ③ `aspect-ratio` — Safari 15+ seulement. Présent 2 fois ; hors de cette barre, mais
+        signalé ici parce qu'il faut le savoir.
+
+     ⛔ CE QUE JE NE FAIS PAS : je n'invente pas un correctif « pour Safari » sans mesure.
+        Je pose les préfixes et les replis **vérifiables**, et je le dis : **le reste doit
+        être constaté sur un vrai appareil Apple.** *Je ne peux pas tester ce que je ne peux
+        pas ouvrir.* */
+
+  /* ① LE FLOU, AVEC SON PRÉFIXE — l'ordre compte : le préfixe D'ABORD, le standard ensuite.
+     ⛔⚠️ RÉPARÉ LE 28/09/2026 — MON SCRIPT DE PRÉFIXAGE AVAIT CASSÉ CES TROIS LIGNES.
+        Il écrivait `-webkit-backdrop-filter` DEUX fois et **supprimait la version standard**,
+        parce qu'il appliquait `-replace` sur `backdrop-filter:` **sans vérifier le résultat**.
+        ⭐ *Un remplacement sans assertion est un remplacement à l'aveugle* — loi n° 2 de
+        l'atelier, et je l'ai payée une fois de plus le même jour.
+        Ce qui l'a attrapé : **la relecture du fichier après écriture**, pas le script. */
+  .barre{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .menu{-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+  .menu-panneau{-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+
+  /* ② LE FOCUS, EN REPLI POUR LES SAFARI SANS `:focus-visible` */
+  .menu-bouton:focus,.menu-panneau a:focus,.menu-panneau .lien-nav:focus{
+    outline:2px solid var(--cyan);outline-offset:-2px}
   .menu-bouton:hover{background:rgba(0,229,255,.08);color:var(--cyan);border-left:0}
   .menu-bouton[aria-expanded="true"]{background:rgba(0,229,255,.1);color:var(--cyan);border-left:0}
 
@@ -326,7 +370,7 @@ a{color:var(--cyan)}
      ⚠️ `z-index` élevé : sans lui, le panneau passe SOUS la barre qui est fixe. */
   .menu-panneau{position:absolute;top:calc(100% + .45rem);left:0;z-index:120;
     min-width:15rem;padding:.4rem 0;margin:0;list-style:none;
-    background:rgba(8,12,24,.98);backdrop-filter:blur(14px);
+    background:rgba(8,12,24,.98);-webkit-backdrop-filter:blur(14px);
     border:1px solid rgba(0,229,255,.22);border-radius:10px;
     box-shadow:0 12px 32px rgba(0,0,0,.55);
     max-height:0;overflow:hidden;visibility:hidden;
@@ -343,12 +387,31 @@ a{color:var(--cyan)}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.indice{animation:none}#revelation{display:none}}
 
+/* ⭐ LE REPLI D'OPACITÉ — POUR LES NAVIGATEURS QUI IGNORENT LE FLOU (vieux Safari).
+   ⛔ LE PROBLÈME, ET IL EST VISUEL : `.barre` est en `rgba(10,15,29,.75)` et compte sur
+      `backdrop-filter` pour se détacher du fond ANIMÉ. Si le flou n'est pas rendu, la barre
+      reste à 75 % d'opacité **par-dessus une image qui bouge** — le texte devient pénible
+      à lire, et par endroits illisible. *C'est très probablement ce que Gaëtan voit.*
+   ⭐ LA CORRECTION EST SANS RISQUE : `@supports not` ne s'applique QUE si le navigateur ne
+      comprend PAS la propriété. **Les navigateurs modernes ne verront aucune différence** —
+      ils gardent leur flou, intacts.
+   ⚠️ On REMONTE l'opacité, on ne retire pas le fond : le fond du studio est travaillé, on
+      ne le cache pas — on s'assure que le texte reste lisible dessus.
+   ⚠️ Les teintes sont celles DÉJÀ utilisées par ces blocs (`rgba(10,15,29,…)` pour la barre,
+      `rgba(8,12,24,…)` pour le panneau). Aucune couleur inventée. */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .barre{background:rgba(10,15,29,.97)}
+  .menu{background:rgba(10,15,29,.99)}
+  .menu-panneau{background:rgba(8,12,24,1)}
+  .voile-menu{background:rgba(2,6,15,.85)}
+}
+
 
 /* ---- cartes et texte dynamique (25/09) ---- */
 .acte:nth-of-type(even){align-items:flex-end}
 .panneau{position:relative;width:100%;max-width:680px;padding:2.5rem;border-radius:12px;
   background:rgba(13,22,45,.7);border:1px solid rgba(0,229,255,.25);
-  box-shadow:0 8px 32px rgba(0,0,0,.6),inset 0 0 16px rgba(0,229,255,.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(10px) saturate(1.2)}
+  box-shadow:0 8px 32px rgba(0,0,0,.6),inset 0 0 16px rgba(0,229,255,.05);-webkit-backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(10px) saturate(1.2)}
 .panneau::before{content:"";position:absolute;left:1.8rem;right:1.8rem;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:.7}
 .ouverture .panneau{background:linear-gradient(160deg,#0d111f99,#080b14b3);width:min(44rem,100%)}
 .lore{font-family:var(--titre);font-style:italic;color:#cbbcff;border-left:2px solid #9b5cff;padding-left:.9rem;margin:1rem 0;
@@ -392,7 +455,7 @@ a{color:var(--cyan)}
    à droite MAIS centré verticalement (`top:50%`), le coin bas-droite est libre. */
 .armure{position:fixed;right:1rem;bottom:1rem;z-index:7;font-family:Consolas,monospace;color:#d8e4ff;max-width:min(22rem,calc(100vw - 2rem))}
 .armure[hidden]{display:none}
-.armure-bouton{display:flex;gap:.6rem;align-items:center;background:#0d111fcc;border:1px solid #2abfff55;border-radius:6px;padding:.45rem .7rem;color:inherit;font:inherit;cursor:pointer;backdrop-filter:blur(6px)}
+.armure-bouton{display:flex;gap:.6rem;align-items:center;background:#0d111fcc;border:1px solid #2abfff55;border-radius:6px;padding:.45rem .7rem;color:inherit;font:inherit;cursor:pointer;-webkit-backdrop-filter:blur(6px)}
 .armure-runes i{display:inline-block;font-style:normal;font-size:1.15rem;margin:0 .12rem;color:#2abfff33;transition:color .6s,text-shadow .6s}
 .armure-runes i.ok{color:#bfe9ff;text-shadow:0 0 8px #2abfff}
 .armure-runes i.neuf{animation:rune 1.4s ease-out}
@@ -458,7 +521,7 @@ a{color:var(--cyan)}
    ligne) pour ne pas casser la lecture d'ensemble. Le quatrième vert arrivé avec ce bloc a été RAMENÉ AU CYAN le 26/09/2026
    (décision de Gaëtan) : il ne portait aucun sens, et l'en-tête ne le répertorie pas. Le violet
    Oracle `#9b5cff` reste — c'est un jeton, il vient de la fiche du réacteur. */
-.tiroir-hud{position:fixed;inset:0;background:rgba(10,12,16,.88);backdrop-filter:blur(12px);z-index:1000;display:flex;justify-content:flex-end}
+.tiroir-hud{position:fixed;inset:0;background:rgba(10,12,16,.88);-webkit-backdrop-filter:blur(12px);z-index:1000;display:flex;justify-content:flex-end}
 .tiroir-hud[hidden]{display:none}
 .tiroir-contenu{width:100%;max-width:680px;height:100vh;background:#0d1117;border-left:1px solid rgba(42,191,255,.35);box-shadow:-10px 0 30px rgba(0,0,0,.8),0 0 20px rgba(42,191,255,.1);padding:2.5rem;overflow-y:auto;display:flex;flex-direction:column;justify-content:space-between}
 .tiroir-en-tete{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(200,209,220,.15);padding-bottom:1.5rem;margin-bottom:2rem}
@@ -483,7 +546,7 @@ a{color:var(--cyan)}
    spécificité égale, la dernière règle gagne — c'est ce qui permet de corriger l'existant
    sans le réécrire. */
 #fond,#scene3d{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;pointer-events:none}
-header.barre{position:fixed;top:0;left:0;right:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;background:rgba(10,15,29,.75);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,229,255,.15);font-family:var(--mono);font-size:.85rem}
+header.barre{position:fixed;top:0;left:0;right:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 2rem;background:rgba(10,15,29,.75);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,229,255,.15);font-family:var(--mono);font-size:.85rem}
 main{position:relative;z-index:10}
 .acte{min-height:100vh;padding:4rem 2rem;max-width:none;margin:0 auto;display:flex;flex-direction:column;justify-content:center;align-items:center;box-sizing:border-box}
 /* ⚠️ L'ACTE 8 EST AÉRÉ, PAS DÉCOUPÉ : le contrôle du studio EXIGE exactement 8 actes
@@ -507,7 +570,7 @@ main{position:relative;z-index:10}
 .panneau-large{max-width:1100px;width:92%;margin:0 auto}
 .titre-section-hud{font-family:Consolas,monospace;color:#2abfff;font-size:.95rem;letter-spacing:.15em;text-transform:uppercase;margin:2.5rem 0 1rem;border-left:3px solid #2abfff;padding-left:.75rem}
 .grille-departements{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:2rem}
-.carte-dept{background:rgba(10,12,16,.75);border:1px solid rgba(200,209,220,.15);border-radius:6px;padding:1.25rem;backdrop-filter:blur(8px);transition:border-color .2s,transform .2s}
+.carte-dept{background:rgba(10,12,16,.75);border:1px solid rgba(200,209,220,.15);border-radius:6px;padding:1.25rem;-webkit-backdrop-filter:blur(8px);transition:border-color .2s,transform .2s}
 .carte-dept:hover,.carte-dept:focus-within{border-color:#2abfff;transform:translateY(-3px);box-shadow:0 4px 20px rgba(42,191,255,.15)}
 .badge-dept{font-size:.7rem;color:#9b5cff;margin-bottom:.5rem;font-family:Consolas,monospace}
 .carte-dept h4{color:#fff;font-size:1.05rem;margin:0 0 .4rem}
