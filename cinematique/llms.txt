@@ -1,19 +1,48 @@
 # GL Digital Lab — Génie IT Tek FR
 
-> Studio indépendant à Harponville (Somme, 80560), en France. Développement web,
-> applications métier et intelligence artificielle locale pour PME et collectivités.
-> Les données traitées restent chez le client. Aucun traceur sur ce site.
+> Studio indépendant à Harponville (Somme, 80560), en France. **Neuf capacités
+> techniques**, toutes exécutées en local sur nos propres machines : développement web,
+> applications métier, intelligence artificielle locale, recherche documentaire,
+> génération d'images, de vidéos et de modèles 3D, voix et transcription, audit
+> technique, et production de jeu vidéo. Les données traitées restent chez le client.
+> Aucun traceur sur ce site.
 
 Ce fichier est écrit pour les agents et les moteurs qui lisent un site sans le voir.
 Il dit ce que le studio fait, où c'est, et où aller pour le vérifier.
 
 ## Ce que le studio fait
 
+<!-- ⭐ CETTE SECTION A ÉTÉ COMPLÈTE LE 28/09/2026, ET C'ÉTAIT UN DÉFAUT RÉEL.
+     ⛔ AVANT : trois capacités déclarées — web, applications, IA locale. Or le studio
+        en a NEUF, mesurées le 28/09/2026. Un moteur ou un agent qui lisait ce fichier
+        voyait un développeur web, pas un studio qui fait neuf choses.
+        *Un écosystème qui existe mais qui n'est pas déclaré n'existe pas pour qui
+        le cherche.*
+     ⚠️ ET CHAQUE LIGNE EST VÉRIFIABLE : les outils cités existent sur le disque, et
+        le document `livrables/ECOSYSTEME-GL-DIGITAL-LAB-2026-09-28.md` porte les mesures. -->
+
 - **Développement web** — sites vitrines et sites métier, servis en statique, sans dépendance
   à un service tiers.
 - **Applications métier** — outils internes sur mesure : devis, suivi, prises de rendez-vous.
 - **Intelligence artificielle locale** — modèles exécutés sur les machines du client, pas
   dans un service distant. Aucun document client n'est envoyé à un tiers.
+- **Recherche documentaire** — les documents d'un client deviennent interrogeables, sur ses
+  machines, **avec les sources citées à chaque réponse**. L'assistant dit « je n'ai pas ce
+  document » quand le corpus ne rend rien, au lieu d'inventer.
+- **Génération d'images** — modèles Flux, SDXL et LoRA exécutés localement.
+- **Génération de vidéos** — texte vers vidéo et image vers vidéo, en local.
+- **Modélisation 3D** — génération de modèles depuis une image.
+- **Voix et transcription** — synthèse vocale et transcription audio, en local.
+- **Audit technique** — accessibilité, référencement, qualité web, performance : mesurés,
+  pas estimés, et les résultats défavorables sont publiés comme les autres.
+- **Production de jeu vidéo** — moteur, données et banc d'épreuve, sur un univers original.
+
+## Ce qui relie ces capacités
+
+**Elles tournent sur les mêmes machines et sur le même corpus.** Une vidéo transcrite
+devient un document interrogeable ; un document interrogeable nourrit un prompt ; le
+prompt est rendu localement. *Ce n'est pas neuf outils séparés : c'est un poste qui fait
+neuf choses, et qui ne fait sortir aucune donnée.*
 
 ## Où c'est
 
