@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La langue du code — où le français s'arrête — GL Digital Lab</title>
+<meta name="description" content="Tout ce qui vient de nous est en français ; ce que la machine exige reste tel quel. Une règle, et sa frontière.">
+<link rel="canonical" href="https://gldigitallab.fr/analyses/la-langue-du-code.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="stylesheet" href="../css/site.css?v=20260928">
+</head>
+<body class="page-simple">
+<main class="acte" style="min-height:auto">
+
+<p class="note"><a href="./">← Toutes les analyses</a></p>
+
+<h1>La langue du code — où le français s'arrête</h1>
+<p class="sous">Tout ce qui vient de nous est en français ; ce que la machine exige reste tel quel. Une règle, et sa frontière.</p>
+
+<div class="avertissement">
+  <p><strong>Document publié par GL Digital Tech — GL Digital Lab.</strong></p>
+  <p>Il porte ses sources et leurs dates, et <strong>déclare ce qu'il n'a pas mesuré</strong>.
+  Là où il n'y a pas de mesure, il n'y a pas d'affirmation.</p>
+</div>
+
+<hr>
+
+<h2>La langue du code — où le français s'arrête, et pourquoi</h2>
+<blockquote>
+<p><strong>Écrit le 28/09/2026</strong>, sur une demande de Gaëtan : *« Et les communications internes</p>
+</blockquote>
+<blockquote>
+<p>en français aussi bordel ! »*</p>
+</blockquote>
+<blockquote>
+<p>⚠️ <strong>La règle existait déjà</strong> (<code>AGENTS.md</code> § 0 et § 6) — mais elle parle des <em>documents</em>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Elle ne disait nulle part quoi faire du CODE</strong>, et c'est là que le manque était.</p>
+</blockquote>
+<hr>
+<h3>Le constat, mesuré avant d'écrire quoi que ce soit</h3>
+<p>⛔ <strong>On ne corrige pas une règle sur une impression.</strong> Mesure du 28/09/2026 sur les</p>
+<p><strong>188 fichiers <code>.mjs</code>/<code>.js</code></strong> de <code>forge-ia/</code> :</p>
+<table class="tableau-prix compact"><tbody>
+<tr><td>ce qu'on y trouve</td><td>nombre</td><td>en quelle langue</td></tr>
+<tr><td>noms de variables et de fonctions</td><td>4 788</td><td><strong>français</strong> (<code>bilan</code>, <code>resultats</code>, <code>chercher</code>, <code>resoudreCarnet</code>)</td></tr>
+<tr><td>chaînes affichées, messages, verdicts</td><td>~90 % accentuées</td><td><strong>français</strong></td></tr>
+<tr><td><strong>mots-clés du langage</strong></td><td><strong>8 957</strong></td><td><strong>anglais — et non traduisibles</strong></td></tr>
+<tr><td>noms de variables anglais (<code>the</code>, <code>get</code>, <code>result</code>)</td><td><strong>101</strong></td><td>anglais — <em>ceux-là sont à corriger</em></td></tr>
+</tbody></table>
+<p>⭐ <strong>Conclusion de la mesure, et elle est nuancée</strong> : le français est <strong>déjà</strong> la langue de</p>
+<p>notre code, pour tout ce qui <strong>nous appartient</strong>. Les 8 957 occurrences anglaises sont</p>
+<p><code>const</code>, <code>let</code>, <code>function</code>, <code>return</code>, <code>await</code>, <code>catch</code>, <code>console.log</code> — **la grammaire de</p>
+<p>JavaScript**. Les traduire casse le programme.</p>
+<p>⇒ ⛔ <strong>Ce qui manquait n'est pas une correction : c'est une FRONTIÈRE ÉCRITE.</strong></p>
+<p>*Sans frontière, chacun juge à sa main — et un agent suivant écrira légitimement</p>
+<p><code>console.log("No results found")</code> sans savoir qu'il vient de sortir du français.*</p>
+<hr>
+<h3>LA RÈGLE</h3>
+<blockquote>
+<p>### <strong>Tout ce que nous écrivons est en français. Ce que la machine exige reste tel quel.</strong></p>
+</blockquote>
+<h4>✅ EN FRANÇAIS — sans exception</h4>
+<table class="tableau-prix compact"><tbody>
+<tr><td>quoi</td><td>pourquoi</td></tr>
+<tr><td><strong>Commentaires</strong></td><td>c'est nous qui parlons</td></tr>
+<tr><td><strong>Messages affichés</strong> (<code>console.log</code>, erreurs, verdicts)</td><td>c'est lu par un humain</td></tr>
+<tr><td><strong>Noms de fichiers et de dossiers</strong></td><td><code>epreuve-rag.mjs</code>, pas <code>rag-test.mjs</code></td></tr>
+<tr><td><strong>Noms de fonctions et de variables</strong></td><td><code>resoudreCarnet()</code>, <code>bilan</code>, <code>extraits</code></td></tr>
+<tr><td><strong>Noms de commits</strong></td><td>écrit par nous, lu par nous</td></tr>
+<tr><td><strong>Contenu des <code>throw</code></strong></td><td>c'est un message, pas un identifiant</td></tr>
+</tbody></table>
+<h4>⛔ EN ANGLAIS — et ce n'est pas une entorse, c'est une contrainte</h4>
+<ul>
+<li><strong>Les mots-clés du langage</strong> : <code>const</code>, <code>let</code>, <code>function</code>, <code>return</code>, <code>if</code>, <code>await</code>,</li>
+</ul>
+<p>  <code>catch</code>, <code>throw</code>, <code>class</code>, <code>import</code>, <code>export</code>.</p>
+<ul>
+<li><strong>Les API des bibliothèques</strong> : <code>console.log</code>, <code>JSON.stringify</code>, <code>fetch</code>, <code>readFileSync</code>,</li>
+</ul>
+<p>  <code>addEventListener</code>, <code>querySelector</code>.</p>
+<ul>
+<li><strong>Les valeurs protocolaires</strong> : <code>POST</code>, <code>application/json</code>, <code>utf-8</code>, <code>true</code>, <code>null</code>.</li>
+<li><strong>Les identifiants imposés par un tiers</strong> : noms de modèles, de collections, variables</li>
+</ul>
+<p>  d'environnement, en-têtes HTTP.</p>
+<p>⭐ <strong>Le test, en une question</strong> :</p>
+<blockquote>
+<p><strong>Si je renomme ça, est-ce que quelque chose casse ?</strong></p>
+</blockquote>
+<blockquote>
+<p><em>Oui ⇒ c'est de l'anglais, et on n'y touche pas. Non ⇒ c'est à nous, donc en français.</em></p>
+</blockquote>
+<hr>
+<h3>Les faux amis — là où la règle se joue vraiment</h3>
+<p>⚠️ <strong>Trois cas qui ne se tranchent pas au feeling, et où je me suis trompé ou j'ai hésité :</strong></p>
+<p>1. <strong>Un nom d'API à l'intérieur d'un nom français.</strong></p>
+<p>   <code>function lireFichier()</code> ✅ — mais <code>fs.readFileSync()</code> dedans reste anglais.</p>
+<p>   <em>Le nom est à nous, l'appel est à eux.</em></p>
+<p>2. <strong>Un identifiant qui vient de la DONNÉE, pas du code.</strong></p>
+<p>   <code>CARNETS['Vault-ARKADIA']</code> — c'est le nom réel d'une collection.</p>
+<p>   ⛔ <strong>On ne le traduit pas</strong> : le traduire casse la recherche. <em>Ce n'est pas notre mot.</em></p>
+<p>3. <strong>Un terme technique sans équivalent courant.</strong></p>
+<p>   <code>commit</code>, <code>JSON</code>, <code>GPU</code>, <code>token</code>, <code>prompt</code>, <code>mjs</code>.</p>
+<p>   ✅ <code>AGENTS.md</code> § 6 les autorise explicitement — <strong>on les garde tels quels.</strong></p>
+<hr>
+<h3>Ce qui reste à faire, et ce n'est pas cosmétique</h3>
+<table class="tableau-prix compact"><tbody>
+<tr><td>#</td><td>action</td><td>état</td></tr>
+<tr><td>①</td><td><strong>Cette règle entre dans <code>lois-de-latelier.md</code></strong> — <em>une règle qui vit dans un document isolé ne sera pas lue</em></td><td>⬜ <strong>à faire</strong></td></tr>
+<tr><td>②</td><td>Corriger les <strong>101</strong> noms de variables anglais repérés dans <code>forge-ia/</code></td><td>⬜ <strong>à faire, par lots, avec assertion</strong></td></tr>
+<tr><td>③</td><td>Vérifier que le <strong>site</strong> ne contient aucun libellé anglais visible</td><td>⬜ à mesurer</td></tr>
+</tbody></table>
+<p>⚠️ <strong>POURQUOI ② N'EST PAS FAIT TOUT DE SUITE, ET IL FAUT LE DIRE</strong> :</p>
+<p>renommer une variable dans 188 fichiers est <strong>exactement</strong> le genre de remplacement</p>
+<p>programmatique à l'aveugle que la <strong>loi n° 2</strong> interdit sans assertion. *« Un remplacement</p>
+<p>sans assertion est un remplacement à l'aveugle »* — <strong>payé trois fois en une nuit.</strong></p>
+<p>⇒ Ça se fait <strong>par lots</strong>, avec un test qui passe <strong>avant</strong> et <strong>après</strong>, lot par lot.</p>
+<p>⛔ <strong>Et surtout : renommer ne change aucun comportement.</strong> Le bénéfice est la lisibilité.</p>
+<p><em>On ne casse pas un outil qui marche pour une question de style non mesurée.</em></p>
+<hr>
+<h3>⭐ La leçon, et elle dépasse la langue</h3>
+<blockquote>
+<p><strong>Une règle appliquée mais non écrite n'existe pas.</strong></p>
+</blockquote>
+<blockquote>
+<p>Le code était en français — <strong>à 90 %</strong> — mais <strong>rien ne le disait</strong>. Donc rien ne</p>
+</blockquote>
+<blockquote>
+<p>l'imposait, et le prochain fichier pouvait partir en anglais sans que personne</p>
+</blockquote>
+<blockquote>
+<p>puisse dire « c'est une entorse ».</p>
+</blockquote>
+<blockquote>
+<p><em>Une règle non écrite ne se transmet pas : elle se réinvente à chaque session.</em></p>
+</blockquote>
+<p>⚠️ <strong>Et le corollaire, qui est la partie honnête</strong> : quand on m'a dit « c'est en anglais »,</p>
+<p><strong>j'ai d'abord mesuré</strong> — et la mesure a dit « c'est déjà en français, sauf ce qui ne peut</p>
+<p>pas l'être ». ⛔ <strong>Je n'ai pas dit « oui tu as raison » pour faire plaisir.</strong></p>
+<p>*Un agent qui acquiesce sans mesurer fabrique une correction inutile — et c'est exactement</p>
+<p>le défaut que ce studio a payé cinq fois aujourd'hui.*</p>
+
+<hr>
+
+<p class="note"><a href="./">← Toutes les analyses</a> ·
+<a href="../index.html">Le site</a></p>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Production 100 % française — où on en est — GL Digital Lab</title>
+<meta name="description" content="Ce qui est déjà souverain, ce qui pourrait le devenir, et ce qui ne le sera pas. Avec les mesures.">
+<link rel="canonical" href="https://gldigitallab.fr/analyses/production-100-francaise.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="stylesheet" href="../css/site.css?v=20260928">
+</head>
+<body class="page-simple">
+<main class="acte" style="min-height:auto">
+
+<p class="note"><a href="./">← Toutes les analyses</a></p>
+
+<h1>Production 100 % française — où on en est</h1>
+<p class="sous">Ce qui est déjà souverain, ce qui pourrait le devenir, et ce qui ne le sera pas. Avec les mesures.</p>
+
+<div class="avertissement">
+  <p><strong>Document publié par GL Digital Tech — GL Digital Lab.</strong></p>
+  <p>Il porte ses sources et leurs dates, et <strong>déclare ce qu'il n'a pas mesuré</strong>.
+  Là où il n'y a pas de mesure, il n'y a pas d'affirmation.</p>
+</div>
+
+<hr>
+
+<h2>Production 100 % française — où on en est, mesuré</h2>
+<blockquote>
+<p><strong>Objectif de Gaëtan, 28/09/2026</strong> : *« Faire de la production locale à 100 %, pas d'appel</p>
+</blockquote>
+<blockquote>
+<p>à Microsoft, faire du produit 100 % français. »*</p>
+</blockquote>
+<blockquote>
+<p>⚠️ <strong>Cet objectif est mesurable. Ce document le mesure, et nomme les trois trous.</strong></p>
+</blockquote>
+<hr>
+<h3>⭐ OÙ LE STUDIO EN EST — MESURÉ LE 28/09/2026</h3>
+<table class="tableau-prix compact"><tbody>
+<tr><td>couche</td><td>état</td><td>souverain ?</td></tr>
+<tr><td><strong>Modèles de langue</strong></td><td><strong>12 en local</strong> (Ollama), <strong>42,6 Go</strong></td><td>✅ <strong>oui</strong> — <em>aucun appel à OpenAI, Anthropic, Google, Microsoft</em></td></tr>
+<tr><td><strong>Données</strong></td><td>⛔ <strong>aucune ne sort</strong> de la machine</td><td>✅ <strong>oui</strong></td></tr>
+<tr><td><strong>Génération d'images</strong></td><td>ComfyUI local (<strong>arrêté au 28/09</strong>)</td><td>✅ oui, <em>quand il tourne</em></td></tr>
+<tr><td><strong>Inférence</strong></td><td>RTX 3080, <strong>10 240 MiB</strong> (10 Go)</td><td>⚠️ <strong>matériel américain</strong></td></tr>
+<tr><td><strong>Processeur</strong></td><td>Intel i7-11700KF</td><td>⚠️ <strong>américain</strong></td></tr>
+<tr><td><strong>Hébergement du site</strong></td><td><strong>o2switch</strong> — Clermont-Ferrand, <strong>français</strong></td><td>✅ <strong>oui</strong></td></tr>
+<tr><td><strong>Dépôt de code</strong></td><td>⛔ <strong>GitHub — Microsoft</strong></td><td>⛔ <strong>NON</strong></td></tr>
+<tr><td><strong>Chaîne de déploiement</strong></td><td>⛔ <strong>GitHub Actions — Microsoft</strong></td><td>⛔ <strong>NON</strong></td></tr>
+<tr><td><strong>Système d'exploitation</strong></td><td>⛔ <strong>Windows 11 — Microsoft</strong></td><td>⛔ <strong>NON</strong></td></tr>
+</tbody></table>
+<p>⇒ ⭐ <strong>« Pas d'appel à Microsoft » : c'est DÉJÀ VRAI pour l'IA.</strong> Aucun modèle distant,</p>
+<p>aucune API payante, aucune donnée qui sort. **C'est le résultat de dix-huit mois de</p>
+<p>discipline** — <em>et c'est rare.</em></p>
+<hr>
+<h3>⛔ LES TROIS TROUS, ET ILS NE SONT PAS DE LA MÊME TAILLE</h3>
+<h4>① <strong>Microsoft dans la chaîne de production</strong> — le plus visible</h4>
+<p><strong>Le site est déployé par GitHub Actions.</strong> Le code vit chez <strong>Microsoft</strong>, le</p>
+<p>déploiement est exécuté <strong>par Microsoft</strong>.</p>
+<p>⇒ ⚠️ <strong>Ce n'est pas un appel d'IA — mais c'est une dépendance de production.</strong></p>
+<p><em>Si GitHub tombe, on ne déploie plus. Si GitHub change ses conditions, on subit.</em></p>
+<p><strong>✅ Ce qui existe pour le remplacer, en français :</strong></p>
+<ul>
+<li><strong>Forgejo</strong> / <strong>Gitea</strong> — auto-hébergeable, libre ;</li>
+<li><strong>GitLab</strong> — auto-hébergeable (éditeur <strong>franco-américain</strong>, ⚠️ à vérifier) ;</li>
+<li><strong>Woodpecker CI</strong>, <strong>Drone</strong> — chaînes d'intégration auto-hébergées.</li>
+</ul>
+<p>⚠️ <strong>Et une réserve mesurée</strong> : <strong>o2switch est du mutualisé.</strong> Y faire tourner un</p>
+<p>serveur Git + CI est <strong>possible mais pas prévu pour ça.</strong> <em>Ça se vérifie avant de promettre.</em></p>
+<h4>② <strong>Le silicium et le système</strong> — le trou qu'on ne comble pas</h4>
+<p>⛔ <strong>Windows, Intel, NVIDIA.</strong> Les trois sont <strong>américains</strong>.</p>
+<p>⇒ ⭐ <strong>Et c'est le point honnête de ce document</strong> : *personne, en Europe, ne fait un</p>
+<p>poste de travail 100 % européen de bout en bout.*</p>
+<ul>
+<li><strong>système</strong> : Linux ✅ <em>— mais le noyau s'appuie sur du matériel non-européen</em> ;</li>
+<li><strong>CPU</strong> : ⛔ <em>pas d'alternative européenne grand public</em> ;</li>
+<li><strong>GPU</strong> : ⛔ <em>pas d'accélérateur européen de pointe en production</em>.</li>
+</ul>
+<p>⚠️ <strong>Le studio travaille sur DEUX postes</strong> : un sous <strong>Windows</strong> et un sous <strong>Linux Mint</strong>.</p>
+<p>⇒ <strong>Une partie du parc est déjà sous Linux.</strong> <em>C'est un début réel, pas théorique.</em></p>
+<p>⚠️ <strong>Les noms de machines ne sont pas publiés</strong> : ils n'ont **aucune utilité pour le</p>
+<p>lecteur**, et la règle du studio (<code>REGLE-ce-qui-se-publie</code>, question ②) dit de ne pas</p>
+<p>donner ce qui n'est pas à nous de dire. <em>Un nom d'hôte est une prise.</em></p>
+<h4>③ <strong>Les modèles ouverts viennent d'ailleurs</strong> — même s'ils tournent ici</h4>
+<p>⚠️ <strong>Distinction qui compte</strong> :</p>
+<ul>
+<li><strong>faire tourner un modèle localement</strong> = les données ne sortent pas ✅ ;</li>
+<li><strong>que le modèle soit français</strong> = autre chose ⛔.</li>
+</ul>
+<p><strong>Les 12 modèles d'Ollama sont-ils français ?</strong> ⛔ <strong>Non</strong> — pour la plupart.</p>
+<p><strong>Mistral est le seul acteur européen de premier rang</strong>, et **Gaëtan a prévu de les</p>
+<p>contacter.** *C'est exactement la bonne démarche — et elle se mesure : combien de nos</p>
+<p>12 modèles sont français ?*</p>
+<hr>
+<h3>⭐ CE QUE « 100 % FRANÇAIS » VEUT DIRE AUJOURD'HUI — ET CE QUE ÇA NE PEUT PAS</h3>
+<table class="tableau-prix compact"><tbody>
+<tr><td>niveau</td><td>atteignable ?</td><td>comment</td></tr>
+<tr><td><strong>Les données ne sortent pas</strong></td><td>✅ <strong>déjà fait</strong></td><td>modèles locaux</td></tr>
+<tr><td><strong>Aucun appel d'IA à un tiers</strong></td><td>✅ <strong>déjà fait</strong></td><td>Ollama, ComfyUI</td></tr>
+<tr><td><strong>L'hébergement du site est français</strong></td><td>✅ <strong>déjà fait</strong></td><td>o2switch</td></tr>
+<tr><td><strong>La chaîne de déploiement est française</strong></td><td>⚠️ <strong>possible</strong></td><td>Forgejo auto-hébergé <em>— à vérifier</em></td></tr>
+<tr><td><strong>Les modèles sont européens</strong></td><td>⚠️ <strong>partiel</strong></td><td>Mistral <em>— à mesurer</em></td></tr>
+<tr><td><strong>Le matériel est européen</strong></td><td>⛔ <strong>non</strong></td><td><em>aucune offre de pointe</em></td></tr>
+</tbody></table>
+<p>⇒ ⭐ <strong>« Nécessaire et suffisant », en une phrase</strong> :</p>
+<blockquote>
+<p><strong>Souverain sur la DONNÉE et sur l'USAGE. Honnête sur le MATÉRIEL.</strong></p>
+</blockquote>
+<p>*On peut garantir qu'aucune donnée ne sort. On ne peut pas garantir que la puce est</p>
+<p>européenne — et le dire vaut mieux que de le promettre.*</p>
+<hr>
+<h3>⛔ CE QUE CE DOCUMENT NE FAIT PAS</h3>
+<ul>
+<li>⛔ <strong>Il ne propose aucune migration.</strong> <em>C'est une décision, et elle a un coût.</em></li>
+<li>⛔ <strong>Il ne dit pas que GitHub est un danger.</strong> <em>Il dit que c'est une dépendance.</em></li>
+<li>⛔ <strong>Il ne prétend pas que « 100 % » est atteignable en matériel.</strong></li>
+</ul>
+<p>  <em>Le dire est la seule position tenable.</em></p>
+<ul>
+<li>⚠️ <strong>Deux chiffres restent à vérifier</strong> :</li>
+</ul>
+<p>  - <strong>combien des 12 modèles Ollama sont européens</strong> — <em>à mesurer</em> ;</p>
+<p>  - <strong>si o2switch autorise un serveur Git + CI</strong> — <em>à vérifier dans les CGU, pas à supposer</em>.</p>
+<hr>
+<h3>⭐ LA PLACE DU STUDIO, ET ELLE EST RÉELLE</h3>
+<p><strong>Le studio ne fait pas de politique industrielle. Il fait une démonstration.</strong></p>
+<p>⭐ <strong>Et elle tient en trois lignes</strong> :</p>
+<ul>
+<li><strong>12 modèles</strong> qui tournent <strong>en local</strong>, <strong>42,6 Go</strong> ;</li>
+<li><strong>aucun appel payant</strong>, <strong>aucune donnée qui sort</strong> ;</li>
+<li><strong>sur une machine de 2021, avec 10 Go de VRAM.</strong></li>
+</ul>
+<p>⇒ <em>Dans un débat où l'on parle d'infrastructures en milliards, </em>*une seule machine qui</p>
+<p>tourne vraiment vaut mieux qu'un schéma**.*</p>
+<p><strong>Et c'est mesurable par n'importe qui : les commandes sont dans ce document.</strong></p>
+<hr>
+<h3>⭐⭐ LE CADRE JURIDIQUE — ARTICLE 5 DE LA CONSTITUTION</h3>
+<blockquote>
+<p>**Gaëtan, 28/09/2026 : <em>« Article 5 de la Constitution. »</em>**</p>
+</blockquote>
+<blockquote>
+<p><strong>Article 5</strong> — *« Le Président de la République veille au respect de la Constitution.</p>
+</blockquote>
+<blockquote>
+<p>Il assure, par son arbitrage, le fonctionnement régulier des pouvoirs publics ainsi que</p>
+</blockquote>
+<blockquote>
+<p>la <strong>continuité de l'État</strong>. Il est le garant de l'<strong>indépendance nationale</strong>, de</p>
+</blockquote>
+<blockquote>
+<p>l'intégrité du territoire et du <strong>respect des traités</strong>. »*</p>
+</blockquote>
+<h4>⭐ LES TROIS TERMES QUI CONCERNENT DIRECTEMENT CE DOCUMENT</h4>
+<table class="tableau-prix compact"><tbody>
+<tr><td>le terme</td><td>ce qu'il implique concrètement</td></tr>
+<tr><td><strong>« continuité de l'État »</strong></td><td>⛔ <strong>une chaîne de déploiement chez Microsoft n'est pas une continuité garantie</strong> — <em>si GitHub tombe, un service public s'arrête</em></td></tr>
+<tr><td><strong>« indépendance nationale »</strong></td><td>⛔ <strong>les couches ③ (silicium) et ⑤ (modèles)</strong> — <em>le vrai écart, mesuré</em></td></tr>
+<tr><td><strong>« respect des traités »</strong></td><td>✅ <strong>RGPD, EHDS</strong> — <em>c'est par là que l'Europe se construit, pas par le repli</em></td></tr>
+</tbody></table>
+<p>⇒ ⭐ <strong>L'article 5 donne un CADRE JURIDIQUE à ce que Gaëtan décrit.</strong> Ce n'est plus</p>
+<p><em>« il faudrait être souverain »</em> : c'est **une obligation constitutionnelle de</p>
+<p>continuité<strong>, qui se traduit par </strong>ne pas dépendre d'un acteur unique et étranger pour</p>
+<p>un service essentiel.**</p>
+<h4>⛔ MAIS IL NE DIT PAS QUI CONSTRUIT — ET IL FAUT LE DIRE</h4>
+<p><strong>L'article 5 dit que l'État VEILLE et ARBITRE.</strong></p>
+<p>⇒ ⛔ <strong>Un studio privé ne peut pas s'auto-attribuer une mission de continuité.</strong></p>
+<p>Il peut :</p>
+<ul>
+<li><strong>la proposer</strong> ;</li>
+<li><strong>la démontrer</strong> ;</li>
+<li><strong>s'y adosser</strong> (établissement public, collectivité).</li>
+</ul>
+<p>⭐ <em>C'est exactement ce que Gaëtan a dit du CNAM : <strong>ça se propose, ça ne se décrète pas.</strong></em></p>
+<h4>⭐ ET LE STUDIO A DÉJÀ UNE DÉMONSTRATION DE CONTINUITÉ</h4>
+<p>⚠️ <strong>À petite échelle, et ce n'est pas une figure de style</strong> :</p>
+<ul>
+<li><strong>12 modèles en local</strong> — <em>aucun appel à un service tiers</em> ;</li>
+<li><strong>aucune donnée qui sort</strong> ;</li>
+<li><strong>aucun abonnement, aucune API payante</strong>.</li>
+</ul>
+<p>⇒ ⭐ <strong>Si Internet tombe, le studio continue de fonctionner.</strong></p>
+<p><em>La plupart des entreprises ne peuvent pas en dire autant — et c'est vérifiable.</em></p>
+<p>⚠️ <strong>ET LA LIMITE, ÉCRITE NOIR SUR BLANC</strong> : le studio <strong>reste dépendant</strong> de</p>
+<p><strong>GitHub</strong> (dépôt + déploiement) et de <strong>Microsoft</strong> (Windows). *La continuité est</p>
+<p>démontrée pour l'IA, pas encore pour la chaîne de publication.*</p>
+<p>⇒ <strong>C'est le premier chantier si cet objectif devient une priorité</strong> — et il est</p>
+<p><strong>faisable</strong> : Forgejo auto-hébergé, à condition de vérifier que l'hébergeur le permet.</p>
+
+<hr>
+
+<p class="note"><a href="./">← Toutes les analyses</a> ·
+<a href="../index.html">Le site</a></p>
+
+</main>
+</body>
+</html>
