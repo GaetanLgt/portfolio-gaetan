@@ -46,7 +46,24 @@ const MOTIFS = [
   {
     id: 'NOM-MACHINE',
     gravite: 'BLOQUANT',
-    motif: /\bEVA-01\b|\bCalcifer\b|neosp/gi,
+    // ⛔⛔ LE MOTIF A ÉTÉ ÉLARGI LE 29/09/2026 — IL PASSAIT À CÔTÉ, ET C'EST MESURÉ.
+    //
+    //    Ancien motif : /\bEVA-01\b|\bCalcifer\b|neosp/gi
+    //    ⚠️ Il exigeait le TIRET. Or la page `gldigitallab.fr/eva01/` écrit « EVA01 »
+    //       — **sans tiret** — dans son `<title>` et son `<h1>` :
+    //         « EVA01 — assistant IA local, mémoire et contrôle humain »
+    //       Résultat mesuré : le contrôle a rendu **« 0 bloquant »** sur une page qui
+    //       publie le nom de la machine de production, sans `noindex`, donc indexable.
+    //
+    //    ⭐ *Un garde-fou qui ne couvre qu'une ORTHOGRAPHE est une porte* — c'est la
+    //       loi 4 de l'atelier, appliquée non pas à un chemin mais à une écriture.
+    //       Et le défaut est plus vicieux qu'un chemin manquant : le contrôle ne
+    //       restait pas muet, il rendait un ✅ **faux**.
+    //
+    //    ⇒ Le motif accepte désormais les formes réellement observées : EVA-01, EVA01,
+    //      EVA 01, EVA_01, eva01. *On ne protège pas un mot, on protège la MACHINE —
+    //      donc toutes les façons de l'écrire.*
+    motif: /\bEVA[\s\-_]?0?1\b|\bCalcifer\b|neosp/gi,
     pourquoi: 'un nom d\'hote est une prise — et il n\'a aucune utilite pour un lecteur',
   },
   {
@@ -60,6 +77,49 @@ const MOTIFS = [
     gravite: 'BLOQUANT',
     motif: /\b(?:192\.168|10\.\d{1,3}|172\.(?:1[6-9]|2\d|3[01]))\.\d{1,3}\.\d{1,3}\b/g,
     pourquoi: 'une adresse privee situe un reseau',
+  },
+  {
+    id: 'ADRESSE-LOCALE',
+    gravite: 'BLOQUANT',
+    // ⛔ AJOUTÉ LE 29/09/2026 — CE MOTIF MANQUAIT, ET LE TROU ÉTAIT LARGE.
+    //
+    //    Le motif `IP-PRIVEE` couvrait 192.168.x, 10.x et 172.16-31.x — **mais pas la
+    //    boucle locale**. Or `127.0.0.1` est ce qu'on publie le plus facilement par
+    //    accident : un exemple de configuration, une capture de terminal, une phrase
+    //    de preuve.
+    //
+    //    MESURÉ le 29/09/2026, en ligne :
+    //      · `gldigitallab.fr/monde/`  → `127.0.0.1` ×2
+    //      · `gldigitallab.fr/demos/`  → `127.0.0.1` ×7
+    //    et la page `/demos/` affiche la phrase « http://127.0.0.1:8080/ répond 200 ».
+    //
+    //    ⭐ Le second défaut est plus grave que le premier : **cette adresse ne peut
+    //       rien vouloir dire pour un visiteur** — sa machine à lui n'a pas ce service
+    //       sur ce port. On publie donc une preuve que le lecteur ne peut pas vérifier.
+    //       *Une affirmation invérifiable présentée comme une preuve est pire qu'une
+    //       affirmation absente : elle apprend à croire sans vérifier.*
+    //
+    //    ⚠️ `localhost` A ÉTÉ SÉPARÉ DE CE MOTIF LE MÊME JOUR, APRÈS UN FAUX POSITIF MESURÉ.
+    //       Première version : `/\b127\.0\.0\.1\b|\blocalhost\b/gi`, en BLOQUANT.
+    //       Résultat : `cinematique/src/copier-adresse.js:18` refusée — un **commentaire**
+    //       qui explique que `navigator.clipboard` n'existe que sur HTTPS ou localhost.
+    //       ⇒ Faux positif, et il aurait **cassé le déploiement** dès le premier commit.
+    //       ⭐ La nuance qui les sépare n'est pas l'orthographe, c'est le RISQUE :
+    //          `127.0.0.1` désigne un service PRÉCIS que le lecteur ne peut pas joindre ;
+    //          `localhost` ne désigne rien de précis — tout le monde en a un, et l'écrire
+    //          n'apprend rien. **Il alerte, il ne bloque pas.**
+    motif: /\b127\.0\.0\.1\b/g,
+    pourquoi: 'une adresse locale ne prouve rien pour un lecteur — sa machine n\'a pas ce service',
+  },
+  {
+    id: 'LOCALHOST',
+    gravite: 'ALERTE',
+    // ⚠️ ALERTE SEULEMENT, ET LA RAISON EST MESURÉE : le mot apparaît légitimement dans
+    //    du code de développement (repli quand `location.hostname` est vide) et dans des
+    //    commentaires de documentation. *Un contrôle qui refuse du code correct finit par
+    //    être désactivé* — et celui-ci aurait bloqué un fichier sain dès sa première pose.
+    motif: /\blocalhost\b/g,
+    pourquoi: '⚠️ souvent légitime dans du code — à vérifier, pas à bloquer',
   },
   {
     id: 'SECRET',
@@ -134,6 +194,11 @@ const CAS_EPREUVE = [
   { nom: 'secret en clair', texte: 'API_KEY = "abcdef1234567890ghij"', fautif: true },
   { nom: 'Bearer', texte: 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6', fautif: true },
   { nom: 'nom de personne', texte: 'M. Dupont a signe le contrat.', fautif: true },
+  // ⚠️ CES DEUX CAS SONT AJOUTÉS LE 29/09/2026 PARCE QUE LE CONTRÔLE LES LAISSAIT PASSER.
+  //    *On prouve qu'un garde-fou mord en rouvrant le défaut exprès* — les deux
+  //    défauts ci-dessous étaient EN LIGNE quand ils ont été trouvés.
+  { nom: 'nom de machine SANS tiret (le trou comblé)', texte: 'La page EVA01 decrit le poste de production.', fautif: true },
+  { nom: 'adresse de boucle locale', texte: 'Le service repond sur http://127.0.0.1:8080/ en 11 ko.', fautif: true },
   {
     nom: 'TEXTE PROPRE — doit passer',
     texte: 'Le studio fait tourner douze modeles en local, sans appel externe.\nLes sources sont datees du 28/09/2026.',

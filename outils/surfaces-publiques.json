@@ -1,0 +1,41 @@
+{
+  "_lisezmoi": [
+    "LES SURFACES PUBLIQUES DE gldigitallab.fr — la liste que compare comparer-depot-serveur.mjs.",
+    "",
+    "⛔ POURQUOI CETTE LISTE EST ÉCRITE À LA MAIN, ET CE QUE ÇA COÛTE.",
+    "   Le serveur o2switch expose le FTP en écriture mais PAS de listage HTTP :",
+    "   rien ne permet d'énumérer ce qui est en ligne. On ne peut donc confronter",
+    "   que les URLs qu'on désigne.",
+    "   ⭐ *Un inventaire qui ne se découvre pas s'écrit — et une liste écrite à la",
+    "      main devient fausse le jour où on l'oublie.* C'est une dette ASSUMÉE, et",
+    "      elle est écrite ici pour qu'on ne la prenne pas pour un balayage complet.",
+    "",
+    "⚠️ LA LEÇON DU 29/09/2026 : /monde/ publiait 30 documents internes — trois",
+    "   rapports d'incident, un plan de réponse, deux logs serveur, une",
+    "   transcription portant le nom de la machine, et le nom d'un client.",
+    "   Elle a été trouvée **en inventoriant des URLs une par une**, pas par un",
+    "   contrôle. C'est cette page qui a produit cet outil.",
+    "",
+    "⚠️ QUAND ON AJOUTE UNE SURFACE AU SITE, ON L'AJOUTE ICI. Sinon le contrôle",
+    "   ne la regarde pas — et un contrôle qui ne regarde pas dit « tout va bien »."
+  ],
+  "misAJour": "2026-09-29",
+  "urls": [
+    "/",
+    "/analyses/",
+    "/formation/",
+    "/veille/",
+    "/demos/",
+    "/services/",
+    "/laboratoire/",
+    "/eva01/",
+    "/monde/",
+    "/contact/",
+    "/mentions-legales.html",
+    "/confidentialite.html",
+    "/sitemap.xml",
+    "/robots.txt",
+    "/llms.txt",
+    "/.well-known/security.txt"
+  ]
+}

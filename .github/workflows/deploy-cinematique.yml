@@ -372,3 +372,45 @@ jobs:
             echec=1
           fi
           echo "✅ La racine répond."
+
+      # ⛔⛔ LA SURFACE SERVIE EST-ELLE VERSIONNÉE ? — ajouté le 29/09/2026
+      #
+      # ⚠️ LE DÉFAUT QUI A PRODUIT CETTE ÉTAPE, ET IL EST LE PLUS GRAVE TROUVÉ À CE JOUR :
+      #
+      #    `https://gldigitallab.fr/monde/` répondait 200 et publiait **30 documents
+      #    internes du studio** — trois rapports d'incident, un plan de réponse à
+      #    incident, deux journaux serveur, une transcription portant le nom de la
+      #    machine de production, et le nom d'un client. **Aucun `noindex`.**
+      #
+      #    ⛔ ET AUCUN CONTRÔLE NE POUVAIT LA VOIR, PAS PAR NÉGLIGENCE :
+      #       la porte de publication lit les fichiers de `cinematique/`.
+      #       `/monde/` **n'est pas dans `cinematique/`** — elle est sur le serveur,
+      #       posée par le pipeline Vue arrêté le 26/09, **sans source versionnée**.
+      #
+      #    ⭐ *Un garde-fou qui ne couvre qu'un chemin est une porte.* Ici, le chemin
+      #       manquant n'était pas un fichier : c'était **tout ce qui est servi sans
+      #       être dans le dépôt**. Un fichier propre devient sale en étant servi —
+      #       et rien ne comparait les deux.
+      #
+      #    Mesure du 29/09/2026 : **5 surfaces servies sans source** (`/services/`,
+      #    `/laboratoire/`, `/eva01/`, `/monde/`, `/contact/`), et **19 bloquants** de
+      #    publication sur trois d'entre elles quand on les passe au contrôle.
+      #
+      # ⛔ CE N'EST PAS ENCORE UNE PORTE, ET ELLE LE DIT. Elle ne bloque pas, parce
+      #    qu'elle échouerait à CHAQUE déploiement tant que les 5 pages ne sont pas
+      #    tranchées — et **un garde-fou qu'on ne peut pas satisfaire est un garde-fou
+      #    qu'on désactive**. Ici elle **mesure et publie l'écart** dans le journal du
+      #    run, pour qu'il ne dépende plus de quelqu'un qui pense à le chercher.
+      #    ⇒ Le jour où les 5 surfaces sont tranchées, on retire `continue-on-error`.
+      #
+      # ⚠️ SA LIMITE, ÉCRITE POUR QU'ON NE LA PRENNE PAS POUR UN BALAYAGE : le serveur
+      #    n'expose aucun listage. Cet outil confronte **la liste de
+      #    `outils/surfaces-publiques.json`** — pas l'intégralité de `public_html/`.
+      #    Une page en ligne absente de cette liste reste invisible. *Un contrôle dont
+      #    on ignore la limite finit par être cru au-delà de ce qu'il fait.*
+      - name: 🔭 Surface servie — dépôt ↔ serveur (RAPPORT, ne bloque pas)
+        continue-on-error: true
+        run: |
+          echo "⛔ Écart mesuré, PAS un échec de déploiement. Voir le commentaire du workflow."
+          node outils/comparer-depot-serveur.mjs || true
+
