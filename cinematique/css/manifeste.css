@@ -50,15 +50,40 @@
    ============================================================================ */
 
 .manifeste {
-  /* ---- LES JETONS DE LA TRAME ---- */
-  --mf-papier:   #efede7;   /* le fond papier, légèrement chaud */
-  --mf-papier-2: #e7e4dd;   /* les zones encadrées */
-  --mf-encre:    #14140f;   /* presque noir, jamais pur */
-  --mf-trait:    #14140f;   /* les bords francs */
-  --mf-grille:   #cfcbc0;   /* la grille de tracé, très pâle */
-  --mf-vert:     #2f7d5a;   /* le vert du tampon et des chiffres prouvés */
-  --mf-rouge:    #c4006b;   /* l'avertissement de la slide 5 */
-  --mf-gris:     #6b6a62;   /* le texte secondaire */
+  /* ---- LES JETONS DE LA TRAME — INVERSÉS LE 29/09/2026 --------------------
+     ⛔ DEMANDE DE GAËTAN : « et inverse les couleurs suite notre DA ! »
+
+     ⚠️ CE QUI N'ALLAIT PAS, ET LE FICHIER LE DISAIT DÉJÀ à la ligne 82 : la trame était
+        un document PAPIER CLAIR posée sur un site SOMBRE. Le commentaire d'origine
+        nommait le résultat sans en tirer la conséquence : *« un en-tête sombre, un corps
+        papier et un pied sombre — trois thèmes sur une page. »*
+        ⭐ Il avait raison, et la règle qui suivait ne corrigeait qu'un tiers du problème :
+        elle forçait le `<body>` en papier, donc **elle aggravait l'écart avec l'en-tête
+        au lieu de le réduire.**
+
+     ⭐ LA DA DU STUDIO EST ÉCRITE — canon du 25/09/2026 : NOIR · VERT · ARGENT. Et le
+        site public la suit déjà (`site.css` : `#0d111f` ×6, `#080b14` ×4, `#c8d1dc` ×6,
+        `#2abfff` ×44). **C'est la trame qui était à contre-courant, pas le site.**
+        ⇒ On ne peint pas le site en clair : on retourne le document.
+
+     ⛔ ET LES VALEURS NE SONT PAS INVENTÉES — elles sont PRISES du site existant, qui les
+        sert déjà à ses visiteurs. Deux teintes nouvelles sont introduites, et elles
+        viennent du canon, pas d'un nuancier : le vert `#2ce39b` et le rouge `#ff5a5f`.
+
+     ⚠️ ⚠️ POINT À SIGNALER, ET JE NE LE TRANCHE PAS — LE VERT. Le canon dit que le VERT
+        porte la SANTÉ MENTALE, et qu'« un jeton déclaré n'est pas un jeton posé : on le
+        pose là où le propos est la santé mentale, jamais pour décorer un bouton ».
+        Or `--mf-vert` sert ici au **tampon `[MESURÉ]`** et aux chiffres prouvés — ce
+        n'est pas de la santé mentale, c'est de la PREUVE.
+        ⇒ Deux lectures possibles : soit le studio a deux usages du vert et le canon n'en
+           décrit qu'un, soit le tampon doit changer de teinte. **Décision de Gaëtan.** */
+  --mf-papier:   #0d111f;   /* le fond NUIT — la valeur que site.css sert déjà */
+  --mf-papier-2: #161b28;   /* les zones encadrées, à peine plus claires */
+  --mf-encre:    #c8d1dc;   /* ARGENT — le texte. Pris de site.css. */
+  --mf-trait:    #c8d1dc;   /* les bords francs, en argent */
+  --mf-grille:   #1e2634;   /* la grille de tracé, sombre — elle guide sans crier */
+  --mf-vert:     #2ce39b;   /* LE VERT DU CANON (cf. avertissement ci-dessus) */
+  --mf-rouge:    #ff5a5f;   /* LE ROUGE DU CANON — le monde physique */
 
   --mf-titre: "Arial Narrow", "Liberation Sans Narrow", "Franklin Gothic Medium",
               "Helvetica Neue", Arial, sans-serif;
@@ -80,15 +105,21 @@
 }
 
 /* ---- LE CORPS DE LA PAGE, QUAND ELLE PORTE LA TRAME ---------------------
-   ⚠️ `site.css` pose un fond sombre sur `body` (le thème spatial). La trame est un
-   document CLAIR : sans cette règle, on aurait un en-tête sombre, un corps papier et
-   un pied sombre — trois thèmes sur une page.
-   ⛔ La règle est portée par une CLASSE posée sur `<body>`, et non par `body` tout
-   court : *les autres pages du site ne changent pas.* */
+   ⭐ RÉÉCRIT LE 29/09/2026 — LA RÈGLE FAISAIT L'INVERSE DE CE QU'IL FALLAIT.
+   ⚠️ Elle disait : *« site.css pose un fond sombre sur body. La trame est un document
+      CLAIR : sans cette règle, on aurait un en-tête sombre, un corps papier et un pied
+      sombre — trois thèmes sur une page. »*
+   ⛔ Et elle forçait donc le `<body>` en papier `#efede7`. **Elle ne supprimait pas le
+      troisième thème : elle le déplaçait dans l'en-tête et le pied.** Le défaut nommé
+      était le bon ; le remède allait dans le mauvais sens.
+   ⇒ La trame est maintenant sombre (cf. les jetons ci-dessus) : plus besoin de contredire
+     `site.css`. **On s'aligne dessus, et les trois thèmes n'en font plus qu'un.**
+   ⚠️ La règle est portée par une CLASSE posée sur `<body>`, et non par `body` tout
+     court : *les autres pages du site ne changent pas.* */
 body.trame-manifeste {
-  background-color: #efede7;
+  background-color: #0d111f;
   background-image: none;
-  color: #14140f;
+  color: #c8d1dc;
   padding-top: 0;
 }
 
@@ -213,6 +244,35 @@ body.trame-manifeste {
 
 /* la grille de boîtes : deux colonnes sur écran large */
 .mf-grille { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); }
+
+/* ---- UNE GRILLE PEUT ÊTRE UNE LISTE — ajouté le 29/09/2026 ------------------
+   ⚠️ MOTIF : deux consignes de Gaëtan le même jour — « le parcours en sept étapes <=
+      accessibilité ! » puis « c'est une trame, boxe-moi le tout ! »
+      Les sept étapes étaient un `<ol>` NU, « en clair » de son propre aveu.
+
+   ⛔⛔ LE PIÈGE, ET C'EST LE CŒUR DU SUJET : mettre un `<li>` « en boîte » se fait
+      naturellement en le remplaçant par un `<div class="mf-boite">`.
+      **Ce geste DÉTRUIT la liste** — un lecteur d'écran annonce sept paragraphes au
+      lieu de « liste de sept éléments » — **et personne ne le voit**, puisque le rendu
+      visuel est rigoureusement identique. *C'est le genre de régression qui ne se
+      découvre qu'à l'usage, et seulement par ceux qui en dépendent.*
+      ⇒ Ce sont donc les `<li>` eux-mêmes qui portent `.mf-boite`.
+
+   ⚠️ LES DEUX LIGNES SONT NÉCESSAIRES, POUR DEUX RAISONS DIFFÉRENTES :
+     · `list-style: none` retire les puces — sans lui on lirait « 1. 1 Premier échange »,
+       le marqueur du navigateur s'ajoutant au numéro écrit dans le contenu (`.mf-num`).
+     · `padding-left: 0` retire les 40 px que le navigateur réserve à ces marqueurs ;
+       sans lui la première boîte est décalée et la grille est bancale.
+
+   ⛔⛔ ET CE QUE CETTE RÈGLE NE FAIT PAS — le point qu'il ne faut pas rater :
+      `list-style: none` fait perdre la SÉMANTIQUE de liste à **VoiceOver / Safari**.
+      Ce n'est pas une légende : c'est un comportement connu, et il ne se voit que sur
+      iPhone. **Le remède est dans le HTML** : `role="list"` sur le `<ol>`.
+      ⇒ Les deux moitiés vont ensemble. Cette règle sans le `role`, et on casse une
+        liste en croyant l'embellir.
+      ⭐ *Une correction d'apparence qui défait une sémantique n'est pas une correction :
+         c'est un échange qu'on n'a pas annoncé.* */
+.mf-grille:is(ol, ul) { list-style: none; padding-left: 0; margin: 0; }
 .mf-grille .mf-boite + .mf-boite { margin-top: 0; }
 
 /* ---- LES CHEVRONS --------------------------------------------------------
@@ -285,9 +345,31 @@ body.trame-manifeste {
 
 /* ---- IMPRESSION ----------------------------------------------------------
    La trame est un DOCUMENT. Elle doit s'imprimer proprement — c'est même la
-   raison pour laquelle Gaëtan l'a choisie : *on l'accroche au mur.* */
+   raison pour laquelle Gaëtan l'a choisie : *on l'accroche au mur.*
+
+   ⛔⛔ ET L'INVERSION DES COULEURS DU 29/09/2026 A CRÉÉ ICI UN DÉFAUT QU'IL FALLAIT
+      FERMER DANS LE MÊME GESTE : `.manifeste` était passé au texte ARGENT `#c8d1dc`
+      sur fond nuit. Le `background: #fff` ci-dessous n'inversait QUE le fond.
+      ⇒ Résultat sans cette correction : **du gris très clair sur du blanc, à l'impression.**
+        *Une page qui s'affiche parfaitement à l'écran et devient illisible sur papier ne
+        se voit nulle part — personne n'imprime pour vérifier.*
+      ⇒ On rétablit donc la PAIRE : fond blanc **et** encre noire. Le papier redevient
+        ce que la trame était au départ, et l'écran suit la DA. Les deux ne se croisent
+        jamais, et c'est voulu. */
 @media print {
-  .manifeste { background: #fff; background-image: none; }
+  .manifeste {
+    background: #fff;
+    background-image: none;
+    color: #14140f;
+    --mf-papier:   #ffffff;
+    --mf-papier-2: #f4f2ee;
+    --mf-encre:    #14140f;
+    --mf-trait:    #14140f;
+    --mf-grille:   #cfcbc0;
+    --mf-vert:     #1f6b4a;   /* assombri : le vert du canon sur blanc est trop clair */
+    --mf-rouge:    #b3241f;   /* assombri pour la même raison */
+    --mf-gris:     #565550;
+  }
   .mf-section { break-inside: avoid; }
   .mf-chevron { clip-path: none; border: 1px solid #000; }
 }

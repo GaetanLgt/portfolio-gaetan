@@ -397,15 +397,38 @@
       </div>
     </div>
 
+    <!-- ⛔⛔ LE PARCOURS EST PASSÉ EN BOÎTES LE 29/09/2026 — DEMANDE DE GAËTAN :
+         « Le parcours en sept étapes <= accessibilité ! » puis « c'est une trame, boxe-moi le tout ! »
+         Les deux consignes se règlent au MÊME endroit, et c'est ce qui rend ce bloc intéressant.
+
+         ⚠️ CE QUI N'ALLAIT PAS : les sept étapes étaient un `<ol>` NU. Le commentaire juste
+            au-dessus l'écrivait sans le savoir : *« les sept étapes du parcours restent en
+            dessous, en clair »*. Or la trame est *« boîtes à bord franc, coins marqués d'un
+            trait »* — et `.mf-boite` existait déjà, utilisée 31 fois dans l'écosystème.
+
+         ⛔⛔ LE PIÈGE, ET C'EST LE CŒUR DU SUJET : mettre un `<li>` « en boîte » se fait
+            naturellement en le remplaçant par un `<div class="mf-boite">`. **Ce geste
+            DÉTRUIT la liste.** Un lecteur d'écran n'annonce plus « liste de sept éléments »,
+            il annonce sept paragraphes — *et personne ne le voit à l'écran, puisque le
+            rendu visuel est identique.*
+            ⇒ On garde donc `<li>`, et c'est LUI qui porte la boîte.
+
+         ⚠️ ET LA DEUXIÈME MOITIÉ, QUI EST UN PIÈGE CONNU : styler une liste avec
+            `list-style: none` fait perdre la sémantique de liste à **VoiceOver/Safari**.
+            ⇒ D'où le `role="list"` explicite ci-dessous. *Il ne sert à rien dans Chrome,
+               et il est la différence entre « liste » et « rien » sur iPhone.*
+            ⇒ Et les numéros sont écrits DANS le contenu (`.mf-num`), pas laissés au
+               marqueur CSS : ce qui est décoré n'est pas annoncé. -->
+
     <h3>Le parcours en sept étapes</h3>
-    <ol>
-      <li>Premier échange — 30 min, gratuit</li>
-      <li>Lecture du besoin</li>
-      <li>Atelier de cadrage</li>
-      <li>Devis détaillé</li>
-      <li>Construction</li>
-      <li>Déploiement</li>
-      <li>Maintenance</li>
+    <ol class="mf-grille" role="list">
+      <li class="mf-boite"><span class="mf-num">1</span> <strong>Premier échange</strong> — 30 min, gratuit</li>
+      <li class="mf-boite"><span class="mf-num">2</span> <strong>Lecture du besoin</strong></li>
+      <li class="mf-boite"><span class="mf-num">3</span> <strong>Atelier de cadrage</strong></li>
+      <li class="mf-boite"><span class="mf-num">4</span> <strong>Devis détaillé</strong></li>
+      <li class="mf-boite"><span class="mf-num">5</span> <strong>Construction</strong></li>
+      <li class="mf-boite"><span class="mf-num">6</span> <strong>Déploiement</strong></li>
+      <li class="mf-boite"><span class="mf-num">7</span> <strong>Maintenance</strong></li>
     </ol>
 
     <p><strong>Rien ne sort sans validation humaine.</strong> Une machine, un poste, des agents —
