@@ -163,21 +163,56 @@ a{color:var(--cyan)}
   background:rgba(10,15,29,.97);backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(0,229,255,.18);font-family:var(--mono)}
 .menu.ouvert{max-height:calc(100vh - var(--hauteur-barre,70px));overflow:auto}
-.menu-titre{margin:0;padding:1rem 1.5rem .35rem;font-size:.72rem;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(255,255,255,.42)}
-.menu-liste{margin:0;padding:0 0 .5rem;list-style:none}
-.menu-liste a,.menu-liste .lien-nav{display:block;padding:.85rem 1.5rem;
-  color:var(--texte);text-decoration:none;font-size:.95rem;
-  border-left:2px solid transparent;background:none;border-top:0;border-right:0;border-bottom:0;
-  width:100%;text-align:left;font-family:inherit;cursor:pointer}
-.menu-liste a:hover,.menu-liste .lien-nav:hover{background:rgba(0,229,255,.08);color:var(--cyan);
-  border-left-color:var(--cyan)}
-.menu-liste a:focus-visible,.menu-liste .lien-nav:focus-visible{outline:2px solid var(--cyan);
+/* ⛔ SIX RÈGLES RETIRÉES LE 28/09/2026 — elles visaient `.menu-titre` et `.menu-liste`,
+   deux classes qui n'existent PLUS dans le balisage depuis les dropdowns.
+   Elles ont été SUPPRIMÉES, pas commentées : *une règle qu'on garde « au cas où » finit
+   par être réactivée par quelqu'un qui ne sait plus pourquoi elle était là.*
+   ⚠️ Ce qu'elles portaient est repris par `.menu-bouton` et `.menu-panneau`, plus bas. */
+
+/* ⭐⭐ LES DROPDOWNS — refonte du 28/09/2026, demande de Gaëtan.
+   Le menu à plat regroupait déjà les destinations en quatre thèmes, mais les affichait
+   toutes à la suite : *grouper sans replier, ce n'est pas grouper — c'est ranger.*
+
+   ⛔ PAS DE DROPDOWN AU SURVOL (`:hover`). C'est le réflexe, et c'est un défaut :
+      inutilisable au doigt, invisible au clavier. Le studio a écrit la règle le 25/09 à
+      propos de l'interrupteur d'animations — *« un contrôle qui s'efface selon la taille
+      de l'écran manque précisément à ceux qui en ont besoin »*. Ici : ouverture au CLIC,
+      fermeture à ÉCHAP, parcours au clavier. Le survol ne fait que SUGGÉRER.
+   ⚠️ UNE SEULE STRUCTURE POUR LES DEUX FORMES : barre déroulante en desktop, accordéon
+      vertical en mobile. *Deux navigations séparées seraient deux vérités sur le même objet.* */
+
+.menu-groupe{position:relative}
+
+/* Le bouton de groupe — il porte `aria-expanded`, l'état est donc ANNONCÉ, pas seulement peint. */
+.menu-bouton{display:flex;align-items:center;gap:.35rem;width:100%;
+  padding:.85rem 1.5rem;background:none;border:0;border-left:2px solid transparent;
+  color:var(--texte);font-family:inherit;font-size:.95rem;text-align:left;cursor:pointer}
+.menu-bouton:hover{background:rgba(0,229,255,.08);color:var(--cyan);border-left-color:var(--cyan)}
+.menu-bouton:focus-visible{outline:2px solid var(--cyan);outline-offset:-2px}
+.menu-bouton[aria-expanded="true"]{color:var(--cyan);border-left-color:var(--cyan)}
+.chevron{font-size:.7rem;transition:transform .2s ease}
+.menu-bouton[aria-expanded="true"] .chevron{transform:rotate(180deg)}
+
+/* Le panneau déroulant.
+   ⚠️ `max-height` et non `display:none` : une transition a besoin d'une valeur mesurable,
+   et surtout un élément en `display:none` **sort de l'ordre de tabulation** — ce qui est
+   exactement ce qu'on veut ici, mais sans transition possible. On garde donc le repli
+   par la hauteur, et on retire le panneau du flux de tabulation par `visibility`. */
+.menu-panneau{margin:0;padding:0 0 .35rem;list-style:none;
+  max-height:0;overflow:hidden;visibility:hidden;transition:max-height .25s ease,visibility .25s}
+.menu-groupe.ouvert .menu-panneau{max-height:60vh;overflow:auto;visibility:visible}
+.menu-panneau a,.menu-panneau .lien-nav{display:block;padding:.7rem 1.5rem .7rem 2.2rem;
+  color:var(--doux);text-decoration:none;font-size:.9rem;width:100%;text-align:left;
+  background:none;border:0;border-left:2px solid transparent;
+  font-family:inherit;cursor:pointer}
+.menu-panneau a:hover,.menu-panneau .lien-nav:hover{background:rgba(0,229,255,.08);
+  color:var(--cyan);border-left-color:var(--cyan)}
+.menu-panneau a:focus-visible,.menu-panneau .lien-nav:focus-visible{outline:2px solid var(--cyan);
   outline-offset:-2px;border-left-color:var(--cyan)}
-/* ⭐ L'ACTE COURANT EST MARQUÉ — ce que le CSS du 26/09 ne faisait pas. Le repère visuel est
-   doublé d'`aria-current="page"`, posé par le script : *une couleur seule ne dit rien à un
-   lecteur d'écran, et elle ne dit rien à qui ne distingue pas le cyan.* */
-.menu-liste a[aria-current="page"]{color:var(--cyan);border-left-color:var(--cyan);
+/* ⭐ L'ACTE COURANT EST MARQUÉ — repère visuel DOUBLÉ d'`aria-current="page"` posé par le
+   script : *une couleur seule ne dit rien à un lecteur d'écran, et rien à qui ne distingue
+   pas le cyan.* */
+.menu-panneau a[aria-current="page"]{color:var(--cyan);border-left-color:var(--cyan);
   background:rgba(0,229,255,.06);font-weight:600}
 
 /* Le voile : ferme au clic, et assombrit ce qu'il recouvre. */
@@ -235,39 +270,52 @@ a{color:var(--cyan)}
    *Deux navigations séparées, ce serait deux vérités sur le même objet.* */
 @media (min-width:1101px){
   .btn-menu{display:none}
-  /* ⛔ CORRIGÉ LE 28/09/2026 — LE MENU S'EMPILAIT AU CENTRE DE L'ÉCRAN.
-     Mesuré sur les captures de Gaëtan, prises à ~1870 px : les quatre groupes
-     formaient une COLONNE verticale au milieu de la page, avec leurs puces, et
-     passaient par-dessus le titre « GL Digital Lab ».
+  /* ⭐⭐ EN DESKTOP, LES QUATRE GROUPES DEVIENNENT DES DROPDOWNS — 28/09/2026.
+     On ne remet PAS les liens à plat : on garde les boutons, et leur panneau se déroule
+     SOUS la barre au clic. C'est ce que Gaëtan a demandé, et c'est aussi ce qui garde
+     une seule structure pour les deux formes.
 
-     LA CAUSE, ET ELLE EST DE MOI :
-       · mes quatre groupes (`.menu-titre` + `.menu-liste`) sont des ENFANTS de `.menu` ;
-       · en desktop je cachais les titres et passais `.menu-liste` en `flex` ;
-       · ⛔ mais je n'ai JAMAIS posé `flex-direction:row` sur `.menu` — les quatre
-         `<ul>` restaient donc des BLOCS empilés dans un conteneur flex.
-     ⭐ Et `list-style` n'était retiré qu'en mobile : les puces revenaient en desktop.
-
-     ⛔ POURQUOI JE NE L'AI PAS VU AVANT DE PUBLIER — et c'est la vraie leçon :
-       j'ai « vérifié » à 320, 360, 390, 414, 900, 1100 et 1440 px, et mes captures
-       paraissaient bonnes. Mais Chrome headless refuse une fenêtre sous ~500 px et
-       `--window-size` ne déclenche pas toujours le `@media` attendu.
-       ⇒ *Une capture n'est pas une mesure si l'instrument ne fait pas ce qu'on croit.*
-       Le seul contrôle qui aurait attrapé ça : ouvrir la page sur un VRAI écran.
-
-     ⚠️ LA CORRECTION NE TOUCHE PAS LE MOBILE : tout est dans ce `@media min-width`,
-        et le menu vertical en dessous de 1101 px reste exactement ce qu'il était. */
+     ⛔ CORRIGÉ LE 28/09/2026, AVANT LES DROPDOWNS — LE MENU S'EMPILAIT AU CENTRE DE L'ÉCRAN.
+        Mesuré sur les captures de Gaëtan à ~1870 px : les quatre groupes formaient une
+        COLONNE verticale au milieu de la page, avec leurs puces, par-dessus le titre.
+        LA CAUSE ÉTAIT DE MOI : je n'avais JAMAIS posé `flex-direction:row` sur `.menu`.
+        ⛔ ET POURQUOI JE NE L'AI PAS VU AVANT DE PUBLIER — c'est la vraie leçon :
+           j'ai « vérifié » à 320, 360, 390, 414, 900, 1100 et 1440 px, et mes captures
+           paraissaient bonnes. Mais Chrome headless refuse une fenêtre sous ~500 px et
+           `--window-size` ne déclenche pas toujours le `@media` attendu.
+           ⇒ *Une capture n'est pas une mesure si l'instrument ne fait pas ce qu'on croit.*
+           Le seul contrôle qui l'a attrapé : l'œil de Gaëtan sur un VRAI écran. */
   .menu{position:static;max-height:none;overflow:visible;display:flex;flex-direction:row;
-    align-items:center;justify-content:flex-end;flex-wrap:wrap;
-    gap:0 1.1rem;background:none;backdrop-filter:none;border:0;transition:none}
-  /* Les quatre <ul> redeviennent des segments ALIGNÉS, et sans puces. */
-  .menu-titre{display:none}
-  .menu-liste{display:flex;flex-direction:row;align-items:center;gap:1.1rem;
-    padding:0;margin:0;list-style:none}
-  .menu-liste li{display:inline;list-style:none}
-  .menu-liste a,.menu-liste .lien-nav{display:inline;padding:0;border-left:0;width:auto;
-    color:var(--doux);font-size:.85rem;background:none}
-  .menu-liste a:hover,.menu-liste .lien-nav:hover{background:none;border-left:0;color:var(--cyan)}
-  .menu-liste a[aria-current="page"]{color:var(--cyan);background:none;border-left:0;font-weight:600}
+    align-items:center;justify-content:flex-end;gap:0 .3rem;
+    background:none;backdrop-filter:none;border:0;transition:none}
+
+  /* Le groupe : un bloc de référence, pour que son panneau se pose DESSOUS. */
+  .menu-groupe{position:relative}
+  .menu-bouton{padding:.4rem .6rem;border-left:0;font-size:.85rem;color:var(--doux);
+    white-space:nowrap;border-radius:6px}
+  .menu-bouton:hover{background:rgba(0,229,255,.08);color:var(--cyan);border-left:0}
+  .menu-bouton[aria-expanded="true"]{background:rgba(0,229,255,.1);color:var(--cyan);border-left:0}
+
+  /* LE PANNEAU DÉROULANT — absolu, sous son bouton, largeur du contenu.
+     ⚠️ `min-width` plutôt qu'une largeur fixe : « Ce que vous cherchez » et « Explorer »
+     n'ont pas la même longueur, et un panneau plus étroit que son bouton est illisible.
+     ⚠️ `z-index` élevé : sans lui, le panneau passe SOUS la barre qui est fixe. */
+  .menu-panneau{position:absolute;top:calc(100% + .45rem);left:0;z-index:120;
+    min-width:15rem;padding:.4rem 0;margin:0;list-style:none;
+    background:rgba(8,12,24,.98);backdrop-filter:blur(14px);
+    border:1px solid rgba(0,229,255,.22);border-radius:10px;
+    box-shadow:0 12px 32px rgba(0,0,0,.55);
+    max-height:0;overflow:hidden;visibility:hidden;
+    transition:max-height .22s ease,visibility .22s,opacity .22s;opacity:0}
+  .menu-groupe.ouvert .menu-panneau{max-height:70vh;overflow:auto;visibility:visible;opacity:1}
+  .menu-panneau li{display:block;list-style:none}
+  .menu-panneau a,.menu-panneau .lien-nav{display:block;padding:.55rem 1rem;border-left:0;
+    font-size:.84rem;border-radius:0;white-space:nowrap;color:var(--doux);
+    text-align:left;width:100%}
+  .menu-panneau a:hover,.menu-panneau .lien-nav:hover{background:rgba(0,229,255,.12);
+    color:var(--cyan);border-left:0}
+  .menu-panneau a[aria-current="page"]{color:var(--cyan);background:rgba(0,229,255,.08);
+    border-left:0;font-weight:600}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.indice{animation:none}#revelation{display:none}}
 

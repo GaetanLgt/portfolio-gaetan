@@ -41,7 +41,7 @@
   // ⚠️ La police arrive après le premier rendu : la hauteur change une fois de plus.
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(mesurerBarre);
 
-  // ── ① OUVRIR / FERMER ──────────────────────────────────────────────────────
+  // ── ① OUVRIR / FERMER LE MENU (mobile) ────────────────────────────────────
   const estOuvert = () => bouton.getAttribute('aria-expanded') === 'true';
 
   function ouvrir() {
@@ -55,6 +55,10 @@
   }
 
   function fermer(rendreLeFocus) {
+    // On referme aussi les dropdowns ouverts : sinon l'état « ouvert » survit à la
+    // fermeture du menu mobile, et rouvrir le menu le rendrait déjà déroulé. *Un état
+    // qui survit à ce qui l'a produit n'est pas un état : c'est un résidu.*
+    fermerTousLesGroupes();
     if (!estOuvert()) return;
     bouton.setAttribute('aria-expanded', 'false');
     bouton.setAttribute('aria-label', 'Ouvrir le menu');
@@ -68,6 +72,64 @@
 
   bouton.addEventListener('click', () => (estOuvert() ? fermer(false) : ouvrir()));
   if (voile) voile.addEventListener('click', () => fermer(false));
+
+  // ── ② LES DROPDOWNS — ouverture au CLIC, JAMAIS au survol ──────────────────
+  // ⭐ POURQUOI PAS `:hover` — et c'est un choix, pas une préférence.
+  //    Un dropdown qui s'ouvre au survol est **inutilisable au doigt** (aucun survol
+  //    sur un téléphone) et **invisible au clavier**. Le studio a déjà écrit la règle
+  //    le 25/09, à propos de l'interrupteur d'animations : *« un contrôle qui s'efface
+  //    selon la taille de l'écran manque précisément à ceux qui en ont besoin. »*
+  //    ⇒ Ici : clic pour ouvrir, Échap pour fermer, flèches pour circuler.
+  //      Le survol ne fait que changer la couleur du bouton — il **suggère**, il n'ouvre pas.
+  const groupes = [...menu.querySelectorAll('.menu-groupe')];
+
+  const groupeDe = (el) => el.closest('.menu-groupe');
+
+  function fermerTousLesGroupes(sauf) {
+    for (const g of groupes) {
+      if (g === sauf) continue;
+      g.classList.remove('ouvert');
+      const b = g.querySelector('.menu-bouton');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function basculerGroupe(g) {
+    const b = g.querySelector('.menu-bouton');
+    if (!b) return;
+    const ouvert = g.classList.contains('ouvert');
+    if (ouvert) {
+      g.classList.remove('ouvert');
+      b.setAttribute('aria-expanded', 'false');
+    } else {
+      fermerTousLesGroupes(g);         // un seul dropdown ouvert à la fois
+      g.classList.add('ouvert');
+      b.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  for (const g of groupes) {
+    const b = g.querySelector('.menu-bouton');
+    if (!b) continue;
+    b.addEventListener('click', (e) => { e.stopPropagation(); basculerGroupe(g); });
+  }
+
+  // ⭐ ON FERME SUR TOUT CLIC AILLEURS — dans le menu comme dans la page.
+  //    ⛔ C'est la correction du 28/09 : la première version ne fermait QUE sur un clic
+  //    de `<a>`, donc cliquer sur un titre, une marge ou dans le vide ne fermait rien.
+  //    *Un panneau qui ne se referme pas est pire qu'un panneau qui ne s'ouvre pas :
+  //    le premier enferme le visiteur.*
+  document.addEventListener('click', (e) => {
+    // Un clic sur un LIEN d'un dropdown : on referme tout.
+    if (e.target.closest('.menu-panneau a')) { fermer(false); return; }
+    // Un clic sur le bouton « Expertises » : il ouvre son propre tiroir, on le laisse.
+    if (e.target.closest('#btn-secteurs')) return;
+    // Un clic sur un BOUTON de groupe : déjà traité par son propre écouteur.
+    if (e.target.closest('.menu-bouton')) return;
+    // Partout ailleurs : on referme.
+    fermerTousLesGroupes();
+    if (estOuvert()) fermer(false);
+  });
 
   // ── ③ FERMER APRÈS AVOIR CHOISI UNE DESTINATION ────────────────────────────
   // ⚠️ Sans ça, le menu reste ouvert par-dessus la section qu'on vient de rejoindre :
@@ -90,27 +152,45 @@
   //    ⇒ On ferme sur TOUT clic dans le panneau qui n'est pas un contrôle actif.
   //      Un lien : on ferme. Un bouton (les pôles) : on laisse faire, il ouvre son
   //      propre tiroir. Le reste : on ferme.
-  menu.addEventListener('click', (e) => {
-    const cible = e.target;
-    if (cible.closest('a')) { fermer(false); return; }
-    if (cible.closest('button')) return;   // « Expertises » garde la main
-    fermer(false);                          // titre de groupe, marge, vide du panneau
-  });
-
-  // ⭐ CEINTURE ET BRETELLES — le clic DANS la page referme aussi.
-  //    Le voile couvre déjà la page sous le menu, mais il n'existe qu'en dessous de
-  //    1101 px (`@media max-width` ne le cache pas, c'est `hidden` qui le gère).
-  //    On écoute donc au niveau du document, et on ignore ce qui vient du menu
-  //    lui-même — sinon l'ouverture se refermerait dans le même clic.
-  document.addEventListener('click', (e) => {
-    if (!estOuvert()) return;
-    if (menu.contains(e.target) || bouton.contains(e.target)) return;
-    fermer(false);
-  });
+  //
+  // ⛔⚠️ CE BLOC A ÉTÉ SUPPRIMÉ LE 28/09/2026, EN MÊME TEMPS QUE LES DROPDOWNS.
+  //    Il écoutait `.menu` ET un second écouteur écoutait `document` — **deux gestionnaires
+  //    de clic pour la même intention.** Ils se seraient contredits : le second refermait
+  //    ce que le premier venait d'ouvrir, parce qu'un clic sur un `.menu-bouton` remonte
+  //    au document. *Deux vérités sur le même geste, c'est une vérité qui dépend de l'ordre.*
+  //    ⇒ Il n'en reste QU'UN, plus bas, et il traite les quatre cas en un seul endroit.
 
   // ── LE CLAVIER ─────────────────────────────────────────────────────────────
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && estOuvert()) { fermer(true); return; }
+    // ⭐ ÉCHAP FERME D'ABORD LE DROPDOWN OUVERT, PUIS LE MENU.
+    //    Ordre voulu : sur mobile, Échap sur un accordéon déroulé doit replier
+    //    l'accordéon — pas fermer tout le menu d'un coup. *On défait par où l'on est entré.*
+    if (e.key === 'Escape') {
+      const ouvertGroupe = groupes.find((g) => g.classList.contains('ouvert'));
+      if (ouvertGroupe) {
+        const b = ouvertGroupe.querySelector('.menu-bouton');
+        ouvertGroupe.classList.remove('ouvert');
+        if (b) { b.setAttribute('aria-expanded', 'false'); b.focus(); }
+        return;
+      }
+      if (estOuvert()) { fermer(true); return; }
+    }
+
+    // ⭐ LES FLÈCHES CIRCULENT DANS UN DROPDOWN OUVERT — et c'est ce qui rend le clavier
+    //    vraiment utilisable. Sans ça, il faudrait tabuler à travers chaque lien.
+    const g = document.activeElement && document.activeElement.closest
+      ? document.activeElement.closest('.menu-groupe') : null;
+    if (g && g.classList.contains('ouvert') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      const liens = [...g.querySelectorAll('.menu-panneau a, .menu-panneau button')];
+      if (!liens.length) return;
+      const i = liens.indexOf(document.activeElement);
+      e.preventDefault();
+      const suivant = e.key === 'ArrowDown'
+        ? (i < 0 ? 0 : (i + 1) % liens.length)
+        : (i < 0 ? liens.length - 1 : (i - 1 + liens.length) % liens.length);
+      liens[suivant].focus();
+      return;
+    }
 
     // ⭐ LE PIÈGE À FOCUS, ET IL EST OBLIGATOIRE ICI.
     //    Le menu est un panneau qui recouvre la page. Sans piège, la tabulation sort du

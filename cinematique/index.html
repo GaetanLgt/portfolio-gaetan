@@ -119,36 +119,67 @@
   </button>
 
   <nav id="menu-principal" class="menu" aria-label="Navigation principale">
-    <!-- ① CE QUE VOUS CHERCHEZ -->
-    <p class="menu-titre" id="menu-g1">Ce que vous cherchez</p>
-    <ul class="menu-liste" aria-labelledby="menu-g1">
-      <li><a href="#acte-2">L'Entrée</a></li>
-      <li><a href="#acte-4">L'Offre</a></li>
-      <li><a href="#acte-8">Contact</a></li>
-    </ul>
+    <!-- ⭐⭐ DROPDOWNS — refonte du 28/09/2026, demande de Gaëtan : « je veux des dropdowns ».
+         Le menu à plat regroupait DÉJÀ les destinations en quatre thèmes, mais les affichait
+         toutes à la suite : *grouper sans replier, ce n'est pas grouper — c'est ranger.*
 
-    <!-- ② CE QUE JE FAIS -->
-    <p class="menu-titre" id="menu-g2">Ce que je fais</p>
-    <ul class="menu-liste" aria-labelledby="menu-g2">
-      <li><a href="#acte-3">Laboratoire</a></li>
-      <li><a href="#acte-5">Méthode</a></li>
-      <li><a href="#acte-6">Démonstrateur</a></li>
-    </ul>
+         ⛔ CE QUI AURAIT ÉTÉ FAIT PAR PAIRE, ET QUI EST REFUSÉ ICI :
+            un dropdown qui s'ouvre **au survol** (`:hover`). C'est le réflexe, et c'est un
+            défaut : il est **inutilisable au doigt** (aucun survol sur un téléphone) et
+            **invisible au clavier**. Le studio a déjà écrit la règle, le 25/09, à propos de
+            l'interrupteur d'animations : *« un contrôle qui s'efface selon la taille de
+            l'écran manque précisément à ceux qui en ont besoin. »*
+            ⇒ Ici, le dropdown s'ouvre **au CLIC**, se ferme à **Échap**, et **le clavier le
+              parcourt**. Le survol ne fait que le suggérer, jamais l'ouvrir.
+
+         ⚠️ ET LA MÊME STRUCTURE SERT LES DEUX FORMES : en desktop c'est une barre dont les
+            boutons déroulent un panneau ; en mobile c'est la liste verticale d'avant, avec
+            les mêmes boutons. *Deux navigations séparées seraient deux vérités sur le même
+            objet* — ici il n'y en a qu'une, repliée différemment. -->
+    <div class="menu-groupe">
+      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p1">
+        Ce que vous cherchez<span class="chevron" aria-hidden="true">▾</span>
+      </button>
+      <ul class="menu-panneau" id="menu-p1">
+        <li><a href="#acte-2">L'Entrée</a></li>
+        <li><a href="#acte-4">L'Offre</a></li>
+        <li><a href="#acte-8">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="menu-groupe">
+      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p2">
+        Ce que je fais<span class="chevron" aria-hidden="true">▾</span>
+      </button>
+      <ul class="menu-panneau" id="menu-p2">
+        <li><a href="#acte-3">Laboratoire</a></li>
+        <li><a href="#acte-5">Méthode</a></li>
+        <li><a href="#acte-6">Démonstrateur</a></li>
+      </ul>
+    </div>
 
     <!-- ③ CE QUI ME CONTRAINT — et ce groupe est un argument, pas un aveu.
          Les limites sont publiées : un cabinet de sûreté qui cache ses limites n'en a pas. -->
-    <p class="menu-titre" id="menu-g3">Ce qui me contraint</p>
-    <ul class="menu-liste" aria-labelledby="menu-g3">
-      <li><a href="#acte-7">Limites</a></li>
-    </ul>
+    <div class="menu-groupe">
+      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p3">
+        Ce qui me contraint<span class="chevron" aria-hidden="true">▾</span>
+      </button>
+      <ul class="menu-panneau" id="menu-p3">
+        <li><a href="#acte-7">Limites</a></li>
+      </ul>
+    </div>
 
     <!-- ④ LE TIROIR DES PÔLES — hors groupe : ce n'est pas une destination, c'est un filtre. -->
-    <p class="menu-titre" id="menu-g4">Explorer</p>
-    <ul class="menu-liste" aria-labelledby="menu-g4">
-      <li><button id="btn-secteurs" type="button" class="lien-nav"
-                  aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button></li>
-      <li><a href="/veille/">Relevés de veille</a></li>
-    </ul>
+    <div class="menu-groupe">
+      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p4">
+        Explorer<span class="chevron" aria-hidden="true">▾</span>
+      </button>
+      <ul class="menu-panneau" id="menu-p4">
+        <li><button id="btn-secteurs" type="button" class="lien-nav"
+                    aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button></li>
+        <li><a href="/veille/">Relevés de veille</a></li>
+      </ul>
+    </div>
   </nav>
 
   <!-- ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. L'audit externe a raison : la
