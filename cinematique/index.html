@@ -666,15 +666,29 @@
           penserait à le changer. *Un lien qu'il faut penser à mettre à jour est un lien
           qui sera faux.* -->
   <p><a href="veille/">Le relevé de veille</a> — ce que les sources suivies ont publié, avec les liens vers leurs auteurs.</p>
-<!-- ⛔ LE LIEN VERS LES RESSOURCES PÉDAGOGIQUES EST RETIRÉ — 28/09/2026, round 22.
-⭐ POURQUOI : `/ressources/` rend **403** et son PDF rend **404** en production.
-Le motif `ressources/**` figure dans le bloc `exclude:` du workflow de déploiement
-(ligne 157) — **la page n'a donc jamais été envoyée.**
-⇒ *Un lien mort est pire que pas de lien* : il fait croire que la ressource existe.
-⚠️ REMETTRE CE LIEN **quand la page répondra 200** — pas avant. Vérifier par
-`curl -s -o /dev/null -w "%{http_code}" https://gldigitallab.fr/ressources/`.
-📚 La page, ses contenus et la décision de Gaëtan (gratuit et ouvert) existent
-toujours dans `cinematique/ressources/` — **rien n'est perdu, seul le lien est retiré.** -->
+<!-- 📚 LES RESSOURCES PÉDAGOGIQUES — remises le 28/09/2026, après renommage.
+⭐ POURQUOI `/ecole/` ET NON `/ressources/` : `ressources/**` figure dans le bloc
+`exclude:` du workflow de déploiement — la page n'était donc **jamais envoyée**.
+Après cinq hypothèses fausses sur la cause, Gaëtan a tranché : **renommer**.
+`ecole` est libre dans la liste, et c'est le nom du dossier côté studio.
+⛔ CE QUI A ÉTÉ VÉRIFIÉ AVANT DE PUBLIER : les quatre conditions CFC
+(`vault-agence/axe-scolaire-droit-photocopie-2026-09-13.md`). La page ne contient
+**aucune planche et aucune image d'œuvre** — seul le favicon. La condition 4 du CFC
+interdit la mise en ligne **des œuvres** ; il n'y en a aucune. *Le dossier décrit la
+méthode, pas les albums.*
+⚠️ REMETTRE CE LIEN quand `/ecole/` répondra 200 — vérifier par
+`curl -s -o /dev/null -w "%{http_code}" https://gldigitallab.fr/ecole/`. -->
+<!-- 📚 LA FORMATION — posée le 28/09/2026, après deux renommages.
+⭐ HISTOIRE DU NOM, ET ELLE EST INSTRUCTIVE : `ressources/` était **exclu du
+déploiement** (motif `ressources/**` dans le bloc `exclude:` du workflow) — la page
+n'a jamais été envoyée. Renommée `ecole/`, puis `formation/` : Gaëtan a tranché
+que **ce n'est pas un sujet scolaire**, c'est la **formation permanente**, du
+scolaire à l'université. *Un nom qui se trompe de case trompe tout ce qui suit.*
+⛔ CE QUI A ÉTÉ VÉRIFIÉ AVANT DE PUBLIER : les quatre conditions CFC. La page ne
+contient **aucune planche et aucune image** (0 balise `<img>`). La condition 4
+interdit la mise en ligne **des œuvres** — il n'y en a aucune.
+⚠️ `formation` et `ecole` sont **libres** dans la liste d'exclusion — vérifié avant. -->
+<p><a href="formation/">La formation</a> — un dossier pédagogique libre, et le chantier ouvert d'une formation à l'IA.</p>
 </footer>
 <!-- TIROIR HUD : PÔLES D'EXPERTISE — proposé par Gaëtan le 26/09/2026.
      ⛔ `hidden` DANS LE HTML, ET C'EST VOULU : sans JavaScript le tiroir n'existe pas à l'écran,
