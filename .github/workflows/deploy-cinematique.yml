@@ -231,7 +231,16 @@ jobs:
             projets/**
             ressources/**
             screenshots/**
-            services/**
+            # ⛔ « services/** » A ÉTÉ RETIRÉ DE CETTE LISTE LE 28/09/2026 — DÉCISION DE GAËTAN.
+            #    Cette exclusion PROTÉGEAIT une page du pipeline Vue arrêté le 26/09 :
+            #    /services/ servait 135 Ko d'une page « Génie IT TeK FR » SANS AUCUNE
+            #    SOURCE dans le dépôt, avec des prix qui ne sont pas les nôtres
+            #    (450 €/jour, audit 149-199 €) — mesuré en ligne le 28/09.
+            #    ⭐ L'exclusion avait été écrite pour EMPÊCHER la synchronisation de la
+            #      supprimer. Elle empêchait surtout la nouvelle page d'arriver.
+            #    ⇒ cinematique/services/index.html est désormais la SEULE version, et
+            #      sitemap.xml la déclare. *Une page servie sans source n'est pas un
+            #      contenu : c'est une fuite qu'on ne peut pas corriger.*
             site.webmanifest
             sitemap/**
             soute/**
