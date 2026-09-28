@@ -26,6 +26,23 @@
 #   ⇒ Si une règle doit être ajoutée plus tard, elle s'ajoute **seule**, et on la mesure.
 # ============================================================================
 
+# ── L'ENCODAGE — AJOUTÉ LE 28/09/2026 ───────────────────────────────────────
+# ⛔ LE DÉFAUT, MESURÉ : l'en-tête HTTP du serveur renvoie un `Content-Type`
+#    `text/html` SANS charset. Le navigateur retombe alors sur ISO-8859-1 — le
+#    défaut historique — et affiche « â¬ » au lieu de « € », « Ã© » au lieu de « é ».
+#
+# ⚠️ ET LE FICHIER, LUI, EST BON. Mesure des octets réellement servis :
+#      la séquence E2 82 AC — le « € » en UTF-8 valide — est présente 10 fois,
+#      et le double encodage est à ZÉRO.
+#    *Le contenu n'est pas cassé : c'est la DÉCLARATION qui manque.*
+#
+# ⭐ Ce que ça change : TOUT le site, et depuis toujours. Les accents français
+#    s'affichaient mal chez quiconque n'avait pas forcé l'UTF-8 à la main.
+#
+# ⚠️ La directive ci-dessous ne touche QUE ce qui n'a pas déjà un charset
+#    déclaré : images, polices et JSON gardent le leur. Elle est donc sûre.
+AddDefaultCharset utf-8
+AddCharset utf-8 .html .css .js .mjs .json .svg .xml .txt .webmanifest
 # ── La page d'erreur, celle qui manquait ────────────────────────────────────
 # Sans cette ligne, et sans le fichier, Apache sert sa propre page : 9 octets, un doctype
 # HTML 4.01, un titre « 404 Not Found », en anglais, sans un seul lien — mesuré le 26/09/2026.
