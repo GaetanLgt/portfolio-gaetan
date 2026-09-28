@@ -1,5 +1,27 @@
 // reparer-main.mjs — GL Digital Lab, 28/09/2026
 //
+// ⛔⛔⛔ NE PAS BRANCHER DANS LE DÉPLOIEMENT. OUTIL EN ÉTAT DE DÉFAUT CONNU.
+//
+//    Tentative du 28/09/2026 : je l'ai ajouté comme étape du workflow, avant l'envoi
+//    FTP, pour garantir la portée `.manifeste` sur le `<main>`. **Je l'ai retiré.**
+//
+//    ⚠️ CE QU'IL A FAIT, MESURÉ AVANT DE LE RETIRER :
+//      · il a modifié 5 pages QUI ÉTAIENT CORRECTES ;
+//      · sur `index.html`, il a VISÉ LE `<main>` CITÉ DANS UN COMMENTAIRE et lui a
+//        ajouté `id="main-content"` — laissant le vrai `<main>` intact.
+//    ⭐ *Un outil qui ne distingue pas le code du commentaire qui le décrit touche
+//      du texte qu'il n'a pas le droit de toucher.*
+//
+//    ⇒ Les fichiers ont été restaurés par `git checkout` dans la minute. Rien n'est perdu.
+//    ⇒ Ce qui manque pour qu'il soit sûr : une analyse par POSITION dans le document
+//      (un vrai parseur, ou un état « dedans/dehors commentaire »), pas par motif.
+//      *Un motif qui matche dans un commentaire n'est pas un défaut du document.*
+//
+// DÉFAUT SUPPLÉMENTAIRE, MESURÉ : sur `index.html`, le `<main>` réel porte déjà
+//    `id="main-content" class="manifeste"`. C'est LE COMMENTAIRE qui ne les a pas.
+//    => La page était BONNE. L'outil signalait un faux positif.
+//
+// Usage (à la main seulement) : node outils/reparer-main.mjs --simuler//
 // ⛔⛔ CE QUE J'AI CASSÉ, ET COMMENT. Gaëtan : « mon site est tout pété ».
 //    Il a raison, et la cause est entièrement de mon fait.
 //
@@ -83,10 +105,24 @@ for (const page of pages) {
   }
 
   // ── ③ VÉRIFIER QU'IL N'EN RESTE QU'UN ────────────────────────────────────
-  const compte = (t.match(/<main\b/g) || []).length;
-  if (compte !== 1) throw new Error('ASSERTION ' + rel + ' : ' + compte + ' <main> après réparation');
-  const fin = (t.match(/<\/main>/g) || []).length;
-  if (fin !== 1) throw new Error('ASSERTION ' + rel + ' : ' + fin + ' </main>');
+  // ⛔⛔ CORRIGÉ LE 28/09/2026 — L'OUTIL COMPTAIT LES `<main>` DES COMMENTAIRES.
+  //    Il refusait de tourner sur `index.html` avec :
+  //        ASSERTION index.html : 2 <main> après réparation
+  //    Or le second n'existe pas : c'est **une phrase de commentaire** qui cite la
+  //    balise en expliquant qu'un `<main>` sans identifiant ne peut pas être visé.
+  //    ⭐ *Troisième fois aujourd'hui qu'un contrôle attrape son propre texte.
+  //      Un contrôle compte ce que le NAVIGATEUR voit, pas ce que le fichier contient.*
+  //    ⇒ On retire les commentaires HTML avant de compter la structure.
+  const sansComm = t.replace(/<!--[\s\S]*?-->/g, '');
+  const compte = (sansComm.match(/<main\b/g) || []).length;
+  if (compte !== 1) throw new Error('ASSERTION ' + rel + ' : ' + compte + ' <main> hors commentaires');
+  const fin = (sansComm.match(/<\/main>/g) || []).length;
+  if (fin !== 1) throw new Error('ASSERTION ' + rel + ' : ' + fin + ' </main> hors commentaires');
+  // et la portée doit être portée par LE <main> réel, pas par un commentaire
+  const mReel = sansComm.match(/<main\b[^>]*>/);
+  if (!mReel || !/\bclass="[^"]*\bmanifeste\b/.test(mReel[0])) {
+    throw new Error('ASSERTION ' + rel + ' : le <main> ne porte pas la portée .manifeste');
+  }
 
   if (t !== avant) {
     if (!SIMULER) fs.writeFileSync(page, t, 'utf8');
