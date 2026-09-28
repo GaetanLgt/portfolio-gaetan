@@ -208,13 +208,25 @@ jobs:
           #    ⚠️ La liste est écrite ici, et c'est imparfait : *une liste écrite à la main
           #      oubliera un jour* — c'est le défaut payé six fois sur `indexer-agence.js`.
           #      Mais **elle porte sa raison**, et un fichier oublié ici se voit tout de suite.
+          #
+          # ⛔⛔ ET CE BLOC A MORDU — SUR NOUS, LE 28/09/2026. TROIS RUNS ROUGES D'AFFILÉE.
+          #    La liste portait `ressources/` — un chemin **qui n'existe plus** depuis que la
+          #    page a été renommée `formation/` (Gaëtan : *« c'est pas sujet ÉCOLE en tant que
+          #    tel »*, puis `formation/`).
+          #    ⇒ Le contrôle échouait **à chaque déploiement, pour la mauvaise raison** —
+          #      et **la page n'était pas mise à jour** (`/formation/` servait encore le titre
+          #      « Ressources pédagogiques »).
+          #    ⭐ *C'est EXACTEMENT le défaut qu'il devait attraper : une liste écrite à la
+          #      main devient fausse sans le dire.* **Le remède a le défaut qu'il soigne.**
+          #    ⚠️ **METTRE CETTE LISTE À JOUR À CHAQUE RENOMMAGE DE PAGE.** C'est le prix —
+          #      et c'est moins cher que de ne rien vérifier du tout.
           echo ""
           echo "── Vérification des fichiers publiés ──"
           echec=0
           for f in \
-            "ressources/" \
-            "ressources/DOSSIER-PEDAGOGIQUE-MANGA-PRIMAIRE.pdf" \
-            "ressources/DOSSIER-PEDAGOGIQUE-MANGA-PRIMAIRE.md" \
+            "formation/" \
+            "formation/DOSSIER-PEDAGOGIQUE-MANGA-PRIMAIRE.pdf" \
+            "formation/DOSSIER-PEDAGOGIQUE-MANGA-PRIMAIRE.md" \
             "veille/" \
             "llms.txt" \
             ".well-known/security.txt"
