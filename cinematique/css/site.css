@@ -839,3 +839,37 @@ main{position:relative;z-index:10}
   .souverainete p,.souverainete li{font-size:.85rem}
   .tableau-prix.compact{font-size:.84rem}
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LE BLOC VIDÉOS — centré, 28/09/2026.
+
+   ⛔ CE QUI A ÉTÉ MESURÉ AVANT D'ÉCRIRE : `.videos` est utilisé dans le HTML
+      (`<div class="videos">`, acte 6) et **n'existait NULLE PART dans cette feuille**
+      — 0 occurrence. La classe était donc un nom sans règle.
+   ⭐ LA CONSÉQUENCE, ET C'EST CE QUE GAËTAN A VU : le `<div>` reste un bloc neutre,
+      et son enfant `.facade` porte `max-width:40rem` **sans rien pour le centrer**.
+      ⇒ la façade reste collée à gauche de son conteneur.
+      *Une classe HTML sans règle CSS n'est pas un oubli visible : c'est un style
+        qui ne s'applique pas, et personne ne le voit dans le code.*
+
+   ⚠️ ON CENTRE LES DEUX : le titre ET la façade. Centrer le bouton sans son titre
+      donnerait un titre à gauche et une image au milieu — *pire que tout à gauche.*
+   ⚠️ ET LE TEXTE DU TITRE RESTE ALIGNÉ À GAUCHE DANS SA BOÎTE : un `<h3>` centré
+      sur une ligne courte est lisible, mais on garde la convention du site, où les
+      titres de section sont alignés sur le bord du contenu.
+   ⛔ AUCUNE COULEUR AJOUTÉE ICI : le canon du 25/09 tient (noir · cyan · argent),
+      et `.facade:focus-visible` garde son `var(--jaune)` existant — *je ne change pas
+      un jeton de focus qui était déjà là.* */
+
+.videos{display:flex;flex-direction:column;align-items:center;text-align:center;
+  margin:1.6rem 0 0;gap:.9rem}
+.videos h3{margin:0;font-size:1rem;color:var(--cyan)}
+/* ⚠️ `margin:0 auto` en renfort : si un jour `.videos` cesse d'être un flex, la façade
+   restera centrée. *Une correction qui ne tient que par un seul mécanisme casse au
+   premier changement de mise en page.* */
+.videos .facade{margin:0 auto}
+
+@media (max-width:600px){
+  .videos{margin-top:1.2rem}
+  .videos h3{font-size:.95rem}
+}
