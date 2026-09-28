@@ -305,51 +305,44 @@
           Elle n'a pas été réécrite : c'est TON texte, et il dit mieux en huit mots
           ce que le site mettait huit actes à dire.
        ══════════════════════════════════════════════════════════════════════ -->
-  <section class="mf-couverture" id="couverture">
-    <p class="mf-etiquette">GL Digital Lab — Studio web &amp; IA locale pour PME</p>
+  <section class="mf-couverture mf-hero" id="couverture">
+    <div class="mf-hero-texte">
+      <p class="mf-etiquette">GL Digital Lab — Studio web &amp; IA locale pour PME</p>
 
-    <h1 class="mf-titre">Vos outils.<br>Chez vous.<br>À vous.</h1>
+      <h1 class="mf-titre">Vos outils.<br>Chez vous.<br>À vous.</h1>
 
-    <!-- ⛔⛔ LA PHRASE DE COUVERTURE A ÉTÉ RÉÉCRITE LE 29/09/2026 — ELLE ÉTAIT FAUSSE.
-         Elle disait : une promesse absolue qui etait fausse
+      <!-- ⛔⛔ LA PHRASE DE COUVERTURE A ÉTÉ RÉÉCRITE LE 28/09/2026 — ELLE ÉTAIT FAUSSE.
+           Elle promettait une absence qui n'était pas vraie : l'agent du studio peut
+           utiliser un modèle distant, son .env porte une clé d'API, et le brief prévoit
+           un MRR de maintenance. *Un DSI qui lit ça, puis découvre le contraire, ne croit
+           plus rien d'autre — et il a raison.*
+           ⇒ On ne promet plus l'ABSENCE, on promet la TRAÇABILITÉ. C'est plus faible
+             comme slogan, et c'est la seule version défendable devant un RSSI. -->
+      <div class="mf-chapeau">
+        <p>Des sites, des applications métier et des assistants documentaires qui font
+           gagner du temps à vos équipes — <strong>sans confier vos documents à une boîte noire.</strong></p>
+        <p>Flux externes <strong>désactivables ou explicitement documentés</strong>. Pas de
+           facturation au token : <strong>les coûts matériels et de maintenance sont écrits</strong>,
+           pas dissimulés dans une ligne « cloud ».</p>
+      </div>
 
-         ⚠️ LA MESURE QUI L'A CONDAMNÉE, faite ce jour-là :
-           · l'agent du studio peut utiliser un mod.le distant ;
-           · `le .env du studio` contient une cle d'API distante ;
-           · `le .env du bot` contient un jeton de bot ;
-           · le studio a par ailleurs **12 modèles locaux** dans Ollama.
-         ⇒ cette promesse n'était pas une approximation : **c'était faux**, et
-           c'était la PREMIÈRE phrase lue par un visiteur.
-           ⭐ *Un DSI qui lit ça, puis découvre l'usage de un modele distant, ne croit plus rien
-              d'autre — et il a raison.*
-
-         ⛔ ET LA SECONDE MOITIÉ ÉTAIT FAUSSE AUSSI : la seconde moitie. Le brief du
-           studio prévoit un **MRR de maintenance**. *S'il y a de la maintenance, il y a
-           un abonnement* — simplement, il n'est pas caché.
-
-         ⭐ LA FORMULATION RETENUE VIENT DE L'AUDIT EXTERNE, à son tableau de vocabulaire :
-           la precedente → **« flux externes désactivables ou explicitement
-           documentés »** ; et pour le coût, « pas de facturation au token ; coûts
-           matériels et de maintenance explicités ».
-         ⇒ On ne promet plus l'ABSENCE : **on promet la TRAÇABILITÉ.** C'est plus faible
-           comme slogan, et c'est la seule version qu'on puisse défendre devant un RSSI. -->
-    <div class="mf-chapeau">
-      <p>Des sites, des applications métier et des assistants documentaires qui font
-         gagner du temps à vos équipes — <strong>sans confier vos documents à une boîte noire.</strong></p>
-      <p>Flux externes <strong>désactivables ou explicitement documentés</strong>. Pas de
-         facturation au token : <strong>les coûts matériels et de maintenance sont écrits</strong>,
-         pas dissimulés dans une ligne « cloud ».</p>
+      <p class="mf-hero-actions">
+        <a class="mf-bouton" href="/contact/">Réserver un diagnostic de 30 minutes</a>
+        <a class="mf-bouton mf-bouton-clair" href="#prix">Voir les offres</a>
+      </p>
+      <p class="mf-hero-note"><em>Sans engagement · Réponse sous 24 h · Hauts-de-France et à distance</em></p>
     </div>
 
-    <!-- ⭐ L'APPEL À L'ACTION UNIQUE — demande de l'audit : « un CTA principal unique et
-         visible ». ⚠️ Il est ici, et il réapparaît après les offres : *un appel qu'on ne
-         répète pas est un appel qu'on ne lit pas.*
-         ⚠️ Les deux liens portent `.mf-bouton`, qui EXISTE dans manifeste.css. -->
-    <p>
-      <a class="mf-bouton" href="/contact/">Réserver un diagnostic de 30 minutes</a>
-      <a class="mf-bouton" href="#ecosysteme">Voir les offres et l'écosystème</a>
-    </p>
-    <p><em>Sans engagement · Réponse sous 24 h · Hauts-de-France et à distance</em></p>
+    <!-- ⚠️ LE VISUEL — ET CE QU'IL N'EST PAS. Les six images du site viennent d'ArkAdiA :
+         ce ne sont pas des visuels commerciaux. Gaëtan a été prévenu. En attendant,
+         l'oracle est la plus neutre — une salle technique, pas un personnage.
+         ⛔ Aucune requête externe : l'image est sur le serveur. -->
+    <div class="mf-hero-visuel">
+      <img src="/img/oracle-salle.webp" width="1024" height="640" loading="eager"
+           alt="Salle technique du studio : le poste de travail qui exécute les modèles locaux.">
+      <p class="mf-hero-legende"><strong>Recherche documentaire locale — 4 épreuves sur 4, le 28/09/2026.</strong></p>
+      <p class="mf-tampon">Mesuré</p>
+    </div>
 
     <ul class="mf-pastilles">
       <li>IA locale</li>
@@ -360,30 +353,18 @@
       <li>Maintenance continue</li>
     </ul>
 
-    <!-- ⛔⛔ LE TAMPON A CHANGÉ DE PORTÉE, ET C'EST LE POINT DÉLICAT DE CETTE RÉÉCRITURE.
-         Il disait « Mesuré » en bas de couverture et portait sur les phrases ci-dessus —
-         dont cette promesse, qui était FAUSSE.
-         ⭐ *Un tampon « mesuré » posé sur une promesse est un mensonge avec un sceau
-            officiel* — le commentaire d'origine le disait déjà mot pour mot.
-         ⇒ Il ne tamponne plus la couverture : il tamponne UNE mesure nommée, datée et
-           vérifiable. **Il a changé de voisin, pas de sens.** -->
-    <p><strong>Recherche documentaire locale — 4 épreuves sur 4, le 28/09/2026.</strong></p>
-    <p class="mf-tampon">Mesuré</p>
-  <!-- LA SOUS-NAVIGATION PAR ANCRES — ajoutee le 29/09/2026, cahier des charges :
-       « La landing doit proposer une navigation par ancres, mais uniquement pour les
-       grandes sections. » Les sept sections portaient deja leur identifiant : il ne
-       manquait que la barre qui les relie.
-       aria-label EXPLICITE : la page a maintenant DEUX zones de navigation, et deux
-       zones sans nom sont deux zones qu un lecteur d ecran ne distingue pas.
-       LES LIBELLES SONT DESCRIPTIFS — pas de « ici » ni de « en savoir plus ». -->
-  <nav class="page-nav" aria-label="Navigation dans cette page">
-    <a href="#ce-quon-fait">Vos besoins</a>
-    <a href="#prix">Solutions</a>
-    <a href="#methode">Méthode</a>
-    <a href="#capacites">Ce qui est prouvé</a>
-    <a href="#ecosysteme">Tout l’écosystème</a>
-    <a href="#contact">Contact</a>
-  </nav>
+    <!-- LA SOUS-NAVIGATION PAR ANCRES — les grandes sections de la page.
+         aria-label explicite : la page a DEUX zones de navigation, et deux zones sans
+         nom sont deux zones qu'un lecteur d'écran ne distingue pas. -->
+    <nav class="page-nav" aria-label="Navigation dans cette page">
+      <a href="#ce-quon-fait">Vos besoins</a>
+      <a href="#pourquoi">Pourquoi nous</a>
+      <a href="#prix">Solutions</a>
+      <a href="#methode">Méthode</a>
+      <a href="#capacites">Ce qui est prouvé</a>
+      <a href="#ressources">Ressources</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </section>
 
   <!-- ══════════════════════════════════════════════════════════════════════

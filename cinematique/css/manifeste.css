@@ -642,3 +642,85 @@ header .cta-nav {
   .site-pied { padding: 24px 18px 16px; gap: 18px; }
   .mf-bandeau { padding: 20px 18px; }
 }
+
+/* ---- LE HERO EN DEUX COLONNES — AJOUTÉ LE 28/09/2026 ----------------------
+   ⭐ LA MAQUETTE LE MONTRE AINSI : titre à gauche sur trois lignes, visuel à droite,
+      pastilles de confiance en bas sur toute la largeur. La trame, elle, empilait
+      tout au centre — ce qui marchait pour un document technique, pas pour une page
+      qui doit convaincre en trois secondes.
+   ⚠️ Sur mobile, une seule colonne : le visuel passe SOUS le texte. Une grille à
+      deux colonnes qui ne se replie pas est une page illisible sur téléphone. */
+.mf-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  gap: 30px 52px;
+  align-items: center;
+  text-align: left;
+  padding: 52px 44px 38px;
+}
+/* ⛔⛔ TAILLE DU TITRE RÉDUITE — CORRECTION DU 28/09/2026.
+   ⚠️ MESURE : le titre héritait de `clamp(2.2rem, 7.2vw, 5.6rem)`. À 1600 px, 7.2vw
+      = 115 px : sur trois lignes, il occupait **plus de la moitié de la hauteur du hero**
+      et écrasait tout le reste.
+   ⭐ Le défaut n'était pas la valeur, c'était le CONTEXTE : ce clamp avait été calibré
+     pour une couverture CENTRÉE, seule sur toute la largeur. Dans une colonne qui n'en
+     fait plus que la moitié, la même formule donne un titre deux fois trop gros.
+     *Un `vw` se juge à la largeur de son CONTENEUR, pas à celle de la fenêtre.*
+   ⇒ Plafond à 3.6rem et 4.6vw : à 1600 px, 73 px au lieu de 115. */
+.mf-hero .mf-titre { font-size: clamp(2rem, 4.6vw, 3.6rem); text-align: left; line-height: 1; }
+.mf-hero .mf-etiquette { margin-bottom: 14px; }
+/* ⛔ LE CHAPÔ PERD SA BOÎTE DANS LE HERO — DEUXIÈME DÉFAUT VISUEL.
+   ⚠️ MESURE : `.mf-chapeau` porte `display:inline-block` + bordure + fond + ergots
+      d'angle. Centré dans une page pleine largeur, c'était un encadré de document
+      technique — et ça marchait. Dans une colonne de hero, c'est **une boîte de texte
+      qui flotte au milieu du vide**, décalée du titre qu'elle accompagne.
+   ⭐ *Un composant qui a du sens dans un document n'en a pas forcément dans un hero.*
+   ⇒ Ici le chapô redevient un paragraphe d'accroche : pas de cadre, largeur lisible. */
+.mf-hero .mf-chapeau {
+  display: block;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  max-width: 46ch;
+  font-size: 1rem;
+  text-align: left;
+}
+.mf-hero .mf-chapeau::before,
+.mf-hero .mf-chapeau::after { display: none; }
+.mf-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 0; }
+.mf-hero-note { margin-top: 12px; font-size: .85rem; }
+.mf-hero-visuel { position: relative; }
+.mf-hero-visuel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid var(--mf-trait);
+  /* ⛔ L'IMAGE EST SOMBRE — TROISIÈME DÉFAUT. `oracle-salle.webp` est une photo très
+     sombre : sur le fond nuit de la trame, elle se confond avec la page et on ne
+     distingue RIEN. ⇒ On la traite pour qu'elle se LISE.
+     ⭐ *Un visuel qu'on ne lit pas n'est pas un visuel, c'est une tache.*
+     ⚠️ C'est un pansement, pas une solution : le vrai correctif est un visuel
+        commercial, que le studio n'a pas encore. */
+  filter: brightness(1.2) contrast(1.08) saturate(.9);
+}
+.mf-hero-legende { margin: 12px 0 0; font-size: .85rem; }
+.mf-hero-visuel .mf-tampon { display: inline-block; margin-top: 10px; }
+.mf-hero .mf-pastilles,
+.mf-hero .page-nav { grid-column: 1 / -1; }
+.mf-bouton-clair { background: transparent; }
+
+@media (max-width: 900px) {
+  .mf-hero {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 34px 20px 28px;
+    text-align: left;
+  }
+  .mf-hero .mf-titre { font-size: clamp(1.9rem, 7.5vw, 2.6rem); }
+  .mf-hero .mf-chapeau { max-width: none; }
+  .mf-hero-visuel { order: 2; }
+}
