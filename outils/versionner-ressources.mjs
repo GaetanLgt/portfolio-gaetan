@@ -44,7 +44,19 @@ if (!fs.existsSync(C)) {
 const SIMULER = process.argv.includes('--simuler');
 console.log('  racine : ' + C);
 
-const sha8 = (abs) => crypto.createHash('sha256').update(fs.readFileSync(abs)).digest('hex').slice(0, 8);
+// ⛔⛔ CORRIGÉ LE 28/09/2026 — L'EMPREINTE DÉCRIVAIT UN CONTENU QUI N'EXISTE PAS EN LIGNE.
+//    MESURE :
+//      · le fichier local fait 33 545 octets, avec 724 fins de ligne CRLF (Windows) ;
+//      · le serveur en sert 32 821, avec 0 CRLF — la synchronisation FTP convertit ;
+//      · les octets sont identiques dès qu'on normalise, mais les empreintes DIFFÈRENT.
+//    ⇒ L'empreinte gravée dans les pages était donc celle d'un fichier que le serveur
+//      ne sert JAMAIS. Le navigateur réclamait une version inexistante.
+//    ⭐ *Une version doit décrire ce qui sera SERVI, pas ce qui est sur le disque.*
+//    ⇒ On hache le contenu NORMALISÉ EN LF — exactement ce que le FTP enverra.
+const sha8 = (abs) => {
+  const normalise = fs.readFileSync(abs, 'utf8').replace(/\r\n/g, '\n');
+  return crypto.createHash('sha256').update(normalise, 'utf8').digest('hex').slice(0, 8);
+};
 
 // Toutes les pages, à toute profondeur
 const pages = [];
