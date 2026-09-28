@@ -298,17 +298,59 @@
           ce que le site mettait huit actes à dire.
        ══════════════════════════════════════════════════════════════════════ -->
   <section class="mf-couverture" id="couverture">
+    <p class="mf-etiquette">GL Digital Lab — Studio web &amp; IA locale pour PME</p>
+
     <h1 class="mf-titre">Vos outils.<br>Chez vous.<br>À vous.</h1>
 
+    <!-- ⛔⛔ LA PHRASE DE COUVERTURE A ÉTÉ RÉÉCRITE LE 29/09/2026 — ELLE ÉTAIT FAUSSE.
+         Elle disait : une promesse absolue qui etait fausse
+
+         ⚠️ LA MESURE QUI L'A CONDAMNÉE, faite ce jour-là :
+           · le harnais de l'agent tourne sur **deepseek-official**, un modèle DISTANT ;
+           · `le .env du studio` contient **OPENROUTER_API_KEY** ;
+           · `le .env du bot` contient **DISCORD_TOKEN** ;
+           · le studio a par ailleurs **12 modèles locaux** dans Ollama.
+         ⇒ cette promesse n'était pas une approximation : **c'était faux**, et
+           c'était la PREMIÈRE phrase lue par un visiteur.
+           ⭐ *Un DSI qui lit ça, puis découvre l'usage de DeepSeek, ne croit plus rien
+              d'autre — et il a raison.*
+
+         ⛔ ET LA SECONDE MOITIÉ ÉTAIT FAUSSE AUSSI : « Zéro abonnement ». Le brief du
+           studio prévoit un **MRR de maintenance**. *S'il y a de la maintenance, il y a
+           un abonnement* — simplement, il n'est pas caché.
+
+         ⭐ LA FORMULATION RETENUE VIENT DE L'AUDIT EXTERNE, à son tableau de vocabulaire :
+           « Zéro donnée externe » → **« flux externes désactivables ou explicitement
+           documentés »** ; et pour le coût, « pas de facturation au token ; coûts
+           matériels et de maintenance explicités ».
+         ⇒ On ne promet plus l'ABSENCE : **on promet la TRAÇABILITÉ.** C'est plus faible
+           comme slogan, et c'est la seule version qu'on puisse défendre devant un RSSI. -->
     <div class="mf-chapeau">
-      <p>L'intelligence artificielle locale pour les PME.</p>
-      <p><strong>Zéro donnée sortante. Zéro abonnement.</strong></p>
+      <p>Des sites, des applications métier et des assistants documentaires qui font
+         gagner du temps à vos équipes — <strong>sans confier vos documents à une boîte noire.</strong></p>
+      <p>Flux externes <strong>désactivables ou explicitement documentés</strong>. Pas de
+         facturation au token : <strong>les coûts matériels et de maintenance sont écrits</strong>,
+         pas dissimulés dans une ligne « cloud ».</p>
     </div>
 
-    <!-- ⛔ LE TAMPON NE SE POSE PAS PAR DÉCORATION. Il dit que la phrase au-dessus a
-         été MESURÉE, et elle l'a été : l'indexation et la recherche tournent en local
-         sur le poste, sans service tiers (épreuves du 28/09/2026). *Un tampon
-         « mesuré » posé sur une promesse serait un mensonge avec un sceau officiel.* -->
+    <!-- ⭐ L'APPEL À L'ACTION UNIQUE — demande de l'audit : « un CTA principal unique et
+         visible ». ⚠️ Il est ici, et il réapparaît après les offres : *un appel qu'on ne
+         répète pas est un appel qu'on ne lit pas.*
+         ⚠️ Les deux liens portent `.mf-bouton`, qui EXISTE dans manifeste.css. */
+    <p>
+      <a class="mf-bouton" href="/contact/">Réserver un diagnostic de 30 minutes</a>
+      <a class="mf-bouton" href="#ecosysteme">Voir les offres et l'écosystème</a>
+    </p>
+    <p><em>Sans engagement · Réponse sous 24 h · Hauts-de-France et à distance</em></p>
+
+    <!-- ⛔⛔ LE TAMPON A CHANGÉ DE PORTÉE, ET C'EST LE POINT DÉLICAT DE CETTE RÉÉCRITURE.
+         Il disait « Mesuré » en bas de couverture et portait sur les phrases ci-dessus —
+         dont cette promesse, qui était FAUSSE.
+         ⭐ *Un tampon « mesuré » posé sur une promesse est un mensonge avec un sceau
+            officiel* — le commentaire d'origine le disait déjà mot pour mot.
+         ⇒ Il ne tamponne plus la couverture : il tamponne UNE mesure nommée, datée et
+           vérifiable. **Il a changé de voisin, pas de sens.** -->
+    <p><strong>Recherche documentaire locale — 4 épreuves sur 4, le 28/09/2026.</strong></p>
     <p class="mf-tampon">Mesuré</p>
   </section>
 
@@ -809,9 +851,19 @@ interdit la mise en ligne **des œuvres** — il n'y en a aucune.
         étaient vrais au 29/09/2026. Un relevé daté ne devient pas faux — il devient
         périmé, et la date le dit. *Un chiffre sans date, lui, devient faux sans le dire.* -->
 <footer class="mf-log">
-  <p><strong>GL DIGITAL LAB</strong> — Génie IT TeK FR · conception, déploiement et maintenance
-     de solutions web et d'IA locale. <em>Sites, applications métier, RAG documentaire,
-     agents — sur une infrastructure contrôlée.</em></p>
+  <!-- ⭐ LA MARQUE EST SÉPARÉE DE L'ENTITÉ LÉGALE DEPUIS LE 29/09/2026 — DEMANDE DE L'AUDIT.
+       ⚠️ CE QUI N'ALLAIT PAS : la ligne disait « GL DIGITAL LAB — Génie IT TeK FR », les
+          deux noms collés dans la même phrase. L'audit nomme le défaut exactement :
+          *« Ne laisse jamais le visiteur devoir reconstruire mentalement cette relation. »*
+          Et il liste ce qu'un prospect doit pouvoir répondre sans hésiter : qui est mon
+          prestataire, quel nom commercial, quelle raison sociale, quel nom sur le devis.
+       ⇒ Trois lignes, trois rôles : **la marque**, **ce qu'elle fait**, **qui l'exploite**.
+         Génie IT TeK FR n'apparaît plus qu'une fois, et à sa place — l'entité légale. -->
+  <p><strong>GL DIGITAL LAB</strong></p>
+  <p>Studio web &amp; IA locale pour PME</p>
+  <p><em>Une activité de Génie IT TeK FR — conception, déploiement et maintenance de
+     solutions web et d'IA locale. Sites, applications métier, RAG documentaire, agents —
+     sur une infrastructure contrôlée.</em></p>
   <p><a href="/mentions-legales/">Mentions légales</a> ·
      <a href="/confidentialite/">Confidentialité</a> ·
      <a href="/cgv/">CGV</a> ·
