@@ -256,4 +256,38 @@ jobs:
             exit 1
           fi
           echo "✅ Tous les fichiers vérifiés répondent 200."
+          # ⛔⛔ ET 200 NE SUFFIT PAS — AJOUTÉ LE 28/09/2026 APRÈS UN DÉFAUT MESURÉ.
+          #
+          # ⭐ CE QUI S'EST PASSÉ, ET C'EST LA DEUXIÈME COUCHE DU MÊME DÉFAUT :
+          #    le run `a53a8fe` a rendu **`success`**. Tous les fichiers répondaient 200.
+          #    ⛔ **Et `/formation/` servait encore l'ANCIENNE page** — titre
+          #      « Ressources pédagogiques », canonical `/ressources/`.
+          #    En-tête mesuré : `Last-Modified: 12:33:06` — posé par le run **précédent**,
+          #    celui qui avait échoué. Le run vert **n'a pas republié le fichier.**
+          #
+          #    ⇒ ⭐ **Un contrôle de code HTTP vérifie qu'une porte s'ouvre. Il ne vérifie
+          #      pas ce qu'il y a derrière.** *C'est le même défaut, une couche plus haut.*
+          #    ⇒ **On vérifie maintenant que le CONTENU servi est le nôtre.**
+          echo ""
+          echo "── Vérification du CONTENU (pas seulement du code) ──"
+          # La signature de la page d'accueil doit être présente dans ce qui est servi.
+          # ⚠️ Elle est écrite ici, et c'est imparfait — comme toute liste écrite à la main.
+          #    *Mais une signature fausse se voit, alors qu'une page périmée ne se voit pas.*
+          sig_index=$(curl -s -L --max-time 30 "https://gldigitallab.fr/" | grep -c 'GL Digital Lab' || true)
+          if [ "${sig_index:-0}" -gt 0 ]; then
+            echo "  ✅ la page d'accueil porte bien « GL Digital Lab »"
+          else
+            echo "  ⛔ la page d'accueil ne porte PAS la signature attendue"
+            echec=1
+          fi
+
+          sig_formation=$(curl -s -L --max-time 30 "https://gldigitallab.fr/formation/" | grep -c 'Suivi de formation\|suivi de formation\|Universitaire' || true)
+          if [ "${sig_formation:-0}" -gt 0 ]; then
+            echo "  ✅ /formation/ sert bien la version avec les trois niveaux"
+          else
+            echo "  ⛔ /formation/ sert une version PÉRIMÉE"
+            echo "     ⇒ elle répond 200, mais ce n'est pas la page attendue."
+            echo "     ⇒ *Un 200 sur une page périmée est un déploiement qui n'a pas livré.*"
+            echec=1
+          fi
           echo "✅ La racine répond."

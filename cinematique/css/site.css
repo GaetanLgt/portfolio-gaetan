@@ -1,4 +1,4 @@
-/* GL Digital Lab — site cinématique · polices système (aucun téléchargement)
+﻿/* GL Digital Lab — site cinématique · polices système (aucun téléchargement)
    ⚠️ EN-TÊTE CORRIGÉ LE 25/09/2026. Il disait « DA D6 (19/09) · aucun vert ». La décision du 24/09
    (« LE VERT RESTE SORTI ») est ANNULÉE : la palette est NOIR · VERT · ARGENT (canon § 11, 25/09).
    LE CODE DES COULEURS, et c'est lui qui porte le sens :
@@ -921,4 +921,44 @@ main{position:relative;z-index:10}
   .preuve-marche{padding:.85rem .9rem}
   .preuve-marche .grille strong{font-size:1.05rem}
   .preuve-marche .grille li{font-size:.83rem}
+}
+/* ⛔⛔ .avertissement ET .etiquette — AJOUTÉES LE 28/09/2026.
+   ⭐ MESURE QUI L'A IMPOSÉE : la page `/formation/` utilise ces deux classes
+   depuis sa création, et **elles n'existaient pas dans cette feuille**.
+   ⇒ Le bloc « non officiel » s'affichait **sans cadre**, et les étiquettes
+     (« disponible », « en construction ») **sans style**.
+   ⛔ *Une classe utilisée sans règle ne casse rien visiblement : elle rend
+     simplement ce qu'on voulait mettre en valeur comme du texte ordinaire.*
+   ⚠️ Et c'est le MÊME défaut que `.videos` le 28/09 : une classe écrite dans le
+     HTML, jamais définie en CSS. *Deux fois le même oubli, à quinze jours.* */
+.avertissement{
+  border:1px solid rgba(255,90,95,.45);
+  border-left:4px solid #ff5a5f;
+  background:rgba(255,90,95,.06);
+  padding:1rem 1.1rem;
+  margin:1.4rem 0 1.8rem;
+  border-radius:0;
+}
+.avertissement p{margin:.4rem 0;font-size:.92rem;line-height:1.55}
+.avertissement p:first-child{margin-top:0;font-size:1rem}
+.avertissement p:last-child{margin-bottom:0}
+.etiquette{
+  display:inline-block;
+  font-size:.72rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:.16rem .5rem;
+  border:1px solid rgba(44,227,155,.5);
+  color:#2ce39b;
+  vertical-align:middle;
+  margin-left:.5rem;
+}
+.etiquette-attente{
+  border-color:rgba(200,209,224,.4);
+  color:var(--doux,#c8d1e0);
+}
+@media (max-width:600px){
+  .avertissement{padding:.85rem .9rem}
+  .avertissement p{font-size:.86rem}
+  .etiquette{font-size:.66rem;padding:.12rem .4rem}
 }
