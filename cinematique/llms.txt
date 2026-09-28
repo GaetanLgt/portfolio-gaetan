@@ -56,12 +56,41 @@ neuf choses, et qui ne fait sortir aucune donnée.*
 ## Les pages du site
 
 - [Accueil](https://gldigitallab.fr/) — la présentation en huit actes
+- [Analyses](https://gldigitallab.fr/analyses/) — ce que le studio a mesuré, avec les sources
+  datées et **les blancs déclarés** : marché du numérique en France, souveraineté de
+  l'infrastructure, production française, langue du code
+- [Formation](https://gldigitallab.fr/formation/) — un dossier pédagogique libre et le chantier
+  d'une formation à l'intelligence artificielle, du scolaire à l'université.
+  **⚠️ Non certifiant** : le contenu s'appuie sur des ressources officielles, le studio n'est
+  pas un organisme certificateur.
+- [Urgence cyber](https://gldigitallab.fr/urgence-cyber/) — **qui contacter en cas d'incident
+  cyber en France, selon qui vous êtes** : particulier, PME/collectivité, administration.
+  Numéros et sites officiels (ANSSI / CERT-FR), vérifiés et datés. Utile même si vous n'êtes
+  jamais client.
 - [Relevés de veille](https://gldigitallab.fr/veille/) — ce que les sources suivies publient,
   avec les liens vers leurs auteurs
+- [Point de contrôle](https://controle.gldigitallab.fr/) — tableau de bord servi 24/7 qui
+  reçoit les signaux du poste de travail. **Aucun nom de client, aucun identifiant de machine,
+  aucun profil matériel** : uniquement des valeurs calculées par le serveur.
 - [Écrire au studio](https://gldigitallab.fr/contact.php) — formulaire, traité par le site
   lui-même, sans service tiers
 - [Mentions légales](https://gldigitallab.fr/mentions-legales.html)
 - [Confidentialité](https://gldigitallab.fr/confidentialite.html)
+
+<!-- ⭐ CETTE SECTION A ÉTÉ COMPLÈTE LE 28/09/2026, ET C'ÉTAIT UN DÉFAUT RÉEL — LE MÊME
+     QUE CELUI DU 28/09 SUR « CE QUE LE STUDIO FAIT ».
+     ⛔ AVANT : cinq entrées. Aucune ne menait à `/analyses/`, `/formation/`,
+        `/urgence-cyber/` ni au point de contrôle — **quatre surfaces publiées, vérifiées en
+        200, et absentes du seul fichier écrit pour que les moteurs les trouvent.**
+     ⭐ *Un fichier qui dit « voici où aller pour vérifier » et qui omet la moitié des
+        endroits ne renseigne pas : il égare.* Et ici, l'omission coûte plus cher qu'ailleurs,
+        parce que ce fichier est lu par des machines qui **ne peuvent pas deviner** ce qu'on
+        ne leur a pas écrit — elles n'ont pas de menu déroulant à ouvrir.
+     ⚠️ Chaque entrée porte **ce qu'on y trouve**, pas seulement son nom : un moteur qui
+        cite doit pouvoir dire pourquoi la page valait d'être citée.
+     ⛔ Et `/formation/` porte **« non certifiant »** dans sa description, ici comme sur sa
+        page : *une information fausse dans un fichier que personne ne relit ne se corrige
+        jamais.* -->
 
 ## Ce qui se vérifie, et comment
 

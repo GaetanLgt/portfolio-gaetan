@@ -9,6 +9,49 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="stylesheet" href="../css/site.css?v=20260928">
+<!-- ⭐ DONNÉES STRUCTURÉES — ajoutées le 28/09/2026.
+     ⛔ CE QUI A ÉTÉ MESURÉ AVANT : sur les 8 pages du site, **une seule** portait un bloc
+        JSON-LD (l'accueil, en `ProfessionalService`). Les sept autres n'en avaient aucun.
+        Or « Schema Markup » est l'un des sept critères qu'un moteur ou un assistant
+        utilise pour **citer** une page plutôt que la résumer.
+     ⚠️ ET C'EST PLUS UTILE ICI QU'AILLEURS : cette page répond à des questions précises
+        (« qui appeler quand on est une PME victime de rançongiciel ? »). Un moteur qui
+        comprend la structure peut citer **la bonne ligne** au lieu de paraphraser.
+     ⛔ CE QUE CE BLOC NE DIT PAS, ET C'EST DÉLIBÉRÉ : aucune date de publication inventée,
+        aucun auteur qui n'existe pas, aucune note, aucun avis. *Un balisage qui ment est
+        pire que pas de balisage : il est cru par une machine, qui n'a aucun moyen de
+        vérifier.* On ne déclare que ce qui est vrai et vérifiable. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Urgence cyber — qui contacter, et quand",
+  "url": "https://gldigitallab.fr/urgence-cyber/",
+  "inLanguage": "fr-FR",
+  "description": "Les bons interlocuteurs en cas d'incident cyber en France, selon qui vous êtes : particulier (17Cyber), PME, ETI, collectivité ou association (CSIRT territorial), administration ou opérateur vital (CERT-FR, 3218). Numéros et sites officiels, vérifiés et datés.",
+  "dateModified": "2026-09-28",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "GL Digital Lab",
+    "url": "https://gldigitallab.fr/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "GL Digital Lab",
+    "alternateName": "Génie IT Tek FR",
+    "url": "https://gldigitallab.fr/"
+  },
+  "about": [
+    { "@type": "Thing", "name": "Réponse aux incidents de sécurité informatique" },
+    { "@type": "Thing", "name": "Cybersécurité en France" }
+  ],
+  "mentions": [
+    { "@type": "Organization", "name": "CERT-FR (ANSSI)", "url": "https://www.cert.ssi.gouv.fr/" },
+    { "@type": "Organization", "name": "17Cyber", "url": "https://17cyber.gouv.fr/" },
+    { "@type": "Organization", "name": "Cybermalveillance.gouv.fr", "url": "https://www.cybermalveillance.gouv.fr/" }
+  ]
+}
+</script>
 </head>
 <body class="page-simple">
 <main class="acte" style="min-height:auto">
