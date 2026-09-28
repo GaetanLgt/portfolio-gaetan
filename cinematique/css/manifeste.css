@@ -437,3 +437,197 @@ header .cta-nav {
   padding: 8px 14px;
   white-space: nowrap;
 }
+
+/* ============================================================================
+   LA COQUILLE DU SITE — AJOUTÉE LE 28/09/2026
+   ══════════════════════════════════════════════════════════════════════════
+   ⭐ POURQUOI CETTE SECTION EXISTE. Demande de Gaëtan : « tu me mets
+      immédiatement la nouvelle maquette en place sur TOUT le site ! »
+
+   ⛔ LA MESURE QUI L'A DÉCLENCHÉE : sur les 13 pages du site, QUATRE
+      (`analyses/`, `veille/`, `formation/`, `urgence-cyber/`) portaient
+      `nav=0 header=0 footer=0`. Elles n'avaient ni barre ni pied — on ne
+      pouvait pas en sortir. *Un visiteur qui tombe sur un article n'avait
+      aucun chemin vers le reste.*
+
+   ⇒ Cette section est la COQUILLE COMMUNE : une barre, un pied, et les
+      composants de la maquette (cartes, étapes, offres, bandeau de
+      confiance). Elle est écrite une fois, ici, et servie aux 13 pages.
+
+   ⚠️ ELLE NE TOUCHE PAS AU CORPS DE LA TRAME. `.mf-*`, `.page-nav`,
+      `.manifeste` : rien n'est modifié. On ajoute, on ne remplace pas.
+      *Une refonte qui déborde sur ce qu'on ne refait pas est une régression.*
+
+   ⚠️ AUCUNE REQUÊTE EXTERNE : les icônes sont des SVG en ligne, les polices
+      sont des piles système (déjà en tête de fichier). Rien ne sort.
+   ============================================================================ */
+
+/* ---- ① LA BARRE ---------------------------------------------------------- */
+.site-barre {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 24px;
+  background: var(--mf-papier);
+  border-bottom: 2px solid var(--mf-trait);
+}
+.site-barre .marque {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mf-titre);
+  font-stretch: condensed;
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.site-barre .marque .hex {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--mf-vert);
+  color: var(--mf-vert);
+  font-size: .82rem;
+}
+.site-barre nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 20px;
+  margin-left: auto;
+  font-size: .88rem;
+}
+.site-barre nav a { text-decoration: none; border-bottom: 1px solid transparent; padding: 4px 0; }
+.site-barre nav a:hover,
+.site-barre nav a:focus-visible { border-bottom-color: var(--mf-vert); color: var(--mf-vert); }
+.site-barre nav a[aria-current="page"] { border-bottom-color: var(--mf-vert); color: var(--mf-vert); }
+
+@media (max-width: 900px) {
+  .site-barre { flex-wrap: wrap; gap: 8px 14px; padding: 10px 16px; }
+  .site-barre nav { width: 100%; margin-left: 0; gap: 2px 14px; font-size: .84rem; }
+}
+
+/* ---- ② LES PASTILLES DE CONFIANCE — la bande de la maquette -------------- */
+.mf-pastilles { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0 0; padding: 0; list-style: none; }
+.mf-pastilles li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border: 1px solid var(--mf-trait);
+  font-size: .82rem;
+}
+.mf-pastilles li::before { content: "◇"; color: var(--mf-vert); font-size: .9rem; line-height: 1; }
+
+/* ---- ③ LES CARTES DE SERVICE — la grille 6 de la maquette ---------------- */
+.mf-cartes { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); margin: 22px 0 0; padding: 0; list-style: none; }
+.mf-carte {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border: 1px solid var(--mf-trait);
+  background: rgba(200, 209, 220, .025);
+}
+.mf-carte .mf-carte-ico {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border: 1px solid var(--mf-vert);
+  color: var(--mf-vert);
+}
+.mf-carte h3 {
+  margin: 4px 0 0;
+  font-family: var(--mf-titre);
+  font-stretch: condensed;
+  font-size: 1.06rem;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+.mf-carte p { margin: 0; font-size: .9rem; }
+.mf-carte .mf-lien { margin-top: auto; padding-top: 10px; font-size: .86rem; }
+.mf-carte .mf-lien a { text-decoration: none; }
+.mf-carte .mf-lien a::after { content: " →"; color: var(--mf-vert); }
+
+/* ---- ④ LES ÉTAPES EN LIGNE — 5 pastilles numérotées --------------------- */
+.mf-etapes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(178px, 1fr)); margin: 22px 0 0; padding: 0; list-style: none; counter-reset: et; }
+.mf-etapes li { padding: 16px; border-top: 3px solid var(--mf-vert); font-size: .88rem; }
+.mf-etapes li::before {
+  counter-increment: et;
+  content: counter(et);
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--mf-mono);
+  font-size: 1.5rem;
+  color: var(--mf-vert);
+  line-height: 1;
+}
+.mf-etapes strong { display: block; margin-bottom: 4px; font-size: .95rem; }
+
+/* ---- ⑤ LES OFFRES — trois boîtes, la troisième mise en avant ------------ */
+.mf-offres { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr)); margin: 22px 0 0; padding: 0; list-style: none; }
+.mf-offre { display: flex; flex-direction: column; gap: 10px; padding: 22px; border: 1px solid var(--mf-trait); }
+.mf-offre h3 { margin: 0; font-family: var(--mf-titre); font-stretch: condensed; font-size: 1.02rem; text-transform: uppercase; }
+.mf-offre .mf-prix { font-family: var(--mf-mono); font-size: 1.55rem; color: var(--mf-vert); line-height: 1.1; }
+.mf-offre .mf-prix small { display: block; font-size: .72rem; color: var(--mf-encre); opacity: .75; letter-spacing: .08em; }
+.mf-offre ul { margin: 0; padding-left: 1.05em; font-size: .87rem; }
+.mf-offre li { margin-bottom: 4px; }
+.mf-offre .mf-bouton { margin-top: auto; text-align: center; }
+.mf-offre.mf-mise-avant { border-color: var(--mf-vert); border-width: 2px; }
+
+/* ---- ⑥ LE BANDEAU CTA --------------------------------------------------- */
+.mf-bandeau {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 26px 28px;
+  border: 1px solid var(--mf-vert);
+  margin: 22px 0 0;
+}
+.mf-bandeau p { margin: 0; font-size: .92rem; }
+.mf-bandeau strong { display: block; font-size: 1.1rem; margin-bottom: 4px; }
+
+/* ---- ⑦ LE PIED — quatre colonnes --------------------------------------- */
+.site-pied {
+  border-top: 2px solid var(--mf-trait);
+  padding: 34px 28px 20px;
+  display: grid;
+  gap: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+}
+.site-pied h4 {
+  margin: 0 0 10px;
+  font-family: var(--mf-mono);
+  font-size: .74rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mf-vert);
+}
+.site-pied ul { margin: 0; padding: 0; list-style: none; font-size: .86rem; }
+.site-pied li { margin-bottom: 6px; }
+.site-pied a { text-decoration: none; }
+.site-pied a:hover, .site-pied a:focus-visible { color: var(--mf-vert); text-decoration: underline; }
+.site-pied .mf-legal {
+  grid-column: 1 / -1;
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--mf-grille);
+  font-size: .78rem;
+  opacity: .85;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+}
+
+@media (max-width: 640px) {
+  .site-pied { padding: 24px 18px 16px; gap: 18px; }
+  .mf-bandeau { padding: 20px 18px; }
+}
