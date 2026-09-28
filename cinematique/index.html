@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -206,9 +206,36 @@
         Explorer<span class="chevron" aria-hidden="true">▾</span>
       </button>
       <ul class="menu-panneau" id="menu-p4">
-        <li><button id="btn-secteurs" type="button" class="lien-nav"
-                    aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button></li>
+        <li><button id="btn-secteurs" type="button" class="lien-nav"                    aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button></li>
         <li><a href="/veille/">Relevés de veille</a></li>
+      </ul>
+    </div>
+
+    <!-- ⑤ ⭐⭐ L'ÉCOSYSTÈME — LA PORTE. Ajouté le 28/09/2026, décision de Gaëtan :
+         *« Il faut que la page principale du site soit une GATE de telle manière à accéder
+         à tout l'écosystème. C'est pas compliqué à comprendre. »*
+
+         ⛔ CE QUI ÉTAIT FAUX AVANT : les pages existaient, mais on n'y accédait **que par le
+            pied de page** — donc après avoir tout lu. *Une porte au fond du couloir n'est pas
+            une porte.* Mesure du 28/09 : 4 pages publiées, **un seul lien** dans le menu
+            (`/veille/`), rangé sous « Explorer ».
+         ⭐ CE QUE CE GROUPE CHANGE : c'est **la sortie du récit** — vers ce qui est publié,
+            mesuré, et réutilisable.
+         ⚠️ IL EST EN DERNIER, ET C'EST VOULU : le menu raconte d'abord ce qu'on vend, puis ce
+            qu'on fait, puis ce qui nous contraint, puis le filtre par secteur — **et seulement
+            ensuite, ce qui existe en dehors.** *Un visiteur qui cherche l'offre ne doit pas
+            traverser un catalogue avant de la trouver.* -->
+    <div class="menu-groupe">
+      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p5">
+        L'écosystème<span class="chevron" aria-hidden="true">▾</span>
+      </button>
+      <ul class="menu-panneau" id="menu-p5">
+        <li><a href="/analyses/">Analyses</a></li>
+        <li><a href="/formation/">Formation</a></li>
+        <li><a href="/veille/">Veille</a></li>
+        <!-- ⚠️ LES TROIS SEULES PAGES PUBLIÉES AU 28/09/2026, vérifiées en 200.
+             ⛔ On n'annonce pas ici ce qui n'existe pas : *un lien mort est pire que pas de
+             lien* — la leçon payée trois fois ce soir (ressources/, ecole/, formation/). -->
       </ul>
     </div>
   </nav>
