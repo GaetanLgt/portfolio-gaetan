@@ -98,6 +98,23 @@ for (const f of pages()) {
   const txt = texteVisible(html);
   const constats = [];
 
+  /* ── HORS SUJET : UNE PAGE EN `noindex` N'EST PAS CANDIDATE À LA CITATION ────
+     ⛔ AJOUTÉ LE 28/09/2026 APRÈS AVOIR SIGNALÉ DU TRAVAIL CORRECT.
+        Le premier jet auditait `404.html` comme les autres et lui reprochait
+        « aucune donnée structurée ». Or cette page porte `<meta name="robots"
+        content="noindex">` : **elle demande explicitement à ne pas être indexée.**
+        La baliser serait au mieux inutile, au pire une contradiction.
+        ⭐ *Un contrôle qui ne connaît pas ses exceptions signale du travail correct —
+           et un contrôle qui crie sur du travail correct finit par être ignoré.*
+        ⚠️ On ne la retire pas pour autant : on la marque HORS SUJET et on dit pourquoi.
+           *Une page qu'on cesse de regarder en silence devient une page qu'on oublie.* */
+  const noindex = /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html);
+  const canonical = (html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)/i) || [, ''])[1];
+
+  if (noindex) {
+    constats.push({ c: '⊘', etat: 'HORS SUJET', dit: 'page en `noindex` : elle demande à ne pas être indexée, donc à ne pas être citée' });
+  } else {
+
   /* ── ① RÉPONSE DIRECTE EN HAUT ──────────────────────────────────────
      Mesure : y a-t-il du texte AVANT le premier <h2>, et quelle longueur ?
      L'article : « ouvrir avec 2 ou 3 paragraphes courts qui définissent le
@@ -168,7 +185,6 @@ for (const f of pages()) {
     if (!o) {
       constats.push({ c: '⑤', etat: 'FAIBLE', dit: 'balisage présent mais INVALIDE' });
     } else {
-      const canonical = (html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)/i) || [, ''])[1];
       const urlBalise = o.url || '';
       if (canonical && urlBalise && !canonical.replace(/\/$/, '').startsWith(urlBalise.replace(/\/$/, '')) && !urlBalise.startsWith(canonical.replace(/\/$/, ''))) {
         constats.push({ c: '⑤', etat: 'FAIBLE', dit: `l’URL déclarée (${urlBalise}) ne correspond pas au canonical (${canonical})` });
@@ -193,6 +209,8 @@ for (const f of pages()) {
   } else {
     constats.push({ c: '⑦', etat: 'OK', dit: `${liens.length} lien(s) interne(s), tous résolus en local` });
   }
+
+  }   // fin du « sinon » : les pages en noindex ne passent pas les contrôles
 
   resultats.push({ rel, constats, mots: txt.split(/\s+/).length });
 }

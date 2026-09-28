@@ -9,6 +9,32 @@
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="stylesheet" href="../css/site.css?v=20260928">
+<!-- ⭐ BALISAGE AJOUTÉ LE 28/09/2026, sur la checklist de citation.
+     ⛔⛔ ET SURTOUT PAS `Course`. C'est le réflexe évident, et c'est le mauvais :
+        `Course` déclare une **formation structurée**, avec un programme, une durée et
+        souvent une reconnaissance. Or cette page dit l'inverse d'elle-même, en tête :
+        **le studio n'est pas un organisme certificateur.**
+        *Un `Course` posé ici ferait dire au balisage le contraire de ce que la page
+        affiche — et le balisage est cru par des machines qui ne lisent pas la page.*
+     ⚠️ On déclare donc `WebPage` avec son `about`, ce qui est vrai : une page qui PARLE
+        de formation, sans se déclarer comme une formation certifiante. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Formation — GL Digital Lab",
+  "url": "https://gldigitallab.fr/formation/",
+  "inLanguage": "fr-FR",
+  "description": "Un dossier pédagogique libre et réutilisable (lire le manga à l'école, cinq séances du CP au CM2), et le chantier ouvert d'une formation à l'intelligence artificielle, du scolaire à l'université. Non certifiant : le contenu s'appuie sur des ressources officielles, le studio n'est pas un organisme certificateur.",
+  "dateModified": "2026-09-28",
+  "isPartOf": { "@type": "WebSite", "name": "GL Digital Lab", "url": "https://gldigitallab.fr/" },
+  "publisher": { "@type": "Organization", "name": "GL Digital Lab", "alternateName": "Génie IT Tek FR", "url": "https://gldigitallab.fr/" },
+  "about": [
+    { "@type": "Thing", "name": "Formation à l'intelligence artificielle" },
+    { "@type": "Thing", "name": "Éducation aux médias et à l'information" }
+  ]
+}
+</script>
 </head>
 <body class="page-simple">
 <main class="acte" style="min-height:auto">
