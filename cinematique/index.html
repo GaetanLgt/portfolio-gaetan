@@ -666,17 +666,15 @@
           penserait à le changer. *Un lien qu'il faut penser à mettre à jour est un lien
           qui sera faux.* -->
   <p><a href="veille/">Le relevé de veille</a> — ce que les sources suivies ont publié, avec les liens vers leurs auteurs.</p>
-<!-- 📚 LES RESSOURCES PÉDAGOGIQUES — ajoutées le 28/09/2026, décision de Gaëtan.
-⭐ CE QU'ON Y TROUVE : « Lire le manga à l'école », cinq séances du CP au CM2, avec son PDF.
-Décision de Gaëtan : « adosser les packs pédagogiques existants au site » — gratuit et
-ouvert, sans inscription ni formulaire.
-⚠️ ET LE MÊME PIÈGE QUE LA VEILLE A ÉTÉ ÉVITÉ ICI : le dossier existait depuis le 13/09
-dans `livrables/`, **sans aucun chemin vers le public**. *Une page que personne ne peut
-atteindre n'existe pas* — c'est écrit trois lignes plus haut, et ça valait aussi pour elle.
-⛔ CE QUI N'EST PAS PUBLIÉ, ET C'EST VOLONTAIRE : les chantiers par cycle (cycle 2, 3, 4)
-et l'histoire du jeu vidéo sont annoncés **comme en cours**, pas comme disponibles.
-*On ne promet pas ce qu'on n'a pas produit.* -->
-<p><a href="ressources/">Les ressources pédagogiques</a> — des dossiers libres, faits pour être utilisés en classe, sans inscription.</p>
+<!-- ⛔ LE LIEN VERS LES RESSOURCES PÉDAGOGIQUES EST RETIRÉ — 28/09/2026, round 22.
+⭐ POURQUOI : `/ressources/` rend **403** et son PDF rend **404** en production.
+Le motif `ressources/**` figure dans le bloc `exclude:` du workflow de déploiement
+(ligne 157) — **la page n'a donc jamais été envoyée.**
+⇒ *Un lien mort est pire que pas de lien* : il fait croire que la ressource existe.
+⚠️ REMETTRE CE LIEN **quand la page répondra 200** — pas avant. Vérifier par
+`curl -s -o /dev/null -w "%{http_code}" https://gldigitallab.fr/ressources/`.
+📚 La page, ses contenus et la décision de Gaëtan (gratuit et ouvert) existent
+toujours dans `cinematique/ressources/` — **rien n'est perdu, seul le lien est retiré.** -->
 </footer>
 <!-- TIROIR HUD : PÔLES D'EXPERTISE — proposé par Gaëtan le 26/09/2026.
      ⛔ `hidden` DANS LE HTML, ET C'EST VOULU : sans JavaScript le tiroir n'existe pas à l'écran,
