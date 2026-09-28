@@ -527,7 +527,18 @@ header .cta-nav {
 .mf-pastilles li::before { content: "◇"; color: var(--mf-vert); font-size: .9rem; line-height: 1; }
 
 /* ---- ③ LES CARTES DE SERVICE — la grille 6 de la maquette ---------------- */
-.mf-cartes { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); margin: 22px 0 0; padding: 0; list-style: none; }
+/* ⚠️ CORRIGÉ LE 28/09/2026 — LA 6ᵉ CARTE SE RETROUVAIT SEULE SUR SA LIGNE.
+   Mesure : à 1600 px, 1512 px utiles / 268 px = 5,64 → CINQ colonnes, et la sixième
+   passait seule à la ligne. Le défaut était invisible à 1920 (6,8 → 6 colonnes).
+   ⭐ *Un auto-fit se juge au nombre d'éléments qu'on lui donne, pas à sa beauté.*
+   ⇒ On plafonne à 3 colonnes : 6 cartes font DEUX rangées de trois, à toute taille. */
+.mf-cartes { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); max-width: 100%; margin: 22px 0 0; padding: 0; list-style: none; }
+@media (min-width: 1024px) {
+  .mf-cartes { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1600px) {
+  .mf-cartes { grid-template-columns: repeat(3, 1fr); max-width: 1180px; }
+}
 .mf-carte {
   display: flex;
   flex-direction: column;
