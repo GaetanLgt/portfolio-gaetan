@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Plan de site — ENGENDRÉ par outils-pilotage/veille-generer-articles.mjs le 2026-09-25.
-     ⛔ Ne pas compléter à la main : il est reconstruit à chaque génération, à partir des
-        fichiers qui EXISTENT. *Un plan qu'on complète à la main finit par déclarer des
-        pages mortes — l'ancien en avait 37 sur 38.* -->
+<!-- Plan de site — ENGENDRÉ par outils/generer-sitemap.mjs le 2026-09-28.
+     ⛔ Ne pas modifier à la main : la liste est DÉCOUVERTE sur le disque à chaque exécution.
+        *Un plan qu'on complète à la main finit par déclarer des pages mortes — l'ancien
+        en avait 37 sur 38, et celui-ci en oubliait 4 sur 9.*
+
+     ⚠️ CE FICHIER A DÉJÀ MENTI DEUX FOIS, ET C'EST POUR ÇA QU'IL EST ENGENDRÉ :
+        · le 25/09/2026 il déclarait « ENGENDRÉ par veille-generer-articles.mjs », un script
+          qui écrit dans un AUTRE projet (chemin absolu en dur vers ArkAdiA/cinematique-neo)
+          et qui n'a jamais touché ce fichier ;
+        · il déclarait 5 URLs quand le site en servait 9 — /analyses/ et /formation/
+          étaient publiées, vérifiées en 200, et absentes du plan.
+
+     ⛔ CE QUI N'EST PAS DÉCLARÉ ICI, ET CE N'EST PAS UN OUBLI : llms.txt,
+        .well-known/security.txt et sitemap.xml ne sont pas des pages — un plan de site
+        déclare des documents destinés à un lecteur, pas des fichiers de service. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://gldigitallab.fr/</loc><lastmod>2026-09-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://gldigitallab.fr/veille/</loc><lastmod>2026-09-25</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://gldigitallab.fr/veille/2026-09-25.html</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://gldigitallab.fr/mentions-legales.html</loc><lastmod>2026-09-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://gldigitallab.fr/confidentialite.html</loc><lastmod>2026-09-25</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://gldigitallab.fr/</loc><lastmod>2026-09-28</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://gldigitallab.fr/analyses/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/confidentialite.html</loc><lastmod>2026-09-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://gldigitallab.fr/formation/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/mentions-legales.html</loc><lastmod>2026-09-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://gldigitallab.fr/veille/</loc><lastmod>2026-09-28</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://gldigitallab.fr/veille/2026-09-25.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

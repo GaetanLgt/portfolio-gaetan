@@ -71,6 +71,87 @@ jobs:
           echo "Service worker de desinscription present :"
           test -f cinematique/sw.js && echo "  oui" || echo "  NON — le cache de l'ancien site pourrait survivre"
 
+      # ⛔⛔ LA PORTE DE PUBLICATION — AJOUTÉE LE 29/09/2026, APRÈS UNE FUITE TROUVÉE PAR HASARD.
+      #
+      # ⚠️ CE QUI S'EST PASSÉ, ET C'EST LA LOI 4 DE L'ATELIER EN PLEIN :
+      #    *« un garde-fou qui ne couvre qu'un chemin est une porte. »*
+      #
+      #    Le studio POSSÉDAIT déjà `forge-ia/verifier-publication.mjs` — 7 motifs,
+      #    auto-épreuve 6/6, 0 faux positif. Il ne tournait QUE sur deux dossiers du
+      #    dépôt du studio (`communication/`, `livrables/dossier-presentation`).
+      #    Le SITE n'était couvert nulle part.
+      #
+      #    Mesure du 29/09/2026, en le lançant à la main sur la page d'accueil :
+      #      L351  <h2>Le Laboratoire (EVA-01 & ArkAdiA)</h2>     → titre de section
+      #      L366  <li><strong>EVA-01</strong> — le poste : …       → la pile du studio
+      #      L632  <div class="badge-dept">PÔLE 02 // EVA-01</div> → badge affiché
+      #      L94   commentaire HTML citant EVA-01
+      #      L592  commentaire citant `C:\IA\ArkAdiA\visuels\`
+      #    ⇒ 5 bloquants, dont 3 VISIBLES PAR LE VISITEUR. Le nom d'hôte de la machine
+      #      de production était PUBLIÉ, en titre de section, sur le site public.
+      #
+      # ⭐ POURQUOI ICI ET PAS DANS UN `pre-commit` :
+      #    `portfolio-gaetan` est un dépôt SÉPARÉ de `gl-digital-lab` (vérifié : aucun
+      #    hook, `core.hooksPath` vide). Un pre-commit du studio ne verra jamais un
+      #    commit du site. **Le point de passage obligé de toute publication, c'est ce
+      #    workflow** — un fichier publié passe forcément par lui. C'est donc là que la
+      #    porte doit vivre.
+      #
+      # ⚠️ L'OUTIL EST VERSIONNÉ DANS CE DÉPÔT (`outils/verifier-publication.mjs`),
+      #    copie de `forge-ia/verifier-publication.mjs` du studio. Un workflow ne peut
+      #    appeler que ce qui est dans le dépôt qu'il construit. Si la copie dérive,
+      #    c'est ici qu'on le verra — et le job échouera AVANT l'envoi FTP.
+      #
+      # ⛔ CE QUE CE CONTRÔLE NE FAIT PAS : il ne vérifie QUE la question 2 de la règle
+      #    `REGLE-ce-qui-se-publie-2026-09-28.md` — « contient-il ce qui n'est pas à
+      #    nous de dire ? ». Il ne dit PAS qu'une page est publiable : les questions
+      #    1 (utile ?), 3 (vérifiable ?) et 4 (engage le studio ?) sont humaines.
+      - name: 🛡 Publication — rien de ce qui n'est pas à nous de dire
+        run: |
+          echo "Auto-épreuve du vérificateur (il doit MORDRE, sinon il ne prouve rien) :"
+          node outils/verifier-publication.mjs --auto | tail -4
+          echo ""
+          CIBLES=$(find cinematique -type f \( -name '*.html' -o -name '*.md' -o -name '*.txt' \
+                   -o -name '*.xml' -o -name '*.css' -o -name '*.js' -o -name '*.mjs' -o -name '*.json' \) \
+                   | grep -v '/sources/' || true)
+          if [ -z "$CIBLES" ]; then
+            echo "⛔ Aucun fichier à vérifier — ce n'est pas « tout va bien », c'est un contrôle aveugle."
+            exit 1
+          fi
+          echo "Fichiers vérifiés : $(echo "$CIBLES" | wc -l)"
+          if ! node outils/verifier-publication.mjs $CIBLES; then
+            echo ""
+            echo "⛔ PUBLICATION REFUSÉE — un fichier destiné à sortir contient ce qui n'est pas à nous de dire."
+            echo "   → Règle : vault-agence/REGLE-ce-qui-se-publie-2026-09-28.md (question 2)"
+            echo "   → Ce commit N'A PAS été envoyé sur le serveur. La production est intacte."
+            exit 1
+          fi
+          echo "✅ Publication : rien de ce qui est interdit."
+
+      # ⛔ LE PLAN DE SITE EST-IL À JOUR ? — ajouté le 29/09/2026, sur un défaut mesuré.
+      #
+      # ⚠️ CE QUI A ÉTÉ TROUVÉ : `cinematique/sitemap.xml` déclarait 5 URLs quand le site
+      #    en servait 9. **Quatre pages publiées et vérifiées en 200 n'étaient déclarées
+      #    nulle part** — `/analyses/`, `/formation/` et le dossier pédagogique.
+      #    ⇒ Une page que le plan ignore est une page que les moteurs trouvent par hasard.
+      #
+      # ⛔ ET SON EN-TÊTE MENTAIT : il attribuait la génération à
+      #    `outils-pilotage/veille-generer-articles.mjs`, un script qui porte
+      #    `const SITE = 'C:\IA\ArkAdiA\cinematique-neo'` — **un chemin absolu en dur vers
+      #    un AUTRE projet.** Il n'a jamais écrit ce fichier.
+      #    *Un en-tête qui décrit une intention non tenue est pire qu'aucun en-tête : il
+      #    fait croire que le contrôle a eu lieu.*
+      #
+      # ⇒ Le plan est désormais ENGENDRÉ par `outils/generer-sitemap.mjs`, qui DÉCOUVRE
+      #   les pages sur le disque au lieu de recopier une liste écrite à la main.
+      #   Le mode `--verifier` **n'écrit rien** : il compare et échoue si le plan a dérivé.
+      #   ⛔ On ne le régénère PAS à la volée dans ce workflow : un pipeline qui répare
+      #      l'artefact qu'il publie masque la dérive au lieu de la signaler. Le plan est
+      #      mis à jour par un humain, et la porte refuse de publier tant qu'il ne l'est pas.
+      - name: 🗺 Plan de site — à jour ?
+        run: |
+          node outils/generer-sitemap.mjs --verifier
+
       - name: 🚀 Envoi FTP vers la RACINE
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
