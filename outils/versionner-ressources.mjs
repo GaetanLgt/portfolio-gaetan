@@ -119,10 +119,15 @@ if (SIMULER) console.log('  MODE SIMULE : rien n a ete ecrit.');
 // ── La preuve : on relit un fichier et on recalcule ────────────────────────
 console.log('');
 console.log('=== VERIFICATION (relu du disque) ===');
+// Témoin : la PREMIÈRE feuille de style que l'accueil charge réellement. Corrigé le 29/09/2026 :
+// le témoin était `manifeste.css` en dur ; l'accueil refait charge `css/accueil.css`, et le contrôle
+// affichait « NE CONCORDE PAS » pour un fichier que la page ne charge plus — une fausse alerte.
 const temoin = path.join(C, 'index.html');
 const contenu = fs.readFileSync(temoin, 'utf8');
-const attendu = sha8(path.join(C, 'css/manifeste.css'));
-const trouve = (contenu.match(/manifeste\.css\?v=([0-9a-f]+)/) || [, 'absent'])[1];
-console.log('  sha256(manifeste.css) tronque : ' + attendu);
+const lien = contenu.match(/href="(css\/[^"?]+\.css)\?v=([0-9a-f]+)"/);
+const feuille = lien ? lien[1] : 'css/manifeste.css';
+const attendu = sha8(path.join(C, feuille));
+const trouve = lien ? lien[2] : 'absent';
+console.log('  sha256(' + feuille + ') tronque : ' + attendu);
 console.log('  ce que porte index.html       : ' + trouve);
 console.log('  ' + (trouve === attendu ? '✅ CONCORDE' : '⛔ NE CONCORDE PAS'));

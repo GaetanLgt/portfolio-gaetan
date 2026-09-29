@@ -3,19 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GL Digital Lab — Vos outils. Chez vous. À vous.</title>
-<meta name="description" content="GL Digital Lab (Génie IT Tek FR), studio indépendant à Harponville : développement web, applications métier et IA exécutée localement.">
-<meta name="generator" content="Créé avec l'aide de l'IA — graine 42">
-<!-- ⭐ DONNÉES STRUCTURÉES — ajoutées le 26/09/2026. Mesure du jour : **0 JSON-LD** sur le site.
-     Un moteur et un agent ne voyaient donc nulle part, en clair, QUI est le studio, CE QU'il
-     fait et OÙ il est. Ils devaient le déduire du texte de la page — et une déduction n'est
-     pas une donnée.
-     ⛔ ET RIEN N'Y EST INVENTÉ. Pas de note, pas de nombre d'avis, pas de prix : *une donnée
-        structurée fausse est pire qu'une donnée absente — elle est lue comme un fait.* Chaque
-        champ ci-dessous est vérifiable sur cette page ou dans les mentions légales.
-     ⚠️ Le numéro de rue n'y est pas : le site ne publie que Harponville et le code postal, et
-        c'est une décision du 25/09. *On ne met pas dans une donnée ce qu'on ne met pas dans
-        une page.* -->
+<title>GL Digital Lab — Sites, outils métier et IA locale pour TPE/PME</title>
+<meta name="description" content="Des sites, outils métier et assistants IA qui font gagner du temps à votre PME, sans confier vos documents sensibles à une boîte noire. Premier échange de 30 minutes offert.">
+<link rel="canonical" href="https://gldigitallab.fr/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="any">
+<meta property="og:title" content="GL Digital Lab — Sites, outils métier et IA locale pour TPE/PME">
+<meta property="og:description" content="Développement web sur mesure, automatisation et IA installée dans un environnement maîtrisé.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gldigitallab.fr/">
+<meta property="og:image" content="https://gldigitallab.fr/img/poste-de-travail.webp">
+<link rel="stylesheet" href="css/accueil.css?v=97e9f966">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -23,1164 +21,232 @@
   "name": "GL Digital Lab",
   "alternateName": "Génie IT Tek FR",
   "url": "https://gldigitallab.fr/",
-  "email": "gtn.langlet+lab@gmail.com",
-  "description": "Studio indépendant à Harponville (Somme) : développement web, applications métier, intelligence artificielle locale, recherche documentaire, génération d'images, de vidéos et de modèles 3D, voix et transcription, audit technique. Les traitements peuvent être exécutés sur nos propres machines, en France ; les flux externes sont désactivables ou explicitement documentés selon le projet. Chaque devis nomme le périmètre, les prérequis et ce qui reste à la charge du client.",
-  "founder": { "@type": "Person", "name": "Gaëtan Langlet" },
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Harponville",
-    "postalCode": "80560",
-    "addressCountry": "FR"
-  },
-  "areaServed": [
-    { "@type": "AdministrativeArea", "name": "Somme" },
-    { "@type": "Country", "name": "France" }
-  ],
-  "knowsAbout": [
-    "développement web",
-    "application métier sur mesure",
-    "intelligence artificielle locale",
-    "recherche documentaire augmentée",
-    "génération d'images par IA",
-    "génération de vidéos par IA",
-    "modélisation 3D assistée",
-    "synthèse vocale et transcription",
-    "audit d'accessibilité et de référencement",
-    "hébergement en France",
-    "protection des données"
-  ],
-  "serviceType": [
-    "Création de site web",
-    "Application métier",
-    "Intelligence artificielle locale",
-    "Recherche documentaire (RAG)",
-    "Génération d'images et de vidéos",
-    "Modélisation 3D",
-    "Transcription et synthèse vocale",
-    "Audit technique et accessibilité"
+  "description": "Studio web et IA locale pour TPE/PME : sites, applications métier, automatisation et assistants IA installés dans un environnement maîtrisé.",
+  "areaServed": "FR",
+  "address": { "@type": "PostalAddress", "addressLocality": "Harponville", "postalCode": "80560", "addressCountry": "FR" },
+  "makesOffer": [
+    { "@type": "Offer", "name": "Cadrage & diagnostic IA locale", "price": "1500", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Site web & IA intégrée", "price": "2500", "priceCurrency": "EUR" },
+    { "@type": "Offer", "name": "Déploiement IA souveraine", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "15000", "priceCurrency": "EUR" } }
   ]
 }
 </script>
-<!-- ⚠️ LES ICÔNES SONT DÉCLARÉES ICI DEPUIS LE 26/09/2026, et ce n'est pas du confort :
-     sans déclaration, le navigateur réclame `/favicon.ico` à chaque visite. Sur ce
-     domaine il répondait 404 — une requête perdue par visiteur, et un onglet sans
-     repère. Ce sont celles du studio, déjà en production. -->
-<!-- ⚠️ LE VECTEUR SUFFIT : les PNG 16x32/192 et l'icône Apple ont été retirés le
-     26/09/2026. Le contrôle du studio impose le 16:9 à toute image de `public/`,
-     et un favicon est carré — il les refusait, à juste titre : ce sont des icônes,
-     pas des visuels. Le SVG couvre tous les cas, et il pèse 257 octets. -->
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon.ico" sizes="any">
-<link rel="stylesheet" href="css/site.css?v=9050ee8b">
-<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js","three/addons/":"./vendor/jsm/"}}</script>
-<link rel="stylesheet" href="css/manifeste.css?v=50e531f6">
 </head>
-<body class="trame-manifeste">
-<!-- ⛔ AJOUTÉ LE 25/09/2026 — cible « Aller au contenu ». L'audit externe l'a relevé à juste
-     titre : sans elle, un utilisateur au clavier doit traverser TOUT l'en-tête et les huit
-     repères avant d'atteindre le premier mot du contenu. C'est le premier élément focusable
-     de la page, et il reste invisible jusqu'au focus (voir .lien-evitement dans site.css). -->
-<a class="lien-evitement" href="#main-content">Aller au contenu principal</a>
-<canvas id="fond" aria-hidden="true"></canvas>
-<canvas id="scene3d" aria-hidden="true"></canvas>
-<div id="revelation" aria-hidden="true"></div>
+<body>
+<a class="aller-au-contenu" href="#contenu">Aller au contenu</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bouclier" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-roues" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+  <symbol id="i-serveur" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="13" width="16" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path stroke="currentColor" stroke-width="2" d="M8 7.5h.01M8 16.5h.01"/></symbol>
+  <symbol id="i-cle" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M11 12l9-9M17 6l3 3"/></symbol>
+  <symbol id="i-oeil" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-source" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 6h16M4 12h10M4 18h7M17 15l3 3-3 3"/></symbol>
+</svg>
 
 <header class="barre">
-  <a class="marque" href="#couverture"><span class="hex">GL</span> GL Digital Lab</a>
-  <!-- ⛔ LES LIBELLÉS DE LA BARRE ONT ÉTÉ CORRIGÉS LE 26/09/2026, ET C'ÉTAIT UN VRAI DÉFAUT.
-       « Couches » menait à l'acte 4, qui s'appelle « L'Offre » ; « Doctrine » menait à l'acte 6,
-       qui s'appelle « Démonstrateur & Vidéos ». Aucun des deux mots n'existe dans la page : ils
-       venaient d'une organisation antérieure, et un visiteur qui cliquait arrivait ailleurs que
-       là où le mot promettait. ⭐ Les actes 2, 3 et 5 n'avaient AUCUN lien : « L'Entrée &
-       étaient inatteignables au clic — alors que le laboratoire et la méthode sont ce que le
-       studio vend. Les sept libellés reprennent maintenant les mots des titres.
-       ⚠️ La barre a été MESURÉE avant d'être chargée (1920×1080 : 639 px pour les sept liens,
-       contre 359 px pour les quatre anciens) : voir le point de bascule dans `css/site.css`. -->
-  <!-- ⭐ LA NAVIGATION A ÉTÉ REFONDUE LE 28/09/2026. Ce qui suit remplace le `<nav>` du 26/09
-       et ses deux règles CSS qui masquaient les liens (`max-width:1100px` et `600px`).
-
-       ⛔ LE DÉFAUT QUI A DÉCLENCHÉ CETTE REFONTE, ET IL ÉTAIT MESURÉ :
-          en dessous de 1100 px, `.barre nav a{display:none}` effaçait les SEPT liens, et
-          **rien n'apparaissait à la place** — ni bouton, ni tiroir, ni menu. Le studio avait
-          déjà écrit la règle qui condamne ce motif (« un contrôle d'accessibilité qui s'efface
-          selon la taille de l'écran est un contrôle qui manque précisément à ceux qui en ont
-          besoin »), et il s'appliquait à l'interrupteur d'animations — mais pas à la navigation.
-          ⭐ Un site dont 60 % des visites sont mobiles et dont la navigation disparaît sur
-          mobile n'a pas une navigation : il a une navigation d'ordinateur.
-
-       CE QUI CHANGE, ET POURQUOI CHAQUE PIÈCE EXISTE :
-         ① **Un vrai menu mobile** — un bouton, un panneau, et les mêmes sept destinations.
-            Il n'y a donc plus AUCUNE largeur où la navigation est absente.
-         ② **Les groupes** — sept liens à plat se lisent mal ; trois groupes disent l'histoire :
-            ce que vous cherchez · ce que je fais · ce qui me contraint.
-         ③ **L'acte courant est marqué** (`aria-current="page"`), ce que le CSS n'avait pas.
-         ④ **Le bouton « Expertises » reste** — il ouvre le tiroir des pôles, il est hors groupe.
-
-       ⛔ CE QUI N'EST PAS TOUCHÉ, ET IL FAUT LE DIRE : les huit repères de progression
-          (`nav.reperes`) restent tels quels — ils sont le seul moyen de situer où l'on est sur
-          cette page, et ils marchaient. L'interrupteur d'animations reste aussi : il est un
-          contrôle d'accessibilité, pas un élément de navigation.
-       ⛔ AUCUN VERT ICI. Le canon du 25/09 est explicite : **le vert dit la santé mentale**,
-          et « un jeton déclaré n'est pas un jeton posé — on le pose là où le propos est la santé
-          mentale, jamais pour décorer un bouton ». La barre reste donc cyan/argent, comme avant. -->
-  <button id="btn-menu" class="btn-menu" type="button"
-          aria-expanded="false" aria-controls="menu-principal"
-          aria-label="Ouvrir le menu">
-    <span class="btn-menu-barres" aria-hidden="true"><i></i><i></i><i></i></span>
-  </button>
-
-  <nav id="menu-principal" class="menu" aria-label="Navigation principale">
-    <!-- ⭐⭐ DROPDOWNS — refonte du 28/09/2026, demande de Gaëtan : « je veux des dropdowns ».
-         Le menu à plat regroupait DÉJÀ les destinations en quatre thèmes, mais les affichait
-         toutes à la suite : *grouper sans replier, ce n'est pas grouper — c'est ranger.*
-
-         ⛔ CE QUI AURAIT ÉTÉ FAIT PAR PAIRE, ET QUI EST REFUSÉ ICI :
-            un dropdown qui s'ouvre **au survol** (`:hover`). C'est le réflexe, et c'est un
-            défaut : il est **inutilisable au doigt** (aucun survol sur un téléphone) et
-            **invisible au clavier**. Le studio a déjà écrit la règle, le 25/09, à propos de
-            l'interrupteur d'animations : *« un contrôle qui s'efface selon la taille de
-            l'écran manque précisément à ceux qui en ont besoin. »*
-            ⇒ Ici, le dropdown s'ouvre **au CLIC**, se ferme à **Échap**, et **le clavier le
-              parcourt**. Le survol ne fait que le suggérer, jamais l'ouvrir.
-
-         ⚠️ ET LA MÊME STRUCTURE SERT LES DEUX FORMES : en desktop c'est une barre dont les
-            boutons déroulent un panneau ; en mobile c'est la liste verticale d'avant, avec
-            les mêmes boutons. *Deux navigations séparées seraient deux vérités sur le même
-            objet* — ici il n'y en a qu'une, repliée différemment. -->
-    <div class="menu-groupe">
-      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p1">
-        Solutions<span class="chevron" aria-hidden="true">▾</span>
-      </button>
-      <ul class="menu-panneau" id="menu-p1">
-        <li><a href="#prix">Les trois offres</a></li>
-        <li><a href="#ce-quon-fait">Les quatre pôles</a></li>
-        <li><a href="/services/">Services détaillés</a></li>
-        <li><a href="/dossier/">Dossier professionnel</a></li>
+  <div class="cadre">
+    <a class="logo" href="/" aria-label="GL Digital Lab — accueil"><b>G<span>L</span></b><small>DIGITAL LAB</small></a>
+    <nav aria-label="Navigation principale">
+      <ul class="menu">
+        <li><a href="/" aria-current="page">Accueil</a></li>
+        <li><a href="/offres/">Solutions</a></li>
+        <li><a href="#preuves">Réalisations</a></li>
+        <li><a href="#ressources">Ressources</a></li>
+        <li><a href="/contact.php">Contact</a></li>
       </ul>
-    </div>
-
-    <div class="menu-groupe">
-      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p2">
-        Méthode &amp; preuves<span class="chevron" aria-hidden="true">▾</span>
-      </button>
-      <ul class="menu-panneau" id="menu-p2">
-        <li><a href="/laboratoire/">Laboratoire</a></li>
-        <li><a href="#methode">Méthode</a></li>
-        <li><a href="/demos/">Démonstrateur</a></li>
-        <!-- ⭐ LA PAGE SOUVERAINETÉ ET PRIX — ajoutée au menu le 28/09/2026.
-             ⚠️ ELLE EST ICI, dans « Ce que je fais », et pas dans « Ce que vous cherchez » :
-             ce n'est pas une destination de visiteur pressé, c'est la **justification** de
-             ce qu'on vend. *Un lien au mauvais endroit est un lien qu'on ne trouve pas.*
-             ⛔ ET ELLE EST LA SEULE ENTRÉE DU MENU QUI SORT DE LA PAGE — les autres sont
-             des ancres. C'est voulu : le menu de l'accueil mène aux actes, et l'acte 4
-             (« L'Offre ») n'a pas la place d'expliquer trois prix et une architecture.
-             *Une page qui explique ce qu'on vend mérite sa propre adresse.* -->
-        <!-- ⭐ « PRIX » ET « SOUVERAINETÉ » — le 28/09/2026, sur « un site racine unique ».
-             ⛔ IL Y AVAIT ICI UN LIEN VERS `souverainete.html`, UNE PAGE SÉPARÉE. Elle a été
-                SUPPRIMÉE, et le lien avec elle : *un lien qui mène à un 404 est pire que pas
-                de lien* — il fait croire que le contenu existe, puis il déçoit.
-             ⭐ CE QUI LA REMPLACE : deux ancres vers les actes qui portent désormais le contenu.
-                Les prix sont dans « L'Offre » (acte 4), la souveraineté dans « Transparence &
-                Limites » (acte 7). **C'est mieux qu'une page à part** : le visiteur reste dans
-                le récit, au lieu d'en sortir pour lire un document.
-             ⚠️ ET ON NE CACHE PAS QUE CE SONT DES ANCRES INTERNES : elles portent le nom de ce
-                qu'on y trouve, pas un mot d'interface. -->
-        <li><a href="#prix">Nos prix</a></li>
-        <li><a href="/ce-que-nous-nous-imposons/">Souveraineté</a></li>
-      </ul>
-    </div>
-
-    <!-- ③ CE QUI ME CONTRAINT — et ce groupe est un argument, pas un aveu.
-         Les limites sont publiées : un cabinet de sûreté qui cache ses limites n'en a pas. -->
-    <div class="menu-groupe">
-      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p3">
-        Ce que je garantis<span class="chevron" aria-hidden="true">▾</span>
-      </button>
-      <ul class="menu-panneau" id="menu-p3">
-        <li><a href="/ce-que-nous-nous-imposons/">Limites</a></li>
-      </ul>
-    </div>
-
-    <!-- ④ LE TIROIR DES PÔLES — hors groupe : ce n'est pas une destination, c'est un filtre. -->
-    <div class="menu-groupe">
-      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p4">
-        Le studio<span class="chevron" aria-hidden="true">▾</span>
-      </button>
-      <ul class="menu-panneau" id="menu-p4">
-        <li><button id="btn-secteurs" type="button" class="lien-nav"                    aria-expanded="false" aria-controls="tiroir-secteurs">Expertises</button></li>
-        <li><a href="/veille/">Relevés de veille</a></li>
-      </ul>
-    </div>
-
-    <!-- ⑤ ⭐⭐ L'ÉCOSYSTÈME — LA PORTE. Ajouté le 28/09/2026, décision de Gaëtan :
-         *« Il faut que la page principale du site soit une GATE de telle manière à accéder
-         à tout l'écosystème. C'est pas compliqué à comprendre. »*
-
-         ⛔ CE QUI ÉTAIT FAUX AVANT : les pages existaient, mais on n'y accédait **que par le
-            pied de page** — donc après avoir tout lu. *Une porte au fond du couloir n'est pas
-            une porte.* Mesure du 28/09 : 4 pages publiées, **un seul lien** dans le menu
-            (`/veille/`), rangé sous « Explorer ».
-         ⭐ CE QUE CE GROUPE CHANGE : c'est **la sortie du récit** — vers ce qui est publié,
-            mesuré, et réutilisable.
-         ⚠️ IL EST EN DERNIER, ET C'EST VOULU : le menu raconte d'abord ce qu'on vend, puis ce
-            qu'on fait, puis ce qui nous contraint, puis le filtre par secteur — **et seulement
-            ensuite, ce qui existe en dehors.** *Un visiteur qui cherche l'offre ne doit pas
-            traverser un catalogue avant de la trouver.* -->
-    <div class="menu-groupe">
-      <button type="button" class="menu-bouton" aria-expanded="false" aria-controls="menu-p5">
-        Ressources<span class="chevron" aria-hidden="true">▾</span>
-      </button>
-      <ul class="menu-panneau" id="menu-p5">
-          <li><a href="#ressources">Ressources</a></li>
-        <li><a href="/analyses/">Analyses</a></li>
-        <li><a href="/formation/">Formation</a></li>
-        <li><a href="/veille/">Veille</a></li>
-        <li><a href="https://controle.gldigitallab.fr/">Point de contrôle</a></li>
-        <!-- ⭐ LA QUATRIÈME ENTRÉE — ajoutée le 28/09/2026. `controle.gldigitallab.fr`
-             répond 200 et sert une page réelle (2 336 octets, cloisonnement v3, 8 302
-             signaux reçus) — et **aucun lien du site n'y menait**. *Une surface adossée
-             au site à laquelle le site ne mène pas n'est pas adossée : elle est à côté.*
-             ⚠️ Les trois premières sont des PAGES ; celle-ci est un SERVICE VIVANT : elles
-                racontent, elle mesure en direct. Elle ne publie que des valeurs calculées
-                par le serveur — aucun nom de client, aucun identifiant de machine.
-             ⛔ `target="_blank"` n'est pas posé : le site n'en ouvre aucune. -->
-        <li><a href="/urgence-cyber/">Urgence cyber</a></li>
-        <!-- ⭐ LA CINQUIÈME ENTRÉE — ajoutée le 28/09/2026, et elle n'est pas comme les autres.
-             ⛔ CE QUE LE STUDIO AVAIT : `/.well-known/security.txt` dit à qui signaler une
-                faille **chez nous**. Il ne disait **nulle part** où aller quand on est
-                victime. *Un site qui vend de l'audit et qui ne sait pas orienter une
-                victime dit quelque chose de gênant — et ce n'est pas ce qu'il veut dire.*
-             ⭐ ELLE EST LA SEULE ENTRÉE DE CE GROUPE QUI NE PARLE PAS DU STUDIO. Les quatre
-                autres racontent ce qu'on a produit ; celle-ci **rend service à celui qui
-                lit**, y compris s'il n'est jamais client. C'est la règle de publication
-                appliquée pour elle-même : utile à quelqu'un d'extérieur ? Oui.
-             ⚠️ ELLE EST EN DERNIER, ET C'EST VOULU : un menu qui commence par « urgence »
-                dit quelque chose sur l'état d'esprit de celui qui l'a écrit. Le lien est
-                aussi dans le pied de page, donc atteignable par deux chemins.
-             ⛔ ELLE NE CONTIENT AUCUN NUMÉRO NON VÉRIFIÉ — les blancs sont déclarés dans la
-                page elle-même. *Une page d'urgence qui cache ses blancs est une page qu'on
-                ne peut pas corriger.* -->
-      </ul>
-    </div>
-    <!-- LE CTA DANS LA NAVBAR — ajoute le 29/09/2026, cahier des charges de Gaetan :
-         « Reserver un diagnostic de 30 minutes » doit etre dans la navbar, dans le hero,
-         apres les offres, en bas de page ET dans le footer — et ce doit etre la SEULE
-         formule employee. *La repetition reduit l effort de decision.*
-         MESURE AVANT : ce CTA existait dans le hero seulement. Il manquait ici.
-         Il est HORS des groupes : ce n est pas une destination, c est l action.
-         *Un bouton range dans un menu n est plus un bouton, c est une entree.* -->
-    <a class="mf-bouton cta-nav" href="/contact/">Reserver un diagnostic</a>  </nav>
-
-  <!-- ⛔ INTERRUPTEUR D'ANIMATIONS — ajouté le 25/09/2026. L'audit externe a raison : la
-       préférence SYSTÈME ne suffit pas, elle est un réglage de POSTE. Il est dans l'en-tête
-       parce que celui-ci est fixe : un contrôle d'accessibilité qu'on ne trouve qu'en bas de
-       page n'est pas un contrôle. Il ne disparaît PAS sur mobile.
-       ⚠️ AJUSTÉ LE 28/09/2026 : il débordait à droite en dessous de 600 px (`Réduire les…`),
-       parce que `white-space:nowrap` l'empêchait de se replier et que le hamburger venait
-       d'entrer dans la même barre. ⇒ un `<span>` porte le mot long, masqué sous 600 px.
-       ⭐ ET LE `aria-label` RESTE COMPLET DANS TOUS LES CAS : un lecteur d'écran entend
-       toujours « Réduire les animations », quelle que soit la largeur. *Ce qui est lu ne
-       rétrécit pas avec l'écran.* -->
-  <button id="interrupteur-animations" type="button" aria-pressed="false"
-          aria-label="Réduire les animations">Réduire<span class="mot-long"> les animations</span></button>
+    </nav>
+    <a class="bouton plein" href="/contact.php">Réserver un diagnostic →</a>
+  </div>
 </header>
 
-<!-- ⭐ LE VOILE DU MENU — il ferme le menu au clic, et il est `aria-hidden` parce qu'il n'a
-     aucun sens pour un lecteur d'écran : c'est une zone de clic, pas un contenu. -->
-<div id="voile-menu" class="voile-menu" hidden aria-hidden="true"></div>
+<main id="contenu">
 
-<!-- ⛔ NOMS ACCESSIBLES AJOUTÉS LE 25/09/2026. Avant : chaque repère n'avait que <span>1</span>
-     comme contenu, donc un lecteur d'écran annonçait « 1, lien ». Un CHIFFRE N'EST PAS UN NOM —
-     l'audit externe l'a relevé à juste titre, et ma première mesure l'avait manqué en regardant
-     l'aria-label du <nav> au lieu du contenu des liens. Les spans passent en aria-hidden : ils
-     restent visibles à l'écran, mais c'est l'aria-label qui nomme le lien. -->
-<!-- ⛔ `id="contenu"` AJOUTÉ LE 25/09/2026 : c'est la cible du lien d'évitement ci-dessus.
-     Un <main> sans identifiant ne peut pas être visé. -->
-<main id="main-content" class="manifeste">
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ① LA COUVERTURE — le type A de la trame.
-       ⚠️ La phrase « Vos outils. Chez vous. À vous. » est celle de la slide 1.
-          Elle n'a pas été réécrite : c'est TON texte, et il dit mieux en huit mots
-          ce que le site mettait huit actes à dire.
-       ══════════════════════════════════════════════════════════════════════ -->
-  <section class="mf-couverture mf-hero" id="couverture">
-    <div class="mf-hero-texte">
-      <p class="mf-etiquette">GL Digital Lab — Studio web &amp; IA locale pour PME</p>
-
-      <h1 class="mf-titre">Vos outils.<br>Chez vous.<br>À vous.</h1>
-
-      <!-- ⛔⛔ LA PHRASE DE COUVERTURE A ÉTÉ RÉÉCRITE LE 28/09/2026 — ELLE ÉTAIT FAUSSE.
-           Elle promettait une absence qui n'était pas vraie : l'agent du studio peut
-           utiliser un modèle distant, son .env porte une clé d'API, et le brief prévoit
-           un MRR de maintenance. *Un DSI qui lit ça, puis découvre le contraire, ne croit
-           plus rien d'autre — et il a raison.*
-           ⇒ On ne promet plus l'ABSENCE, on promet la TRAÇABILITÉ. C'est plus faible
-             comme slogan, et c'est la seule version défendable devant un RSSI. -->
-      <div class="mf-chapeau">
-        <p>Des sites, des applications métier et des assistants documentaires qui font
-           gagner du temps à vos équipes — <strong>sans confier vos documents à une boîte noire.</strong></p>
-        <p>Flux externes <strong>désactivables ou explicitement documentés</strong>. Pas de
-           facturation au token : <strong>les coûts matériels et de maintenance sont écrits</strong>,
-           pas dissimulés dans une ligne « cloud ».</p>
-      </div>
-
-      <p class="mf-hero-actions">
-        <a class="mf-bouton" href="/contact/">Réserver un diagnostic de 30 minutes</a>
-        <a class="mf-bouton mf-bouton-clair" href="#prix">Voir les offres</a>
-      </p>
-      <p class="mf-hero-note"><em>Sans engagement · Réponse sous 24 h · Hauts-de-France et à distance</em></p>
-    </div>
-
-      <!-- LE VISUEL DU HERO — generee par le studio (ComfyUI, RealVisXL V5).
-         ce ne sont pas des visuels commerciaux. Gaëtan a été prévenu. En attendant,
-           une salle technique se lit mieux qu'un personnage.
-         ⛔ Aucune requête externe : l'image est sur le serveur. -->
-    <div class="mf-hero-visuel">
-      <!-- LE VISUEL DU HERO — GENERE LE 28/09/2026 PAR LE STUDIO (ComfyUI, RealVisXL V5,
-           graine 20260928). Elle remplace une image interne qui etait sombre
-           d'etre illisible sur le fond nuit.
-           LE SUJET EST LE BON : un poste de travail, ecrans allumes, eclairage VERT
-           EMERAUDE — la couleur du canon (noir, vert, argent). Aucun texte lisible,
-           aucun logo, aucune personne : rien a retoucher, rien a defendre.
-           DEUX TAILLES : 700 px a l'affichage, 1400 px pour les ecrans a double densite.
-           24 Ko + 65 Ko au lieu d'un PNG de 1370 Ko.
-           GRAINE ET MODELE SONT NOTES : l'image est reproductible. -->
-      <img src="/img/poste-de-travail.webp"
-           srcset="/img/poste-de-travail.webp 700w, /img/poste-de-travail@2x.webp 1400w"
-           sizes="(max-width: 900px) 100vw, 46vw"
-           width="700" height="526" loading="eager" decoding="async"
-           alt="Poste de travail du studio : trois écrans allumés, éclairage vert.">
-      <p class="mf-hero-legende"><strong>Recherche documentaire locale — 4 épreuves sur 4, le 28/09/2026.</strong></p>
-      <p class="mf-tampon">Mesuré</p>
-    </div>
-
-    <ul class="mf-pastilles">
-      <li>IA locale</li>
-      <li>Hébergement en France</li>
-      <li>Développement web</li>
-      <li>Automatisation</li>
-      <li>Déploiement rapide</li>
-      <li>Maintenance continue</li>
-    </ul>
-
-    <!-- LA SOUS-NAVIGATION PAR ANCRES — les grandes sections de la page.
-         aria-label explicite : la page a DEUX zones de navigation, et deux zones sans
-         nom sont deux zones qu'un lecteur d'écran ne distingue pas. -->
-    <nav class="page-nav" aria-label="Navigation dans cette page">
-      <a href="#ce-quon-fait">Vos besoins</a>
-      <a href="#pourquoi">Pourquoi nous</a>
-      <a href="#prix">Solutions</a>
-      <a href="#methode">Méthode</a>
-      <a href="#capacites">Ce qui est prouvé</a>
-      <a href="#ressources">Ressources</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ② CE QU'ON FAIT — les quatre pôles, repris de l'acte 8 du récit.
-       ⚠️ Ils étaient dans la page de contact. Ici ils sont là où on les cherche.
-       ══════════════════════════════════════════════════════════════════════ -->
-  <section class="mf-section" id="ce-quon-fait">
-    <p class="mf-etiquette">Ce qu'on fait</p>
-    <h2 class="mf-titre-section">Quatre pôles, un seul poste de travail.</h2>
-
-    <div class="mf-grille">
-      <div class="mf-boite">
-        <span class="mf-boite-titre">Pôle 01 — CORE · Ingénierie web &amp; métier</span>
-        <p>Applications sur mesure, architectures modulaires, refontes d'API sous contrôle strict.</p>
-        <p><small>Symfony 7 · Vue.js 3 · API Platform · PostgreSQL</small></p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre">Pôle 02 — LOCAL · IA locale &amp; agents</span>
-        <p>Modèles exécutés sur votre poste ou sur un serveur dédié — <strong>aucune donnée ne sort</strong>.</p>
-        <p><small>Ollama · vLLM · MCP · ChromaDB</small></p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre">Pôle 03 — MÉMOIRE · Recherche documentaire</span>
-        <p>Indexation de vos documents (PDF, mails, code) avec sourçage exact et suppression à la demande.</p>
-        <p><small>RAG local · Embeddings · Sources citées · Effacement</small></p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre">Pôle 04 — SHIELD · Audit, sécurité, résilience</span>
-        <p>Conformité RGAA, durcissement, chiffrement des disques, validation humaine continue.</p>
-        <p><small>Chiffrement · Audit · Tests de bout en bout · CI/CD</small></p>
-      </div>
-    </div>
-
-    <!-- ⛔⛔ L'ENCADRÉ « CE QUE NOUS NE FAISONS PAS » — AJOUTÉ LE 29/09/2026, DEMANDE DE L'AUDIT.
-         Il écrit : *« Un encadré "Ce que nous ne faisons pas" : parfait pour crédibiliser une
-         approche souveraine. »*
-         ⭐ ET LA MATIÈRE EXISTAIT DÉJÀ, ÉCRITE, PUBLIÉE NULLE PART : les bornes du studio
-            (`AGENTS.md` § 7 bis, décisions du 18/09/2026). *Une borne qu'on ne dit pas ne
-            protège que celui qui la connaît déjà.*
-         ⚠️ RIEN N'EST INVENTÉ ICI : chaque ligne vient d'une règle écrite et appliquée. Et
-            aucune ne promet quoi que ce soit en échange — *une limite n'est pas un argument
-            de vente, c'est une limite.* -->
-    <div class="mf-boite">
-      <span class="mf-boite-titre">Ce que nous ne faisons pas</span>
-      <ul>
-        <li><strong>Aucun usage militaire</strong> — ni par nous, ni par un partenaire, ni par
-            un tiers à qui nous aurions livré un outil.</li>
-        <li><strong>Aucun système qui vise une personne</strong> : pas de surveillance, pas
-            d'inspection automatisée, pas de ciblage.</li>
-        <li><strong>Aucun outil offensif</strong>, même gardé « au cas où ». Le studio est du
-            côté de la défense, et seulement quand il y a eu une attaque constatée et datée.</li>
-        <li><strong>Nous n'attribuons jamais une attaque.</strong> Désigner un auteur relève de
-            l'ANSSI et de VIGINUM — nous constatons, nous datons, nous archivons, et nous
-            n'amplifions pas.</li>
-        <li><strong>Aucune conformité promise.</strong> Nous concevons pour réduire votre
-            exposition et documentons ce que nous faisons ; nous ne certifions rien à votre
-            place.</li>
+<section class="heros" aria-labelledby="t-heros">
+  <div class="cadre">
+    <div>
+      <h1 id="t-heros">GL Digital Lab
+        <span class="ligne2">Des sites, outils métier et assistants IA qui font gagner du temps à votre PME, <span class="accent-rouge">sans confier vos documents sensibles à une boîte noire.</span></span>
+      </h1>
+      <p class="chapeau">Développement web sur mesure, automatisation et IA installée dans un environnement maîtrisé : chez vous, ou sur une infrastructure que vous validez.</p>
+      <ul class="badges">
+        <li><span class="icone"><svg><use href="#i-bouclier"/></svg></span>IA locale et données sous contrôle</li>
+        <li><span class="icone"><svg><use href="#i-code"/></svg></span>Sites web &amp; applications métier</li>
+        <li><span class="icone"><svg><use href="#i-roues"/></svg></span>Automatisation &amp; agents, validés par un humain</li>
+        <li><span class="icone"><svg><use href="#i-serveur"/></svg></span>Déploiement local &amp; maintenance</li>
       </ul>
-      <p><em>Ces refus ne sont pas des arbitrages de routine : ce sont des bornes. Une borne ne
-         se délègue pas.</em></p>
+      <div class="actions">
+        <a class="bouton plein" href="/contact.php">Réserver un diagnostic de 30 min →</a>
+        <a class="bouton contour" href="#offres">Voir les offres et les prix</a>
+      </div>
     </div>
+    <figure>
+      <img src="img/poste-de-travail.webp" width="700" height="526" alt="Le poste de travail du studio : trois écrans et une station de calcul locale" fetchpriority="high">
+      <div class="parcours">
+        <strong>Votre projet, de l'idée au déploiement</strong>
+        <ol><li>Diagnostic</li><li>Prototype</li><li>Déploiement</li></ol>
+      </div>
+    </figure>
+  </div>
+</section>
 
-    <!-- LA GRILLE DE SERVICES DE LA MAQUETTE — AJOUTÉE LE 28/09/2026.
-         Demande de Gaëtan : la nouvelle maquette sur TOUT le site.
-         Les six cartes sont celles de la maquette, dans son ordre.
-         Les pôles ci-dessus restent : ils disent l'organisation interne,
-         les cartes disent l'offre. On ajoute la vitrine, on ne supprime pas l'atelier. -->
-    <p class="mf-etiquette" style="margin-top:34px">Les six services</p>
-    <ul class="mf-cartes">
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">◎</span>
-        <h3>Audit &amp; cadrage IA locale</h3>
-        <p>Comprendre vos besoins, vos données et vos contraintes avant de construire. Un rapport écrit, pas une intuition.</p>
-        <p class="mf-lien"><a href="/services/#cadrage">En savoir plus</a></p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">◫</span>
-        <h3>Site web &amp; applications métier</h3>
-        <p>Sites et applications sur mesure, rapides, accessibles et maintenables — sans dépendre d'un constructeur.</p>
-        <p class="mf-lien"><a href="/services/#site">En savoir plus</a></p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">◇</span>
-        <h3>Assistants IA privés &amp; RAG</h3>
-        <p>Un assistant qui répond sur <strong>vos</strong> documents, avec les sources, exécuté sur vos machines.</p>
-        <p class="mf-lien"><a href="/services/#deploiement">En savoir plus</a></p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">⟳</span>
-        <h3>Automatisation &amp; agents</h3>
-        <p>Les tâches répétitives deviennent des procédures reproductibles, avec journal et point de contrôle humain.</p>
-        <p class="mf-lien"><a href="/services/#deploiement">En savoir plus</a></p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">▼</span>
-        <h3>Déploiement IA souveraine</h3>
-        <p>Modèles, données, recherche documentaire, sauvegardes et supervision — installés chez vous, documentés.</p>
-        <p class="mf-lien"><a href="/services/#deploiement">En savoir plus</a></p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">⚙</span>
-        <h3>Maintenance &amp; évolutions</h3>
-        <p>Mises à jour, supervision et améliorations continues. Ce qui est livré doit rester utilisable dans un an.</p>
-        <p class="mf-lien"><a href="/#contact">En savoir plus</a></p>
-      </li>
-    </ul>
-  </section>
+<section class="section" aria-labelledby="t-ia">
+  <div class="cadre deux-colonnes">
+    <div>
+      <h2 id="t-ia">Une IA utile, locale et <span class="accent">maîtrisée</span></h2>
+      <p class="sous-titre">Vos données sont traitées sur une infrastructure contrôlée. Tout flux vers un service extérieur est désactivable ou explicitement documenté.</p>
+      <ul class="points">
+        <li><span class="icone"><svg><use href="#i-serveur"/></svg></span><div><b>Local ou européen</b><span>modèles ouverts exécutés sur votre matériel, dont des modèles français (Mistral)</span></div></li>
+        <li><span class="icone"><svg><use href="#i-source"/></svg></span><div><b>Réponses sourcées</b><span>l'assistant cite vos documents et signale quand l'information manque</span></div></li>
+        <li><span class="icone"><svg><use href="#i-cle"/></svg></span><div><b>Accès contrôlés</b><span>journalisation, droits par espace, rien d'irréversible sans validation humaine</span></div></li>
+        <li><span class="icone"><svg><use href="#i-oeil"/></svg></span><div><b>Réversible</b><span>briques open source, pas de facturation au jeton, coûts matériels et maintenance explicités</span></div></li>
+      </ul>
+      <a class="bouton contour" href="/ce-que-nous-nous-imposons/">Ce que nous nous imposons →</a>
+    </div>
+    <img src="img/anneau-cristal.webp" width="1920" height="1080" alt="Illustration : un anneau de verre, symbole de la boucle produire, observer, mesurer, corriger" loading="lazy">
+  </div>
+</section>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ③ LES PRIX — repris tels quels de l'acte 4.
-       ⛔ LE TABLEAU N'A PAS ÉTÉ RETOUCHÉ : les montants sont une décision du studio
-          (prix figés le 10/09/2026, affichés le 28/09). *Un agent ne réécrit pas un prix.*
-       ══════════════════════════════════════════════════════════════════════ -->
-  <!-- ⭐ « POURQUOI GL DIGITAL LAB ? » — AJOUTÉE LE 28/09/2026.
-       La maquette porte cette section ; la trame ne l'avait pas.
-       ⛔ AUCUN CONTENU INVENTÉ : les quatre raisons sont celles que cette page
-          ÉCRIT DÉJÀ ailleurs — IA locale (pôle 02), flux documentés (couverture),
-          hébergement en France (mentions légales), bornes assumées (les refus du
-          studio, imprimés plus bas). Cette section les RASSEMBLE, elle ne les crée pas.
-       ⚠️ Pas de « +150 clients », pas de « 98 % de satisfaction » : le studio ne les a pas. -->
-  <section class="mf-section" id="pourquoi">
-    <p class="mf-etiquette">Pourquoi GL Digital Lab</p>
-    <h2 class="mf-titre-section">Quatre raisons, et chacune est vérifiable.</h2>
-    <ul class="mf-cartes">
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">◆</span>
-        <h3>Expertise locale &amp; souveraine</h3>
-        <p>Un studio indépendant à Harponville (Somme), pas une agence sous-traitée. Vos données
-        restent en France, et vous savez chez qui.</p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">◇</span>
-        <h3>IA maîtrisée, pas subie</h3>
-        <p>Les modèles tournent sur vos machines ou les nôtres. <strong>Les flux externes sont
-        désactivables ou explicitement documentés</strong> — jamais silencieux.</p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">▣</span>
-        <h3>Code &amp; périmètre explicites</h3>
-        <p>Ce qui est livré est documenté, et <strong>vous pouvez reprendre le système sans
-        nous</strong>. Aucun verrouillage, aucune dépendance cachée.</p>
-      </li>
-      <li class="mf-carte">
-        <span class="mf-carte-ico" aria-hidden="true">◻</span>
-        <h3>Limites assumées</h3>
-        <p>Nous écrivons ce que nous <strong>ne faisons pas</strong> — usage militaire, ciblage,
-        surveillance, conformité garantie. <em>Une offre sans limites n'est pas une offre.</em></p>
-      </li>
-    </ul>
-    <p><a class="mf-bouton" href="#contact">En savoir plus sur le studio</a></p>
-  </section>
+<section class="section" id="services" aria-labelledby="t-services">
+  <div class="cadre">
+    <h2 id="t-services">Nos <span class="accent">services</span></h2>
+    <p class="sous-titre">Un seul interlocuteur, du cadrage à la maintenance.</p>
+    <div class="grille x3">
+      <article class="carte"><span class="icone"><svg><use href="#i-doc"/></svg></span><h3>Audit &amp; cadrage IA locale</h3><p>Comprendre vos besoins, cartographier vos données, trier les cas d'usage et écrire la feuille de route.</p><a class="lien" href="#offres">Voir l'offre →</a></article>
+      <article class="carte"><span class="icone"><svg><use href="#i-code"/></svg></span><h3>Sites web &amp; applications métier</h3><p>Symfony et Vue.js : accessibles, rapides, bien référencés et intégrés à vos outils.</p><a class="lien" href="#offres">Voir l'offre →</a></article>
+      <article class="carte"><span class="icone"><svg><use href="#i-source"/></svg></span><h3>Assistants IA privés &amp; RAG</h3><p>Une IA qui s'appuie sur vos documents, avec des réponses sourcées et traçables.</p><a class="lien" href="#offres">Voir l'offre →</a></article>
+      <article class="carte"><span class="icone"><svg><use href="#i-roues"/></svg></span><h3>Automatisation &amp; agents</h3><p>Des tâches répétitives confiées à des workflows, avec un point de contrôle humain.</p><a class="lien" href="/contact.php">En parler →</a></article>
+      <article class="carte"><span class="icone"><svg><use href="#i-serveur"/></svg></span><h3>Déploiement IA souveraine</h3><p>Modèles locaux, sauvegardes, supervision, chiffrement et documentation, installés chez vous.</p><a class="lien" href="#offres">Voir l'offre →</a></article>
+      <article class="carte"><span class="icone"><svg><use href="#i-bouclier"/></svg></span><h3>Maintenance &amp; évolution</h3><p>Mises à jour, surveillance et accompagnement dans la durée.</p><a class="lien" href="/contact.php">En parler →</a></article>
+    </div>
+  </div>
+</section>
 
-  <section class="mf-section" id="prix">
-    <p class="mf-etiquette">Les prix</p>
-    <!-- ⛔⛔ LES TROIS OFFRES SONT DEVENUES DES PRODUITS LE 29/09/2026 — APPLICATION DE L'AUDIT.
-         Il est explicite : *« il faut en faire des produits de service achetables, avec une
-         cible précise, un résultat final, un périmètre, une durée, un prix "à partir de",
-         des livrables, une étape suivante et une CTA dédiée. »*
-         Et il donnait le tableau. Il est appliqué ici, dans cet ordre.
+<section class="section" aria-labelledby="t-methode">
+  <div class="cadre">
+    <h2 id="t-methode">Notre <span class="accent">méthode</span></h2>
+    <p class="sous-titre">Aucune ligne de code n'est écrite avant un cadrage et un devis validés.</p>
+    <ol class="grille x5 etapes">
+      <li><b>Diagnostic</b><span>vos besoins et vos contraintes</span></li>
+      <li><b>Conception</b><span>la solution et son périmètre</span></li>
+      <li><b>Développement</b><span>coder, tester, valider avec vous</span></li>
+      <li><b>Déploiement</b><span>mise en service sécurisée</span></li>
+      <li><b>Suivi</b><span>supervision, support, évolution</span></li>
+    </ol>
+  </div>
+</section>
 
-         ⛔ ET LE TITRE A CHANGÉ POUR UNE AUTRE RAISON, PLUS GRAVE : il disait
-            « Paiement unique. Aucun abonnement. » — **la même affirmation que celle retirée
-            de la couverture le même jour.** Le brief du studio prévoit un MRR de
-            maintenance : *s'il y a de la maintenance, il y a un abonnement.*
-            ⭐ La phrase n'était pas fausse par approximation : elle était fausse **par
-              omission du mot qui la rend vraie** — l'abonnement existe, il n'est pas caché.
-
-         ⚠️ LA TABLE DE PRIX COMPLÈTE EST CONSERVÉE, ET C'EST DÉLIBÉRÉ. L'audit classe la
-            publication des prix et des délais dans ce qui convertit déjà — *« très positif
-            pour instaurer de la confiance, surtout chez des dirigeants fatigués des devis
-            opaques »*. Les trois cartes **hiérarchisent** ; la table **prouve**. -->
-    <h2 class="mf-titre-section">Trois façons de commencer, selon votre besoin.</h2>
-
-    <!-- LES 3 OFFRES EN BOÎTES — ajoutées le 28/09/2026, forme de la maquette.
-         ⛔ MONTANTS TRANCHÉS PAR GAËTAN LE 28/09 : 1 500 / 2 500 / 15 000 € HT.
-            Les montants 199 / 290 / 390 / 8k€ qui dormaient dans le tableau
-            ci-dessous ont été RETIRÉS : ils contredisaient la maquette, et personne
-            ne savait lesquels étaient les vrais. *Un chiffre sans sujet est faux.* -->
-    <ul class="mf-offres">
-      <li class="mf-offre">
+<section class="section" id="offres" aria-labelledby="t-offres">
+  <div class="cadre">
+    <h2 id="t-offres">Nos <span class="accent">offres</span></h2>
+    <p class="sous-titre">Des prix affichés, un périmètre écrit, des limites dites. Un devis détaillé suit toujours le premier échange.</p>
+    <div class="grille x3">
+      <article class="carte offre">
         <h3>Cadrage &amp; diagnostic IA locale</h3>
-        <p class="mf-prix">1 500 € HT <small>2 à 4 jours</small></p>
-        <ul>
-          <li>Entretiens et inventaire de vos données</li>
-          <li>Cas d'usage triés par valeur</li>
-          <li>Rapport écrit et chiffré</li>
-          <li>Restitution et feuille de route</li>
-        </ul>
-        <a class="mf-bouton" href="/services/#cadrage">Voir le détail</a>
-      </li>
-      <li class="mf-offre">
+        <p>« Nous ne savons pas quoi faire de l'IA, ni avec quelles données. »</p>
+        <div class="prix">1 500 € <small>HT</small></div><div class="duree">2 à 4 jours</div>
+        <ul><li>Entretiens et inventaire de vos données</li><li>Cas d'usage triés par valeur</li><li>Rapport écrit et chiffré, feuille de route</li></ul>
+        <a class="lien" href="/contact.php?offre=cadrage">Réserver un diagnostic →</a> <a class="lien" href="/offres/#cadrage">Tout le détail de l'offre</a>
+      </article>
+      <article class="carte offre mise-en-avant">
         <h3>Site web &amp; IA intégrée</h3>
-        <p class="mf-prix">2 500 € HT <small>4 à 8 semaines</small></p>
-        <ul>
-          <li>Site ou application sur mesure</li>
-          <li>SEO, accessibilité, formulaires</li>
-          <li>IA intégrée si elle apporte quelque chose</li>
-          <li>Formation de vos équipes</li>
-        </ul>
-        <a class="mf-bouton" href="/services/#site">Voir le détail</a>
-      </li>
-      <li class="mf-offre mf-mise-avant">
+        <p>« Notre site ne produit pas de demandes utiles, ou devient difficile à maintenir. »</p>
+        <div class="prix">2 500 € <small>HT</small></div><div class="duree">4 à 8 semaines</div>
+        <ul><li>Site ou application sur mesure, administration</li><li>Référencement, accessibilité, performance</li><li>IA intégrée seulement là où elle apporte une valeur mesurable</li></ul>
+        <a class="lien" href="/contact.php?offre=site">Décrire mon projet →</a> <a class="lien" href="/offres/#site">Tout le détail de l'offre</a>
+      </article>
+      <article class="carte offre">
         <h3>Déploiement IA souveraine</h3>
-        <p class="mf-prix">15 000 € HT <small>à partir de</small></p>
-        <ul>
-          <li>Modèles locaux et recherche documentaire</li>
-          <li>Corpus isolés, sources citées</li>
-          <li>Sauvegardes et supervision</li>
-          <li>Documentation et transfert de compétence</li>
-        </ul>
-        <a class="mf-bouton" href="/services/#deploiement">Voir le détail</a>
-      </li>
-    </ul>
-    <p><em>Un prix annoncé sans son périmètre n'est pas un prix. Chaque offre a sa page,
-    avec ce qu'elle livre et ce qu'elle ne fait pas.</em></p>
-
-    <div class="mf-grille">
-      <div class="mf-boite">
-        <span class="mf-boite-titre">① Cadrage &amp; diagnostic IA locale</span>
-        <p><strong>« Nous ne savons pas quoi faire de l'IA, ni quelles données mettre
-           dedans. »</strong></p>
-        <p>Vous repartez avec une cartographie de vos besoins et de vos données, des cas
-           d'usage priorisés, une architecture recommandée et une feuille de route.</p>
-        <p><strong>2 à 4 jours</strong> · à partir de <strong>1 500 € HT</strong></p>
-        <p><a class="mf-bouton" href="/contact/">Réserver un diagnostic</a></p>
-      </div>
-
-      <div class="mf-boite">
-        <span class="mf-boite-titre">② Site web &amp; application métier</span>
-        <p><strong>« Notre site ne produit pas de demandes utiles, ou il devient impossible
-           à maintenir. »</strong></p>
-        <p>Vous obtenez un site ou une application sur mesure, son administration, le SEO,
-           l'accessibilité, les formulaires et la formation de vos équipes.</p>
-        <p><strong>4 à 8 semaines</strong> · à partir de <strong>2 500 € HT</strong></p>
-        <p><a class="mf-bouton" href="/contact/">Décrire mon projet</a></p>
-      </div>
-
-      <div class="mf-boite">
-        <span class="mf-boite-titre">③ Assistant documentaire privé</span>
-        <p><strong>« Nos équipes perdent du temps à chercher une information dans nos propres
-           documents. »</strong></p>
-        <p>Vous obtenez un assistant branché sur un corpus contrôlé, des réponses qui citent
-           leurs sources, des accès par utilisateur, et la documentation qui va avec.</p>
-        <p><strong>5 à 15 jours</strong> selon le corpus · après cadrage</p>
-        <p><a class="mf-bouton" href="/contact/">Demander une démonstration</a></p>
-      </div>
+        <p>« Nos équipes perdent du temps à chercher l'information dans nos documents. »</p>
+        <div class="prix"><small>à partir de</small> 15 000 € <small>HT</small></div><div class="duree">sur devis, après cadrage</div>
+        <ul><li>Modèles locaux et recherche documentaire sourcée</li><li>Corpus isolés, accès contrôlés, sauvegardes</li><li>Documentation, formation et maintenance</li></ul>
+        <a class="lien" href="/contact.php?offre=deploiement">Demander une démonstration →</a> <a class="lien" href="/offres/#deploiement">Tout le détail de l'offre</a>
+      </article>
     </div>
+  </div>
+</section>
 
-    <h3>Le détail des prix</h3>
-    <p class="mf-chapeau">Les montants ci-dessus sont des <strong>points de départ</strong>, pas
-       des forfaits. Le devis nomme le périmètre, ce qui est exclu, et ce qui dépend de
-       vous. <em>Un prix annoncé sans son périmètre n'est pas un prix, c'est une invitation
-       à la négociation.</em></p>
-
-        <div class="mf-boite">
-    <table class="mf-mesures">
-      <thead>
-        <tr><th scope="col">Prestation</th><th scope="col">Prix</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Cadrage &amp; diagnostic IA locale</td><td class="mf-fait">1 500 €</td></tr>
-        <tr><td>Site web &amp; IA intégrée</td><td class="mf-fait">2 500 €</td></tr>
-        <tr><td>Déploiement IA souveraine</td><td class="mf-fait">15 000 €</td></tr>
-      </tbody>
-    </table>
-        </div>
-
-    <p><em>L'audit est notre porte d'entrée, pas notre activité : si l'audit suffit, il suffit.</em></p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ④ COMMENT ON TRAVAILLE — le type C de la trame : trois chevrons.
-       ⚠️ Les trois chevrons sont ceux de la slide 14 (« Vous auditez, nous
-          équipons ») ; les sept étapes du parcours restent en dessous, en clair.
-          *Le chevron dit l'entrée en relation ; le parcours dit l'exécution. Ce
-          n'est pas la même chose, et les confondre ferait un parcours en trois pas.*
-       ══════════════════════════════════════════════════════════════════════ -->
-  <section class="mf-section" id="methode">
-    <p class="mf-etiquette">Comment on travaille</p>
-    <h2 class="mf-titre-section">« Vous auditez, nous équipons. »</h2>
-
-    <!-- LES 5 ÉTAPES DE LA MAQUETTE — ajoutées le 28/09/2026. La maquette les montre
-         en pastilles numérotées ; la trame les montrait en chevrons puis en texte.
-         Les deux formes disent la même chose : ici on ajoute la lecture rapide,
-         le détail en dessous reste. -->
-    <ol class="mf-etapes">
-      <li><strong>Diagnostic</strong>Comprendre votre besoin, vos données et vos contraintes.</li>
-      <li><strong>Conception</strong>Définir le périmètre, les livrables et le prix.</li>
-      <li><strong>Développement</strong>Construire par étapes, avec des points de contrôle.</li>
-      <li><strong>Déploiement</strong>Installer, documenter, former vos équipes.</li>
-      <li><strong>Suivi</strong>Maintenir, superviser et faire évoluer.</li>
-    </ol>
-
-    <div class="mf-chevrons">
-      <div class="mf-chevron">
-        <span class="mf-num">1. Démonstration</span>
-        <p>Une heure. Vous voyez le système tourner, vous posez vos questions. <strong>Aucun engagement.</strong></p>
-      </div>
-      <div class="mf-chevron">
-        <span class="mf-num">2. Cas réel</span>
-        <p>Vous désignez un cas type. Nous évaluons la faisabilité et le coût ensemble, devant vos données.</p>
-      </div>
-      <div class="mf-chevron">
-        <span class="mf-num">3. L'accord</span>
-        <p>Définition du périmètre, du partage, et clause de non-démarchage. Appelé aussi « Le Pacte ».</p>
-      </div>
+<section class="section claire" id="preuves" aria-labelledby="t-preuves">
+  <div class="cadre">
+    <h2 id="t-preuves">Ce que nous avons <span class="accent">construit</span></h2>
+    <p class="sous-titre">Projets internes du studio, pas des références clients : aucun projet client n'est encore publiable, et nous n'en inventerons pas. Chaque chiffre porte sa date de mesure.</p>
+    <div class="grille x3">
+      <article class="carte preuve"><span class="etiquette">GL-OS · IA locale</span><h3>Un système qui fait tourner l'IA chez le client</h3><div class="mesure">73 ms</div><p>premier mot de l'assistante, modèle local, réflexion court-circuitée</p><span class="date">mesuré le 29/09/2026 sur le poste du studio</span></article>
+      <article class="carte preuve"><span class="etiquette">Sécurité vocale</span><h3>Un sas phonétique contre les commandes injectées</h3><div class="mesure">60 / 60</div><p>défis reconnus, 0 faux défi accepté ; testé avec une voix de synthèse, l'épreuve en voix humaines reste à faire</p><span class="date">mesuré le 29/09/2026</span></article>
+      <article class="carte preuve"><span class="etiquette">Agents IA</span><h3>Des outils fermés par défaut</h3><div class="mesure">11 / 11</div><p>contrôles réussis : outil non déclaré invisible, autorisation expirée refusée, espace isolé coupé du web</p><span class="date">mesuré le 29/09/2026</span></article>
     </div>
+    <p style="margin-top:24px"><a href="/recherche-souveraine.html">Ce qui est souverain aujourd'hui, et ce qui ne l'est pas encore →</a></p>
+  </div>
+</section>
 
-    <!-- ⛔⛔ LE PARCOURS EST PASSÉ EN BOÎTES LE 29/09/2026 — DEMANDE DE GAËTAN :
-         « Le parcours en sept étapes <= accessibilité ! » puis « c'est une trame, boxe-moi le tout ! »
-         Les deux consignes se règlent au MÊME endroit, et c'est ce qui rend ce bloc intéressant.
-
-         ⚠️ CE QUI N'ALLAIT PAS : les sept étapes étaient un `<ol>` NU. Le commentaire juste
-            au-dessus l'écrivait sans le savoir : *« les sept étapes du parcours restent en
-            dessous, en clair »*. Or la trame est *« boîtes à bord franc, coins marqués d'un
-            trait »* — et `.mf-boite` existait déjà, utilisée 31 fois dans l'écosystème.
-
-         ⛔⛔ LE PIÈGE, ET C'EST LE CŒUR DU SUJET : mettre un `<li>` « en boîte » se fait
-            naturellement en le remplaçant par un `<div class="mf-boite">`. **Ce geste
-            DÉTRUIT la liste.** Un lecteur d'écran n'annonce plus « liste de sept éléments »,
-            il annonce sept paragraphes — *et personne ne le voit à l'écran, puisque le
-            rendu visuel est identique.*
-            ⇒ On garde donc `<li>`, et c'est LUI qui porte la boîte.
-
-         ⚠️ ET LA DEUXIÈME MOITIÉ, QUI EST UN PIÈGE CONNU : styler une liste avec
-            `list-style: none` fait perdre la sémantique de liste à **VoiceOver/Safari**.
-            ⇒ D'où le `role="list"` explicite ci-dessous. *Il ne sert à rien dans Chrome,
-               et il est la différence entre « liste » et « rien » sur iPhone.*
-            ⇒ Et les numéros sont écrits DANS le contenu (`.mf-num`), pas laissés au
-               marqueur CSS : ce qui est décoré n'est pas annoncé. -->
-
-    <h3>Le parcours en sept étapes</h3>
-    <ol class="mf-grille" role="list">
-      <li class="mf-boite"><span class="mf-num">1</span> <strong>Premier échange</strong> — 30 min, gratuit</li>
-      <li class="mf-boite"><span class="mf-num">2</span> <strong>Lecture du besoin</strong></li>
-      <li class="mf-boite"><span class="mf-num">3</span> <strong>Atelier de cadrage</strong></li>
-      <li class="mf-boite"><span class="mf-num">4</span> <strong>Devis détaillé</strong></li>
-      <li class="mf-boite"><span class="mf-num">5</span> <strong>Construction</strong></li>
-      <li class="mf-boite"><span class="mf-num">6</span> <strong>Déploiement</strong></li>
-      <li class="mf-boite"><span class="mf-num">7</span> <strong>Maintenance</strong></li>
-    </ol>
-
-    <p><strong>Rien ne sort sans validation humaine.</strong> Une machine, un poste, des agents —
-    et un humain qui valide chaque étape.</p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ⑤ CE QU'ON MESURE — la section qui justifie le tampon [MESURÉ].
-       ⛔ CHAQUE LIGNE PORTE SA DATE, ET C'EST LA RÈGLE DU STUDIO : *un chiffre sans
-          sujet est un chiffre faux*, et un chiffre sans date devient faux sans le dire.
-       ⛔ ET LA LIGNE EN DÉFAUT EST ÉCRITE AUSSI. Une page de capacités qui n'affiche
-          que les vertes n'est pas une preuve, c'est une publicité.
-       ══════════════════════════════════════════════════════════════════════ -->
-  <section class="mf-section" id="realisations">
-    <p class="mf-etiquette">Réalisations</p>
-    <h2 class="mf-titre-section">Ce que nous avons construit.</h2>
-    <div class="mf-boite">
-      <p class="mf-boite-titre">Ce que cette section contiendra</p>
-      <p>Des projets réels, avec le problème de départ, ce qui a été livré, et une mesure du résultat.
-      <strong>Elle est vide parce qu'aucun projet client n'est encore publiable</strong> — et des
-      références inventées coûteraient plus cher que son absence.</p>
-      <p><em>Ce qui se démontre aujourd'hui, ce sont les capacités, et elles portent leur date de
-      mesure : <a href="#capacites">voir « Nos capacités »</a>.</em></p>
+<section class="section" aria-labelledby="t-pourquoi">
+  <div class="cadre deux-colonnes">
+    <img src="img/capitaine-samourai.webp" width="1920" height="1080" alt="Néo, l'avatar du fondateur du studio, sous l'orage" loading="lazy">
+    <div>
+      <h2 id="t-pourquoi">Pourquoi <span class="accent-rouge">GL</span> Digital Lab ?</h2>
+      <p class="sous-titre">Un studio indépendant et un interlocuteur unique, qui conçoit, développe et héberge des outils utiles, avec une maîtrise concrète de vos données et de l'infrastructure.</p>
+      <ul class="points">
+        <li><span class="icone"><svg><use href="#i-code"/></svg></span><div><b>Technique</b><span>du site web au modèle local, une seule chaîne</span></div></li>
+        <li><span class="icone"><svg><use href="#i-doc"/></svg></span><div><b>Transparent</b><span>prix, limites et erreurs publiés</span></div></li>
+        <li><span class="icone"><svg><use href="#i-roues"/></svg></span><div><b>Pragmatique</b><span>l'IA seulement si elle apporte une valeur mesurable</span></div></li>
+        <li><span class="icone"><svg><use href="#i-bouclier"/></svg></span><div><b>Indépendant</b><span>briques ouvertes, pas de verrouillage</span></div></li>
+      </ul>
     </div>
-  </section>
+  </div>
+</section>
 
+<section class="section" aria-labelledby="t-fondateurs">
+  <div class="cadre">
+    <h2 id="t-fondateurs">Devenez <span class="accent">partenaire fondateur</span></h2>
+    <p class="sous-titre">Le studio accueille ses premiers clients. Si vous voulez une IA et des outils qui travaillent chez vous, avec un accompagnement rapproché dès le premier jour, parlons-en : les conditions vous sont présentées lors du premier échange.</p>
+    <a class="bouton plein" href="/contact.php">Échanger 30 minutes, gratuitement →</a>
+  </div>
+</section>
 
-  <!-- LE BANDEAU CTA DE LA MAQUETTE — ajouté le 28/09/2026. -->
-  <section class="mf-section">
-    <div class="mf-bandeau">
-      <p><strong>Vous avez un projet ?</strong>
-      Discutons de vos besoins et construisons la solution la plus adaptée —
-      30 minutes, gratuit, sans engagement.</p>
-      <a class="mf-bouton" href="#contact">Réserver un diagnostic de 30 minutes</a>
+<section class="section appel" aria-labelledby="t-appel">
+  <div class="cadre">
+    <div>
+      <h2 id="t-appel">Vous avez un <span class="accent">projet</span> ?</h2>
+      <p class="sous-titre">Discutons de vos besoins et trouvons ensemble la solution la plus adaptée.</p>
+      <a class="bouton contour" href="/contact.php">Prendre rendez-vous →</a>
     </div>
-  </section>
-  <section class="mf-section" id="capacites">
-    <p class="mf-etiquette">Ce qu'on mesure</p>
-    <h2 class="mf-titre-section">Nos capacités, avec leur date de mesure.</h2>
+    <ul><li>✓ Premier échange de 30 minutes offert</li><li>✓ Réponse sous 24 h</li><li>✓ Sans engagement</li><li>✓ Un devis détaillé avant toute ligne de code</li></ul>
+  </div>
+</section>
 
-        <div class="mf-boite">
-    <table class="mf-mesures">
-      <thead>
-        <tr><th scope="col">Capacité</th><th scope="col">Mesure</th><th scope="col">Le</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Recherche documentaire locale</td><td class="mf-fait">4 épreuves sur 4</td><td>28/09/2026</td></tr>
-        <tr><td>Modèles exécutés en local</td><td class="mf-fait">12 modèles, 42,6 Go</td><td>28/09/2026</td></tr>
-        <tr><td>Assistance vocale locale</td><td class="mf-fait">réponse en ~11 s</td><td>28/09/2026</td></tr>
-        <tr><td>Transcription audio</td><td class="mf-fait">999 segments, 8 410 mots</td><td>28/09/2026</td></tr>
-        <tr><td>Bancs d'épreuve du studio</td><td class="mf-fait">5 sur 5 passent</td><td>28/09/2026</td></tr>
-        <tr><td>Pages publiées et vérifiées</td><td class="mf-fait">8 URL servies</td><td>28/09/2026</td></tr>
-        <tr><td>Génération d'images</td><td class="mf-fait">1 image en 21,5 s</td><td>29/09/2026</td></tr>
-      </tbody>
-    </table>
-        </div>
-
-    <!-- ⛔ CE PARAGRAPHE A ÉTÉ RÉÉCRIT LE 29/09/2026, PARCE QUE LA LIGNE AU-DESSUS A CHANGÉ.
-         ⚠️ Il disait : *« une capacité en panne est écrite comme les autres. Une page de
-            capacités qui n'affiche que les vertes n'est pas une preuve, c'est une publicité. »*
-         ⭐ La règle était juste, et **la page vient d'en devenir le contre-exemple** : la
-           génération d'images est passée de « hors service » à « 1 image en 21,5 s ».
-           ⇒ Une page dont TOUTES les lignes sont vertes n'est plus une preuve. **On garde
-             donc la trace de la panne** — la ligne dit qu'elle a changé, et quand.
-           ⭐ *Une capacité qui tombe et qu'on répare est une information. La masquer serait
-              la seule chose malhonnête.* -->
-    <p><a class="mf-bouton" href="/etat-du-studio/">Le relevé complet, tenu à jour →</a></p>
-
-    <p class="mf-chapeau">⚠️ La dernière ligne a changé le 29/09/2026 : elle disait
-    « hors service » la veille, le service a été redémarré et l'épreuve refaite.
-    <em>Une page qui n'affiche que ses réussites n'est pas une preuve, c'est une publicité —
-    et une panne réparée vaut mieux qu'une panne cachée.</em></p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ⑥ L'ÉCOSYSTÈME — la porte.
-       ⚠️ Les mêmes cinq entrées que le menu, avec ce qu'on y trouve. *Un lien seul
-          ne dit pas ce qu'il y a derrière ; celui qui cherche ne clique pas au hasard.*
-       ══════════════════════════════════════════════════════════════════════ -->
-  <section class="mf-section" id="ecosysteme">
-    <p class="mf-etiquette">L'écosystème — la porte d'entrée</p>
-    <h2 class="mf-titre-section">Tout ce qui est publié, et où ça mène.</h2>
-
-    <p class="mf-chapeau">Chaque adresse ci-dessous <strong>a été appelée une par une le
-      29/09/2026</strong>, et a répondu. Celles qui ne répondaient pas, ou qui publiaient ce qui
-      n'est pas à nous de dire, <strong>ne sont pas ici</strong> — <em>l'absence est une décision,
-      pas un oubli.</em></p>
-
-    <p class="mf-etiquette">① Ce que le studio fait</p>
-    <div class="mf-grille">
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/services/">Services</a></span>
-        <p>Audit, sites, applications, IA locale. <strong>Le cadrage avant la ligne de code.</strong></p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/dossier/">Dossier professionnel</a></span>
-        <p>Prestations, prix, méthode et <strong>limites assumées</strong> — en un seul document.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/projets/">Projets &amp; réalisations</a></span>
-        <p>Ce qui a été construit, et dans quel contexte.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/voyageo-pro/">Étude de cas VoyageoPro</a></span>
-        <p>Une plateforme B2B dans le tourisme. <strong>Le cas complet, pas la capture d'écran.</strong></p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/guides/">Dix questions, dix réponses</a></span>
-        <p>Les questions qu'on nous pose vraiment, <strong>traitées en une page chacune</strong>.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/liens/">Liens</a></span>
-        <p>L'audit WordPress 48 h et les prestations, <strong>regroupés en un endroit</strong>.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/contact/">Contact</a></span>
-        <p>Premier échange de 30 minutes, <strong>gratuit</strong>. Aucun engagement, aucune obligation.</p>
-      </div>
+<section class="section claire" id="ressources" aria-labelledby="t-ressources">
+  <div class="cadre">
+    <h2 id="t-ressources">Ressources &amp; <span class="accent">veille</span></h2>
+    <p class="sous-titre">Guides, analyses et veille autour du web, de l'IA locale et de la souveraineté numérique.</p>
+    <div class="grille x4">
+      <article class="carte"><h3>Guides</h3><p>Pour comprendre et démarrer.</p><a class="lien" href="/guides/">Lire →</a></article>
+      <article class="carte"><h3>Recherche souveraine</h3><p>Chercher sur le web sans être profilé.</p><a class="lien" href="/recherche-souveraine.html">Lire →</a></article>
+      <article class="carte"><h3>Analyses</h3><p>Nos notes d'analyse publiées.</p><a class="lien" href="/analyses/">Lire →</a></article>
+      <article class="carte"><h3>Veille</h3><p>Ce que nous lisons, et pourquoi.</p><a class="lien" href="/veille/">Lire →</a></article>
     </div>
-
-    <p class="mf-etiquette">② Ce qu'on publie</p>
-    <div class="mf-grille">
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/analyses/">Analyses</a></span>
-        <p>Ce qu'on a mesuré, avec les sources datées et <strong>les blancs déclarés</strong>.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/veille/">Relevés de veille</a></span>
-        <p>Ce que les sources suivies publient, <strong>avec le lien vers leurs auteurs</strong>.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/formation/">Formation</a></span>
-        <p>Un dossier pédagogique libre, et le chantier d'une formation à l'IA. <strong>Non certifiant.</strong></p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/urgence-cyber/">Urgence cyber</a></span>
-        <p>Qui appeler en cas d'incident, selon qui vous êtes. Numéros officiels vérifiés.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/etat-du-studio/">L'état du studio</a></span>
-        <p>Le relevé du présent, <strong>mesuré et daté</strong> — y compris ce qui ne marche pas.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/ia-de-bord/">L'IA de bord</a></span>
-        <p>La pièce qui parle, ses postes et <strong>ses limites écrites noir sur blanc</strong>.</p>
-      </div>
-    </div>
-
-    <p class="mf-etiquette">③ Les démonstrations</p>
-    <div class="mf-grille">
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/demos/">Les démos</a></span>
-        <p>Ce qui tourne, qu'on peut essayer — <strong>pas une vidéo, une page</strong>.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/demo-conformite/">Suivi de conformité</a></span>
-        <p>Un tableau d'échéances, montré tel qu'il fonctionne.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/demo-festival-metz/">Festival Pop Culture — Metz</a></span>
-        <p>Un site d'événement, du cadrage au jour J.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/components/">Bibliothèque de composants</a></span>
-        <p>Vue &amp; Symfony — <strong>les briques réutilisées d'un projet à l'autre</strong>.</p>
-      </div>
-    </div>
-
-    <p class="mf-etiquette">④ Le cadre — ce à quoi on s'engage</p>
-    <div class="mf-grille">
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/ce-que-nous-nous-imposons/">Ce que nous nous imposons</a></span>
-        <p>Nos règles et nos limites, <strong>écrites avant qu'on nous les demande</strong>.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/cgv/">Conditions générales de vente</a></span>
-        <p>Le contrat, en clair, sans clause dissimulée.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/mentions-legales/">Mentions légales</a></span>
-        <p>Qui édite, qui héberge, et comment nous joindre.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/confidentialite/">Confidentialité</a></span>
-        <p>Ce qui est collecté, pourquoi, et <strong>combien de temps c'est gardé</strong>.</p>
-      </div>
-    </div>
-
-    <p class="mf-etiquette">⑤ Le bateau — l'univers et les outils</p>
-    <div class="mf-grille">
-        <div class="mf-boite">
-          <span class="mf-boite-titre"><a href="/plan/">Le plan</a></span>
-          <p>GL Digital Lab, <strong>dans l'ordre</strong> — où va le studio.</p>
-        </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/le-pont/">La salle du pont</a></span>
-        <p>D'où l'on regarde — et ce qu'on y voit.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/armure/">L'armure</a></span>
-        <p>Un projet de jeu <strong>montré en cours de route</strong>, pas à la fin.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/vitrine/">La vitrine</a></span>
-        <p>Ce que le studio fabrique pour lui-même.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/laboratoire/">Le laboratoire</a></span>
-        <p>Des systèmes <strong>testés dans le réel</strong>, pas en démonstration.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/apps/">Les applications</a></span>
-        <p>Les outils de l'équipage, un par usage.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/plan/">Le plan</a></span>
-        <p>GL Digital Lab, <strong>dans l'ordre</strong> — où va le studio et pourquoi.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="/sitemap/">Plan du site</a></span>
-        <p>La carte applicative, telle que le serveur la sert.</p>
-      </div>
-      <div class="mf-boite">
-        <span class="mf-boite-titre"><a href="https://controle.gldigitallab.fr/">Point de contrôle</a></span>
-        <p>Le tableau de bord servi 24/7. <strong>Aucun nom de client, aucun identifiant de machine.</strong></p>
-      </div>
-    </div>
-
-    <p class="mf-chapeau">⚠️ <strong>Ce que cette page ne liste pas.</strong> Trois surfaces du site
-      portent encore des noms qui ne sont pas à nous — <em>une franchise protégée, un jeu tiers, le nom
-      d'hôte d'une machine</em>. Elles sont atteignables mais <strong>volontairement absentes d'ici</strong>
-      tant qu'elles n'ont pas été tranchées. <em>Une porte qui ignore ce qu'elle n'ouvre pas vaut mieux
-      qu'un menu qui promet tout.</em></p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       ⑦ LE CONTACT
-       ══════════════════════════════════════════════════════════════════════ -->
-  <!-- ⭐ « RESSOURCES & ACTUALITÉS » — AJOUTÉE LE 28/09/2026 (section de la maquette).
-       ⛔ LES QUATRE ARTICLES EXISTENT, ils sont VÉRIFIÉS sur le disque avant publication :
-          analyses/barometre-france-num-2026.html · la-langue-du-code.html ·
-          production-100-francaise.html · souverainete-infra.html. Les descriptions
-          sont celles des <meta name="description"> de chaque page — pas des résumés
-          réinventés. *On n'annonce pas un article qu'on n'a pas écrit.* -->
-  <section class="mf-section" id="ressources">
-    <p class="mf-etiquette">Ressources &amp; actualités</p>
-    <h2 class="mf-titre-section">Ce que nous publions, et pourquoi.</h2>
-    <ul class="mf-cartes">
-      <li class="mf-carte">
-        <p class="mf-etiquette">Analyse</p>
-        <h3>Baromètre France Num 2026</h3>
-        <p>9 655 entreprises interrogées, source primaire. Ce qui monte, ce qui baisse,
-        et ce que ça change pour une TPE.</p>
-        <p class="mf-lien"><a href="/analyses/barometre-france-num-2026.html">Lire l'analyse</a></p>
-      </li>
-      <li class="mf-carte">
-        <p class="mf-etiquette">Analyse</p>
-        <h3>La langue du code</h3>
-        <p>Tout ce qui vient de nous est en français ; ce que la machine exige reste tel quel.
-        Une règle, et sa raison.</p>
-        <p class="mf-lien"><a href="/analyses/la-langue-du-code.html">Lire l'analyse</a></p>
-      </li>
-      <li class="mf-carte">
-        <p class="mf-etiquette">Analyse</p>
-        <h3>Production 100 % française</h3>
-        <p>Ce qui est déjà souverain, ce qui pourrait le devenir, et ce qui ne le sera pas.
-        Avec les mesures.</p>
-        <p class="mf-lien"><a href="/analyses/production-100-francaise.html">Lire l'analyse</a></p>
-      </li>
-      <li class="mf-carte">
-        <p class="mf-etiquette">Analyse</p>
-        <h3>Souveraineté et infrastructure</h3>
-        <p>Énergie, réseau, silicium, infogérance, modèles. Chacune a un propriétaire
-        différent — et une ne l'est pas.</p>
-        <p class="mf-lien"><a href="/analyses/souverainete-infra.html">Lire l'analyse</a></p>
-      </li>
-    </ul>
-    <p><a class="mf-bouton" href="/analyses/">Toutes nos analyses</a>
-    <a class="mf-bouton" href="/veille/">Relevés de veille</a></p>
-  </section>
-
-  <section class="mf-section" id="contact">
-    <p class="mf-etiquette">Prendre contact</p>
-    <h2 class="mf-titre-section">Premier échange — 30 minutes, gratuit.</h2>
-
-        <div class="mf-boite">
-    <p>Vous exposez votre situation, on vous dit ce qui est faisable et ce qui ne l'est pas.
-    <strong>Si l'audit suffit, il suffit.</strong></p>
-
-    <p>
-      <a class="mf-bouton" href="mailto:gtn.langlet+lab@gmail.com?subject=Premier%20%C3%A9change%20%E2%80%94%2030%20min">Écrire au studio</a>
-        </div>
-      <button type="button" id="copier-adresse" hidden>Copier l'adresse</button>
-      <span id="copie-etat" class="copie-etat" aria-live="polite"></span>
-    </p>
-
-    <p class="mf-chapeau">GL Digital Lab — Génie IT Tek FR · Harponville (80560), Somme, France.
-    Studio en cours d'immatriculation : ses références légales seront publiées dès qu'elle sera prononcée.</p>
-  </section>
-
-  <!-- ══════════════════════════════════════════════════════════════════════
-       LE PIED DE JOURNAL — la forme de la trame, les valeurs VRAIES.
-       ⛔ LA TRAME PORTAIT `OPERATOR: UNIT_74`, `LAT: 48.9566 N`, un `HASH` décoratif.
-          Ces valeurs sont INVENTÉES. *Un chiffre sans sujet est un chiffre faux* —
-          et un faux chiffre technique est le plus crédible des mensonges, parce que
-          personne ne le vérifie.
-       ⇒ On garde la ligne, on y met des grandeurs qu'on peut défendre, et on DATE.
-       ══════════════════════════════════════════════════════════════════════ -->
-  <p class="mf-log">
-    SYSTEM.MANIFESTE.LOG // DOCUMENT&nbsp;: gldigitallab.fr/ // STATUT&nbsp;: MANIFESTE DE CAPACITÉ
-    // RÉVISION&nbsp;: 2026-09-29 // CAPACITÉS MESURÉES&nbsp;: 7 SUR 7 // DERNIÈRE MESURE&nbsp;: 2026-09-29
-    // END OF FILE
-  </p>
+  </div>
+</section>
 
 </main>
 
-<!-- TIROIR HUD : PÔLES D'EXPERTISE — proposé par Gaëtan le 26/09/2026.
-     ⛔ `hidden` DANS LE HTML, ET C'EST VOULU : sans JavaScript le tiroir n'existe pas à l'écran,
-        et le bouton ne fait rien. Du contenu piégé derrière un script qui n'a pas tourné serait
-        pire que pas de contenu du tout.
-     ⛔ LE MOT INTERDIT DU STUDIO A ÉTÉ RETIRÉ de cette carte : il est dans la liste noire du
-        contrôle, et la page aurait ÉCHOUÉ. La carte dit maintenant « locaux » — le mot juste,
-        et celui qui est vrai. ⚠️ ET IL A FALLU LE RETIRER DEUX FOIS : de la carte, PUIS d'ici —
-        parce que ce commentaire le réécrivait pour l'expliquer, et que le contrôle lit les
-        commentaires comme le reste. *Un commentaire fait partie du fichier.*
-     ⛔ `role="dialog"` + `aria-modal="true"` SANS PIÈGE DE FOCUS : le piège est dans
-        `src/secteurs.mjs` — Tab et Maj+Tab ne sortent plus du tiroir, Escape le ferme, le clic
-        sur le fond aussi. -->
-<!-- ⭐ LA NAVIGATION EST SÉPARÉE DU RESTE DEPUIS LE 28/09/2026, ET CE N'EST PAS UN GOÛT.
-     `src/main.js` est chargé en `type="module"` et fait 44 981 octets : il porte la séquence
-     d'images, la 3D, l'armure, la révélation au curseur. **Une navigation ne doit dépendre
-     de rien de tout ça** — si le module principal échoue (WebGL absent, image manquante,
-     `IntersectionObserver` refusé), le menu doit continuer de fonctionner.
-     ⚠️ `defer` et non `type="module"` : ce fichier n'exporte rien et n'importe rien, il
-     s'exécute après le DOM, et il ne bloque pas le rendu.
-     ⛔ Et il est chargé EN DERNIER : `main.js` appelle `preparerSecteurs()` qui a besoin du
-     `<div id="tiroir-secteurs">` — le charger avant ne casserait rien, mais le lire avant
-     qu'il existe, si. L'ordre est donc : le contenu, puis le module, puis la navigation. -->
-<div id="tiroir-secteurs" class="tiroir-hud" hidden role="dialog" aria-modal="true" aria-labelledby="titre-secteurs">
-  <div class="tiroir-contenu">
-    <div class="tiroir-en-tete">
-      <div><span class="sous-titre-hud">SECTEURS // MATRICE OPÉRATIONNELLE</span><h2 id="titre-secteurs" class="titre-hud">Pôles d'Intervention &amp; Solutions</h2></div>
-      <button id="fermer-secteurs" type="button" class="bouton-fermer" aria-label="Fermer la matrice des secteurs">✕</button>
+<footer class="pied">
+  <div class="cadre">
+    <div class="grille">
+      <div>
+        <a class="logo" href="/"><b>G<span>L</span></b><small>DIGITAL LAB</small></a>
+        <p style="color:var(--doux)">Studio web &amp; IA locale pour TPE/PME.<br>Une activité de Génie IT Tek FR — immatriculation en cours.</p>
+      </div>
+      <nav aria-label="Pied de page"><h2>Navigation</h2><ul><li><a href="/services/">Services</a></li><li><a href="#offres">Offres</a></li><li><a href="/dossier/">Dossier</a></li><li><a href="/laboratoire/">Laboratoire</a></li><li><a href="/formation/">Formation</a></li></ul></nav>
+      <div><h2>Ressources</h2><ul><li><a href="/guides/">Guides</a></li><li><a href="/veille/">Veille</a></li><li><a href="/analyses/">Analyses</a></li><li><a href="/urgence-cyber/">Urgence cyber</a></li><li><a href="/etat-du-studio/">État du studio</a></li></ul></div>
+      <div><h2>Contact</h2><ul><li>Harponville (80560)</li><li><a href="/contact.php">Formulaire de contact</a></li><li><a href="/ce-que-nous-nous-imposons/">Ce que nous nous imposons</a></li></ul></div>
     </div>
-    <div class="grille-secteurs">
-      <article class="carte-secteur" tabindex="0">
-        <div class="secteur-badge">CORE_01</div><h3>Ingénierie Web &amp; Applications Métier</h3>
-        <p>Architectures robustes et durables, axées sur la maintenabilité et la sécurité.</p>
-        <ul class="tags-tech"><li>Symfony 7</li><li>Vue.js 3</li><li>API Platform</li><li>PostgreSQL</li></ul>
-      </article>
-      <article class="carte-secteur" tabindex="0">
-        <div class="secteur-badge">AI_LOCAL_02</div><h3>IA Embarquée &amp; Agents Autonomes</h3>
-        <p>Pipelines de modèles locaux, mémoire documentaire et connecteurs MCP locaux — rien ne sort sans validation.</p>
-        <ul class="tags-tech"><li>Ollama / vLLM</li><li>FastAPI</li><li>MCP</li><li>ChromaDB</li></ul>
-      </article>
-      <article class="carte-secteur" tabindex="0">
-        <div class="secteur-badge">3D_WEBGL_03</div><h3>Expériences Cinématiques &amp; 3D Web</h3>
-        <p>Scrollytelling haute performance, interfaces WebGL et pipelines d'actifs temps réel.</p>
-        <ul class="tags-tech"><li>Three.js</li><li>GLSL</li><li>Séquence d'images</li><li>GLB optimisé</li></ul>
-      </article>
-      <article class="carte-secteur" tabindex="0">
-        <div class="secteur-badge">AUTOMATION_04</div><h3>Audit, Résilience &amp; Automatisation</h3>
-        <p>Industrialisation des flux, sécurisation des données et surveillance automatisée.</p>
-        <ul class="tags-tech"><li>CI/CD &amp; Docker</li><li>Tests de bout en bout</li><li>Chiffrement</li><li>Sauvegardes testées</li></ul>
-      </article>
+    <div class="legal">
+      <span>© 2026 GL Digital Lab · Créé avec l'aide de l'IA</span>
+      <span><a href="/mentions-legales/">Mentions légales</a> · <a href="/confidentialite/">Confidentialité</a> · <a href="/cgv/">CGV</a> · <a href="/plan/">Plan du site</a></span>
     </div>
-    <div class="tiroir-pied"><span>STATUT : DISPONIBLE SUR DEVIS</span><a href="#contact" id="lien-devis-direct" class="bouton-action">INITIALISER UN PROJET →</a></div>
   </div>
-</div>
-<!-- ⛔⛔ LE MODULE `main.js` A ÉTÉ RETIRÉ LE 29/09/2026 — ET C'EST UN CORRECTIF, PAS UN NETTOYAGE.
-     ⚠️ CE QUI S'EST PASSÉ, MESURÉ DANS LA CONSOLE DU NAVIGATEUR :
-        Uncaught TypeError: can't access property "offsetTop", actes[3] is undefined
-          → src/main.js:439, appelé par `demander()` → **l'erreur se répétait 10 fois**.
-        `main.js` L30 fait `[...document.querySelectorAll('[data-act]')]`. Mesure :
-          `[data-act]` : 0 · `.acte` : 0 · `.facade` : 0 · `h1,h2` : 0 — **la structure
-          que ce module pilote a disparu avec l'ancienne page d'accueil.**
-        ⇒ Ce n'était pas un plantage isolé : **une boucle d'erreurs, chez chaque visiteur.**
-
-     ⭐ POURQUOI C'EST LE BON GESTE, ET PAS UNE PERTE. La trame est un DOCUMENT
-        statique — son propre CSS le dit. `main.js` portait la séquence d'ouverture,
-        la 3D et la révélation au curseur : **des choses de l'ANCIENNE page.**
-        Et le studio avait écrit la règle ici même :
-          *« une navigation ne doit dépendre d'aucune de ces choses. Si le module
-            échoue — WebGL absent, image manquante, IntersectionObserver refusé —
-            le menu doit continuer de fonctionner. »*
-        ⇒ C'est exactement la situation prévue. Le menu continue, et il fonctionne :
-          tous ses éléments sont présents (mesuré), et `navigation.js` écarte les
-          liens morts avec `.filter((p) => p.section)`.
-
-     ⚠️ CE QU'IL RESTE À FAIRE, ET QUI N'EST PAS FAIT ICI : la nav « repères » pointe
-        vers `#acte-1` … `#acte-8`, **huit ancres qui n'existent pas**. Et le pied de
-        page (`.tiroir-pied`, `.tags-tech`, `.bouton-action`) vient encore de l'ancienne
-        structure. *La trame a remplacé le corps et gardé la tête et les pieds : c'est
-        un hybride, et il se voit.* — signalé, non corrigé. -->
-
-<!-- ⭐ LE PIED DE LA TRAME — AJOUTÉ LE 29/09/2026, DEMANDE DE GAËTAN : « header et footer à modifier ».
-     ⚠️ CE QUI N'ALLAIT PAS, ET C'EST MESURÉ : la page n'avait **AUCUN `<footer>`**.
-        Elle avait un `div.tiroir-pied` (le pied du tiroir des secteurs, autre chose) et
-        rien d'autre. `manifeste.css` déclare `.mf-log` — « pied de page en ligne de
-        journal technique » — et **aucun élément ne l'utilisait**.
-     ⭐ ET LA LIGNE DE JOURNAL PORTE DES VALEURS VRAIES, PAS DÉCORATIVES. C'est le CSS
-        de la trame lui-même qui l'exige : *« la trame est une esthétique ; les chiffres
-        sont une responsabilité »* — il refuse les `UNIT_74` et les hash inventés du
-        PowerPoint d'origine.
-     ⚠️ LES CHIFFRES CI-DESSOUS SONT DATÉS, ET C'EST CE QUI LES REND HONNÊTES : ils
-        étaient vrais au 29/09/2026. Un relevé daté ne devient pas faux — il devient
-        périmé, et la date le dit. *Un chiffre sans date, lui, devient faux sans le dire.* -->
-<footer class="mf-log">
-  <!-- ⭐ LA MARQUE EST SÉPARÉE DE L'ENTITÉ LÉGALE DEPUIS LE 29/09/2026 — DEMANDE DE L'AUDIT.
-       ⚠️ CE QUI N'ALLAIT PAS : la ligne disait « GL DIGITAL LAB — Génie IT TeK FR », les
-          deux noms collés dans la même phrase. L'audit nomme le défaut exactement :
-          *« Ne laisse jamais le visiteur devoir reconstruire mentalement cette relation. »*
-          Et il liste ce qu'un prospect doit pouvoir répondre sans hésiter : qui est mon
-          prestataire, quel nom commercial, quelle raison sociale, quel nom sur le devis.
-       ⇒ Trois lignes, trois rôles : **la marque**, **ce qu'elle fait**, **qui l'exploite**.
-         Génie IT TeK FR n'apparaît plus qu'une fois, et à sa place — l'entité légale. -->
-  <p><strong>GL DIGITAL LAB</strong></p>
-  <p>Studio web &amp; IA locale pour PME</p>
-  <p><em>Une activité de Génie IT TeK FR — conception, déploiement et maintenance de
-     solutions web et d'IA locale. Sites, applications métier, RAG documentaire, agents —
-     sur une infrastructure contrôlée.</em></p>
-  <p><a href="/mentions-legales/">Mentions légales</a> ·
-     <a href="/confidentialite/">Confidentialité</a> ·
-     <a href="/cgv/">CGV</a> ·
-     <a href="/ce-que-nous-nous-imposons/">Ce que nous nous imposons</a> ·
-     <a href="/plan/">Le plan</a> ·
-     <a href="/sitemap/">Plan du site</a></p>
-  <!-- ⭐ LE SECONDAIRE EST ICI DEPUIS LE 29/09/2026 — L'AUDIT, À LA LETTRE :
-       *« Dans le footer seulement : dossier professionnel, tarifs et conditions, guides,
-     veille, liens, CGV, mentions légales, politique de confidentialité. »*
-       ⛔ CES LIENS VIVAIENT DANS UN SECOND PIED DE PAGE — `<footer class="pied">` — qui
-          datait de l'ancienne page. Il **s'affichait en plus du nouveau**, et sa première
-          ligne collait « GL Digital Lab · Génie IT Tek FR », ce que l'audit condamne
-          nommément.
-       ⇒ Un seul pied de page, et il porte les entrées de l'audit.
-         *Deux pieds de page, c'est deux vérités sur le même objet.* -->
-  <p><a href="/dossier/">Dossier professionnel</a> ·
-     <a href="/guides/">Guides</a> ·
-     <a href="/liens/">Liens</a> ·
-     <a href="/analyses/">Analyses</a> ·
-     <a href="/veille/">Veille</a> ·
-     <a href="/formation/">Formation</a> ·
-     <a href="/urgence-cyber/">Urgence cyber</a> ·
-     <a href="/etat-du-studio/">L'état du studio</a></p>
-  <p>RELEVÉ DU 29/09/2026 // SURFACES APPELÉES UNE PAR UNE : 35 //
-     FERMÉES DEPUIS : 4 (dont 3 pour un nom qui n'est pas à nous) // AUCUN NOM DE CLIENT,
-     AUCUN IDENTIFIANT DE MACHINE.</p>
 </footer>
-
-<!-- ⭐ LE TIROIR DES SECTEURS A SON PROPRE CHARGEMENT DEPUIS LE 29/09/2026.
-     ⚠️ POURQUOI : `preparerSecteurs()` n'était appelée QUE par `main.js` (L11 et L489).
-     En retirant `main.js` — qui pilotait une structure disparue — le bouton « Expertises »
-     a cessé d'ouvrir quoi que ce soit. **Le défaut a été trouvé en le cherchant, pas
-     après coup.**
-     ⭐ `secteurs.js` est AUTONOME, et c'est mesuré : 3 482 octets, **aucun `import`,
-     aucune dépendance à `three`**. Il ne fait que lire quatre identifiants du DOM.
-     ⇒ Le charger seul coûte 3,5 ko au lieu des 45 ko de `main.js`, **et il rend au
-        bouton exactement ce que le retrait lui avait pris.**
-     ⚠️ Si `secteurs.js` devient un jour dépendant d'autre chose, ce chargement cessera
-        de fonctionner — et rien ne le signalera. *C'est la limite de ce montage, écrite
-        ici pour qu'on ne la découvre pas en production.* -->
-<script type="module">
-  import { preparerSecteurs } from './src/secteurs.js';
-  preparerSecteurs();
-</script>
-<script defer src="src/navigation.js?v=792b4f74"></script>
 </body>
 </html>

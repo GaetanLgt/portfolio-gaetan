@@ -1,0 +1,122 @@
+/* accueil.css — gldigitallab.fr · refonte de l'accueil (29/09/2026, branche refonte-accueil-2026-09-29).
+   Maquette de Gaëtan + audit « 360° » + critique audio : marque unique, promesse orientée résultats,
+   5 entrées de menu, offres productisées, aucun absolu marketing. Aucune police ni script externe. */
+:root {
+  --fond: #080b14; --fond-2: #0d111f; --carte: #111729; --bord: #1e2742;
+  --texte: #e4e9f2; --doux: #9aa6bf; --cyan: #2abfff; --rouge: #ff3b4e; --violet: #9b5cff; --jaune: #ffe650;
+  --clair: #f4f6fa; --texte-clair: #141a2a; --doux-clair: #56607a;
+  --rayon: 12px; --largeur: 1180px;
+  --police: ui-sans-serif, system-ui, "Segoe UI", Roboto, Ubuntu, Cantarell, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--fond); color: var(--texte); font: 16px/1.6 var(--police); }
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--cyan); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 4px; }
+.aller-au-contenu { position: absolute; left: -999px; top: 8px; background: var(--cyan); color: #04121c; padding: 8px 14px; border-radius: 8px; z-index: 10; }
+.aller-au-contenu:focus { left: 16px; }
+.cadre { width: 100%; max-width: var(--largeur); margin-inline: auto; padding-inline: 20px; }
+.section { padding-block: 72px; }
+.section.claire { background: var(--clair); color: var(--texte-clair); }
+.section.claire .sous-titre, .section.claire .carte p { color: var(--doux-clair); }
+.section h2 { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.15; margin: 0 0 8px; }
+.accent { color: var(--cyan); } .accent-rouge { color: var(--rouge); }
+.sous-titre { color: var(--doux); margin: 0 0 32px; max-width: 70ch; }
+
+/* ── barre ── */
+.barre { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--fond) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--bord); }
+.barre .cadre { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 10px; color: var(--texte); text-decoration: none; font-weight: 800; letter-spacing: .08em; }
+.logo b { font-size: 24px; letter-spacing: 0; } .logo b span { color: var(--rouge); }
+.logo small { font-weight: 600; font-size: 14px; letter-spacing: .14em; }
+.menu { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.menu a { color: var(--texte); text-decoration: none; font-size: 15px; opacity: .85; }
+.menu a:hover, .menu a[aria-current] { opacity: 1; color: var(--cyan); }
+.bouton { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 10px 20px; font-weight: 700; text-decoration: none; font-size: 15px; min-height: 44px; }
+.bouton.plein { background: var(--rouge); color: #fff; }
+.bouton.plein:hover { background: #ff5a6a; }
+.bouton.contour { border: 1px solid var(--texte); color: var(--texte); }
+.bouton.contour:hover { border-color: var(--cyan); color: var(--cyan); }
+.bouton.clair { background: #fff; color: var(--texte-clair); }
+
+/* ── héros ── */
+.heros { position: relative; overflow: hidden; background: radial-gradient(ellipse at 80% 20%, #16204a 0%, var(--fond) 60%); }
+.heros .cadre { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 40px; align-items: center; padding-block: 64px 56px; }
+.heros h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.05; margin: 0 0 18px; }
+.heros h1 .ligne2 { display: block; font-size: .62em; line-height: 1.2; margin-top: 10px; }
+.heros p.chapeau { font-size: 18px; color: var(--doux); max-width: 56ch; }
+.badges { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 28px 0; max-width: 560px; }
+.badges li { display: flex; gap: 10px; align-items: center; font-size: 14px; }
+.badges svg { width: 34px; height: 34px; flex: none; }
+.actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.heros figure { margin: 0; position: relative; }
+.heros figure img { border-radius: var(--rayon); border: 1px solid var(--bord); aspect-ratio: 16 / 10; object-fit: cover; width: 100%; }
+.parcours { position: absolute; right: 16px; bottom: 16px; background: color-mix(in srgb, var(--fond-2) 92%, transparent); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 16px 18px; min-width: 220px; }
+.parcours strong { display: block; margin-bottom: 8px; }
+.parcours ol { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--bord); }
+.parcours li { position: relative; padding: 4px 0 4px 16px; font-size: 14px; color: var(--doux); }
+.parcours li::before { content: ""; position: absolute; left: -6px; top: 11px; width: 10px; height: 10px; border-radius: 50%; background: var(--cyan); }
+
+/* ── grilles et cartes ── */
+.grille { display: grid; gap: 18px; }
+.grille.x3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grille.x4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.grille.x5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.carte { background: var(--carte); border: 1px solid var(--bord); border-radius: var(--rayon); padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+.section.claire .carte { background: #fff; border-color: #dfe4ee; }
+.carte h3 { margin: 0; font-size: 18px; }
+.carte p { margin: 0; color: var(--doux); font-size: 15px; }
+.carte .lien { margin-top: auto; padding-top: 8px; font-weight: 600; text-decoration: none; font-size: 14px; }
+.icone { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--cyan) 14%, transparent); color: var(--cyan); }
+.icone svg { width: 22px; height: 22px; }
+.deux-colonnes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.deux-colonnes img { border-radius: var(--rayon); border: 1px solid var(--bord); }
+.points { list-style: none; padding: 0; margin: 24px 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.points li { display: flex; gap: 12px; } .points b { display: block; } .points span { color: var(--doux); font-size: 14px; }
+
+/* ── méthode ── */
+.etapes { list-style: none; padding: 0; margin: 0; counter-reset: etape; }
+.etapes li { counter-increment: etape; text-align: center; }
+.etapes li::before { content: counter(etape); display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 12px; border-radius: 50%; border: 2px solid var(--cyan); color: var(--cyan); font-weight: 800; font-size: 20px; background: color-mix(in srgb, var(--cyan) 10%, transparent); }
+.etapes b { display: block; } .etapes span { color: var(--doux); font-size: 14px; }
+
+/* ── offres ── */
+.offre .prix { font-size: 24px; font-weight: 800; color: var(--texte); }
+.offre .prix small { font-size: 14px; font-weight: 500; color: var(--doux); }
+.offre ul { margin: 6px 0 0; padding-left: 18px; color: var(--doux); font-size: 14px; }
+.offre .duree { font-size: 13px; color: var(--cyan); font-weight: 600; }
+.offre.mise-en-avant { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan) inset; }
+
+/* ── preuves ── */
+.preuve .etiquette { align-self: flex-start; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: #e8ecf5; color: var(--doux-clair); }
+.preuve .mesure { font-size: 28px; font-weight: 800; color: #0a7fb8; line-height: 1.1; }
+.preuve .date { font-size: 12px; color: var(--doux-clair); }
+
+/* ── appel ── */
+.appel { background: linear-gradient(90deg, color-mix(in srgb, var(--fond) 92%, transparent), color-mix(in srgb, var(--fond) 60%, transparent)), url("../img/anneau-cristal.webp") center / cover; }
+.appel .cadre { display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+.appel ul { list-style: none; padding: 16px 20px; margin: 0; background: color-mix(in srgb, var(--fond-2) 90%, transparent); border: 1px solid var(--bord); border-radius: var(--rayon); display: grid; gap: 10px; font-size: 15px; }
+
+/* ── pied ── */
+.pied { border-top: 1px solid var(--bord); padding-block: 48px 24px; font-size: 14px; }
+.pied .grille { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 28px; }
+.pied h2 { font-size: 14px; letter-spacing: .08em; text-transform: uppercase; color: var(--doux); margin: 0 0 12px; }
+.pied ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pied a { color: var(--texte); text-decoration: none; opacity: .85; } .pied a:hover { color: var(--cyan); opacity: 1; }
+.pied .legal { border-top: 1px solid var(--bord); margin-top: 32px; padding-top: 16px; color: var(--doux); display: flex; gap: 16px; flex-wrap: wrap; justify-content: space-between; font-size: 13px; }
+
+@media (max-width: 960px) {
+  .heros .cadre, .deux-colonnes { grid-template-columns: 1fr; }
+  .grille.x3, .grille.x4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grille.x5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pied .grille { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .grille.x3, .grille.x4, .grille.x5, .badges, .points, .pied .grille { grid-template-columns: 1fr; }
+  .menu { gap: 14px; }
+  .parcours { position: static; margin-top: 12px; }
+  .section { padding-block: 52px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

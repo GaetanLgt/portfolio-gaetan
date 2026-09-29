@@ -41,7 +41,7 @@ const EXPEDITEUR   = 'contact@gldigitallab.fr';
 const SUJET_BASE   = 'Prise de contact — GL Digital Lab';
 const ADRESSE      = 'gtn.langlet+lab@gmail.com';
 
-const LONGUEURS = ['nom' => 100, 'courriel' => 200, 'structure' => 120, 'besoin' => 5000];
+const LONGUEURS = ['nom' => 100, 'courriel' => 200, 'structure' => 120, 'besoin' => 5000, 'secteur' => 120];
 
 /** Échappement unique de tout ce qui est affiché. */
 function h(?string $s): string
@@ -60,9 +60,32 @@ function propre(string $cle, array $source): string
     return mb_substr(trim($v), 0, LONGUEURS[$cle] ?? 200, 'UTF-8');
 }
 
+// ── La qualification (29/09/2026) : des LISTES FERMÉES. Le serveur n'accepte que ces valeurs ;
+//    tout le reste devient « non précisé ». Aucune donnée sensible n'est demandée : on demande
+//    seulement SI des données sensibles sont en jeu, jamais lesquelles.
+const CHOIX = [
+    'offre'    => ['cadrage' => 'Cadrage & diagnostic IA locale', 'site' => 'Site web & IA intégrée',
+                   'deploiement' => 'Déploiement IA souveraine', 'autre' => 'Je ne sais pas encore'],
+    'taille'   => ['1' => 'Seul(e)', '2-9' => '2 à 9 personnes', '10-49' => '10 à 49 personnes',
+                   '50-249' => '50 à 249 personnes', '250+' => '250 personnes et plus'],
+    'donnees'  => ['non' => 'Non', 'oui' => 'Oui (clients, santé, contrats, plans…)', 'nsp' => 'Je ne sais pas'],
+    'echeance' => ['urgent' => 'Moins d’un mois', 'trimestre' => '1 à 3 mois', 'plus' => 'Plus tard', 'nsp' => 'Pas encore fixée'],
+];
+function choix(string $cle, array $source): string
+{
+    $v = (string) ($source[$cle] ?? '');
+    return array_key_exists($v, CHOIX[$cle]) ? $v : '';
+}
+function libelle(string $cle, string $v): string
+{
+    return $v !== '' ? CHOIX[$cle][$v] : '(non précisé)';
+}
+
 $envoye   = false;
 $probleme = null;          // le message affiché, en français, jamais un code
-$valeurs  = ['nom' => '', 'courriel' => '', 'structure' => '', 'besoin' => ''];
+$vide     = ['nom' => '', 'courriel' => '', 'structure' => '', 'besoin' => '', 'secteur' => '',
+             'offre' => choix('offre', $_GET), 'taille' => '', 'donnees' => '', 'echeance' => ''];
+$valeurs  = $vide;
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
@@ -71,6 +94,11 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         'courriel'  => propre('courriel', $_POST),
         'structure' => propre('structure', $_POST),
         'besoin'    => propre('besoin', $_POST),
+        'secteur'   => propre('secteur', $_POST),
+        'offre'     => choix('offre', $_POST),
+        'taille'    => choix('taille', $_POST),
+        'donnees'   => choix('donnees', $_POST),
+        'echeance'  => choix('echeance', $_POST),
     ];
     $consentement = ($_POST['consentement'] ?? '') === 'oui';
 
@@ -106,6 +134,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     'Nom       : ' . $valeurs['nom'],
                     'Courriel  : ' . $valeurs['courriel'],
                     'Structure : ' . ($valeurs['structure'] !== '' ? $valeurs['structure'] : '(non précisée)'),
+                    '', '── Qualification ──',
+                    'Offre visée       : ' . libelle('offre', $valeurs['offre']),
+                    'Taille            : ' . libelle('taille', $valeurs['taille']),
+                    'Secteur           : ' . ($valeurs['secteur'] !== '' ? $valeurs['secteur'] : '(non précisé)'),
+                    'Données sensibles : ' . libelle('donnees', $valeurs['donnees']),
+                    'Échéance          : ' . libelle('echeance', $valeurs['echeance']),
                     '', 'Besoin :', $valeurs['besoin'], '',
                     '---', 'Répondre à ce message écrit directement à la personne qui l’a envoyé.',
                 ]);
@@ -128,7 +162,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
                 if ($ok) {
                     $envoye = true;
-                    $valeurs = ['nom' => '', 'courriel' => '', 'structure' => '', 'besoin' => ''];
+                    $valeurs = $vide;
                 } else {
                     // ⚠️ ON DIT LA VÉRITÉ MÊME QUAND ELLE EST MAUVAISE. `mail()` qui rend `false`
                     //    veut dire que l'agent local a refusé : le message n'est PAS parti. Afficher
@@ -190,6 +224,25 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     <label for="structure">Votre structure <span class="facultatif">(facultatif)</span></label>
     <input type="text" id="structure" name="structure" autocomplete="organization" maxlength="120" value="<?= h($valeurs['structure']) ?>">
   </p>
+  <fieldset class="champ">
+    <legend>Pour mieux préparer notre échange <span class="facultatif">(facultatif)</span></legend>
+<?php foreach (['offre' => 'Ce qui vous intéresse', 'taille' => 'Taille de votre structure',
+                'donnees' => 'Des données sensibles sont-elles en jeu ?', 'echeance' => 'Votre échéance'] as $cle => $titre): ?>
+    <p class="champ">
+      <label for="<?= $cle ?>"><?= h($titre) ?></label>
+      <select id="<?= $cle ?>" name="<?= $cle ?>">
+        <option value="">— Choisir —</option>
+<?php foreach (CHOIX[$cle] as $v => $l): ?>
+        <option value="<?= h($v) ?>"<?= $valeurs[$cle] === $v ? ' selected' : '' ?>><?= h($l) ?></option>
+<?php endforeach; ?>
+      </select>
+    </p>
+<?php endforeach; ?>
+    <p class="champ">
+      <label for="secteur">Votre secteur d’activité</label>
+      <input type="text" id="secteur" name="secteur" maxlength="120" value="<?= h($valeurs['secteur']) ?>">
+    </p>
+  </fieldset>
   <p class="champ">
     <label for="besoin">Votre besoin <span class="obligatoire" aria-hidden="true">*</span></label>
     <textarea id="besoin" name="besoin" rows="7" required maxlength="5000"><?= h($valeurs['besoin']) ?></textarea>
