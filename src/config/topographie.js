@@ -196,27 +196,48 @@ export const TOPOGRAPHIE = [
   { chemin: '/confidentialite', declaration: { lastmod: '2026-09-10', changefreq: 'yearly', priority: '0.3' } },
   { chemin: '/cgv', declaration: { lastmod: '2026-09-10', changefreq: 'yearly', priority: '0.3' } },
 
-  // ═══ LA PAGE NON RÉPERTORIÉE — ni sur la carte, ni déclarée ══════════════════════
+  // ⛔⛔ RETIRÉE DU SITE LE 29/09/2026 — DÉCISION DE GAËTAN : « Retirer du site, garder
+  //     dans le dépôt. »
+  //
+  // CE QUI A MOTIVÉ LA DÉCISION, ET C'EST MESURÉ :
+  //   · 141 pages vivantes sous `/TARDIS/JoF/metroid/`, toutes en `noindex` — donc
+  //     invisibles des moteurs, mais **accessibles par URL directe** ;
+  //   · l'une d'elles s'intitulait, TELLE QU'ELLE ÉTAIT SERVIE :
+  //       « Metroid × ArkAdiA — l'oeuf, et la mutation · Génie IT Tek FR »
+  //     ⇒ `Metroid` est une franchise Nintendo, interdite nommément par
+  //       `vault-agence/licences-refusees.md` ; et `ArkAdiA` a été retiré du site
+  //       sur décision. **Deux noms qui n'ont pas à voisiner sur une page commerciale.**
+  //   · et **le menu du site menait à `/TARDIS/...`** : deux clics séparaient un
+  //     prospect venu chercher un prestataire cyber de ce contenu.
+  //
+  // ⭐ C'EST LE MÊME DÉFAUT QUE LA CRITIQUE DU 28/09 RELÈVE : *« l'abondance des
+  //   capacités techniques masque totalement leur proposition de valeur de base —
+  //   la souveraineté des données pour les PME. »* Le studio passe pour un collectif
+  //   d'artistes dispersés au lieu d'un rempart cyber.
+  //
+  // ⚠️ RIEN N'EST SUPPRIMÉ. `public/TARDIS/` reste dans le dépôt (146 fichiers suivis),
+  //   et `scripts/publier-ecole.mjs` garde toute sa logique — son écriture est
+  //   simplement fermée par défaut (`ECOLE_TARDIS=1` la rouvre).
+  //   **On n'efface pas un chantier : on ferme sa porte.**
+  //
+  // VOIR AUSSI : `PORTE_DOSSIERS` plus bas, désactivée pour la même raison.
+  //
+  // ═══ LA PAGE NON RÉPERTORIÉE — ni sur la carte, ni déclarée, NI SERVIE ══════════
   {
-    // Emplacement dicté par Gaëtan : « gldigitallab.fr/TARDIS/JoF ».
-    // ⚠️ LA CASSE EST EXACTE ET ELLE COMPTE : le serveur est sous Linux, `/TARDIS/JoF` et
-    // `/tardis/jof` sont deux adresses différentes. Cette ligne et le dossier
-    // `public/TARDIS/JoF/` doivent porter les mêmes majuscules, sinon l'adresse est morte.
     chemin: '/TARDIS/JoF',
-    // ⚠️ `declaration: null` EST UNE DÉCISION DE GAËTAN (13/09/2026), PAS UN OUBLI.
-    // « À mettre en place, non répertorié, à www.gldigitallab.fr/ » — les dossiers
-    // pédagogiques sont en ligne, mais ils ne doivent pas être trouvés par un moteur :
-    // c'est une pièce qu'on envoie à une école, pas une porte d'entrée commerciale.
-    //
-    // Trois choses le garantissent, et il faudra défaire LES TROIS pour la rendre publique :
-    //   1. `noindex, nofollow` dans chaque page générée (scripts/publier-ecole.mjs) ;
-    //   2. aucune entrée au sitemap — c'est cette ligne ;
-    //   3. aucun lien depuis la navigation, le pied de page ou le plan du site.
-    //
-    // Et on n'ajoute PAS de `Disallow` dans robots.txt : une exclusion de chemin
-    // empêcherait le robot de lire le `noindex`, ce qui serait une contradiction — le
-    // `robots.txt` du site porte déjà cette leçon (correction du 10/09).
     declaration: null,
+    // ⭐ LE CHAMP QUI CHANGE TOUT, AJOUTÉ LE 29/09/2026.
+    //   `retiree: true` = la page n'est plus publiée. Les contrôles la lisent et
+    //   l'excluent des routes attendues, au lieu de réclamer une page absente.
+    //   ⚠️ On ne supprime PAS l'entrée : *la garder permet de savoir ce qu'on a
+    //   retiré, et pourquoi.* Une route qu'on efface du fichier se confondrait
+    //   demain avec une route qu'on n'a jamais eue.
+    retiree: true,
+    // La raison, en clair, pour qu'elle survive à la session qui l'a écrite.
+    raisonRetrait:
+      "Metroid est une franchise Nintendo et ArkAdiA a été retiré du site : "
+      + "les deux noms voisinaient dans le titre d'une page servie en production. "
+      + "Décision de Gaëtan du 29/09/2026 — retirée du site, gardée dans le dépôt.",
   },
 
   // ═══ LES DÉMONSTRATIONS — ni sur la carte, ni déclarées ═══════════════════════════
@@ -387,6 +408,24 @@ export const PORTE_DOSSIERS = {
     + "ci-dessous la rend joignable par un visiteur ; il ne la rend pas trouvable par un "
     + "moteur de recherche, et c'est voulu.",
   indexable: false,
+
+  // ⛔⛔ PORTE FERMÉE LE 29/09/2026 — MÊME DÉCISION QUE LA ROUTE CI-DESSUS.
+  //
+  //   ⚠️ CE CHAMP N'A PAS ÉTÉ AJOUTÉ PAR PRUDENCE : il l'a été parce que la porte
+  //   MENAIT À UNE PAGE QUI N'EXISTE PLUS. *Un lien qui survit à sa cible est un 404
+  //   déguisé — et le studio a déjà écrit la règle : « un lien qui mène à un 404 est
+  //   pire que pas de lien ».* C'est exactement ce qui s'était passé pour
+  //   `souverainete.html`, supprimée le 28/09 sans que son lien le soit.
+  //
+  //   ⇒ `retiree: true` : la page qui affiche cette porte doit la considérer comme
+  //     fermée et ne plus rendre de lien. Le texte reste — il documente ce qui a
+  //     existé et pourquoi ce n'est plus servi.
+  //
+  //   ⭐ CE QUI ROUVRE LA PORTE, EN ENTIER : `ECOLE_TARDIS=1 npm run ecole` pour
+  //     REGÉNÉRER les pages, PUIS remettre `retiree` à `false` ici. Les deux vont
+  //     ensemble — l'un sans l'autre donne soit une porte vers rien, soit des pages
+  //     que rien n'atteint. **C'est écrit ici pour que le prochain ne le devine pas.**
+  retiree: true,
 };
 
 export const DOMAINE = 'https://gldigitallab.fr';

@@ -220,8 +220,47 @@ console.log('  publication depuis : ' + LOCAL);
  * jour de la mise en ligne, et invérifiable depuis un poste Windows, qui lui ne distingue
  * pas la casse.
  */
+/*
+ * ⛔⛔ 29/09/2026 — L'ÉCRITURE DANS `/TARDIS/JoF` EST DÉSACTIVÉE PAR DÉFAUT.
+ *
+ * DÉCISION DE GAËTAN : « Retirer du site, garder dans le dépôt. »
+ *
+ * CE QUI A ÉTÉ MESURÉ AVANT DE DÉCIDER :
+ *   · 141 pages HTML vivantes sous `/TARDIS/JoF/metroid/`, toutes en `noindex`
+ *     — donc invisibles des moteurs, mais **accessibles par URL directe** ;
+ *   · une d'elles s'intitulait, telle qu'elle était SERVIE :
+ *       « Metroid × ArkAdiA — l'oeuf, et la mutation · Génie IT Tek FR »
+ *     ⇒ deux noms qui n'ont pas à voisiner sur un site commercial :
+ *       `Metroid` est une franchise Nintendo (`vault-agence/licences-refusees.md`
+ *       l'interdit nommément), et `ArkAdiA` a été retiré du site sur décision.
+ *   · et **le menu du site menait à `/TARDIS/...`** : un prospect venu chercher
+ *     un prestataire cyber arrivait là en deux clics.
+ *     C'est le même défaut que la critique du 28/09 relève : *l'abondance des
+ *     capacités techniques masque la proposition de valeur.*
+ *
+ * ⭐ POURQUOI UN DRAPEAU, ET PAS UNE SUPPRESSION.
+ *   Supprimer le bloc aurait effacé du travail ET rendu le retour impossible sans
+ *   réécrire du code. Le drapeau garde tout : le script, les sources, la logique.
+ *   **On n'efface pas un chantier, on ferme sa porte.**
+ *
+ * ⚠️ CE QUE CE N'EST PAS : ce n'est PAS une suppression des fichiers.
+ *   `public/TARDIS/` reste dans le dépôt (146 fichiers suivis). Ce qui change,
+ *   c'est que **le build ne l'alimente plus**, donc le site ne le sert plus.
+ *
+ * ⭐ POUR ROUVRIR : `ECOLE_TARDIS=1 npm run ecole`
+ *   Un seul mot, et le kit revient — c'est ce qui rend la décision RÉVERSIBLE.
+ *   *Une porte fermée qu'on ne peut pas rouvrir n'est pas une porte : c'est un mur.*
+ */
+const TARDIS_ACTIF = process.env.ECOLE_TARDIS === '1';
 const DEST = join(RACINE, 'public/TARDIS/JoF');
-mkdirSync(DEST, { recursive: true });
+if (TARDIS_ACTIF) {
+  mkdirSync(DEST, { recursive: true });
+  console.log('  ⚠️  ECOLE_TARDIS=1 : le kit /TARDIS/JoF EST écrit (décision explicite).');
+} else {
+  console.log('  /TARDIS/JoF : écriture DÉSACTIVÉE (décision du 29/09/2026).');
+  console.log('  Le dossier reste dans le dépôt ; le site ne le sert plus.');
+  console.log('  Pour rouvrir : ECOLE_TARDIS=1 npm run ecole');
+}
 
 /* ── Le frontmatter Obsidian est retiré ──────────────────────────────────────── */
 function retirerFrontmatter(md) {
@@ -576,7 +615,10 @@ for (const kit of kits) {
 }
 
 /* ── Génération des documents à plat ─────────────────────────────────────────── */
-for (const p of pages) {
+// ⛔ ENVELOPPÉ LE 29/09/2026 : sans `TARDIS_ACTIF`, on n'écrit RIEN.
+//    `DEST` existe toujours sur le disque (les fichiers sont dans le dépôt),
+//    donc un simple `continue` ne suffirait pas — il fallait retirer l'appel.
+for (const p of (TARDIS_ACTIF ? pages : [])) {
   const md = lireMd(join(src, p.fichier));
   const titre = (md.match(/^#\s+(.*)$/m) || [, p.nom])[1].trim();
   let corps = convertir(md);
@@ -604,7 +646,8 @@ for (const p of pages) {
 /* ── Génération des kits ─────────────────────────────────────────────────────── */
 const bilans = [];
 
-for (const kit of kits) {
+// ⛔ ENVELOPPÉ LE 29/09/2026, comme la boucle des documents à plat.
+for (const kit of (TARDIS_ACTIF ? kits : [])) {
   const liste = kitsNotes.get(kit);
   const parCle = kitsCles.get(kit);
   const bilan = nouveauBilan();

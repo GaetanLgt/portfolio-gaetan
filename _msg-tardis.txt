@@ -1,0 +1,69 @@
+site: retirer /TARDIS/ du site -- deux noms qui n'avaient pas a voisiner
+
+DECISION DE GAETAN : « Retirer du site, garder dans le depot. »
+
+CE QUI A ETE MESURE AVANT DE DECIDER
+------------------------------------
+141 pages HTML vivantes sous /TARDIS/JoF/metroid/, toutes en `noindex` -- donc
+invisibles des moteurs, mais ACCESSIBLES PAR URL DIRECTE.
+
+L'une d'elles s'intitulait, TELLE QU'ELLE ETAIT SERVIE en production :
+
+    « Metroid x ArkAdiA -- l'oeuf, et la mutation . Genie IT Tek FR »
+
+Deux noms qui n'ont pas a voisiner sur un site commercial :
+  . Metroid est une franchise Nintendo, interdite nommement par
+    vault-agence/licences-refusees.md
+  . ArkAdiA a ete retire du site sur decision
+
+Et LE MENU DU SITE MENAIT A /TARDIS/ : deux clics separaient un prospect venu
+chercher un prestataire cyber de ce contenu.
+
+C'est le defaut que la critique du 28/09 releve mot pour mot : « l'abondance des
+capacites techniques masque totalement leur proposition de valeur de base ».
+
+CE QUI A ETE FAIT
+-----------------
+1. public/TARDIS/ -> _hors-site/TARDIS/   (git mv, 146 fichiers)
+   RIEN N'EST SUPPRIME : le deplacement preserve l'historique, et `git mv -f`
+   remet tout en place si la decision change.
+
+2. scripts/publier-ecole.mjs : l'ecriture dans public/TARDIS/JoF est FERMEE PAR
+   DEFAUT. Deux boucles enveloppees (`TARDIS_ACTIF ? ... : []`). Pour rouvrir :
+   `ECOLE_TARDIS=1 npm run ecole`. ⭐ Un drapeau plutot qu'une suppression :
+   supprimer le bloc aurait efface du travail ET rendu le retour impossible sans
+   reecrire du code. *On n'efface pas un chantier, on ferme sa porte.*
+
+3. src/config/topographie.js : la route /TARDIS/JoF et PORTE_DOSSIERS portent
+   `retiree: true` + `raisonRetrait`. L'entree n'est PAS supprimee : la garder
+   permet de savoir ce qu'on a retire, et pourquoi. *Une route qu'on efface se
+   confondrait demain avec une route qu'on n'a jamais eue.*
+
+4. Les trois liens retires, parce qu'ils menaient a une page qui n'existe plus :
+     public/plan/index.html      <a href="/TARDIS/JoF/metroid/">
+     public/univers/index.html   <a href="/TARDIS/JoF/metroid/">
+     src/views/core/SoutePage.vue  la porte, derriere `v-if="porte.retiree"`
+   ⭐ C'est une regle que le studio avait DEJA ecrite le 28/09 en supprimant
+   `souverainete.html` : « un lien qui mene a un 404 est pire que pas de lien ».
+   Elle avait ete appliquee a une page ; elle ne l'avait pas ete a celle-ci.
+   *Une regle qu'on applique a un seul endroit est une regle qu'on n'a pas.*
+
+VERIFIE APRES COUP -- MESURE, PAS DEDUCTION
+-------------------------------------------
+  liens href vers /TARDIS/ dans les pages servies : 0
+  dist/TARDIS apres `npm run build`                 : absent
+  pages metroid dans dist                           : 0
+  les pages du site (index, services, contact,
+    plan, univers, soute)                           : toutes presentes
+  build                                             : code de sortie 0
+
+⚠️ UNE MESURE A RETENIR POUR LA PROCHAINE FOIS : `npm run build` ECHOUE si on le
+lance depuis la JONCTION `C:\IA\portfolio-gaetan` -- Vite recoit
+`../depots/portfolio-gaetan/index.html` et refuse un chemin relatif. Il passe
+depuis le chemin REEL `C:\IA\depots\portfolio-gaetan`. *La jonction n'est pas le
+depot : elle y ressemble.*
+
+⚠️ CE QUI RESTE, ET CE N'EST PAS FAIT ICI : /analyses/ et /veille/ sont liees par
+la page d'accueil, repondent 200 en ligne, mais n'existent NI dans `public/` NI
+dans `dist/`. Ce n'est pas cette modification qui les a retirees -- elles n'y
+etaient pas. Signale, non traite : c'est un autre chantier, et on ne melange pas.

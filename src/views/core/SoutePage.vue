@@ -98,7 +98,27 @@
           liait</strong>. Un moteur pouvait tomber dessus ; vous, non.
         </p>
         <p>{{ porte.pourquoi }}</p>
-        <a :href="porte.chemin" class="soute__lien soute__lien--porte">
+        <!-- ⛔⛔ LIEN RETIRÉ LE 29/09/2026 — DÉCISION DE GAËTAN : « Retirer du site,
+             garder dans le dépôt. »
+             ⚠️ LA PAGE CIBLE N'EST PLUS SERVIE : `publier-ecole.mjs` n'écrit plus dans
+             `public/TARDIS/JoF`, et la route est marquée `retiree` dans `topographie.js`.
+             ⇒ Laisser ce `<a>` produisait **un lien vers un 404**.
+             ⭐ ET C'EST UNE RÈGLE QUE LE STUDIO AVAIT DÉJÀ ÉCRITE, le 28/09, en
+               supprimant `souverainete.html` : *« un lien qui mène à un 404 est pire que
+               pas de lien — il fait croire que le contenu existe, puis il déçoit. »*
+               Elle avait été appliquée à une page ; **elle ne l'avait pas été à celle-ci.**
+               *Une règle qu'on applique à un seul endroit est une règle qu'on n'a pas.*
+
+             ⚠️ LE TEXTE RESTE, ET C'EST VOLONTAIRE. Il raconte ce qui a existé et pourquoi
+             ce n'est plus publié — *retirer le récit avec le lien effacerait la trace de
+             la décision elle-même.* Ce qui disparaît, c'est **l'invitation à cliquer**,
+             pas l'explication. -->
+        <p v-if="porte.retiree" class="soute__note">
+          <strong>Ce dossier n'est plus publié.</strong> Il reste dans le dépôt du studio —
+          il n'est simplement plus servi sur le site. La raison est écrite dans
+          <code>src/config/topographie.js</code>, à l'entrée qui le déclare.
+        </p>
+        <a v-else :href="porte.chemin" class="soute__lien soute__lien--porte">
           <span class="soute__zone-nom">{{ porte.libelle }}</span>
           <span class="soute__zone-chemin">{{ porte.chemin }}</span>
         </a>
