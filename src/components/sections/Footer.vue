@@ -70,12 +70,14 @@
           <h2 class="footer__title">Navigation</h2>
           <nav class="footer__nav">
             <!-- HARMONISATION 29/09/2026 : mêmes destinations que le site statique (liens <a> :
-                 ce sont des pages statiques). Le Navire et ArkAdiA, retirés du menu, sont ICI. -->
+                 ce sont des pages statiques). Le Navire et le laboratoire, retirés du menu, sont ICI. -->
             <a href="/">Accueil</a>
             <a href="/offres/">Solutions (offres, prix, limites)</a>
             <a href="/#preuves">Réalisations</a>
             <router-link to="/galion">Le Navire — le galion en 3D</router-link>
-            <router-link to="/arkadia">ArkAdiA — le laboratoire</router-link>
+            <!-- /arkadia est FERMÉ en 410 (le .htaccess : « surfaces qui publiaient le nom d'un tiers ») :
+                 le laboratoire se visite en /lab. Corrigé le 29/09/2026. -->
+            <router-link to="/lab">Le laboratoire</router-link>
             <!-- Dossier professionnel : la porte d'entrée sobre, pour les
                  acheteurs publics et les appels d'offres, qui n'ont pas à
                  traverser le récit du site concept pour trouver les prix. -->

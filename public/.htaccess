@@ -1,3 +1,10 @@
+# ⚖️ UNION DES DEUX .htaccess (29/09/2026) — les deux déploiements (statique et appli) écrivent
+# chacun LEUR .htaccess à la racine, et le dernier passé gagne. Pour que le serveur se comporte
+# pareil quel que soit l'ordre, CHAQUE fichier porte toutes les règles de l'autre.
+# ⛔ Toute règle ajoutée ici doit l'être AUSSI dans l'autre fichier (public/.htaccess ↔ cinematique/.htaccess).
+AddDefaultCharset utf-8
+DirectoryIndex index.html
+
 # ===========================================
 # GL Digital Lab - Configuration Apache/O2Switch
 # ===========================================
@@ -24,6 +31,15 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 # deux portes différentes : /contact et /contact/ mènent au formulaire unique. QSA garde
 # ?offre=… (pré-remplissage de l'offre visée).
 RewriteRule ^contact/?$ /contact.php [R=301,L,QSA]
+
+# Règles venues de cinematique/.htaccess (union du 29/09/2026). Les fermetures en 410 sont des
+# décisions : /monde/ (28/09/2026), et trois surfaces qui publiaient le nom d'un tiers.
+RewriteRule ^mentions-legales/?$ /mentions-legales.html [R=301,L]
+RewriteRule ^confidentialite/?$ /confidentialite.html [R=301,L]
+RewriteRule ^monde(/.*)?$ - [G,L]
+RewriteRule ^Arche(/.*)?$ - [G,L]
+RewriteRule ^arkadia(/.*)?$ - [G,L]
+RewriteRule ^arkadia-labo(/.*)?$ - [G,L]
 
 # ------------------------------
 # 3. ROUTAGE — pages prérendues, plus de repli SPA

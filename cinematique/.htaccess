@@ -1,3 +1,7 @@
+# ⚖️ UNION DES DEUX .htaccess (29/09/2026) — les deux déploiements (statique et appli) écrivent
+# chacun LEUR .htaccess à la racine, et le dernier passé gagne. Pour que le serveur se comporte
+# pareil quel que soit l'ordre, CHAQUE fichier porte toutes les règles de l'autre.
+# ⛔ Toute règle ajoutée ici doit l'être AUSSI dans l'autre fichier (public/.htaccess ↔ cinematique/.htaccess).
 # ============================================================================
 # .htaccess de gldigitallab.fr — RACINE DU DOMAINE
 # Rétabli le 26/09/2026, après avoir constaté qu'il était ABSENT du serveur.
@@ -75,6 +79,9 @@ ErrorDocument 404 /404.html
   #      la page EXISTE toujours, sous un autre nom, et l'ancien nom y mène.
   RewriteRule ^mentions-legales/?$ /mentions-legales.html [R=301,L]
   RewriteRule ^confidentialite/?$ /confidentialite.html [R=301,L]
+
+  # Un seul formulaire de contact (harmonisation du 29/09/2026) — aussi dans public/.htaccess.
+  RewriteRule ^contact/?$ /contact.php [R=301,L,QSA]
 
   # ══════════════════════════════════════════════════════════════════════════
   # ⛔⛔ /monde/ EST FERMÉ — décision du 28/09/2026
@@ -167,6 +174,8 @@ ErrorDocument 404 /404.html
 
 # ── Ce qu'on demande au navigateur de ne pas faire ──────────────────────────
 <IfModule mod_headers.c>
+  # HSTS — présent dans public/.htaccess : sans lui ici, il disparaissait après chaque déploiement statique.
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
   # Ne jamais deviner le type d'un fichier d'après son contenu : un fichier texte qui se
   # déclare image ne doit pas être exécuté.
   Header set X-Content-Type-Options "nosniff"
