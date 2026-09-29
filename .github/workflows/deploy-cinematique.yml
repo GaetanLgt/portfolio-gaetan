@@ -225,6 +225,12 @@ jobs:
           #
           # ⚠️ Regenerer apres toute page nouvelle : node scripts/proteger-pages-studio.mjs
           exclude: |
+            # 29/09/2026 : pages de l'appli Vue absentes de cette liste — ce déploiement les aurait supprimées (même état FTP partagé).
+            architecture/**
+            automatisation/**
+            ia/**
+            lab/**
+            sitemap.xml.avant-retrait
             api/**
             apple-touch-icon.png
             apple-touch-icon.svg

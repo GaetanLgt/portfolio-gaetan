@@ -577,6 +577,15 @@ jobs:
           #      envoyé. *On ne garde pas deux protections pour la même chose quand l'une
           #      des deux mord à côté.*
           exclude: |
+            # 29/09/2026 : fichiers du site STATIQUE (cinematique/). Les deux déploiements partagent l'état FTP : sans ces lignes, ce déploiement les SUPPRIMAIT (accueil en 403, 5 pages en 404, mesuré le 29/09).
+            index.html
+            offres/**
+            analyses/**
+            formation/**
+            services/**
+            urgence-cyber/**
+            recherche-souveraine.html
+            .well-known/**
             404.html
             cles/**
             confidentialite.html
