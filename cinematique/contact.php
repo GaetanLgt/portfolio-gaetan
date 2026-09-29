@@ -66,7 +66,7 @@ function propre(string $cle, array $source): string
 const CHOIX = [
     'offre'    => ['cadrage' => 'Cadrage & diagnostic IA locale', 'site' => 'Site web & IA intégrée',
                    'deploiement' => 'Déploiement IA souveraine', 'autre' => 'Je ne sais pas encore'],
-    'taille'   => ['1' => 'Seul(e)', '2-9' => '2 à 9 personnes', '10-49' => '10 à 49 personnes',
+    'taille'   => ['seul' => 'Seul(e)', '2-9' => '2 à 9 personnes', '10-49' => '10 à 49 personnes',
                    '50-249' => '50 à 249 personnes', '250+' => '250 personnes et plus'],
     'donnees'  => ['non' => 'Non', 'oui' => 'Oui (clients, santé, contrats, plans…)', 'nsp' => 'Je ne sais pas'],
     'echeance' => ['urgent' => 'Moins d’un mois', 'trimestre' => '1 à 3 mois', 'plus' => 'Plus tard', 'nsp' => 'Pas encore fixée'],
@@ -233,7 +233,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
       <select id="<?= $cle ?>" name="<?= $cle ?>">
         <option value="">— Choisir —</option>
 <?php foreach (CHOIX[$cle] as $v => $l): ?>
-        <option value="<?= h($v) ?>"<?= $valeurs[$cle] === $v ? ' selected' : '' ?>><?= h($l) ?></option>
+        <option value="<?= h((string) $v) ?>"<?= $valeurs[$cle] === (string) $v ? ' selected' : '' ?>><?= h($l) ?></option>
 <?php endforeach; ?>
       </select>
     </p>
