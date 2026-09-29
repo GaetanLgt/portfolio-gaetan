@@ -17,6 +17,15 @@ RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 # ------------------------------
+# 2bis. UN SEUL FORMULAIRE DE CONTACT (harmonisation du 29/09/2026)
+# ------------------------------
+# Deux formulaires coexistaient : /contact/ (l'appli) et /contact.php (le site statique,
+# auto-hébergé, sans JavaScript, avec la qualification). Un prospect ne doit pas tomber sur
+# deux portes différentes : /contact et /contact/ mènent au formulaire unique. QSA garde
+# ?offre=… (pré-remplissage de l'offre visée).
+RewriteRule ^contact/?$ /contact.php [R=301,L,QSA]
+
+# ------------------------------
 # 3. ROUTAGE — pages prérendues, plus de repli SPA
 # ------------------------------
 # Chaque route réelle possède sa page HTML (dist/<route>/index.html), produite

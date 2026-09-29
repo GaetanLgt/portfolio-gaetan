@@ -15,7 +15,7 @@
           <div class="footer__brand">
             <div class="footer__logo">
               <div class="logo-icon">GL</div>
-              <span class="logo-name">GÉNIE IT TEK FR</span>
+              <span class="logo-name">GL DIGITAL LAB</span>
             </div>
             <!--
               FORMULATION CORRIGÉE (13/09/2026, décision Gaëtan — option A).
@@ -62,22 +62,25 @@
               <a :href="LIEN_TELEPHONE">{{ TELEPHONE_AFFICHE }}</a>
             </p>
           </address>
-          <p class="footer__response">SLA réponse : 24h</p>
+          <p class="footer__response">Réponse sous 24 h</p>
         </div>
         
         <!-- Navigation Principale — parcours prospect (audit Awwwards D2) -->
         <div class="footer__section">
           <h2 class="footer__title">Navigation</h2>
           <nav class="footer__nav">
-            <router-link to="/">Accueil</router-link>
-            <router-link to="/services">Offre &amp; audits</router-link>
-            <router-link to="/projets">Réalisations</router-link>
-            <router-link to="/arkadia">Preuve — ARKADIA France (ARK)</router-link>
+            <!-- HARMONISATION 29/09/2026 : mêmes destinations que le site statique (liens <a> :
+                 ce sont des pages statiques). Le Navire et ArkAdiA, retirés du menu, sont ICI. -->
+            <a href="/">Accueil</a>
+            <a href="/offres/">Solutions (offres, prix, limites)</a>
+            <a href="/#preuves">Réalisations</a>
+            <router-link to="/galion">Le Navire — le galion en 3D</router-link>
+            <router-link to="/arkadia">ArkAdiA — le laboratoire</router-link>
             <!-- Dossier professionnel : la porte d'entrée sobre, pour les
                  acheteurs publics et les appels d'offres, qui n'ont pas à
                  traverser le récit du site concept pour trouver les prix. -->
             <router-link to="/dossier">Dossier professionnel (prix, méthode, limites)</router-link>
-            <router-link to="/contact">Contact</router-link>
+            <a href="/contact.php">Contact</a>
           </nav>
         </div>
         
@@ -188,7 +191,7 @@
       <!-- Bottom -->
       <div class="footer__bottom">
         <p class="footer__copyright">
-          © {{ currentYear }} Génie IT Tek FR · Tous droits réservés
+          © {{ currentYear }} GL Digital Lab — une activité de Génie IT Tek FR, immatriculation en cours · Tous droits réservés
         </p>
         <!-- Rien n'est affiche tant qu'il n'y a pas de SIRET reel :
              « EN COURS » signale a un prospect qu'aucune facture n'est possible. -->

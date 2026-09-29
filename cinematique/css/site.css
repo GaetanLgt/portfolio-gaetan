@@ -962,3 +962,7 @@ main{position:relative;z-index:10}
   .avertissement p{font-size:.86rem}
   .etiquette{font-size:.66rem;padding:.12rem .4rem}
 }
+/* Harmonisation 29/09/2026 : les listes du formulaire qualifiant ont le même style que les champs. */
+.champ select{width:100%;padding:.7rem .8rem;border-radius:8px;border:1px solid #2abfff44;background:#0d111f;color:inherit;font:inherit}
+.formulaire fieldset{border:1px solid #2abfff33;border-radius:10px;padding:.4rem 1rem 1rem;margin:0 0 1.2rem}
+.formulaire legend{padding:0 .4rem;color:var(--cyan)}

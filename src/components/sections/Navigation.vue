@@ -18,13 +18,16 @@
            aria-label posé par-dessus ne fait qu'introduire un risque de
            divergence entre ce qui est lu et ce qui est vu.
            Règle retenue : pas d'aria-label là où il y a du texte visible. -->
-      <router-link to="/" class="nav-logo">
+      <!-- HARMONISATION 29/09/2026 : même marque et mêmes destinations que le site statique.
+           Liens <a> (et non <router-link>) : l'accueil, les offres et le contact sont des pages
+           STATIQUES ; un router-link vers « / » affichait l'ANCIENNE page d'accueil de l'appli. -->
+      <a href="/" class="nav-logo">
         <div class="nav-logo__icon">GL</div>
         <div class="nav-logo__text">
-          <span class="nav-logo__name">GÉNIE IT TEK FR</span>
-          <span class="nav-logo__tagline">Studio de systèmes multi-agents locaux</span>
+          <span class="nav-logo__name">GL DIGITAL LAB</span>
+          <span class="nav-logo__tagline">Studio web &amp; IA locale pour TPE/PME</span>
         </div>
-      </router-link>
+      </a>
       
       <!-- Desktop Navigation — parcours prospect épuré (audit Awwwards D2) -->
       <nav class="nav-desktop" aria-label="Navigation principale">
@@ -52,28 +55,24 @@
              il est cohérent avec `<span class="nav-link__num">`, qui existait
              déjà juste à côté, et il rend le libellé adressable par le style.
              ⚠️ Mais il ne répare RIEN, et il ne faut pas le lui faire dire. -->
-        <router-link to="/services" class="nav-link">
+        <a href="/offres/" class="nav-link">
           <span class="nav-link__num">01</span>
-          <span class="nav-link__libelle">OFFRE</span>
-        </router-link>
-        <router-link to="/projets" class="nav-link">
+          <span class="nav-link__libelle">SOLUTIONS</span>
+        </a>
+        <a href="/#preuves" class="nav-link">
           <span class="nav-link__num">02</span>
           <span class="nav-link__libelle">RÉALISATIONS</span>
-        </router-link>
-        <router-link to="/arkadia" class="nav-link">
+        </a>
+        <a href="/#ressources" class="nav-link">
           <span class="nav-link__num">03</span>
-          <span class="nav-link__libelle">PREUVE</span>
-        </router-link>
-        <!-- ⭐ Ajouté le 22/09/2026 (demande de Gaëtan : « tu me le références dans la nav »).
-             Le parcours prospect reste 01→04 : OFFRE → RÉALISATIONS → PREUVE → LE NAVIRE. -->
-        <router-link to="/galion" class="nav-link">
-          <span class="nav-link__num">04</span>
-          <span class="nav-link__libelle">LE NAVIRE</span>
-        </router-link>
-
-        <router-link to="/contact" class="nav-cta">
-          RÉSERVER UN AUDIT
-        </router-link>
+          <span class="nav-link__libelle">RESSOURCES</span>
+        </a>
+        <!-- « LE NAVIRE » (ajouté le 22/09/2026 à la demande de Gaëtan) et ArkAdiA sont passés
+             dans le PIED DE PAGE le 29/09/2026 : l'audit limite le menu à 5 entrées et place
+             l'univers en second plan. Réversible : remettre ici un lien vers /galion. -->
+        <a href="/contact.php" class="nav-cta">
+          RÉSERVER UN DIAGNOSTIC
+        </a>
       </nav>
       
       <!-- Mobile Menu Button -->
@@ -94,28 +93,25 @@
     <!-- Mobile Menu -->
     <Transition name="mobile-menu">
       <nav v-if="mobileMenuOpen" class="nav-mobile" aria-label="Navigation mobile">
-        <router-link to="/" class="nav-mobile__link" @click="closeMobile">
+        <a href="/" class="nav-mobile__link">
           <span class="nav-link__num">00</span> ACCUEIL
-        </router-link>
+        </a>
 
         <!-- Parcours prospect épuré (audit Awwwards D2) -->
-        <router-link to="/services" class="nav-mobile__link nav-mobile__link--solutions" @click="closeMobile">
-          <span class="nav-link__num">01</span> OFFRE
-        </router-link>
-        <router-link to="/projets" class="nav-mobile__link nav-mobile__link--projets" @click="closeMobile">
+        <a href="/offres/" class="nav-mobile__link nav-mobile__link--solutions">
+          <span class="nav-link__num">01</span> SOLUTIONS
+        </a>
+        <a href="/#preuves" class="nav-mobile__link nav-mobile__link--projets">
           <span class="nav-link__num">02</span> RÉALISATIONS
-        </router-link>
-        <router-link to="/arkadia" class="nav-mobile__link" @click="closeMobile">
-          <span class="nav-link__num">03</span> PREUVE — ARKADIA France (ARK)
-        </router-link>
-        <router-link to="/galion" class="nav-mobile__link" @click="closeMobile">
-          <span class="nav-link__num">04</span> LE NAVIRE — le galion en 3D
-        </router-link>
+        </a>
+        <a href="/#ressources" class="nav-mobile__link">
+          <span class="nav-link__num">03</span> RESSOURCES
+        </a>
 
         <!-- CTA -->
-        <router-link to="/contact" class="nav-mobile__cta" @click="closeMobile">
-          RÉSERVER UN AUDIT
-        </router-link>
+        <a href="/contact.php" class="nav-mobile__cta">
+          RÉSERVER UN DIAGNOSTIC
+        </a>
       </nav>
     </Transition>
   </header>

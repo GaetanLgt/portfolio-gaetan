@@ -235,6 +235,22 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: ContactPage,
+    // HARMONISATION 29/09/2026 : un seul formulaire, /contact.php (statique, auto-hébergé,
+    // qualifiant). Les ~35 liens de l'appli vers /contact y mènent sans être touchés un à un.
+    // ⚠️ PAS pendant le prérendu, qui sert l'appli depuis 127.0.0.1. Critère d'ABORD tenté :
+    // `navigator.webdriver` (comme BandeauSoutien.vue) — MESURÉ FAUX le 29/09/2026 : la route
+    // s'est redirigée pendant le prérendu (« /contact ÉCHEC — rend la page 404 », build en 2).
+    // L'adresse de la page, elle, ne ment pas. Le serveur redirige de toute façon /contact/
+    // (public/.htaccess § 2bis).
+    beforeEnter: (vers) => {
+      const enLigne = typeof window !== 'undefined' && !/^(127\.0\.0\.1|localhost|\[::1\])$/.test(window.location.hostname);
+      if (enLigne) {
+        const offre = typeof vers.query.offre === 'string' ? `?offre=${encodeURIComponent(vers.query.offre)}` : '';
+        window.location.assign(`/contact.php${offre}`);
+        return false;
+      }
+      return true;
+    },
     meta: { 
       // « Diagnostic » et non « audit » : le site appelait « audit » DEUX choses
       // différentes — le rendez-vous gratuit de 30 min (l'entrée) et la prestation
@@ -763,7 +779,11 @@ const router = createRouter({
 // Opquast N°98 : Title et meta description uniques par page
 router.beforeEach((to, from, next) => {
   // Update title
-  document.title = `${to.meta.title} | Génie IT Tek FR`;
+  // HARMONISATION 29/09/2026 : la marque VISIBLE est GL Digital Lab (Génie IT Tek FR reste l'entité
+  // légale, dans les mentions). Cinq titres portaient déjà « | Génie IT Tek FR » : l'onglet l'affichait
+  // en double. On retire l'ancien suffixe, on pose le nouveau, une seule fois.
+  const titre = String(to.meta.title ?? '').replace(/\s*\|\s*Génie IT Te[kK] FR\s*$/, '');
+  document.title = `${titre} | GL Digital Lab`;
   
   // Update meta description
   const metaDescription = document.querySelector('meta[name="description"]');

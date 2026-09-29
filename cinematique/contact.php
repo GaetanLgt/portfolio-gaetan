@@ -183,9 +183,25 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 <title>Écrire au studio — GL Digital Lab</title>
 <meta name="description" content="Écrire à GL Digital Lab : développement web et IA locale pour PME. Premier échange gratuit de 30 minutes.">
 <meta name="robots" content="noindex,follow">
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/site.css?v=b4a45adf">
+<link rel="stylesheet" href="css/entete.css?v=dd11ea99">
 </head>
 <body class="page-simple">
+<header class="gl-barre">
+  <div class="gl-cadre">
+    <a class="gl-logo" href="/" aria-label="GL Digital Lab — accueil"><b>G<span>L</span></b><small>DIGITAL LAB</small></a>
+    <nav aria-label="Navigation principale">
+      <ul class="gl-menu">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/offres/">Solutions</a></li>
+        <li><a href="/#preuves">Réalisations</a></li>
+        <li><a href="/#ressources">Ressources</a></li>
+        <li><a href="/contact.php" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+    <a class="gl-bouton" href="/contact.php">Réserver un diagnostic →</a>
+  </div>
+</header>
 <main class="acte" style="min-height:auto">
 <h1>Écrire au studio</h1>
 <p class="sous">Premier échange gratuit — 30 min.</p>
@@ -274,5 +290,22 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
   <p><a href="index.html">Retour à l’accueil</a> · <a href="confidentialite.html">Confidentialité</a> · <a href="mentions-legales.html">Mentions légales</a></p>
 </div>
 </main>
+<footer class="gl-pied">
+  <div class="gl-cadre">
+    <div class="gl-pied-grille">
+      <div>
+        <a class="gl-logo" href="/"><b>G<span>L</span></b><small>DIGITAL LAB</small></a>
+        <p>Studio web &amp; IA locale pour TPE/PME.<br>Une activité de Génie IT Tek FR — immatriculation en cours.</p>
+      </div>
+      <nav aria-label="Pied de page"><h2>Solutions</h2><ul><li><a href="/offres/#cadrage">Cadrage &amp; diagnostic IA locale</a></li><li><a href="/offres/#site">Site web &amp; IA intégrée</a></li><li><a href="/offres/#deploiement">Déploiement IA souveraine</a></li><li><a href="/services/">Tous les services</a></li></ul></nav>
+      <div><h2>Ressources</h2><ul><li><a href="/analyses/">Analyses</a></li><li><a href="/veille/">Veille</a></li><li><a href="/formation/">Formation</a></li><li><a href="/recherche-souveraine.html">Recherche souveraine</a></li><li><a href="/urgence-cyber/">Urgence cyber</a></li></ul></div>
+      <div><h2>Contact</h2><ul><li>Harponville (80560)</li><li><a href="/contact.php">Formulaire de contact</a></li><li><a href="/ce-que-nous-nous-imposons/">Ce que nous nous imposons</a></li></ul></div>
+    </div>
+    <div class="gl-legal">
+      <span>© 2026 GL Digital Lab · Créé avec l'aide de l'IA</span>
+      <span><a href="/mentions-legales.html">Mentions légales</a> · <a href="/confidentialite.html">Confidentialité</a> · <a href="/cgv/">CGV</a></span>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
