@@ -1,0 +1,57 @@
+deploiement: retirer TARDIS/** des exclusions -- et le dire avant de le faire
+
+POURQUOI CETTE LIGNE DISPARAIT
+------------------------------
+`TARDIS/**` figurait dans la liste `exclude:` de l'etape FTP vers la RACINE.
+Cette liste existe parce que l'action FTP **supprime en distant tout ce qui n'est
+pas dans `local-dir` et n'est pas exclu**. La ligne PROTEGEAIT donc /TARDIS/.
+
+La retirer signifie que le prochain deploiement cinematique **effacera /TARDIS/
+du serveur**. C'est l'effet recherche, et il est ecrit ici pour qu'on ne le
+decouvre pas par surprise.
+
+CE QUI A ETE MESURE AVANT
+-------------------------
+  141 pages vivantes sous /TARDIS/JoF/metroid/, toutes en `noindex`, mais
+  ACCESSIBLES PAR URL DIRECTE. L'une s'intitulait, telle qu'elle etait servie :
+
+      « Metroid x ArkAdiA -- l'oeuf, et la mutation . Genie IT Tek FR »
+
+  `Metroid` est une franchise Nintendo, interdite nommement par
+  vault-agence/licences-refusees.md. `ArkAdiA` avait deja ete retire du site.
+  Et le menu du site menait a ces pages.
+
+CE QUI EST DEJA FAIT (commit 60019e5)
+-------------------------------------
+  public/TARDIS/ -> _hors-site/TARDIS/ (git mv, 146 fichiers, historique conserve)
+  publier-ecole.mjs : ecriture fermee, reouvrable par ECOLE_TARDIS=1
+  topographie.js : route et porte en `retiree: true` + raisonRetrait
+  plan/, univers/, SoutePage.vue : liens retires
+
+CE QU'IL FALLUT POUR QUE CA PRENNE EFFET -- ET C'EST L'OBJET DE CE COMMIT
+-------------------------------------------------------------------------
+Le retrait du depot ne suffisait pas : `/TARDIS/JoF/metroid/` repondait toujours
+200 en ligne. Cause mesuree : cette liste d'exclusions le PROTEGEAIT.
+
+⭐ LA LECON, ET ELLE A ETE PAYEE LE MEME JOUR : *une protection ecrite pour un
+  motif survit au motif.* La ligne avait ete posee pour empecher la
+  synchronisation d'EFFACER le dossier ; elle empechait surtout sa disparition
+  quand la disparition etait voulue. C'est le meme defaut que `/services/`, deja
+  documente quinze lignes plus haut dans ce fichier -- et ou il est ecrit noir
+  sur blanc que l'exclusion « empechait surtout la nouvelle page d'arriver ».
+  **La lecon etait dans le fichier. Elle n'avait pas ete appliquee ici.**
+
+RIEN N'EST PERDU
+----------------
+Le dossier vit dans `_hors-site/TARDIS/`. Pour le republier, il faut defaire LES
+TROIS choses ensemble :
+  1. remettre `TARDIS/**` dans cette liste ;
+  2. remettre `public/TARDIS` en place (ou `ECOLE_TARDIS=1 npm run ecole`) ;
+  3. remettre `retiree: false` dans `src/config/topographie.js`.
+Une seule des trois ne suffit pas : elle donnerait soit des pages que rien
+n'atteint, soit un lien vers rien.
+
+VERIFIE AVANT D'ENVOYER
+-----------------------
+  /soute/ : 0 lien vers /TARDIS/, et le texte de retrait y figure (128 192 o)
+  la racine est servie par `cinematique/index.html`, pas par ce dossier

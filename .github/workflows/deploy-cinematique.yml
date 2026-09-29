@@ -288,7 +288,27 @@ jobs:
             site.webmanifest
             sitemap/**
             soute/**
-            TARDIS/**
+            # ⛔ `TARDIS/**` A ÉTÉ RETIRÉ DE CETTE LISTE LE 29/09/2026 — DÉCISION DE GAËTAN.
+            #
+            #   ⚠️ CETTE LIGNE EXISTAIT POUR PROTÉGER LE DOSSIER. La retirer signifie que
+            #   le déploiement cinématique va désormais **effacer `/TARDIS/` du serveur**,
+            #   puisque l'action FTP supprime en distant tout ce qui n'est pas dans
+            #   `local-dir` et n'est pas exclu. **C'est exactement l'effet recherché.**
+            #
+            #   POURQUOI : les 141 pages de `/TARDIS/JoF/metroid/` étaient servies en
+            #   production, et l'une d'elles s'intitulait « Metroid × ArkAdiA — l'oeuf, et
+            #   la mutation ». `Metroid` est une franchise Nintendo, interdite nommément par
+            #   `vault-agence/licences-refusees.md`, et ArkAdiA avait déjà été retiré du
+            #   site. Le menu du site menait à ces pages.
+            #
+            #   ⭐ RIEN N'EST PERDU : le dossier vit maintenant dans `_hors-site/TARDIS/`
+            #   (146 fichiers, déplacés par `git mv`, historique conservé). Pour le
+            #   republier un jour, il faut DÉFAIRE LES TROIS choses ensemble :
+            #     ① remettre `TARDIS/**` ici ;
+            #     ② repasser `public/TARDIS` en place, ou régénérer via `ECOLE_TARDIS=1` ;
+            #     ③ remettre `retiree: false` dans `src/config/topographie.js`.
+            #   *Une seule des trois ne suffit pas : elle donnerait soit des pages que rien
+            #   n'atteint, soit un lien vers rien.*
             univers/**
             vendor/three.min.js
             vitrine/**
