@@ -226,6 +226,8 @@ jobs:
           # ⚠️ Regenerer apres toute page nouvelle : node scripts/proteger-pages-studio.mjs
           exclude: |
             # 29/09/2026 : pages de l'appli Vue absentes de cette liste — ce déploiement les aurait supprimées (même état FTP partagé).
+            # 01/10/2026 : `cgv/**` et `guides/**` RETIRÉS de cette liste — ces deux pages sont désormais statiques,
+            # dans cinematique/. Les laisser ici empêchait leur envoi : le serveur gardait l'ancienne page Vue.
             architecture/**
             automatisation/**
             ia/**
@@ -241,7 +243,6 @@ jobs:
             armure/**
             assets/**
             ce-que-nous-nous-imposons/**
-            cgv/**
             cinematique/**
             components/**
             confidentialite/**
@@ -260,7 +261,6 @@ jobs:
             galion/**
             galion-arkadia.glb
             galion.glb
-            guides/**
             ia-de-bord/**
             laboratoire/**
             le-pont/**
