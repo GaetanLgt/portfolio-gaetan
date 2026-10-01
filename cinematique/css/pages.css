@@ -1,0 +1,69 @@
+/* pages.css — gldigitallab.fr · une seule charte pour les pages de texte (01/10/2026).
+   ⭐ POURQUOI. L'accueil et /offres/ portent la charte d'accueil.css ; les pages de texte
+   (analyses, veille, recherche souveraine, guides, CGV, mentions, confidentialité…) portaient
+   celle de site.css + manifeste.css : titres centrés en grande serif, intertitres cyan, fond de
+   scène cinématique. Deux sites sous un même en-tête.
+   ⭐ CE QUE FAIT CE FICHIER. Il se charge APRÈS site.css et manifeste.css et ramène ces pages aux
+   jetons de l'accueil (fond, carte, bord, texte, cyan, rouge, police, rayon, largeur) : même
+   police système, titres alignés à gauche, intertitres blancs, colonne de lecture de 78 caractères,
+   cartes et listes comme sur l'accueil. Il ne touche NI à entete.css (en-tête et pied communs),
+   NI aux composants propres à une page (.releve, .avertissement…) sauf pour la typographie.
+   Aucune police ni script externe. */
+:root {
+  --p-fond: #080b14; --p-fond-2: #0d111f; --p-carte: #111729; --p-bord: #1e2742;
+  --p-texte: #e4e9f2; --p-doux: #9aa6bf; --p-cyan: #2abfff; --p-rouge: #ff3b4e;
+  --p-police: ui-sans-serif, system-ui, "Segoe UI", Roboto, Ubuntu, Cantarell, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--p-fond); color: var(--p-texte); font: 16px/1.6 var(--p-police); overflow-x: hidden; }
+body > main, main.acte, main.page {
+  display: block; position: relative; z-index: 1; min-height: 0 !important;
+  width: 100%; max-width: 860px; margin: 0 auto; padding: 56px 20px 72px; box-sizing: border-box; text-align: left;
+}
+main h1, main h2, main h3 { font-family: var(--p-police); font-weight: 700; line-height: 1.15; text-align: left; letter-spacing: 0; }
+main h1:not(#_) { font-size: clamp(30px, 4.6vw, 46px); color: #fff; margin: 0 0 14px; }
+main h2:not(#_) { font-size: clamp(22px, 2.8vw, 28px); color: var(--p-texte); margin: 44px 0 10px; padding-top: 22px; border-top: 1px solid var(--p-bord); }
+main h3:not(#_) { font-size: 18px; color: var(--p-texte); margin: 26px 0 6px; }
+main p, main li { font-size: 16px; line-height: 1.65; color: var(--p-texte); max-width: 78ch; text-align: left; }
+main p.sous, main .sous, main .chapeau { font-size: 18px; color: var(--p-doux); margin: 0 0 22px; max-width: 70ch; }
+main .rubrique { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--p-cyan); margin: 0 0 10px; }
+main a { color: var(--p-cyan); }
+main a:hover { color: #6fd5ff; }
+main a:focus-visible, main button:focus-visible { outline: 2px solid var(--p-cyan); outline-offset: 3px; border-radius: 4px; }
+main strong, main b { color: #fff; }
+main ul, main ol { padding-left: 22px; margin: 10px 0 18px; }
+main li { margin: 4px 0; }
+main hr { border: 0; border-top: 1px solid var(--p-bord); margin: 32px 0; }
+main table { width: 100%; border-collapse: collapse; font-size: 15px; margin: 16px 0; display: block; overflow-x: auto; }
+main th, main td { border: 1px solid var(--p-bord); padding: 8px 12px; text-align: left; vertical-align: top; }
+main th { background: var(--p-carte); color: #fff; }
+main blockquote, main .avertissement, main .encadre {
+  background: var(--p-carte); border: 1px solid var(--p-bord); border-left: 3px solid var(--p-rouge);
+  border-radius: 12px; padding: 16px 20px; margin: 22px 0; }
+main blockquote p:last-child, main .avertissement p:last-child, main .encadre p:last-child { margin-bottom: 0; }
+main code { background: var(--p-carte); border: 1px solid var(--p-bord); border-radius: 6px; padding: 1px 6px; font-size: .92em; }
+main pre { background: var(--p-carte); border: 1px solid var(--p-bord); border-radius: 12px; padding: 16px; overflow-x: auto; }
+main figure { margin: 24px 0; } main img { max-width: 100%; height: auto; border-radius: 12px; }
+
+/* listes de pages : relevés, analyses, guides — cartes comme sur l'accueil */
+main ul.releve, main ul.liste, main ul.guides-liste { list-style: none; padding: 0; margin: 18px 0 28px; display: grid; gap: 12px; }
+main ul.releve li, main ul.liste li, main ul.guides-liste li { background: var(--p-carte); border: 1px solid var(--p-bord); border-radius: 12px; padding: 0; max-width: none; margin: 0; }
+main ul.releve li > a, main ul.liste li > a, main ul.guides-liste li > a { display: flex; flex-direction: column; gap: 6px; padding: 16px 20px; text-decoration: none; color: var(--p-texte); border-radius: 12px; }
+main ul.releve li > a:hover, main ul.liste li > a:hover, main ul.guides-liste li > a:hover { border-color: var(--p-cyan); box-shadow: 0 0 0 1px var(--p-cyan) inset; }
+main .guides-liste .question { font-weight: 700; font-size: 17px; color: #fff; }
+main .guides-liste .resume { color: var(--p-doux); font-size: 15px; }
+
+/* guide et pages juridiques */
+main .guide-bloc { background: var(--p-carte); border: 1px solid var(--p-bord); border-radius: 12px; padding: 18px 22px; margin: 18px 0 8px; font-size: 17px; }
+main .guide-pied { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--p-bord); }
+main .actions { display: flex; gap: 14px; flex-wrap: wrap; margin: 18px 0 0; }
+main .bouton { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; background: var(--p-rouge); color: #fff; border: 1px solid transparent; }
+main .bouton:hover { background: #ff5a6a; color: #fff; }
+main .bouton.contour { background: transparent; border-color: var(--p-texte); color: var(--p-texte); }
+main .bouton.contour:hover { border-color: var(--p-cyan); color: var(--p-cyan); }
+main .maj { font-size: 13px; color: var(--p-doux); margin-top: 28px; }
+
+/* pied commun : ses intertitres ne sont pas ceux des pages de texte */
+.gl-pied h2 { font-family: var(--p-police); font-weight: 700; font-size: 13px; margin: 0 0 12px; }
+
+@media (max-width: 600px) { body > main, main.acte, main.page { padding: 36px 16px 56px; } main h2:not(#_) { margin-top: 34px; } }

@@ -17,7 +17,7 @@ const SIMULER = process.argv.includes('--simuler');
 const MENU = [['/', 'Accueil'], ['/offres/', 'Solutions'], ['/#preuves', 'Réalisations'], ['/#ressources', 'Ressources'], ['/contact.php', 'Contact']];
 const actif = (rel, href) =>
   (href === '/' && rel === 'index.html') || (href === '/offres/' && rel.startsWith('offres/')) ||
-  (href === '/contact.php' && rel === 'contact.php') || (href === '/#ressources' && /^(analyses|veille|formation)\//.test(rel));
+  (href === '/contact.php' && rel === 'contact.php') || (href === '/#ressources' && /^(analyses|veille|formation|guides|cgv)\//.test(rel));
 
 const entete = (rel) => `<header class="gl-barre">
   <div class="gl-cadre">
@@ -39,7 +39,7 @@ const PIED = `<footer class="gl-pied">
         <p>Studio web &amp; IA locale pour TPE/PME.<br>Une activité de Génie IT Tek FR — immatriculation en cours.</p>
       </div>
       <nav aria-label="Pied de page"><h2>Solutions</h2><ul><li><a href="/offres/#cadrage">Cadrage &amp; diagnostic IA locale</a></li><li><a href="/offres/#site">Site web &amp; IA intégrée</a></li><li><a href="/offres/#deploiement">Déploiement IA souveraine</a></li><li><a href="/services/">Tous les services</a></li></ul></nav>
-      <div><h2>Ressources</h2><ul><li><a href="/analyses/">Analyses</a></li><li><a href="/veille/">Veille</a></li><li><a href="/formation/">Formation</a></li><li><a href="/recherche-souveraine.html">Recherche souveraine</a></li><li><a href="/urgence-cyber/">Urgence cyber</a></li></ul></div>
+      <div><h2>Ressources</h2><ul><li><a href="/analyses/">Analyses</a></li><li><a href="/veille/">Veille</a></li><li><a href="/guides/">Guides</a></li><li><a href="/formation/">Formation</a></li><li><a href="/recherche-souveraine.html">Recherche souveraine</a></li><li><a href="/urgence-cyber/">Urgence cyber</a></li></ul></div>
       <div><h2>Contact</h2><ul><li>Harponville (80560)</li><li><a href="/contact.php">Formulaire de contact</a></li><li><a href="/ce-que-nous-nous-imposons/">Ce que nous nous imposons</a></li></ul></div>
     </div>
     <div class="gl-legal">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Plan de site — ENGENDRÉ par outils/generer-sitemap.mjs le 2026-09-29.
+<!-- Plan de site — ENGENDRÉ par outils/generer-sitemap.mjs le 2026-10-01.
      ⛔ Ne pas modifier à la main : la liste est DÉCOUVERTE sur le disque à chaque exécution.
         *Un plan qu'on complète à la main finit par déclarer des pages mortes — l'ancien
         en avait 37 sur 38, et celui-ci en oubliait 4 sur 9.*
@@ -15,15 +15,17 @@
         .well-known/security.txt et sitemap.xml ne sont pas des pages — un plan de site
         déclare des documents destinés à un lecteur, pas des fichiers de service. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://gldigitallab.fr/</loc><lastmod>2026-09-29</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://gldigitallab.fr/analyses/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://gldigitallab.fr/confidentialite.html</loc><lastmod>2026-09-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://gldigitallab.fr/formation/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://gldigitallab.fr/mentions-legales.html</loc><lastmod>2026-09-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://gldigitallab.fr/offres/</loc><lastmod>2026-09-29</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://gldigitallab.fr/recherche-souveraine.html</loc><lastmod>2026-09-29</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://gldigitallab.fr/services/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://gldigitallab.fr/urgence-cyber/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://gldigitallab.fr/veille/</loc><lastmod>2026-09-28</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-  <url><loc>https://gldigitallab.fr/veille/2026-09-25.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://gldigitallab.fr/</loc><lastmod>2026-10-01</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://gldigitallab.fr/analyses/</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/cgv/</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/confidentialite.html</loc><lastmod>2026-10-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://gldigitallab.fr/formation/</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/guides/</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/mentions-legales.html</loc><lastmod>2026-10-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://gldigitallab.fr/offres/</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/recherche-souveraine.html</loc><lastmod>2026-10-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://gldigitallab.fr/services/</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/urgence-cyber/</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://gldigitallab.fr/veille/</loc><lastmod>2026-10-01</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+  <url><loc>https://gldigitallab.fr/veille/2026-09-25.html</loc><lastmod>2026-10-01</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

@@ -59,6 +59,9 @@ neuf choses, et qui ne fait sortir aucune donnée.*
 - [Analyses](https://gldigitallab.fr/analyses/) — ce que le studio a mesuré, avec les sources
   datées et **les blancs déclarés** : marché du numérique en France, souveraineté de
   l'infrastructure, production française, langue du code
+- [Guides](https://gldigitallab.fr/guides/) — dix questions, dix réponses courtes : prix, délais, hébergement en France, IA locale,
+  propriété du code. Prix publics hors taxes.
+- [Recherche souveraine](https://gldigitallab.fr/recherche-souveraine.html) — chercher sur le web sans être profilé, depuis ses propres machines.
 - [Formation](https://gldigitallab.fr/formation/) — un dossier pédagogique libre et le chantier
   d'une formation à l'intelligence artificielle, du scolaire à l'université.
   **⚠️ Non certifiant** : le contenu s'appuie sur des ressources officielles, le studio n'est
@@ -76,6 +79,7 @@ neuf choses, et qui ne fait sortir aucune donnée.*
   lui-même, sans service tiers
 - [Mentions légales](https://gldigitallab.fr/mentions-legales.html)
 - [Confidentialité](https://gldigitallab.fr/confidentialite.html)
+- [Conditions générales de vente](https://gldigitallab.fr/cgv/)
 
 <!-- ⭐ CETTE SECTION A ÉTÉ COMPLÈTE LE 28/09/2026, ET C'ÉTAIT UN DÉFAUT RÉEL — LE MÊME
      QUE CELUI DU 28/09 SUR « CE QUE LE STUDIO FAIT ».
