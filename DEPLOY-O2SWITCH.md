@@ -1,5 +1,23 @@
 # 🚀 DÉPLOIEMENT GL DIGITAL LAB - O2SWITCH
 
+> ## ⚠️ MISE À JOUR DU 01/10/2026 — CETTE PROCÉDURE MANUELLE NE PUBLIE PLUS LA RACINE
+>
+> **Ce qui est servi sur `gldigitallab.fr` est le dossier `cinematique/`** (pages statiques),
+> déployé par `.github/workflows/deploy-cinematique.yml` à chaque push sur `main` qui touche
+> `cinematique/**` ou `outils/**`. La SPA Vue décrite plus bas ne se déploie plus qu'à la main
+> (`deploy.yml`) et ne sert plus que des routes résiduelles (`/etat-du-studio`, `/dossier`, `/contact`…).
+>
+> - **Modifier le site = modifier `cinematique/`, commit, push** — jamais d'envoi FTP manuel.
+> - Charte des pages de texte : `cinematique/css/pages.css` (après `entete.css`). Menu et pied :
+>   `node outils/harmoniser-entete.mjs`. Plan du site : `node outils/generer-sitemap.mjs`.
+>   Versions CSS : `node outils/versionner-ressources.mjs`. Contrôle : `node outils/verifier-publication.mjs`.
+> - **Piège** : la liste `exclude` du workflow protège les routes Vue. Une page reconstruite en
+>   statique (comme `guides/`, `cgv/`, `ce-que-nous-nous-imposons/`) doit en être retirée, sinon
+>   elle n'est jamais envoyée.
+> - Copie de travail unique : `C:\IA\depots\portfolio-gaetan` (`C:\IA\portfolio-gaetan` en est un lien).
+>   `C:\Users\neosp\code\portfolio-gaetan` est une ancienne copie, en retard de 72 commits : ne pas s'en servir.
+
+
 ## ⚠️ BANDEAU DE CORRECTION — 22/09/2026
 
 > **Ce fichier a été corrigé le 22/09/2026 par un audit à 360°, et il le fallait :**
