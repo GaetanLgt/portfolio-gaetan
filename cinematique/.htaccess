@@ -181,6 +181,14 @@ ErrorDocument 404 /404.html
   Header set X-Content-Type-Options "nosniff"
   # Ne pas transmettre l'adresse complète des pages visitées à un site tiers.
   Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # ── 01/10/2026 — auto-diagnostic « ce qu'un inconnu voit » (Cybermois) ──
+  # Trois en-têtes manquaient. Aucun ne restreint les scripts ni les médias du site :
+  # ils interdisent seulement d'afficher le site dans le cadre d'un autre (détournement
+  # de clic), de poster un formulaire ailleurs que chez nous, et d'utiliser caméra, micro,
+  # position ou paiement — que le site n'utilise pas.
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Content-Security-Policy "frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
 </IfModule>
 
 # ── ⛔ NE PAS LISTER LE CONTENU DES DOSSIERS ────────────────────────────────
