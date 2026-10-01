@@ -67,3 +67,11 @@ main .maj { font-size: 13px; color: var(--p-doux); margin-top: 28px; }
 .gl-pied h2 { font-family: var(--p-police); font-weight: 700; font-size: 13px; margin: 0 0 12px; }
 
 @media (max-width: 600px) { body > main, main.acte, main.page { padding: 36px 16px 56px; } main h2:not(#_) { margin-top: 34px; } }
+
+/* gestes numérotés (page « Ce que nous nous imposons ») */
+main .impose__gestes { list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 12px; }
+main .impose__geste { background: var(--p-carte); border: 1px solid var(--p-bord); border-radius: 12px; padding: 16px 20px; max-width: none; }
+main .impose__geste--absent { border-left: 3px solid var(--p-rouge); }
+main .impose__geste-titre { font-weight: 700; color: #fff; margin: 0 0 6px; }
+main .impose__etiquette { font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--p-bord); color: var(--p-doux); margin-left: 8px; }
+main .impose__note, main .impose__fait, main .impose__reference, main .impose__precision { color: var(--p-doux); font-size: 15px; }
