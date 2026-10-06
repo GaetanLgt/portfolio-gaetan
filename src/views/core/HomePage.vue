@@ -899,7 +899,7 @@
          (Win32_Processor, Win32_PhysicalMemory, nvidia-smi), pas estimée. Le
          visuel est généré par notre propre chaîne locale et étiqueté comme tel.
          ═══════════════════════════════════════════════════════════════════════ -->
-    <section class="vaisseau" data-vaisseau aria-labelledby="vaisseau-title">
+    <section ref="vaisseauSection" class="vaisseau" data-vaisseau aria-labelledby="vaisseau-title">
       <div class="container">
         <ScrollReveal animation="fade-up">
           <div class="section-header">
@@ -935,7 +935,7 @@
              les retirer du dépôt est une décision de Gaëtan, pas un effet de bord. -->
         <ScrollReveal animation="fade-up">
           <div class="vaisseau__vue">
-            <VaisseauNavigable />
+            <VaisseauNavigable v-if="vaisseauPret" />
           </div>
 
           <p class="vaisseau__legende-3d">
@@ -1674,6 +1674,9 @@ onMounted(() => {
 const CarteDuNavire = defineAsyncComponent(() => import('@/components/ui/CarteDuNavire.vue'));
 const cartePrete = ref(false);
 const GESTES = ['scroll', 'pointerdown', 'keydown', 'touchstart'];
+const vaisseauPret = ref(false);
+const vaisseauSection = ref(null);
+let observateurVaisseau = null;
 
 function reveillerCarte() {
   cartePrete.value = true;
@@ -1685,11 +1688,28 @@ function reveillerCarte() {
 onMounted(() => {
   if (typeof window === 'undefined') return;
   GESTES.forEach((g) => window.addEventListener(g, reveillerCarte, { passive: true }));
+
+  if (!vaisseauSection.value || typeof IntersectionObserver === 'undefined') {
+    vaisseauPret.value = true;
+  } else {
+    observateurVaisseau = new IntersectionObserver(
+      (entrees) => {
+        if (!entrees.some((entree) => entree.isIntersecting)) return;
+        vaisseauPret.value = true;
+        observateurVaisseau?.disconnect();
+        observateurVaisseau = null;
+      },
+      { rootMargin: '320px 0px' }
+    );
+    observateurVaisseau.observe(vaisseauSection.value);
+  }
 });
 
 onUnmounted(() => {
   if (typeof window === 'undefined') return;
   GESTES.forEach((g) => window.removeEventListener(g, reveillerCarte));
+  observateurVaisseau?.disconnect();
+  observateurVaisseau = null;
 });
 
 // UI Components
