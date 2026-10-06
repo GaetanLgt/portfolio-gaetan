@@ -39,6 +39,7 @@ const DIST = path.resolve(option('dist', 'dist'))
 const RACINE = path.resolve(DIST, '..')
 const PORT = Number(option('port', 4178))
 const DEBUG_PORT = PORT + 1
+const MAX_CHROME_CONNECT_TOURS = 100
 const ECRIRE = !args.includes('--titre-seulement')
 // ⭐ `--reprendre` : sauter les pages DÉJÀ écrites ET PROPRES. C'est ce qui rend le
 //    prérendu possible sur une machine dont le moteur fige après N pages — on le
@@ -615,7 +616,7 @@ async function principal() {
   chromeProc = proc   // ⭐ exposé au nettoyage global : SANS ÇA, Chrome survit à l'échec
 
   let cdp = null
-  for (let i = 0; i < 40 && !cdp; i++) {
+  for (let i = 0; i < MAX_CHROME_CONNECT_TOURS && !cdp; i++) {
     await attendre(300)
     try {
       const cibles = await (await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/list`)).json()
