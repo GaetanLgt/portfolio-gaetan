@@ -475,5 +475,5 @@ Ce que nous pouvons dire sans risque :
 
 ---
 
-*Dossier préparé par Génie IT Tek FR — 13 septembre 2026.*
+*Dossier préparé par GL Digital Lab — 13 septembre 2026.*
 *Les faits cités sont sourcés dans `FAITS-MANGA-VERIFIES.md` ; ce qui n'a pas pu être vérifié est signalé.*
